@@ -8,12 +8,31 @@ const routes = (): RouteConfig[] => [
   // },
   {
 
+    path: '/admin',
+    component: () => import('layouts/AdminLayout.vue'),
+    children: [
+      { name: 'admin-index', path: 'list', component: () => import('pages/admin/Page.vue') },
+      { name: 'admin-country', path: 'country/:country', component: () => import('pages/admin/Country.vue') }
+    ]
+  },
+  {
+
     path: '/:locale?',
+    component: () => import('layouts/IntroLayout.vue'),
+    children: [
+      { name: 'index', path: '', component: () => import('pages/Index.vue') }
+    ]
+
+  },
+
+  {
+
+    path: '/:locale/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { name: 'index', path: '', component: () => import('pages/Index.vue') },
-      { path: 'country/:country', component: () => import('pages/Index.vue') }
+      { name: 'country', path: 'country/:country', component: () => import('pages/country/Page.vue') }
     ]
+
   },
 
   // Always leave this as last one,

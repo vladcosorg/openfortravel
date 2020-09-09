@@ -1,29 +1,81 @@
 {
-  "posts": [
-    {
-      "id": 1,
-      "title": "json-serverr",
-      "author": "typicode"
-    }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  },
   "countries": [
     {
       "id": 1,
-      "name": "Moldova"
+      "code": "md",
+      "destinations": [
+        {
+          "countryId": 4,
+          "status": "allowed",
+          "testRequired": false,
+          "notes": ""
+        },
+        {
+          "countryId": 2,
+          "status": "allowed",
+          "testRequired": true,
+          "notes": ""
+        },
+        {
+          "countryId": 3,
+          "status": "forbidden",
+          "testRequired": null,
+          "notes": ""
+        },
+        {
+          "countryId": 5,
+          "status": "forbidden",
+          "testRequired": null,
+          "notes": ""
+        }
+      ]
     },
     {
       "id": 2,
-      "name": "Romania"
+      "code": "ro",
+      "destinations": [
+        {
+          "countryId": 4,
+          "status": "allowed",
+          "testRequired": false,
+          "notes": ""
+        },
+        {
+          "countryId": 2,
+          "status": "allowed",
+          "testRequired": true,
+          "notes": ""
+        },
+        {
+          "countryId": 3,
+          "status": "forbidden",
+          "testRequired": null,
+          "notes": ""
+        },
+        {
+          "countryId": 5,
+          "status": "forbidden",
+          "testRequired": null,
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "code": "gb",
+      "destinations": []
+    },
+    {
+      "id": 4,
+      "code": "ru",
+      "destinations": []
+    },
+    {
+      "id": 5,
+      "code": "us",
+      "destinations": []
     }
+  ],
+  "destinations": [
   ]
 }

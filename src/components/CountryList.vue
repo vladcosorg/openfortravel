@@ -1,91 +1,192 @@
 <template>
-  <q-select
-    :value="currentCountry"
-    :options="countryList"
-    @input="handleChange"
-    dense
-    borderless
-    emit-value
-    map-options
-    options-dense
-    use-input
-  />
+
+  <div :class="['row', $style.row]">
+    <q-select
+      v-model="currentCountry"
+      :options="countryList"
+      options-dense
+      :class="[$style.select, 'col']"
+      :clearable="null"
+      borderless
+      item-aligned
+      use-input
+      @filter="filterCountryList"
+      @focus="clearCountry = true"
+      @blur="clearCountry = false"
+      @popup-hide="clearCountry = false"
+      bg-color="white"
+      :dropdown-icon="icon"
+    />
+    <q-btn
+      size="14px"
+      round
+      color="secondary"
+      :icon="`img:${searchIcon}`"
+      text-color="primary"
+      :class="$style.btn"
+    />
+  </div>
+
 </template>
 
-<script lang="ts">
-import {
-  defineComponent, watch, computed, toRef
-} from '@vue/composition-api'
-import axios from 'axios'
-import { Cookies } from 'quasar'
-const fetchCountryList = async (locale: string) => {
-  locale = locale.split('-')[0]
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  let translations = await import(
-    (`i18n-iso-countries/langs/${locale}.json`)
-  )
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-  translations = (translations.default.countries) as Record<string, string>
-  const out = Object.keys(translations).map(key => ({
-    value: key.toLowerCase(),
-    label: translations[key]
-  }))
-
-  return Object.freeze(out)
+<style lang="scss" module>
+.row {
+  //padding:10px 0px;
 }
 
-const detectCountry = async (cookies: Cookies) => {
-  let countryCode = cookies.get('country')
+.select {
+  padding: 0;
+  margin-right: 10px;
+  height: 70px;
 
-  if (!countryCode) {
-    const response = await axios('http://ip-api.com/json/')
-    countryCode = response.data.countryCode as string
-    countryCode = countryCode.toLowerCase()
-    cookies.set('country', countryCode)
+  :global {
+    .q-field__control {
+      border-radius: 50px;
+      box-shadow: $shadow-5;
+      padding: 5px 20px;
+      height: 100%;
+    }
+
+    .q-field__native, .q-field__append {
+      color: $primary;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .q-field__native span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.btn {
+  height: 70px;
+  width: 70px;
+  box-shadow: $shadow-8;
+  :global {
+    .q-icon {
+      margin-left: 2px;
+      margin-bottom: 2px;
+    }
+  }
+}
+
+:global(.mobile) {
+  .select {
+    :global(.q-field__input) {
+      display: none;
+    }
+
   }
 
-  return countryCode
+}
+</style>
+<script lang="ts">
+import {
+  computed,
+  defineComponent, onServerPrefetch, ref
+} from '@vue/composition-api'
+import { getLabelForCountryCode, getFlagForCountryCode, getCountryList } from 'src/misc/I18nCountryList'
+import { fetchCurrentCountryCode } from 'src/api/IpApi'
+import { useCookies, useI18n, useRoute, useRouter, useStore } from 'src/composables/use-plugins'
+import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
+import searchIcon from 'src/assets/search.svg'
+
+interface ListItem {
+  value: string
+  label: string
 }
 
-export default defineComponent({
-  name: 'CountryList',
+type List = ListItem[]
 
-  async serverPrefetch (this) {
-    this.$store.commit('setDetectedCountry', await detectCountry(this.$q.cookies))
-    this.$store.commit('setCountryList', await fetchCountryList(this.$i18n.locale))
-  },
-  setup (props, { root }) {
-    const currentLanguage = toRef(root.$i18n, 'locale')
-    const currentCountry = computed({
-      get () {
-        return root.$store.state.detectedCountry
-        // return root.$route.params.country
-      },
-      set (country) {
-        root.$store.commit('setDetectedCountry', country)
-      }
-    })
+export default defineComponent({
+  setup () {
+    const filteredList = ref([])
+    const clearCountry = ref(false)
 
     const countryList = computed({
       get () {
-        return root.$store.state.countryList
+        return filteredList.value
       },
-      set (countryList) {
-        root.$store.commit('setCountryList', countryList)
+      set (list: any) {
+        filteredList.value = list
       }
     })
 
-    watch(currentLanguage, async (newLocale) => {
-      countryList.value = await fetchCountryList(newLocale)
-    })
-
-    const handleChange = (country: string) => {
-      const to = root.$router.resolve({ params: { country } })
-
-      root.$router.push(to.location)
+    const persistCountry = (countryCode: string) => {
+      useStore().commit('setDetectedCountry', countryCode)
+      useCookies().set('country', countryCode, {
+        path: '/'
+      })
     }
 
-    return { countryList, currentCountry, handleChange }
+    const decideOnCountry = async () => {
+      const countryCodeSources: (() => string | Promise<string>)[] = [
+        () => useRoute().params.country,
+        () => useCookies().get('country'),
+        fetchCurrentCountryCode,
+        () => 'us'
+      ]
+
+      for (const countryCodeSource of countryCodeSources) {
+        const result = await countryCodeSource()
+        if (result) {
+          return result
+        }
+      }
+    }
+
+    const filterCountryList = (currentValue: string, update: { (callback: { (): void }): void }) => {
+      update(() => {
+        // console.log(currentCountry)
+        currentCountry.value = null
+        // const needle = currentValue.value.value.toLowerCase()
+        // console.log(currentValue)
+        countryList.value = getCountryList().filter((listItem: ListItem) => {
+          return listItem.label.toLowerCase().indexOf(currentValue) > -1
+        })
+
+        // console.log(filteredList)
+      })
+    }
+
+    const currentCountry = computed({
+      get () {
+        if (clearCountry.value === true) {
+          return null
+        }
+
+        const countryCode = useStore().state.detectedCountry
+        return { label: getLabelForCountryCode(countryCode), value: countryCode }
+      },
+      async set (countryPair: { value: string | null }) {
+        if (!countryPair) {
+          return
+        }
+
+        const locale = useI18n().locale
+        const country = countryPair.value
+        persistCountry(country)
+        if (country) {
+          await useRouter().push({ name: 'country', params: { country, locale } })
+        }
+      }
+    })
+    onServerPrefetch(async () => {
+      persistCountry(await decideOnCountry())
+    })
+
+    return {
+      countryList,
+      currentCountry,
+      getFlagForCountryCode,
+      filterCountryList,
+      clearCountry,
+      icon,
+      searchIcon
+    }
   }
 })
 </script>

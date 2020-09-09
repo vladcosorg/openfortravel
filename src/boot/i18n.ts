@@ -1,7 +1,9 @@
 import { boot } from 'quasar/wrappers'
 import messages from 'src/i18n'
 import Vue from 'vue'
-import VueI18n from 'vue-i18n'
+import VueI18n, { LocaleMessageObject } from 'vue-i18n'
+import VueAutoI18n from 'vue-auto-i18n'
+import Locale = VueI18n.Locale;
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -10,13 +12,34 @@ declare module 'vue/types/vue' {
 }
 
 Vue.use(VueI18n)
+
 export const i18n = new VueI18n({
-  // locale: navigator.language.toLowerCase(),
-  fallbackLocale: 'en-us',
+  locale: 'ro',
+  fallbackLocale: 'ro',
   messages
 })
 
-export default boot(({ app, ssrContext }) => {
+Vue.use(VueAutoI18n, {
+  i18nPluginInstance: i18n,
+  apiKey: 'AIzaSyAfFKXuPwwnrNwzPZuynAMPyd88AmLWsOg',
+  sourceLanguage: 'en'
+})
+
+export async function changeLanguage (lang: Locale): Promise<void> {
+  if (i18n.locale === lang) {
+    return
+  }
+
+  try {
+    const response = await import(/* webpackChunkName: "lang-[request]" */`src/i18n/${lang}.ts`) as {default: LocaleMessageObject}
+    i18n.setLocaleMessage(lang, response.default)
+  } catch (e) {
+
+  }
+  i18n.locale = lang
+}
+
+export default boot(({ app }) => {
   // Set i18n instance on app
   app.i18n = i18n
 })

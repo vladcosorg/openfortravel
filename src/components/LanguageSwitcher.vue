@@ -3,38 +3,65 @@
     :value="$i18n.locale"
     :options="languageList"
     @input="handleChange"
-    label="Quasar Language"
-    dense
+    bg-color="accent"
     borderless
     emit-value
-    map-options
     options-dense
-    style="min-width: 150px"
-  />
+    :class="[$style.select]"
+    :dropdown-icon="icon"
+  >
+  </q-select>
 </template>
+<style lang="scss" module>
+.select {
+  :global {
+    .q-field__control {
+      border-radius: 14px;
+      min-height: auto;
+      padding: 0 8px;
+      font-size: .75rem;
+    }
+    .q-field__native, .q-field__append {
+      color: $primary;
+      font-weight: bold;
+      text-transform: uppercase;
+      min-height: auto;
+      height: auto;
+    }
 
+    .q-field__append {
+      padding-left: 0;
+    }
+  }
+}
+
+</style>
 <script lang="ts">
 import {
-  defineComponent, ref, watch
+  defineComponent
 } from '@vue/composition-api'
+import { useCookies, useRouter } from 'src/composables/use-plugins'
+import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
 
   setup (props, { root }) {
     const languageList = [
-      { value: 'en-us', label: 'English' },
+      { value: 'en', label: 'English' },
       { value: 'ro', label: 'Romanian' },
       { value: 'ru', label: 'Русский' }
     ]
 
-    const handleChange = (locale) => {
+    const handleChange = async (locale: string) => {
       const to = root.$router.resolve({ params: { locale } })
-      root.$q.cookies.set('locale', locale)
-      root.$router.push(to.location)
+      useCookies().set('locale', locale, {
+        path: '/'
+      })
+      await useRouter().push(to.location)
     }
 
-    return { languageList, handleChange }
+    return { languageList, handleChange, icon }
   }
 })
 </script>

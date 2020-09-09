@@ -4,7 +4,6 @@
       <q-toolbar class=" q-px-md q-py-md">
         <q-icon :name="`img:${logo}`" style=" height: auto; width: 100px"/>
         <q-space />
-        <language-switcher/>
       </q-toolbar>
     </q-header>
     <q-footer>
@@ -13,15 +12,6 @@
       </q-toolbar>
     </q-footer>
     <q-page-container>
-      <div class=" text-h5 q-px-md q-py-md" style="background-color: #222930; color: #04E4AA">
-        Find out which destinations are<br> <span class="text-bold" style="color: white">open or reopening soon</span>
-      </div>
-      <div style="background-color: #222930;">
-        <div class="row full-width justify-center items-center text-h5 q-pa-lg" style="background-color: #EDEDF4; color: #3D4867; border-radius: 30px 30px 0 0 ">
-          {{ $t('intro.title') }}
-          <country-list />
-        </div>
-      </div>
       <router-view/>
     </q-page-container>
 
@@ -29,14 +19,11 @@
 </template>
 
 <script lang="ts">
-import LanguageSwitcher from 'components/LanguageSwitcher.vue'
-import CountryList from 'components/CountryList.vue'
 import { defineComponent } from '@vue/composition-api'
 import logo from 'src/assets/logo.svg'
 
 export default defineComponent({
   name: 'MainLayout',
-  components: { LanguageSwitcher, CountryList },
 
   setup () {
     return { logo }

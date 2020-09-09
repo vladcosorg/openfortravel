@@ -26,11 +26,12 @@ module.exports = configure(function (ctx) {
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
       'composition-api',
+      'store',
       'i18n',
       'axios',
       'routes',
-      'language-detector'
-      // 'country-detector'
+      'language-detector',
+      'firebase'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -110,7 +111,7 @@ module.exports = configure(function (ctx) {
       //
       // components: [],
       // directives: [],
-
+      components: [],
       // Quasar plugins
       plugins: [
         'Cookies'

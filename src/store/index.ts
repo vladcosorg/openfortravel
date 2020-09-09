@@ -1,6 +1,7 @@
 import { store } from 'quasar/wrappers'
 import Vuex from 'vuex'
-import { colorsRgba } from 'quasar'
+import { DestinationCountry, GroupedDestinations } from 'components/models'
+import { I18nCountryList } from 'src/misc/I18nCountryList'
 
 // import example from './module-example';
 // import { ExampleStateInterface } from './module-example/state';
@@ -15,10 +16,11 @@ export interface StateInterface {
   // Define your own store structure, using submodules if needed
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  // example: unknown;
+  // example: unknown;a
   // count: unknown;
-  countryList: [],
-  detectedCountry?: string
+  countryList: I18nCountryList,
+  detectedCountry: string,
+  countryDestinations: GroupedDestinations
 }
 
 export default store(function ({ Vue }) {
@@ -26,15 +28,19 @@ export default store(function ({ Vue }) {
 
   const Store = new Vuex.Store<StateInterface>({
     state: {
-      countryList: [],
-      detectedCountry: undefined
+      countryList: {},
+      detectedCountry: 'us',
+      countryDestinations: {}
     },
     mutations: {
-      setCountryList (state: StateInterface, list: []) {
+      setCountryList (state: StateInterface, list: I18nCountryList) {
         state.countryList = list
       },
       setDetectedCountry (state: StateInterface, country: string) {
         state.detectedCountry = country
+      },
+      setCountryDestinations (state: StateInterface, countryDestinations: GroupedDestinations) {
+        state.countryDestinations = countryDestinations
       }
     },
     modules: {
