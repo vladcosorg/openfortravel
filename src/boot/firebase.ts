@@ -13,7 +13,7 @@ if (!firebase.apps.length) {
     storageBucket: 'openfortravel.appspot.com',
     messagingSenderId: '678272975127',
     appId: '1:678272975127:web:eef8ccaa39e923964c3752',
-    measurementId: 'G-NHT0P83PH5'
+    measurementId: 'G-NHT0P83PH5',
   })
 } else {
   firebaseApp = firebase.app()

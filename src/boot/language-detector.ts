@@ -13,7 +13,10 @@ export default boot(({ Vue, ssrContext, router }) => {
       let locale: string = cookies.get('locale')
       if (!locale) {
         if (process.env.SERVER) {
-          locale = ssrContext?.req.acceptsLanguages()[0].toLowerCase().split('-')[0]
+          locale = ssrContext?.req
+            .acceptsLanguages()[0]
+            .toLowerCase()
+            .split('-')[0]
         } else {
           locale = navigator.language.toLowerCase().split('-')[0]
         }

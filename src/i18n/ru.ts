@@ -6,6 +6,6 @@ export default {
   conditional: 'Условно разрешено',
   intro: {
     title: 'Хочу путешествовать из',
-    btn: 'Искать!'
-  }
+    btn: 'Искать!',
+  },
 }

@@ -9,8 +9,8 @@ import { useCountryListLoader } from 'src/misc/I18nCountryList'
 
 export default defineComponent({
   name: 'App',
-  setup () {
+  setup() {
     useCountryListLoader()
-  }
+  },
 })
 </script>

@@ -3,11 +3,11 @@ import { boot } from 'quasar/wrappers'
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $axios: AxiosInstance;
+    $axios: AxiosInstance
   }
 }
 export const axiosAPI = axios.create({
-  baseURL: 'http://localhost:3000/'
+  baseURL: 'http://localhost:3000/',
 })
 export default boot(({ Vue }) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

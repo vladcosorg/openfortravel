@@ -1,0 +1,146 @@
+@keyframes moveHair {
+  45% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: rotate(5deg) skew(5deg, 11deg) translate(2%, -11%);
+  }
+
+  55% {
+    transform: rotate(2deg) skew(2deg, 5deg) translate(1%, -5%);
+  }
+  60% {
+    transform: rotate(5deg) skew(5deg, 11deg) translate(2%, -11%);
+  }
+
+  65% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes moveScarf {
+  45% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: rotate(-15deg) skew(0deg, 10deg);
+  }
+
+  55% {
+    transform: rotate(-5deg) skew(0deg, 5deg);
+  }
+  60% {
+    transform: rotate(-25deg) skew(0deg, 20deg);
+  }
+  75% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes blinkEyes {
+  40% {
+    transform: none;
+  }
+  45% {
+    transform: rotate(4deg) scale(1, 0.2);
+  }
+  50% {
+    transform: none;
+  }
+}
+
+@keyframes brows {
+  40% {
+    transform: none;
+  }
+  45% {
+    transform: translate(0%, 3%);
+  }
+  50% {
+    transform: none;
+  }
+
+  90% {
+    transform: translate(0%, 15%);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes leftBrow {
+  70% {
+    transform: none;
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
+  80% {
+    transform: none;
+  }
+}
+
+@keyframes rightBrow {
+  70% {
+    transform: none;
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+  80% {
+    transform: none;
+  }
+}
+
+@keyframes torsoMovement {
+  20% {
+    transform: none;
+  }
+  30% {
+    transform: translate(2%);
+  }
+  40%,
+  70% {
+    transform: none;
+  }
+  80% {
+    transform: translate(-2%);
+  }
+  90% {
+    transform: none;
+  }
+}
+
+@keyframes rightHand {
+  0% {
+    transform: translate(85%, -400%);
+  }
+  100% {
+    transform: skew(4deg, 4deg) translate(85%, -400%) rotate(-35deg);
+  }
+}
+
+@keyframes leftHand {
+  40% {
+    transform: translate(-10%) rotate(5deg);
+  }
+
+  35%,
+  45% {
+    transform: none;
+  }
+}
+
+@keyframes palmTracking {
+  100% {
+    transform: translate(85%, -400%);
+  }
+}
+
+@keyframes palmTrackingDown {
+  100% {
+    transform: translate(0%, 0%);
+  }
+}

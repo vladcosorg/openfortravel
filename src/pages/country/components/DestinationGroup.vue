@@ -1,24 +1,21 @@
 <template>
   <div v-if="destinations">
     <div :class="['text-h6', `text-${groupColor}`, 'q-pb-md']">
-      <q-icon size="md" :name="groupIcon"/>
+      <q-icon size="md" :name="groupIcon" />
       {{ groupName }}
     </div>
     <q-list bordered>
       <div v-for="destination in destinations" :key="destination.country.code">
-        <destination-item :destination="destination"/>
-        <q-separator/>
+        <destination-item :destination="destination" />
+        <q-separator />
       </div>
     </q-list>
   </div>
 </template>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
 <script lang="ts">
-import {
-  defineComponent, PropType
-} from '@vue/composition-api'
+import { defineComponent, PropType } from '@vue/composition-api'
 import { FormattedDestinationCountry } from 'components/models'
 import { getFlagForCountryCode } from 'src/misc/I18nCountryList'
 import DestinationItem from 'pages/country/components/DestinationItem.vue'
@@ -28,22 +25,22 @@ export default defineComponent({
   props: {
     groupName: {
       required: true,
-      type: String
+      type: String,
     },
     groupIcon: {
       required: true,
-      type: String
+      type: String,
     },
     groupColor: {
       required: true,
-      type: String
+      type: String,
     },
     destinations: {
-      type: Array as PropType<FormattedDestinationCountry[]>
-    }
+      type: Array as PropType<FormattedDestinationCountry[]>,
+    },
   },
-  setup () {
+  setup() {
     return { getFlagForCountryCode }
-  }
+  },
 })
 </script>

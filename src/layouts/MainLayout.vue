@@ -1,45 +1,38 @@
 <template>
-  <q-layout view="hhr lpr ffr">
-    <q-header reveal style="background-color: #222930">
-      <q-toolbar class=" q-px-md q-py-md">
-        <q-icon :name="`img:${logo}`" style=" height: auto; width: 100px"/>
-        <q-space />
-        <language-switcher/>
-      </q-toolbar>
-    </q-header>
-    <q-footer>
-      <q-toolbar style="background-color: #222930">
-        <q-toolbar-title>Footer</q-toolbar-title>
-      </q-toolbar>
-    </q-footer>
-    <q-page-container>
-      <div class=" text-h5 q-px-md q-py-md" style="background-color: #222930; color: #04E4AA">
-        Find out which destinations are<br> <span class="text-bold" style="color: white">open or reopening soon</span>
-      </div>
-      <div style="background-color: #222930;">
-        <div class="row full-width justify-center items-center text-h5 q-pa-lg" style="background-color: #EDEDF4; color: #3D4867; border-radius: 30px 30px 0 0 ">
-          {{ $t('intro.title') }}
-          <country-list />
-        </div>
-      </div>
-      <router-view/>
-    </q-page-container>
+  <container :fullheight="fullHeight">
+    <header-bar />
+    <div v-if="fullHeight" class="col-2 text-h5 row items-center q-px-lg">
+      Find out which destinations are open or reopening soon
+    </div>
 
-  </q-layout>
+    <div v-if="fullHeight" class="col-3 column items-center position-relative">
+      <boy />
+    </div>
+
+    <travel-bar :class="{ 'q-mt-xl': !fullHeight }" :show-arrow="fullHeight" />
+    <router-view class="col-3" />
+  </container>
 </template>
 
+<style></style>
+
 <script lang="ts">
-import LanguageSwitcher from 'components/LanguageSwitcher.vue'
-import CountryList from 'components/CountryList.vue'
+import Container from 'components/Container.vue'
+import HeaderBar from 'components/HeaderBar.vue'
+import TravelBar from 'components/TravelBar.vue'
+import Boy from 'components/boy/Boy.vue'
 import { defineComponent } from '@vue/composition-api'
-import logo from 'src/assets/logo.svg'
 
 export default defineComponent({
-  name: 'MainLayout',
-  components: { LanguageSwitcher, CountryList },
-
-  setup () {
-    return { logo }
-  }
+  components: { HeaderBar, TravelBar, Boy, Container },
+  props: {
+    fullHeight: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup() {
+    return {}
+  },
 })
 </script>

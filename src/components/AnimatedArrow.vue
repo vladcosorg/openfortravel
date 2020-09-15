@@ -1,27 +1,26 @@
-<template functional>
-  <svg :class="$style.svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 411.94 305.6">
-    <defs>
-      <style>
-        .cls-1 {
-
-        }
-
-        .cls-2 {
-
-        }</style>
-    </defs>
-    <path :class="$style.line" stroke-linecap="round" stroke-linejoin="round"
-          d="M.36.34s63.71,68,291,44c226.85-23.92,82.54,166.64-28,255"/>
-    <polygon :class="$style.arrow" points="277.18 301.87 256.26 305.6 259.96 284.69 264.02 298.06 277.18 301.87"/>
+<template>
+  <svg
+    :class="$style.svg"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 411.94 305.6"
+  >
+    <path
+      :class="$style.line"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M.36.34s63.71,68,291,44c226.85-23.92,82.54,166.64-28,255"
+    />
+    <polygon
+      :class="$style.arrow"
+      points="277.18 301.87 256.26 305.6 259.96 284.69 264.02 298.06 277.18 301.87"
+    />
   </svg>
-
 </template>
 
 <style lang="scss" module>
 .svg {
-  position: absolute;
-  height: auto;
   width: 100%;
+  z-index: 1;
 }
 
 @keyframes draw {
@@ -56,14 +55,13 @@
   animation-timing-function: ease-out;
   animation-fill-mode: forwards;
 }
-
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-  setup () {
+  setup() {
     return {}
-  }
+  },
 })
 </script>

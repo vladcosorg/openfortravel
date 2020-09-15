@@ -1,35 +1,36 @@
 export interface Todo {
-  id: number;
-  content: string;
+  id: number
+  content: string
 }
 
 export interface Meta {
-  totalCount: number;
+  totalCount: number
 }
 
 export interface Country {
-  id: number;
-  code: string;
+  id: number
+  code: string
   destinations: DestinationCountry[]
 }
 
 export interface DestinationCountry {
-  countryId: number;
-  status: string;
-  requiresTest?: boolean;
-  notes?: string;
+  countryId: number
+  status: string
+  requiresTest?: boolean
+  notes?: string
 }
 
-export interface FormattedDestinationCountry extends Omit<DestinationCountry, 'countryId'> {
+export interface FormattedDestinationCountry
+  extends Omit<DestinationCountry, 'countryId'> {
   country: {
-    label: string,
-    flag: string,
+    label: string
+    flag: string
     code: string
-  };
+  }
 }
 
 export interface GroupedDestinations {
-  allowed?: FormattedDestinationCountry[];
-  forbidden?: FormattedDestinationCountry[];
-  conditional?: FormattedDestinationCountry[];
+  allowed?: FormattedDestinationCountry[]
+  forbidden?: FormattedDestinationCountry[]
+  conditional?: FormattedDestinationCountry[]
 }

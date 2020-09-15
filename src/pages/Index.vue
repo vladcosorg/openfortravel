@@ -1,7 +1,5 @@
 <template>
-  <q-page>
-    Index
-  </q-page>
+  <q-page> Index </q-page>
 </template>
 
 <script lang="ts">
@@ -12,8 +10,6 @@ export default defineComponent({
   name: 'PageIndex',
 
   components: { CountryList },
-  setup () {
-
-  }
+  setup() {},
 })
 </script>

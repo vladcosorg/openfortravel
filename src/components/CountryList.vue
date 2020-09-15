@@ -1,5 +1,4 @@
 <template>
-
   <div :class="['row', $style.row]">
     <q-select
       v-model="currentCountry"
@@ -10,30 +9,26 @@
       borderless
       item-aligned
       use-input
+      bg-color="white"
+      :dropdown-icon="icon"
       @filter="filterCountryList"
       @focus="clearCountry = true"
       @blur="clearCountry = false"
       @popup-hide="clearCountry = false"
-      bg-color="white"
-      :dropdown-icon="icon"
     />
     <q-btn
       size="14px"
       round
       color="secondary"
-      :icon="`img:${searchIcon}`"
+      :icon="`img:${require('src/assets/search.svg')}`"
       text-color="primary"
       :class="$style.btn"
+      @click="navigateToCountryPage(currentCountry.value)"
     />
   </div>
-
 </template>
 
 <style lang="scss" module>
-.row {
-  //padding:10px 0px;
-}
-
 .select {
   padding: 0;
   margin-right: 10px;
@@ -47,7 +42,8 @@
       height: 100%;
     }
 
-    .q-field__native, .q-field__append {
+    .q-field__native,
+    .q-field__append {
       color: $primary;
       font-weight: bold;
       text-transform: uppercase;
@@ -78,21 +74,32 @@
     :global(.q-field__input) {
       display: none;
     }
-
   }
-
 }
 </style>
 <script lang="ts">
 import {
   computed,
-  defineComponent, onServerPrefetch, ref
+  defineComponent,
+  onServerPrefetch,
+  ref,
 } from '@vue/composition-api'
-import { getLabelForCountryCode, getFlagForCountryCode, getCountryList } from 'src/misc/I18nCountryList'
+import {
+  getLabelForCountryCode,
+  getFlagForCountryCode,
+  getCountryList,
+} from 'src/misc/I18nCountryList'
 import { fetchCurrentCountryCode } from 'src/api/IpApi'
-import { useCookies, useI18n, useRoute, useRouter, useStore } from 'src/composables/use-plugins'
+import {
+  useCookies,
+  useI18n,
+  useRoute,
+  useRouter,
+  useStore,
+} from 'src/composables/use-plugins'
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import searchIcon from 'src/assets/search.svg'
+import { Locale } from 'vue-i18n'
+import { CountryCode } from 'src/i18n/CountryI18n'
 
 interface ListItem {
   value: string
@@ -102,23 +109,23 @@ interface ListItem {
 type List = ListItem[]
 
 export default defineComponent({
-  setup () {
+  setup() {
     const filteredList = ref([])
     const clearCountry = ref(false)
 
     const countryList = computed({
-      get () {
+      get() {
         return filteredList.value
       },
-      set (list: any) {
+      set(list: any) {
         filteredList.value = list
-      }
+      },
     })
 
     const persistCountry = (countryCode: string) => {
       useStore().commit('setDetectedCountry', countryCode)
       useCookies().set('country', countryCode, {
-        path: '/'
+        path: '/',
       })
     }
 
@@ -127,7 +134,7 @@ export default defineComponent({
         () => useRoute().params.country,
         () => useCookies().get('country'),
         fetchCurrentCountryCode,
-        () => 'us'
+        () => 'us',
       ]
 
       for (const countryCodeSource of countryCodeSources) {
@@ -138,7 +145,10 @@ export default defineComponent({
       }
     }
 
-    const filterCountryList = (currentValue: string, update: { (callback: { (): void }): void }) => {
+    const filterCountryList = (
+      currentValue: string,
+      update: { (callback: { (): void }): void },
+    ) => {
       update(() => {
         // console.log(currentCountry)
         currentCountry.value = null
@@ -153,26 +163,28 @@ export default defineComponent({
     }
 
     const currentCountry = computed({
-      get () {
+      get() {
         if (clearCountry.value === true) {
           return null
         }
 
         const countryCode = useStore().state.detectedCountry
-        return { label: getLabelForCountryCode(countryCode), value: countryCode }
+        return {
+          label: getLabelForCountryCode(countryCode),
+          value: countryCode,
+        }
       },
-      async set (countryPair: { value: string | null }) {
+      async set(countryPair: { value: string | null }) {
         if (!countryPair) {
           return
         }
 
-        const locale = useI18n().locale
         const country = countryPair.value
         persistCountry(country)
         if (country) {
-          await useRouter().push({ name: 'country', params: { country, locale } })
+          await navigateToCountryPage(country)
         }
-      }
+      },
     })
     onServerPrefetch(async () => {
       persistCountry(await decideOnCountry())
@@ -185,8 +197,15 @@ export default defineComponent({
       filterCountryList,
       clearCountry,
       icon,
-      searchIcon
+      navigateToCountryPage,
     }
-  }
+  },
 })
+
+async function navigateToCountryPage(country?: CountryCode) {
+  await useRouter().push({
+    name: 'country',
+    params: { country, locale: useI18n().locale },
+  })
+}
 </script>
