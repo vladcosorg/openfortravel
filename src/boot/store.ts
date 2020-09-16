@@ -7,7 +7,7 @@ import { getCookiesAPI } from 'src/misc/misc'
 export let storeInstance: Store<StateInterface>
 export let routerInstance: VueRouter
 export let cookies: Cookies
-export default boot(async ({ store, router, ssrContext }) => {
+export default boot(({ store, router, ssrContext }) => {
   storeInstance = store as Store<StateInterface>
   routerInstance = router
   cookies = getCookiesAPI(ssrContext)

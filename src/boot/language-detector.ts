@@ -1,10 +1,15 @@
+import { QSsrContext } from '@quasar/app'
 import { boot } from 'quasar/wrappers'
 import { changeLanguage } from 'boot/i18n'
 import { getCookiesAPI } from 'src/misc/misc'
-export default boot(({ Vue, ssrContext, router }) => {
+
+function isServer(ssrContext?: QSsrContext | null): ssrContext is QSsrContext {
+  return !!process.env.SERVER && ssrContext !== null && ssrContext !== undefined
+}
+export default boot(({ ssrContext, router }) => {
   router.beforeEach(async (to, from, next) => {
     const cookies = getCookiesAPI(ssrContext)
-    if (['admin-index', 'admin-country'].indexOf(to.name) !== -1) {
+    if (['admin-index', 'admin-country'].indexOf(<string>to.name) !== -1) {
       await changeLanguage('ru')
       return next()
     }
@@ -12,8 +17,8 @@ export default boot(({ Vue, ssrContext, router }) => {
     if (!to.params.locale) {
       let locale: string = cookies.get('locale')
       if (!locale) {
-        if (process.env.SERVER) {
-          locale = ssrContext?.req
+        if (isServer(ssrContext)) {
+          locale = ssrContext.req
             .acceptsLanguages()[0]
             .toLowerCase()
             .split('-')[0]

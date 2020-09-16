@@ -10,6 +10,5 @@ export default defineComponent({
   name: 'PageIndex',
 
   components: { CountryList },
-  setup() {},
 })
 </script>

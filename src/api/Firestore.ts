@@ -1,4 +1,6 @@
-import { firestore, countryCollection } from 'boot/firebase'
+import { countryCollection } from 'boot/firebase'
+import * as firebase from 'firebase/app'
+import QuerySnapshot = firebase.firestore.QuerySnapshot
 
 export interface Country {
   code: string
@@ -13,10 +15,10 @@ export interface Destination {
   testRequired: boolean
 }
 
-function extractDocs(results) {
-  const output = {}
+function extractDocs(results: QuerySnapshot) {
+  const output: Record<string, Destination> = {}
   results.forEach((document) => {
-    output[document.id] = document.data()
+    output[document.id] = document.data() as Destination
   })
   return output
 }
@@ -32,14 +34,13 @@ export async function findCountryDestinations(
 }
 
 export async function saveCountryDestination(
-  object: any,
+  object: Destination,
   hostCountryISO: string,
   destinationCountryISO: string,
-) {
-  const results = await countryCollection
+): Promise<void> {
+  await countryCollection
     .doc(hostCountryISO)
     .collection('destinations')
     .doc(destinationCountryISO)
     .set(object, { merge: true })
-  console.log(results)
 }

@@ -118,6 +118,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from '@vue/composition-api'
+import { FormattedDestinationCountry } from 'components/models'
 import { getLabelForCountryCode } from 'src/misc/I18nCountryList'
 import { useRoute } from 'src/composables/use-plugins'
 import {
@@ -141,7 +142,7 @@ export default defineComponent({
       const destinations = await findCountryDestinations(
         useRoute().params.country,
       )
-      let output = {}
+      let output: Record<string, FormattedDestinationCountry> = {}
       for (const [countryCode, destination] of Object.entries(destinations)) {
         output[countryCode] = {
           ...destination,
@@ -151,7 +152,8 @@ export default defineComponent({
           },
         }
       }
-      output = generateSecondaryDestinations(format(output))
+      output = format(output)
+      output = generateSecondaryDestinations(output)
       return Object.values(output)
     }
 
@@ -161,7 +163,7 @@ export default defineComponent({
       destinationISO: string,
     ) {
       isLoading.value = true
-      saveCountryDestination(
+      await saveCountryDestination(
         { [field]: value },
         useRoute().params.country,
         destinationISO,

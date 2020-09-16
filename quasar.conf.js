@@ -87,6 +87,9 @@ module.exports = configure(function (ctx) {
           loader: 'vue-svg-inline-loader',
         })
       },
+      chainWebpack(chain) {
+        chain.plugins.delete('ts-checker')
+      },
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer

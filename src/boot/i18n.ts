@@ -34,7 +34,9 @@ export async function changeLanguage(lang: Locale): Promise<void> {
       /* webpackChunkName: "lang-[request]" */ `src/i18n/${lang}.ts`
     )) as { default: LocaleMessageObject }
     i18n.setLocaleMessage(lang, response.default)
-  } catch (e) {}
+  } catch (e) {
+    //one
+  }
   i18n.locale = lang
 }
 

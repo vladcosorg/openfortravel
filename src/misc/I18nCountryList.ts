@@ -71,7 +71,7 @@ export function getCountryList(): { value: string; label: string }[] {
   }))
 }
 
-export function useCountryListLoader() {
+export function useCountryListLoader(): void {
   onServerPrefetch(() => loadCountryList(i18n.locale))
   watch(toRef(i18n, 'locale'), loadCountryList)
 }

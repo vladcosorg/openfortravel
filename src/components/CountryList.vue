@@ -98,7 +98,6 @@ import {
   useStore,
 } from 'src/composables/use-plugins'
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import { Locale } from 'vue-i18n'
 import { CountryCode } from 'src/i18n/CountryI18n'
 
 interface ListItem {
@@ -110,14 +109,14 @@ type List = ListItem[]
 
 export default defineComponent({
   setup() {
-    const filteredList = ref([])
+    const filteredList = ref<List>([])
     const clearCountry = ref(false)
 
     const countryList = computed({
-      get() {
+      get(): List {
         return filteredList.value
       },
-      set(list: any) {
+      set(list: List) {
         filteredList.value = list
       },
     })
@@ -145,25 +144,8 @@ export default defineComponent({
       }
     }
 
-    const filterCountryList = (
-      currentValue: string,
-      update: { (callback: { (): void }): void },
-    ) => {
-      update(() => {
-        // console.log(currentCountry)
-        currentCountry.value = null
-        // const needle = currentValue.value.value.toLowerCase()
-        // console.log(currentValue)
-        countryList.value = getCountryList().filter((listItem: ListItem) => {
-          return listItem.label.toLowerCase().indexOf(currentValue) > -1
-        })
-
-        // console.log(filteredList)
-      })
-    }
-
     const currentCountry = computed({
-      get() {
+      get(): ListItem {
         if (clearCountry.value === true) {
           return null
         }
@@ -186,6 +168,21 @@ export default defineComponent({
         }
       },
     })
+
+    const filterCountryList = (
+      currentValue: string,
+      update: { (callback: { (): void }): void },
+    ) => {
+      update(() => {
+        currentCountry.value = null
+        countryList.value = getCountryList().filter((listItem: ListItem) => {
+          return listItem.label.toLowerCase().indexOf(currentValue) > -1
+        })
+
+        // console.log(filteredList)
+      })
+    }
+
     onServerPrefetch(async () => {
       persistCountry(await decideOnCountry())
     })

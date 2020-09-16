@@ -36,8 +36,8 @@ module.exports = {
     // Uncomment any of the lines below to choose desired strictness,
     // but leave only one uncommented!
     // See https://eslint.vuejs.org/rules/#available-rules
-    'plugin:vue/essential', // Priority A: Essential (Error Prevention)
-    'plugin:vue/strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
+    // 'plugin:vue/essential', // Priority A: Essential (Error Prevention)
+    // 'plugin:vue/strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
     'plugin:vue/recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
     // https://github.com/prettier/eslint-config-prettier#installation
     // usage with Prettier, provided by 'eslint-config-prettier'.
@@ -66,6 +66,11 @@ module.exports = {
   // add your custom rules here
   rules: {
     'prefer-promise-reject-errors': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
     //
     // // TypeScript
     quotes: ['warn', 'single', { avoidEscape: true }],

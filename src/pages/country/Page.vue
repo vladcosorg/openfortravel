@@ -96,7 +96,7 @@ function groupByStatus(destinations: FormattedDestinationCountry[]) {
 export function format(
   destinations: Record<string, FormattedDestinationCountry>,
 ): Record<string, FormattedDestinationCountry> {
-  const output = {}
+  const output: Record<string, FormattedDestinationCountry> = {}
   for (const [countryCode, destination] of Object.entries(destinations)) {
     output[countryCode] = {
       ...destination,
