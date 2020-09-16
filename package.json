@@ -11,7 +11,9 @@
     "format": "prettier --write ./src ./src-ssr ./*.js",
     "test": "echo \"No test specified\" && exit 0",
     "fake-server": "json-server --watch db.json",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "build": "quasar build -m ssr && cp app.yaml dist/ssr/app.yaml",
+    "build-deploy": "yarn run build && gcloud app deploy dist/ssr/app.yaml --quiet"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
