@@ -1,13 +1,7 @@
 <template>
   <q-layout view="hhr lpr ffr">
-    <q-header reveal style="background-color: #222930">
-      <q-toolbar class="q-px-md q-py-md">
-        <q-icon
-          :name="`img:${require('src/assets/logo.svg')}`"
-          style="height: auto; width: 100px"
-        />
-        <q-space />
-      </q-toolbar>
+    <q-header reveal>
+      <logo />
     </q-header>
     <q-footer>
       <q-toolbar style="background-color: #222930">
@@ -22,6 +16,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
+import HeaderBar from 'components/HeaderBar.vue'
+import Logo from 'components/Logo.vue'
 
-export default defineComponent({})
+export default defineComponent({
+  components: { HeaderBar, Logo },
+})
 </script>

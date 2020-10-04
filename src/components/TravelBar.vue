@@ -1,7 +1,9 @@
 <template>
-  <div class="col-auto column justify-end q-mb-xl q-px-lg relative-position">
+  <div
+    class="col-auto column justify-end q-mb-xl q-px-lg relative-position text-center"
+  >
     <animated-arrow v-if="showArrow" :class="$style.arrow" />
-    <div :class="[$style.intro, 'q-mb-md']">
+    <div :class="[$style.intro, 'q-mb-md', 'montserrat']">
       {{ $t('intro.title') }}
     </div>
     <country-list />

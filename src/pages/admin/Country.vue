@@ -4,7 +4,7 @@
       <q-table
         :data="destinations"
         :columns="columns"
-        :row-key="(destination) => destination.country.code"
+        :row-key="(destination) => destination.countryCode"
         :filter="filter"
         :loading="isLoading"
         :class="$style.table"
@@ -28,17 +28,17 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td key="country" :props="props">
-              {{ props.row.country.label }}
+              {{ props.row.countryLabel }}
             </q-td>
             <q-td key="code" :props="props">
-              {{ props.row.country.code }}
+              {{ props.row.countryCode }}
             </q-td>
             <q-td key="notes" :props="props">
               {{ props.row.notes }}
               <q-popup-edit
                 v-model="props.row.notes"
                 max-width="40px"
-                @save="saveValue('notes', $event, props.row.country.code)"
+                @save="saveValue('notes', $event, props.row.countryCode)"
               >
                 <q-input
                   v-model="props.row.notes"
@@ -59,7 +59,7 @@
               <q-popup-edit
                 v-model="props.row.status"
                 auto-save
-                @save="saveValue('status', $event, props.row.country.code)"
+                @save="saveValue('status', $event, props.row.countryCode)"
               >
                 <q-radio
                   v-model="props.row.status"
@@ -82,7 +82,7 @@
               <q-checkbox
                 v-model="props.row.testRequired"
                 @input="
-                  saveValue('testRequired', $event, props.row.country.code)
+                  saveValue('testRequired', $event, props.row.countryCode)
                 "
               />
             </q-td>
@@ -107,7 +107,7 @@
     background-color: #00ffbb;
   }
   thead {
-    background-color: $blue-grey-2;
+    background-color: $blue-grey-9;
     th {
       font-weight: bold;
       font-size: 0.9rem;
@@ -118,58 +118,42 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from '@vue/composition-api'
-import { FormattedDestinationCountry } from 'components/models'
+import { convertToDestonation, Destination } from 'src/api/Destinations'
 import { getLabelForCountryCode } from 'src/misc/I18nCountryList'
-import { useRoute } from 'src/composables/use-plugins'
-import {
-  findCountryDestinations,
-  saveCountryDestination,
-} from 'src/api/Firestore'
-import { format, generateSecondaryDestinations } from 'pages/country/Page.vue'
+import { generateDestinationList } from 'src/repositories/CountryDestinations'
 
 export default defineComponent({
-  setup() {
-    const hostCountry = useRoute().params.country
-    const destinations = ref([])
+  props: {
+    originCode: {
+      type: String,
+      required: true,
+    },
+  },
+  setup(props) {
+    const hostCountry = props.originCode
+    const destinations = ref<Destination[]>([])
     const filter = ref('')
     const isLoading = ref(false)
 
     onMounted(async () => {
-      destinations.value = await buildDestinationList()
+      const plainDestinations = await generateDestinationList(hostCountry)
+      const destinations.value = plainDestinations.map(
+        (plainDestination) => new Destination(plainDestination),
+      )
     })
 
-    async function buildDestinationList() {
-      const destinations = await findCountryDestinations(
-        useRoute().params.country,
-      )
-      let output: Record<string, FormattedDestinationCountry> = {}
-      for (const [countryCode, destination] of Object.entries(destinations)) {
-        output[countryCode] = {
-          ...destination,
-          country: {
-            label: getLabelForCountryCode(countryCode),
-            code: countryCode,
-          },
-        }
-      }
-      output = format(output)
-      output = generateSecondaryDestinations(output)
-      return Object.values(output)
-    }
-
-    async function saveValue(
-      field: string,
-      value: string,
-      destinationISO: string,
-    ) {
-      isLoading.value = true
-      await saveCountryDestination(
-        { [field]: value },
-        useRoute().params.country,
-        destinationISO,
-      ).then(() => {
-        isLoading.value = false
-      })
+    async function saveValue() {
+      // field: string,
+      // value: string,
+      // destinationISO: string,
+      // isLoading.value = true
+      // await saveCountryDestination(
+      //   { [field]: value },
+      //   useRoute().params.country,
+      //   destinationISO,
+      // ).then(() => {
+      //   isLoading.value = false
+      // })
     }
 
     return {
@@ -182,15 +166,15 @@ export default defineComponent({
         {
           name: 'country',
           label: 'Страна',
-          field: (row) => row.country.label,
+          field: 'countryLabel',
           align: 'left',
-          classes: 'bg-grey-2 ellipsis',
+          classes: 'bg-grey-9 ellipsis',
           style: 'max-width: 100px',
         },
         {
           name: 'code',
           label: 'Код страны',
-          field: (row) => row.country.code,
+          field: 'countryCode',
           headerStyle: 'width: 50px',
         },
         {

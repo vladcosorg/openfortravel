@@ -1,7 +1,10 @@
 <template>
   <container :fullheight="fullHeight">
     <header-bar />
-    <div v-if="fullHeight" class="col-2 text-h5 row items-center q-px-lg">
+    <div
+      v-if="fullHeight"
+      class="col-2 text-h5 row items-center q-px-lg montserrat text-center"
+    >
       Find out which destinations are open or reopening soon
     </div>
 
@@ -9,12 +12,14 @@
       <boy />
     </div>
 
-    <travel-bar :class="{ 'q-mt-xl': !fullHeight }" :show-arrow="fullHeight" />
+    <travel-bar
+      v-if="showTravelBar"
+      :class="{ 'q-mt-xl': !fullHeight }"
+      :show-arrow="fullHeight"
+    />
     <router-view class="col-3" />
   </container>
 </template>
-
-<style></style>
 
 <script lang="ts">
 import Container from 'components/Container.vue'
@@ -29,6 +34,10 @@ export default defineComponent({
     fullHeight: {
       type: Boolean,
       default: false,
+    },
+    showTravelBar: {
+      type: Boolean,
+      default: true,
     },
   },
   setup() {

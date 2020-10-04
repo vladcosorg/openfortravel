@@ -4,21 +4,20 @@
       <q-icon size="md" :name="groupIcon" />
       {{ groupName }}
     </div>
-    <q-list bordered>
-      <div v-for="destination in destinations" :key="destination.country.code">
-        <destination-item :destination="destination" />
-        <q-separator />
-      </div>
+    <q-list separator>
+      <destination-item
+        v-for="destination in destinations"
+        :key="destination.countryLabel"
+        :dest="destination"
+      />
     </q-list>
   </div>
 </template>
 
-<style lang="scss"></style>
 <script lang="ts">
 import { defineComponent, PropType } from '@vue/composition-api'
-import { FormattedDestinationCountry } from 'components/models'
-import { getFlagForCountryCode } from 'src/misc/I18nCountryList'
 import DestinationItem from 'pages/country/components/DestinationItem.vue'
+import { PlainDestination } from 'src/api/Destinations'
 
 export default defineComponent({
   components: { DestinationItem },
@@ -36,11 +35,8 @@ export default defineComponent({
       type: String,
     },
     destinations: {
-      type: Array as PropType<FormattedDestinationCountry[]>,
+      type: Array as PropType<PlainDestination[]>,
     },
-  },
-  setup() {
-    return { getFlagForCountryCode }
   },
 })
 </script>

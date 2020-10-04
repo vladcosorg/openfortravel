@@ -1,6 +1,6 @@
 import { QSsrContext } from '@quasar/app'
-import { boot } from 'quasar/wrappers'
 import { changeLanguage } from 'boot/i18n'
+import { boot } from 'quasar/wrappers'
 import { getCookiesAPI } from 'src/misc/misc'
 
 function isServer(ssrContext?: QSsrContext | null): ssrContext is QSsrContext {

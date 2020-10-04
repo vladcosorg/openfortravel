@@ -1,5 +1,5 @@
-import { Cookies, LooseDictionary } from 'quasar'
 import { QSsrContext } from '@quasar/app'
+import { Cookies, LooseDictionary } from 'quasar'
 
 export const getCookiesAPI = function (
   ssrContext?: QSsrContext | null,

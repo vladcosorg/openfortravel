@@ -1,7 +1,7 @@
 <template>
   <div :class="['row', $style.row]">
     <q-select
-      v-model="currentCountry"
+      :value="currentCountry"
       :options="countryList"
       options-dense
       :class="[$style.select, 'col']"
@@ -15,6 +15,7 @@
       @focus="clearCountry = true"
       @blur="clearCountry = false"
       @popup-hide="clearCountry = false"
+      @input="navigateToCountryPage"
     />
     <q-btn
       size="14px"
@@ -23,7 +24,7 @@
       :icon="`img:${require('src/assets/search.svg')}`"
       text-color="primary"
       :class="$style.btn"
-      @click="navigateToCountryPage(currentCountry.value)"
+      @click="navigateToCountryPage(currentCountry)"
     />
   </div>
 </template>
@@ -61,6 +62,7 @@
   height: 70px;
   width: 70px;
   box-shadow: $shadow-8;
+
   :global {
     .q-icon {
       margin-left: 2px;
@@ -78,27 +80,14 @@
 }
 </style>
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onServerPrefetch,
-  ref,
-} from '@vue/composition-api'
-import {
-  getLabelForCountryCode,
-  getFlagForCountryCode,
-  getCountryList,
-} from 'src/misc/I18nCountryList'
-import { fetchCurrentCountryCode } from 'src/api/IpApi'
-import {
-  useCookies,
-  useI18n,
-  useRoute,
-  useRouter,
-  useStore,
-} from 'src/composables/use-plugins'
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import { CountryCode } from 'src/i18n/CountryI18n'
+import { computed, defineComponent, ref } from '@vue/composition-api'
+import { useI18n, useRouter } from 'src/composables/use-plugins'
+import { getCurrentCountry } from 'src/misc/CountryDecider'
+import {
+  getCountryList,
+  getLabelForCountryCode,
+} from 'src/misc/I18nCountryList'
 
 interface ListItem {
   value: string
@@ -121,52 +110,16 @@ export default defineComponent({
       },
     })
 
-    const persistCountry = (countryCode: string) => {
-      useStore().commit('setDetectedCountry', countryCode)
-      useCookies().set('country', countryCode, {
-        path: '/',
-      })
-    }
-
-    const decideOnCountry = async () => {
-      const countryCodeSources: (() => string | Promise<string>)[] = [
-        () => useRoute().params.country,
-        () => useCookies().get('country'),
-        fetchCurrentCountryCode,
-        () => 'us',
-      ]
-
-      for (const countryCodeSource of countryCodeSources) {
-        const result = await countryCodeSource()
-        if (result) {
-          return result
-        }
+    const currentCountry = computed<ListItem | null>(() => {
+      if (clearCountry.value === true) {
+        return null
       }
-    }
 
-    const currentCountry = computed({
-      get(): ListItem {
-        if (clearCountry.value === true) {
-          return null
-        }
-
-        const countryCode = useStore().state.detectedCountry
-        return {
-          label: getLabelForCountryCode(countryCode),
-          value: countryCode,
-        }
-      },
-      async set(countryPair: { value: string | null }) {
-        if (!countryPair) {
-          return
-        }
-
-        const country = countryPair.value
-        persistCountry(country)
-        if (country) {
-          await navigateToCountryPage(country)
-        }
-      },
+      const countryCode = getCurrentCountry()
+      return {
+        label: getLabelForCountryCode(countryCode),
+        value: countryCode,
+      }
     })
 
     const filterCountryList = (
@@ -174,23 +127,16 @@ export default defineComponent({
       update: { (callback: { (): void }): void },
     ) => {
       update(() => {
-        currentCountry.value = null
+        // currentCountry.value = null
         countryList.value = getCountryList().filter((listItem: ListItem) => {
           return listItem.label.toLowerCase().indexOf(currentValue) > -1
         })
-
-        // console.log(filteredList)
       })
     }
-
-    onServerPrefetch(async () => {
-      persistCountry(await decideOnCountry())
-    })
 
     return {
       countryList,
       currentCountry,
-      getFlagForCountryCode,
       filterCountryList,
       clearCountry,
       icon,
@@ -199,10 +145,10 @@ export default defineComponent({
   },
 })
 
-async function navigateToCountryPage(country?: CountryCode) {
-  await useRouter().push({
-    name: 'country',
-    params: { country, locale: useI18n().locale },
+function navigateToCountryPage(origin: ListItem) {
+  void useRouter().push({
+    name: 'origin',
+    params: { originCode: origin.value, locale: useI18n().locale },
   })
 }
 </script>

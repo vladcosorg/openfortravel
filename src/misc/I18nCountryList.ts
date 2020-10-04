@@ -1,14 +1,15 @@
 import {
   computed,
-  watch,
+  ComputedRef,
   onServerPrefetch,
   toRef,
-  ComputedRef,
+  watch,
 } from '@vue/composition-api'
 
 import { i18n } from 'boot/i18n'
 import { transform } from 'lodash'
 import { useStore } from 'src/composables/use-plugins'
+
 export type I18nCountryList = Record<string, string>
 
 function getFirstLabel(label: string | string[]): string {
@@ -62,6 +63,11 @@ export function getCountryMap(): Record<string, string> {
   return store.state.countryList
 }
 
+export function getCountryCodes(): string[] {
+  const store = useStore()
+  return Object.keys(store.state.countryList)
+}
+
 export function getCountryList(): { value: string; label: string }[] {
   const store = useStore()
   const list = store.state.countryList
@@ -77,13 +83,10 @@ export function useCountryListLoader(): void {
 }
 
 export function getLabelForCountryCode(countryCode: string): string {
-  const store = useStore()
-  return getFirstLabel(store.state.countryList[countryCode])
+  return getFirstLabel(useStore().state.countryList[countryCode])
 }
 
 export function getFlagForCountryCode(countryCode: string): string {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  let url = require(`svg-country-flags/svg/${countryCode}.svg`) as string
-  url = `img:${url}`
-  return url
+  return require(`svg-country-flags/svg/${countryCode}.svg`) as string
 }

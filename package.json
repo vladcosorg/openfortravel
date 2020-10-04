@@ -6,12 +6,13 @@
   "author": "chetzof <vcosvic@gmail.com>",
   "private": true,
   "scripts": {
+    "dev": "quasar dev -m ssr",
     "lint": "eslint --ext .js,.ts,.vue ./src",
     "fix": "eslint --fix --ext .js,.ts,.vue  ./",
     "format": "prettier --write ./src ./src-ssr ./*.js",
     "test": "echo \"No test specified\" && exit 0",
     "fake-server": "json-server --watch db.json",
-    "typecheck": "tsc",
+    "typecheck": "tsc -p tsconfig.json",
     "build": "quasar build -m ssr && cp app.yaml dist/ssr/app.yaml",
     "build-deploy": "yarn run build && gcloud app deploy dist/ssr/app.yaml --quiet"
   },
@@ -20,7 +21,7 @@
     "@vue/composition-api": "^0.6.4",
     "axios": "^0.18.1",
     "core-js": "^3.6.5",
-    "firebase": "^7.19.1",
+    "firebase": "^7.21.0",
     "i18n-iso-countries": "^6.0.0",
     "lodash": "^4.17.20",
     "quasar": "^1.0.0",

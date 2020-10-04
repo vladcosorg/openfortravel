@@ -1,6 +1,6 @@
-import { boot } from 'quasar/wrappers'
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
+import { boot } from 'quasar/wrappers'
 import { firestorePlugin } from 'vuefire'
 
 let firebaseApp

@@ -1,11 +1,10 @@
 <template>
-  <div :class="['col-2 column text-center']">
-    <div class="col-auto relative-position">
-      <div :class="$style.logoBg" />
-      <logo />
-      <language-switcher :class="[$style.lang, 'q-pr-lg']" />
-    </div>
-  </div>
+  <router-link to="/ro">
+    <q-icon
+      :class="$style.logo"
+      :name="`img:${require('src/assets/logo.svg')}`"
+    />
+  </router-link>
 </template>
 
 <style lang="scss" module>
@@ -14,15 +13,6 @@
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-}
-
-@keyframes slideInFromLeft {
-  0% {
-    width: 100vw;
-  }
-  100% {
-    width: 140px;
-  }
 }
 
 .logo {
@@ -38,16 +28,18 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100vw;
-  animation: slideInFromLeft 1s ease-out 1s 1 normal forwards;
+
+  :global {
+    animation: 1s ease-out 1s 1 normal forwards running slideInFromLeft;
+  }
 }
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import LanguageSwitcher from 'components/LanguageSwitcher.vue'
-import Logo from 'components/Logo.vue'
 
 export default defineComponent({
-  components: { LanguageSwitcher, Logo },
+  components: { LanguageSwitcher },
   setup() {
     return {}
   },

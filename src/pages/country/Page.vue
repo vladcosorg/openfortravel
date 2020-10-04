@@ -5,23 +5,42 @@
         Am gasit urmatoarele directii disponibile
       </div>
       <destination-group
+        v-if="!loading"
         :group-name="$t('status.allowed')"
         :group-icon="allowedIcon"
         group-color="positive"
         :destinations="destinations.allowed"
       />
       <destination-group
+        v-if="!loading"
         :group-name="$t('status.conditional')"
         :group-icon="conditionalIcon"
         group-color="warning"
         :destinations="destinations.conditional"
       />
       <destination-group
+        v-if="!loading"
         :group-name="$t('status.forbidden')"
         :group-icon="forbiddenIcon"
         group-color="negative"
         :destinations="destinations.forbidden"
       />
+      <q-list v-if="loading" separator>
+        <q-item v-for="n in Array(4)" :key="n">
+          <q-item-section avatar>
+            <q-skeleton type="QAvatar" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>
+              <q-skeleton type="text" />
+            </q-item-label>
+            <q-item-label caption>
+              <q-skeleton type="text" width="65%" />
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
     </div>
   </q-page>
 </template>
@@ -33,41 +52,62 @@ import {
   nextTick,
   onMounted,
   onServerPrefetch,
+  provide,
+  ref,
   watch,
 } from '@vue/composition-api'
 import DestinationGroup from 'pages/country/components/DestinationGroup.vue'
-import {
-  DestinationCountry,
-  FormattedDestinationCountry,
-} from 'components/models'
-import { useRoute, useStore } from 'src/composables/use-plugins'
-import {
-  getCountryMap,
-  getFlagForCountryCode,
-  getLabelForCountryCode,
-} from 'src/misc/I18nCountryList'
-import { groupBy, isEmpty } from 'lodash'
-import { LoadingBar } from 'quasar'
+import { useStore } from 'src/composables/use-plugins'
+
+import { isEmpty } from 'lodash'
 import {
   ionCheckmarkCircle as allowedIcon,
   ionAlertCircle as conditionalIcon,
   ionRemoveCircle as forbiddenIcon,
 } from '@quasar/extras/ionicons-v5'
-import { findCountryDestinations } from 'src/api/Firestore'
+import { Origin } from 'src/models/Origin'
+import {
+  generateGroupedDestinationList,
+  GroupedDestinations,
+} from 'src/repositories/CountryDestinations'
 
 export default defineComponent({
   components: { DestinationGroup },
   props: {
-    country: {
+    originCode: {
       type: String,
       required: true,
     },
   },
   setup(props) {
-    const destinations = computed(() => useStore().state.countryDestinations)
-    watch(() => props.country, loadDestinationList)
+    const loading = ref(false)
 
+    async function loadOrigin() {
+      await useStore().dispatch('loadOrigin', props.originCode)
+    }
+    onServerPrefetch(loadOrigin)
+    onMounted(loadOrigin)
+    const origin = computed(() => {
+      return new Origin(useStore().getters.currentOrigin)
+    })
+    provide('origin', origin)
+
+    const destinations = computed<GroupedDestinations>(
+      () => useStore().state.countryDestinations,
+    )
     onServerPrefetch(loadDestinationList)
+
+    async function loadDestinationList() {
+      loading.value = true
+      useStore().commit(
+        'setCountryDestinations',
+        await generateGroupedDestinationList(props.originCode),
+      )
+      loading.value = false
+    }
+
+    watch(() => props.originCode, loadDestinationList)
+
     onMounted(async () => {
       if (!isEmpty(useStore().state.countryDestinations)) {
         return
@@ -82,66 +122,8 @@ export default defineComponent({
       allowedIcon,
       conditionalIcon,
       forbiddenIcon,
+      loading,
     }
   },
 })
-
-function groupByStatus(destinations: FormattedDestinationCountry[]) {
-  return groupBy(
-    destinations,
-    (destination: FormattedDestinationCountry) => destination.status,
-  )
-}
-
-export function format(
-  destinations: Record<string, FormattedDestinationCountry>,
-): Record<string, FormattedDestinationCountry> {
-  const output: Record<string, FormattedDestinationCountry> = {}
-  for (const [countryCode, destination] of Object.entries(destinations)) {
-    output[countryCode] = {
-      ...destination,
-      country: {
-        label: getLabelForCountryCode(countryCode),
-        flag: getFlagForCountryCode(countryCode),
-        code: countryCode,
-      },
-    }
-  }
-  return output
-}
-
-export function generateSecondaryDestinations(
-  destinations: DestinationCountry[],
-): DestinationCountry[] {
-  const countries = getCountryMap()
-  const excludedCountries = Object.keys(destinations)
-  for (const countryCode of Object.keys(countries)) {
-    if (excludedCountries.includes(countryCode)) {
-      continue
-    }
-
-    destinations[countryCode] = {
-      notes: '',
-      status: 'allowed',
-      testRequired: false,
-      country: {
-        label: getLabelForCountryCode(countryCode),
-        flag: getFlagForCountryCode(countryCode),
-        code: countryCode,
-      },
-    }
-  }
-
-  return destinations
-}
-
-async function loadDestinationList() {
-  LoadingBar.start(50)
-  const hostCountry = await findCountryDestinations(useRoute().params.country)
-  LoadingBar.stop()
-  useStore().commit(
-    'setCountryDestinations',
-    groupByStatus(generateSecondaryDestinations(format(hostCountry))),
-  )
-}
 </script>

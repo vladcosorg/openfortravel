@@ -30,6 +30,7 @@ module.exports = configure(function (ctx) {
       'i18n',
       'axios',
       'language-detector',
+      'country-detector',
       'firebase',
     ],
 
@@ -54,7 +55,7 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
 
-      // transpile: false,
+      transpile: ctx.prod,
 
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
@@ -65,7 +66,7 @@ module.exports = configure(function (ctx) {
       // preloadChunks: true,
       // showProgress: false,
       // gzip: true,
-      // analyze: true,
+      analyze: true,
 
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
@@ -87,9 +88,6 @@ module.exports = configure(function (ctx) {
           loader: 'vue-svg-inline-loader',
         })
       },
-      chainWebpack(chain) {
-        chain.plugins.delete('ts-checker')
-      },
     },
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
@@ -104,8 +102,10 @@ module.exports = configure(function (ctx) {
       iconSet: 'material-icons', // Quasar icon set
       lang: 'en-us', // Quasar language pack
       config: {
+        dark: true,
         loadingBar: {
           position: 'bottom',
+          skipHijack: true,
         },
       },
 
@@ -122,10 +122,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
       components: [],
       // Quasar plugins
-      plugins: [
-        'Cookies',
-        // 'LoadingBar'
-      ],
+      plugins: ['Cookies', 'Loading'],
     },
 
     // animations: 'all', // --- includes all animations

@@ -4,9 +4,7 @@
       :class="[
         $style.container,
         fullheight ? 'window-height' : '',
-        'montserrat',
         'column',
-        'text-center',
         'justify-between',
       ]"
     >

@@ -1,4 +1,4 @@
-import { RouteConfig } from 'vue-router'
+import { Route, RouteConfig } from 'vue-router'
 // import { i18n } from 'boot/i18n'
 
 const routes = (): RouteConfig[] => [
@@ -18,8 +18,9 @@ const routes = (): RouteConfig[] => [
       },
       {
         name: 'admin-country',
-        path: 'country/:country',
+        path: 'country/:originCode',
         component: () => import('pages/admin/Country.vue'),
+        props: true,
       },
     ],
   },
@@ -35,10 +36,28 @@ const routes = (): RouteConfig[] => [
   {
     path: '/:locale/',
     component: () => import('layouts/MainLayout.vue'),
+    props: { showTravelBar: false },
     children: [
       {
-        name: 'country',
-        path: 'country/:country',
+        name: 'destination',
+        path: 'country/:originCode/destination/:destinationCode/',
+        component: () => import('pages/destination/Page.vue'),
+        props: (route: Route) => {
+          return {
+            showTravelBar: false,
+            ...route.params,
+          }
+        },
+      },
+    ],
+  },
+  {
+    path: '/:locale/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        name: 'origin',
+        path: 'country/:originCode/',
         component: () => import('pages/country/Page.vue'),
         props: true,
       },

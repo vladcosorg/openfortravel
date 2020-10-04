@@ -19,6 +19,11 @@ import { defineComponent } from '@vue/composition-api'
 import { getCountryMap } from 'src/misc/I18nCountryList'
 import { useRouter } from 'src/composables/use-plugins'
 
+interface CountryPair {
+  country: string
+  code: string
+}
+
 export default defineComponent({
   setup() {
     return {
@@ -28,7 +33,7 @@ export default defineComponent({
           label: 'Country',
           field: 'country',
           align: 'left',
-          classes: 'bg-grey-2 ellipsis',
+          classes: 'ellipsis',
           headerClasses: 'bg-primary text-white',
         },
         {
@@ -45,11 +50,11 @@ export default defineComponent({
         },
       ],
       data: getCountryData(),
-      goTo(event, row) {
-        useRouter().push({
+      goTo: async (event: unknown, country: CountryPair) => {
+        await useRouter().push({
           name: 'admin-country',
           params: {
-            country: row.code,
+            country: country.code,
           },
         })
       },
@@ -57,7 +62,7 @@ export default defineComponent({
   },
 })
 
-function getCountryData() {
+function getCountryData(): CountryPair[] {
   const output = []
 
   for (const [code, country] of Object.entries(getCountryMap())) {
