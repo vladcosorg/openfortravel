@@ -8,18 +8,23 @@ const routes = (): RouteConfig[] => [
   // },
   {
     path: '/admin',
-    component: () => import('layouts/AdminLayout.vue'),
+    component: () =>
+      import(/* webpackChunkName: "admin-layout" */ 'layouts/AdminLayout.vue'),
 
     children: [
       {
         name: 'admin-index',
         path: 'list',
-        component: () => import('pages/admin/Page.vue'),
+        component: () =>
+          import(/* webpackChunkName: "admin-list" */ 'pages/admin/Page.vue'),
       },
       {
         name: 'admin-country',
         path: 'country/:originCode',
-        component: () => import('pages/admin/Country.vue'),
+        component: () =>
+          import(
+            /* webpackChunkName: "admin-country" */ 'pages/admin/Country.vue'
+          ),
         props: true,
       },
     ],
@@ -27,7 +32,8 @@ const routes = (): RouteConfig[] => [
   {
     name: 'index',
     path: '/:locale?',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () =>
+      import(/* webpackChunkName: "main-layout" */ 'layouts/MainLayout.vue'),
     props: {
       fullHeight: true,
     },
@@ -35,13 +41,17 @@ const routes = (): RouteConfig[] => [
   },
   {
     path: '/:locale/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () =>
+      import(/* webpackChunkName: "main-layout" */ 'layouts/MainLayout.vue'),
     props: { showTravelBar: false },
     children: [
       {
         name: 'destination',
         path: 'country/:originCode/destination/:destinationCode/',
-        component: () => import('pages/destination/Page.vue'),
+        component: () =>
+          import(
+            /* webpackChunkName: "page-destination" */ 'pages/destination/Page.vue'
+          ),
         props: (route: Route) => {
           return {
             showTravelBar: false,
@@ -53,12 +63,16 @@ const routes = (): RouteConfig[] => [
   },
   {
     path: '/:locale/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () =>
+      import(/* webpackChunkName: "main-layout" */ 'layouts/MainLayout.vue'),
     children: [
       {
         name: 'origin',
         path: 'country/:originCode/',
-        component: () => import('pages/country/Page.vue'),
+        component: () =>
+          import(
+            /* webpackChunkName: "page-origin" */ 'pages/country/Page.vue'
+          ),
         props: true,
       },
     ],
@@ -68,7 +82,8 @@ const routes = (): RouteConfig[] => [
   // but you can also remove it
   {
     path: '*',
-    component: () => import('pages/Error404.vue'),
+    component: () =>
+      import(/* webpackChunkName: "page-error" */ 'pages/Error404.vue'),
   },
 ]
 

@@ -48,6 +48,7 @@ export default defineComponent({
       { value: 'en', label: 'English' },
       { value: 'ro', label: 'Romanian' },
       { value: 'ru', label: 'Русский' },
+      { value: 'fr', label: 'French' },
     ]
 
     const handleChange = async (locale: string) => {

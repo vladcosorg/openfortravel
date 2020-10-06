@@ -15,7 +15,7 @@ Vue.use(VueI18n)
 
 export const i18n = new VueI18n({
   locale: 'ro',
-  fallbackLocale: 'ro',
+  fallbackLocale: 'en',
   messages,
 })
 Vue.use(VueAutoI18n, {

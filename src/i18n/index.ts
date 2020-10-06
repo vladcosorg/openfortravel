@@ -1,5 +1,5 @@
-import ro from './ro'
+import en from './en'
 
 export default {
-  ro,
+  en,
 }

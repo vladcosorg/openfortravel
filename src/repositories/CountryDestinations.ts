@@ -5,7 +5,6 @@ import {
   PlainDestination,
   PlainDestinationCollection,
 } from 'src/api/Destinations'
-import { CountryCode } from 'src/i18n/CountryI18n'
 import { getCountryCodes as getAllCountryCodes } from 'src/misc/I18nCountryList'
 
 export type GroupedDestinations<T = PlainDestination> = {
@@ -52,7 +51,7 @@ export function groupByStatus<T extends PlainDestination>(
 }
 
 export async function generateDestinationList(
-  countryCode: CountryCode,
+  countryCode: string,
 ): Promise<PlainDestination[]> {
   const realDestinations = await getOriginDestinations(countryCode)
   const fallbackDestinations = generateFallbackDestinations(
@@ -63,7 +62,7 @@ export async function generateDestinationList(
 }
 
 export async function generateGroupedDestinationList(
-  countryCode: CountryCode,
+  countryCode: string,
 ): Promise<GroupedDestinations> {
   const allDestinations = await generateDestinationList(countryCode)
   return groupByStatus(allDestinations)

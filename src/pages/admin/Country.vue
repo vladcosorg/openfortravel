@@ -33,51 +33,6 @@
             <q-td key="code" :props="props">
               {{ props.row.countryCode }}
             </q-td>
-            <q-td key="notes" :props="props">
-              {{ props.row.notes }}
-              <q-popup-edit
-                v-model="props.row.notes"
-                max-width="40px"
-                @save="saveValue('notes', $event, props.row.countryCode)"
-              >
-                <q-input
-                  v-model="props.row.notes"
-                  dense
-                  autofocus
-                  type="textarea"
-                />
-              </q-popup-edit>
-            </q-td>
-            <q-td key="status" :props="props">
-              {{
-                {
-                  allowed: $t('allowed'),
-                  conditional: $t('conditional'),
-                  forbidden: $t('forbidden'),
-                }[props.row.status]
-              }}
-              <q-popup-edit
-                v-model="props.row.status"
-                auto-save
-                @save="saveValue('status', $event, props.row.countryCode)"
-              >
-                <q-radio
-                  v-model="props.row.status"
-                  val="allowed"
-                  :label="$t('allowed')"
-                />
-                <q-radio
-                  v-model="props.row.status"
-                  val="conditional"
-                  :label="$t('conditional')"
-                />
-                <q-radio
-                  v-model="props.row.status"
-                  val="forbidden"
-                  :label="$t('forbidden')"
-                />
-              </q-popup-edit>
-            </q-td>
             <q-td key="testRequired" :props="props">
               <q-checkbox
                 v-model="props.row.testRequired"
@@ -85,6 +40,34 @@
                   saveValue('testRequired', $event, props.row.countryCode)
                 "
               />
+            </q-td>
+            <q-td key="status" :props="props">
+              <q-option-group
+                v-model="props.row.status"
+                :options="statuses"
+                type="radio"
+                color="secondary"
+                inline
+                @input="saveValue('status', $event, props.row.countryCode)"
+              />
+            </q-td>
+            <q-td key="notes" :props="props">
+              {{ props.row.notes }}
+              <q-popup-edit
+                v-model="props.row.notes"
+                color="accent"
+                content-class="bg-blue-grey"
+                max-width="40px"
+                @save="saveValue('notes', $event, props.row.countryCode)"
+              >
+                <q-input
+                  v-model="props.row.notes"
+                  color="accent"
+                  dense
+                  autofocus
+                  type="textarea"
+                />
+              </q-popup-edit>
             </q-td>
           </q-tr>
         </template>
@@ -104,7 +87,7 @@
 <style lang="scss" module>
 .table {
   :global .q-table__top {
-    background-color: #00ffbb;
+    //background-color: #00ffbb;
   }
   thead {
     background-color: $blue-grey-9;
@@ -118,9 +101,14 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from '@vue/composition-api'
-import { convertToDestonation, Destination } from 'src/api/Destinations'
+import {
+  Destination,
+  PlainDestination,
+  saveCountryDestination,
+} from 'src/api/Destinations'
 import { getLabelForCountryCode } from 'src/misc/I18nCountryList'
 import { generateDestinationList } from 'src/repositories/CountryDestinations'
+import { getStatusListPairs } from 'src/api/Destinations'
 
 export default defineComponent({
   props: {
@@ -137,23 +125,24 @@ export default defineComponent({
 
     onMounted(async () => {
       const plainDestinations = await generateDestinationList(hostCountry)
-      const destinations.value = plainDestinations.map(
+      destinations.value = plainDestinations.map(
         (plainDestination) => new Destination(plainDestination),
       )
     })
 
-    async function saveValue() {
-      // field: string,
-      // value: string,
-      // destinationISO: string,
-      // isLoading.value = true
-      // await saveCountryDestination(
-      //   { [field]: value },
-      //   useRoute().params.country,
-      //   destinationISO,
-      // ).then(() => {
-      //   isLoading.value = false
-      // })
+    async function saveValue<K extends keyof PlainDestination>(
+      field: K,
+      value: PlainDestination[K],
+      destinationISO: string,
+    ) {
+      isLoading.value = true
+      await saveCountryDestination(
+        { [field]: value },
+        hostCountry,
+        destinationISO,
+      ).then(() => {
+        isLoading.value = false
+      })
     }
 
     return {
@@ -162,6 +151,7 @@ export default defineComponent({
       hostCountryName: getLabelForCountryCode(hostCountry),
       destinations,
       saveValue,
+      statuses: getStatusListPairs(),
       columns: [
         {
           name: 'country',
@@ -169,7 +159,7 @@ export default defineComponent({
           field: 'countryLabel',
           align: 'left',
           classes: 'bg-grey-9 ellipsis',
-          style: 'max-width: 100px',
+          headerStyle: 'width: 109px',
         },
         {
           name: 'code',
@@ -178,19 +168,21 @@ export default defineComponent({
           headerStyle: 'width: 50px',
         },
         {
-          name: 'notes',
-          label: 'Заметки',
-          field: 'notes',
+          name: 'testRequired',
+          label: 'Тест обязателен',
+          field: 'testRequired',
+          headerStyle: 'width: 50px',
         },
         {
           name: 'status',
           label: 'Статус',
           field: 'status',
+          headerStyle: 'width: 50px',
         },
         {
-          name: 'testRequired',
-          label: 'Тест обязателен',
-          field: 'testRequired',
+          name: 'notes',
+          label: 'Заметки',
+          field: 'notes',
         },
       ],
     }

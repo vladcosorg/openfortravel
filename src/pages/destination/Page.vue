@@ -67,8 +67,10 @@ export default defineComponent({
       await fetchAll(originCode, destinationCode)
     })
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
     const origin = computed<Origin>(() => useStore().getters.currentOrigin)
     const destination = computed<Destination>(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
       () => useStore().getters.currentDestination,
     )
     onMounted(async () => {

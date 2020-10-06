@@ -1,7 +1,6 @@
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
 import { boot } from 'quasar/wrappers'
-import { firestorePlugin } from 'vuefire'
 
 let firebaseApp
 if (!firebase.apps.length) {
@@ -25,6 +24,6 @@ const countryCollection = firestore.collection('countries')
 
 export { firestore, firebaseApp, countryCollection }
 
-export default boot(({ Vue }) => {
-  Vue.use(firestorePlugin)
+export default boot(() => {
+  //
 })

@@ -59,7 +59,7 @@ import {
 import DestinationGroup from 'pages/country/components/DestinationGroup.vue'
 import { useStore } from 'src/composables/use-plugins'
 
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 import {
   ionCheckmarkCircle as allowedIcon,
   ionAlertCircle as conditionalIcon,
@@ -88,7 +88,8 @@ export default defineComponent({
     onServerPrefetch(loadOrigin)
     onMounted(loadOrigin)
     const origin = computed(() => {
-      return new Origin(useStore().getters.currentOrigin)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      return new Origin(useStore().getters['currentOrigin'])
     })
     provide('origin', origin)
 

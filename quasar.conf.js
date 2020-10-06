@@ -34,6 +34,14 @@ module.exports = configure(function (ctx) {
       'firebase',
     ],
 
+    vendor: {
+      remove: [
+        'i18n-iso-countries',
+        'svg-country-flags',
+        'quasar/src/components/table',
+      ],
+    },
+
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
     css: ['app.sass'],
 

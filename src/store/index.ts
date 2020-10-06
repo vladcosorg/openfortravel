@@ -2,6 +2,7 @@ import { store } from 'quasar/wrappers'
 import {
   Destination,
   getDestination,
+  IncompletePlainDestination,
   PlainDestination,
 } from 'src/api/Destinations'
 import { getOrigin, PlainOrigin } from 'src/api/Origin'
@@ -10,7 +11,6 @@ import { Origin } from 'src/models/Origin'
 import { GroupedDestinations } from 'src/repositories/CountryDestinations'
 import Vuex from 'vuex'
 
-// import example from './module-example';
 // import { ExampleStateInterface } from './module-example/state';
 
 /*
@@ -28,8 +28,8 @@ export interface StateInterface {
   countryList: I18nCountryList
   detectedCountry: string
   countryDestinations: GroupedDestinations
-  origin: Partial<PlainOrigin>
-  destination: Partial<PlainDestination>
+  origin: PlainOrigin
+  destination: IncompletePlainDestination
 }
 
 export default store(function ({ Vue }) {
@@ -40,8 +40,8 @@ export default store(function ({ Vue }) {
       countryList: {},
       detectedCountry: 'us',
       countryDestinations: {},
-      origin: null,
-      destination: null,
+      origin: { countryCode: 'us', reference: '' },
+      destination: { countryCode: 'us' },
     },
     mutations: {
       setCountryList(state: StateInterface, list: I18nCountryList) {
@@ -62,17 +62,8 @@ export default store(function ({ Vue }) {
       setDestination(state, destination: PlainDestination) {
         state.destination = destination
       },
-      resetOriginAndDestination(state) {
-        state.origin = {}
-        state.destination = {
-          countryCode: 'none',
-          isDummy: true,
-        }
-      },
     },
-    modules: {
-      // example
-    },
+
     actions: {
       async loadOrigin({ commit }, countryCode: string) {
         commit('setOrigin', await getOrigin(countryCode))

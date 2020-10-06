@@ -7,7 +7,7 @@ import {
 } from '@vue/composition-api'
 
 import { i18n } from 'boot/i18n'
-import { transform } from 'lodash'
+import transform from 'lodash/transform'
 import { useStore } from 'src/composables/use-plugins'
 
 export type I18nCountryList = Record<string, string>
@@ -26,7 +26,9 @@ export const fetchCountryList = async (
   locale = locale.split('-')[0]
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  let translations = await import(`i18n-iso-countries/langs/${locale}.json`)
+  let translations = await import(
+    /* webpackChunkName: "country-list-[request]" */ `i18n-iso-countries/langs/${locale}.json`
+  )
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
   translations = translations.default.countries as I18nCountryList
   translations = transform(
@@ -88,5 +90,5 @@ export function getLabelForCountryCode(countryCode: string): string {
 
 export function getFlagForCountryCode(countryCode: string): string {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  return require(`svg-country-flags/svg/${countryCode}.svg`) as string
+  return `svg-country-flags/png100px/${countryCode}.png`
 }
