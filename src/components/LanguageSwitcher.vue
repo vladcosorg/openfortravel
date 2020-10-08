@@ -39,17 +39,37 @@
 import { defineComponent } from '@vue/composition-api'
 import { useCookies, useRouter } from 'src/composables/use-plugins'
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-
+import langs from 'iso-639-1'
+import sortBy from 'lodash/sortBy'
 export default defineComponent({
   name: 'LanguageSwitcher',
 
   setup(props, { root }) {
-    const languageList = [
-      { value: 'en', label: 'English' },
-      { value: 'ro', label: 'Romanian' },
-      { value: 'ru', label: 'Русский' },
-      { value: 'fr', label: 'French' },
+    const priorityLanguages = [
+      'en',
+      'zh',
+      'es',
+      'fr',
+      'ar',
+      'ru',
+      'pt',
+      'de',
+      'jp',
     ]
+    let initialList = langs
+      .getLanguages(langs.getAllCodes())
+      .map((language) => {
+        return {
+          value: language.code,
+          label: language.nativeName,
+        }
+      })
+
+    initialList = sortBy(initialList, (item) => {
+      return priorityLanguages.includes(item.value) ? 0 : 1
+    })
+
+    const languageList = Object.freeze(initialList)
 
     const handleChange = async (locale: string) => {
       const to = root.$router.resolve({ params: { locale } })

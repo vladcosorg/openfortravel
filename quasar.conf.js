@@ -63,8 +63,6 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
 
-      transpile: ctx.prod,
-
       // Add dependencies for transpiling with Babel (Array of string/regex)
       // (from node_modules, which are by default not transpiled).
       // Applies only if "transpile" is set to true.
@@ -130,7 +128,7 @@ module.exports = configure(function (ctx) {
       // directives: [],
       components: [],
       // Quasar plugins
-      plugins: ['Cookies', 'Loading'],
+      plugins: ['Cookies', 'Loading', 'Meta'],
     },
 
     // animations: 'all', // --- includes all animations

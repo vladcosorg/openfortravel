@@ -16,28 +16,36 @@ const routes = (): RouteConfig[] => [
         name: 'admin-index',
         path: 'list',
         component: () =>
-          import(/* webpackChunkName: "admin-list" */ 'pages/admin/Page.vue'),
+          import(
+            /* webpackChunkName: "admin-list" */ 'pages/admin/AdminListPage.vue'
+          ),
       },
       {
         name: 'admin-country',
         path: 'country/:originCode',
         component: () =>
           import(
-            /* webpackChunkName: "admin-country" */ 'pages/admin/Country.vue'
+            /* webpackChunkName: "admin-country" */ 'pages/admin/AdminCountryPage.vue'
           ),
         props: true,
       },
     ],
   },
   {
-    name: 'index',
     path: '/:locale?',
     component: () =>
       import(/* webpackChunkName: "main-layout" */ 'layouts/MainLayout.vue'),
     props: {
       fullHeight: true,
     },
-    children: [],
+    children: [
+      {
+        name: 'index',
+        path: '',
+        component: () =>
+          import(/* webpackChunkName: "page-index" */ 'pages/IndexPage.vue'),
+      },
+    ],
   },
   {
     path: '/:locale/',
@@ -46,11 +54,17 @@ const routes = (): RouteConfig[] => [
     props: { showTravelBar: false },
     children: [
       {
+        name: 'index',
+        path: '',
+        component: () =>
+          import(/* webpackChunkName: "page-index" */ 'pages/IndexPage.vue'),
+      },
+      {
         name: 'destination',
         path: 'country/:originCode/destination/:destinationCode/',
         component: () =>
           import(
-            /* webpackChunkName: "page-destination" */ 'pages/destination/Page.vue'
+            /* webpackChunkName: "page-destination" */ 'pages/destination/DestinationPage.vue'
           ),
         props: (route: Route) => {
           return {
@@ -71,7 +85,7 @@ const routes = (): RouteConfig[] => [
         path: 'country/:originCode/',
         component: () =>
           import(
-            /* webpackChunkName: "page-origin" */ 'pages/country/Page.vue'
+            /* webpackChunkName: "page-origin" */ 'pages/country/CountryPage.vue'
           ),
         props: true,
       },
@@ -83,7 +97,7 @@ const routes = (): RouteConfig[] => [
   {
     path: '*',
     component: () =>
-      import(/* webpackChunkName: "page-error" */ 'pages/Error404.vue'),
+      import(/* webpackChunkName: "page-error" */ 'pages/Error404Page.vue'),
   },
 ]
 

@@ -51,7 +51,6 @@ export default defineComponent({
       ],
       data: getCountryData(),
       goTo: async (event: unknown, country: CountryPair) => {
-        console.log(country)
         await useRouter().push({
           name: 'admin-country',
           params: {

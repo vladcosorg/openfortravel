@@ -1,23 +1,12 @@
 <template>
   <container :fullheight="fullHeight">
     <header-bar />
-    <div
-      v-if="fullHeight"
-      class="col-2 text-h5 row items-center q-px-lg montserrat text-center"
-    >
-      Find out which destinations are open or reopening soon
-    </div>
-
-    <div v-if="fullHeight" class="col-3 column items-center position-relative">
-      <boy />
-    </div>
-
     <travel-bar
       v-if="showTravelBar"
-      :class="{ 'q-mt-xl': !fullHeight }"
+      :class="{ 'q-mt-xl': !fullHeight, 'order-last': fullHeight }"
       :show-arrow="fullHeight"
     />
-    <router-view class="col-3" />
+    <router-view />
   </container>
 </template>
 
@@ -25,11 +14,15 @@
 import Container from 'components/Container.vue'
 import HeaderBar from 'components/HeaderBar.vue'
 import TravelBar from 'components/TravelBar.vue'
-import Boy from 'components/boy/Boy.vue'
+
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
-  components: { HeaderBar, TravelBar, Boy, Container },
+  components: { HeaderBar, TravelBar, Container },
+  meta: {
+    title: 'lol',
+    titleTemplate: (title: string) => `${title} - Open For Travel`,
+  },
   props: {
     fullHeight: {
       type: Boolean,

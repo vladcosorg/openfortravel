@@ -87,8 +87,3 @@ export function useCountryListLoader(): void {
 export function getLabelForCountryCode(countryCode: string): string {
   return getFirstLabel(useStore().state.countryList[countryCode])
 }
-
-export function getFlagForCountryCode(countryCode: string): string {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  return `svg-country-flags/png100px/${countryCode}.png`
-}

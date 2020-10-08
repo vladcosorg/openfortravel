@@ -1,5 +1,5 @@
 <template>
-  <router-link to="/ro">
+  <router-link :to="{ name: 'index', locale: $i18n.locale }">
     <q-icon
       :class="$style.logo"
       :name="`img:${require('src/assets/logo.svg')}`"

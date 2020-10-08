@@ -72,6 +72,10 @@ import {
 } from 'src/repositories/CountryDestinations'
 
 export default defineComponent({
+  meta: {
+    // sets document title
+    title: 'is page',
+  },
   components: { DestinationGroup },
   props: {
     originCode: {

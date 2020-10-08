@@ -12,7 +12,12 @@
   >
     <q-item-section avatar>
       <q-avatar>
-        <img :class="$style.flag" :src="destination.countryFlag" />
+        <img
+          :class="$style.flag"
+          :src="
+            require(`svg-country-flags/png100px/${destination.countryCode}.png`)
+          "
+        />
       </q-avatar>
     </q-item-section>
 

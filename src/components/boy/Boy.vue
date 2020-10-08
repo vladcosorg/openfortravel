@@ -45,7 +45,7 @@
   z-index: 100;
   top: 40%;
   left: 10%;
-  position: absolute;
+  //position: absolute;
   overflow: visible !important;
 
   :global(#haircreast) {

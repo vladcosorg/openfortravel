@@ -1,10 +1,7 @@
 import { countryCollection } from 'boot/firebase'
 import { i18n } from 'boot/i18n'
 import * as firebase from 'firebase/app'
-import {
-  getFlagForCountryCode,
-  getLabelForCountryCode,
-} from 'src/misc/I18nCountryList'
+import { getLabelForCountryCode } from 'src/misc/I18nCountryList'
 import { TranslateResult } from 'vue-i18n'
 import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
 
@@ -56,10 +53,6 @@ export class Destination implements PlainDestination {
 
   get countryLabel(): string {
     return getLabelForCountryCode(this.countryCode)
-  }
-
-  get countryFlag(): string {
-    return getFlagForCountryCode(this.countryCode)
   }
 }
 
