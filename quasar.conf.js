@@ -31,10 +31,10 @@ module.exports = configure(function (ctx) {
       'axios',
       'language-detector',
       'country-detector',
-      'firebase',
     ],
 
     vendor: {
+      disable: true,
       remove: [
         'i18n-iso-countries',
         'svg-country-flags',
@@ -73,7 +73,6 @@ module.exports = configure(function (ctx) {
       // showProgress: false,
       // gzip: true,
       analyze: true,
-
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
 
@@ -93,6 +92,26 @@ module.exports = configure(function (ctx) {
           test: /\.vue$/,
           loader: 'vue-svg-inline-loader',
         })
+      },
+      chainWebpack(cfg) {
+        cfg.module
+          .rule('images')
+          .use('url-loader')
+          .tap((options) => {
+            options.limit = 1
+            return options
+          })
+
+        // chain
+        //   .plugin('prefetch')
+        //   .use(PreloadWebpackPlugin, [
+        //     {
+        //       rel: 'prefetch',
+        //       include: 'asyncChunks',
+        //       fileBlacklist: [/pdfmake.+\.js$/, /canvg.+\.js$/, /xlsx.+\.js$/],
+        //     },
+        //   ])
+        //   .after('html-webpack')
       },
     },
 
@@ -138,88 +157,6 @@ module.exports = configure(function (ctx) {
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {
       pwa: false,
-    },
-
-    // https://quasar.dev/quasar-cli/developing-pwa/configuring-pwa
-    pwa: {
-      workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
-      workboxOptions: {}, // only for GenerateSW
-      manifest: {
-        name: 'Open For Travel Guide',
-        short_name: 'Open For Travel Guide',
-        description: 'A Quasar Framework app',
-        display: 'standalone',
-        orientation: 'portrait',
-        background_color: '#ffffff',
-        theme_color: '#027be3',
-        icons: [
-          {
-            src: 'icons/icon-128x128.png',
-            sizes: '128x128',
-            type: 'image/png',
-          },
-          {
-            src: 'icons/icon-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: 'icons/icon-256x256.png',
-            sizes: '256x256',
-            type: 'image/png',
-          },
-          {
-            src: 'icons/icon-384x384.png',
-            sizes: '384x384',
-            type: 'image/png',
-          },
-          {
-            src: 'icons/icon-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-        ],
-      },
-    },
-
-    // Full list of options: https://quasar.dev/quasar-cli/developing-cordova-apps/configuring-cordova
-    cordova: {
-      // noIosLegacyBuildFlag: true, // uncomment only if you know what you are doing
-    },
-
-    // Full list of options: https://quasar.dev/quasar-cli/developing-capacitor-apps/configuring-capacitor
-    capacitor: {
-      hideSplashscreen: true,
-    },
-
-    // Full list of options: https://quasar.dev/quasar-cli/developing-electron-apps/configuring-electron
-    electron: {
-      bundler: 'packager', // 'packager' or 'builder'
-
-      packager: {
-        // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
-        // OS X / Mac App Store
-        // appBundleId: '',
-        // appCategoryType: '',
-        // osxSign: '',
-        // protocol: 'myapp://path',
-        // Windows only
-        // win32metadata: { ... }
-      },
-
-      builder: {
-        // https://www.electron.build/configuration/configuration
-
-        appId: 'openfortravel',
-      },
-
-      // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
-      nodeIntegration: true,
-
-      extendWebpack(/* cfg */) {
-        // do something with Electron main process Webpack cfg
-        // chainWebpack also available besides this extendWebpack
-      },
     },
   }
 })

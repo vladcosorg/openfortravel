@@ -23,7 +23,7 @@
     "core-js": "^3.6.5",
     "firebase": "^7.21.0",
     "i18n-iso-countries": "^6.0.0",
-    "iso-639-1": "^2.1.4",
+    "iso-language-list": "^0.3.2",
     "lodash": "^4.17.20",
     "quasar": "^1.0.0",
     "svg-country-flags": "^1.2.7",

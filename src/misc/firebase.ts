@@ -1,6 +1,5 @@
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
-import { boot } from 'quasar/wrappers'
 
 let firebaseApp
 if (!firebase.apps.length) {
@@ -23,7 +22,3 @@ const firestore = firebaseApp.firestore()
 const countryCollection = firestore.collection('countries')
 
 export { firestore, firebaseApp, countryCollection }
-
-export default boot(() => {
-  //
-})

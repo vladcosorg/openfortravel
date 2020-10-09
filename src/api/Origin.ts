@@ -1,4 +1,3 @@
-import { countryCollection } from 'boot/firebase'
 import * as firebase from 'firebase/app'
 import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
 
@@ -32,6 +31,7 @@ const dataConverter: FirestoreDataConverter<PlainOrigin> = {
 }
 
 export async function getOrigin(code: string): Promise<PlainOrigin> {
+  const { countryCollection } = await import('src/misc/firebase')
   const doc = await countryCollection
     .doc(code)
     .withConverter<PlainOrigin>(dataConverter)

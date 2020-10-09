@@ -1,4 +1,3 @@
-import { countryCollection } from 'boot/firebase'
 import { i18n } from 'boot/i18n'
 import * as firebase from 'firebase/app'
 import { getLabelForCountryCode } from 'src/misc/I18nCountryList'
@@ -82,6 +81,7 @@ const destinationCountryConverter: FirestoreDataConverter<PlainDestination> = {
 export async function getOriginDestinations(
   code: string,
 ): Promise<PlainDestination[]> {
+  const { countryCollection } = await import('src/misc/firebase')
   const results = await countryCollection
     .doc(code)
     .collection('destinations')
@@ -95,6 +95,7 @@ export async function getDestination(
   originCode: string,
   destinationCode: string,
 ): Promise<PlainDestination> {
+  const { countryCollection } = await import('src/misc/firebase')
   const doc = await countryCollection
     .doc(originCode)
     .collection('destinations')
@@ -118,6 +119,7 @@ export async function saveCountryDestination(
   hostCountryISO: string,
   destinationCountryISO: string,
 ): Promise<void> {
+  const { countryCollection } = await import('src/misc/firebase')
   await countryCollection
     .doc(hostCountryISO)
     .collection('destinations')
