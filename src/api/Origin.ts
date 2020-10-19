@@ -7,6 +7,8 @@ export interface OriginDocument {
 
 export interface PlainOrigin extends OriginDocument {
   countryCode: string
+  infoLink?: string
+  bestByDate?: string
 }
 
 export class DummyPlainOrigin implements PlainOrigin {
@@ -43,4 +45,19 @@ export async function getOrigin(code: string): Promise<PlainOrigin> {
   }
 
   return data
+}
+
+export async function updateOriginDoc(
+  reference: string,
+  object: Partial<PlainOrigin>,
+): Promise<void> {
+  const { countryCollection } = await import('src/misc/firebase')
+  await countryCollection.doc(reference).set(object, { merge: true })
+}
+
+export async function updateOriginField<
+  K extends keyof PlainOrigin,
+  V extends PlainOrigin[K]
+>(reference: string, field: K, value: V): Promise<void> {
+  await updateOriginDoc(reference, { [field]: value })
 }

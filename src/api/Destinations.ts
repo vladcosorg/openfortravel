@@ -136,7 +136,7 @@ export function getStatusListPairs(): {
   value: DestinationStatus
 }[] {
   return getStatusList().map((value) => ({
-    label: i18n.t(value),
+    label: i18n.t(`status.${value}`),
     value,
   }))
 }

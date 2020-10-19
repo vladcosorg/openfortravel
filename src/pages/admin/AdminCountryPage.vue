@@ -1,86 +1,44 @@
 <template>
   <q-page>
-    <div class="qq-pa-md">
-      <q-table
-        :data="destinations"
-        :columns="columns"
-        :row-key="(destination) => destination.countryCode"
-        :filter="filter"
-        :loading="isLoading"
-        :class="$style.table"
-        flat
-        separator="cell"
-        :pagination="{ rowsPerPage: 25 }"
-      >
-        <template v-slot:top-right>
-          <q-input
-            v-model="filter"
-            outlined
-            dense
-            debounce="300"
-            placeholder="Search"
-          >
-            <template v-slot:append>
-              <q-icon name="search" />
-            </template>
-          </q-input>
-        </template>
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td key="country" :props="props">
-              {{ props.row.countryLabel }}
-            </q-td>
-            <q-td key="code" :props="props">
-              {{ props.row.countryCode }}
-            </q-td>
-            <q-td key="testRequired" :props="props">
-              <q-checkbox
-                v-model="props.row.testRequired"
-                @input="
-                  saveValue('testRequired', $event, props.row.countryCode)
-                "
-              />
-            </q-td>
-            <q-td key="status" :props="props">
-              <q-option-group
-                v-model="props.row.status"
-                :options="statuses"
-                type="radio"
-                color="secondary"
-                inline
-                @input="saveValue('status', $event, props.row.countryCode)"
-              />
-            </q-td>
-            <q-td key="notes" :props="props">
-              {{ props.row.notes }}
-              <q-popup-edit
-                v-model="props.row.notes"
-                color="accent"
-                content-class="bg-blue-grey"
-                max-width="40px"
-                @save="saveValue('notes', $event, props.row.countryCode)"
-              >
-                <q-input
-                  v-model="props.row.notes"
-                  color="accent"
-                  dense
-                  autofocus
-                  type="textarea"
-                />
-              </q-popup-edit>
-            </q-td>
-          </q-tr>
-        </template>
-        <template v-slot:top-left>
-          <div class="text-h6">
-            Страны из которых разрешен въезд в {{ hostCountryName }}
-          </div>
-          <router-link :to="{ name: 'admin-index' }">
-            К списку стран
-          </router-link>
-        </template>
-      </q-table>
-    </div>
+    <q-table
+      :data="destinations"
+      :columns="columns"
+      :row-key="(destination) => destination.countryCode"
+      :filter="filter"
+      :loading="destinationsLoading"
+      :class="$style.table"
+      flat
+      separator="cell"
+      :pagination="{ rowsPerPage: 25 }"
+      :virtual-scroll="false"
+    >
+      <template #top>
+        <table-header v-model="filter" :origin-code="originCode" />
+      </template>
+
+      <template #body="props">
+        <q-tr :props="props">
+          <q-td key="country" :props="props">
+            {{ props.row.countryLabel }}
+          </q-td>
+          <q-td key="code" :props="props">
+            {{ props.row.countryCode }}
+          </q-td>
+          <q-td key="testRequired" :props="props">
+            <test-required
+              :value="props.row.testRequired"
+              @input="updateValue('testRequired', $event, props.row)"
+            />
+          </q-td>
+          <q-td key="status" :props="props">
+            <status-input
+              :value="props.row.status"
+              @input="updateValue('status', $event, props.row)"
+            />
+          </q-td>
+        </q-tr>
+      </template>
+    </q-table>
   </q-page>
 </template>
 
@@ -89,8 +47,10 @@
   :global .q-table__top {
     //background-color: #00ffbb;
   }
+
   thead {
     background-color: $blue-grey-9;
+
     th {
       font-weight: bold;
       font-size: 0.9rem;
@@ -100,17 +60,24 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@vue/composition-api'
-import {
-  Destination,
-  PlainDestination,
-  saveCountryDestination,
-} from 'src/api/Destinations'
-import { getLabelForCountryCode } from 'src/misc/I18nCountryList'
-import { generateDestinationList } from 'src/repositories/CountryDestinations'
-import { getStatusListPairs } from 'src/api/Destinations'
+import { defineComponent, ref } from '@vue/composition-api'
+import InputDate from 'components/InputDate.vue'
+import InPlaceField from 'pages/admin/InPlaceField.vue'
+import StatusInput from 'pages/admin/StatusInput.vue'
+import TableHeader from 'pages/admin/TableHeader.vue'
+import TestRequired from 'pages/admin/TestRequired.vue'
+import { Destination, PlainDestination } from 'src/api/Destinations'
+import { useDestinationList } from 'src/composables/use-destination-list'
+import { useOrigin } from 'src/composables/use-origin'
 
 export default defineComponent({
+  components: {
+    InPlaceField,
+    InputDate,
+    StatusInput,
+    TableHeader,
+    TestRequired,
+  },
   props: {
     originCode: {
       type: String,
@@ -118,40 +85,35 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const hostCountry = props.originCode
-    const destinations = ref<Destination[]>([])
+    const originCode = props.originCode
     const filter = ref('')
-    const isLoading = ref(false)
 
-    onMounted(async () => {
-      const plainDestinations = await generateDestinationList(hostCountry)
-      destinations.value = plainDestinations.map(
-        (plainDestination) => new Destination(plainDestination),
-      )
+    const origin = useOrigin(originCode, {
+      countryCode: 'Loading',
+      reference: 'Loading',
     })
 
-    async function saveValue<K extends keyof PlainDestination>(
-      field: K,
-      value: PlainDestination[K],
-      destinationISO: string,
-    ) {
-      isLoading.value = true
-      await saveCountryDestination(
-        { [field]: value },
-        hostCountry,
-        destinationISO,
-      ).then(() => {
-        isLoading.value = false
-      })
+    const {
+      state: destinations,
+      saveValue,
+      ready: destinationsLoading,
+    } = useDestinationList(originCode)
+
+    async function updateValue<
+      K extends keyof PlainDestination,
+      V extends PlainDestination[K]
+    >(field: K, value: V, destination: Destination) {
+      destination[field] = value
+      await saveValue('status', value, destination.countryCode)
     }
 
     return {
+      origin,
       filter,
-      isLoading,
-      hostCountryName: getLabelForCountryCode(hostCountry),
+      destinationsLoading,
       destinations,
       saveValue,
-      statuses: getStatusListPairs(),
+      updateValue,
       columns: [
         {
           name: 'country',
@@ -177,12 +139,6 @@ export default defineComponent({
           name: 'status',
           label: 'Статус',
           field: 'status',
-          headerStyle: 'width: 50px',
-        },
-        {
-          name: 'notes',
-          label: 'Заметки',
-          field: 'notes',
         },
       ],
     }

@@ -2,6 +2,36 @@ import { RouteConfig } from 'vue-router'
 
 const routes = (): RouteConfig[] => [
   {
+    path: '/adminn',
+    component: () =>
+      import(
+        /* webpackChunkName: "admin-layout" */
+        'layouts/AdminLayout.vue'
+      ),
+
+    children: [
+      {
+        name: 'admin-index',
+        path: 'list',
+        component: () =>
+          import(
+            /* webpackChunkName: "admin-list" */
+            'pages/admin/AdminListPage.vue'
+          ),
+      },
+      {
+        name: 'admin-country',
+        path: 'country/:originCode',
+        component: () =>
+          import(
+            /* webpackChunkName: "admin-country" */
+            'pages/admin/AdminCountryPage.vue'
+          ),
+        props: true,
+      },
+    ],
+  },
+  {
     path: '/:locale/',
     component: () =>
       import(
@@ -54,36 +84,7 @@ const routes = (): RouteConfig[] => [
       },
     ],
   },
-  {
-    path: '/admin',
-    component: () =>
-      import(
-        /* webpackChunkName: "admin-layout" */
-        'layouts/AdminLayout.vue'
-      ),
 
-    children: [
-      {
-        name: 'admin-index',
-        path: 'list',
-        component: () =>
-          import(
-            /* webpackChunkName: "admin-list" */
-            'pages/admin/AdminListPage.vue'
-          ),
-      },
-      {
-        name: 'admin-country',
-        path: 'country/:originCode',
-        component: () =>
-          import(
-            /* webpackChunkName: "admin-country" */
-            'pages/admin/AdminCountryPage.vue'
-          ),
-        props: true,
-      },
-    ],
-  },
   // Always leave this as last one,
   // but you can also remove it
   {

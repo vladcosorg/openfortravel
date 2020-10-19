@@ -10,7 +10,7 @@ export default boot(({ ssrContext, router }) => {
   router.beforeEach(async (to, from, next) => {
     const cookies = getCookiesAPI(ssrContext)
     if (['admin-index', 'admin-country'].indexOf(<string>to.name) !== -1) {
-      await changeLanguage('ru')
+      await changeLanguage('en')
       return next()
     }
 
