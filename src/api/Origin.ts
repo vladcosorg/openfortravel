@@ -47,6 +47,15 @@ export async function getOrigin(code: string): Promise<PlainOrigin> {
   return data
 }
 
+export async function getOrigins(): Promise<PlainOrigin[]> {
+  const { countryCollection } = await import('src/misc/firebase')
+  const results = await countryCollection
+    .withConverter<PlainOrigin>(dataConverter)
+    .get()
+
+  return results.docs.map((snapshot) => snapshot.data())
+}
+
 export async function updateOriginDoc(
   reference: string,
   object: Partial<PlainOrigin>,

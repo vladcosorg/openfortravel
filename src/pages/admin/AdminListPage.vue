@@ -1,37 +1,68 @@
 <template>
   <q-page>
-    <div class="q-pa-md">
+    <div>
       <q-table
-        :data="data"
+        :data="origins.list"
+        :loading="!origins.ready"
         :columns="columns"
+        :filter="filter"
         row-key="code"
         :pagination="{ rowsPerPage: 0 }"
         separator="cell"
         hide-bottom
         @row-click="goTo"
-      />
+      >
+        <template #header-cell-country="props">
+          <q-th :props="props">
+            <q-input
+              v-model="filter"
+              label="Filter by name"
+              label-color="grey-6"
+              dense
+              autofocus
+            />
+          </q-th>
+        </template>
+        <template #body-cell-bestByDate="props">
+          <q-td :props="props">
+            <q-badge
+              v-if="props.value && props.value.expired"
+              color="negative"
+              :label="props.value.text"
+            />
+            <q-badge
+              v-if="props.value && !props.value.expired"
+              color="positive"
+              :label="props.value.text"
+            />
+          </q-td>
+        </template>
+      </q-table>
     </div>
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
-import { getCountryMap } from 'src/misc/I18nCountryList'
+import { defineComponent, ref } from '@vue/composition-api'
+import { formatDistanceToNow, isPast, parseISO } from 'date-fns'
+import { useOrigins } from 'src/composables/use-origin'
 import { useRouter } from 'src/composables/use-plugins'
-
-interface CountryPair {
-  country: string
-  code: string
-}
+import { Origin } from 'src/models/Origin'
 
 export default defineComponent({
   setup() {
+    const origins = useOrigins()
+    const filter = ref('')
+    const selection = ref([])
     return {
+      filter,
+      origins,
+      selection,
       columns: [
         {
           name: 'country',
           label: 'Country',
-          field: 'country',
+          field: 'countryLabel',
           align: 'left',
           classes: 'ellipsis',
           headerClasses: 'bg-primary text-white',
@@ -39,38 +70,35 @@ export default defineComponent({
         {
           name: 'code',
           label: 'Country code',
-          field: 'code',
+          field: 'countryCode',
           align: 'left',
         },
         {
-          name: 'edit',
-          label: 'Edit',
-          field: 'edit',
+          name: 'bestByDate',
+          label: 'Expiration date',
+          field: 'bestByDate',
           align: 'right',
+          format: (date?: string) => {
+            if (date) {
+              const dateObj = parseISO(date)
+              return {
+                text: formatDistanceToNow(dateObj, { addSuffix: true }),
+                expired: isPast(dateObj),
+              }
+            }
+            return undefined
+          },
         },
       ],
-      data: getCountryData(),
-      goTo: async (event: unknown, country: CountryPair) => {
+      goTo: async (event: unknown, origin: Origin) => {
         await useRouter().push({
           name: 'admin-country',
           params: {
-            originCode: country.code,
+            originCode: origin.countryCode,
           },
         })
       },
     }
   },
 })
-
-function getCountryData(): CountryPair[] {
-  const output = []
-
-  for (const [code, country] of Object.entries(getCountryMap())) {
-    output.push({
-      code,
-      country,
-    })
-  }
-  return output
-}
 </script>

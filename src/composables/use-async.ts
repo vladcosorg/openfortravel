@@ -4,7 +4,7 @@ import { Ref, ref } from '@vue/composition-api'
 export function useAsyncState<T>(
   promise: Promise<T>,
   defaultState: T,
-  catchFn?: { (e: Error): void },
+  { freeze }: { freeze: boolean } = { freeze: true },
 ): {
   state: Ref<T>
   ready: Ref<boolean>
@@ -16,17 +16,28 @@ export function useAsyncState<T>(
   function run() {
     void promise.then((data: T) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      state.value = data
+      state.value = freeze ? Object.freeze(data) : data
       ready.value = true
     })
-
-    if (catchFn) {
-      promise.catch(catchFn)
-    }
   }
 
   run()
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   return { state, ready }
+}
+
+export function useAsyncStateWithMapper<T, K>(
+  promise: Promise<T[]>,
+  mapper: { (item: T): K },
+): { state: Ref<K[]>; loading: Ref<boolean> } {
+  const state = ref<K[]>([])
+  const loading = ref<boolean>(true)
+
+  void promise.then((data: T[]) => {
+    state.value = data.map(mapper)
+    loading.value = false
+  })
+
+  return { state, loading }
 }

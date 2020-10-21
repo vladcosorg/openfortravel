@@ -1,6 +1,9 @@
 import { i18n } from 'boot/i18n'
 import * as firebase from 'firebase/app'
-import { getLabelForCountryCode } from 'src/misc/I18nCountryList'
+import {
+  getCountryCodes,
+  getLabelForCountryCode,
+} from 'src/misc/I18nCountryList'
 import { TranslateResult } from 'vue-i18n'
 import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
 
@@ -88,6 +91,7 @@ export async function getOriginDestinations(
     .where(firebase.firestore.FieldPath.documentId(), '!=', code)
     .withConverter<PlainDestination>(destinationCountryConverter)
     .get()
+
   return results.docs.map((snapshot) => snapshot.data())
 }
 
@@ -125,6 +129,22 @@ export async function saveCountryDestination(
     .collection('destinations')
     .doc(destinationCountryISO)
     .set(object, { merge: true })
+}
+
+export async function updateAllCountryDestinations(
+  object: Partial<PlainDestination>,
+  hostCountryISO: string,
+): Promise<void> {
+  const { countryCollection, firestore } = await import('src/misc/firebase')
+  const batch = firestore.batch()
+  const collection = countryCollection
+    .doc(hostCountryISO)
+    .collection('destinations')
+  for (const countryCode of getCountryCodes()) {
+    batch.set(collection.doc(countryCode), object, { merge: true })
+  }
+
+  await batch.commit()
 }
 
 export function getStatusList(): DestinationStatus[] {

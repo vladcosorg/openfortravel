@@ -1,7 +1,15 @@
 <template>
-  <q-field :value="value" outlined autofocus dense :loading="loading">
-    <template #control="{ value }">
-      <q-checkbox :value="value" dense v-on="listeners"> Yes </q-checkbox>
+  <q-field borderless autofocus dense :loading="loading">
+    <template #control>
+      <q-option-group
+        v-model="internalValue"
+        :options="options"
+        type="radio"
+        color="secondary"
+        inline
+        dense
+        v-on="listeners"
+      />
     </template>
   </q-field>
 </template>
@@ -9,7 +17,7 @@
 <style lang="scss" module></style>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
 import { useAsyncListeners } from 'src/composables/use-async-listeners'
 
 export default defineComponent({
@@ -17,11 +25,34 @@ export default defineComponent({
   props: {
     value: {
       type: Boolean,
+      required: false,
+      default: undefined,
     },
   },
   setup(props) {
     const { loading, listeners } = useAsyncListeners()
-    return { listeners, loading }
+    const fallbackValueStorage = ref<boolean | undefined>(undefined)
+    const internalValue = computed<boolean | undefined>({
+      get() {
+        if (props.value === undefined) {
+          return fallbackValueStorage.value
+        }
+
+        return props.value
+      },
+      set(value) {
+        fallbackValueStorage.value = value
+      },
+    })
+    return {
+      internalValue,
+      listeners,
+      loading,
+      options: [
+        { label: 'Yes', value: true },
+        { label: 'No', value: false },
+      ],
+    }
   },
 })
 </script>

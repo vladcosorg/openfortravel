@@ -1,19 +1,36 @@
 <template>
   <q-page>
     <q-table
-      :data="destinations"
+      :data="destinations.list"
       :columns="columns"
       :row-key="(destination) => destination.countryCode"
       :filter="filter"
-      :loading="destinationsLoading"
-      :class="$style.table"
+      :loading="destinations.loading"
+      :class="[$style.table]"
       flat
       separator="cell"
-      :pagination="{ rowsPerPage: 25 }"
-      :virtual-scroll="false"
+      :pagination="{ rowsPerPage: 15 }"
+      :virtual-scroll-slice-size="10"
+      :virtual-scroll-item-size="52"
     >
       <template #top>
         <table-header v-model="filter" :origin-code="originCode" />
+      </template>
+      <template #top-row>
+        <q-tr class="top-row">
+          <q-td colspan="2">Mass actions</q-td>
+          <q-td>
+            <test-required
+              @input="
+                destinations.persistAllFieldValues('testRequired', $event)
+              "
+          /></q-td>
+          <q-td>
+            <status-input
+              @input="destinations.persistAllFieldValues('status', $event)"
+            />
+          </q-td>
+        </q-tr>
       </template>
 
       <template #body="props">
@@ -27,13 +44,25 @@
           <q-td key="testRequired" :props="props">
             <test-required
               :value="props.row.testRequired"
-              @input="updateValue('testRequired', $event, props.row)"
+              @input="
+                destinations.persistOneFieldValue(
+                  'testRequired',
+                  $event,
+                  props.row.countryCode,
+                )
+              "
             />
           </q-td>
           <q-td key="status" :props="props">
             <status-input
               :value="props.row.status"
-              @input="updateValue('status', $event, props.row)"
+              @input="
+                destinations.persistOneFieldValue(
+                  'status',
+                  $event,
+                  props.row.countryCode,
+                )
+              "
             />
           </q-td>
         </q-tr>
@@ -44,10 +73,7 @@
 
 <style lang="scss" module>
 .table {
-  :global .q-table__top {
-    //background-color: #00ffbb;
-  }
-
+  height: 100%;
   thead {
     background-color: $blue-grey-9;
 
@@ -55,6 +81,10 @@
       font-weight: bold;
       font-size: 0.9rem;
     }
+  }
+
+  :global(.top-row) {
+    background-color: $blue-grey-9;
   }
 }
 </style>
@@ -66,8 +96,7 @@ import InPlaceField from 'pages/admin/InPlaceField.vue'
 import StatusInput from 'pages/admin/StatusInput.vue'
 import TableHeader from 'pages/admin/TableHeader.vue'
 import TestRequired from 'pages/admin/TestRequired.vue'
-import { Destination, PlainDestination } from 'src/api/Destinations'
-import { useDestinationList } from 'src/composables/use-destination-list'
+import { useOriginDestinations } from 'src/composables/use-origin-destinations'
 import { useOrigin } from 'src/composables/use-origin'
 
 export default defineComponent({
@@ -93,31 +122,16 @@ export default defineComponent({
       reference: 'Loading',
     })
 
-    const {
-      state: destinations,
-      saveValue,
-      ready: destinationsLoading,
-    } = useDestinationList(originCode)
-
-    async function updateValue<
-      K extends keyof PlainDestination,
-      V extends PlainDestination[K]
-    >(field: K, value: V, destination: Destination) {
-      destination[field] = value
-      await saveValue('status', value, destination.countryCode)
-    }
+    const destinations = useOriginDestinations(originCode)
 
     return {
       origin,
       filter,
-      destinationsLoading,
       destinations,
-      saveValue,
-      updateValue,
       columns: [
         {
           name: 'country',
-          label: 'Страна',
+          label: 'Country',
           field: 'countryLabel',
           align: 'left',
           classes: 'bg-grey-9 ellipsis',
@@ -125,20 +139,21 @@ export default defineComponent({
         },
         {
           name: 'code',
-          label: 'Код страны',
+          label: 'Country Code',
           field: 'countryCode',
           headerStyle: 'width: 50px',
         },
         {
           name: 'testRequired',
-          label: 'Тест обязателен',
+          label: 'Test required',
           field: 'testRequired',
           headerStyle: 'width: 50px',
         },
         {
           name: 'status',
-          label: 'Статус',
+          label: 'Status',
           field: 'status',
+          align: 'left',
         },
       ],
     }

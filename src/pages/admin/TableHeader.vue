@@ -58,12 +58,13 @@
 import { defineComponent } from '@vue/composition-api'
 import InputDate from 'components/InputDate.vue'
 import InPlaceField from 'pages/admin/InPlaceField.vue'
+import TestRequired from 'pages/admin/TestRequired.vue'
 import { useComputedVmodel } from 'src/composables/use-computed-vmodel'
 import { useOrigin } from 'src/composables/use-origin'
 import { getLabelForCountryCode } from 'src/misc/I18nCountryList'
 
 export default defineComponent({
-  components: { InPlaceField, InputDate },
+  components: { InPlaceField, InputDate, TestRequired },
   props: {
     value: {
       type: String,

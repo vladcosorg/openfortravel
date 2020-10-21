@@ -8,7 +8,7 @@
         <q-toolbar-title>Footer</q-toolbar-title>
       </q-toolbar>
     </q-footer>
-    <q-page-container>
+    <q-page-container class="window-height column">
       <router-view />
     </q-page-container>
   </q-layout>
