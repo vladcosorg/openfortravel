@@ -1,4 +1,5 @@
 import { getCurrentInstance } from '@vue/composition-api'
+
 import {
   Loading,
   useClosureLoading,

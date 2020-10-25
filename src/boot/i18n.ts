@@ -1,8 +1,8 @@
 import { boot } from 'quasar/wrappers'
-
 import Vue from 'vue'
 import { extend } from 'vue-auto-i18n'
 import VueI18n, { LocaleMessageObject, LocaleMessages } from 'vue-i18n'
+
 import Locale = VueI18n.Locale
 declare module 'vue/types/vue' {
   interface Vue {

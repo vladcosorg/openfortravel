@@ -23,6 +23,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
+
 import { useAsyncListeners } from 'src/composables/use-async-listeners'
 
 export default defineComponent({

@@ -1,7 +1,9 @@
 import { route } from 'quasar/wrappers'
 import VueRouter from 'vue-router'
 import { Store } from 'vuex'
+
 import { StateInterface } from '../store'
+
 import routes from './routes'
 
 /*

@@ -1,7 +1,9 @@
-import full from './full.json'
+import fs from 'fs'
 
 import transform from 'lodash/transform'
 
-import fs from 'fs'
+import full from './full.json'
+
+
 
 console.log(fs, transform())

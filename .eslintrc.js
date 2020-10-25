@@ -87,7 +87,14 @@ module.exports = {
     // // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'import/no-unresolved': [2, { ignore: ['.vue$'] }],
-    'import/order': 'warn',
+    'import/order': [
+      'warn',
+      { 'newlines-between': 'always', alphabetize: { order: 'asc' } },
+    ],
+    'import/no-unused-modules': [
+      'warn',
+      { unusedExports: true, missingExports: true },
+    ],
   },
   settings: {
     // 'import/ignore': [/\.vue$/],

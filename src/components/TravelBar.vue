@@ -28,8 +28,8 @@
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import CountryList from 'components/CountryList.vue'
 import AnimatedArrow from 'components/AnimatedArrow.vue'
+import CountryList from 'components/CountryList.vue'
 
 export default defineComponent({
   components: { AnimatedArrow, CountryList },

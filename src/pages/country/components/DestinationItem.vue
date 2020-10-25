@@ -51,6 +51,7 @@ import {
   inject,
   PropType,
 } from '@vue/composition-api'
+
 import { Destination, PlainDestination } from 'src/api/Destinations'
 import { Origin } from 'src/models/Origin'
 

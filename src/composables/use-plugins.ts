@@ -1,11 +1,11 @@
-import { storeInstance, routerInstance, cookies } from 'src/boot/store'
-import { i18n } from 'src/boot/i18n'
 import { Cookies } from 'quasar'
-import { StateInterface } from 'src/store'
 import VueI18n from 'vue-i18n'
 import VueRouter, { Route } from 'vue-router'
-
 import { Store } from 'vuex'
+
+import { i18n } from 'src/boot/i18n'
+import { storeInstance, routerInstance, cookies } from 'src/boot/store'
+import { StateInterface } from 'src/store'
 
 export function useStore(): Store<StateInterface> {
   return storeInstance

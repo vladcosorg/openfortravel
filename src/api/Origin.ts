@@ -1,4 +1,5 @@
 import * as firebase from 'firebase/app'
+
 import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
 
 export interface OriginDocument {

@@ -1,3 +1,5 @@
+import fs from 'fs'
+
 import {
   computed,
   ComputedRef,
@@ -5,16 +7,15 @@ import {
   toRef,
   watch,
 } from '@vue/composition-api'
+import transform from 'lodash/transform'
 
 import { i18n } from 'src/boot/i18n'
-import transform from 'lodash/transform'
 import { useStore } from 'src/composables/use-plugins'
-import fs from 'fs'
 export type I18nCountryList = Record<string, string>
 
 function getFirstLabel(label: string | string[]): string {
   if (Array.isArray(label)) {
-    [label] = label
+    ;[label] = label
   }
 
   return label

@@ -1,10 +1,11 @@
-import { i18n } from 'src/boot/i18n'
 import * as firebase from 'firebase/app'
+import { TranslateResult } from 'vue-i18n'
+
+import { i18n } from 'src/boot/i18n'
 import {
   getCountryCodes,
   getLabelForCountryCode,
 } from 'src/misc/I18nCountryList'
-import { TranslateResult } from 'vue-i18n'
 import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
 
 export enum DestinationStatus {

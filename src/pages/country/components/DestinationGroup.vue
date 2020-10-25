@@ -20,6 +20,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from '@vue/composition-api'
 import DestinationItem from 'pages/country/components/DestinationItem.vue'
+
 import { PlainDestination } from 'src/api/Destinations'
 
 export default defineComponent({

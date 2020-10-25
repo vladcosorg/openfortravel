@@ -56,6 +56,11 @@
 
 <script lang="ts">
 import {
+  ionCheckmarkCircle as allowedIcon,
+  ionAlertCircle as conditionalIcon,
+  ionRemoveCircle as forbiddenIcon,
+} from '@quasar/extras/ionicons-v5'
+import {
   computed,
   defineComponent,
   nextTick,
@@ -65,15 +70,10 @@ import {
   ref,
   watch,
 } from '@vue/composition-api'
-import DestinationGroup from 'pages/country/components/DestinationGroup.vue'
-import { useStore } from 'src/composables/use-plugins'
-
 import isEmpty from 'lodash/isEmpty'
-import {
-  ionCheckmarkCircle as allowedIcon,
-  ionAlertCircle as conditionalIcon,
-  ionRemoveCircle as forbiddenIcon,
-} from '@quasar/extras/ionicons-v5'
+import DestinationGroup from 'pages/country/components/DestinationGroup.vue'
+
+import { useStore } from 'src/composables/use-plugins'
 import { Origin } from 'src/models/Origin'
 import {
   generateGroupedDestinationList,

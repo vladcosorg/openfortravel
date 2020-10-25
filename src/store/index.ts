@@ -1,4 +1,6 @@
 import { store } from 'quasar/wrappers'
+import Vuex from 'vuex'
+
 import {
   Destination,
   getDestination,
@@ -9,7 +11,6 @@ import { getOrigin, PlainOrigin } from 'src/api/Origin'
 import { I18nCountryList } from 'src/misc/I18nCountryList'
 import { Origin } from 'src/models/Origin'
 import { GroupedDestinations } from 'src/repositories/CountryDestinations'
-import Vuex from 'vuex'
 
 // import { ExampleStateInterface } from './module-example/state';
 

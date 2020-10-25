@@ -1,7 +1,8 @@
-import { cookies, storeInstance } from 'src/boot/store'
 import { Cookies } from 'quasar'
-import { fetchCurrentCountryCode } from 'src/api/IpApi'
 import { Route } from 'vue-router'
+
+import { fetchCurrentCountryCode } from 'src/api/IpApi'
+import { cookies, storeInstance } from 'src/boot/store'
 
 export async function decideOnCountry(
   route: Route,

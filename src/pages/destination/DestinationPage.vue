@@ -68,6 +68,7 @@ import {
   onServerPrefetch,
   ref,
 } from '@vue/composition-api'
+
 import { Destination } from 'src/api/Destinations'
 import { useStore } from 'src/composables/use-plugins'
 import { Origin } from 'src/models/Origin'

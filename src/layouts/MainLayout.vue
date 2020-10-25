@@ -11,11 +11,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from '@vue/composition-api'
 import Container from 'components/Container.vue'
 import HeaderBar from 'components/HeaderBar.vue'
 import TravelBar from 'components/TravelBar.vue'
 
-import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
   components: { HeaderBar, TravelBar, Container },
