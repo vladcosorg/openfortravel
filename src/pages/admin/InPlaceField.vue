@@ -31,7 +31,10 @@
         label-color="white"
       >
         <template #control>
-          <slot name="view" :value="value">
+          <slot
+            name="view"
+            :value="value"
+          >
             <div
               class="self-center no-outline ellipsis"
               style="white-space: normal"

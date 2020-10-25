@@ -25,8 +25,14 @@
         group-color="negative"
         :destinations="destinations.forbidden"
       />
-      <q-list v-if="loading" separator>
-        <q-item v-for="n in Array(4)" :key="n">
+      <q-list
+        v-if="loading"
+        separator
+      >
+        <q-item
+          v-for="n in Array(4)"
+          :key="n"
+        >
           <q-item-section avatar>
             <q-skeleton type="QAvatar" />
           </q-item-section>
@@ -36,7 +42,10 @@
               <q-skeleton type="text" />
             </q-item-label>
             <q-item-label caption>
-              <q-skeleton type="text" width="65%" />
+              <q-skeleton
+                type="text"
+                width="65%"
+              />
             </q-item-label>
           </q-item-section>
         </q-item>

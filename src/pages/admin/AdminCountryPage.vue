@@ -14,11 +14,16 @@
       :virtual-scroll-item-size="52"
     >
       <template #top>
-        <table-header v-model="filter" :origin-code="originCode" />
+        <table-header
+          v-model="filter"
+          :origin-code="originCode"
+        />
       </template>
       <template #top-row>
         <q-tr class="top-row">
-          <q-td colspan="2">Mass actions</q-td>
+          <q-td colspan="2">
+            Mass actions
+          </q-td>
           <q-td>
             <test-required
               @input="
@@ -36,13 +41,22 @@
 
       <template #body="props">
         <q-tr :props="props">
-          <q-td key="country" :props="props">
+          <q-td
+            key="country"
+            :props="props"
+          >
             {{ props.row.countryLabel }}
           </q-td>
-          <q-td key="code" :props="props">
+          <q-td
+            key="code"
+            :props="props"
+          >
             {{ props.row.countryCode }}
           </q-td>
-          <q-td key="testRequired" :props="props">
+          <q-td
+            key="testRequired"
+            :props="props"
+          >
             <test-required
               :value="props.row.testRequired"
               @input="
@@ -54,7 +68,10 @@
               "
             />
           </q-td>
-          <q-td key="status" :props="props">
+          <q-td
+            key="status"
+            :props="props"
+          >
             <status-input
               :value="props.row.status"
               @input="

@@ -26,24 +26,27 @@ module.exports = {
 
   // Rules order is important, please avoid shuffling them
   extends: [
+    //
     // Base ESLint recommended rules
     'eslint:recommended',
     // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#usage
     // ESLint typescript rules
     'plugin:@typescript-eslint/recommended',
     // consider disabling this class of rules if linting takes too long
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
     // Uncomment any of the lines below to choose desired strictness,
     // but leave only one uncommented!
     // See https://eslint.vuejs.org/rules/#available-rules
-    // 'plugin:vue/essential', // Priority A: Essential (Error Prevention)
-    // 'plugin:vue/strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
+    'plugin:vue/essential', // Priority A: Essential (Error Prevention)
+    'plugin:vue/strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
     'plugin:vue/recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
     // https://github.com/prettier/eslint-config-prettier#installation
     // usage with Prettier, provided by 'eslint-config-prettier'.
+
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
+
     'prettier',
     'prettier/@typescript-eslint',
     'prettier/vue',
@@ -55,6 +58,7 @@ module.exports = {
     // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-file
     // required to lint *.vue files
     'vue',
+    'import',
   ],
 
   globals: {
@@ -82,15 +86,21 @@ module.exports = {
     //
     // // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'import/no-unresolved': [2, { ignore: ['.vue$'] }],
+    'import/order': 'warn',
   },
   settings: {
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-    },
+    // 'import/ignore': [/\.vue$/],
+    // 'import/extensions': ['.js', '.vue', '.ts'],
+    // 'import/parsers': {
+    //   '@typescript-eslint/parser': ['.ts', '.vue'],
+    // },
     'import/resolver': {
-      // use <root>/tsconfig.json
       typescript: {
-        alwaysTryTypes: true, // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
+        project: [
+          'tsconfig.json',
+          'node_modules/@quasar/app/tsconfig-preset.json',
+        ],
       },
     },
   },

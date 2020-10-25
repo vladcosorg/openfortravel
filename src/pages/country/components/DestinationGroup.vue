@@ -1,7 +1,10 @@
 <template>
   <div v-if="destinations">
     <div :class="['text-h6', `text-${groupColor}`, 'q-pb-md']">
-      <q-icon size="md" :name="groupIcon" />
+      <q-icon
+        size="md"
+        :name="groupIcon"
+      />
       {{ groupName }}
     </div>
     <q-list separator>

@@ -1,5 +1,5 @@
-import { storeInstance, routerInstance, cookies } from 'boot/store'
-import { i18n } from 'boot/i18n'
+import { storeInstance, routerInstance, cookies } from 'src/boot/store'
+import { i18n } from 'src/boot/i18n'
 import { Cookies } from 'quasar'
 import { StateInterface } from 'src/store'
 import VueI18n from 'vue-i18n'

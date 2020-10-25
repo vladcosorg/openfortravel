@@ -1,5 +1,10 @@
 <template>
-  <q-field borderless autofocus dense :loading="loading">
+  <q-field
+    borderless
+    autofocus
+    dense
+    :loading="loading"
+  >
     <template #control>
       <q-option-group
         v-model="internalValue"

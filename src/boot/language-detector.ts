@@ -1,5 +1,5 @@
 import { QSsrContext } from '@quasar/app'
-import { changeLanguage } from 'boot/i18n'
+import { changeLanguage } from 'src/boot/i18n'
 import { boot } from 'quasar/wrappers'
 import { getCookiesAPI } from 'src/misc/misc'
 

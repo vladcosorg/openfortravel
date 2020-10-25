@@ -4,7 +4,10 @@
       <div class="text-h6">
         Страны из которых разрешен въезд в {{ hostCountryName }}
       </div>
-      <router-link class="text-h6" :to="{ name: 'admin-index' }">
+      <router-link
+        class="text-h6"
+        :to="{ name: 'admin-index' }"
+      >
         К списку стран
       </router-link>
     </div>
@@ -16,7 +19,11 @@
         @input="origin.updateField('infoLink', $event)"
       >
         <template #view="{ value }">
-          <a :href="value" target="_blank" class="text-white">
+          <a
+            :href="value"
+            target="_blank"
+            class="text-white"
+          >
             {{ value }}
           </a>
         </template>
@@ -32,7 +39,7 @@
           <input-date
             v-bind="{ label, loading, value }"
             @input="updateValue($event)"
-          ></input-date>
+          />
         </template>
       </in-place-field>
     </div>

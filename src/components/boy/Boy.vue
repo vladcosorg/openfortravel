@@ -11,7 +11,7 @@
         [$style['handFinisheDropping']]: handFinisheDropping,
       }"
       src="../../assets/boy.svg"
-    />
+    >
   </div>
 </template>
 

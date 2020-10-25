@@ -1,4 +1,4 @@
-import { i18n } from 'boot/i18n'
+import { i18n } from 'src/boot/i18n'
 import * as firebase from 'firebase/app'
 import {
   getCountryCodes,
