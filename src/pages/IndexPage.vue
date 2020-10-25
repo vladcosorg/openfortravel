@@ -13,6 +13,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import Boy from 'components/boy/Boy.vue'
+
 export default defineComponent({
   components: { Boy },
   name: 'PageIndex',

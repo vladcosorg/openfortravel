@@ -11,6 +11,7 @@ import routes from './routes'
  * directly export the Router instantiation
  */
 
+// eslint-disable-next-line import/no-unused-modules
 export default route<Store<StateInterface>>(function ({ Vue }) {
   Vue.use(VueRouter)
   const Router = new VueRouter({

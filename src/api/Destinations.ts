@@ -1,12 +1,12 @@
 import * as firebase from 'firebase/app'
 import { TranslateResult } from 'vue-i18n'
 
+import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
 import { i18n } from 'src/boot/i18n'
 import {
   getCountryCodes,
   getLabelForCountryCode,
 } from 'src/misc/I18nCountryList'
-import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
 
 export enum DestinationStatus {
   FORBIDDEN = 'forbidden',
@@ -14,7 +14,7 @@ export enum DestinationStatus {
   CONDITIONAL = 'conditional',
 }
 
-export interface DestinationDocument {
+interface DestinationDocument {
   notes?: string
   status?: DestinationStatus
   testRequired?: boolean
@@ -30,12 +30,6 @@ export const destinationDefaults: Omit<PlainDestination, 'countryCode'> = {
   status: DestinationStatus.ALLOWED,
   testRequired: false,
   isDummy: true,
-}
-
-export function isValidDestination(
-  destination: Partial<PlainDestination>,
-): destination is PlainDestination {
-  return destination.countryCode !== undefined
 }
 
 type AtLeast<T, K extends keyof T> = Partial<T> & Pick<T, K>
@@ -148,7 +142,7 @@ export async function updateAllCountryDestinations(
   await batch.commit()
 }
 
-export function getStatusList(): DestinationStatus[] {
+function getStatusList(): DestinationStatus[] {
   return Object.values(DestinationStatus)
 }
 

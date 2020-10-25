@@ -2,7 +2,7 @@ import * as firebase from 'firebase/app'
 
 import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
 
-export interface OriginDocument {
+interface OriginDocument {
   reference: string
 }
 
@@ -58,7 +58,7 @@ export async function getOrigins(): Promise<PlainOrigin[]> {
   return results.docs.map((snapshot) => snapshot.data())
 }
 
-export async function updateOriginDoc(
+async function updateOriginDoc(
   reference: string,
   object: Partial<PlainOrigin>,
 ): Promise<void> {

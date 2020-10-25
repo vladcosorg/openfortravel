@@ -1,6 +1,6 @@
 import { Cookies } from 'quasar'
 import VueI18n from 'vue-i18n'
-import VueRouter, { Route } from 'vue-router'
+import VueRouter from 'vue-router'
 import { Store } from 'vuex'
 
 import { i18n } from 'src/boot/i18n'
@@ -19,9 +19,6 @@ export function useCookies(): Cookies {
   return cookies
 }
 
-export function useRoute(): Route {
-  return routerInstance.currentRoute
-}
 export function useI18n(): VueI18n {
   return i18n
 }

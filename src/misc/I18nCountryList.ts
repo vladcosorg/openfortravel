@@ -1,16 +1,9 @@
-import fs from 'fs'
-
-import {
-  computed,
-  ComputedRef,
-  onServerPrefetch,
-  toRef,
-  watch,
-} from '@vue/composition-api'
+import { onServerPrefetch, toRef, watch } from '@vue/composition-api'
 import transform from 'lodash/transform'
 
 import { i18n } from 'src/boot/i18n'
 import { useStore } from 'src/composables/use-plugins'
+
 export type I18nCountryList = Record<string, string>
 
 function getFirstLabel(label: string | string[]): string {
@@ -21,9 +14,7 @@ function getFirstLabel(label: string | string[]): string {
   return label
 }
 
-export const fetchCountryList = async (
-  locale: string,
-): Promise<I18nCountryList> => {
+const fetchCountryList = async (locale: string): Promise<I18nCountryList> => {
   locale = locale.split('-')[0]
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -45,25 +36,6 @@ async function loadCountryList(locale: string) {
   const store = useStore()
   const list = await fetchCountryList(locale)
   store.commit('setCountryList', Object.freeze(list))
-}
-
-export function useCountryList(): ComputedRef<
-  { value: string; label: string }[]
-> {
-  const store = useStore()
-
-  return computed(() => {
-    const list = store.state.countryList
-    return Object.keys(list).map((key) => ({
-      value: key.toLowerCase(),
-      label: getFirstLabel(list[key]),
-    }))
-  })
-}
-
-export function getCountryMap(): Record<string, string> {
-  const store = useStore()
-  return store.state.countryList
 }
 
 export function getCountryCodes(): string[] {

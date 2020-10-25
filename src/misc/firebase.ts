@@ -21,4 +21,5 @@ const firestore = firebaseApp.firestore()
 
 const countryCollection = firestore.collection('countries')
 
+// eslint-disable-next-line import/no-unused-modules
 export { firestore, firebaseApp, countryCollection }

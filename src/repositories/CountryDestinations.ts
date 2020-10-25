@@ -5,17 +5,13 @@ import {
   PlainDestination,
   PlainDestinationCollection,
 } from 'src/api/Destinations'
-import {
-  getCountryCodes as getAllCountryCodes,
-  getCountryList,
-  getCountryMap,
-} from 'src/misc/I18nCountryList'
+import { getCountryCodes as getAllCountryCodes } from 'src/misc/I18nCountryList'
 
 export type GroupedDestinations<T = PlainDestination> = {
   [key in DestinationStatus]?: T[]
 }
 
-export function generateFallbackDestinations(
+function generateFallbackDestinations(
   realDestinations: PlainDestination[],
   originCode: string,
 ): PlainDestination[] {
@@ -34,13 +30,11 @@ export function generateFallbackDestinations(
   return fallbackDestinations
 }
 
-export function getCountryCodes(
-  destinations: PlainDestinationCollection,
-): string[] {
+function getCountryCodes(destinations: PlainDestinationCollection): string[] {
   return destinations.map((destination) => destination.countryCode)
 }
 
-export function groupByStatus<T extends PlainDestination>(
+function groupByStatus<T extends PlainDestination>(
   destinations: T[],
 ): GroupedDestinations<T> {
   const allStatuses = Object.values(DestinationStatus)

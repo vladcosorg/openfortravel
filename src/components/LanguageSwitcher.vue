@@ -41,6 +41,7 @@ import { defineComponent } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 
 import { useCookies, useRouter } from 'src/composables/use-plugins'
+
 export default defineComponent({
   name: 'LanguageSwitcher',
 

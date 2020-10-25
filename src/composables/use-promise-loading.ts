@@ -8,7 +8,7 @@ export type Loading = {
   loading: Ref<boolean>
 }
 
-export function useLoading(defaultValue = false): Loading {
+function useLoading(defaultValue = false): Loading {
   const loading = ref(defaultValue)
   return { loading }
 }

@@ -59,6 +59,7 @@ module.exports = {
     // required to lint *.vue files
     'vue',
     'import',
+    'unused-imports',
   ],
 
   globals: {
@@ -87,21 +88,43 @@ module.exports = {
     // // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'import/no-unresolved': [2, { ignore: ['.vue$'] }],
+    'import/extensions': ['warn', 'always', { js: 'never', ts: 'never' }],
     'import/order': [
       'warn',
       { 'newlines-between': 'always', alphabetize: { order: 'asc' } },
     ],
     'import/no-unused-modules': [
       'warn',
-      { unusedExports: true, missingExports: true },
+      {
+        unusedExports: true,
+        missingExports: true,
+        ignoreExports: [
+          '**/*.d.ts',
+          'babel.config.js',
+          'quasar.conf.js',
+          '**/*.vue',
+          '**/src/boot/*.ts',
+        ],
+      },
+    ],
+    'import/newline-after-import': 'warn',
+    'unused-imports/no-unused-imports-ts': 'error',
+    'unused-imports/no-unused-vars-ts': [
+      'error',
+      {
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+      },
     ],
   },
   settings: {
-    // 'import/ignore': [/\.vue$/],
-    // 'import/extensions': ['.js', '.vue', '.ts'],
-    // 'import/parsers': {
-    //   '@typescript-eslint/parser': ['.ts', '.vue'],
-    // },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+      'vue-eslint-parser': ['.vue'],
+    },
+
     'import/resolver': {
       typescript: {
         project: [

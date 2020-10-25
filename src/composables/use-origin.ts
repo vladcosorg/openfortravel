@@ -1,4 +1,4 @@
-import { ref } from '@vue/composition-api'
+import { Ref } from '@vue/composition-api'
 import keyBy from 'lodash/keyBy'
 
 import {
@@ -32,7 +32,10 @@ export function useOrigin(originCode: string, defaultState: PlainOrigin) {
   return { state, updateField, loading }
 }
 
-export function useOrigins() {
+export function useOrigins(): {
+  list: Ref<Origin[]>
+  ready: Ref<boolean>
+} {
   const promise = generateOriginList()
   const { state, ready } = useAsyncState(promise, [], { freeze: true })
 
