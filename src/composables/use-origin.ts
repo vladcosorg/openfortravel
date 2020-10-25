@@ -13,9 +13,7 @@ import { Origin } from 'src/models/Origin'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function useOrigin(originCode: string, defaultState: PlainOrigin) {
-  const loading = ref(true)
-  const promise = getOrigin(originCode)
-  const { state, ready } = useAsyncState(promise, defaultState)
+  const { state, loading } = useAsyncState(getOrigin(originCode), defaultState)
 
   const updateField = async <
     K extends keyof PlainOrigin,
@@ -30,9 +28,7 @@ export function useOrigin(originCode: string, defaultState: PlainOrigin) {
     loading.value = false
   }
 
-  void promise.then(() => (loading.value = false))
-
-  return { ready, state, updateField, loading }
+  return { state, updateField, loading }
 }
 
 export function useOrigins() {

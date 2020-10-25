@@ -24,7 +24,8 @@
               @input="
                 destinations.persistAllFieldValues('testRequired', $event)
               "
-          /></q-td>
+            />
+          </q-td>
           <q-td>
             <status-input
               @input="destinations.persistAllFieldValues('status', $event)"
@@ -74,6 +75,7 @@
 <style lang="scss" module>
 .table {
   height: 100%;
+
   thead {
     background-color: $blue-grey-9;
 
@@ -97,7 +99,6 @@ import StatusInput from 'pages/admin/StatusInput.vue'
 import TableHeader from 'pages/admin/TableHeader.vue'
 import TestRequired from 'pages/admin/TestRequired.vue'
 import { useOriginDestinations } from 'src/composables/use-origin-destinations'
-import { useOrigin } from 'src/composables/use-origin'
 
 export default defineComponent({
   components: {
@@ -117,15 +118,9 @@ export default defineComponent({
     const originCode = props.originCode
     const filter = ref('')
 
-    const origin = useOrigin(originCode, {
-      countryCode: 'Loading',
-      reference: 'Loading',
-    })
-
     const destinations = useOriginDestinations(originCode)
 
     return {
-      origin,
       filter,
       destinations,
       columns: [

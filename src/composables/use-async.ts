@@ -1,43 +1,27 @@
 import { Ref, ref } from '@vue/composition-api'
+import { usePromiseLoading } from 'src/composables/use-promise-loading'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function useAsyncState<T>(
   promise: Promise<T>,
   defaultState: T,
-  { freeze }: { freeze: boolean } = { freeze: true },
+  { freeze }: { freeze: boolean } = { freeze: false },
 ): {
   state: Ref<T>
   ready: Ref<boolean>
+  loading: Ref<boolean>
 } {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-assignment
   const state = ref<T>(defaultState) as any
   const ready = ref<boolean>(false)
+  const { loading } = usePromiseLoading(promise)
 
-  function run() {
-    void promise.then((data: T) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      state.value = freeze ? Object.freeze(data) : data
-      ready.value = true
-    })
-  }
-
-  run()
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  return { state, ready }
-}
-
-export function useAsyncStateWithMapper<T, K>(
-  promise: Promise<T[]>,
-  mapper: { (item: T): K },
-): { state: Ref<K[]>; loading: Ref<boolean> } {
-  const state = ref<K[]>([])
-  const loading = ref<boolean>(true)
-
-  void promise.then((data: T[]) => {
-    state.value = data.map(mapper)
-    loading.value = false
+  void promise.then((data: T) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    state.value = freeze ? Object.freeze(data) : data
+    ready.value = true
   })
 
-  return { state, loading }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  return { state, ready, loading }
 }

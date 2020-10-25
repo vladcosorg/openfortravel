@@ -13,6 +13,7 @@ export interface PlainOrigin extends OriginDocument {
 
 export class DummyPlainOrigin implements PlainOrigin {
   public readonly reference = ''
+
   constructor(public countryCode: string) {}
 }
 

@@ -3,8 +3,8 @@ import { i18n } from 'boot/i18n'
 import { Cookies } from 'quasar'
 import { StateInterface } from 'src/store'
 import VueI18n from 'vue-i18n'
-import VueRouter from 'vue-router'
-import { Route } from 'vue-router'
+import VueRouter, { Route } from 'vue-router'
+
 import { Store } from 'vuex'
 
 export function useStore(): Store<StateInterface> {

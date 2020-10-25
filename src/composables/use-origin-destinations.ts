@@ -28,7 +28,7 @@ export function useOriginDestinations(
 } {
   const promise = generateDestinationList(originCode)
   const list = ref<Destination[]>([])
-  const { ready: loading } = useAsyncState(promise, [])
+  const { loading } = useAsyncState(promise, [])
 
   void promise.then((destinations) => {
     list.value = destinations

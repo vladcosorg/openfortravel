@@ -1,19 +1,21 @@
-import { getCurrentInstance, ref } from '@vue/composition-api'
-import mapValues from 'lodash/mapValues'
+import { getCurrentInstance } from '@vue/composition-api'
+import {
+  Loading,
+  useClosureLoading,
+  CallbackCollection,
+} from 'src/composables/use-promise-loading'
 
-export function useAsyncListeners() {
-  const loading = ref(false)
-  const listeners = mapValues(
-    getCurrentInstance()?.$listeners,
-    (callback: { (...args: unknown[]): Promise<void> }) => {
-      return async function (...args: unknown[]) {
-        loading.value = true
-        const result = await callback(...args)
-        loading.value = false
-        return result
-      }
-    },
-  )
+export function useAsyncListeners(): {
+  listeners: CallbackCollection
+} & Loading {
+  const instance = getCurrentInstance()
+
+  if (!instance) {
+    throw new Error('Instance not available')
+  }
+
+  const rawListeners = instance.$listeners as CallbackCollection
+  const { loading, closures: listeners } = useClosureLoading(rawListeners)
 
   return { loading, listeners }
 }
