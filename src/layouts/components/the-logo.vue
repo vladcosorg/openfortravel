@@ -8,30 +8,10 @@
 </template>
 
 <style lang="scss" module>
-.lang {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 .logo {
   height: auto;
   width: 140px;
   cursor: pointer;
-}
-
-.logoBg {
-  background-color: $secondary;
-  position: absolute;
-  height: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100vw;
-
-  :global {
-    animation: 1s ease-out 1s 1 normal forwards running slideInFromLeft;
-  }
 }
 </style>
 <script lang="ts">

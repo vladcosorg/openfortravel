@@ -1,6 +1,19 @@
 <template>
   <div :class="['row', $style.row]">
-    <q-select :value="currentCountry" :options="countryList" />
+    <q-select
+      :value="currentCountry"
+      :options="countryList"
+      options-dense
+      :class="[$style.select, 'col']"
+      borderless
+      item-aligned
+      use-input
+      hide-selected
+      fill-input
+      :dropdown-icon="icon"
+      @filter="filterCountryList"
+      @input="navigateToCountryPage"
+    />
     <q-btn
       v-if="showButton"
       size="14px"
@@ -19,16 +32,16 @@
   padding: 0;
   margin-right: 10px;
   height: 70px;
-
   :global {
     .q-field__control {
       border-radius: 50px;
       box-shadow: $shadow-5;
       padding: 5px 20px;
       height: 100%;
+      background-color: white;
     }
 
-    .q-field__native,
+    .q-field__input,
     .q-field__append {
       color: $primary;
       font-weight: bold;
@@ -55,14 +68,14 @@
     }
   }
 }
-
-:global(.mobile) {
-  .select {
-    :global(.q-field__input) {
-      display: none;
-    }
-  }
-}
+//
+//:global(.mobile) {
+//  .select {
+//    :global(.q-field__input) {
+//      display: none;
+//    }
+//  }
+//}
 </style>
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
@@ -90,7 +103,7 @@ export default defineComponent({
   },
   setup() {
     const filteredList = ref<List>([])
-    const clearCountry = ref(false)
+    const fullList = Object.freeze(getCountryList())
 
     const countryList = computed({
       get(): List {
@@ -102,10 +115,6 @@ export default defineComponent({
     })
 
     const currentCountry = computed<ListItem | undefined>(() => {
-      if (clearCountry.value === true) {
-        return
-      }
-
       const countryCode = getCurrentCountry()
       return {
         label: getLabelForCountryCode(countryCode),
@@ -118,8 +127,7 @@ export default defineComponent({
       update: { (callback: { (): void }): void },
     ) => {
       update(() => {
-        // currentCountry.value = null
-        countryList.value = getCountryList().filter((listItem: ListItem) => {
+        countryList.value = fullList.filter((listItem: ListItem) => {
           return listItem.label.toLowerCase().includes(currentValue)
         })
       })
@@ -129,7 +137,6 @@ export default defineComponent({
       countryList,
       currentCountry,
       filterCountryList,
-      clearCountry,
       icon,
       navigateToCountryPage,
     }
