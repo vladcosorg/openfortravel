@@ -43,7 +43,7 @@ module.exports = {
     // https://github.com/prettier/eslint-config-prettier#installation
     // usage with Prettier, provided by 'eslint-config-prettier'.
 
-    // 'plugin:unicorn/recommended',
+    'plugin:unicorn/recommended',
 
     'plugin:import/errors',
     'plugin:import/warnings',
@@ -135,6 +135,10 @@ module.exports = {
         },
       },
     ],
+    'unicorn/numeric-separators-style': 'warn',
+    'unicorn/no-unsafe-regex': 'warn',
+    'unicorn/no-unused-properties': 'warn',
+    'unicorn/prefer-replace-all': 'warn',
   },
   settings: {
     'import/parsers': {

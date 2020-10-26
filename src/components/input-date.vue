@@ -1,20 +1,8 @@
 <template>
-  <q-input
-    :value="currentValue"
-    outlined
-    autofocus
-    dense
-    mask="date"
-  >
+  <q-input :value="currentValue" outlined autofocus dense mask="date">
     <template #append>
-      <q-icon
-        name="event"
-        class="cursor-pointer"
-      >
-        <q-popup-proxy
-          ref="popup"
-          :value="true"
-        >
+      <q-icon name="event" class="cursor-pointer">
+        <q-popup-proxy ref="popup" :value="true">
           <q-date
             mask="YYYY-MM-DD"
             :value="value"
@@ -44,14 +32,14 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const popup = ref<QPopupProxy | null>(null)
+    const popup = ref<QPopupProxy>()
     const currentValue = computed({
       get() {
         return props.value
       },
       set(value) {
         emit('input', value)
-        if (popup.value !== null) {
+        if (popup.value) {
           popup.value.hide()
         }
       },

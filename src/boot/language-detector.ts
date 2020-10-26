@@ -10,7 +10,7 @@ function isServer(ssrContext?: QSsrContext | null): ssrContext is QSsrContext {
 export default boot(({ ssrContext, router }) => {
   router.beforeEach(async (to, from, next) => {
     const cookies = getCookiesAPI(ssrContext)
-    if (['admin-index', 'admin-country'].indexOf(<string>to.name) !== -1) {
+    if (['admin-index', 'admin-country'].includes(<string>to.name)) {
       await changeLanguage('en')
       return next()
     }
@@ -18,14 +18,10 @@ export default boot(({ ssrContext, router }) => {
     if (!to.params.locale) {
       let locale: string = cookies.get('locale')
       if (!locale) {
-        if (isServer(ssrContext)) {
-          locale = ssrContext.req
+        locale = isServer(ssrContext) ? ssrContext.req
             .acceptsLanguages()[0]
             .toLowerCase()
-            .split('-')[0]
-        } else {
-          locale = navigator.language.toLowerCase().split('-')[0]
-        }
+            .split('-')[0] : navigator.language.toLowerCase().split('-')[0];
         cookies.set('locale', locale)
       }
 

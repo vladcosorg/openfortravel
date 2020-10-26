@@ -74,7 +74,7 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const buffer = ref<string | undefined>(undefined)
+    const buffer = ref<string | undefined>()
     const internalValue = computed<string | undefined>({
       get() {
         if (buffer.value === undefined) {
@@ -93,7 +93,7 @@ export default defineComponent({
     const toggleEditing = () => {
       isEditing.value = !isEditing.value
 
-      if (buffer.value != null) {
+      if (buffer.value != undefined) {
         updateValue(buffer.value)
       }
     }

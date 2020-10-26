@@ -37,7 +37,7 @@ export default defineComponent({
   },
   setup(props) {
     const { loading, listeners } = useAsyncListeners()
-    const fallbackValueStorage = ref<boolean | undefined>(undefined)
+    const fallbackValueStorage = ref<boolean | undefined>()
     const internalValue = computed<boolean | undefined>({
       get() {
         if (props.value === undefined) {

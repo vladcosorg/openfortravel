@@ -105,17 +105,17 @@ export default defineComponent({
     const handFinishedRaising = ref(false)
     const handStartedDropping = ref(false)
     const handFinisheDropping = ref(true)
-    const svg = ref<Document | null>(null)
+    const svg = ref<Document | undefined>()
 
     onMounted(() => {
       const domElement = unref(svg)
-      if (domElement === null) {
+      if (!domElement) {
         return
       }
 
       let animation = domElement.querySelector('#myanim')
 
-      if (animation === null) {
+      if (!animation) {
         return
       }
 
@@ -130,7 +130,7 @@ export default defineComponent({
 
       animation = domElement.querySelector('#myanim2')
 
-      if (animation === null) {
+      if (!animation) {
         return
       }
 

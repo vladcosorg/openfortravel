@@ -111,9 +111,9 @@ export default defineComponent({
       },
     })
 
-    const currentCountry = computed<ListItem | null>(() => {
+    const currentCountry = computed<ListItem | undefined>(() => {
       if (clearCountry.value === true) {
-        return null
+        return
       }
 
       const countryCode = getCurrentCountry()
