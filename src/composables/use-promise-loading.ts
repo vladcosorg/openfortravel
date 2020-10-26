@@ -38,9 +38,9 @@ export function useClosureLoading(
 
 export function usePromiseLoading(
   promise: Promise<unknown>,
-  loadingRef?: Ref<boolean>,
+  loadingReference?: Ref<boolean>,
 ): { loading: Ref<boolean> } {
-  const loading = loadingRef ?? ref(true)
+  const loading = loadingReference ?? ref(true)
   promise.finally(() => (loading.value = false))
   return { loading }
 }

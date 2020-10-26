@@ -9,7 +9,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { configure } = require('quasar/wrappers')
 
-module.exports = configure(function (ctx) {
+module.exports = configure(function (context) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: {
@@ -79,7 +79,7 @@ module.exports = configure(function (ctx) {
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack(cfg) {
         // linting is slow in TS projects, we execute it only for production builds
-        if (ctx.prod) {
+        if (context.prod) {
           cfg.module.rules.push({
             enforce: 'pre',
             test: /\.(js|vue)$/,
