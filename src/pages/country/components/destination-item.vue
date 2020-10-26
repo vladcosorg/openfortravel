@@ -17,7 +17,7 @@
           :src="
             require(`svg-country-flags/png100px/${destination.countryCode}.png`)
           "
-        >
+        />
       </q-avatar>
     </q-item-section>
 
@@ -25,10 +25,7 @@
       <q-item-label class="text-blue-grey-2 text-weight-bold">
         {{ destination.countryLabel }}
       </q-item-label>
-      <q-item-label
-        caption
-        class="text-blue-grey-2"
-      >
+      <q-item-label caption class="text-blue-grey-2">
         Set the content filtering level to restrict apps that can be downloaded
       </q-item-label>
     </q-item-section>
@@ -52,8 +49,8 @@ import {
   PropType,
 } from '@vue/composition-api'
 
-import { Destination, PlainDestination } from 'src/api/Destinations'
-import { Origin } from 'src/models/Origin'
+import { Destination, PlainDestination } from 'src/api/destinations'
+import { Origin } from 'src/models/origin'
 
 export default defineComponent({
   props: {

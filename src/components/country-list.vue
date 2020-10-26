@@ -84,11 +84,11 @@ import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { useI18n, useRouter } from 'src/composables/use-plugins'
-import { getCurrentCountry } from 'src/misc/CountryDecider'
+import { getCurrentCountry } from 'src/misc/country-decider'
 import {
   getCountryList,
   getLabelForCountryCode,
-} from 'src/misc/I18nCountryList'
+} from 'src/misc/i18n-country-list'
 
 interface ListItem {
   value: string
@@ -130,7 +130,7 @@ export default defineComponent({
       update(() => {
         // currentCountry.value = null
         countryList.value = getCountryList().filter((listItem: ListItem) => {
-          return listItem.label.toLowerCase().indexOf(currentValue) > -1
+          return listItem.label.toLowerCase().includes(currentValue)
         })
       })
     }

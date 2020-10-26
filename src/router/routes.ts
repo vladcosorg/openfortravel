@@ -6,7 +6,7 @@ const routes = (): RouteConfig[] => [
     component: () =>
       import(
         /* webpackChunkName: "admin-layout" */
-        'layouts/AdminLayout.vue'
+        'layouts/admin-layout.vue'
       ),
 
     children: [
@@ -16,7 +16,7 @@ const routes = (): RouteConfig[] => [
         component: () =>
           import(
             /* webpackChunkName: "admin-list" */
-            'pages/admin/AdminListPage.vue'
+            'pages/admin/admin-list-page.vue'
           ),
       },
       {
@@ -25,7 +25,7 @@ const routes = (): RouteConfig[] => [
         component: () =>
           import(
             /* webpackChunkName: "admin-country" */
-            'pages/admin/AdminCountryPage.vue'
+            'pages/admin/admin-country-page.vue'
           ),
         props: true,
       },
@@ -36,7 +36,7 @@ const routes = (): RouteConfig[] => [
     component: () =>
       import(
         /* webpackChunkName: "main-layout" */
-        'layouts/MainLayout.vue'
+        'layouts/main-layout.vue'
       ),
     props(route) {
       const props = {
@@ -60,7 +60,7 @@ const routes = (): RouteConfig[] => [
         name: 'index',
         path: '',
         component: () =>
-          import(/* webpackChunkName: "page-index" */ 'pages/IndexPage.vue'),
+          import(/* webpackChunkName: "page-index" */ 'pages/index-page.vue'),
       },
       {
         name: 'origin',
@@ -68,7 +68,7 @@ const routes = (): RouteConfig[] => [
         component: () =>
           import(
             /* webpackChunkName: "page-origin" */
-            'pages/country/CountryPage.vue'
+            'pages/country/country-page.vue'
           ),
         props: true,
       },
@@ -78,7 +78,7 @@ const routes = (): RouteConfig[] => [
         component: () =>
           import(
             /* webpackChunkName: "page-destination" */
-            'pages/destination/DestinationPage.vue'
+            'pages/destination/destination-page.vue'
           ),
         props: true,
       },
@@ -90,7 +90,7 @@ const routes = (): RouteConfig[] => [
   {
     path: '*',
     component: () =>
-      import(/* webpackChunkName: "page-error" */ 'pages/Error404Page.vue'),
+      import(/* webpackChunkName: "page-error" */ 'pages/error-404-page.vue'),
   },
 ]
 

@@ -6,33 +6,14 @@
       label="Back"
       :to="{ name: 'origin', params: { originCode: origin.countryCode } }"
     />
-    <div
-      v-if="loading || !destination"
-      class="q-pa-md"
-    >
-      <q-card
-        flat
-        style="max-width: 300px"
-      >
-        <q-skeleton
-          height="150px"
-          square
-        />
+    <div v-if="loading || !destination" class="q-pa-md">
+      <q-card flat style="max-width: 300px">
+        <q-skeleton height="150px" square />
 
         <q-card-section>
-          <q-skeleton
-            type="text"
-            class="text-subtitle1"
-          />
-          <q-skeleton
-            type="text"
-            width="50%"
-            class="text-subtitle1"
-          />
-          <q-skeleton
-            type="text"
-            class="text-caption"
-          />
+          <q-skeleton type="text" class="text-subtitle1" />
+          <q-skeleton type="text" width="50%" class="text-subtitle1" />
+          <q-skeleton type="text" class="text-caption" />
         </q-card-section>
       </q-card>
     </div>
@@ -42,10 +23,7 @@
         Travel from {{ origin.countryLabel }} to
         {{ destination.countryLabel }} is {{ destination.status }}.
       </p>
-      <q-list
-        bordered
-        separator
-      >
+      <q-list bordered separator>
         <q-item>
           <q-item-section>Status: {{ destination.status }}</q-item-section>
         </q-item>
@@ -69,9 +47,9 @@ import {
   ref,
 } from '@vue/composition-api'
 
-import { Destination } from 'src/api/Destinations'
+import { Destination } from 'src/api/destinations'
 import { useStore } from 'src/composables/use-plugins'
-import { Origin } from 'src/models/Origin'
+import { Origin } from 'src/models/origin'
 
 export default defineComponent({
   props: {

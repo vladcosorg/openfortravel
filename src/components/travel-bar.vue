@@ -2,10 +2,7 @@
   <div
     class="col-auto column justify-end q-mb-xl q-px-lg relative-position text-center"
   >
-    <animated-arrow
-      v-if="showArrow"
-      :class="$style.arrow"
-    />
+    <animated-arrow v-if="showArrow" :class="$style.arrow" />
     <div :class="[$style.intro, 'q-mb-md', 'montserrat']">
       {{ $t('intro.title') }}
     </div>
@@ -28,8 +25,8 @@
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import AnimatedArrow from 'components/AnimatedArrow.vue'
-import CountryList from 'components/CountryList.vue'
+import AnimatedArrow from 'components/animated-arrow.vue'
+import CountryList from 'components/country-list.vue'
 
 export default defineComponent({
   components: { AnimatedArrow, CountryList },

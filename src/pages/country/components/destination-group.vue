@@ -1,10 +1,7 @@
 <template>
   <div v-if="destinations">
     <div :class="['text-h6', `text-${groupColor}`, 'q-pb-md']">
-      <q-icon
-        size="md"
-        :name="groupIcon"
-      />
+      <q-icon size="md" :name="groupIcon" />
       {{ groupName }}
     </div>
     <q-list separator>
@@ -19,9 +16,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from '@vue/composition-api'
-import DestinationItem from 'pages/country/components/DestinationItem.vue'
+import DestinationItem from 'pages/country/components/destination-item.vue'
 
-import { PlainDestination } from 'src/api/Destinations'
+import { PlainDestination } from 'src/api/destinations'
 
 export default defineComponent({
   components: { DestinationItem },

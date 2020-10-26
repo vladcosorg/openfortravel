@@ -25,14 +25,8 @@
         group-color="negative"
         :destinations="destinations.forbidden"
       />
-      <q-list
-        v-if="loading"
-        separator
-      >
-        <q-item
-          v-for="n in Array(4)"
-          :key="n"
-        >
+      <q-list v-if="loading" separator>
+        <q-item v-for="n in Array(4)" :key="n">
           <q-item-section avatar>
             <q-skeleton type="QAvatar" />
           </q-item-section>
@@ -42,10 +36,7 @@
               <q-skeleton type="text" />
             </q-item-label>
             <q-item-label caption>
-              <q-skeleton
-                type="text"
-                width="65%"
-              />
+              <q-skeleton type="text" width="65%" />
             </q-item-label>
           </q-item-section>
         </q-item>
@@ -71,14 +62,14 @@ import {
   watch,
 } from '@vue/composition-api'
 import isEmpty from 'lodash/isEmpty'
-import DestinationGroup from 'pages/country/components/DestinationGroup.vue'
+import DestinationGroup from 'pages/country/components/destination-group.vue'
 
 import { useStore } from 'src/composables/use-plugins'
-import { Origin } from 'src/models/Origin'
+import { Origin } from 'src/models/origin'
 import {
   generateGroupedDestinationList,
   GroupedDestinations,
-} from 'src/repositories/CountryDestinations'
+} from 'src/repositories/country-destinations'
 
 export default defineComponent({
   meta: {

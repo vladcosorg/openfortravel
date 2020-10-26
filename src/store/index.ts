@@ -6,11 +6,11 @@ import {
   getDestination,
   IncompletePlainDestination,
   PlainDestination,
-} from 'src/api/Destinations'
-import { getOrigin, PlainOrigin } from 'src/api/Origin'
-import { I18nCountryList } from 'src/misc/I18nCountryList'
-import { Origin } from 'src/models/Origin'
-import { GroupedDestinations } from 'src/repositories/CountryDestinations'
+} from 'src/api/destinations'
+import { getOrigin, PlainOrigin } from 'src/api/origin'
+import { I18nCountryList } from 'src/misc/i18n-country-list'
+import { Origin } from 'src/models/origin'
+import { GroupedDestinations } from 'src/repositories/country-destinations'
 
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -87,14 +87,14 @@ export default store(function ({ Vue }) {
     getters: {
       currentDestination: (state) => {
         if (!state.destination) {
-          return undefined
+          return
         }
 
         return new Destination(state.destination)
       },
       currentOrigin: (state) => {
         if (!state.origin) {
-          return undefined
+          return
         }
 
         return new Origin(state.origin)

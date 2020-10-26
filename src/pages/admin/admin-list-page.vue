@@ -48,7 +48,7 @@ import { formatDistanceToNow, isPast, parseISO } from 'date-fns'
 
 import { useOrigins } from 'src/composables/use-origin'
 import { useRouter } from 'src/composables/use-plugins'
-import { Origin } from 'src/models/Origin'
+import { Origin } from 'src/models/origin'
 
 export default defineComponent({
   setup() {
@@ -81,13 +81,13 @@ export default defineComponent({
           align: 'right',
           format: (date?: string) => {
             if (date) {
-              const dateObj = parseISO(date)
+              const dateObject = parseISO(date)
               return {
-                text: formatDistanceToNow(dateObj, { addSuffix: true }),
-                expired: isPast(dateObj),
+                text: formatDistanceToNow(dateObject, { addSuffix: true }),
+                expired: isPast(dateObject),
               }
             }
-            return undefined
+            return
           },
         },
       ],

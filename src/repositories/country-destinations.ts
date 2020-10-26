@@ -4,8 +4,8 @@ import {
   getOriginDestinations,
   PlainDestination,
   PlainDestinationCollection,
-} from 'src/api/Destinations'
-import { getCountryCodes as getAllCountryCodes } from 'src/misc/I18nCountryList'
+} from 'src/api/destinations'
+import { getCountryCodes as getAllCountryCodes } from 'src/misc/i18n-country-list'
 
 export type GroupedDestinations<T = PlainDestination> = {
   [key in DestinationStatus]?: T[]

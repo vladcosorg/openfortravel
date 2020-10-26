@@ -1,10 +1,5 @@
 <template>
-  <q-field
-    borderless
-    autofocus
-    dense
-    :loading="loading"
-  >
+  <q-field borderless autofocus dense :loading="loading">
     <template #control>
       <q-option-group
         v-model="internalValue"
@@ -22,7 +17,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
-import { getStatusListPairs } from 'src/api/Destinations'
+import { getStatusListPairs } from 'src/api/destinations'
 import { useAsyncListeners } from 'src/composables/use-async-listeners'
 
 export default defineComponent({
@@ -35,7 +30,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const fallbackValueStorage = ref<string | undefined>(undefined)
+    const fallbackValueStorage = ref<string | undefined>()
     const internalValue = computed<string | undefined>({
       get() {
         if (props.value === undefined) {

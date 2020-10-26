@@ -11,7 +11,7 @@
         [$style['handFinisheDropping']]: handFinisheDropping,
       }"
       src="../../assets/boy.svg"
-    >
+    />
   </div>
 </template>
 
@@ -96,7 +96,7 @@
 </style>
 <script lang="ts">
 import { defineComponent, onMounted, ref, unref } from '@vue/composition-api'
-import CountryList from 'components/CountryList.vue'
+import CountryList from 'components/country-list.vue'
 
 export default defineComponent({
   components: { CountryList },
@@ -113,7 +113,7 @@ export default defineComponent({
         return
       }
 
-      let animation = domElement.getElementById('myanim')
+      let animation = domElement.querySelector('#myanim')
 
       if (animation === null) {
         return
@@ -128,7 +128,7 @@ export default defineComponent({
         handFinishedRaising.value = true
       })
 
-      animation = domElement.getElementById('myanim2')
+      animation = domElement.querySelector('#myanim2')
 
       if (animation === null) {
         return

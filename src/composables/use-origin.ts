@@ -7,10 +7,10 @@ import {
   getOrigins,
   PlainOrigin,
   updateOriginField,
-} from 'src/api/Origin'
+} from 'src/api/origin'
 import { useAsyncState } from 'src/composables/use-async'
-import { getCountryCodes } from 'src/misc/I18nCountryList'
-import { Origin } from 'src/models/Origin'
+import { getCountryCodes } from 'src/misc/i18n-country-list'
+import { Origin } from 'src/models/origin'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function useOrigin(originCode: string, defaultState: PlainOrigin) {

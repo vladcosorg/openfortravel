@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers'
 
-import { decideOnCountry, persistCountry } from 'src/misc/CountryDecider'
+import { decideOnCountry, persistCountry } from 'src/misc/country-decider'
 import { getCookiesAPI } from 'src/misc/misc'
 
 export default boot(({ router, ssrContext }) => {

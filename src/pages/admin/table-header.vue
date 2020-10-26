@@ -4,10 +4,7 @@
       <div class="text-h6">
         Страны из которых разрешен въезд в {{ hostCountryName }}
       </div>
-      <router-link
-        class="text-h6"
-        :to="{ name: 'admin-index' }"
-      >
+      <router-link class="text-h6" :to="{ name: 'admin-index' }">
         К списку стран
       </router-link>
     </div>
@@ -19,11 +16,7 @@
         @input="origin.updateField('infoLink', $event)"
       >
         <template #view="{ value }">
-          <a
-            :href="value"
-            target="_blank"
-            class="text-white"
-          >
+          <a :href="value" target="_blank" class="text-white">
             {{ value }}
           </a>
         </template>
@@ -63,13 +56,13 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import InputDate from 'components/InputDate.vue'
-import InPlaceField from 'pages/admin/InPlaceField.vue'
-import TestRequired from 'pages/admin/TestRequired.vue'
+import InputDate from 'components/input-date.vue'
+import InPlaceField from 'pages/admin/in-place-field.vue'
+import TestRequired from 'pages/admin/test-required.vue'
 
 import { useComputedVmodel } from 'src/composables/use-computed-vmodel'
 import { useOrigin } from 'src/composables/use-origin'
-import { getLabelForCountryCode } from 'src/misc/I18nCountryList'
+import { getLabelForCountryCode } from 'src/misc/i18n-country-list'
 
 export default defineComponent({
   components: { InPlaceField, InputDate, TestRequired },

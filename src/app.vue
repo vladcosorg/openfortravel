@@ -6,7 +6,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-import { useCountryListLoader } from 'src/misc/I18nCountryList'
+import { useCountryListLoader } from 'src/misc/i18n-country-list'
 
 export default defineComponent({
   name: 'App',

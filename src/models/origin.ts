@@ -1,5 +1,5 @@
-import { PlainOrigin } from 'src/api/Origin'
-import { getLabelForCountryCode } from 'src/misc/I18nCountryList'
+import { PlainOrigin } from 'src/api/origin'
+import { getLabelForCountryCode } from 'src/misc/i18n-country-list'
 
 export class Origin implements PlainOrigin {
   public readonly countryCode!: string

@@ -43,8 +43,8 @@
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import LanguageSwitcher from 'components/LanguageSwitcher.vue'
-import Logo from 'components/Logo.vue'
+import LanguageSwitcher from 'components/language-switcher.vue'
+import Logo from 'components/logo.vue'
 
 export default defineComponent({
   components: { LanguageSwitcher, Logo },

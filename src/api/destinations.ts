@@ -6,7 +6,7 @@ import { i18n } from 'src/boot/i18n'
 import {
   getCountryCodes,
   getLabelForCountryCode,
-} from 'src/misc/I18nCountryList'
+} from 'src/misc/i18n-country-list'
 
 export enum DestinationStatus {
   FORBIDDEN = 'forbidden',

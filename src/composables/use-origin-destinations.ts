@@ -4,9 +4,9 @@ import {
   Destination,
   saveCountryDestination,
   updateAllCountryDestinations,
-} from 'src/api/Destinations'
+} from 'src/api/destinations'
 import { useAsyncState } from 'src/composables/use-async'
-import { generateDestinationList } from 'src/repositories/CountryDestinations'
+import { generateDestinationList } from 'src/repositories/country-destinations'
 
 type PersistAllFunc = <K extends keyof Destination>(
   field: K,

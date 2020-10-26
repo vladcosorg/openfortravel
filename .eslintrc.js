@@ -43,7 +43,7 @@ module.exports = {
     // https://github.com/prettier/eslint-config-prettier#installation
     // usage with Prettier, provided by 'eslint-config-prettier'.
 
-    'plugin:unicorn/recommended',
+    // 'plugin:unicorn/recommended',
 
     'plugin:import/errors',
     'plugin:import/warnings',
@@ -62,6 +62,7 @@ module.exports = {
     'vue',
     'import',
     'unused-imports',
+    'unicorn',
   ],
 
   globals: {
@@ -118,6 +119,20 @@ module.exports = {
         varsIgnorePattern: '^_',
         args: 'after-used',
         argsIgnorePattern: '^_',
+      },
+    ],
+
+    'unicorn/prevent-abbreviations': [
+      'error',
+      {
+        checkFilenames: false,
+        whitelist: {
+          args: true,
+          props: true,
+          prop: true,
+          i18n: true,
+          doc: true,
+        },
       },
     ],
   },
