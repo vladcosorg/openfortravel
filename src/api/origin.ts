@@ -58,7 +58,7 @@ export async function getOrigins(): Promise<PlainOrigin[]> {
   return results.docs.map((snapshot) => snapshot.data())
 }
 
-async function updateOriginDoc(
+async function updateOriginDocument(
   reference: string,
   object: Partial<PlainOrigin>,
 ): Promise<void> {
@@ -70,5 +70,5 @@ export async function updateOriginField<
   K extends keyof PlainOrigin,
   V extends PlainOrigin[K]
 >(reference: string, field: K, value: V): Promise<void> {
-  await updateOriginDoc(reference, { [field]: value })
+  await updateOriginDocument(reference, { [field]: value })
 }
