@@ -16,8 +16,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import HeaderBar from 'components/header-bar.vue'
-import Logo from 'components/logo.vue'
+import HeaderBar from 'layouts/components/the-header-bar.vue'
+import Logo from 'layouts/components/the-logo.vue'
 
 export default defineComponent({
   components: { HeaderBar, Logo },

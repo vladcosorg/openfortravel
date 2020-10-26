@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import Boy from 'components/boy/boy.vue'
+import Boy from 'layouts/components/the-boy/the-boy.vue'
 
 export default defineComponent({
   components: { Boy },

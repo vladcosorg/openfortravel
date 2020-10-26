@@ -10,7 +10,7 @@
         [$style['handStartedDropping']]: handStartedDropping,
         [$style['handFinisheDropping']]: handFinisheDropping,
       }"
-      src="../../assets/boy.svg"
+      src="../../../assets/boy.svg"
     />
   </div>
 </template>
@@ -96,7 +96,7 @@
 </style>
 <script lang="ts">
 import { defineComponent, onMounted, ref, unref } from '@vue/composition-api'
-import CountryList from 'components/country-list.vue'
+import CountryList from 'layouts/components/the-country-list.vue'
 
 export default defineComponent({
   components: { CountryList },

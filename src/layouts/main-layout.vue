@@ -12,9 +12,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import Container from 'components/container.vue'
-import HeaderBar from 'components/header-bar.vue'
-import TravelBar from 'components/travel-bar.vue'
+import Container from 'layouts/components/the-layout-container.vue'
+import HeaderBar from 'layouts/components/the-header-bar.vue'
+import TravelBar from 'layouts/components/the-travel-bar.vue'
 
 export default defineComponent({
   components: { HeaderBar, TravelBar, Container },

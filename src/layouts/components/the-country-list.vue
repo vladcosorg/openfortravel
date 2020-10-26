@@ -1,23 +1,8 @@
 <template>
   <div :class="['row', $style.row]">
-    <q-select
-      :value="currentCountry"
-      :options="countryList"
-      options-dense
-      :class="[$style.select, 'col']"
-      :clearable="null"
-      borderless
-      item-aligned
-      use-input
-      bg-color="white"
-      :dropdown-icon="icon"
-      @filter="filterCountryList"
-      @focus="clearCountry = true"
-      @blur="clearCountry = false"
-      @popup-hide="clearCountry = false"
-      @input="navigateToCountryPage"
-    />
+    <q-select :value="currentCountry" :options="countryList" />
     <q-btn
+      v-if="showButton"
       size="14px"
       round
       color="secondary"
@@ -98,6 +83,11 @@ interface ListItem {
 type List = ListItem[]
 
 export default defineComponent({
+  props: {
+    showButton: {
+      type: Boolean,
+    },
+  },
   setup() {
     const filteredList = ref<List>([])
     const clearCountry = ref(false)

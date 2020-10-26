@@ -6,7 +6,7 @@
     <div :class="[$style.intro, 'q-mb-md', 'montserrat']">
       {{ $t('intro.title') }}
     </div>
-    <country-list />
+    <country-list :show-button="showArrow" />
   </div>
 </template>
 
@@ -25,8 +25,8 @@
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import AnimatedArrow from 'components/animated-arrow.vue'
-import CountryList from 'components/country-list.vue'
+import AnimatedArrow from 'layouts/components/the-animated-arrow.vue'
+import CountryList from 'layouts/components/the-country-list.vue'
 
 export default defineComponent({
   components: { AnimatedArrow, CountryList },

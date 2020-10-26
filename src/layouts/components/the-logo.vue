@@ -36,7 +36,7 @@
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import LanguageSwitcher from 'components/language-switcher.vue'
+import LanguageSwitcher from 'layouts/components/the-language-switcher.vue'
 
 export default defineComponent({
   components: { LanguageSwitcher },
