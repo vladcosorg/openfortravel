@@ -39,17 +39,11 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  onMounted,
-  onServerPrefetch,
-  ref,
-} from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
-import { Destination } from 'src/api/destinations'
-import { useStore } from 'src/composables/use-plugins'
-import { Origin } from 'src/models/origin'
+import { useCurrentDestination } from 'src/composables/use-current-destination'
+import { useCurrentOrigin } from 'src/composables/use-current-origin'
+import { aggregatedLoading } from 'src/composables/use-promise-loading'
 
 export default defineComponent({
   props: {
@@ -62,39 +56,17 @@ export default defineComponent({
       required: true,
     },
   },
-  setup({ originCode, destinationCode }) {
-    const loading = ref(false)
-    onServerPrefetch(async () => {
-      await fetchAll(originCode, destinationCode)
-    })
+  setup(props) {
+    const originCode: string = props.originCode
+    const destinationCode: string = props.destinationCode
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-    const origin = computed<Origin>(() => useStore().getters.currentOrigin)
-    const destination = computed<Destination>(
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-      () => useStore().getters.currentDestination,
+    const { destination, loading: destinationLoading } = useCurrentDestination(
+      originCode,
+      destinationCode,
     )
-    onMounted(async () => {
-      if (
-        origin.value?.countryCode === originCode &&
-        destination.value?.countryCode === destinationCode
-      ) {
-        return
-      }
-
-      loading.value = true
-      await fetchAll(originCode, destinationCode)
-      loading.value = false
-    })
-
+    const { origin, loading: originLoading } = useCurrentOrigin(originCode)
+    const loading = aggregatedLoading(destinationLoading, originLoading)
     return { origin, destination, loading }
   },
 })
-async function fetchAll(originCode: string, destinationCode: string) {
-  await useStore().dispatch('loadOrigin', originCode)
-  await useStore().dispatch('loadDestination', {
-    originCode,
-    destinationCode,
-  })
-}
 </script>

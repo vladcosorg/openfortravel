@@ -1,4 +1,4 @@
-import { Ref, ref } from '@vue/composition-api'
+import { computed, ComputedRef, Ref, ref } from '@vue/composition-api'
 import mapValues from 'lodash/mapValues'
 
 type Callback = { (...args: unknown[]): Promise<unknown> }
@@ -8,9 +8,17 @@ export type Loading = {
   loading: Ref<boolean>
 }
 
-function useLoading(defaultValue = false): Loading {
+export function useLoading(defaultValue = false): Loading {
   const loading = ref(defaultValue)
   return { loading }
+}
+
+export function aggregatedLoading(
+  ...loaders: Ref<boolean>[]
+): ComputedRef<boolean> {
+  return computed<boolean>(
+    () => !loaders.every((loadingReference) => !loadingReference.value),
+  )
 }
 
 export function useClosureLoading(
@@ -41,6 +49,10 @@ export function usePromiseLoading(
   loadingReference?: Ref<boolean>,
 ): { loading: Ref<boolean> } {
   const loading = loadingReference ?? ref(true)
+  if (loadingReference) {
+    loading.value = true
+  }
+
   promise.finally(() => (loading.value = false))
   return { loading }
 }
