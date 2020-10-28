@@ -2,8 +2,13 @@
   <q-page>
     <div class="column justify-center q-pa-lg q-gutter-xl">
       <div class="text-h6 text-center">
-        Am gasit urmatoarele directii disponibile
+        Am gasit urmatoarele directii disponibile din {{ origin }}
       </div>
+
+      <img
+        :class="$style.originFlag"
+        :src="require(`svg-country-flags/svg/${origin.countryCode}.svg`)"
+      />
       <destination-group
         v-if="!loading"
         :group-name="$t('status.allowed')"
@@ -44,32 +49,26 @@
     </div>
   </q-page>
 </template>
-
+<style module>
+.originFlag {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+}
+</style>
 <script lang="ts">
 import {
   ionCheckmarkCircle as allowedIcon,
   ionAlertCircle as conditionalIcon,
   ionRemoveCircle as forbiddenIcon,
 } from '@quasar/extras/ionicons-v5'
-import {
-  computed,
-  defineComponent,
-  nextTick,
-  onMounted,
-  onServerPrefetch,
-  provide,
-  ref,
-  watch,
-} from '@vue/composition-api'
-import isEmpty from 'lodash/isEmpty'
+import { defineComponent, provide, toRefs } from '@vue/composition-api'
 import DestinationGroup from 'pages/country/components/destination-group.vue'
 
-import { useStore } from 'src/composables/use-plugins'
-import { Origin } from 'src/models/origin'
-import {
-  generateGroupedDestinationList,
-  GroupedDestinations,
-} from 'src/repositories/country-destinations'
+import { useCurrentOrigin } from 'src/composables/use-current-origin'
+import { useOriginGroupedDestinations } from 'src/composables/use-origin-destinations'
+import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 
 export default defineComponent({
   meta: {
@@ -84,50 +83,25 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const loading = ref(false)
+    const { originCode } = toRefs(props)
 
-    async function loadOrigin() {
-      await useStore().dispatch('loadOrigin', props.originCode)
-    }
-    onServerPrefetch(loadOrigin)
-    onMounted(loadOrigin)
-    const origin = computed(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      return new Origin(useStore().getters['currentOrigin'])
-    })
+    const { origin, loading: originLoading } = useCurrentOrigin(originCode)
+    const {
+      destinations,
+      loading: destinationLoading,
+    } = useOriginGroupedDestinations(originCode.value)
+
     provide('origin', origin)
 
-    const destinations = computed<GroupedDestinations>(
-      () => useStore().state.countryDestinations,
-    )
-    onServerPrefetch(loadDestinationList)
-
-    async function loadDestinationList() {
-      loading.value = true
-      useStore().commit(
-        'setCountryDestinations',
-        await generateGroupedDestinationList(props.originCode),
-      )
-      loading.value = false
-    }
-
-    watch(() => props.originCode, loadDestinationList)
-
-    onMounted(async () => {
-      if (!isEmpty(useStore().state.countryDestinations)) {
-        return
-      }
-
-      await nextTick()
-      await loadDestinationList()
-    })
+    const loading = useAggregatedLoader(originLoading, destinationLoading)
 
     return {
+      origin,
       destinations,
+      loading,
       allowedIcon,
       conditionalIcon,
       forbiddenIcon,
-      loading,
     }
   },
 })

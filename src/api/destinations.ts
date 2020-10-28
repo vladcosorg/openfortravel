@@ -3,10 +3,7 @@ import { TranslateResult } from 'vue-i18n'
 
 import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
 import { i18n } from 'src/boot/i18n'
-import {
-  getCountryCodes,
-  getLabelForCountryCode,
-} from 'src/misc/i18n-country-list'
+import { getCountryCodes, getLabelForCountryCode } from 'src/misc/country-list'
 
 export enum DestinationStatus {
   FORBIDDEN = 'forbidden',

@@ -1,4 +1,14 @@
-import { ref, Ref } from '@vue/composition-api'
+import {
+  computed,
+  ComputedRef,
+  nextTick,
+  onMounted,
+  onServerPrefetch,
+  ref,
+  Ref,
+  watch,
+} from '@vue/composition-api'
+import isEmpty from 'lodash/isEmpty'
 
 import {
   Destination,
@@ -6,7 +16,13 @@ import {
   updateAllCountryDestinations,
 } from 'src/api/destinations'
 import { useAsyncState } from 'src/composables/use-async'
-import { generateDestinationList } from 'src/repositories/country-destinations'
+import { useStore } from 'src/composables/use-plugins'
+import { Loading, useLoading } from 'src/composables/use-promise-loading'
+import {
+  generateDestinationList,
+  generateGroupedDestinationList,
+  GroupedDestinations,
+} from 'src/repositories/country-destinations'
 
 type PersistAllFunc = <K extends keyof Destination>(
   field: K,
@@ -63,4 +79,45 @@ export function useOriginDestinations(
     persistOneFieldValue,
     persistAllFieldValues,
   }
+}
+
+export function useOriginGroupedDestinations(
+  originCode: string,
+): {
+  destinations: ComputedRef<GroupedDestinations>
+} & Loading {
+  const destinations = computed<GroupedDestinations>(
+    () => useStore().state.countryDestinations,
+  )
+  const { loading } = useLoading(false)
+  onServerPrefetch(loadDestinationList)
+
+  async function loadDestinationList() {
+    loading.value = true
+    await fetchDestinations(originCode)
+    loading.value = false
+  }
+
+  watch(() => originCode, loadDestinationList)
+
+  onMounted(async () => {
+    if (!isEmpty(useStore().state.countryDestinations)) {
+      return
+    }
+
+    await nextTick()
+    await loadDestinationList()
+  })
+
+  return {
+    destinations,
+    loading,
+  }
+}
+
+async function fetchDestinations(originCode: string): Promise<void> {
+  useStore().commit(
+    'setCountryDestinations',
+    await generateGroupedDestinationList(originCode),
+  )
 }

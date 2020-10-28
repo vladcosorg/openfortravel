@@ -68,14 +68,6 @@
     }
   }
 }
-//
-//:global(.mobile) {
-//  .select {
-//    :global(.q-field__input) {
-//      display: none;
-//    }
-//  }
-//}
 </style>
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
@@ -83,10 +75,7 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { useI18n, useRouter } from 'src/composables/use-plugins'
 import { getCurrentCountry } from 'src/misc/country-decider'
-import {
-  getCountryList,
-  getLabelForCountryCode,
-} from 'src/misc/i18n-country-list'
+import { getCountryList, getLabelForCountryCode } from 'src/misc/country-list'
 
 interface ListItem {
   value: string
@@ -103,7 +92,7 @@ export default defineComponent({
   },
   setup() {
     const filteredList = ref<List>([])
-    const fullList = Object.freeze(getCountryList())
+    const fullList = getCountryList()
 
     const countryList = computed({
       get(): List {

@@ -9,7 +9,7 @@ import {
   updateOriginField,
 } from 'src/api/origin'
 import { useAsyncState } from 'src/composables/use-async'
-import { getCountryCodes } from 'src/misc/i18n-country-list'
+import { getCountryCodes } from 'src/misc/country-list'
 import { Origin } from 'src/models/origin'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

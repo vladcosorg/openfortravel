@@ -39,11 +39,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, toRefs } from '@vue/composition-api'
 
 import { useCurrentDestination } from 'src/composables/use-current-destination'
 import { useCurrentOrigin } from 'src/composables/use-current-origin'
-import { aggregatedLoading } from 'src/composables/use-promise-loading'
+import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 
 export default defineComponent({
   props: {
@@ -57,15 +57,17 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const originCode: string = props.originCode
-    const destinationCode: string = props.destinationCode
+    const { originCode, destinationCode } = toRefs<{
+      originCode: string
+      destinationCode: string
+    }>(props)
 
     const { destination, loading: destinationLoading } = useCurrentDestination(
-      originCode,
-      destinationCode,
+      originCode.value,
+      destinationCode.value,
     )
     const { origin, loading: originLoading } = useCurrentOrigin(originCode)
-    const loading = aggregatedLoading(destinationLoading, originLoading)
+    const loading = useAggregatedLoader(destinationLoading, originLoading)
     return { origin, destination, loading }
   },
 })

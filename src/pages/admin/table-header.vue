@@ -62,7 +62,7 @@ import TestRequired from 'pages/admin/test-required.vue'
 
 import { useComputedVmodel } from 'src/composables/use-computed-vmodel'
 import { useOrigin } from 'src/composables/use-origin'
-import { getLabelForCountryCode } from 'src/misc/i18n-country-list'
+import { getLabelForCountryCode } from 'src/misc/country-list'
 
 export default defineComponent({
   components: { InPlaceField, InputDate, TestRequired },

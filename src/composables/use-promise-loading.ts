@@ -13,7 +13,7 @@ export function useLoading(defaultValue = false): Loading {
   return { loading }
 }
 
-export function aggregatedLoading(
+export function useAggregatedLoader(
   ...loaders: Ref<boolean>[]
 ): ComputedRef<boolean> {
   return computed<boolean>(

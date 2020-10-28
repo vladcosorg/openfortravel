@@ -8,7 +8,7 @@ import {
   PlainDestination,
 } from 'src/api/destinations'
 import { getOrigin, PlainOrigin } from 'src/api/origin'
-import { I18nCountryList } from 'src/misc/i18n-country-list'
+import { CountryList } from 'src/misc/country-list'
 import { Origin } from 'src/models/origin'
 import { GroupedDestinations } from 'src/repositories/country-destinations'
 
@@ -26,7 +26,7 @@ export interface StateInterface {
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   // example: unknown;a
   // count: unknown;
-  countryList: I18nCountryList
+  countryList: CountryList
   detectedCountry: string
   countryDestinations: GroupedDestinations
   origin: PlainOrigin
@@ -47,7 +47,7 @@ export default store(function ({ Vue }) {
       destination: { countryCode: 'us' },
     },
     mutations: {
-      setCountryList(state: StateInterface, list: I18nCountryList) {
+      setCountryList(state: StateInterface, list: CountryList) {
         state.countryList = list
       },
       setDetectedCountry(state: StateInterface, country: string) {
@@ -68,7 +68,10 @@ export default store(function ({ Vue }) {
     },
 
     actions: {
-      async loadOrigin({ commit }, countryCode: string) {
+      async loadOrigin({ commit, state }, countryCode: string) {
+        if (state.origin.countryCode === countryCode) {
+          return
+        }
         commit('setOrigin', await getOrigin(countryCode))
       },
       async loadDestination(
