@@ -1,5 +1,4 @@
 import {
-  computed,
   ComputedRef,
   onServerPrefetch,
   onMounted,
@@ -7,12 +6,12 @@ import {
   watch,
 } from '@vue/composition-api'
 
-import { useStore } from 'src/composables/use-plugins'
 import {
   Loading,
   useLoading,
   usePromiseLoading,
 } from 'src/composables/use-promise-loading'
+import { useVuexAction, useVuexGetter } from 'src/composables/use-vuex'
 import { Origin } from 'src/models/origin'
 
 export function useCurrentOrigin(
@@ -22,17 +21,12 @@ export function useCurrentOrigin(
 } & Loading {
   const { loading } = useLoading(false)
   async function fetchOrigin() {
-    await usePromiseLoading(
-      useStore().dispatch('loadOrigin', originCode.value),
-      loading,
-    )
+    const promise = useVuexAction('loadOrigin', originCode.value)
+    usePromiseLoading(promise, loading)
+    await promise
   }
 
-  const origin = computed<Origin>(
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
-    () => useStore().getters.currentOrigin,
-  )
-
+  const origin = useVuexGetter<Origin>('currentOrigin')
   onServerPrefetch(fetchOrigin)
   onMounted(fetchOrigin)
   watch(originCode, fetchOrigin)

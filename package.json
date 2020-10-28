@@ -26,6 +26,7 @@
     "i18n-iso-countries": "^6.0.0",
     "iso-language-list": "^0.3.2",
     "lodash": "^4.17.20",
+    "portal-vue": "^2.1.7",
     "quasar": "^1.0.0",
     "svg-country-flags": "^1.2.7",
     "typescript": "^4.0.2",

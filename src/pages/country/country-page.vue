@@ -1,14 +1,14 @@
 <template>
   <q-page>
+    <portal to="top">
+      <the-flag-background :first-country-code="originCode" />
+    </portal>
+
     <div class="column justify-center q-pa-lg q-gutter-xl">
       <div class="text-h6 text-center">
-        Am gasit urmatoarele directii disponibile din {{ origin }}
+        Am gasit urmatoarele directii disponibile
       </div>
 
-      <img
-        :class="$style.originFlag"
-        :src="require(`svg-country-flags/svg/${origin.countryCode}.svg`)"
-      />
       <destination-group
         v-if="!loading"
         :group-name="$t('status.allowed')"
@@ -50,11 +50,12 @@
   </q-page>
 </template>
 <style module>
-.originFlag {
+.flagBg {
   position: absolute;
   left: 0;
   top: 0;
   margin: 0;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
 }
 </style>
 <script lang="ts">
@@ -63,11 +64,14 @@ import {
   ionAlertCircle as conditionalIcon,
   ionRemoveCircle as forbiddenIcon,
 } from '@quasar/extras/ionicons-v5'
-import { defineComponent, provide, toRefs } from '@vue/composition-api'
+import { defineComponent, provide, toRefs, watch } from '@vue/composition-api'
+import TheFlagBackground from 'layouts/components/the-flag-background.vue'
 import DestinationGroup from 'pages/country/components/destination-group.vue'
+import { Portal } from 'portal-vue'
 
 import { useCurrentOrigin } from 'src/composables/use-current-origin'
 import { useOriginGroupedDestinations } from 'src/composables/use-origin-destinations'
+import { useStore } from 'src/composables/use-plugins'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 
 export default defineComponent({
@@ -75,7 +79,7 @@ export default defineComponent({
     // sets document title
     title: 'is page',
   },
-  components: { DestinationGroup },
+  components: { DestinationGroup, Portal, TheFlagBackground },
   props: {
     originCode: {
       type: String,
@@ -94,6 +98,10 @@ export default defineComponent({
     provide('origin', origin)
 
     const loading = useAggregatedLoader(originLoading, destinationLoading)
+
+    watch(loading, (newValue) => {
+      useStore().commit('setCountrySelectorLoading', newValue)
+    })
 
     return {
       origin,

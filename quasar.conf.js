@@ -28,7 +28,6 @@ module.exports = configure(function (context) {
       'composition-api',
       'store',
       'i18n',
-      'axios',
       'language-detector',
       'country-detector',
     ],
@@ -147,12 +146,13 @@ module.exports = configure(function (context) {
       // directives: [],
       components: [],
       // Quasar plugins
-      plugins: ['Cookies', 'Loading', 'Meta'],
+      plugins: ['Cookies', 'Meta'],
     },
 
     // animations: 'all', // --- includes all animations
     // https://quasar.dev/options/animations
-    animations: [],
+    // animations: [],
+    animations: ['bounceIn', 'bounceOut', 'fadeInRight', 'fadeOutRight'],
 
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {

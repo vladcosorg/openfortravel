@@ -1,5 +1,6 @@
 <template>
   <container :fullheight="fullHeight">
+    <portal-target name="top" slim />
     <header-bar />
     <travel-bar
       v-if="showTravelBar"
@@ -15,9 +16,15 @@ import { defineComponent } from '@vue/composition-api'
 import HeaderBar from 'layouts/components/the-header-bar.vue'
 import Container from 'layouts/components/the-layout-container.vue'
 import TravelBar from 'layouts/components/the-travel-bar.vue'
+import { PortalTarget } from 'portal-vue'
 
 export default defineComponent({
-  components: { HeaderBar, TravelBar, Container },
+  components: {
+    HeaderBar,
+    TravelBar,
+    Container,
+    PortalTarget,
+  },
   meta: {
     title: 'lol',
     titleTemplate: (title: string) => `${title} - Open For Travel`,

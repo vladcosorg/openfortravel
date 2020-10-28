@@ -40,7 +40,6 @@ export async function getOrigin(code: string): Promise<PlainOrigin> {
     .doc(code)
     .withConverter<PlainOrigin>(dataConverter)
     .get()
-  console.log(doc)
   const data = doc.data()
   if (!data) {
     return new DummyPlainOrigin(code)

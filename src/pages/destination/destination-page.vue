@@ -1,12 +1,18 @@
 <template>
   <q-page>
+    <portal to="top">
+      <the-flag-background
+        :first-country-code="originCode"
+        :second-country-code="destinationCode"
+      />
+    </portal>
     <q-btn
       color="primary"
       icon="back"
       label="Back"
       :to="{ name: 'origin', params: { originCode: origin.countryCode } }"
     />
-    <div v-if="loading || !destination" class="q-pa-md">
+    <div v-if="loading" class="q-pa-md">
       <q-card flat style="max-width: 300px">
         <q-skeleton height="150px" square />
 
@@ -40,12 +46,15 @@
 
 <script lang="ts">
 import { defineComponent, toRefs } from '@vue/composition-api'
+import TheFlagBackground from 'layouts/components/the-flag-background.vue'
+import { Portal } from 'portal-vue'
 
 import { useCurrentDestination } from 'src/composables/use-current-destination'
 import { useCurrentOrigin } from 'src/composables/use-current-origin'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 
 export default defineComponent({
+  components: { Portal, TheFlagBackground },
   props: {
     originCode: {
       type: String,

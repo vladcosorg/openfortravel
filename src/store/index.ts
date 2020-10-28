@@ -26,6 +26,7 @@ export interface StateInterface {
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   // example: unknown;a
   // count: unknown;
+  countrySelectorLoading: boolean
   countryList: CountryList
   detectedCountry: string
   countryDestinations: GroupedDestinations
@@ -40,6 +41,7 @@ export default store(function ({ Vue }) {
   // eslint-disable-next-line import/no-named-as-default-member
   return new Vuex.Store<StateInterface>({
     state: {
+      countrySelectorLoading: false,
       countryList: {},
       detectedCountry: 'us',
       countryDestinations: {},
@@ -47,6 +49,9 @@ export default store(function ({ Vue }) {
       destination: { countryCode: 'us' },
     },
     mutations: {
+      setCountrySelectorLoading(state, value: boolean) {
+        state.countrySelectorLoading = value
+      },
       setCountryList(state: StateInterface, list: CountryList) {
         state.countryList = list
       },
@@ -75,12 +80,15 @@ export default store(function ({ Vue }) {
         commit('setOrigin', await getOrigin(countryCode))
       },
       async loadDestination(
-        { commit },
+        { commit, state },
         {
           originCode,
           destinationCode,
         }: { originCode: string; destinationCode: string },
       ) {
+        if (state.destination.countryCode === destinationCode) {
+          return
+        }
         commit(
           'setDestination',
           await getDestination(originCode, destinationCode),

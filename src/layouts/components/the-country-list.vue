@@ -8,6 +8,8 @@
       borderless
       item-aligned
       use-input
+      :loading="loading"
+      :disable="loading"
       hide-selected
       fill-input
       :dropdown-icon="icon"
@@ -73,7 +75,7 @@
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
-import { useI18n, useRouter } from 'src/composables/use-plugins'
+import { useI18n, useRouter, useStore } from 'src/composables/use-plugins'
 import { getCurrentCountry } from 'src/misc/country-decider'
 import { getCountryList, getLabelForCountryCode } from 'src/misc/country-list'
 
@@ -103,6 +105,8 @@ export default defineComponent({
       },
     })
 
+    const loading = computed(() => useStore().state.countrySelectorLoading)
+
     const currentCountry = computed<ListItem | undefined>(() => {
       const countryCode = getCurrentCountry()
       return {
@@ -123,6 +127,7 @@ export default defineComponent({
     }
 
     return {
+      loading,
       countryList,
       currentCountry,
       filterCountryList,
