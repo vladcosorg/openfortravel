@@ -62,7 +62,7 @@ module.exports = {
     'vue',
     'import',
     'unused-imports',
-    'unicorn',
+    // 'unicorn',
   ],
 
   globals: {
@@ -139,6 +139,7 @@ module.exports = {
     'unicorn/no-unsafe-regex': 'warn',
     'unicorn/no-unused-properties': 'warn',
     'unicorn/prefer-replace-all': 'warn',
+    'unicorn/filename-case': 'off',
   },
   settings: {
     'import/parsers': {

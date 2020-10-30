@@ -1815,20 +1815,10 @@
   dependencies:
     tslib "^2.0.0"
 
-"@vueuse/core@^4.0.0-beta.30":
-  version "4.0.0-beta.30"
-  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-4.0.0-beta.30.tgz#ce7fe9a470c1ad802e56c6a8ad343d588c06986f"
-  integrity sha512-RNdxUm/++eHEsDH3BJJfTqA07y6kralyLYXKwoOHWUd37z2fHgIs8mMamNpfrRLqQVdOqiPfdRNrDn8Cuw+OgQ==
-  dependencies:
-    "@vueuse/shared" "4.0.0-beta.30"
-    vue-demi latest
-
-"@vueuse/shared@4.0.0-beta.30":
-  version "4.0.0-beta.30"
-  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-4.0.0-beta.30.tgz#1de048c6e49321098da09eb0a1bd263dc7becb91"
-  integrity sha512-bGCSLW0dSYeRe5hfi6k/NvXdyArcFMJVcjwhXDBTLMejFYxoYqqi3RivpHLWyO7eyrzNKdKsgqty2UkPQt8vEQ==
-  dependencies:
-    vue-demi latest
+"@vueuse/core@^2.0.35":
+  version "2.0.35"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-2.0.35.tgz#84df6f708e18102082b0cd50e6efc843307c5df2"
+  integrity sha512-k/f4YoU8L2JrvPMCQqYo4LkSPuIw04giKti5PuCFo93rGpSoItIMj7oP4Bl0R10cEQbE06mhXJP0XmrtUQ83tg==
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -10327,11 +10317,6 @@ vue-auto-i18n@^0.5.2:
   dependencies:
     axios "^0.20.0"
     flat "^5.0.2"
-
-vue-demi@latest:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.4.1.tgz#2261b8afe57b99ef4a6ee82a7bd2e6fe471bdcde"
-  integrity sha512-3xxnqY426eMKhmYdNygYwOvuaJlrgP+aSZLiD5GdCF7cBsMNmUZM7g3RL0NqIuY19WB5CCzuFbi/xW1Nd053xw==
 
 vue-eslint-parser@^7.0.0:
   version "7.1.1"

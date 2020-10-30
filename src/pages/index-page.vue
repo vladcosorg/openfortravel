@@ -15,6 +15,7 @@ export default defineComponent({
   components: {
     Boy: hydrateWhenIdle(
       () => import('layouts/components/the-boy/the-boy.vue'),
+      {},
     ),
   },
   name: 'PageIndex',

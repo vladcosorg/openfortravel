@@ -75,6 +75,7 @@ module.exports = configure(function (context) {
       analyze: true,
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
+      // minify: false,
 
       // https://quasar.dev/quasar-cli/handling-webpack
       extendWebpack(cfg) {
@@ -91,6 +92,17 @@ module.exports = configure(function (context) {
         cfg.module.rules.push({
           test: /\.vue$/,
           loader: 'vue-svg-inline-loader',
+          options: {
+            svgo: {
+              plugins: [
+                {
+                  inlineStyles: {
+                    onlyMatchedOnce: false,
+                  },
+                },
+              ],
+            },
+          },
         })
       },
       chainWebpack(cfg) {
@@ -153,7 +165,7 @@ module.exports = configure(function (context) {
     // animations: 'all', // --- includes all animations
     // https://quasar.dev/options/animations
     // animations: [],
-    animations: ['bounceIn', 'bounceOut', 'fadeInRight', 'fadeOutRight'],
+    animations: ['fadeIn', 'fadeOut', 'fadeInRight', 'fadeOutRight'],
 
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {

@@ -5,9 +5,6 @@
     </portal>
 
     <div class="column justify-center q-pa-lg q-gutter-xl">
-      <div class="text-h6 text-center">
-        Am gasit urmatoarele directii disponibile
-      </div>
       <q-input
         v-model="destinationFilter"
         placeholder="Quick country search"
@@ -17,50 +14,48 @@
         stack-label
         dark
       />
-      <lazy-hydrate ssr-only>
-        <div>
-          <q-list v-if="loading || filterLoading" separator>
-            <q-item v-for="n in Array(4)" :key="n">
-              <q-item-section avatar>
-                <q-skeleton type="QAvatar" />
-              </q-item-section>
+      <!--      <lazy-hydrate ssr-only>-->
+      <q-list v-if="loading || filterLoading" separator>
+        <q-item v-for="n in Array(4)" :key="n">
+          <q-item-section avatar>
+            <q-skeleton type="QAvatar" />
+          </q-item-section>
 
-              <q-item-section>
-                <q-item-label>
-                  <q-skeleton type="text" />
-                </q-item-label>
-                <q-item-label caption>
-                  <q-skeleton type="text" width="65%" />
-                </q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-          <div v-else>
-            <destination-group
-              v-if="!loading"
-              :group-name="$t('status.allowed')"
-              :group-icon="allowedIcon"
-              group-color="positive"
-              :destinations="destinations.allowed"
-            />
-            <destination-group
-              v-if="!loading"
-              :group-name="$t('status.conditional')"
-              :group-icon="conditionalIcon"
-              group-color="warning"
-              :destinations="destinations.conditional"
-            />
-            <destination-group
-              v-if="!loading"
-              :group-name="$t('status.forbidden')"
-              :group-icon="forbiddenIcon"
-              group-color="negative"
-              :destinations="destinations.forbidden"
-            />
-          </div>
-        </div>
-      </lazy-hydrate>
+          <q-item-section>
+            <q-item-label>
+              <q-skeleton type="text" />
+            </q-item-label>
+            <q-item-label caption>
+              <q-skeleton type="text" width="65%" />
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+      <div v-else>
+        <destination-group
+          v-if="!loading && destinations.allowed"
+          :group-name="$t('status.allowed')"
+          :group-icon="allowedIcon"
+          group-color="positive"
+          :destinations="destinations.allowed"
+        />
+        <destination-group
+          v-if="!loading"
+          :group-name="$t('status.conditional')"
+          :group-icon="conditionalIcon"
+          group-color="warning"
+          :destinations="destinations.conditional"
+        />
+        <destination-group
+          v-if="!loading"
+          :group-name="$t('status.forbidden')"
+          :group-icon="forbiddenIcon"
+          group-color="negative"
+          :destinations="destinations.forbidden"
+        />
+      </div>
     </div>
+    <!--      </lazy-hydrate>-->
   </q-page>
 </template>
 <style module>

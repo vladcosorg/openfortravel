@@ -2,6 +2,15 @@ import { RouteConfig } from 'vue-router'
 
 const routes = (): RouteConfig[] => [
   {
+    path: '/admin/test',
+    name: 'admin-index',
+    component: () =>
+      import(
+        /* webpackChunkName: "test-layout" */
+        'layouts/test-layout.vue'
+      ),
+  },
+  {
     path: '/admin',
     component: () =>
       import(

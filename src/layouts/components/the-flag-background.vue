@@ -1,32 +1,35 @@
 <template>
-  <div :class="[$style.flagBg]">
-    <div :class="[$style.flagBgInner, 'relative-position']">
-      <flag
-        :class="{
-          [$style.firstCountry]: true,
-          [$style.halfWidth]: secondCountryCode,
-        }"
-        :country-code="firstCountryCode"
-      />
-      <transition
-        appear
-        enter-active-class="animated fadeInRight"
-        leave-active-class="animated fadeOutRight"
-      >
+  <transition
+    appear
+    enter-active-class="animated fadeIn"
+    leave-active-class="animated fadeOut"
+  >
+    <div :key="firstCountryCode" :class="[$style.flagBg]">
+      <div :class="['fit', 'relative-position']">
         <flag
-          v-if="secondCountryCode"
-          :class="$style.secondCountry"
-          :country-code="secondCountryCode"
+          :class="{
+            [$style.firstCountry]: true,
+            [$style.halfWidth]: secondCountryCode,
+          }"
+          :country-code="firstCountryCode"
         />
-      </transition>
+        <transition
+          appear
+          enter-active-class="animated fadeInRight"
+          leave-active-class="animated fadeOutRight"
+        >
+          <flag
+            v-if="secondCountryCode"
+            :class="$style.secondCountry"
+            :country-code="secondCountryCode"
+          />
+        </transition>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <style lang="scss" module>
-.halfWidth {
-  width: 50% !important;
-}
 .flagBg {
   position: absolute;
   left: 0;
@@ -41,29 +44,29 @@
       object-fit: cover;
       position: absolute;
       height: 100%;
-      top: 0;
     }
   }
-  .flagBgInner {
-    height: 100%;
-    width: 100%;
-  }
+}
 
-  .firstCountry {
-    left: 0;
-    width: 100%;
-  }
+.firstCountry {
+  left: 0;
+  width: 100%;
+  transition: width 0.3s ease;
+}
 
-  .secondCountry {
-    right: 0;
-    mask-image: linear-gradient(
-      to left,
-      rgba(0, 0, 0, 1) 45%,
-      rgba(0, 0, 0, 1) 50%
-    );
-    z-index: 1;
-    width: 50%;
-  }
+.halfWidth {
+  width: 50%;
+}
+
+.secondCountry {
+  right: 0;
+  mask-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 1) 90%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  z-index: 1;
+  width: 50%;
 }
 </style>
 <script lang="ts">

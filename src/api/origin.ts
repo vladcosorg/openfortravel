@@ -1,6 +1,4 @@
-import * as firebase from 'firebase/app'
-
-import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
+import type * as firebase from 'firebase'
 
 interface OriginDocument {
   reference: string
@@ -18,7 +16,7 @@ export class DummyPlainOrigin implements PlainOrigin {
   constructor(public countryCode: string) {}
 }
 
-const dataConverter: FirestoreDataConverter<PlainOrigin> = {
+const dataConverter: firebase.firestore.FirestoreDataConverter<PlainOrigin> = {
   toFirestore({ reference }: PlainOrigin): OriginDocument {
     return { reference }
   },

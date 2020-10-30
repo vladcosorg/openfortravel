@@ -1,7 +1,6 @@
-import * as firebase from 'firebase/app'
+import type * as firebase from 'firebase'
 import { TranslateResult } from 'vue-i18n'
 
-import FirestoreDataConverter = firebase.firestore.FirestoreDataConverter
 import { i18n } from 'src/boot/i18n'
 import { getCountryCodes, getLabelForCountryCode } from 'src/misc/country-list'
 
@@ -52,7 +51,7 @@ export class Destination implements PlainDestination {
 
 export type PlainDestinationCollection = PlainDestination[]
 
-const destinationCountryConverter: FirestoreDataConverter<PlainDestination> = {
+const destinationCountryConverter: firebase.firestore.FirestoreDataConverter<PlainDestination> = {
   toFirestore({
     notes,
     status,
@@ -76,7 +75,7 @@ const destinationCountryConverter: FirestoreDataConverter<PlainDestination> = {
 export async function getOriginDestinations(
   code: string,
 ): Promise<PlainDestination[]> {
-  const { countryCollection } = await import('src/misc/firebase')
+  const { countryCollection, firebase } = await import('src/misc/firebase')
   const results = await countryCollection
     .doc(code)
     .collection('destinations')

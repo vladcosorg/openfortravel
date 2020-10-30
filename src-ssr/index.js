@@ -15,6 +15,13 @@ const express = require('express')
 const compression = require('compression')
 
 const ssr = require('quasar-ssr')
+ssr.mergeRendererOptions({
+  shouldPrefetch: (file) => {
+    return ['country-list', 'admin', 'lang', '0.'].every(
+      (item) => !file.includes(item),
+    )
+  },
+})
 const extension = require('./extension')
 const app = express()
 const port = process.env.PORT || 3000
