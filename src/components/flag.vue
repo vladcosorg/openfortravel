@@ -1,19 +1,33 @@
 <template>
-  <img :src="require(`svg-country-flags/svg/${countryCode}.svg`)" />
+  <img loading="lazy" :src="url" />
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
   components: {},
   props: {
+    png: {
+      type: Boolean,
+      default: false,
+    },
     countryCode: {
       type: String,
       required: true,
     },
+  },
+  setup(prop) {
+    const url = computed<string>(() => {
+      return prop.png
+        ? // eslint-disable-next-line no-undef,import/extensions
+          require(`svg-country-flags/png100px/${prop.countryCode}.png`)
+        : // eslint-disable-next-line no-undef,import/extensions
+          require(`svg-country-flags/svg/${prop.countryCode}.svg`)
+    })
+    return {
+      url,
+    }
   },
 })
 </script>

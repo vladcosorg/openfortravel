@@ -1,3 +1,5 @@
+import isEmpty from 'lodash/isEmpty'
+import mapValues from 'lodash/mapValues'
 import { store } from 'quasar/wrappers'
 import Vuex from 'vuex'
 
@@ -10,7 +12,10 @@ import {
 import { getOrigin, PlainOrigin } from 'src/api/origin'
 import { CountryList } from 'src/misc/country-list'
 import { Origin } from 'src/models/origin'
-import { GroupedDestinations } from 'src/repositories/country-destinations'
+import {
+  generateGroupedDestinationList,
+  GroupedDestinations,
+} from 'src/repositories/country-destinations'
 
 // import { ExampleStateInterface } from './module-example/state';
 
@@ -94,8 +99,30 @@ export default store(function ({ Vue }) {
           await getDestination(originCode, destinationCode),
         )
       },
+      async fetchCountryDestinations({ commit, state }, originCode: string) {
+        if (
+          !isEmpty(state.countryDestinations) &&
+          state.detectedCountry === originCode
+        ) {
+          return
+        }
+
+        commit(
+          'setCountryDestinations',
+          await generateGroupedDestinationList(originCode),
+        )
+      },
     },
     getters: {
+      getCountryDestinationsObjects: (state) => {
+        return mapValues(state.countryDestinations, (group) => {
+          if (group === undefined) {
+            return group
+          }
+
+          return group.map((destination) => new Destination(destination))
+        })
+      },
       currentDestination: (state) => {
         if (!state.destination) {
           return

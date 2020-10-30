@@ -1,25 +1,32 @@
 <template>
   <div :class="[$style.flagBg]">
     <div :class="[$style.flagBgInner, 'relative-position']">
-      <flag :class="$style.firstCountry" :country-code="firstCountryCode" />
+      <flag
+        :class="{
+          [$style.firstCountry]: true,
+          [$style.halfWidth]: secondCountryCode,
+        }"
+        :country-code="firstCountryCode"
+      />
       <transition
         appear
         enter-active-class="animated fadeInRight"
         leave-active-class="animated fadeOutRight"
       >
-        <keep-alive>
-          <flag
-            v-if="secondCountryCode"
-            :class="$style.secondCountry"
-            :country-code="secondCountryCode"
-          />
-        </keep-alive>
+        <flag
+          v-if="secondCountryCode"
+          :class="$style.secondCountry"
+          :country-code="secondCountryCode"
+        />
       </transition>
     </div>
   </div>
 </template>
 
 <style lang="scss" module>
+.halfWidth {
+  width: 50% !important;
+}
 .flagBg {
   position: absolute;
   left: 0;
@@ -52,9 +59,10 @@
     mask-image: linear-gradient(
       to left,
       rgba(0, 0, 0, 1) 45%,
-      rgba(0, 0, 0, 0) 50%
+      rgba(0, 0, 0, 1) 50%
     );
     z-index: 1;
+    width: 50%;
   }
 }
 </style>

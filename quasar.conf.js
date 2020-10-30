@@ -25,6 +25,7 @@ module.exports = configure(function (context) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
+      'vue',
       'composition-api',
       'store',
       'i18n',

@@ -1,14 +1,13 @@
 import {
-  computed,
   ComputedRef,
-  nextTick,
   onMounted,
   onServerPrefetch,
   ref,
   Ref,
   watch,
+  WritableComputedRef,
 } from '@vue/composition-api'
-import isEmpty from 'lodash/isEmpty'
+import mapValues from 'lodash/mapValues'
 
 import {
   Destination,
@@ -16,11 +15,14 @@ import {
   updateAllCountryDestinations,
 } from 'src/api/destinations'
 import { useAsyncState } from 'src/composables/use-async'
-import { useStore } from 'src/composables/use-plugins'
+import { useFilterableCollection } from 'src/composables/use-misc'
 import { Loading, useLoading } from 'src/composables/use-promise-loading'
 import {
+  useVuexActionDispatcher,
+  useVuexGetter,
+} from 'src/composables/use-vuex'
+import {
   generateDestinationList,
-  generateGroupedDestinationList,
   GroupedDestinations,
 } from 'src/repositories/country-destinations'
 
@@ -84,40 +86,45 @@ export function useOriginDestinations(
 export function useOriginGroupedDestinations(
   originCode: string,
 ): {
-  destinations: ComputedRef<GroupedDestinations>
+  filterLoading: Ref<boolean>
+  destinations: ComputedRef<GroupedDestinations<Destination>>
+  filter: WritableComputedRef<string>
 } & Loading {
-  const destinations = computed<GroupedDestinations>(
-    () => useStore().state.countryDestinations,
-  )
   const { loading } = useLoading(false)
-  onServerPrefetch(loadDestinationList)
+  const fetcher = useVuexActionDispatcher(
+    'fetchCountryDestinations',
+    originCode,
+    loading,
+  )
+  const {
+    filter,
+    collection,
+    loading: filterLoading,
+  } = useFilterableCollection(
+    useVuexGetter<GroupedDestinations<Destination>>(
+      'getCountryDestinationsObjects',
+    ),
+    (input, filterValue) => {
+      return mapValues(input, (group) => {
+        if (group === undefined) {
+          return group
+        }
 
-  async function loadDestinationList() {
-    loading.value = true
-    await fetchDestinations(originCode)
-    loading.value = false
-  }
+        return group.filter((destinations) => {
+          return destinations.countryLabel.toLowerCase().includes(filterValue)
+        })
+      })
+    },
+  )
 
-  watch(() => originCode, loadDestinationList)
-
-  onMounted(async () => {
-    if (!isEmpty(useStore().state.countryDestinations)) {
-      return
-    }
-
-    await nextTick()
-    await loadDestinationList()
-  })
+  onServerPrefetch(fetcher)
+  watch(() => originCode, fetcher)
+  onMounted(fetcher)
 
   return {
-    destinations,
+    destinations: collection,
     loading,
+    filter,
+    filterLoading,
   }
-}
-
-async function fetchDestinations(originCode: string): Promise<void> {
-  useStore().commit(
-    'setCountryDestinations',
-    await generateGroupedDestinationList(originCode),
-  )
 }

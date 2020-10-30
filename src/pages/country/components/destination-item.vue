@@ -12,11 +12,10 @@
   >
     <q-item-section avatar>
       <q-avatar>
-        <img
+        <flag
+          png
           :class="$style.flag"
-          :src="
-            require(`svg-country-flags/png100px/${destination.countryCode}.png`)
-          "
+          :country-code="destination.countryCode"
         />
       </q-avatar>
     </q-item-section>
@@ -42,27 +41,23 @@
 </style>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  PropType,
-} from '@vue/composition-api'
+import { defineComponent, inject, PropType } from '@vue/composition-api'
 
-import { Destination, PlainDestination } from 'src/api/destinations'
+import { Destination } from 'src/api/destinations'
+import Flag from 'src/components/flag.vue'
 import { Origin } from 'src/models/origin'
 
 export default defineComponent({
+  components: { Flag },
   props: {
     dest: {
       required: true,
-      type: Object as PropType<PlainDestination>,
+      type: Object as PropType<Destination>,
     },
   },
-  setup({ dest }) {
+  setup(prop) {
     const origin = inject<Origin>('origin')
-    const destination = computed(() => new Destination(dest))
-    return { destination, origin }
+    return { destination: prop.dest, origin }
   },
 })
 </script>

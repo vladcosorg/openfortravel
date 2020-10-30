@@ -9,10 +9,14 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import Boy from 'layouts/components/the-boy/the-boy.vue'
+import { hydrateWhenIdle } from 'vue-lazy-hydration'
 
 export default defineComponent({
-  components: { Boy },
+  components: {
+    Boy: hydrateWhenIdle(
+      () => import('layouts/components/the-boy/the-boy.vue'),
+    ),
+  },
   name: 'PageIndex',
   meta: {
     title: 'lol',

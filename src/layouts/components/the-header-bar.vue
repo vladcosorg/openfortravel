@@ -25,9 +25,10 @@
 import { defineComponent } from '@vue/composition-api'
 import LanguageSwitcher from 'layouts/components/the-language-switcher.vue'
 import Logo from 'layouts/components/the-logo.vue'
+import LazyHydrate from 'vue-lazy-hydration'
 
 export default defineComponent({
-  components: { LanguageSwitcher, Logo },
+  components: { LanguageSwitcher, Logo, LazyHydrate },
   setup() {
     return {}
   },

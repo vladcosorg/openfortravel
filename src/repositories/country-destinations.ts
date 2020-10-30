@@ -55,7 +55,7 @@ export async function generateDestinationList(
   const fallbackDestinations = generateFallbackDestinations(
     realDestinations,
     countryCode,
-  ).slice(0, 1)
+  )
   return realDestinations.concat(fallbackDestinations)
 }
 

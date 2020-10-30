@@ -1,9 +1,9 @@
 <template>
   <div v-if="destinations">
-    <div :class="['text-h6', `text-${groupColor}`, 'q-pb-md']">
-      <q-icon size="md" :name="groupIcon" />
-      {{ groupName }}
-    </div>
+    <!--    <div :class="['text-h6', `text-${groupColor}`, 'q-pb-md']">-->
+    <!--      <q-icon size="md" :name="groupIcon" />-->
+    <!--      {{ groupName }}-->
+    <!--    </div>-->
     <q-list separator>
       <destination-item
         v-for="destination in destinations"
