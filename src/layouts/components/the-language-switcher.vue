@@ -1,15 +1,17 @@
 <template>
-  <q-select
-    :value="$i18n.locale"
-    :options="languageList"
-    bg-color="accent"
-    borderless
-    emit-value
-    options-dense
-    :class="[$style.select]"
-    :dropdown-icon="icon"
-    @input="handleChange"
-  />
+  <div>
+    <native-mobile-select
+      v-model="currentLanguage"
+      :options="languageList"
+      bg-color="accent"
+      :loading="loading"
+      borderless
+      emit-value
+      options-dense
+      :class="[$style.select]"
+      :dropdown-icon="icon"
+    />
+  </div>
 </template>
 <style lang="scss" module>
 .select {
@@ -37,26 +39,36 @@
 </style>
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 
+import NativeMobileSelect from 'src/components/native-mobile-select.vue'
 import { useCookies, useRouter } from 'src/composables/use-plugins'
+import { useLoading } from 'src/composables/use-promise-loading'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
-
+  components: { NativeMobileSelect },
   setup(props, { root }) {
     const languageList = Object.freeze(langs)
+    const { loading } = useLoading(false)
+    const currentLanguage = computed({
+      get() {
+        return root.$i18n.locale
+      },
+      set(locale: string) {
+        console.log(locale)
+        loading.value = true
+        setTimeout(() => (loading.value = false), 1000)
+        const to = root.$router.resolve({ params: { locale } })
+        useCookies().set('locale', locale, {
+          path: '/',
+        })
+        useRouter().push(to.location)
+      },
+    })
 
-    const handleChange = async (locale: string) => {
-      const to = root.$router.resolve({ params: { locale } })
-      useCookies().set('locale', locale, {
-        path: '/',
-      })
-      await useRouter().push(to.location)
-    }
-
-    return { languageList, handleChange, icon }
+    return { languageList, icon, currentLanguage, loading }
   },
 })
 </script>

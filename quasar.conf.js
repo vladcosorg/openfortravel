@@ -72,7 +72,7 @@ module.exports = configure(function (context) {
       // preloadChunks: true,
       // showProgress: false,
       // gzip: true,
-      analyze: true,
+      // analyze: true,
       // Options below are automatically set depending on the env, set them if you want to override
       // extractCSS: false,
       // minify: false,
@@ -131,6 +131,8 @@ module.exports = configure(function (context) {
     devServer: {
       https: false,
       port: 8080,
+      host: '0.0.0.0',
+      disableHostCheck: true,
       open: false, // opens browser window automatically
     },
 

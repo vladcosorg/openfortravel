@@ -1,10 +1,11 @@
 <template>
   <div :class="['row', $style.row]">
-    <q-select
+    <native-mobile-select
+      :options="fullList"
       :value="currentCountry"
-      :options="countryList"
+      :class="['col', $style.select]"
+      :dropdown-icon="icon"
       options-dense
-      :class="[$style.select, 'col']"
       borderless
       item-aligned
       use-input
@@ -12,9 +13,8 @@
       :disable="loading"
       hide-selected
       fill-input
-      :dropdown-icon="icon"
       @filter="filterCountryList"
-      @input="navigateToCountryPage"
+      @input="navigateToCountryPage($event.value)"
     />
     <q-btn
       v-if="showButton"
@@ -24,17 +24,19 @@
       :icon="`img:${require('src/assets/search.svg')}`"
       text-color="primary"
       :class="$style.btn"
-      @click="navigateToCountryPage(currentCountry)"
+      @click="navigateToCountryPage()"
     />
   </div>
 </template>
 
 <style lang="scss" module>
 .select {
-  padding: 0;
-  margin-right: 10px;
-  height: 70px;
   :global {
+    .q-field {
+      padding: 0;
+      margin-right: 10px;
+      height: 70px;
+    }
     .q-field__control {
       border-radius: 50px;
       box-shadow: $shadow-5;
@@ -44,7 +46,8 @@
     }
 
     .q-field__input,
-    .q-field__append {
+    .q-field__append,
+    .q-field__native {
       color: $primary;
       font-weight: bold;
       text-transform: uppercase;
@@ -75,6 +78,7 @@
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
+import NativeMobileSelect from 'src/components/native-mobile-select.vue'
 import { useI18n, useRouter, useStore } from 'src/composables/use-plugins'
 import { getCurrentCountry } from 'src/misc/country-decider'
 import { getCountryList, getLabelForCountryCode } from 'src/misc/country-list'
@@ -87,6 +91,7 @@ interface ListItem {
 type List = ListItem[]
 
 export default defineComponent({
+  components: { NativeMobileSelect },
   props: {
     showButton: {
       type: Boolean,
@@ -133,14 +138,18 @@ export default defineComponent({
       filterCountryList,
       icon,
       navigateToCountryPage,
+      fullList,
     }
   },
 })
 
-function navigateToCountryPage(origin: ListItem) {
+const navigateToCountryPage = (originCode?: string) => {
   void useRouter().push({
     name: 'origin',
-    params: { originCode: origin.value, locale: useI18n().locale },
+    params: {
+      originCode: originCode ?? getCurrentCountry(),
+      locale: useI18n().locale,
+    },
   })
 }
 </script>
