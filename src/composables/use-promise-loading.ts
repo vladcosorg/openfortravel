@@ -1,6 +1,7 @@
 import { computed, ComputedRef, Ref, ref } from '@vue/composition-api'
 import mapValues from 'lodash/mapValues'
 
+type FlexCallback = { (...args: any[]): Promise<unknown> }
 type Callback = { (...args: unknown[]): Promise<unknown> }
 export type CallbackCollection = Record<string, Callback>
 
@@ -21,7 +22,7 @@ export function useAggregatedLoader(
   )
 }
 
-export function useClosureLoading(
+export function useClosureCollectionLoading(
   closures: CallbackCollection,
 ): { closures: CallbackCollection } & Loading {
   const { loading } = useLoading()
@@ -41,6 +42,24 @@ export function useClosureLoading(
   return {
     closures,
     loading,
+  }
+}
+
+export function useClosureLoading(
+  callback: FlexCallback,
+): {
+  callback: FlexCallback
+} & Loading {
+  const { loading } = useLoading()
+  const wrappedCallback = async function (...args: unknown[]) {
+    loading.value = true
+    const result = await callback(...args)
+    loading.value = false
+    return result
+  }
+  return {
+    loading,
+    callback: wrappedCallback,
   }
 }
 

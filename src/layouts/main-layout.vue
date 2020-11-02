@@ -4,6 +4,7 @@
     <header-bar />
     <travel-bar
       v-if="showTravelBar"
+      :key="fullHeight"
       :class="{ 'q-mt-xl': !fullHeight, 'order-last': fullHeight }"
       :show-arrow="fullHeight"
     />

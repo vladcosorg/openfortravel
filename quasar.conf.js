@@ -100,6 +100,7 @@ module.exports = configure(function (context) {
                     onlyMatchedOnce: false,
                   },
                 },
+                { cleanupIDs: false },
               ],
             },
           },
@@ -167,7 +168,13 @@ module.exports = configure(function (context) {
     // animations: 'all', // --- includes all animations
     // https://quasar.dev/options/animations
     // animations: [],
-    animations: ['fadeIn', 'fadeOut', 'fadeInRight', 'fadeOutRight'],
+    animations: [
+      'fadeIn',
+      'fadeOut',
+      'fadeInRight',
+      'fadeOutRight',
+      'bounceInUp',
+    ],
 
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
     ssr: {

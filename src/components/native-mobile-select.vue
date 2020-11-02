@@ -1,7 +1,9 @@
 <template>
   <div>
     <q-field v-if="$q.platform.is.mobile" v-bind="$attrs">
-      <template #control>{{ plainLabel }}</template>
+      <template #control
+        ><span>{{ plainLabel }}</span></template
+      >
       <template #append>
         <q-icon v-if="dropdownIcon" :name="dropdownIcon" />
         <select

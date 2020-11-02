@@ -9,6 +9,7 @@
         v-model="destinationFilter"
         placeholder="Quick country search"
         :loading="filterLoading"
+        :disable="loading"
         dense
         outlined
         stack-label

@@ -1,11 +1,15 @@
 <template>
   <q-layout view="hhr lpr ffr">
     <q-page-container
+      style="overflow-x: hidden"
       :class="[
         $style.container,
-        fullheight ? 'window-height' : '',
         'column',
         'justify-between',
+        $q.platform.is.safari && fullheight ? $style['mobile-safari-fix'] : '',
+        {
+          'window-height': fullheight,
+        },
       ]"
     >
       <slot />
@@ -14,6 +18,9 @@
 </template>
 
 <style lang="scss" module>
+.mobile-safari-fix {
+  max-height: -webkit-fill-available !important;
+}
 .container {
   background-color: #222930;
   color: white;
@@ -28,9 +35,6 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
-  },
-  setup() {
-    return {}
   },
 })
 </script>

@@ -1,20 +1,16 @@
 <template>
-  <div :class="['col-2 column text-center']">
-    <div class="col-auto relative-position">
-      <logo />
-      <language-switcher :class="[$style.lang, 'q-pr-lg']" />
+  <div :class="['col-2  text-center']">
+    <div class="row items-center justify-center">
+      <div class="col"></div>
+      <logo class="col-auto" />
+      <div class="col row justify-center">
+        <language-switcher :class="[$style.lang]" />
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" module>
-.lang {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 .logo {
   height: auto;
   width: 140px;

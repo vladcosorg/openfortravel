@@ -3,10 +3,20 @@
     class="col-auto column justify-end q-mb-xl q-px-lg relative-position text-center"
   >
     <animated-arrow v-if="showArrow" :class="$style.arrow" />
-    <div :class="[$style.intro, 'q-mb-md', 'montserrat']">
-      {{ $t('intro.title') }}
-    </div>
-    <country-list :show-button="showArrow" />
+
+    <transition
+      appear
+      enter-active-class="animated bounceInUp"
+      leave-active-class="animated bounceInUp"
+    >
+      <div>
+        <div :class="[$style.intro, 'q-mb-md', 'montserrat']">
+          {{ $t('intro.title') }}
+        </div>
+
+        <country-list :show-button="showArrow" />
+      </div>
+    </transition>
   </div>
 </template>
 

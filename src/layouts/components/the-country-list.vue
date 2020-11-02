@@ -14,7 +14,7 @@
       hide-selected
       fill-input
       @filter="filterCountryList"
-      @input="navigateToCountryPage($event.value)"
+      @input="navigateToCountryPage"
     />
     <q-btn
       v-if="showButton"
@@ -24,6 +24,9 @@
       :icon="`img:${require('src/assets/search.svg')}`"
       text-color="primary"
       :class="$style.btn"
+      :disable="loading"
+      :loading="loading"
+      :percentage="20"
       @click="navigateToCountryPage()"
     />
   </div>
@@ -80,6 +83,10 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import NativeMobileSelect from 'src/components/native-mobile-select.vue'
 import { useI18n, useRouter, useStore } from 'src/composables/use-plugins'
+import {
+  useAggregatedLoader,
+  useClosureLoading,
+} from 'src/composables/use-promise-loading'
 import { getCurrentCountry } from 'src/misc/country-decider'
 import { getCountryList, getLabelForCountryCode } from 'src/misc/country-list'
 
@@ -110,8 +117,23 @@ export default defineComponent({
       },
     })
 
-    const loading = computed(() => useStore().state.countrySelectorLoading)
+    const {
+      loading: eventLoading,
+      callback: navigateToCountryPage,
+    } = useClosureLoading(async (originCode?: string) => {
+      await useRouter().push({
+        name: 'origin',
+        params: {
+          originCode: originCode ?? getCurrentCountry(),
+          locale: useI18n().locale,
+        },
+      })
+    })
 
+    const loading = useAggregatedLoader(
+      computed(() => useStore().state.countrySelectorLoading),
+      eventLoading,
+    )
     const currentCountry = computed<ListItem | undefined>(() => {
       const countryCode = getCurrentCountry()
       return {
@@ -142,14 +164,4 @@ export default defineComponent({
     }
   },
 })
-
-const navigateToCountryPage = (originCode?: string) => {
-  void useRouter().push({
-    name: 'origin',
-    params: {
-      originCode: originCode ?? getCurrentCountry(),
-      locale: useI18n().locale,
-    },
-  })
-}
 </script>
