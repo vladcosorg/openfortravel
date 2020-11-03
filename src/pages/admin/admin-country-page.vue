@@ -27,11 +27,34 @@
             />
           </q-td>
           <q-td>
+            <test-required
+              @input="
+                destinations.persistAllFieldValues('insuranceRequired', $event)
+              "
+            />
+          </q-td>
+          <q-td>
             <status-input
               @input="destinations.persistAllFieldValues('status', $event)"
             />
           </q-td>
         </q-tr>
+      </template>
+
+      <template #header-cell-country="props">
+        <q-th :props="props">
+          <q-input
+            v-model="filter"
+            outlined
+            dense
+            debounce="300"
+            placeholder="Search country"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </q-th>
       </template>
 
       <template #body="props">
@@ -48,6 +71,18 @@
               @input="
                 destinations.persistOneFieldValue(
                   'testRequired',
+                  $event,
+                  props.row.countryCode,
+                )
+              "
+            />
+          </q-td>
+          <q-td key="insuranceRequired" :props="props">
+            <test-required
+              :value="props.row.insuranceRequired"
+              @input="
+                destinations.persistOneFieldValue(
+                  'insuranceRequired',
                   $event,
                   props.row.countryCode,
                 )
@@ -131,7 +166,7 @@ export default defineComponent({
           field: 'countryLabel',
           align: 'left',
           classes: 'bg-grey-9 ellipsis',
-          headerStyle: 'width: 109px',
+          headerStyle: 'width: 200px',
         },
         {
           name: 'code',
@@ -143,6 +178,12 @@ export default defineComponent({
           name: 'testRequired',
           label: 'Test required',
           field: 'testRequired',
+          headerStyle: 'width: 50px',
+        },
+        {
+          name: 'insuranceRequired',
+          label: 'Insurance required',
+          field: 'insuranceRequired',
           headerStyle: 'width: 50px',
         },
         {

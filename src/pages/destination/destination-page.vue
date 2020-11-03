@@ -30,9 +30,10 @@
       <h5 class="text-center text-weight-light">
         Traveling from<br />
         <b>{{ origin.countryLabel }}</b> to
-        <b>{{ destination.countryLabel }}</b>
+        <b>{{ destination.countryLabel }}</b> <br />
+        <span class="text-green text-bold">is allowed</span>
       </h5>
-      <div class="text-subtitle2 text-center" v-html="description" />
+      <div class="q-ma-md text-subtitle2 text-center" v-html="description" />
       <q-list bordered separator class="q-ma-md">
         <q-item v-ripple clickable>
           <q-item-section>
@@ -63,7 +64,21 @@
             }}</q-item-label>
             <q-item-label :class="[`text-${insuranceColor}-6`]">
               {{
-                $t(`restriction.insurance.value`)[destination.testRequired]
+                $t(`restriction.insurance.value`)[destination.insuranceRequired]
+              }}</q-item-label
+            >
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-item-label caption>{{
+              $t('restriction.selfIsolation.label')
+            }}</q-item-label>
+            <q-item-label>
+              {{
+                $t(`restriction.selfIsolation.value`, {
+                  days: destination.selfIsolation,
+                })
               }}</q-item-label
             >
           </q-item-section>

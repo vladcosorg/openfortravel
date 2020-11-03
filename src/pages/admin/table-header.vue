@@ -8,8 +8,9 @@
         К списку стран
       </router-link>
     </div>
-    <div class="col-6 column q-gutter-md">
+    <div class="col-12 row q-gutter-md">
       <in-place-field
+        class="col-3"
         label="Info URL"
         :value="origin.state.infoLink"
         :loading="origin.loading"
@@ -26,6 +27,7 @@
         label="Best by date"
         :value="origin.state.bestByDate"
         :loading="origin.loading"
+        class="col-3"
         @input="origin.updateField('bestByDate', $event)"
       >
         <template #edit="{ label, loading, value, updateValue }">
@@ -35,19 +37,6 @@
           />
         </template>
       </in-place-field>
-    </div>
-    <div class="col-6 column justify-end items-end justify-end">
-      <q-input
-        v-model="filter"
-        outlined
-        dense
-        debounce="300"
-        placeholder="Search"
-      >
-        <template v-slot:append>
-          <q-icon name="search" />
-        </template>
-      </q-input>
     </div>
   </div>
 </template>
