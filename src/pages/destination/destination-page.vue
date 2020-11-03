@@ -6,12 +6,15 @@
         :second-country-code="destinationCode"
       />
     </portal>
-    <q-btn
-      color="primary"
-      icon="back"
-      label="Back"
-      :to="{ name: 'origin', params: { originCode: origin.countryCode } }"
-    />
+    <portal to="top-left">
+      <q-btn
+        unelevated
+        color="primary"
+        icon="arrow_back"
+        :to="{ name: 'origin', params: { originCode: origin.countryCode } }"
+      />
+    </portal>
+
     <div v-if="loading" class="q-pa-md">
       <q-card flat style="max-width: 300px">
         <q-skeleton height="150px" square />
@@ -24,20 +27,46 @@
       </q-card>
     </div>
     <div v-else>
-      <h5>From {{ origin.countryLabel }} to {{ destination.countryLabel }}</h5>
-      <p>
-        Travel from {{ origin.countryLabel }} to
-        {{ destination.countryLabel }} is {{ destination.status }}.
-      </p>
-      <q-list bordered separator>
-        <q-item>
-          <q-item-section>Status: {{ destination.status }}</q-item-section>
+      <h5 class="text-center text-weight-light">
+        Traveling from<br />
+        <b>{{ origin.countryLabel }}</b> to
+        <b>{{ destination.countryLabel }}</b>
+      </h5>
+      <div class="text-subtitle2 text-center" v-html="description" />
+      <q-list bordered separator class="q-ma-md">
+        <q-item v-ripple clickable>
+          <q-item-section>
+            <q-item-label caption>{{
+              $t('restriction.travel.label')
+            }}</q-item-label>
+            <q-item-label :class="['text-uppercase', `text-${statusColor}-6`]">
+              {{ $t(`restriction.travel.value`)[destination.status] }}
+            </q-item-label>
+          </q-item-section>
         </q-item>
         <q-item>
-          <q-item-section>Test: {{ destination.testRequired }}</q-item-section>
+          <q-item-section>
+            <q-item-label caption>{{
+              $t('restriction.testing.label')
+            }}</q-item-label>
+            <q-item-label :class="[`text-${testingColor}-6`]">
+              {{
+                $t(`restriction.testing.value`)[destination.testRequired]
+              }}</q-item-label
+            >
+          </q-item-section>
         </q-item>
         <q-item>
-          <q-item-section>Notes: {{ destination.notes }}</q-item-section>
+          <q-item-section>
+            <q-item-label caption>{{
+              $t('restriction.insurance.label')
+            }}</q-item-label>
+            <q-item-label :class="[`text-${insuranceColor}-6`]">
+              {{
+                $t(`restriction.insurance.value`)[destination.testRequired]
+              }}</q-item-label
+            >
+          </q-item-section>
         </q-item>
       </q-list>
     </div>
@@ -45,13 +74,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs } from '@vue/composition-api'
+import { computed, defineComponent, toRefs } from '@vue/composition-api'
 import TheFlagBackground from 'layouts/components/the-flag-background.vue'
 import { Portal } from 'portal-vue'
 
+import { DestinationStatus } from 'src/api/destinations'
 import { useCurrentDestination } from 'src/composables/use-current-destination'
 import { useCurrentOrigin } from 'src/composables/use-current-origin'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
+import { getFullDescription } from 'src/models/description'
 
 export default defineComponent({
   components: { Portal, TheFlagBackground },
@@ -77,7 +108,40 @@ export default defineComponent({
     )
     const { origin, loading: originLoading } = useCurrentOrigin(originCode)
     const loading = useAggregatedLoader(destinationLoading, originLoading)
-    return { origin, destination, loading }
+
+    const description = computed(() =>
+      getFullDescription(origin.value, destination.value),
+    )
+
+    const statusMap = {
+      [DestinationStatus.ALLOWED]: 'green',
+      [DestinationStatus.CONDITIONAL]: 'orange',
+      [DestinationStatus.FORBIDDEN]: 'red',
+    }
+
+    const statusColor = computed(() => {
+      return statusMap[destination.value.status]
+    })
+
+    const testingColor = computed(() =>
+      getBooleanColor(destination.value.testRequired),
+    )
+
+    const insuranceColor = computed(() =>
+      getBooleanColor(destination.value.insuranceRequired),
+    )
+
+    return {
+      origin,
+      destination,
+      loading,
+      description,
+      statusColor,
+      testingColor,
+      insuranceColor,
+    }
   },
 })
+
+const getBooleanColor = (value: boolean) => (value ? 'red' : 'green')
 </script>

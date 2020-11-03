@@ -8,4 +8,7 @@ export default {
     title: 'Хочу путешествовать из',
     btn: 'Искать!',
   },
+  description: {
+    intro: 'Путешествие из {origin} в {destination} ',
+  },
 }

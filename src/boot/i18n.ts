@@ -1,7 +1,7 @@
 import { boot } from 'quasar/wrappers'
 import Vue from 'vue'
 import { extend } from 'vue-auto-i18n'
-import VueI18n, { LocaleMessageObject, LocaleMessages } from 'vue-i18n'
+import VueI18n, { LocaleMessageObject, LocaleMessages, Values } from 'vue-i18n'
 
 import Locale = VueI18n.Locale
 
@@ -17,6 +17,10 @@ export const i18n = new VueI18n({
   fallbackLocale: 'en',
 })
 
+export const t = (key: string, values?: Values): string => {
+  return <string>i18n.t(key, values)
+}
+
 export async function changeLanguage(lang: Locale): Promise<void> {
   if (i18n.locale === lang) {
     return
@@ -27,7 +31,7 @@ export async function changeLanguage(lang: Locale): Promise<void> {
       /* webpackChunkName: "lang-[request]" */ `src/i18n/${lang}.ts`
     )) as { default: LocaleMessageObject }
     i18n.setLocaleMessage(lang, response.default)
-  } catch  {
+  } catch {
     //one
   }
   i18n.locale = lang

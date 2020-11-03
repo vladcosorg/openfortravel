@@ -57,7 +57,6 @@ export default defineComponent({
         return root.$i18n.locale
       },
       set(locale: string) {
-        console.log(locale)
         loading.value = true
         setTimeout(() => (loading.value = false), 1000)
         const to = root.$router.resolve({ params: { locale } })

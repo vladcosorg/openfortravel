@@ -14,6 +14,7 @@ interface DestinationDocument {
   notes?: string
   status?: DestinationStatus
   testRequired?: boolean
+  insuranceRequired?: boolean
 }
 
 export interface PlainDestination extends Required<DestinationDocument> {
@@ -25,6 +26,7 @@ export const destinationDefaults: Omit<PlainDestination, 'countryCode'> = {
   notes: '',
   status: DestinationStatus.ALLOWED,
   testRequired: false,
+  insuranceRequired: false,
   isDummy: true,
 }
 
@@ -40,6 +42,7 @@ export class Destination implements PlainDestination {
   public readonly status = DestinationStatus.ALLOWED
   public readonly testRequired = false
   public readonly isDummy = true
+  public readonly insuranceRequired = false
   constructor(protected document: IncompletePlainDestination) {
     Object.assign(this, document)
   }

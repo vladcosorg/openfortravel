@@ -1,7 +1,7 @@
 <template>
   <div :class="['col-2  text-center']">
     <div class="row items-center justify-center">
-      <div class="col"></div>
+      <portal-target name="top-left" class="col" />
       <logo class="col-auto" />
       <div class="col row justify-center">
         <language-switcher :class="[$style.lang]" />
@@ -21,10 +21,11 @@
 import { defineComponent } from '@vue/composition-api'
 import LanguageSwitcher from 'layouts/components/the-language-switcher.vue'
 import Logo from 'layouts/components/the-logo.vue'
+import { PortalTarget } from 'portal-vue'
 import LazyHydrate from 'vue-lazy-hydration'
 
 export default defineComponent({
-  components: { LanguageSwitcher, Logo, LazyHydrate },
+  components: { LanguageSwitcher, Logo, LazyHydrate, PortalTarget },
   setup() {
     return {}
   },
