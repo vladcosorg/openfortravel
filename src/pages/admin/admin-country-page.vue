@@ -38,6 +38,13 @@
               @input="destinations.persistAllFieldValues('status', $event)"
             />
           </q-td>
+          <q-td>
+            <self-isolate
+              @input="
+                destinations.persistAllFieldValues('selfIsolation', $event)
+              "
+            />
+          </q-td>
         </q-tr>
       </template>
 
@@ -89,12 +96,25 @@
               "
             />
           </q-td>
+
           <q-td key="status" :props="props">
             <status-input
               :value="props.row.status"
               @input="
                 destinations.persistOneFieldValue(
                   'status',
+                  $event,
+                  props.row.countryCode,
+                )
+              "
+            />
+          </q-td>
+          <q-td key="selfIsolation" :props="props">
+            <self-isolate
+              :value="props.row.selfIsolation"
+              @input="
+                destinations.persistOneFieldValue(
+                  'selfIsolation',
                   $event,
                   props.row.countryCode,
                 )
@@ -130,6 +150,7 @@
 import { defineComponent, ref } from '@vue/composition-api'
 import InputDate from 'components/input-date.vue'
 import InPlaceField from 'pages/admin/in-place-field.vue'
+import SelfIsolate from 'pages/admin/self-isolate.vue'
 import StatusInput from 'pages/admin/status-input.vue'
 import TableHeader from 'pages/admin/table-header.vue'
 import TestRequired from 'pages/admin/test-required.vue'
@@ -138,6 +159,7 @@ import { useOriginDestinations } from 'src/composables/use-origin-destinations'
 
 export default defineComponent({
   components: {
+    SelfIsolate,
     InPlaceField,
     InputDate,
     StatusInput,
@@ -191,6 +213,13 @@ export default defineComponent({
           label: 'Status',
           field: 'status',
           align: 'left',
+        },
+        {
+          name: 'selfIsolation',
+          label: 'Self-isolation',
+          field: 'selfIsolation',
+          align: 'left',
+          headerStyle: 'width: 250px',
         },
       ],
     }

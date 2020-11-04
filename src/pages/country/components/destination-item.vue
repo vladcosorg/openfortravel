@@ -24,7 +24,11 @@
       <q-item-label class="text-blue-grey-2 text-weight-bold">
         {{ destination.countryLabel }}
       </q-item-label>
-      <q-item-label caption class="text-blue-grey-2" v-html="description" />
+      <q-item-label
+        caption
+        class="text-blue-grey-2 ellipsis-2-lines"
+        v-html="description"
+      />
     </q-item-section>
   </q-item>
 </template>
