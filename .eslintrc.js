@@ -122,25 +122,14 @@ module.exports = {
       },
     ],
 
-    'unicorn/prevent-abbreviations': [
-      'error',
-      {
-        checkFilenames: false,
-        whitelist: {
-          args: true,
-          props: true,
-          prop: true,
-          i18n: true,
-          doc: true,
-        },
-      },
-    ],
+    'unicorn/prevent-abbreviations': 'off',
     'unicorn/numeric-separators-style': 'warn',
     'unicorn/no-unsafe-regex': 'warn',
     'unicorn/no-unused-properties': 'warn',
     'unicorn/prefer-replace-all': 'warn',
     'unicorn/filename-case': 'off',
     'no-console': 'warn',
+    'vue/no-v-html': 'off',
   },
   settings: {
     'import/parsers': {
@@ -150,10 +139,7 @@ module.exports = {
 
     'import/resolver': {
       typescript: {
-        project: [
-          'tsconfig.json',
-          'node_modules/@quasar/app/tsconfig-preset.json',
-        ],
+        project: ['tsconfig.json', 'node_modules/@quasar/app/tsconfig-preset.json'],
       },
     },
   },

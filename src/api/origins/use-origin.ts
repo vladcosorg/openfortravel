@@ -7,7 +7,7 @@ import {
   getOrigins,
   PlainOrigin,
   updateOriginField,
-} from 'src/api/origin'
+} from 'src/api/origins/origin'
 import { useAsyncState } from 'src/composables/use-async'
 import { getCountryCodes } from 'src/misc/country-list'
 import { Origin } from 'src/models/origin'
@@ -16,10 +16,7 @@ import { Origin } from 'src/models/origin'
 export function useOrigin(originCode: string, defaultState: PlainOrigin) {
   const { state, loading } = useAsyncState(getOrigin(originCode), defaultState)
 
-  const updateField = async <
-    K extends keyof PlainOrigin,
-    V extends PlainOrigin[K]
-  >(
+  const updateField = async <K extends keyof PlainOrigin, V extends PlainOrigin[K]>(
     field: K,
     value: V,
   ) => {

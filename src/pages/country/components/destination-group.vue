@@ -6,12 +6,12 @@
     </div>
     <q-intersection
       v-for="destination in destinations"
-      :key="destination.countryLabel"
+      :key="destination.destinationLabel"
       style="height: 64px"
       transition="fade"
       ssr-prerender
     >
-      <destination-item :dest="destination" />
+      <destination-item :destination="destination" />
     </q-intersection>
   </div>
 </template>
@@ -20,7 +20,7 @@
 import { defineComponent, PropType } from '@vue/composition-api'
 import DestinationItem from 'pages/country/components/destination-item.vue'
 
-import { PlainDestination } from 'src/api/destinations'
+import { Restriction } from 'src/api/restrictions/models'
 
 export default defineComponent({
   components: { DestinationItem },
@@ -38,7 +38,7 @@ export default defineComponent({
       type: String,
     },
     destinations: {
-      type: Array as PropType<PlainDestination[]>,
+      type: Array as PropType<Restriction[]>,
     },
   },
 })

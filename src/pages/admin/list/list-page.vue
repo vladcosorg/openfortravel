@@ -46,7 +46,7 @@
 import { defineComponent, ref } from '@vue/composition-api'
 import { formatDistanceToNow, isPast, parseISO } from 'date-fns'
 
-import { useOrigins } from 'src/composables/use-origin'
+import { useOrigins } from 'src/api/origins/use-origin'
 import { useRouter } from 'src/composables/use-plugins'
 import { Origin } from 'src/models/origin'
 

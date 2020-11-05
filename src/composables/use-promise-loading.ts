@@ -1,6 +1,7 @@
 import { computed, ComputedRef, Ref, ref } from '@vue/composition-api'
 import mapValues from 'lodash/mapValues'
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/no-explicit-any
 type FlexCallback = { (...args: any[]): Promise<unknown> }
 type Callback = { (...args: unknown[]): Promise<unknown> }
 export type CallbackCollection = Record<string, Callback>
@@ -14,12 +15,8 @@ export function useLoading(defaultValue = false): Loading {
   return { loading }
 }
 
-export function useAggregatedLoader(
-  ...loaders: Ref<boolean>[]
-): ComputedRef<boolean> {
-  return computed<boolean>(
-    () => !loaders.every((loadingReference) => !loadingReference.value),
-  )
+export function useAggregatedLoader(...loaders: Ref<boolean>[]): ComputedRef<boolean> {
+  return computed<boolean>(() => !loaders.every((loadingReference) => !loadingReference.value))
 }
 
 export function useClosureCollectionLoading(

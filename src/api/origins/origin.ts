@@ -24,11 +24,7 @@ const dataConverter: firebase.firestore.FirestoreDataConverter<PlainOrigin> = {
     snapshot: firebase.firestore.QueryDocumentSnapshot<OriginDocument>,
     options: firebase.firestore.SnapshotOptions,
   ): PlainOrigin {
-    return Object.assign(
-      {},
-      { countryCode: snapshot.id },
-      snapshot.data(options),
-    )
+    return Object.assign({}, { countryCode: snapshot.id }, snapshot.data(options))
   },
 }
 
@@ -48,9 +44,7 @@ export async function getOrigin(code: string): Promise<PlainOrigin> {
 
 export async function getOrigins(): Promise<PlainOrigin[]> {
   const { countryCollection } = await import('src/misc/firebase')
-  const results = await countryCollection
-    .withConverter<PlainOrigin>(dataConverter)
-    .get()
+  const results = await countryCollection.withConverter<PlainOrigin>(dataConverter).get()
 
   return results.docs.map((snapshot) => snapshot.data())
 }

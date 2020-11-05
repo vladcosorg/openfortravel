@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <portal to="top">
-      <the-flag-background :first-country-code="originCode" />
+      <!--      <the-flag-background :first-country-code="originCode" />-->
     </portal>
 
     <div class="column justify-center q-pa-lg q-gutter-xl">
@@ -15,7 +15,6 @@
         stack-label
         dark
       />
-      <!--      <lazy-hydrate ssr-only>-->
       <q-list v-if="loading || filterLoading" separator>
         <q-item v-for="n in Array(4)" :key="n">
           <q-item-section avatar>
@@ -56,7 +55,6 @@
         />
       </div>
     </div>
-    <!--      </lazy-hydrate>-->
   </q-page>
 </template>
 <style module>
@@ -74,15 +72,13 @@ import {
   ionAlertCircle as conditionalIcon,
   ionRemoveCircle as forbiddenIcon,
 } from '@quasar/extras/ionicons-v5'
-import { defineComponent, provide, toRefs, watch } from '@vue/composition-api'
-import TheFlagBackground from 'layouts/components/the-flag-background.vue'
-import DestinationGroup from 'pages/country/components/destination-group.vue'
+import { defineComponent, toRefs, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
-import { useCurrentOrigin } from 'src/composables/use-current-origin'
-import { useOriginGroupedDestinations } from 'src/composables/use-origin-destinations'
 import { useStore } from 'src/composables/use-plugins'
-import { useAggregatedLoader } from 'src/composables/use-promise-loading'
+import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
+import DestinationGroup from 'src/pages/country/components/destination-group.vue'
+import { useGroupedDestinations } from 'src/pages/country/composable'
 
 export default defineComponent({
   meta: {
@@ -99,17 +95,12 @@ export default defineComponent({
   setup(props) {
     const { originCode } = toRefs(props)
 
-    const { origin, loading: originLoading } = useCurrentOrigin(originCode)
     const {
       destinations,
       filter: destinationFilter,
-      loading: destinationLoading,
+      loading,
       filterLoading,
-    } = useOriginGroupedDestinations(originCode.value)
-
-    provide('origin', origin)
-
-    const loading = useAggregatedLoader(originLoading, destinationLoading)
+    } = useGroupedDestinations(originCode)
 
     watch(loading, (newValue) => {
       useStore().commit('setCountrySelectorLoading', newValue)
@@ -117,7 +108,6 @@ export default defineComponent({
 
     return {
       destinationFilter,
-      origin,
       destinations,
       loading,
       allowedIcon,

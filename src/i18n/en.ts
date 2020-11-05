@@ -11,7 +11,12 @@ export default {
   description: {
     intro: 'Travel from {origin} to {destination} ',
     status: {
-      allowed: 'is <b>@.lower:status.allowed</b> without any restrictions. ',
+      allowed:
+        'is <b>@.lower:restriction.travel.value.allowed</b> without any restrictions. ',
+      forbidden:
+        'is <b>@.lower:restriction.travel.value.forbidden</b> with some exceptions. Please consult the country page for more info. ',
+      conditional:
+        'is allowed with some conditions. Please consult the country page for more info.',
     },
     testing: {
       true: 'COVID test is required at entry.',

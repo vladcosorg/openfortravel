@@ -1,26 +1,19 @@
-import { Destination } from 'src/api/destinations'
+import { Restriction } from 'src/api/restrictions/models'
 import { t } from 'src/boot/i18n'
-import { Origin } from 'src/models/origin'
 
-export function getShortDescription(
-  origin: Origin,
-  destination: Destination,
-): string {
+export function getShortDescription(restriction: Restriction): string {
   return [
     t('description.intro', {
-      origin: origin.countryLabel,
-      destination: destination.countryLabel,
+      origin: restriction.originLabel,
+      destination: restriction.destinationLabel,
     }),
-    t(`description.status.${destination.status}`),
+    t(`description.status.${restriction.status}`),
   ].join('')
 }
 
-export function getFullDescription(
-  origin: Origin,
-  destination: Destination,
-): string {
+export function getFullDescription(restriction: Restriction): string {
   return (
-    getShortDescription(origin, destination) +
-    [t(`description.testing.${destination.testRequired}`)].join('')
+    getShortDescription(restriction) +
+    [t(`description.testing.${restriction.testRequired}`)].join('')
   )
 }

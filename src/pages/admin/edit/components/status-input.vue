@@ -1,5 +1,5 @@
 <template>
-  <q-field borderless autofocus dense :loading="loading">
+  <q-field borderless dense :loading="loading">
     <template #control>
       <q-option-group
         v-model="internalValue"
@@ -17,7 +17,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
-import { getStatusListPairs } from 'src/api/destinations'
+import { getStatusListPairs } from 'src/api/restrictions/helper'
 import { useAsyncListeners } from 'src/composables/use-async-listeners'
 
 export default defineComponent({

@@ -16,7 +16,7 @@ const routes = (): RouteConfig[] => [
         component: () =>
           import(
             /* webpackChunkName: "admin-list" */
-            'pages/admin/admin-list-page.vue'
+            'src/pages/admin/list/list-page.vue'
           ),
       },
       {
@@ -25,7 +25,7 @@ const routes = (): RouteConfig[] => [
         component: () =>
           import(
             /* webpackChunkName: "admin-country" */
-            'pages/admin/admin-country-page.vue'
+            'src/pages/admin/edit/edit-page.vue'
           ),
         props: true,
       },

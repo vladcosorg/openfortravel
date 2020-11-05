@@ -1,5 +1,7 @@
 import * as firebase from 'firebase/app'
+
 import 'firebase/firestore'
+import { dataConverter } from 'src/api/restrictions/common'
 
 const firebaseApp =
   firebase.apps.length > 0
@@ -18,6 +20,15 @@ const firebaseApp =
 const firestore = firebaseApp.firestore()
 
 const countryCollection = firestore.collection('countries')
+const restrictionCollection = firestore
+  .collection('restrictions')
+  .withConverter(dataConverter)
 
 // eslint-disable-next-line import/no-unused-modules
-export { firestore, firebaseApp, countryCollection, firebase }
+export {
+  firestore,
+  firebaseApp,
+  countryCollection,
+  firebase,
+  restrictionCollection,
+}

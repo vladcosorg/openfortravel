@@ -5,29 +5,25 @@
     :to="{
       name: 'destination',
       params: {
-        originCode: origin.countryCode,
-        destinationCode: destination.countryCode,
+        originCode: destination.origin,
+        destinationCode: destination.destination,
       },
     }"
   >
     <q-item-section avatar>
       <q-avatar>
-        <flag
-          png
-          :class="$style.flag"
-          :country-code="destination.countryCode"
-        />
+        <flag png :class="$style.flag" :country-code="destination.destination" />
       </q-avatar>
     </q-item-section>
 
     <q-item-section>
       <q-item-label class="text-blue-grey-2 text-weight-bold">
-        {{ destination.countryLabel }}
+        {{ destination.destinationLabel }}
       </q-item-label>
       <q-item-label
         caption
         class="text-blue-grey-2 ellipsis-2-lines"
-        v-html="description"
+        v-html="destination.shortDescription"
       />
     </q-item-section>
   </q-item>
@@ -42,40 +38,18 @@
 </style>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  PropType,
-  Ref,
-} from '@vue/composition-api'
+import { defineComponent, PropType } from '@vue/composition-api'
 
-import { Destination } from 'src/api/destinations'
+import { Restriction } from 'src/api/restrictions/models'
 import Flag from 'src/components/flag.vue'
-import { getShortDescription } from 'src/models/description'
-import { Origin } from 'src/models/origin'
 
 export default defineComponent({
   components: { Flag },
   props: {
-    dest: {
+    destination: {
       required: true,
-      type: Object as PropType<Destination>,
+      type: Object as PropType<Restriction>,
     },
-  },
-  setup(prop) {
-    const origin = inject<Ref<Origin>>('origin')
-
-    if (!origin) {
-      throw new Error('Missing origin injection')
-    }
-
-    const destination = prop.dest
-    const description = computed(() =>
-      getShortDescription(origin.value, destination),
-    )
-
-    return { destination, origin, description }
   },
 })
 </script>

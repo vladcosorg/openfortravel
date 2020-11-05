@@ -1,9 +1,7 @@
 <template>
   <div class="row full-width">
     <div class="column items-center col-12">
-      <div class="text-h6">
-        Страны из которых разрешен въезд в {{ hostCountryName }}
-      </div>
+      <div class="text-h6">Страны из которых разрешен въезд в {{ hostCountryName }}</div>
       <router-link class="text-h6" :to="{ name: 'admin-index' }">
         К списку стран
       </router-link>
@@ -31,10 +29,7 @@
         @input="origin.updateField('bestByDate', $event)"
       >
         <template #edit="{ label, loading, value, updateValue }">
-          <input-date
-            v-bind="{ label, loading, value }"
-            @input="updateValue($event)"
-          />
+          <input-date v-bind="{ label, loading, value }" @input="updateValue($event)" />
         </template>
       </in-place-field>
     </div>
@@ -45,21 +40,17 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import InputDate from 'components/input-date.vue'
-import InPlaceField from 'pages/admin/in-place-field.vue'
-import TestRequired from 'pages/admin/test-required.vue'
 
-import { useComputedVmodel } from 'src/composables/use-computed-vmodel'
-import { useOrigin } from 'src/composables/use-origin'
+import { useOrigin } from 'src/api/origins/use-origin'
+import InputDate from 'src/components/input-date.vue'
 import { getLabelForCountryCode } from 'src/misc/country-list'
+import InPlaceField from 'src/pages/admin/edit/components/in-place-field.vue'
+import TestRequired from 'src/pages/admin/edit/components/test-required.vue'
+
 
 export default defineComponent({
   components: { InPlaceField, InputDate, TestRequired },
   props: {
-    value: {
-      type: String,
-      required: true,
-    },
     originCode: {
       type: String,
       required: true,
@@ -71,11 +62,9 @@ export default defineComponent({
       countryCode: 'Loading',
       reference: 'Loading',
     })
-    const filter = useComputedVmodel(props.value)
     return {
       origin,
       hostCountryName: getLabelForCountryCode(originCode),
-      filter,
     }
   },
 })

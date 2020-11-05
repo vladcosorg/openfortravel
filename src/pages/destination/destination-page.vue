@@ -11,7 +11,10 @@
         unelevated
         color="primary"
         icon="arrow_back"
-        :to="{ name: 'origin', params: { originCode: origin.countryCode } }"
+        :to="{
+          name: 'origin',
+          params: { originCode: restriction.origin },
+        }"
       />
     </portal>
 
@@ -29,55 +32,42 @@
     <div v-else>
       <h5 class="text-center text-weight-light">
         Traveling from<br />
-        <b>{{ origin.countryLabel }}</b> to
-        <b>{{ destination.countryLabel }}</b> <br />
+        <b>{{ restriction.originLabel }}</b> to <b>{{ restriction.destinationLabel }}</b> <br />
         <span class="text-green text-bold">is allowed</span>
       </h5>
-      <div class="q-ma-md text-subtitle2 text-center" v-html="description" />
+      <div class="q-ma-md text-subtitle2 text-center" v-html="restriction.description" />
       <q-list bordered separator class="q-ma-md">
         <q-item v-ripple clickable>
           <q-item-section>
-            <q-item-label caption>{{
-              $t('restriction.travel.label')
-            }}</q-item-label>
+            <q-item-label caption>{{ $t('restriction.travel.label') }}</q-item-label>
             <q-item-label :class="['text-uppercase', `text-${statusColor}-6`]">
-              {{ $t(`restriction.travel.value`)[destination.status] }}
+              {{ $t(`restriction.travel.value`)[restriction.status] }}
             </q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label caption>{{
-              $t('restriction.testing.label')
-            }}</q-item-label>
+            <q-item-label caption>{{ $t('restriction.testing.label') }}</q-item-label>
             <q-item-label :class="[`text-${testingColor}-6`]">
-              {{
-                $t(`restriction.testing.value`)[destination.testRequired]
-              }}</q-item-label
+              {{ $t(`restriction.testing.value`)[restriction.testRequired] }}</q-item-label
             >
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label caption>{{
-              $t('restriction.insurance.label')
-            }}</q-item-label>
+            <q-item-label caption>{{ $t('restriction.insurance.label') }}</q-item-label>
             <q-item-label :class="[`text-${insuranceColor}-6`]">
-              {{
-                $t(`restriction.insurance.value`)[destination.insuranceRequired]
-              }}</q-item-label
+              {{ $t(`restriction.insurance.value`)[restriction.insuranceRequired] }}</q-item-label
             >
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label caption>{{
-              $t('restriction.selfIsolation.label')
-            }}</q-item-label>
+            <q-item-label caption>{{ $t('restriction.selfIsolation.label') }}</q-item-label>
             <q-item-label>
               {{
                 $t(`restriction.selfIsolation.value`, {
-                  days: destination.selfIsolation,
+                  days: restriction.selfIsolation,
                 })
               }}</q-item-label
             >
@@ -93,11 +83,8 @@ import { computed, defineComponent, toRefs } from '@vue/composition-api'
 import TheFlagBackground from 'layouts/components/the-flag-background.vue'
 import { Portal } from 'portal-vue'
 
-import { DestinationStatus } from 'src/api/destinations'
-import { useCurrentDestination } from 'src/composables/use-current-destination'
-import { useCurrentOrigin } from 'src/composables/use-current-origin'
-import { useAggregatedLoader } from 'src/composables/use-promise-loading'
-import { getFullDescription } from 'src/models/description'
+import { RestrictionStatus } from 'src/api/restrictions/models'
+import { getRestriction } from 'src/pages/destination/composable'
 
 export default defineComponent({
   components: { Portal, TheFlagBackground },
@@ -112,45 +99,27 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { originCode, destinationCode } = toRefs<{
-      originCode: string
-      destinationCode: string
-    }>(props)
+    const { originCode: originCodeRef, destinationCode: destinationCodeRef } = toRefs(props)
 
-    const { destination, loading: destinationLoading } = useCurrentDestination(
-      originCode.value,
-      destinationCode.value,
-    )
-    const { origin, loading: originLoading } = useCurrentOrigin(originCode)
-    const loading = useAggregatedLoader(destinationLoading, originLoading)
-
-    const description = computed(() =>
-      getFullDescription(origin.value, destination.value),
-    )
+    const { restrictionRef, loadingRef } = getRestriction(originCodeRef, destinationCodeRef)
 
     const statusMap = {
-      [DestinationStatus.ALLOWED]: 'green',
-      [DestinationStatus.CONDITIONAL]: 'orange',
-      [DestinationStatus.FORBIDDEN]: 'red',
+      [RestrictionStatus.ALLOWED]: 'green',
+      [RestrictionStatus.CONDITIONAL]: 'orange',
+      [RestrictionStatus.FORBIDDEN]: 'red',
     }
 
     const statusColor = computed(() => {
-      return statusMap[destination.value.status]
+      return statusMap[restrictionRef.value.status]
     })
 
-    const testingColor = computed(() =>
-      getBooleanColor(destination.value.testRequired),
-    )
+    const testingColor = computed(() => getBooleanColor(restrictionRef.value.testRequired))
 
-    const insuranceColor = computed(() =>
-      getBooleanColor(destination.value.insuranceRequired),
-    )
+    const insuranceColor = computed(() => getBooleanColor(restrictionRef.value.insuranceRequired))
 
     return {
-      origin,
-      destination,
-      loading,
-      description,
+      restriction: restrictionRef,
+      loading: loadingRef,
       statusColor,
       testingColor,
       insuranceColor,

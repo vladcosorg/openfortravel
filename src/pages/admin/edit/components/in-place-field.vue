@@ -10,7 +10,6 @@
           v-model="internalValue"
           :label="label"
           outlined
-          autofocus
           dense
           :loading="loading"
           type="url"
@@ -22,7 +21,6 @@
       <q-field
         v-if="!isEditing"
         outlined
-        autofocus
         dense
         :loading="loading"
         :label="label"
@@ -31,10 +29,7 @@
         label-color="white"
       >
         <template #control>
-          <slot
-            name="view"
-            :value="value"
-          >
+          <slot name="view" :value="value">
             <div
               class="self-center no-outline ellipsis"
               style="white-space: normal"
