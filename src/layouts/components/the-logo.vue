@@ -1,9 +1,6 @@
 <template>
   <router-link :to="{ name: 'index', locale: $i18n.locale }">
-    <q-icon
-      :class="$style.logo"
-      :name="`img:${require('src/assets/logo.svg')}`"
-    />
+    <q-icon :class="$style.logo" :name="`img:${require('src/assets/logo.svg')}`" />
   </router-link>
 </template>
 
@@ -16,7 +13,8 @@
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import LanguageSwitcher from 'layouts/components/the-language-switcher.vue'
+
+import LanguageSwitcher from 'src/layouts/components/the-language-switcher.vue'
 
 export default defineComponent({
   components: { LanguageSwitcher },

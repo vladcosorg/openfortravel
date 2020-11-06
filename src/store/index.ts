@@ -44,7 +44,14 @@ export default store(function ({ Vue }) {
     },
 
     actions: {},
-    getters: {},
+    getters: {
+      getCountryListObjects(state) {
+        return Object.keys(state.countryList).map((key) => ({
+          value: key.toLowerCase(),
+          label: state.countryList[key],
+        }))
+      },
+    },
     strict: !!process.env.DEV,
   })
 })

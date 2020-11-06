@@ -4,7 +4,7 @@ import { useStore } from 'src/composables/use-plugins'
 
 export type CountryList = Record<string, string>
 
-function getFirstLabel(label: string | string[]): string {
+export function getFirstLabel(label: string | string[]): string {
   if (Array.isArray(label)) {
     ;[label] = label
   }

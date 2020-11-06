@@ -14,10 +14,11 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import HeaderBar from 'layouts/components/the-header-bar.vue'
-import Container from 'layouts/components/the-layout-container.vue'
-import TravelBar from 'layouts/components/the-travel-bar.vue'
 import { PortalTarget } from 'portal-vue'
+
+import HeaderBar from 'src/layouts/components/the-header-bar.vue'
+import Container from 'src/layouts/components/the-layout-container.vue'
+import TravelBar from 'src/layouts/components/the-travel-bar.vue'
 
 export default defineComponent({
   components: {

@@ -1,21 +1,13 @@
 <template>
   <div>
     <q-field v-if="$q.platform.is.mobile" v-bind="$attrs">
-      <template #control
-        ><span>{{ plainLabel }}</span></template
-      >
+      <template #control>
+        <div :class="[$style.label, 'col']">{{ plainLabel }}</div>
+      </template>
       <template #append>
         <q-icon v-if="dropdownIcon" :name="dropdownIcon" />
-        <select
-          :value="plainValue"
-          :class="$style.nativeSelect"
-          @change="rethrowNormalizedEvent"
-        >
-          <option
-            v-for="option in options"
-            :key="option.value"
-            :value="option.value"
-          >
+        <select :value="plainValue" :class="$style.nativeSelect" @change="rethrowNormalizedEvent">
+          <option v-for="option in options" :key="option.value" :value="option.value">
             {{ option.label }}
           </option>
         </select>
@@ -23,9 +15,10 @@
     </q-field>
     <slot v-else name="desktop-field" v-bind="{ options, value }">
       <q-select
+        emit-value
         :options="options"
         :value="value"
-        dropdown-icon="dropdownIcon"
+        :dropdown-icon="dropdownIcon"
         v-bind="$attrs"
         v-on="$listeners"
       />
@@ -41,6 +34,13 @@
   left: 0;
   height: 100%;
   opacity: 0;
+}
+
+.label {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 </style>
 

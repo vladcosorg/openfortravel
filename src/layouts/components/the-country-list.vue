@@ -1,16 +1,16 @@
 <template>
   <div :class="['row', $style.row]">
     <native-mobile-select
-      :options="fullList"
+      :options="countryList"
       :value="currentCountry"
-      :class="['col', $style.select]"
+      :class="[showButton ? 'col' : 'col-12', $style.select]"
       :dropdown-icon="icon"
       options-dense
       borderless
       item-aligned
-      use-input
       :loading="loading"
       :disable="loading"
+      use-input
       hide-selected
       fill-input
       @filter="filterCountryList"
@@ -83,12 +83,10 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import NativeMobileSelect from 'src/components/native-mobile-select.vue'
 import { useI18n, useRouter, useStore } from 'src/composables/use-plugins'
-import {
-  useAggregatedLoader,
-  useClosureLoading,
-} from 'src/composables/use-promise-loading'
+import { useAggregatedLoader, useClosureLoading } from 'src/composables/use-promise-loading'
+import { useVuexGetter } from 'src/composables/use-vuex'
 import { getCurrentCountry } from 'src/misc/country-decider'
-import { getCountryList, getLabelForCountryCode } from 'src/misc/country-list'
+import { getLabelForCountryCode } from 'src/misc/country-list'
 
 interface ListItem {
   value: string
@@ -105,11 +103,15 @@ export default defineComponent({
     },
   },
   setup() {
-    const filteredList = ref<List>([])
-    const fullList = getCountryList()
+    const fullList = useVuexGetter<List>('getCountryListObjects')
+    const filteredList = ref<List | undefined>()
 
     const countryList = computed({
       get(): List {
+        if (!filteredList.value) {
+          return fullList.value
+        }
+
         return filteredList.value
       },
       set(list: List) {
@@ -117,18 +119,17 @@ export default defineComponent({
       },
     })
 
-    const {
-      loading: eventLoading,
-      callback: navigateToCountryPage,
-    } = useClosureLoading(async (originCode?: string) => {
-      await useRouter().push({
-        name: 'origin',
-        params: {
-          originCode: originCode ?? getCurrentCountry(),
-          locale: useI18n().locale,
-        },
-      })
-    })
+    const { loading: eventLoading, callback: navigateToCountryPage } = useClosureLoading(
+      async (originCode?: string) => {
+        await useRouter().push({
+          name: 'origin',
+          params: {
+            originCode: originCode ?? getCurrentCountry(),
+            locale: useI18n().locale,
+          },
+        })
+      },
+    )
 
     const loading = useAggregatedLoader(
       computed(() => useStore().state.countrySelectorLoading),
@@ -147,7 +148,7 @@ export default defineComponent({
       update: { (callback: { (): void }): void },
     ) => {
       update(() => {
-        countryList.value = fullList.filter((listItem: ListItem) => {
+        countryList.value = fullList.value.filter((listItem: ListItem) => {
           return listItem.label.toLowerCase().includes(currentValue)
         })
       })
@@ -160,7 +161,6 @@ export default defineComponent({
       filterCountryList,
       icon,
       navigateToCountryPage,
-      fullList,
     }
   },
 })
