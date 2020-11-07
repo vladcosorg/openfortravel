@@ -14,6 +14,9 @@ export function getShortDescription(restriction: Restriction): string {
 export function getFullDescription(restriction: Restriction): string {
   return (
     getShortDescription(restriction) +
-    [t(`description.testing.${restriction.testRequired}`)].join('')
+    [
+      t(`description.testing.${restriction.testRequired}`),
+      t(`description.insurance.${restriction.insuranceRequired}`),
+    ].join('')
   )
 }

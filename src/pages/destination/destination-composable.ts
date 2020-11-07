@@ -1,9 +1,18 @@
-import { ComputedRef, onMounted, onServerPrefetch, Ref } from '@vue/composition-api'
+import {
+  ComputedRef,
+  onMounted,
+  onServerPrefetch,
+  Ref,
+  watch,
+} from '@vue/composition-api'
 
 import { Destination } from 'src/api/destinations/models'
 import { Restriction } from 'src/api/restrictions/models'
 import { useLoading } from 'src/composables/use-promise-loading'
-import { useVuexActionDispatcher, useVuexGetter } from 'src/composables/use-vuex'
+import {
+  useVuexActionDispatcherWithReactivePayload,
+  useVuexGetter,
+} from 'src/composables/use-vuex'
 
 export function getRestriction(
   originCodeRef: Ref<string>,
@@ -12,18 +21,22 @@ export function getRestriction(
   restrictionRef: ComputedRef<Restriction>
   loadingRef: Ref<boolean>
 } {
-  const restrictionRef = useVuexGetter<Restriction>('destinationPage/getRestriction')
+  const restrictionRef = useVuexGetter<Restriction>(
+    'destinationPage/getRestriction',
+  )
   const { loading: loadingRef } = useLoading(false)
-  const fetcher = useVuexActionDispatcher(
+  const fetcher = useVuexActionDispatcherWithReactivePayload(
     'destinationPage/fetchRestriction',
     {
-      originCode: originCodeRef.value,
-      destinationCode: destinationCodeRef.value,
+      originCode: originCodeRef,
+      destinationCode: destinationCodeRef,
     },
     loadingRef,
   )
+
   onServerPrefetch(fetcher)
   onMounted(fetcher)
+  watch([originCodeRef, destinationCodeRef], fetcher)
 
   return { restrictionRef, loadingRef }
 }
@@ -34,11 +47,13 @@ export function getDestination(
   destinationRef: ComputedRef<Destination>
   loadingRef: Ref<boolean>
 } {
-  const destinationRef = useVuexGetter<Destination>('destinationPage/getDestination')
+  const destinationRef = useVuexGetter<Destination>(
+    'destinationPage/getDestination',
+  )
   const { loading: loadingRef } = useLoading(false)
-  const fetcher = useVuexActionDispatcher(
+  const fetcher = useVuexActionDispatcherWithReactivePayload(
     'destinationPage/fetchDestination',
-    destinationCodeRef.value,
+    destinationCodeRef,
     loadingRef,
   )
   onServerPrefetch(fetcher)

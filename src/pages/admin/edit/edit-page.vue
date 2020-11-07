@@ -14,29 +14,44 @@
       :virtual-scroll-item-size="52"
     >
       <template #top>
-        <table-header :origin-code="originCode" />
+        <table-header :destination-code="originCode" />
       </template>
       <template v-if="!filter" #top-row>
         <q-tr class="top-row">
           <q-td colspan="2"> Mass actions </q-td>
           <q-td>
-            <test-required @input="updateAllRestrictions('testRequired', $event)" />
+            <test-required
+              @input="updateAllRestrictions('testRequired', $event)"
+            />
           </q-td>
           <q-td>
-            <test-required @input="updateAllRestrictions('insuranceRequired', $event)" />
+            <test-required
+              @input="updateAllRestrictions('insuranceRequired', $event)"
+            />
           </q-td>
           <q-td>
-            <self-isolate confirm @input="updateAllRestrictions('selfIsolation', $event)" />
+            <self-isolate
+              confirm
+              @input="updateAllRestrictions('selfIsolation', $event)"
+            />
           </q-td>
           <q-td>
-            <test-required @input="updateAllRestrictions('isForbidden', $event)" />
+            <test-required
+              @input="updateAllRestrictions('isForbidden', $event)"
+            />
           </q-td>
         </q-tr>
       </template>
 
       <template #header-cell-country="props">
         <q-th :props="props">
-          <q-input v-model="filter" outlined dense debounce="300" placeholder="Search country">
+          <q-input
+            v-model="filter"
+            outlined
+            dense
+            debounce="300"
+            placeholder="Search country"
+          >
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -45,7 +60,10 @@
       </template>
 
       <template #body="props">
-        <q-tr :props="props" :class="[{ 'is-forbidden': props.row.isForbidden }]">
+        <q-tr
+          :props="props"
+          :class="[{ 'is-forbidden': props.row.isForbidden }]"
+        >
           <q-td key="country" :props="props">
             {{ props.row.originLabel }}
           </q-td>
@@ -61,7 +79,9 @@
           <q-td key="insuranceRequired" :props="props">
             <test-required
               :value="props.row.insuranceRequired"
-              @input="updateOneRestriction('insuranceRequired', $event, props.row)"
+              @input="
+                updateOneRestriction('insuranceRequired', $event, props.row)
+              "
             />
           </q-td>
 
@@ -142,7 +162,9 @@ export default defineComponent({
 
     const restrictions = useRestrictionListFilteredByDestination(originCode)
     const updateOneRestriction = useRestrictionPersister()
-    const updateAllRestrictions = useRestrictionCollectionPersister(restrictions.list)
+    const updateAllRestrictions = useRestrictionCollectionPersister(
+      restrictions.list,
+    )
 
     return {
       filter,

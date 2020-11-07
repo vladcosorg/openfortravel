@@ -5,7 +5,7 @@ import {
   wrapWithRichDestinationObject,
 } from 'src/api/destinations/helper'
 import { Destination, PlainDestination } from 'src/api/destinations/models'
-import { getOrigin } from 'src/api/destinations/repository'
+import { findOrigin } from 'src/api/destinations/repository'
 import {
   createDummyPlainRestriction,
   wrapWithRichRestrictionObject,
@@ -61,7 +61,7 @@ export default {
       if (state.destination.countryCode === destinationCode) {
         return
       }
-      commit('setDestination', await getOrigin(destinationCode))
+      commit('setDestination', await findOrigin(destinationCode))
     },
   },
 } as Module<State, StateInterface>

@@ -25,6 +25,10 @@ export class DestinationDefaults implements PlainDestination {
   public toPlainObject(): PlainDestination {
     return { ...this }
   }
+
+  public cloneWithFields(fields: Partial<PlainDestination>): Destination {
+    return new Destination(Object.assign(this.toPlainObject(), fields))
+  }
 }
 
 export class Destination extends DestinationDefaults {

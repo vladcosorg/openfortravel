@@ -1,7 +1,10 @@
-import { createDummyPlainDestination } from 'src/api/destinations/helper'
-import { PlainDestination } from 'src/api/destinations/models'
+import {
+  createDummyPlainDestination,
+  wrapWithRichDestinationObject,
+} from 'src/api/destinations/helper'
+import { Destination, PlainDestination } from 'src/api/destinations/models'
 
-export async function getOrigin(code: string): Promise<PlainDestination> {
+export async function findOrigin(code: string): Promise<PlainDestination> {
   const { countryCollection } = await import('src/misc/firebase')
   const doc = await countryCollection.doc(code).get()
   const data = doc.data()
@@ -12,7 +15,11 @@ export async function getOrigin(code: string): Promise<PlainDestination> {
   return data
 }
 
-export async function getOrigins(): Promise<PlainDestination[]> {
+export async function findOriginAsRichObject(code: string): Promise<Destination> {
+  return wrapWithRichDestinationObject(await findOrigin(code))
+}
+
+export async function findOrigins(): Promise<PlainDestination[]> {
   const { countryCollection } = await import('src/misc/firebase')
   const results = await countryCollection.get()
 

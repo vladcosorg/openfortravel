@@ -70,15 +70,23 @@ export function sortByOrigin(collection: Restriction[]): Restriction[] {
 }
 
 export function sortByDestination(collection: Restriction[]): Restriction[] {
-  return collection.sort((a, b) => a.destinationLabel.localeCompare(b.destinationLabel))
+  return collection.sort((a, b) =>
+    a.destinationLabel.localeCompare(b.destinationLabel),
+  )
 }
 
-export function wrapWithRichRestrictionObject(plainRestriction: PlainRestriction): Restriction {
+export function wrapWithRichRestrictionObject(
+  plainRestriction: PlainRestriction,
+): Restriction {
   return new Restriction(plainRestriction)
 }
 
-export function wrapCollectionWithRichObject(plainRestrictions: PlainRestriction[]): Restriction[] {
-  return plainRestrictions.map((element) => wrapWithRichRestrictionObject(element))
+export function wrapCollectionWithRichObject(
+  plainRestrictions: PlainRestriction[],
+): Restriction[] {
+  return plainRestrictions.map((element) =>
+    wrapWithRichRestrictionObject(element),
+  )
 }
 
 export function getStatusListPairs(): {

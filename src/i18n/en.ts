@@ -22,6 +22,11 @@ export default {
       true: 'COVID test is required at entry.',
       false: 'COVID test is not required.',
     },
+    insurance: {
+      true:
+        'Purchasing or owning an insurance that would cover COVID-19 treatment is necessary.',
+      false: '',
+    },
   },
   restriction: {
     travel: {
@@ -51,6 +56,21 @@ export default {
       // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
       value: (context: { named: (arg0: string) => number }) =>
         context.named('days') > 0 ? `${context.named('days')}` : 'Not needed',
+    },
+    healthDeclaration: {
+      label: 'Health Declaration',
+      // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+      value: {
+        true: 'Required',
+        false: 'Not needed',
+      },
+    },
+  },
+  page: {
+    destination: {
+      title: 'Latest information on travelling from {origin} to {destination}',
+      seeReturnPage: 'See return travel',
+      backToList: 'Back to list',
     },
   },
 }

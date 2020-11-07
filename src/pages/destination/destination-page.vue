@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
     <portal to="top">
       <the-flag-background
         :first-country-code="originCode"
@@ -18,7 +18,7 @@
       />
     </portal>
 
-    <div v-if="loading" class="q-pa-md">
+    <div v-if="loading">
       <q-card flat style="max-width: 300px">
         <q-skeleton height="150px" square />
 
@@ -30,16 +30,46 @@
       </q-card>
     </div>
     <div v-else>
-      <h5 class="text-center text-weight-light">
-        Traveling from<br />
-        <b>{{ restriction.originLabel }}</b> to <b>{{ restriction.destinationLabel }}</b> <br />
-        <span class="text-green text-bold">is allowed</span>
-      </h5>
-      <div class="q-ma-md text-subtitle2 text-center" v-html="restriction.description" />
-      <q-list bordered separator class="q-ma-md">
+      <i18n
+        path="page.destination.title"
+        tag="h1"
+        class="text-center text-weight-light text-subtitle1"
+      >
+        <template #origin>
+          <br />
+          <b class="text-h5 overflow-hidden">{{ restriction.originLabel }}</b
+          ><br />
+        </template>
+        <template #destination>
+          <br />
+          <b class="text-h5"> {{ restriction.destinationLabel }}</b>
+        </template>
+      </i18n>
+      <q-btn
+        class="q-my-md full-width"
+        color="accent"
+        text-color="primary"
+        icon-right="sync_alt"
+        :label="$t('page.destination.seeReturnPage')"
+        :loading="loading"
+        :to="{
+          name: 'destination',
+          params: {
+            originCode: restriction.destination,
+            destinationCode: restriction.origin,
+          },
+        }"
+      />
+      <div
+        class="text-subtitle1 montserrat text-center"
+        v-html="restriction.description"
+      />
+      <q-list bordered separator class="q-mt-md">
         <q-item v-ripple clickable>
           <q-item-section>
-            <q-item-label caption>{{ $t('restriction.travel.label') }}</q-item-label>
+            <q-item-label caption>{{
+              $t('restriction.travel.label')
+            }}</q-item-label>
             <q-item-label :class="['text-uppercase', `text-${statusColor}-6`]">
               {{ $t(`restriction.travel.value`)[restriction.status] }}
             </q-item-label>
@@ -47,23 +77,52 @@
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label caption>{{ $t('restriction.testing.label') }}</q-item-label>
+            <q-item-label caption>{{
+              $t('restriction.testing.label')
+            }}</q-item-label>
             <q-item-label :class="[`text-${testingColor}-6`]">
-              {{ $t(`restriction.testing.value`)[restriction.testRequired] }}</q-item-label
+              {{
+                $t(`restriction.testing.value`)[restriction.testRequired]
+              }}</q-item-label
             >
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label caption>{{ $t('restriction.insurance.label') }}</q-item-label>
+            <q-item-label caption>{{
+              $t('restriction.insurance.label')
+            }}</q-item-label>
             <q-item-label :class="[`text-${insuranceColor}-6`]">
-              {{ $t(`restriction.insurance.value`)[restriction.insuranceRequired] }}</q-item-label
+              {{
+                $t(`restriction.insurance.value`)[restriction.insuranceRequired]
+              }}</q-item-label
             >
           </q-item-section>
         </q-item>
         <q-item>
           <q-item-section>
-            <q-item-label caption>{{ $t('restriction.selfIsolation.label') }}</q-item-label>
+            <q-item-label caption>{{
+              $t('restriction.healthDeclaration.label')
+            }}</q-item-label>
+            <q-item-label>
+              {{
+                $t(`restriction.healthDeclaration.value`)[
+                  destination.isHealthDeclarationRequired
+                ]
+              }}
+              <a
+                v-if="destination.healthDeclarationDocURL"
+                :href="destination.healthDeclarationDocURL"
+                >Fill online</a
+              >
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section>
+            <q-item-label caption>{{
+              $t('restriction.selfIsolation.label')
+            }}</q-item-label>
             <q-item-label>
               {{
                 $t(`restriction.selfIsolation.value`, {
@@ -74,6 +133,20 @@
           </q-item-section>
         </q-item>
       </q-list>
+
+      <q-btn
+        class="q-mt-md full-width"
+        color="accent"
+        icon="arrow_back"
+        outline
+        :label="$t('page.destination.backToList')"
+        :loading="loading"
+        align="left"
+        :to="{
+          name: 'origin',
+          params: { originCode: restriction.origin },
+        }"
+      />
     </div>
   </q-page>
 </template>
@@ -85,7 +158,10 @@ import { Portal } from 'portal-vue'
 import { RestrictionStatus } from 'src/api/restrictions/models'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
-import { getDestination, getRestriction } from 'src/pages/destination/destination-composable'
+import {
+  getDestination,
+  getRestriction,
+} from 'src/pages/destination/destination-composable'
 
 export default defineComponent({
   components: { Portal, TheFlagBackground },
@@ -100,13 +176,19 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { originCode: originCodeRef, destinationCode: destinationCodeRef } = toRefs(props)
+    const {
+      originCode: originCodeRef,
+      destinationCode: destinationCodeRef,
+    } = toRefs(props)
 
-    const { restrictionRef, loadingRef: restrictionLoadingRef } = getRestriction(
-      originCodeRef,
-      destinationCodeRef,
-    )
-    const { destinationRef, loadingRef: destinationLoadingRef } = getDestination(destinationCodeRef)
+    const {
+      restrictionRef,
+      loadingRef: restrictionLoadingRef,
+    } = getRestriction(originCodeRef, destinationCodeRef)
+    const {
+      destinationRef,
+      loadingRef: destinationLoadingRef,
+    } = getDestination(destinationCodeRef)
     const statusMap = {
       [RestrictionStatus.ALLOWED]: 'green',
       [RestrictionStatus.CONDITIONAL]: 'orange',
@@ -117,13 +199,20 @@ export default defineComponent({
       return statusMap[restrictionRef.value.status]
     })
 
-    const testingColor = computed(() => getBooleanColor(restrictionRef.value.testRequired))
+    const testingColor = computed(() =>
+      getBooleanColor(restrictionRef.value.testRequired),
+    )
 
-    const insuranceColor = computed(() => getBooleanColor(restrictionRef.value.insuranceRequired))
+    const insuranceColor = computed(() =>
+      getBooleanColor(restrictionRef.value.insuranceRequired),
+    )
     return {
       restriction: restrictionRef,
       destination: destinationRef,
-      loading: useAggregatedLoader(restrictionLoadingRef, destinationLoadingRef),
+      loading: useAggregatedLoader(
+        restrictionLoadingRef,
+        destinationLoadingRef,
+      ),
       statusColor,
       testingColor,
       insuranceColor,

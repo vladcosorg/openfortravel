@@ -1,16 +1,20 @@
 <template>
   <div class="row full-width">
     <div class="column items-center col-12">
-      <div class="text-h6">Страны из которых разрешен въезд в {{ hostCountryName }}</div>
-      <router-link class="text-h6" :to="{ name: 'admin-index' }"> К списку стран </router-link>
+      <div class="text-h6">
+        Страны из которых разрешен въезд в {{ destination.name }}
+      </div>
+      <router-link class="text-h6" :to="{ name: 'admin-index' }">
+        К списку стран
+      </router-link>
     </div>
     <div class="col-12 row q-gutter-md">
       <in-place-field
         class="col-6"
         label="Info URL"
-        :value="origin.state.infoLink"
-        :loading="origin.loading"
-        @input="origin.updateField('infoLink', $event)"
+        :value="destination.infoLink"
+        :loading="loading"
+        @input="updateField('infoLink', $event)"
       >
         <template #view="{ value }">
           <a :href="value" target="_blank" class="text-white">
@@ -21,29 +25,32 @@
 
       <in-place-field
         label="Best by date"
-        :value="origin.state.bestByDate"
-        :loading="origin.loading"
+        :value="destination.bestByDate"
+        :loading="loading"
         class="col-6"
-        @input="origin.updateField('bestByDate', $event)"
+        @input="updateField('bestByDate', $event)"
       >
         <template #edit="{ label, loading, value, updateValue }">
-          <input-date v-bind="{ label, loading, value }" @input="updateValue($event)" />
+          <input-date
+            v-bind="{ label, loading, value }"
+            @input="updateValue($event)"
+          />
         </template>
       </in-place-field>
       <test-required
         class="col-6"
         label="Is health declaration required?"
-        :value="origin.state.isHealthDeclarationRequired"
+        :value="destination.isHealthDeclarationRequired"
         stack-label
-        @input="origin.updateField('isHealthDeclarationRequired', $event)"
+        @input="updateField('isHealthDeclarationRequired', $event)"
       />
       <in-place-field
-        v-if="origin.state.isHealthDeclarationRequired"
+        v-if="destination.isHealthDeclarationRequired"
         class="col-3"
         label="Health Declaration Document"
-        :value="origin.state.healthDeclarationDocURL"
-        :loading="origin.loading"
-        @input="origin.updateField('healthDeclarationDocURL', $event)"
+        :value="destination.healthDeclarationDocURL"
+        :loading="loading"
+        @input="updateField('healthDeclarationDocURL', $event)"
       >
         <template #view="{ value }">
           <a :href="value" target="_blank" class="text-white">
@@ -62,27 +69,26 @@ import { defineComponent } from '@vue/composition-api'
 
 import { useDestination } from 'src/api/destinations/composables'
 import InputDate from 'src/components/input-date.vue'
-import { getLabelForCountryCode } from 'src/misc/country-list'
 import InPlaceField from 'src/pages/admin/edit/components/in-place-field.vue'
 import TestRequired from 'src/pages/admin/edit/components/test-required.vue'
 
 export default defineComponent({
   components: { InPlaceField, InputDate, TestRequired },
   props: {
-    originCode: {
+    destinationCode: {
       type: String,
       required: true,
     },
   },
   setup(props) {
-    const originCode: string = props.originCode
-    const origin = useDestination(originCode, {
-      countryCode: 'Loading',
-      reference: 'Loading',
-    })
+    const { destinationRef, loadingRef, updateField } = useDestination(
+      props.destinationCode,
+    )
+
     return {
-      origin,
-      hostCountryName: getLabelForCountryCode(originCode),
+      destination: destinationRef,
+      loading: loadingRef,
+      updateField,
     }
   },
 })

@@ -1,5 +1,6 @@
-import { computed, ComputedRef, Ref } from '@vue/composition-api'
+import { computed, ComputedRef, isRef, Ref, unref } from '@vue/composition-api'
 import get from 'lodash/get'
+import mapValues from 'lodash/mapValues'
 
 import { useStore } from './use-plugins'
 
@@ -21,6 +22,27 @@ function useVuexAction<T>(action: string, payload: any): Promise<T> {
   return useStore().dispatch(action, payload)
 }
 
+export function useVuexActionDispatcherWithReactivePayload(
+  action: string,
+  reactivePayload: Record<string, Ref> | Ref,
+  loadingReference?: Ref<boolean>,
+) {
+  return async (): Promise<void> => {
+    const promise = useVuexAction(
+      action,
+      isRef(reactivePayload)
+        ? unref(reactivePayload)
+        : mapValues(reactivePayload, (ref) => unref(ref)),
+    )
+
+    if (loadingReference) {
+      loadingReference.value = true
+      promise.then(() => (loadingReference.value = false))
+    }
+
+    await promise
+  }
+}
 export function useVuexActionDispatcher<T>(
   action: string,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/no-explicit-any
