@@ -4,7 +4,7 @@ import { useStore } from 'src/composables/use-plugins'
 
 export type CountryList = Record<string, string>
 
-export function getFirstLabel(label: string | string[]): string {
+function getFirstLabel(label: string | string[]): string {
   if (Array.isArray(label)) {
     ;[label] = label
   }
@@ -39,15 +39,6 @@ export async function loadCountryList(locale: string): Promise<void> {
 export function getCountryCodes(): string[] {
   const store = useStore()
   return Object.keys(store.state.countryList)
-}
-
-export function getCountryList(): { value: string; label: string }[] {
-  const store = useStore()
-  const list = store.state.countryList
-  return Object.keys(list).map((key) => ({
-    value: key.toLowerCase(),
-    label: getFirstLabel(list[key]),
-  }))
 }
 
 export function getLabelForCountryCode(countryCode: string): string {

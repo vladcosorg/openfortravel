@@ -80,11 +80,12 @@
 
 <script lang="ts">
 import { computed, defineComponent, toRefs } from '@vue/composition-api'
-import TheFlagBackground from 'layouts/components/the-flag-background.vue'
 import { Portal } from 'portal-vue'
 
 import { RestrictionStatus } from 'src/api/restrictions/models'
-import { getRestriction } from 'src/pages/destination/composable'
+import { useAggregatedLoader } from 'src/composables/use-promise-loading'
+import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
+import { getDestination, getRestriction } from 'src/pages/destination/destination-composable'
 
 export default defineComponent({
   components: { Portal, TheFlagBackground },
@@ -101,8 +102,11 @@ export default defineComponent({
   setup(props) {
     const { originCode: originCodeRef, destinationCode: destinationCodeRef } = toRefs(props)
 
-    const { restrictionRef, loadingRef } = getRestriction(originCodeRef, destinationCodeRef)
-
+    const { restrictionRef, loadingRef: restrictionLoadingRef } = getRestriction(
+      originCodeRef,
+      destinationCodeRef,
+    )
+    const { destinationRef, loadingRef: destinationLoadingRef } = getDestination(destinationCodeRef)
     const statusMap = {
       [RestrictionStatus.ALLOWED]: 'green',
       [RestrictionStatus.CONDITIONAL]: 'orange',
@@ -116,10 +120,10 @@ export default defineComponent({
     const testingColor = computed(() => getBooleanColor(restrictionRef.value.testRequired))
 
     const insuranceColor = computed(() => getBooleanColor(restrictionRef.value.insuranceRequired))
-
     return {
       restriction: restrictionRef,
-      loading: loadingRef,
+      destination: destinationRef,
+      loading: useAggregatedLoader(restrictionLoadingRef, destinationLoadingRef),
       statusColor,
       testingColor,
       insuranceColor,

@@ -2,21 +2,18 @@ import { Ref } from '@vue/composition-api'
 import keyBy from 'lodash/keyBy'
 
 import {
-  DummyPlainOrigin,
-  getOrigin,
-  getOrigins,
-  PlainOrigin,
-  updateOriginField,
-} from 'src/api/origins/origin'
+  createDummyPlainDestination,
+  wrapCollectionWithRichObject,
+} from 'src/api/destinations/helper'
+import { Destination, PlainDestination } from 'src/api/destinations/models'
+import { getOrigin, getOrigins, updateOriginField } from 'src/api/destinations/repository'
 import { useAsyncState } from 'src/composables/use-async'
 import { getCountryCodes } from 'src/misc/country-list'
-import { Origin } from 'src/models/origin'
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function useOrigin(originCode: string, defaultState: PlainOrigin) {
+export function useDestination(originCode: string, defaultState: PlainDestination) {
   const { state, loading } = useAsyncState(getOrigin(originCode), defaultState)
 
-  const updateField = async <K extends keyof PlainOrigin, V extends PlainOrigin[K]>(
+  const updateField = async <K extends keyof PlainDestination, V extends PlainDestination[K]>(
     field: K,
     value: V,
   ) => {
@@ -29,8 +26,8 @@ export function useOrigin(originCode: string, defaultState: PlainOrigin) {
   return { state, updateField, loading }
 }
 
-export function useOrigins(): {
-  list: Ref<Origin[]>
+export function useDestinations(): {
+  list: Ref<Destination[]>
   ready: Ref<boolean>
 } {
   const promise = generateOriginList()
@@ -39,15 +36,13 @@ export function useOrigins(): {
   return { list: state, ready }
 }
 
-async function generateOriginList(): Promise<Origin[]> {
+async function generateOriginList(): Promise<Destination[]> {
   const origins = keyBy(await getOrigins(), (origin) => origin.countryCode)
   const allCountryCodes = getCountryCodes()
-  return allCountryCodes.map((countryCode) => {
-    let origin = origins[countryCode]
-    if (!origin) {
-      origin = new DummyPlainOrigin(countryCode)
-    }
+  const allOrigins = allCountryCodes.map(
+    (countryCode) =>
+      origins[countryCode] ?? createDummyPlainDestination({ countryCode: countryCode }),
+  )
 
-    return new Origin(origin)
-  })
+  return wrapCollectionWithRichObject(allOrigins)
 }

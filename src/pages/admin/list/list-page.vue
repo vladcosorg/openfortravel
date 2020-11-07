@@ -2,8 +2,8 @@
   <q-page>
     <div>
       <q-table
-        :data="origins.list"
-        :loading="!origins.ready"
+        :data="destinations.list"
+        :loading="!destinations.ready"
         :columns="columns"
         :filter="filter"
         row-key="code"
@@ -14,13 +14,7 @@
       >
         <template #header-cell-country="props">
           <q-th :props="props">
-            <q-input
-              v-model="filter"
-              label="Filter by name"
-              label-color="grey-6"
-              dense
-              autofocus
-            />
+            <q-input v-model="filter" label="Filter by name" label-color="grey-6" dense autofocus />
           </q-th>
         </template>
         <template #body-cell-bestByDate="props">
@@ -46,24 +40,24 @@
 import { defineComponent, ref } from '@vue/composition-api'
 import { formatDistanceToNow, isPast, parseISO } from 'date-fns'
 
-import { useOrigins } from 'src/api/origins/use-origin'
+import { Destination } from 'src/api/destinations/models'
+import { useDestinations } from 'src/api/destinations/composables'
 import { useRouter } from 'src/composables/use-plugins'
-import { Origin } from 'src/models/origin'
 
 export default defineComponent({
   setup() {
-    const origins = useOrigins()
+    const destinations = useDestinations()
     const filter = ref('')
     const selection = ref([])
     return {
       filter,
-      origins,
+      destinations,
       selection,
       columns: [
         {
           name: 'country',
           label: 'Country',
-          field: 'countryLabel',
+          field: 'name',
           align: 'left',
           classes: 'ellipsis',
           headerClasses: 'bg-primary text-white',
@@ -91,11 +85,11 @@ export default defineComponent({
           },
         },
       ],
-      goTo: async (event: unknown, origin: Origin) => {
+      goTo: async (event: unknown, destination: Destination) => {
         await useRouter().push({
           name: 'admin-country',
           params: {
-            originCode: origin.countryCode,
+            originCode: destination.countryCode,
           },
         })
       },

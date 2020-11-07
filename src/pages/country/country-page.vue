@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <portal to="top">
-      <!--      <the-flag-background :first-country-code="originCode" />-->
+      <the-flag-background :first-country-code="originCode" />
     </portal>
 
     <div class="column justify-center q-pa-lg q-gutter-xl">

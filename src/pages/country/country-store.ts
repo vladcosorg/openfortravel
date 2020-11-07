@@ -6,7 +6,7 @@ import {
   sortByDestination,
   wrapCollectionWithRichObject,
 } from 'src/api/restrictions/helper'
-import { PlainRestriction, RestrictionStatus } from 'src/api/restrictions/models'
+import { PlainRestriction, Restriction, RestrictionStatus } from 'src/api/restrictions/models'
 import { StateInterface } from 'src/store'
 
 export type GroupedDestinations<T = PlainRestriction> = {
@@ -23,7 +23,7 @@ export default {
     return new State()
   },
   getters: {
-    getDestinationObjects: (state): GroupedDestinations => {
+    getDestinationObjects: (state): GroupedDestinations<Restriction> => {
       const wrappedList = wrapCollectionWithRichObject(state.destinations)
       return groupByStatus(sortByDestination(wrappedList))
     },
@@ -44,9 +44,7 @@ export default {
   },
 } as Module<State, StateInterface>
 
-function groupByStatus<T extends PlainRestriction>(
-  destinations: T[],
-): GroupedDestinations<T> {
+function groupByStatus<T extends Restriction>(destinations: T[]): GroupedDestinations<T> {
   const allStatuses = Object.values(RestrictionStatus)
   return Object.assign(
     {},

@@ -8,8 +8,8 @@ export enum RestrictionStatus {
 }
 
 export interface RestrictionDocument {
+  isForbidden?: boolean
   notes?: string
-  status?: RestrictionStatus
   testRequired?: boolean
   insuranceRequired?: boolean
   selfIsolation?: number
@@ -20,23 +20,23 @@ export interface RestrictionDocument {
 export type PlainRestriction = Required<RestrictionDocument>
 
 export const restrictionDefaults: PlainRestriction = {
+  isForbidden: false,
   notes: '',
-  status: RestrictionStatus.ALLOWED,
   testRequired: false,
   insuranceRequired: false,
   selfIsolation: 0,
   origin: 'us',
   destination: 'md',
 }
+
 export class Restriction implements PlainRestriction {
   public readonly origin!: string
   public readonly destination!: string
   public readonly notes = ''
-  public readonly status = RestrictionStatus.ALLOWED
   public readonly testRequired = false
-  public readonly isDummy = true
   public readonly insuranceRequired = false
   public readonly selfIsolation = 0
+  public readonly isForbidden = false
   constructor(document: PlainRestriction) {
     Object.assign(this, document)
   }
@@ -55,6 +55,18 @@ export class Restriction implements PlainRestriction {
 
   get description(): string {
     return getFullDescription(this)
+  }
+
+  get status(): RestrictionStatus {
+    if (this.isForbidden) {
+      return RestrictionStatus.FORBIDDEN
+    }
+
+    if (this.selfIsolation > 0) {
+      return RestrictionStatus.CONDITIONAL
+    }
+
+    return RestrictionStatus.ALLOWED
   }
 
   public toPlainRestriction(): PlainRestriction {

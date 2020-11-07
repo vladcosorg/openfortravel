@@ -1,4 +1,5 @@
 import type * as firebase from 'firebase'
+import pick from 'lodash/pick'
 
 import {
   PlainRestriction,
@@ -11,10 +12,7 @@ export function generateIDFromEntity(restriction: PlainRestriction): string {
   return generateID(restriction.origin, restriction.destination)
 }
 
-export function generateID(
-  originCode: string,
-  destinationCode: string,
-): string {
+export function generateID(originCode: string, destinationCode: string): string {
   return `${originCode}${destinationCode}`
 }
 
@@ -29,6 +27,10 @@ export const dataConverter: firebase.firestore.FirestoreDataConverter<PlainRestr
     snapshot: firebase.firestore.QueryDocumentSnapshot<RestrictionDocument>,
     options: firebase.firestore.SnapshotOptions,
   ): PlainRestriction {
-    return Object.assign({}, restrictionDefaults, snapshot.data(options))
+    return Object.assign(
+      {},
+      restrictionDefaults,
+      pick(snapshot.data(options), Object.keys(restrictionDefaults)),
+    )
   },
 }

@@ -26,26 +26,17 @@
             <test-required @input="updateAllRestrictions('insuranceRequired', $event)" />
           </q-td>
           <q-td>
-            <status-input @input="updateAllRestrictions('status', $event)" />
+            <self-isolate confirm @input="updateAllRestrictions('selfIsolation', $event)" />
           </q-td>
           <q-td>
-            <self-isolate
-              confirm
-              @input="updateAllRestrictions('selfIsolation', $event)"
-            />
+            <test-required @input="updateAllRestrictions('isForbidden', $event)" />
           </q-td>
         </q-tr>
       </template>
 
       <template #header-cell-country="props">
         <q-th :props="props">
-          <q-input
-            v-model="filter"
-            outlined
-            dense
-            debounce="300"
-            placeholder="Search country"
-          >
+          <q-input v-model="filter" outlined dense debounce="300" placeholder="Search country">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -54,7 +45,7 @@
       </template>
 
       <template #body="props">
-        <q-tr :props="props">
+        <q-tr :props="props" :class="[{ 'is-forbidden': props.row.isForbidden }]">
           <q-td key="country" :props="props">
             {{ props.row.originLabel }}
           </q-td>
@@ -74,16 +65,16 @@
             />
           </q-td>
 
-          <q-td key="status" :props="props">
-            <status-input
-              :value="props.row.status"
-              @input="updateOneRestriction('status', $event, props.row)"
-            />
-          </q-td>
           <q-td key="selfIsolation" :props="props">
             <self-isolate
               :value="props.row.selfIsolation"
               @input="updateOneRestriction('selfIsolation', $event, props.row)"
+            />
+          </q-td>
+          <q-td key="isForbidden" :props="props">
+            <test-required
+              :value="props.row.isForbidden"
+              @input="updateOneRestriction('isForbidden', $event, props.row)"
             />
           </q-td>
         </q-tr>
@@ -107,6 +98,10 @@
 
   :global(.top-row) {
     background-color: $blue-grey-9;
+  }
+
+  :global(.is-forbidden) {
+    background-color: #c1001536;
   }
 }
 </style>
@@ -181,18 +176,19 @@ export default defineComponent({
           field: 'insuranceRequired',
           headerStyle: 'width: 50px',
         },
-        {
-          name: 'status',
-          label: 'Status',
-          field: 'status',
-          align: 'left',
-        },
+
         {
           name: 'selfIsolation',
           label: 'Self-isolation',
           field: 'selfIsolation',
           align: 'left',
           headerStyle: 'width: 250px',
+        },
+        {
+          name: 'isForbidden',
+          label: 'Is Forbidden',
+          field: 'isForbidden',
+          align: 'left',
         },
       ],
     }

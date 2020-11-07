@@ -1,5 +1,5 @@
 <template>
-  <q-field borderless dense :loading="loading">
+  <q-field v-bind="$attrs" borderless dense :loading="loading">
     <template #control>
       <q-option-group
         v-model="internalValue"

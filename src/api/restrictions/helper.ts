@@ -56,7 +56,7 @@ function generateFallbackRestrictions(
     }
 
     fallbackRestrictions.push(
-      Object.assign({}, restrictionDefaults, {
+      createDummyPlainRestriction({
         [valueField]: keyField,
         [fallbackField]: countryCode,
       }),
@@ -73,14 +73,12 @@ export function sortByDestination(collection: Restriction[]): Restriction[] {
   return collection.sort((a, b) => a.destinationLabel.localeCompare(b.destinationLabel))
 }
 
-function wrapWithRichObject(plainRestriction: PlainRestriction): Restriction {
+export function wrapWithRichRestrictionObject(plainRestriction: PlainRestriction): Restriction {
   return new Restriction(plainRestriction)
 }
 
-export function wrapCollectionWithRichObject(
-  plainRestrictions: PlainRestriction[],
-): Restriction[] {
-  return plainRestrictions.map((element) => wrapWithRichObject(element))
+export function wrapCollectionWithRichObject(plainRestrictions: PlainRestriction[]): Restriction[] {
+  return plainRestrictions.map((element) => wrapWithRichRestrictionObject(element))
 }
 
 export function getStatusListPairs(): {
@@ -91,4 +89,10 @@ export function getStatusListPairs(): {
     label: i18n.t(`status.${value}`),
     value,
   }))
+}
+
+export function createDummyPlainRestriction(
+  mergeFields: Partial<PlainRestriction> = {},
+): PlainRestriction {
+  return Object.assign({}, restrictionDefaults, mergeFields)
 }
