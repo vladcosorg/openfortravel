@@ -73,4 +73,12 @@ export default {
       backToList: 'Back to list',
     },
   },
+  components: {
+    theCountryList: {
+      title: 'I want to travel',
+      from: 'From',
+      to: 'To',
+      btn: 'Search',
+    },
+  },
 }

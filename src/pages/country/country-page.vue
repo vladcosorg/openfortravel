@@ -1,8 +1,10 @@
 <template>
-  <q-page class="q-pa-md">
+  <q-page class="q-px-md q-py-xl">
     <portal to="top">
       <the-flag-background :first-country-code="originCode" />
     </portal>
+
+    <the-country-list :origin-code="originCode" />
 
     <div class="column justify-center q-gutter-lg">
       <div>
@@ -105,6 +107,7 @@ import { defineComponent, toRefs, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import { useStore } from 'src/composables/use-plugins'
+import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import DestinationGroup from 'src/pages/country/components/destination-group.vue'
 import { useGroupedDestinations } from 'src/pages/country/composable'
@@ -114,7 +117,7 @@ export default defineComponent({
     // sets document title
     title: 'is page',
   },
-  components: { DestinationGroup, Portal, TheFlagBackground },
+  components: { TheCountryList, DestinationGroup, Portal, TheFlagBackground },
   props: {
     originCode: {
       type: String,

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-md">
+  <q-page class="q-px-md q-py-xl">
     <portal to="top">
       <the-flag-background
         :first-country-code="originCode"
@@ -18,6 +18,28 @@
       />
     </portal>
 
+    <the-country-list
+      :origin-code="originCode"
+      :destination-code="destinationCode"
+    >
+      <q-btn
+        class="q-mb-md full-width"
+        color="accent"
+        text-color="accent"
+        icon-right="sync_alt"
+        outline
+        :label="$t('page.destination.seeReturnPage')"
+        :loading="loading"
+        :to="{
+          name: 'destination',
+          params: {
+            originCode: restriction.destination,
+            destinationCode: restriction.origin,
+          },
+        }"
+      />
+    </the-country-list>
+
     <div v-if="loading">
       <q-card flat style="max-width: 300px">
         <q-skeleton height="150px" square />
@@ -30,46 +52,32 @@
       </q-card>
     </div>
     <div v-else>
-      <i18n
-        path="page.destination.title"
-        tag="h1"
-        class="text-center text-weight-light text-subtitle1 text-weight-regular"
-        style="text-shadow: 1px 1px 5px black"
-      >
-        <template #origin>
-          <br />
-          <span class="text-h5 text-weight-bold">{{
-            restriction.originLabel
-          }}</span
-          ><br />
-        </template>
-        <template #destination>
-          <br />
-          <span class="text-h5 text-weight-bold">
-            {{ restriction.destinationLabel }}</span
-          >
-        </template>
-      </i18n>
-      <q-btn
-        class="q-my-md full-width"
-        color="accent"
-        text-color="primary"
-        icon-right="sync_alt"
-        :label="$t('page.destination.seeReturnPage')"
-        :loading="loading"
-        :to="{
-          name: 'destination',
-          params: {
-            originCode: restriction.destination,
-            destinationCode: restriction.origin,
-          },
-        }"
-      />
+      <!--      <i18n-->
+      <!--        path="page.destination.title"-->
+      <!--        tag="h1"-->
+      <!--        class="text-center text-weight-light text-subtitle1 text-weight-regular"-->
+      <!--        style="text-shadow: 1px 1px 5px black"-->
+      <!--      >-->
+      <!--        <template #origin>-->
+      <!--          <br />-->
+      <!--          <span class="text-h5 text-weight-bold">{{-->
+      <!--            restriction.originLabel-->
+      <!--          }}</span-->
+      <!--          ><br />-->
+      <!--        </template>-->
+      <!--        <template #destination>-->
+      <!--          <br />-->
+      <!--          <span class="text-h5 text-weight-bold">-->
+      <!--            {{ restriction.destinationLabel }}</span-->
+      <!--          >-->
+      <!--        </template>-->
+      <!--      </i18n>-->
       <div
         class="text-subtitle1 montserrat text-center"
         v-html="restriction.description"
       />
-      <q-list bordered separator class="q-mt-md">
+
+      <q-list class="q-mt-md text-subtitle1">
         <q-item v-ripple clickable>
           <q-item-section>
             <q-item-label caption>{{
@@ -162,6 +170,7 @@ import { Portal } from 'portal-vue'
 
 import { RestrictionStatus } from 'src/api/restrictions/models'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
+import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import {
   getDestination,
@@ -169,7 +178,7 @@ import {
 } from 'src/pages/destination/destination-composable'
 
 export default defineComponent({
-  components: { Portal, TheFlagBackground },
+  components: { TheCountryList, Portal, TheFlagBackground },
   props: {
     originCode: {
       type: String,

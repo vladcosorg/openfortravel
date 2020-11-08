@@ -6,14 +6,7 @@
     ]"
   >
     <animated-arrow v-if="showArrow" :class="$style.arrow" />
-
-    <transition
-      appear
-      enter-active-class="animated bounceInUp"
-      leave-active-class="animated bounceInUp"
-    >
-      <country-list :show-button="showArrow" />
-    </transition>
+    <the-country-list />
   </div>
 </template>
 
@@ -29,10 +22,10 @@
 import { defineComponent } from '@vue/composition-api'
 
 import AnimatedArrow from 'src/layouts/components/the-animated-arrow.vue'
-import CountryList from 'src/layouts/components/the-country-list.vue'
+import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 
 export default defineComponent({
-  components: { AnimatedArrow, CountryList },
+  components: { TheCountryList, AnimatedArrow },
   props: {
     showArrow: {
       type: Boolean,

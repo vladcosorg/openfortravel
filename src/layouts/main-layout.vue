@@ -9,12 +9,6 @@
     </q-footer>
 
     <container :fullheight="fullHeight">
-      <travel-bar
-        v-if="showTravelBar"
-        :key="fullHeight"
-        :class="{ 'q-mt-md': !fullHeight, 'order-last': fullHeight }"
-        :show-arrow="fullHeight"
-      />
       <router-view />
     </container>
   </q-layout>
@@ -43,10 +37,6 @@ export default defineComponent({
     fullHeight: {
       type: Boolean,
       default: false,
-    },
-    showTravelBar: {
-      type: Boolean,
-      default: true,
     },
   },
   setup() {

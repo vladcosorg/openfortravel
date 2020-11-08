@@ -4,23 +4,27 @@
       <q-icon size="md" :name="groupIcon" />
       {{ groupName }}
     </div>
-    <q-intersection
-      v-for="destination in destinations"
-      :key="destination.destinationLabel"
-      style="height: 64px"
-      transition="fade"
-      ssr-prerender
-    >
-      <destination-item :destination="destination" />
-    </q-intersection>
+    <q-list class="rounded-borders">
+      <q-item-label header>Quick stats</q-item-label>
+      <q-intersection
+        v-for="destination in destinations"
+        :key="destination.destinationLabel"
+        style="height: 100px"
+        transition="fade"
+        class="q-gutter-md"
+        ssr-prerender
+      >
+        <destination-item :destination="destination" />
+      </q-intersection>
+    </q-list>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from '@vue/composition-api'
-import DestinationItem from 'pages/country/components/destination-item.vue'
 
 import { Restriction } from 'src/api/restrictions/models'
+import DestinationItem from 'src/pages/country/components/destination-item.vue'
 
 export default defineComponent({
   components: { DestinationItem },
