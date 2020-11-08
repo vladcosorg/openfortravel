@@ -1,12 +1,36 @@
 <template>
-  <q-page>
+  <q-page class="q-pa-md">
     <portal to="top">
       <the-flag-background :first-country-code="originCode" />
     </portal>
 
-    <div class="column justify-center q-pa-lg q-gutter-xl">
+    <div class="column justify-center q-gutter-lg">
+      <div>
+        <div class="text-subtitle1"></div>
+        <q-list dense bordered separator padding class="rounded-borders">
+          <q-item-label header>Quick stats</q-item-label>
+
+          <q-item class="text-positive">
+            <q-item-section>
+              <q-item-label>12 allowed countries</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item class="text-warning">
+            <q-item-section>
+              <q-item-label>12 allowed countries</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item class="text-negative">
+            <q-item-section>
+              <q-item-label>12 allowed countries</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </div>
+
       <q-input
         v-model="destinationFilter"
+        autofocus
         placeholder="Quick country search"
         :loading="filterLoading"
         :disable="loading"
@@ -14,7 +38,12 @@
         outlined
         stack-label
         dark
-      />
+      >
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+
       <q-list v-if="loading || filterLoading" separator>
         <q-item v-for="n in Array(4)" :key="n">
           <q-item-section avatar>

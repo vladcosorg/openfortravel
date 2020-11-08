@@ -1,6 +1,9 @@
 <template>
   <div
-    class="col-auto column justify-end q-mb-xl q-px-lg relative-position text-center"
+    :class="[
+      'col-auto column justify-end  relative-position text-center',
+      showArrow ? 'q-mb-xl  q-px-lg' : 'q-mb-sm  q-px-md',
+    ]"
   >
     <animated-arrow v-if="showArrow" :class="$style.arrow" />
 
@@ -9,13 +12,7 @@
       enter-active-class="animated bounceInUp"
       leave-active-class="animated bounceInUp"
     >
-      <div>
-        <div :class="[$style.intro, 'q-mb-md', 'montserrat']">
-          {{ $t('intro.title') }}
-        </div>
-
-        <country-list :show-button="showArrow" />
-      </div>
+      <country-list :show-button="showArrow" />
     </transition>
   </div>
 </template>
@@ -27,16 +24,12 @@
   left: 0;
   transform: translateY(-100%);
 }
-.intro {
-  font-weight: bold;
-  font-size: 1.3rem;
-  color: $secondary;
-}
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import AnimatedArrow from 'layouts/components/the-animated-arrow.vue'
-import CountryList from 'layouts/components/the-country-list.vue'
+
+import AnimatedArrow from 'src/layouts/components/the-animated-arrow.vue'
+import CountryList from 'src/layouts/components/the-country-list.vue'
 
 export default defineComponent({
   components: { AnimatedArrow, CountryList },

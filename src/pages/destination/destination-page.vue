@@ -33,16 +33,21 @@
       <i18n
         path="page.destination.title"
         tag="h1"
-        class="text-center text-weight-light text-subtitle1"
+        class="text-center text-weight-light text-subtitle1 text-weight-regular"
+        style="text-shadow: 1px 1px 5px black"
       >
         <template #origin>
           <br />
-          <b class="text-h5 overflow-hidden">{{ restriction.originLabel }}</b
+          <span class="text-h5 text-weight-bold">{{
+            restriction.originLabel
+          }}</span
           ><br />
         </template>
         <template #destination>
           <br />
-          <b class="text-h5"> {{ restriction.destinationLabel }}</b>
+          <span class="text-h5 text-weight-bold">
+            {{ restriction.destinationLabel }}</span
+          >
         </template>
       </i18n>
       <q-btn

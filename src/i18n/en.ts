@@ -5,7 +5,7 @@ export default {
     conditional: 'Conditional',
   },
   intro: {
-    title: 'I want to travel from',
+    title: 'I want to travel',
     btn: 'Search',
   },
   description: {

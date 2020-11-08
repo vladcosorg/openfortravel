@@ -1,20 +1,18 @@
 <template>
-  <q-layout view="hhr lpr ffr">
-    <q-page-container
-      style="overflow-x: hidden"
-      :class="[
-        $style.container,
-        'column',
-        'justify-between',
-        $q.platform.is.safari && fullheight ? $style['mobile-safari-fix'] : '',
-        {
-          'window-height': fullheight,
-        },
-      ]"
-    >
-      <slot />
-    </q-page-container>
-  </q-layout>
+  <q-page-container
+    style="overflow-x: hidden"
+    :class="[
+      $style.container,
+      'column',
+      'justify-between',
+      $q.platform.is.safari && fullheight ? $style['mobile-safari-fix'] : '',
+      {
+        'window-height': fullheight,
+      },
+    ]"
+  >
+    <slot />
+  </q-page-container>
 </template>
 
 <style lang="scss" module>

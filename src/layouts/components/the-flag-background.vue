@@ -37,7 +37,7 @@
   margin: 0;
   width: 100%;
   height: 250px;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
 
   :global {
     img {

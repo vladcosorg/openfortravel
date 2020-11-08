@@ -1,21 +1,61 @@
 <template>
-  <div :class="['row', $style.row]">
-    <native-mobile-select
-      :options="countryList"
-      :value="currentCountry"
-      :class="[showButton ? 'col' : 'col-12', $style.select]"
-      :dropdown-icon="icon"
-      options-dense
-      borderless
-      item-aligned
+  <div :class="['row', $style.row, 'justify-center']">
+    <div :class="[$style.intro, 'q-mb-xs', 'montserrat']">
+      {{ $t('intro.title') }}
+    </div>
+
+    <q-field
+      v-if="$q.platform.is.mobile"
+      standout
+      :class="[showButton ? 'col' : 'col-12']"
       :loading="loading"
-      :disable="loading"
-      use-input
-      hide-selected
-      fill-input
-      @filter="filterCountryList"
-      @input="navigateToCountryPage"
-    />
+      stack-label
+      class="full-width"
+    >
+      <template #before>
+        <div
+          style="font-size: 0.8rem"
+          :class="[$style.intro, 'montserrat', 'text-subtitle2']"
+        >
+          From
+        </div>
+      </template>
+      <template #prepend>
+        <q-icon name="place" />
+      </template>
+
+      <template #control>
+        <div :class="['self-center full-width no-outline', $style.label]">
+          {{ currentCountry.label }}
+        </div>
+      </template>
+
+      <template #append>
+        <invisible-native-select
+          :value="currentCountry"
+          :options="countryList"
+          @input="navigateToCountryPage"
+        />
+        <q-icon :name="icon" />
+      </template>
+    </q-field>
+
+    <!--        <native-mobile-select-->
+    <!--          :options="countryList"-->
+    <!--          :value="currentCountry"-->
+    <!--          :class="[showButton ? 'col' : 'col-12', $style.select]"-->
+    <!--          :dropdown-icon="icon"-->
+    <!--          options-dense-->
+    <!--          borderless-->
+    <!--          item-aligned-->
+    <!--          :loading="loading"-->
+    <!--          :disable="loading"-->
+    <!--          use-input-->
+    <!--          hide-selected-->
+    <!--          fill-input-->
+    <!--          @filter="filterCountryList"-->
+    <!--          @input="navigateToCountryPage"-->
+    <!--        />-->
     <q-btn
       v-if="showButton"
       size="14px"
@@ -33,6 +73,20 @@
 </template>
 
 <style lang="scss" module>
+.label {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.intro {
+  text-shadow: 1px 1px 5px $primary;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
 .select {
   :global {
     .q-field {
@@ -81,9 +135,13 @@
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
+import InvisibleNativeSelect from 'src/components/invisible-native-select.vue'
 import NativeMobileSelect from 'src/components/native-mobile-select.vue'
 import { useI18n, useRouter, useStore } from 'src/composables/use-plugins'
-import { useAggregatedLoader, useClosureLoading } from 'src/composables/use-promise-loading'
+import {
+  useAggregatedLoader,
+  useClosureLoading,
+} from 'src/composables/use-promise-loading'
 import { useVuexGetter } from 'src/composables/use-vuex'
 import { getCurrentCountry } from 'src/misc/country-decider'
 import { getLabelForCountryCode } from 'src/misc/country-list'
@@ -96,7 +154,7 @@ interface ListItem {
 type List = ListItem[]
 
 export default defineComponent({
-  components: { NativeMobileSelect },
+  components: { InvisibleNativeSelect, NativeMobileSelect },
   props: {
     showButton: {
       type: Boolean,
@@ -119,17 +177,18 @@ export default defineComponent({
       },
     })
 
-    const { loading: eventLoading, callback: navigateToCountryPage } = useClosureLoading(
-      async (originCode?: string) => {
-        await useRouter().push({
-          name: 'origin',
-          params: {
-            originCode: originCode ?? getCurrentCountry(),
-            locale: useI18n().locale,
-          },
-        })
-      },
-    )
+    const {
+      loading: eventLoading,
+      callback: navigateToCountryPage,
+    } = useClosureLoading(async (originCode?: string) => {
+      await useRouter().push({
+        name: 'origin',
+        params: {
+          originCode: originCode ?? getCurrentCountry(),
+          locale: useI18n().locale,
+        },
+      })
+    })
 
     const loading = useAggregatedLoader(
       computed(() => useStore().state.countrySelectorLoading),

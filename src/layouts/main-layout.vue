@@ -1,15 +1,23 @@
 <template>
-  <container :fullheight="fullHeight">
+  <q-layout view="hhr lpr ffr">
     <portal-target name="top" slim />
-    <header-bar />
-    <travel-bar
-      v-if="showTravelBar"
-      :key="fullHeight"
-      :class="{ 'q-mt-xl': !fullHeight, 'order-last': fullHeight }"
-      :show-arrow="fullHeight"
-    />
-    <router-view />
-  </container>
+    <q-header class="bg-transparent">
+      <header-bar />
+    </q-header>
+    <q-footer class="text-caption text-center q-py-xs">
+      Copyright 2020
+    </q-footer>
+
+    <container :fullheight="fullHeight">
+      <travel-bar
+        v-if="showTravelBar"
+        :key="fullHeight"
+        :class="{ 'q-mt-md': !fullHeight, 'order-last': fullHeight }"
+        :show-arrow="fullHeight"
+      />
+      <router-view />
+    </container>
+  </q-layout>
 </template>
 
 <script lang="ts">
