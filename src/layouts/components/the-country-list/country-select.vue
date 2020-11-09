@@ -6,11 +6,11 @@
     stack-label
     :class="['full-width', $style.field]"
   >
-    <template #before>
-      <div :class="[$style.prefix, 'montserrat', 'text-subtitle2']">
-        <slot />
-      </div>
-    </template>
+    <!--    <template #before>-->
+    <!--      <div :class="[$style.prefix, 'montserrat', 'text-subtitle2']">-->
+    <!--        <slot />-->
+    <!--      </div>-->
+    <!--    </template>-->
     <template #prepend>
       <q-icon name="place" />
     </template>

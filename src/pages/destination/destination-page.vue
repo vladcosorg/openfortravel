@@ -21,6 +21,7 @@
     <the-country-list
       :origin-code="originCode"
       :destination-code="destinationCode"
+      class="q-mb-xl"
     >
       <q-btn
         class="q-mb-md full-width"

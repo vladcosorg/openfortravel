@@ -1,7 +1,7 @@
 <template>
   <q-item
     v-ripple
-    :class="[$style.item, 'rounded-borders']"
+    :class="[$style.item, destination.status, 'rounded-borders']"
     clickable
     :to="{
       name: 'destination',
@@ -11,7 +11,10 @@
       },
     }"
   >
-    <flag png :class="$style.bg" :country-code="destination.destination" />
+    <transition appear enter-active-class="animated fadeIn">
+      <flag png :class="$style.bg" :country-code="destination.destination" />
+    </transition>
+
     <q-item-section avatar>
       <q-avatar>
         <flag
@@ -23,11 +26,7 @@
     </q-item-section>
 
     <q-item-section>
-      <q-item-label
-        :class="[$style.label, 'ellipsis-improved', 'full-width']"
-        style=""
-        class=""
-      >
+      <q-item-label :class="[$style.label, 'ellipsis-improved', 'full-width']">
         {{ destination.destinationLabel }}
       </q-item-label>
       <q-item-label
@@ -35,6 +34,31 @@
         class="text-blue-grey-2 ellipsis-3-lines"
         v-html="destination.shortDescription"
       />
+      <q-item-label class="q-gutter-xs">
+        <q-badge
+          v-if="destination.status === 'allowed'"
+          color="green-14"
+          text-color="dark"
+        >
+          {{ $t('restriction.travel.value')[destination.status] }}
+        </q-badge>
+        <q-badge
+          v-if="destination.status === 'conditional'"
+          color="warning"
+          text-color="dark"
+        >
+          {{ $t('restriction.travel.value')[destination.status] }}
+        </q-badge>
+        <q-badge
+          v-if="destination.status === 'forbidden'"
+          color="negative"
+          text-color="white"
+        >
+          {{ $t('restriction.travel.value')[destination.status] }}
+        </q-badge>
+        <!--        <q-badge color="accent" text-color="dark"> COVID test </q-badge>-->
+        <q-badge color="deep-purple"> Self-Isolation </q-badge>
+      </q-item-label>
     </q-item-section>
   </q-item>
 </template>
@@ -57,7 +81,16 @@
   position: relative;
   margin-bottom: 10px;
   overflow: hidden;
-  border: 1px solid darken($primary, 2%);
+
+  &:global(.allowed) {
+    border: 2px solid rgba($positive, 0.3s);
+  }
+  &:global(.conditional) {
+    border: 2px solid rgba($warning, 0.3s);
+  }
+  &:global(.forbidden) {
+    border: 2px solid rgba($negative, 0.3s);
+  }
 }
 
 .flag {
@@ -69,6 +102,7 @@
 </style>
 
 <script lang="ts">
+import { ionBaseballOutline as icon } from '@quasar/extras/ionicons-v5'
 import { defineComponent, PropType } from '@vue/composition-api'
 
 import { Restriction } from 'src/api/restrictions/models'
@@ -77,16 +111,19 @@ import Flag from 'src/components/flag.vue'
 export default defineComponent({
   components: { Flag },
   props: {
+    groupColor: {
+      required: true,
+      type: String,
+    },
     destination: {
       required: true,
       type: Object as PropType<Restriction>,
     },
   },
+
   setup() {
     return {
-      getBg(countryCode) {
-        return require(`svg-country-flags/svg/${countryCode}.svg`)
-      },
+      icon,
     }
   },
 })

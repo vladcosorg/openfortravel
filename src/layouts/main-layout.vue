@@ -20,12 +20,10 @@ import { PortalTarget } from 'portal-vue'
 
 import HeaderBar from 'src/layouts/components/the-header-bar.vue'
 import Container from 'src/layouts/components/the-layout-container.vue'
-import TravelBar from 'src/layouts/components/the-travel-bar.vue'
 
 export default defineComponent({
   components: {
     HeaderBar,
-    TravelBar,
     Container,
     PortalTarget,
   },

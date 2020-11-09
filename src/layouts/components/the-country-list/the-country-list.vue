@@ -3,9 +3,7 @@
     enter-active-class="animated bounceInUp"
     leave-active-class="animated bounceInUp"
   >
-    <div
-      :class="['row', $style.row, 'justify-center', 'q-gutter-y-md', 'q-mb-xl']"
-    >
+    <div :class="['row', $style.row, 'justify-center', 'q-gutter-y-md']">
       <div :class="[$style.intro, 'montserrat text-h5']">
         {{ $t('components.theCountryList.title') }}
       </div>
@@ -14,9 +12,7 @@
         :key="currentOrigin"
         v-model="currentOrigin"
         :loading="loading"
-      >
-        {{ $t('components.theCountryList.from') }}
-      </country-select>
+      />
 
       <country-select
         v-if="currentDestination"
@@ -69,8 +65,6 @@ interface ListItem {
   value: string
   label: string
 }
-
-type List = ListItem[]
 
 export default defineComponent({
   components: { Btn, CountrySelect },

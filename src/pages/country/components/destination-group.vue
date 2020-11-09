@@ -1,23 +1,20 @@
 <template>
-  <div>
-    <div :class="['text-h6', `text-${groupColor}`, 'q-pb-md']">
-      <q-icon size="md" :name="groupIcon" />
+  <q-list class="rounded-borders">
+    <q-item-label header :class="[`text-${groupColor}`]">
+      <q-icon size="sm" :name="groupIcon" />
       {{ groupName }}
-    </div>
-    <q-list class="rounded-borders">
-      <q-item-label header>Quick stats</q-item-label>
-      <q-intersection
-        v-for="destination in destinations"
-        :key="destination.destinationLabel"
-        style="height: 100px"
-        transition="fade"
-        class="q-gutter-md"
-        ssr-prerender
-      >
-        <destination-item :destination="destination" />
-      </q-intersection>
-    </q-list>
-  </div>
+    </q-item-label>
+    <q-intersection
+      v-for="destination in destinations"
+      :key="destination.destinationLabel"
+      style="min-height: 95px"
+      transition="fade"
+      class="q-mb-md"
+      ssr-prerender
+    >
+      <destination-item :group-color="groupColor" :destination="destination" />
+    </q-intersection>
+  </q-list>
 </template>
 
 <script lang="ts">

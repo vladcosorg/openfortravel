@@ -4,7 +4,7 @@
       <the-flag-background :first-country-code="originCode" />
     </portal>
 
-    <the-country-list :origin-code="originCode" />
+    <the-country-list :origin-code="originCode" class="q-mb-xl" />
 
     <div class="column justify-center q-gutter-lg">
       <div>
@@ -99,9 +99,9 @@
 </style>
 <script lang="ts">
 import {
-  ionCheckmarkCircle as allowedIcon,
-  ionAlertCircle as conditionalIcon,
-  ionRemoveCircle as forbiddenIcon,
+  ionCheckmarkCircleOutline as allowedIcon,
+  ionCheckmarkCircle as conditionalIcon,
+  ionCheckmarkCircle as forbiddenIcon,
 } from '@quasar/extras/ionicons-v5'
 import { defineComponent, toRefs, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
