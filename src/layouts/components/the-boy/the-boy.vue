@@ -3,6 +3,7 @@
     <img
       ref="svg"
       svg-inline
+      style="width: 100%"
       :class="{
         [$style.boy]: true,
         [$style['handStartedRaising']]: handStartedRaising,
@@ -96,6 +97,7 @@
 </style>
 <script lang="ts">
 import { defineComponent, onMounted, ref, unref } from '@vue/composition-api'
+
 import CountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 
 export default defineComponent({

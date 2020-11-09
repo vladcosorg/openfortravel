@@ -5,14 +5,36 @@
   >
     <div :class="['row', $style.row, 'justify-center', 'q-gutter-y-md']">
       <div :class="[$style.intro, 'montserrat text-h5']">
-        {{ $t('components.theCountryList.title') }}
+        {{ $t('components.theCountryList')[isIntro ? 'titleIntro' : 'title'] }}
       </div>
 
       <country-select
         :key="currentOrigin"
         v-model="currentOrigin"
         :loading="loading"
-      />
+        :show-prefix-text="!!originCode"
+      >
+        <template #default>
+          {{ $t('components.theCountryList.from') }}
+        </template>
+        <template v-if="!originCode && !destinationCode" #after>
+          <transition
+            :duration="30000"
+            appear
+            enter-active-class="animated bounce slower"
+          >
+            <q-btn
+              unelevated
+              color="secondary"
+              :icon="`img:${require('src/assets/search.svg')}`"
+              style="height: 100%"
+              @click="navigateToPage(currentOrigin)"
+            >
+              <q-tooltip> {{ $t('components.theCountryList.btn') }}</q-tooltip>
+            </q-btn>
+          </transition>
+        </template>
+      </country-select>
 
       <country-select
         v-if="currentDestination"
@@ -20,13 +42,11 @@
         v-model="currentDestination"
         :loading="loading"
       >
-        {{ $t('components.theCountryList.to') }}
+        <template #default>
+          {{ $t('components.theCountryList.to') }}
+        </template>
       </country-select>
 
-      <btn
-        v-if="!originCode && !destinationCode"
-        @click="navigateToPage(currentOrigin)"
-      />
       <slot />
     </div>
   </transition>
@@ -60,11 +80,6 @@ import { useClosureLoading } from 'src/composables/use-promise-loading'
 import Btn from 'src/layouts/components/the-country-list/btn.vue'
 import CountrySelect from 'src/layouts/components/the-country-list/country-select.vue'
 import { getCurrentCountry } from 'src/misc/country-decider'
-
-interface ListItem {
-  value: string
-  label: string
-}
 
 export default defineComponent({
   components: { Btn, CountrySelect },
@@ -126,6 +141,7 @@ export default defineComponent({
       navigateToPage,
       currentOrigin: originValueRef,
       currentDestination: destinationValueRef,
+      isIntro: computed(() => !props.originCode && !props.destinationCode),
     }
   },
 })

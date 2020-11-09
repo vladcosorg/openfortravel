@@ -10,21 +10,21 @@
       <div>
         <div class="text-subtitle1"></div>
         <q-list dense bordered separator padding class="rounded-borders">
-          <q-item-label header>Quick stats</q-item-label>
+          <q-item-label header>{{
+            $t('page.country.stats.header')
+          }}</q-item-label>
 
-          <q-item class="text-positive">
+          <q-item
+            v-for="(statusLabel, status) in statuses"
+            :key="status"
+            :class="`text-${statusColors[status]}`"
+          >
             <q-item-section>
-              <q-item-label>12 allowed countries</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item class="text-warning">
-            <q-item-section>
-              <q-item-label>12 allowed countries</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item class="text-negative">
-            <q-item-section>
-              <q-item-label>12 allowed countries</q-item-label>
+              <q-item-label>
+                {{ stats[status] }}
+                {{ $tc('page.country.stats.country', stats[status]) }}:
+                {{ $t('page.country.stats.values')[status] }}
+              </q-item-label>
             </q-item-section>
           </q-item>
         </q-list>
@@ -33,7 +33,7 @@
       <q-input
         v-model="destinationFilter"
         autofocus
-        placeholder="Quick country search"
+        :placeholder="$t('page.country.quickSearch')"
         :loading="filterLoading"
         :disable="loading"
         dense
@@ -64,48 +64,28 @@
       </q-list>
       <div v-else>
         <destination-group
-          v-if="!loading && destinations.allowed"
-          :group-name="$t('status.allowed')"
-          :group-icon="allowedIcon"
-          group-color="positive"
-          :destinations="destinations.allowed"
-        />
-        <destination-group
-          v-if="!loading"
-          :group-name="$t('status.conditional')"
-          :group-icon="conditionalIcon"
-          group-color="warning"
-          :destinations="destinations.conditional"
-        />
-        <destination-group
-          v-if="!loading"
-          :group-name="$t('status.forbidden')"
-          :group-icon="forbiddenIcon"
-          group-color="negative"
-          :destinations="destinations.forbidden"
+          v-for="(statusLabel, status) in statuses"
+          :key="status"
+          :group-name="statusLabel"
+          :group-icon="statusIcon[status]"
+          :group-color="statusColors[status]"
+          :destinations="destinations[status]"
         />
       </div>
     </div>
   </q-page>
 </template>
-<style module>
-.flagBg {
-  position: absolute;
-  left: 0;
-  top: 0;
-  margin: 0;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));
-}
-</style>
+
 <script lang="ts">
 import {
   ionCheckmarkCircleOutline as allowedIcon,
-  ionCheckmarkCircle as conditionalIcon,
-  ionCheckmarkCircle as forbiddenIcon,
+  ionAlertCircleOutline as conditionalIcon,
+  ionCloseCircleOutline as forbiddenIcon,
 } from '@quasar/extras/ionicons-v5'
-import { defineComponent, toRefs, watch } from '@vue/composition-api'
+import { computed, defineComponent, toRefs, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
+import { getStatusListMap, getStatusMapper } from 'src/api/restrictions/helper'
 import { useStore } from 'src/composables/use-plugins'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
@@ -142,9 +122,20 @@ export default defineComponent({
       destinationFilter,
       destinations,
       loading,
-      allowedIcon,
-      conditionalIcon,
-      forbiddenIcon,
+      statuses: getStatusListMap(),
+      statusIcon: {
+        allowed: allowedIcon,
+        conditional: conditionalIcon,
+        forbidden: forbiddenIcon,
+      },
+      statusColors: {
+        allowed: 'positive',
+        conditional: 'warning',
+        forbidden: 'negative',
+      },
+      stats: computed(() => {
+        return getStatusMapper((status) => destinations.value[status]?.length)
+      }),
       filterLoading,
     }
   },

@@ -2,9 +2,9 @@ import { getLabelForCountryCode } from 'src/misc/country-list'
 import { getFullDescription, getShortDescription } from 'src/models/description'
 
 export enum RestrictionStatus {
-  FORBIDDEN = 'forbidden',
   ALLOWED = 'allowed',
   CONDITIONAL = 'conditional',
+  FORBIDDEN = 'forbidden',
 }
 
 export interface RestrictionDocument {

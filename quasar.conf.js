@@ -174,6 +174,7 @@ module.exports = configure(function (context) {
       'fadeInRight',
       'fadeOutRight',
       'bounceInUp',
+      'bounce',
     ],
 
     // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr

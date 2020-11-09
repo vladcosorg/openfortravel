@@ -1,15 +1,16 @@
 <template>
-  <div class="col column justify-evenly" style="z-index: 2">
-    <div class="col-auto text-h5 q-px-lg montserrat text-center">
+  <div class="col column justify-evenly items-center" style="z-index: 2">
+    <div class="text-h5 q-px-lg montserrat text-center">
       Find out which destinations are open or reopening soon
     </div>
-    <boy class="col-6 column items-center justify-end" />
-    <div :class="[' col-auto self-end  relative-position text-center q-px-lg']">
+    <div :class="['', 'relative-position', 'text-center', 'q-pa-lg']">
       <animated-arrow :class="$style.arrow" />
       <the-country-list />
     </div>
+    <boy class="q-px-lg" style="justify-self: end" />
   </div>
 </template>
+
 <style lang="scss" module>
 .arrow {
   position: absolute;

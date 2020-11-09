@@ -1,3 +1,4 @@
+import zipObject from 'lodash/zipObject'
 import { TranslateResult } from 'vue-i18n'
 
 import {
@@ -87,6 +88,28 @@ export function wrapCollectionWithRichObject(
   return plainRestrictions.map((element) =>
     wrapWithRichRestrictionObject(element),
   )
+}
+
+export function getStatusList(): Array<RestrictionStatus> {
+  return Object.values(RestrictionStatus)
+}
+
+export function getStatusMapper<T>(
+  mapper: (status: RestrictionStatus) => T,
+): Record<RestrictionStatus, T> {
+  const keys = Object.values(RestrictionStatus)
+  return zipObject(
+    keys,
+    keys.map((status) => mapper(status)),
+  ) as Record<RestrictionStatus, T>
+}
+
+export function getStatusListMap(): Record<RestrictionStatus, TranslateResult> {
+  const keys = getStatusList()
+  return zipObject(
+    keys,
+    keys.map((status) => i18n.t(`status.${status}`)),
+  ) as Record<RestrictionStatus, TranslateResult>
 }
 
 export function getStatusListPairs(): {

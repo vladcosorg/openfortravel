@@ -1,11 +1,9 @@
 <template>
   <q-btn
     size="14px"
-    round
     color="secondary"
     :icon="`img:${require('src/assets/search.svg')}`"
     text-color="primary"
-    :class="$style.btn"
     :percentage="20"
     v-bind="$attrs"
     v-on="$listeners"

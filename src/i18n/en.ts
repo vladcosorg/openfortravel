@@ -67,6 +67,18 @@ export default {
     },
   },
   page: {
+    country: {
+      quickSearch: 'Quick country search',
+      stats: {
+        header: 'Quick stats',
+        country: 'country|countries',
+        values: {
+          allowed: 'No limitations',
+          conditional: 'Some limitations',
+          forbidden: 'Entry forbidden',
+        },
+      },
+    },
     destination: {
       title: 'Latest information on travelling from {origin} to {destination}',
       seeReturnPage: 'See return travel',
@@ -76,6 +88,7 @@ export default {
   components: {
     theCountryList: {
       title: 'I want to travel',
+      titleIntro: 'I want to travel from',
       from: 'From',
       to: 'To',
       btn: 'Search',
