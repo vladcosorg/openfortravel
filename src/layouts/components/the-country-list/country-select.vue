@@ -145,15 +145,12 @@ export default defineComponent({
       })
     }
 
-    const isIntro = computed(() => {})
-
     return {
       aggregatedLoading: loadingRef,
       countryList,
       currentCountry,
       filterCountryList,
       icon,
-      isIntro,
     }
   },
 })
