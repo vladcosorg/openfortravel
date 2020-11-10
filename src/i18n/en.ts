@@ -9,7 +9,10 @@ export default {
     btn: 'Search',
   },
   description: {
-    intro: 'Travel from {origin} to {destination} ',
+    intro: {
+      travel: 'Travel from {origin} to {destination} ',
+      return: 'Returning from <b>{origin}</b> to <b>{destination}</b>',
+    },
     status: {
       allowed:
         'is <b>@.lower:restriction.travel.value.allowed</b> without any restrictions. ',
@@ -67,6 +70,9 @@ export default {
     },
   },
   page: {
+    index: {
+      hero: 'Find out which destinations are open or reopening soon',
+    },
     country: {
       quickSearch: 'Quick country search',
       stats: {
@@ -83,6 +89,7 @@ export default {
       title: 'Latest information on travelling from {origin} to {destination}',
       seeReturnPage: 'See return travel',
       backToList: 'Back to list',
+      returnWay: 'Return way',
     },
   },
   components: {

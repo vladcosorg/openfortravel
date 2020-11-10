@@ -31,7 +31,7 @@
       </div>
 
       <q-input
-        v-model="destinationFilter"
+        v-model="filter"
         autofocus
         :placeholder="$t('page.country.quickSearch')"
         :loading="filterLoading"
@@ -62,14 +62,20 @@
           </q-item-section>
         </q-item>
       </q-list>
+      <div v-else-if="isFiltering">
+        <destination-group
+          :show-header="false"
+          :destinations="filteredFlatDestinations"
+        />
+      </div>
       <div v-else>
         <destination-group
-          v-for="(statusLabel, status) in statuses"
+          v-for="(destinations, status) in groupedDestinations"
           :key="status"
-          :group-name="statusLabel"
+          :group-name="$t('status')[status]"
           :group-icon="statusIcon[status]"
           :group-color="statusColors[status]"
-          :destinations="destinations[status]"
+          :destinations="destinations"
         />
       </div>
     </div>
@@ -90,7 +96,10 @@ import { useStore } from 'src/composables/use-plugins'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import DestinationGroup from 'src/pages/country/components/destination-group.vue'
-import { useGroupedDestinations } from 'src/pages/country/composable'
+import {
+  useFilterableFlatDestinations,
+  useGroupedDestinations,
+} from 'src/pages/country/composable'
 
 export default defineComponent({
   meta: {
@@ -107,21 +116,24 @@ export default defineComponent({
   setup(props) {
     const { originCode } = toRefs(props)
 
+    const { destinationsRef, isLoadingRef } = useGroupedDestinations(originCode)
     const {
-      destinations,
-      filter: destinationFilter,
-      loading,
-      filterLoading,
-    } = useGroupedDestinations(originCode)
+      filterRef,
+      filteredDestinationsRef,
+      filterLoadingRef,
+      isFilteringRef,
+    } = useFilterableFlatDestinations(destinationsRef)
 
-    watch(loading, (newValue) => {
+    watch(isLoadingRef, (newValue) => {
       useStore().commit('setCountrySelectorLoading', newValue)
     })
 
     return {
-      destinationFilter,
-      destinations,
-      loading,
+      filter: filterRef,
+      isFiltering: isFilteringRef,
+      groupedDestinations: destinationsRef,
+      filteredFlatDestinations: filteredDestinationsRef,
+      loading: isLoadingRef,
       statuses: getStatusListMap(),
       statusIcon: {
         allowed: allowedIcon,
@@ -134,9 +146,11 @@ export default defineComponent({
         forbidden: 'negative',
       },
       stats: computed(() => {
-        return getStatusMapper((status) => destinations.value[status]?.length)
+        return getStatusMapper(
+          (status) => destinationsRef.value[status]?.length,
+        )
       }),
-      filterLoading,
+      filterLoading: filterLoadingRef,
     }
   },
 })

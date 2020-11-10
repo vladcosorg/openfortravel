@@ -53,6 +53,10 @@ export class Restriction implements PlainRestriction {
     return getShortDescription(this)
   }
 
+  get returnShortDescription(): string {
+    return getShortDescription(this, true)
+  }
+
   get description(): string {
     return getFullDescription(this)
   }
@@ -67,6 +71,10 @@ export class Restriction implements PlainRestriction {
     }
 
     return RestrictionStatus.ALLOWED
+  }
+
+  public isAllowed(): boolean {
+    return RestrictionStatus.ALLOWED === this.status
   }
 
   public toPlainRestriction(): PlainRestriction {

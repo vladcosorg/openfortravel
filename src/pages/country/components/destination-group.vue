@@ -1,6 +1,6 @@
 <template>
   <q-list class="rounded-borders">
-    <q-item-label header :class="[`text-${groupColor}`]">
+    <q-item-label v-if="showHeader" header :class="[`text-${groupColor}`]">
       <q-icon size="sm" :name="groupIcon" />
       {{ groupName }}
     </q-item-label>
@@ -12,7 +12,7 @@
       class="q-mb-md"
       ssr-prerender
     >
-      <destination-item :group-color="groupColor" :destination="destination" />
+      <destination-item :destination="destination" />
     </q-intersection>
   </q-list>
 </template>
@@ -27,16 +27,21 @@ export default defineComponent({
   components: { DestinationItem },
   props: {
     groupName: {
-      required: true,
+      required: false,
       type: String,
     },
     groupIcon: {
-      required: true,
+      required: false,
       type: String,
     },
     groupColor: {
-      required: true,
+      required: false,
       type: String,
+    },
+    showHeader: {
+      required: false,
+      type: Boolean,
+      default: true,
     },
     destinations: {
       type: Array as PropType<Restriction[]>,

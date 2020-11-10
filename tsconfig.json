@@ -12,6 +12,7 @@
     "sourceMap": true,
     "strict": true,
     "target": "es6",
+    "lib": ["es2019", "DOM", "ES6", "DOM.Iterable", "ScriptHost"],
     // Quasar-defined webpack aliases
     "paths": {
       "src/*": ["src/*"]

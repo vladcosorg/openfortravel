@@ -11,9 +11,9 @@
         <slot name="default" />
       </div>
     </template>
-    <template #prepend>
-      <q-icon name="place" />
-    </template>
+    <!--    <template #prepend>-->
+    <!--      <q-icon name="place" />-->
+    <!--    </template>-->
 
     <template #control>
       <transition

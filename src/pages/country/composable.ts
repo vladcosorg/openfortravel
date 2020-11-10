@@ -1,4 +1,5 @@
 import {
+  computed,
   ComputedRef,
   onMounted,
   onServerPrefetch,
@@ -6,12 +7,14 @@ import {
   watch,
   WritableComputedRef,
 } from '@vue/composition-api'
-import mapValues from 'lodash/mapValues'
 
 import { Restriction } from 'src/api/restrictions/models'
 import { useFilterableCollection } from 'src/composables/use-misc'
-import { Loading, useLoading } from 'src/composables/use-promise-loading'
-import { useProperVuexActionDispatcher, useVuexGetter } from 'src/composables/use-vuex'
+import { useLoading } from 'src/composables/use-promise-loading'
+import {
+  useProperVuexActionDispatcher,
+  useVuexGetter,
+} from 'src/composables/use-vuex'
 import { GroupedDestinations } from 'src/pages/country/country-store'
 
 type GroupedDestinationObjects = GroupedDestinations<Restriction>
@@ -19,28 +22,16 @@ type GroupedDestinationObjects = GroupedDestinations<Restriction>
 export function useGroupedDestinations(
   originCodeRef: Ref<string>,
 ): {
-  filterLoading: Ref<boolean>
-  destinations: ComputedRef<GroupedDestinationObjects>
-  filter: WritableComputedRef<string>
-} & Loading {
+  destinationsRef: ComputedRef<GroupedDestinationObjects>
+  isLoadingRef: Ref<boolean>
+} {
   const { loading } = useLoading(false)
   const fetcher = useProperVuexActionDispatcher(
     'countryPage/fetchCountryDestinations',
     loading,
   )
-  const { filter, collection, loading: filterLoading } = useFilterableCollection(
-    useVuexGetter<GroupedDestinationObjects>('countryPage/getDestinationObjects'),
-    (input, filterValue) => {
-      return mapValues(input, (group) => {
-        if (group === undefined) {
-          return group
-        }
-
-        return group.filter((destinations) => {
-          return destinations.destinationLabel.toLowerCase().includes(filterValue)
-        })
-      })
-    },
+  const destinationsRef = useVuexGetter<GroupedDestinationObjects>(
+    'countryPage/getDestinationObjects',
   )
 
   onServerPrefetch(() => fetcher(originCodeRef.value))
@@ -48,9 +39,44 @@ export function useGroupedDestinations(
   watch(originCodeRef, fetcher)
 
   return {
-    destinations: collection,
-    loading,
+    isLoadingRef: loading,
+    destinationsRef,
+  }
+}
+
+export function useFilterableFlatDestinations(
+  destinationsRef: ComputedRef<GroupedDestinationObjects>,
+): {
+  filterLoadingRef: Ref<boolean>
+  filteredDestinationsRef: ComputedRef<Restriction[]>
+  filterRef: WritableComputedRef<string>
+  isFilteringRef: ComputedRef<boolean>
+} {
+  const flatDestinationsRef = computed(
+    () => Object.values(destinationsRef.value).flat() as Restriction[],
+  )
+
+  const {
     filter,
-    filterLoading,
+    collection,
+    loading: filterLoading,
+    isFiltering,
+  } = useFilterableCollection(flatDestinationsRef, (input, filterValue) => {
+    return input
+      .filter((destination) => {
+        return destination.destinationLabel.toLowerCase().includes(filterValue)
+      })
+      .sort(
+        (destinationA, destinationB) =>
+          destinationA.destinationLabel.indexOf(filterValue) -
+          destinationB.destinationLabel.indexOf(filterValue),
+      )
+  })
+
+  return {
+    filteredDestinationsRef: collection,
+    filterRef: filter,
+    isFilteringRef: isFiltering,
+    filterLoadingRef: filterLoading,
   }
 }

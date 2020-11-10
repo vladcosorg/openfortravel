@@ -16,6 +16,7 @@ import { StateInterface } from 'src/store'
 
 class State {
   public restriction = createDummyPlainRestriction()
+  public returnRestriction = createDummyPlainRestriction()
   public destination = createDummyPlainDestination()
 }
 
@@ -28,6 +29,9 @@ export default {
     getRestriction: (state): Restriction => {
       return wrapWithRichRestrictionObject(state.restriction)
     },
+    getReturnRestriction: (state): Restriction => {
+      return wrapWithRichRestrictionObject(state.returnRestriction)
+    },
     getDestination: (state): Destination => {
       return wrapWithRichDestinationObject(state.destination)
     },
@@ -36,6 +40,9 @@ export default {
     setRestriction(state: State, restriction: PlainRestriction): void {
       state.restriction = restriction
     },
+    setReturnRestriction(state: State, restriction: PlainRestriction): void {
+      state.returnRestriction = restriction
+    },
     setDestination(state: State, destination: PlainDestination): void {
       state.destination = destination
     },
@@ -43,7 +50,10 @@ export default {
   actions: {
     async fetchRestriction(
       { commit, state },
-      { originCode, destinationCode }: { originCode: string; destinationCode: string },
+      {
+        originCode,
+        destinationCode,
+      }: { originCode: string; destinationCode: string },
     ) {
       if (
         state.restriction &&
@@ -54,7 +64,32 @@ export default {
       }
       commit(
         'setRestriction',
-        await findRestrictionByOriginAndDestination(originCode, destinationCode),
+        await findRestrictionByOriginAndDestination(
+          originCode,
+          destinationCode,
+        ),
+      )
+    },
+    async fetchReturnRestriction(
+      { commit, state },
+      {
+        originCode,
+        destinationCode,
+      }: { originCode: string; destinationCode: string },
+    ) {
+      if (
+        state.returnRestriction &&
+        state.returnRestriction.origin === originCode &&
+        state.returnRestriction.destination === destinationCode
+      ) {
+        return
+      }
+      commit(
+        'setReturnRestriction',
+        await findRestrictionByOriginAndDestination(
+          originCode,
+          destinationCode,
+        ),
       )
     },
     async fetchDestination({ commit, state }, destinationCode: string) {

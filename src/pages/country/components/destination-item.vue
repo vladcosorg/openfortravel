@@ -26,13 +26,23 @@
     </q-item-section>
 
     <q-item-section>
-      <q-item-label :class="[$style.label, 'ellipsis-improved', 'full-width']">
+      <q-item-label v-if="returning" :class="[$style.label, 'full-width']">
+        {{ destination.originLabel }} → {{ destination.destinationLabel }}
+      </q-item-label>
+      <q-item-label
+        v-else
+        :class="[$style.label, 'ellipsis-improved', 'full-width']"
+      >
         {{ destination.destinationLabel }}
       </q-item-label>
       <q-item-label
         caption
         class="text-blue-grey-2 ellipsis-3-lines"
-        v-html="destination.shortDescription"
+        v-html="
+          returning
+            ? destination.returnShortDescription
+            : destination.shortDescription
+        "
       />
       <q-item-label class="q-gutter-xs">
         <q-badge
@@ -111,10 +121,7 @@ import Flag from 'src/components/flag.vue'
 export default defineComponent({
   components: { Flag },
   props: {
-    groupColor: {
-      required: true,
-      type: String,
-    },
+    returning: { type: Boolean, default: false },
     destination: {
       required: true,
       type: Object as PropType<Restriction>,

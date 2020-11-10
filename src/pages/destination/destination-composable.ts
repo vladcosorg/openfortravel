@@ -17,16 +17,17 @@ import {
 export function getRestriction(
   originCodeRef: Ref<string>,
   destinationCodeRef: Ref<string>,
+  returnDirection = false,
 ): {
   restrictionRef: ComputedRef<Restriction>
   loadingRef: Ref<boolean>
 } {
   const restrictionRef = useVuexGetter<Restriction>(
-    'destinationPage/getRestriction',
+    `destinationPage/get${returnDirection ? 'Return' : ''}Restriction`,
   )
   const { loading: loadingRef } = useLoading(false)
   const fetcher = useVuexActionDispatcherWithReactivePayload(
-    'destinationPage/fetchRestriction',
+    `destinationPage/fetch${returnDirection ? 'Return' : ''}Restriction`,
     {
       originCode: originCodeRef,
       destinationCode: destinationCodeRef,

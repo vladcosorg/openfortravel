@@ -186,6 +186,7 @@ export default defineComponent({
           label: 'Country Code',
           field: 'origin',
           headerStyle: 'width: 50px',
+          sortable: true,
         },
         {
           name: 'testRequired',
@@ -212,6 +213,7 @@ export default defineComponent({
           label: 'Is Forbidden',
           field: 'isForbidden',
           align: 'left',
+          sortable: true,
         },
       ],
     }

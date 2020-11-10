@@ -1,7 +1,7 @@
 <template>
   <div class="col column justify-evenly items-center" style="z-index: 2">
     <div class="text-h5 q-px-lg montserrat text-center">
-      Find out which destinations are open or reopening soon
+      {{ $t('page.index.hero') }}
     </div>
     <div :class="['', 'relative-position', 'text-center', 'q-pa-lg']">
       <animated-arrow :class="$style.arrow" />
