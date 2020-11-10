@@ -77,7 +77,7 @@
         class="text-subtitle1 montserrat text-center"
         v-html="restriction.description"
       />
-
+      {{ restriction }}
       <q-list class="q-mt-md text-subtitle1">
         <q-item v-ripple clickable>
           <q-item-section>

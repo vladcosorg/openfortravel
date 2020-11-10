@@ -51,6 +51,7 @@
             dense
             debounce="300"
             placeholder="Search country"
+            @focus="filter = ''"
           >
             <template v-slot:append>
               <q-icon name="search" />
