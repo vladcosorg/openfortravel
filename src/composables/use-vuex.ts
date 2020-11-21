@@ -9,6 +9,7 @@ export function useVuexComputedState<T>(path: string): ComputedRef<T> {
   return computed(() => get(useStore().state, path))
 }
 
+// eslint-disable-next-line import/no-unused-modules
 export function useVuexRawState<T>(path: string): T {
   return get(useStore().state, path)
 }
@@ -37,7 +38,9 @@ export function useVuexActionDispatcherWithReactivePayload(
 
     if (loadingReference) {
       loadingReference.value = true
-      promise.then(() => (loadingReference.value = false))
+      promise.then(() => {
+        loadingReference.value = false
+      })
     }
 
     await promise

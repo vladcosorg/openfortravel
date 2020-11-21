@@ -27,7 +27,7 @@
         compact
         :origin-code="destinationCode"
         :destination-code="originCode"
-      ></return-way>
+      />
     </the-country-list>
 
     <div v-if="loading">

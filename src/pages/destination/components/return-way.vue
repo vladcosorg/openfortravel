@@ -1,19 +1,21 @@
 <template>
-  <q-card
-    flat
-    square
-    :class="[$style.card, 'bg-blue-grey-10']"
-    style="margin-left: -16px; margin-right: -16px"
-  >
-    <q-card-section>
-      <div class="text-subtitle1">{{ $t('page.destination.returnWay') }}</div>
-      <destination-item returning :destination="restriction" />
-    </q-card-section>
-  </q-card>
+  <div style="margin-left: -16px; margin-right: -16px">
+    <q-card flat square :class="[$style.card, 'bg-blue-grey-10', 'col']">
+      <q-card-section>
+        <div class="text-subtitle1">{{ $t('page.destination.returnWay') }}</div>
+        <destination-item
+          returning
+          :destination="restriction"
+          :loading="loading"
+        />
+      </q-card-section>
+    </q-card>
+  </div>
 </template>
 
 <style lang="scss" module>
 .card {
+  width: 100vw;
 }
 </style>
 
@@ -47,7 +49,10 @@ export default defineComponent({
       destinationCode,
       true,
     )
-    return { restriction: restrictionRef, loading: loadingRef }
+    return {
+      restriction: restrictionRef,
+      loading: loadingRef,
+    }
   },
 })
 </script>

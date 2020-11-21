@@ -41,7 +41,7 @@ export default {
       },
     },
     testing: {
-      label: 'COVID testing',
+      label: 'COVID test',
       value: {
         true: 'Required',
         false: 'Not needed',
@@ -59,6 +59,10 @@ export default {
       // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
       value: (context: { named: (arg0: string) => number }) =>
         context.named('days') > 0 ? `${context.named('days')}` : 'Not needed',
+      staticValue: {
+        true: 'Required',
+        false: 'Not needed',
+      },
     },
     healthDeclaration: {
       label: 'Health Declaration',

@@ -25,7 +25,7 @@ export function getRestriction(
   const restrictionRef = useVuexGetter<Restriction>(
     `destinationPage/get${returnDirection ? 'Return' : ''}Restriction`,
   )
-  const { loading: loadingRef } = useLoading(false)
+  const { loading: loadingRef } = useLoading(true)
   const fetcher = useVuexActionDispatcherWithReactivePayload(
     `destinationPage/fetch${returnDirection ? 'Return' : ''}Restriction`,
     {

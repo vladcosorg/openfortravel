@@ -77,6 +77,10 @@ export class Restriction implements PlainRestriction {
     return RestrictionStatus.ALLOWED === this.status
   }
 
+  public needsSelfIsolation(): boolean {
+    return this.selfIsolation > 0
+  }
+
   public toPlainRestriction(): PlainRestriction {
     return { ...this }
   }

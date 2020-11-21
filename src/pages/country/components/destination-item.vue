@@ -1,5 +1,30 @@
 <template>
+  <q-item v-if="loading" :class="[$style.item, 'rounded-borders']">
+    <q-item-section avatar>
+      <q-skeleton type="QAvatar" />
+    </q-item-section>
+    <q-item-section>
+      <q-item-label>
+        <q-skeleton type="text" height="1.8rem" />
+      </q-item-label>
+      <q-item-label caption>
+        <q-skeleton type="text" width="90%" height="10px" />
+        <q-skeleton type="text" height="10px" />
+        <q-skeleton type="text" height="10px" width="75%" />
+      </q-item-label>
+      <q-item-label class="q-gutter-xs row">
+        <q-skeleton
+          v-for="cnt in 3"
+          :key="cnt"
+          type="QBadge"
+          height="0.9rem"
+          width="3rem"
+        />
+      </q-item-label>
+    </q-item-section>
+  </q-item>
   <q-item
+    v-else
     v-ripple
     :class="[$style.item, destination.status, 'rounded-borders']"
     clickable
@@ -66,8 +91,12 @@
         >
           {{ $t('restriction.travel.value')[destination.status] }}
         </q-badge>
-        <!--        <q-badge color="accent" text-color="dark"> COVID test </q-badge>-->
-        <q-badge color="deep-purple"> Self-Isolation </q-badge>
+        <q-badge v-if="destination.needsSelfIsolation()" color="deep-purple">
+          {{ $t('restriction.selfIsolation.label') }}
+        </q-badge>
+        <q-badge v-if="destination.testRequired" color="deep-purple">
+          {{ $t('restriction.testing.label') }}
+        </q-badge>
       </q-item-label>
     </q-item-section>
   </q-item>
@@ -77,6 +106,7 @@
   font-size: 1rem;
   font-weight: 400;
 }
+
 .bg {
   position: absolute;
   left: 0;
@@ -87,19 +117,23 @@
   object-fit: cover;
   image-rendering: pixelated;
 }
+
 .item {
   position: relative;
   margin-bottom: 10px;
   overflow: hidden;
+  border: 2px solid rgba($grey, 0.3);
 
   &:global(.allowed) {
-    border: 2px solid rgba($positive, 0.3s);
+    border: 2px solid rgba($positive, 0.3);
   }
+
   &:global(.conditional) {
-    border: 2px solid rgba($warning, 0.3s);
+    border: 2px solid rgba($warning, 0.3);
   }
+
   &:global(.forbidden) {
-    border: 2px solid rgba($negative, 0.3s);
+    border: 2px solid rgba($negative, 0.3);
   }
 }
 
@@ -121,7 +155,14 @@ import Flag from 'src/components/flag.vue'
 export default defineComponent({
   components: { Flag },
   props: {
-    returning: { type: Boolean, default: false },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    returning: {
+      type: Boolean,
+      default: false,
+    },
     destination: {
       required: true,
       type: Object as PropType<Restriction>,
