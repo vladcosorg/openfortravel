@@ -20,7 +20,10 @@
             :class="`text-${statusColors[status]}`"
           >
             <q-item-section>
-              <q-item-label>
+              <q-item-label v-if="isGroupedListLoading">
+                <q-skeleton type="text" />
+              </q-item-label>
+              <q-item-label v-else>
                 {{ stats[status] }}
                 {{ $tc('page.country.stats.country', stats[status]) }}:
                 {{ $t('page.country.stats.values')[status] }}
@@ -34,8 +37,7 @@
         v-model="filter"
         autofocus
         :placeholder="$t('page.country.quickSearch')"
-        :loading="filterLoading"
-        :disable="loading"
+        :loading="isFilteredListLoading"
         dense
         outlined
         stack-label
@@ -46,38 +48,21 @@
         </template>
       </q-input>
 
-      <q-list v-if="loading || filterLoading" separator>
-        <q-item v-for="n in Array(4)" :key="n">
-          <q-item-section avatar>
-            <q-skeleton type="QAvatar" />
-          </q-item-section>
-
-          <q-item-section>
-            <q-item-label>
-              <q-skeleton type="text" />
-            </q-item-label>
-            <q-item-label caption>
-              <q-skeleton type="text" width="65%" />
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
-      <div v-else-if="isFiltering">
-        <destination-group
-          :show-header="false"
-          :destinations="filteredFlatDestinations"
-        />
-      </div>
-      <div v-else>
-        <destination-group
-          v-for="(destinations, status) in groupedDestinations"
-          :key="status"
-          :group-name="$t('status')[status]"
-          :group-icon="statusIcon[status]"
-          :group-color="statusColors[status]"
-          :destinations="destinations"
-        />
-      </div>
+      <destination-group
+        v-if="isFiltering || isListLoading"
+        :loading="isListLoading"
+        :show-header="false"
+        :destinations="filteredFlatDestinations"
+      />
+      <destination-group
+        v-for="(destinations, status) in groupedDestinations"
+        v-else
+        :key="status"
+        :group-name="$t('status')[status]"
+        :group-icon="statusIcon[status]"
+        :group-color="statusColors[status]"
+        :destinations="destinations"
+      />
     </div>
   </q-page>
 </template>
@@ -93,6 +78,7 @@ import { Portal } from 'portal-vue'
 
 import { getStatusListMap, getStatusMapper } from 'src/api/restrictions/helper'
 import { useStore } from 'src/composables/use-plugins'
+import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import DestinationGroup from 'src/pages/country/components/destination-group.vue'
@@ -131,9 +117,11 @@ export default defineComponent({
     return {
       filter: filterRef,
       isFiltering: isFilteringRef,
+      isFilteredListLoading: filterLoadingRef,
+      isGroupedListLoading: isLoadingRef,
+      isListLoading: useAggregatedLoader(filterLoadingRef, isLoadingRef),
       groupedDestinations: destinationsRef,
       filteredFlatDestinations: filteredDestinationsRef,
-      loading: isLoadingRef,
       statuses: getStatusListMap(),
       statusIcon: {
         allowed: allowedIcon,
@@ -150,7 +138,6 @@ export default defineComponent({
           (status) => destinationsRef.value[status]?.length,
         )
       }),
-      filterLoading: filterLoadingRef,
     }
   },
 })

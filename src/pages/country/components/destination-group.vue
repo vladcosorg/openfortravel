@@ -5,20 +5,20 @@
       {{ groupName }}
     </q-item-label>
     <q-intersection
-      v-for="destination in destinations"
-      :key="destination.destinationLabel"
+      v-for="(destination, index) in items"
+      :key="index"
       style="min-height: 95px"
       transition="fade"
       class="q-mb-md"
       ssr-prerender
     >
-      <destination-item :destination="destination" />
+      <destination-item :loading="loading" :destination="destination" />
     </q-intersection>
   </q-list>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import { Restriction } from 'src/api/restrictions/models'
 import DestinationItem from 'src/pages/country/components/destination-item.vue'
@@ -26,6 +26,10 @@ import DestinationItem from 'src/pages/country/components/destination-item.vue'
 export default defineComponent({
   components: { DestinationItem },
   props: {
+    loading: {
+      required: false,
+      type: Boolean,
+    },
     groupName: {
       required: false,
       type: String,
@@ -45,7 +49,21 @@ export default defineComponent({
     },
     destinations: {
       type: Array as PropType<Restriction[]>,
+      required: false,
     },
+  },
+  setup(props) {
+    const itemsRef = computed(() => {
+      if (!props.loading) {
+        return props.destinations
+      }
+
+      return new Array(5)
+    })
+
+    return {
+      items: itemsRef,
+    }
   },
 })
 </script>

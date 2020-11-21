@@ -164,7 +164,6 @@ export default defineComponent({
       default: false,
     },
     destination: {
-      required: true,
       type: Object as PropType<Restriction>,
     },
   },
