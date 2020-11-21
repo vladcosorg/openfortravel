@@ -25,8 +25,8 @@ export const restrictionDefaults: PlainRestriction = {
   testRequired: false,
   insuranceRequired: false,
   selfIsolation: 0,
-  origin: 'xx',
-  destination: 'xx',
+  origin: 'us',
+  destination: 'us',
 }
 
 export class Restriction implements PlainRestriction {
