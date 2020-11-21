@@ -30,23 +30,31 @@
       />
     </the-country-list>
 
-    <div v-if="loading">
-      <q-card flat style="max-width: 300px">
-        <q-skeleton height="150px" square />
-
-        <q-card-section>
-          <q-skeleton type="text" class="text-subtitle1" />
-          <q-skeleton type="text" width="50%" class="text-subtitle1" />
-          <q-skeleton type="text" class="text-caption" />
-        </q-card-section>
-      </q-card>
+    <div v-if="loading" class="text-subtitle1 column flex-center">
+      <q-skeleton type="text" width="100%" />
+      <q-skeleton type="text" width="70%" />
+      <q-skeleton type="text" width="95%" />
     </div>
-    <div v-else>
-      <div
-        class="text-subtitle1 montserrat text-center"
-        v-html="restriction.description"
-      />
-      <q-list class="q-mt-md text-subtitle1">
+    <div
+      v-else
+      class="text-subtitle1 montserrat text-center"
+      v-html="restriction.description"
+    />
+
+    <q-list class="q-mt-md text-subtitle1">
+      <template v-if="loading" #default>
+        <q-item v-for="index in 5" :key="index">
+          <q-item-section>
+            <q-item-label caption>
+              <q-skeleton type="text" width="20%" />
+            </q-item-label>
+            <q-item-label>
+              <q-skeleton type="text" width="40%" />
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+      </template>
+      <template v-else #default>
         <q-item v-ripple clickable>
           <q-item-section>
             <q-item-label caption>{{
@@ -114,21 +122,21 @@
             >
           </q-item-section>
         </q-item>
-      </q-list>
-      <q-btn
-        class="q-mt-md full-width"
-        color="accent"
-        icon="arrow_back"
-        outline
-        :label="$t('page.destination.backToList')"
-        :loading="loading"
-        align="left"
-        :to="{
-          name: 'origin',
-          params: { originCode: restriction.origin },
-        }"
-      />
-    </div>
+      </template>
+    </q-list>
+    <q-btn
+      class="q-mt-md full-width"
+      color="accent"
+      icon="arrow_back"
+      outline
+      :label="$t('page.destination.backToList')"
+      :loading="loading"
+      align="left"
+      :to="{
+        name: 'origin',
+        params: { originCode: restriction.origin },
+      }"
+    />
   </q-page>
 </template>
 
