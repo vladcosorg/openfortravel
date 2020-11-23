@@ -15,8 +15,24 @@ export function useLoading(defaultValue = false): Loading {
   return { loading }
 }
 
-export function useAggregatedLoader(...loaders: Ref<boolean>[]): ComputedRef<boolean> {
-  return computed<boolean>(() => !loaders.every((loadingReference) => !loadingReference.value))
+export function useLoadingSwitch(
+  defaultValue = false,
+): { state: Ref<boolean>; toggle: () => void } {
+  const state = ref(defaultValue)
+  return {
+    state,
+    toggle() {
+      state.value = !state.value
+    },
+  }
+}
+
+export function useAggregatedLoader(
+  ...loaders: Ref<boolean>[]
+): ComputedRef<boolean> {
+  return computed<boolean>(
+    () => !loaders.every((loadingReference) => !loadingReference.value),
+  )
 }
 
 export function useClosureCollectionLoading(

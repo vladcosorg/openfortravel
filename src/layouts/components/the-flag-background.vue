@@ -40,10 +40,8 @@
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
 
   :global {
-    img {
-      object-fit: cover;
+    .q-img {
       position: absolute;
-      height: 100%;
     }
   }
 }

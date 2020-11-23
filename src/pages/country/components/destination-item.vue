@@ -35,9 +35,14 @@
         destinationCode: destination.destination,
       },
     }"
+    @click.native="isClicked = true"
   >
     <transition appear enter-active-class="animated fadeIn">
-      <flag png :class="$style.bg" :country-code="destination.destination" />
+      <flag
+        low-quality
+        :class="$style.bg"
+        :country-code="destination.destination"
+      />
     </transition>
 
     <q-item-section avatar>
@@ -99,8 +104,10 @@
         </q-badge>
       </q-item-label>
     </q-item-section>
+    <q-inner-loading :showing="isClicked" />
   </q-item>
 </template>
+
 <style lang="scss" module>
 .label {
   font-size: 1rem;
@@ -113,9 +120,8 @@
   top: 0;
   width: 100%;
   height: 100%;
-  filter: grayscale(10%) opacity(10%) blur(5px);
-  object-fit: cover;
-  image-rendering: pixelated;
+  filter: grayscale(10%) opacity(20%);
+  object-fit: fill;
 }
 
 .item {
@@ -147,7 +153,7 @@
 
 <script lang="ts">
 import { ionBaseballOutline as icon } from '@quasar/extras/ionicons-v5'
-import { defineComponent, PropType } from '@vue/composition-api'
+import { defineComponent, PropType, ref } from '@vue/composition-api'
 
 import { Restriction } from 'src/api/restrictions/models'
 import Flag from 'src/components/flag.vue'
@@ -170,6 +176,7 @@ export default defineComponent({
 
   setup() {
     return {
+      isClicked: ref(false),
       icon,
     }
   },

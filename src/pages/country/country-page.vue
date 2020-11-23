@@ -49,8 +49,8 @@
       </q-input>
 
       <destination-group
-        v-if="isFiltering || isListLoading"
-        :loading="isListLoading"
+        v-if="isFiltering"
+        :loading="isFilteredListLoading"
         :show-header="false"
         :destinations="filteredFlatDestinations"
       />
@@ -58,6 +58,7 @@
         v-for="(destinations, status) in groupedDestinations"
         v-else
         :key="status"
+        :loading="isGroupedListLoading"
         :group-name="$t('status')[status]"
         :group-icon="statusIcon[status]"
         :group-color="statusColors[status]"

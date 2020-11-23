@@ -111,7 +111,7 @@ module.exports = configure(function (context) {
           .rule('images')
           .use('url-loader')
           .tap((options) => {
-            options.limit = 1
+            options.limit = 1000
             return options
           })
 

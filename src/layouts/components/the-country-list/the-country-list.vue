@@ -24,6 +24,7 @@
             enter-active-class="animated bounce slower"
           >
             <q-btn
+              :loading="loading"
               unelevated
               color="secondary"
               :icon="`img:${require('src/assets/search.svg')}`"

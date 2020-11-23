@@ -11,10 +11,12 @@
         unelevated
         color="primary"
         icon="arrow_back"
+        :loading="isGoingBack.state"
         :to="{
           name: 'origin',
           params: { originCode: restriction.origin },
         }"
+        @click="isGoingBack.toggle"
       />
     </portal>
 
@@ -130,12 +132,13 @@
       icon="arrow_back"
       outline
       :label="$t('page.destination.backToList')"
-      :loading="loading"
+      :loading="isGoingBack.state"
       align="left"
       :to="{
         name: 'origin',
         params: { originCode: restriction.origin },
       }"
+      @click="isGoingBack.toggle"
     />
   </q-page>
 </template>
@@ -145,7 +148,10 @@ import { computed, defineComponent, toRefs } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import { RestrictionStatus } from 'src/api/restrictions/models'
-import { useAggregatedLoader } from 'src/composables/use-promise-loading'
+import {
+  useAggregatedLoader,
+  useLoadingSwitch,
+} from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import ReturnWay from 'src/pages/destination/components/return-way.vue'
@@ -197,6 +203,7 @@ export default defineComponent({
     const insuranceColor = computed(() =>
       getBooleanColor(restrictionRef.value.insuranceRequired),
     )
+
     return {
       restriction: restrictionRef,
       destination: destinationRef,
@@ -207,6 +214,7 @@ export default defineComponent({
       statusColor,
       testingColor,
       insuranceColor,
+      isGoingBack: useLoadingSwitch(),
     }
   },
 })
