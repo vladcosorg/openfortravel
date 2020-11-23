@@ -35,7 +35,6 @@
 
       <q-input
         v-model="filter"
-        autofocus
         :placeholder="$t('page.country.quickSearch')"
         :loading="isFilteredListLoading"
         dense

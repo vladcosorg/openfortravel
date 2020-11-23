@@ -1,10 +1,14 @@
 <template>
   <select
-    :value="plainValue"
+    v-model="currentValueRef"
     :class="$style.nativeSelect"
-    @change="rethrowNormalizedEvent"
+    @touchstart="isOptionListInitializedRef = true"
   >
-    <option v-for="option in options" :key="option.value" :value="option.value">
+    <option
+      v-for="(option, index) in lazyOptionListRef"
+      :key="index"
+      :value="option.value"
+    >
       {{ option.label }}
     </option>
   </select>
@@ -22,7 +26,7 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { computed, defineComponent, PropType, ref } from '@vue/composition-api'
 
 export interface SelectItem {
   value: string
@@ -34,10 +38,13 @@ export type SelectList = SelectItem[]
 export default defineComponent({
   components: {},
   props: {
-    value: [Object, String],
+    value: {
+      required: true,
+      type: String,
+    },
     options: {
       type: Array as PropType<SelectList>,
-      require: true,
+      required: true,
     },
     dropdownIcon: {
       type: String,
@@ -45,17 +52,28 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const plainValue = computed(() => {
-      return props.value.value ?? props.value
+    const currentValueRef = computed<string>({
+      get() {
+        return props.value
+      },
+      set(value) {
+        emit('input', value)
+      },
     })
-    const plainLabel = computed(() => {
-      return props.value.label ?? props.value
+
+    const isOptionListInitializedRef = ref(false)
+    const lazyOptionListRef = computed(() => {
+      if (isOptionListInitializedRef.value === true) {
+        return props.options
+      }
+      return [{ value: '', label: 'Loading' }]
     })
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const rethrowNormalizedEvent = (evnt: any) => {
-      emit('input', evnt?.target?.value)
+
+    return {
+      lazyOptionListRef,
+      isOptionListInitializedRef,
+      currentValueRef,
     }
-    return { plainValue, plainLabel, rethrowNormalizedEvent }
   },
 })
 </script>

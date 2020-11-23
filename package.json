@@ -16,7 +16,8 @@
     "build": "quasar build -m ssr && cp app.yaml dist/ssr/app.yaml",
     "serve-build": "cd dist/ssr && npm start",
     "build-serve": "quasar build -m ssr && cd dist/ssr && npm start",
-    "build-deploy": "yarn run build && gcloud app deploy dist/ssr/app.yaml --quiet",
+    "build-deploy": "yarn run build && yarn run deploy",
+    "deploy": "gcloud app deploy dist/ssr/app.yaml --quiet",
     "generate-sqip": "ts-node --project tsconfig.json -r tsconfig-paths/register --files src/bin/sqip.ts"
   },
   "dependencies": {

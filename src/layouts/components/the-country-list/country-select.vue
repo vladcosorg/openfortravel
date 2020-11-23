@@ -11,9 +11,6 @@
         <slot name="default" />
       </div>
     </template>
-    <!--    <template #prepend>-->
-    <!--      <q-icon name="place" />-->
-    <!--    </template>-->
 
     <template #control>
       <transition
@@ -33,7 +30,7 @@
 
     <template #append>
       <invisible-native-select
-        v-model="currentCountry"
+        v-model="currentCountryValueRef"
         :options="countryList"
       />
       <q-icon :name="icon" />
@@ -122,6 +119,16 @@ export default defineComponent({
       computed(() => useStore().state.countrySelectorLoading),
       toRef(props, 'loading'),
     )
+
+    const currentCountryValueRef = computed<string>({
+      get() {
+        return props.value
+      },
+      set(value) {
+        emit('input', value)
+      },
+    })
+
     const currentCountry = computed<ListItem | undefined>({
       get() {
         return {
@@ -151,6 +158,7 @@ export default defineComponent({
       currentCountry,
       filterCountryList,
       icon,
+      currentCountryValueRef,
     }
   },
 })

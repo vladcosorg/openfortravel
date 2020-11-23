@@ -1,17 +1,15 @@
 <template>
-  <div>
-    <native-mobile-select
-      v-model="currentLanguage"
-      :options="languageList"
-      bg-color="accent"
-      :loading="loading"
-      borderless
-      emit-value
-      options-dense
-      :class="[$style.select]"
-      :dropdown-icon="icon"
-    />
-  </div>
+  <simple-select
+    v-model="currentLanguage"
+    :options="languageList"
+    bg-color="accent"
+    :loading="loading"
+    borderless
+    emit-value
+    options-dense
+    :class="[$style.select]"
+    :dropdown-icon="icon"
+  />
 </template>
 <style lang="scss" module>
 .select {
@@ -42,13 +40,13 @@ import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 
-import NativeMobileSelect from 'src/components/native-mobile-select.vue'
+import SimpleSelect from 'src/components/simple-select.vue'
 import { useCookies, useRouter } from 'src/composables/use-plugins'
 import { useLoading } from 'src/composables/use-promise-loading'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
-  components: { NativeMobileSelect },
+  components: { SimpleSelect },
   setup(props, { root }) {
     const languageList = Object.freeze(langs)
     const { loading } = useLoading(false)

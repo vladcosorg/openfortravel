@@ -4,7 +4,7 @@
       <portal-target name="top-left" class="col" />
       <logo class="col-auto" />
       <div class="col row justify-center">
-        <language-switcher :class="[$style.lang]" />
+        <language-switcher />
       </div>
     </div>
   </div>
