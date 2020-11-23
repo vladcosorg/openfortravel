@@ -78,10 +78,11 @@ import { computed, defineComponent, toRefs, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import { getStatusListMap, getStatusMapper } from 'src/api/restrictions/helper'
-import { useStore } from 'src/composables/use-plugins'
+import { useI18n, useStore } from 'src/composables/use-plugins'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
+import { getLabelForCountryCode } from 'src/misc/country-list'
 import DestinationGroup from 'src/pages/country/components/destination-group.vue'
 import {
   useFilterableFlatDestinations,
@@ -89,9 +90,12 @@ import {
 } from 'src/pages/country/composable'
 
 export default defineComponent({
-  meta: {
-    // sets document title
-    title: 'is page',
+  meta({ originCode }: { originCode: string }) {
+    return {
+      title: useI18n().t('page.country.meta.title', {
+        origin: getLabelForCountryCode(originCode),
+      }),
+    }
   },
   components: { TheCountryList, DestinationGroup, Portal, TheFlagBackground },
   props: {

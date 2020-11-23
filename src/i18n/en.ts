@@ -73,11 +73,17 @@ export default {
       },
     },
   },
+  meta: {
+    title: 'Travel destinations during COVID-19 pandemic',
+  },
   page: {
     index: {
       hero: 'Find out which destinations are open or reopening soon',
     },
     country: {
+      meta: {
+        title: 'Travel destinations from {origin}',
+      },
       quickSearch: 'Quick country search',
       stats: {
         header: 'Quick stats',
@@ -90,6 +96,10 @@ export default {
       },
     },
     destination: {
+      meta: {
+        title:
+          'Latest information on travelling from {origin} to {destination}',
+      },
       title: 'Latest information on travelling from {origin} to {destination}',
       seeReturnPage: 'See return travel',
       backToList: 'Back to list',

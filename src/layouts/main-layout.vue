@@ -18,6 +18,7 @@
 import { defineComponent } from '@vue/composition-api'
 import { PortalTarget } from 'portal-vue'
 
+import { useI18n } from 'src/composables/use-plugins'
 import HeaderBar from 'src/layouts/components/the-header-bar.vue'
 import Container from 'src/layouts/components/the-layout-container.vue'
 
@@ -28,8 +29,15 @@ export default defineComponent({
     PortalTarget,
   },
   meta: {
-    title: 'lol',
-    titleTemplate: (title: string) => `${title} - Open For Travel`,
+    title: ' ',
+    titleTemplate: (title: string) => {
+      const mainTitle = useI18n().t('meta.title')
+      if (title.trim().length > 0) {
+        return `${title} - ${mainTitle}`
+      }
+
+      return mainTitle
+    },
   },
   props: {
     fullHeight: {

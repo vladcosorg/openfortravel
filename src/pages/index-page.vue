@@ -36,8 +36,6 @@ export default defineComponent({
     ),
   },
   name: 'PageIndex',
-  meta: {
-    title: 'lol',
-  },
+  meta: {},
 })
 </script>

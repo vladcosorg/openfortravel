@@ -148,12 +148,14 @@ import { computed, defineComponent, toRefs } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import { RestrictionStatus } from 'src/api/restrictions/models'
+import { useI18n } from 'src/composables/use-plugins'
 import {
   useAggregatedLoader,
   useLoadingSwitch,
 } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
+import { getLabelForCountryCode } from 'src/misc/country-list'
 import ReturnWay from 'src/pages/destination/components/return-way.vue'
 import {
   getDestination,
@@ -161,6 +163,20 @@ import {
 } from 'src/pages/destination/destination-composable'
 
 export default defineComponent({
+  meta({
+    originCode,
+    destinationCode,
+  }: {
+    originCode: string
+    destinationCode: string
+  }) {
+    return {
+      title: useI18n().t('page.destination.meta.title', {
+        origin: getLabelForCountryCode(originCode),
+        destination: getLabelForCountryCode(destinationCode),
+      }),
+    }
+  },
   components: { ReturnWay, TheCountryList, Portal, TheFlagBackground },
   props: {
     originCode: {
