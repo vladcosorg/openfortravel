@@ -1,19 +1,15 @@
 <template>
-  <div>
-    <img
-      ref="svg"
-      svg-inline
-      style="width: 100%"
-      :class="{
-        [$style.boy]: true,
-        [$style['handStartedRaising']]: handStartedRaising,
-        [$style['handFinishedRaising']]: handFinishedRaising,
-        [$style['handStartedDropping']]: handStartedDropping,
-        [$style['handFinisheDropping']]: handFinisheDropping,
-      }"
-      src="../../../assets/boy.svg"
-    />
-  </div>
+  <img
+    ref="svg"
+    svg-inline
+    :class="{
+      [$style.boy]: true,
+      [$style['handStartedRaising']]: handStartedRaising,
+      [$style['handFinishedRaising']]: handFinishedRaising,
+      [$style['handStartedDropping']]: handStartedDropping,
+    }"
+    src="../../../assets/boy.svg"
+  />
 </template>
 
 <style lang="scss" module>
@@ -32,21 +28,22 @@
 
 .handStartedDropping :global(#palm) {
   @extend .transform;
-  animation: palmTracking 0.7s ease-in-out 0s infinite reverse;
+  animation-name: palmTracking;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.7s;
+  animation-direction: reverse;
 }
 
 .handStartedRaising :global(#palm) {
   @extend .transform;
-  animation: palmTracking 0.7s ease-in-out 0s infinite normal;
+  animation-name: palmTracking;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.7s;
 }
 
 .boy {
-  height: auto;
-  width: 80%;
-  z-index: 100;
-  top: 40%;
-  left: 10%;
-  //position: absolute;
   overflow: visible !important;
 
   :global(#haircreast) {
@@ -106,7 +103,6 @@ export default defineComponent({
     const handStartedRaising = ref(false)
     const handFinishedRaising = ref(false)
     const handStartedDropping = ref(false)
-    const handFinisheDropping = ref(true)
     const svg = ref<Document | undefined>()
 
     onMounted(() => {
@@ -122,7 +118,6 @@ export default defineComponent({
       }
 
       animation.addEventListener('beginEvent', () => {
-        handFinisheDropping.value = false
         handStartedRaising.value = true
       })
       animation.addEventListener('endEvent', () => {
@@ -142,7 +137,6 @@ export default defineComponent({
       })
       animation.addEventListener('endEvent', () => {
         handStartedDropping.value = false
-        handFinisheDropping.value = true
       })
     })
     return {
@@ -150,7 +144,6 @@ export default defineComponent({
       handStartedRaising,
       handFinishedRaising,
       handStartedDropping,
-      handFinisheDropping,
     }
   },
 })

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-px-md q-py-xl">
+  <q-page>
     <portal to="top">
       <the-flag-background
         :first-country-code="originCode"

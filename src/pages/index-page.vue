@@ -1,22 +1,30 @@
 <template>
-  <div class="col column justify-evenly items-center" style="z-index: 2">
-    <div class="text-h5 q-px-lg montserrat text-center">
+  <q-page :class="['column fit justify-around no-wrap', $style.page]">
+    <div class="text-h6 montserrat text-center q-mb-xl">
       {{ $t('page.index.hero') }}
     </div>
-    <div :class="['', 'relative-position', 'text-center', 'q-pa-lg']">
-      <animated-arrow :class="$style.arrow" />
+    <boy :class="['q-mb-xl']" />
+    <div :class="['relative-position', 'text-center']">
+      <!--      <animated-arrow :class="$style.arrow" />-->
       <the-country-list />
     </div>
-    <boy class="q-px-lg" style="justify-self: end" />
-  </div>
+  </q-page>
 </template>
 
 <style lang="scss" module>
+.page {
+  z-index: 2;
+  @supports (-webkit-touch-callout: none) {
+    /* The hack for Safari */
+    height: -webkit-fill-available !important;
+  }
+}
 .arrow {
   position: absolute;
-  top: 0;
-  left: 0;
-  transform: translateY(-100%);
+  //top: 0;
+  //left: 0;
+  //width: 100%;
+  //transform: translateY(-100%);
 }
 </style>
 <script lang="ts">

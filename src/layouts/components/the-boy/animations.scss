@@ -113,12 +113,15 @@
   }
 }
 
+$hand-top-position-x: 30px;
+$hand-top-position-y: -145px;
+
 @keyframes rightHand {
   0% {
-    transform: translate(85%, -400%);
+    transform: translate($hand-top-position-x, $hand-top-position-y)
   }
   100% {
-    transform: skew(4deg, 4deg) translate(85%, -400%) rotate(-35deg);
+    transform: skew(4deg, 4deg) translate($hand-top-position-x, $hand-top-position-y) rotate(-35deg);
   }
 }
 
@@ -134,8 +137,11 @@
 }
 
 @keyframes palmTracking {
+  0% {
+    transform: translate(0px, 0px);
+  }
   100% {
-    transform: translate(85%, -400%);
+    transform: translate($hand-top-position-x, $hand-top-position-y)
   }
 }
 

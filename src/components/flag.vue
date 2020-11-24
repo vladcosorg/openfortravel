@@ -51,8 +51,7 @@ export default defineComponent({
 
       return [
         require(`svg-country-flags/png100px/${prop.countryCode}.png`) + ' 1x',
-        require(`svg-country-flags/png250px/${prop.countryCode}.png`) + ' 2x',
-        require(`svg-country-flags/svg/${prop.countryCode}.svg`) + ' 3x',
+        require(`svg-country-flags/svg/${prop.countryCode}.svg`) + ' 2x',
       ].join(', ')
     })
 
