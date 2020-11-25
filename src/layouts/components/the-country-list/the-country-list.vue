@@ -4,7 +4,7 @@
     leave-active-class="animated bounceInUp"
   >
     <div :class="['row', $style.row, 'justify-center', 'q-gutter-y-md']">
-      <div :class="[$style.intro, 'montserrat text-h5']">
+      <div :class="[$style.intro, 'montserrat text-h5', 'text-center']">
         {{ $t('components.theCountryList')[isIntro ? 'titleIntro' : 'title'] }}
       </div>
 

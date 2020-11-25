@@ -7,6 +7,7 @@
     <div :key="firstCountryCode" :class="[$style.flagBg]">
       <div :class="['fit', 'relative-position']">
         <flag
+          type="full"
           :class="{
             [$style.firstCountry]: true,
             [$style.halfWidth]: secondCountryCode,

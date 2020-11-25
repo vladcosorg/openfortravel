@@ -1,9 +1,9 @@
 <template>
-  <img v-if="lowQuality" height="100%" :src="url" />
+  <img v-if="type === 'blurry'" height="100%" :src="src" />
   <q-img
     v-else
     spinner-size="20px"
-    :src="url"
+    :src="src"
     :srcset="srcset"
     height="100%"
     :placeholder-src="placeholder"
@@ -17,6 +17,10 @@ import { computed, defineComponent } from '@vue/composition-api'
 export default defineComponent({
   components: {},
   props: {
+    type: {
+      type: String,
+      default: 'full',
+    },
     png: {
       type: Boolean,
       default: false,
@@ -32,31 +36,34 @@ export default defineComponent({
   },
   setup(prop) {
     const placeholder = computed<string>(() => {
-      return require(`src/assets/sqip-flags/${prop.countryCode}.webp`)
+      return `flags/blurry/${prop.countryCode}.webp`
     })
-    const url = computed<string>(() => {
-      if (prop.lowQuality) {
-        return placeholder.value
+
+    const src = computed<string>(() => {
+      if (prop.type === 'blurry') {
+        return `flags/blurry/${prop.countryCode}.webp`
       }
 
-      return prop.png
-        ? require(`svg-country-flags/png100px/${prop.countryCode}.png`)
-        : require(`svg-country-flags/svg/${prop.countryCode}.svg`)
+      return `flags/svg/${prop.countryCode}.svg`
     })
 
     const srcset = computed(() => {
-      if (prop.lowQuality) {
-        return placeholder.value
+      if (process.env.DEV) {
+        return `flags/svg/${prop.countryCode}.svg`
       }
 
-      return [
-        require(`svg-country-flags/png100px/${prop.countryCode}.png`) + ' 1x',
-        require(`svg-country-flags/svg/${prop.countryCode}.svg`) + ' 2x',
-      ].join(', ')
+      if (prop.type === 'responsive') {
+        return [
+          `flags/1x/${prop.countryCode} 1x`,
+          `flags/2x/${prop.countryCode} 2x`,
+        ].join(', ')
+      }
+
+      return
     })
 
     return {
-      url,
+      src,
       placeholder,
       srcset,
     }

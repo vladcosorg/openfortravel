@@ -7,6 +7,8 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
 /* eslint-disable @typescript-eslint/no-var-requires */
+const path = require('path')
+
 const { configure } = require('quasar/wrappers')
 
 module.exports = configure(function (context) {
@@ -135,6 +137,11 @@ module.exports = configure(function (context) {
       host: '0.0.0.0',
       disableHostCheck: true,
       open: false, // opens browser window automatically
+      staticOptions: {
+        contentBase: path.join(__dirname, 'public'),
+
+        extensions: ['svg', 'webp'],
+      },
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
