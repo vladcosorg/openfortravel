@@ -53,7 +53,7 @@ export default boot(async ({ app }) => {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     apiKey: process.env.TRANSLATION_API_KEY!,
     sourceLanguage: 'en',
-    apiProxyURL: `${process.env.APP_URL}translate`,
+    apiProxyURL: '/translate',
   })
   app.i18n = i18n
 })

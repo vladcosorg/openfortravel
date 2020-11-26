@@ -89,6 +89,8 @@ module.exports = configure(function (context) {
             loader: 'eslint-loader',
             exclude: /node_modules/,
           })
+
+          cfg.output.publicPath = 'https://storage.googleapis.com/oftassets/'
         }
 
         cfg.module.rules.push({

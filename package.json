@@ -19,7 +19,8 @@
     "serve": "cd dist/ssr && npm start",
     "build-deploy": "yarn run build && yarn run deploy",
     "deploy": "gcloud app deploy dist/ssr/app.yaml --quiet",
-    "build-flags": "ts-node src/bin/build-flags.ts"
+    "build-flags": "ts-node src/bin/build-flags.ts",
+    "upload-assets": "cd dist/ssr && gsutil -m rsync -r -d ./www gs://oftassets"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
