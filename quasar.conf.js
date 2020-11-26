@@ -118,7 +118,6 @@ module.exports = configure(function (context) {
             options.limit = 1000
             return options
           })
-        console.log(cfg.entries())
         // cfg.plugins.store.delete('preload')
         // cfg.plugins.store.delete('prefetch')
         // cfg.plugins.delete('preload')
