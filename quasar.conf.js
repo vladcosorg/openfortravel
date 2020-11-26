@@ -90,7 +90,7 @@ module.exports = configure(function (context) {
             exclude: /node_modules/,
           })
 
-          cfg.output.publicPath = 'https://storage.googleapis.com/oftassets/'
+          // cfg.output.publicPath = 'https://storage.googleapis.com/oftassets/'
         }
 
         cfg.module.rules.push({
