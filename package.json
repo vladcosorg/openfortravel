@@ -18,9 +18,10 @@
     "build-serve": "quasar build -m ssr && cd dist/ssr && npm start",
     "serve": "cd dist/ssr && npm start",
     "build-deploy": "yarn run build && yarn run deploy",
-    "deploy": "gcloud app deploy dist/ssr/app.yaml --quiet",
+    "deploy": "gcloud app deploy dist/ssr/app.yaml --quiet && yarn run upload-assets",
     "build-flags": "ts-node src/bin/build-flags.ts",
-    "upload-assets": "cd dist/ssr && gsutil -m rsync -r -d ./www gs://oftassets"
+    "upload-assets": "cd dist/ssr && CLOUDSDK_PYTHON=/usr/bin/python2.7 gsutil -m cp -r -z css,html,js,map,svg ./www/** gs://oftassets",
+    "gsutil": "CLOUDSDK_PYTHON=/usr/bin/python2.7 gsutil"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",

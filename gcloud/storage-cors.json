@@ -1,0 +1,12 @@
+[
+  {
+    "origin": ["openfortravel.uc.r.appspot.com", "openfortravel.org"],
+    "responseHeader": [
+      "Access-Control-Allow-Origin",
+      "Content-Type",
+      "Content-Encoding"
+    ],
+    "method": ["GET", "HEAD", "DELETE", "OPTIONS"],
+    "maxAgeSeconds": 86400
+  }
+]
