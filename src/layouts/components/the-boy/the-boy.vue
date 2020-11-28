@@ -1,14 +1,11 @@
 <template>
-  <img
-    ref="svg"
-    svg-inline
+  <inline-svg
+    :src="svg"
     :class="{
       [$style.boy]: true,
-      [$style['handStartedRaising']]: handStartedRaising,
       [$style['handFinishedRaising']]: handFinishedRaising,
-      [$style['handStartedDropping']]: handStartedDropping,
     }"
-    src="../../../assets/boy.svg"
+    @loaded="loaded"
   />
 </template>
 
@@ -20,13 +17,13 @@
   transform-origin: center;
 }
 
-.handFinishedRaising :global(#palm) {
+.handFinishedRaising :global(#palm-right) {
   animation: rightHand 0.3s ease-in-out 0s 4 alternate forwards;
   @extend .transform;
   transform-origin: top;
 }
 
-.handStartedDropping :global(#palm) {
+.handStartedDropping :global(#palm-right) {
   @extend .transform;
   animation-name: palmTracking;
   animation-iteration-count: 1;
@@ -35,7 +32,7 @@
   animation-direction: reverse;
 }
 
-.handStartedRaising :global(#palm) {
+.handStartedRaising :global(#palm-right) {
   @extend .transform;
   animation-name: palmTracking;
   animation-iteration-count: 1;
@@ -46,12 +43,17 @@
 .boy {
   overflow: visible !important;
 
+  :global(#boy) {
+    @extend .transform;
+    animation: boyFlip 15s 3s normal infinite steps(3);
+  }
+
   :global(#haircreast) {
     @extend .transform;
     animation: moveHair 15s 2s normal infinite ease-in-out;
   }
 
-  :global(#scarf) {
+  :global(#scarf-ends) {
     @extend .transform;
     transform-origin: top;
     animation: moveScarf normal 15s 2s infinite ease-in-out;
@@ -80,37 +82,32 @@
     animation: rightBrow normal 20s 2s infinite ease-in-out;
   }
 
-  :global(#torso),
+  :global(#without-legs),
   :global(#torso-shadow) {
     @extend .transform;
     animation: torsoMovement 10s 4s alternate infinite ease-in-out;
   }
 
-  :global(#left-hand) {
+  :global(#palm-left) {
     @extend .transform;
     animation: leftHand 10s 5s alternate infinite ease-in-out;
   }
 }
 </style>
 <script lang="ts">
-import { defineComponent, onMounted, ref, unref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
+import InlineSvg from 'vue-inline-svg'
 
+import { useStore } from 'src/composables/use-plugins'
 import CountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 
 export default defineComponent({
-  components: { CountryList },
+  components: { CountryList, InlineSvg },
   setup() {
     const handStartedRaising = ref(false)
     const handFinishedRaising = ref(false)
     const handStartedDropping = ref(false)
-    const svg = ref<Document | undefined>()
-
-    onMounted(() => {
-      const domElement = unref(svg)
-      if (!domElement) {
-        return
-      }
-
+    const loaded = (domElement: Document) => {
       let animation = domElement.querySelector('#myanim')
 
       if (!animation) {
@@ -138,9 +135,19 @@ export default defineComponent({
       animation.addEventListener('endEvent', () => {
         handStartedDropping.value = false
       })
+    }
+
+    const svg = computed(() => {
+      const country = useStore().state.detectedCountry
+      // eslint-disable-next-line no-undef
+      return require(country === 'md'
+        ? 'src/assets/boy/boy-md.svg'
+        : 'src/assets/boy/boy.svg')
     })
+
     return {
       svg,
+      loaded,
       handStartedRaising,
       handFinishedRaising,
       handStartedDropping,

@@ -42,7 +42,7 @@ export default route<Store<StateInterface>>(function ({ Vue }) {
         path: '/:locale/',
         component: () =>
           import(
-            /* webpackChunkName: "aaaaa" */
+            /* webpackChunkName: "front" */
             'layouts/main-layout.vue'
           ),
         props(route) {

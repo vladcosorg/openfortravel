@@ -1,1 +1,1 @@
-declare module 'sqip';
+declare module 'vue-inline-svg'

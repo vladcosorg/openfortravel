@@ -14,10 +14,6 @@
 <style lang="scss" module>
 .page {
   z-index: 2;
-  @supports (-webkit-touch-callout: none) {
-    /* The hack for Safari */
-    height: -webkit-fill-available !important;
-  }
 }
 .arrow {
   position: absolute;

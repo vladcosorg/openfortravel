@@ -10,11 +10,10 @@
       :class="[
         $style.container,
         'q-px-md',
-        'q-pb-md',
-        fullHeight && !$q.platform.is.safari ? 'window-height' : '',
+        fullHeight && !$q.platform.is.ios ? 'window-height' : '',
       ]"
     >
-      <router-view />
+      <router-view class="q-pb-md" />
     </q-page-container>
     <the-footer />
   </q-layout>

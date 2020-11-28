@@ -18,6 +18,21 @@
   }
 }
 
+@keyframes boyFlip {
+  30% {
+    transform: scale(1, 1);
+  }
+  31% {
+    transform: scale(-1, 1);
+  }
+  49% {
+    transform: scale(-1, 1);
+  }
+  50% {
+    transform: scale(1, 1);
+  }
+}
+
 @keyframes moveScarf {
   45% {
     transform: translate(0, 0);
@@ -113,8 +128,8 @@
   }
 }
 
-$hand-top-position-x: 30px;
-$hand-top-position-y: -145px;
+$hand-top-position-x: 20px;
+$hand-top-position-y: -140px;
 
 @keyframes rightHand {
   0% {
