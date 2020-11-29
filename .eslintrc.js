@@ -130,6 +130,7 @@ module.exports = {
     'unicorn/filename-case': 'off',
     'no-console': 'warn',
     'vue/no-v-html': 'off',
+    'unicorn/no-reduce': 'off'
   },
   settings: {
     'import/parsers': {
