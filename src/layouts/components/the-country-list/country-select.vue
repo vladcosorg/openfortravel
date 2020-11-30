@@ -72,7 +72,7 @@ import InvisibleNativeSelect from 'src/components/invisible-native-select.vue'
 import { useStore } from 'src/composables/use-plugins'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 import { useVuexGetter } from 'src/composables/use-vuex'
-import { getLabelForCountryCode } from 'src/misc/country-list'
+import { getLabelForCountryCode } from 'src/modules/country-list/country-list-helpers'
 
 export interface ListItem {
   value: string
@@ -100,7 +100,9 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const fullList = useVuexGetter<List>('getCountryListObjects')
+    const fullList = useVuexGetter<List>(
+      'modules/countryList/getCountryListObjects',
+    )
     const filteredList = ref<List | undefined>()
     const countryList = computed({
       get(): List {

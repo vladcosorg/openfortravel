@@ -12,7 +12,7 @@ import {
   findRestrictionsByOrigin,
 } from 'src/api/restrictions/repository'
 import { i18n } from 'src/boot/i18n'
-import { getCountryCodes as getAllCountryCodes } from 'src/misc/country-list'
+import { getCountryCodes as getAllCountryCodes } from 'src/modules/country-list/country-list-helpers'
 
 export async function generateRestrictionListByDestination(
   destinationCode: string,
@@ -90,7 +90,7 @@ export function wrapCollectionWithRichObject(
   )
 }
 
-export function getStatusList(): Array<RestrictionStatus> {
+function getStatusList(): Array<RestrictionStatus> {
   return Object.values(RestrictionStatus)
 }
 

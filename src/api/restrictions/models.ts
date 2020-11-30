@@ -1,5 +1,5 @@
-import { getLabelForCountryCode } from 'src/misc/country-list'
 import { getFullDescription, getShortDescription } from 'src/models/description'
+import { getLabelForCountryCode } from 'src/modules/country-list/country-list-helpers'
 
 export enum RestrictionStatus {
   ALLOWED = 'allowed',

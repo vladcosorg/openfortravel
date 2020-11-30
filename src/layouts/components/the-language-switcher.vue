@@ -61,7 +61,10 @@ export default defineComponent({
         useCookies().set('locale', locale, {
           path: '/',
         })
-        useRouter().push(to.location)
+        useRouter()
+          .push(to.location)
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          .catch(() => {})
       },
     })
 

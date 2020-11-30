@@ -81,6 +81,7 @@ import { useClosureLoading } from 'src/composables/use-promise-loading'
 import Btn from 'src/layouts/components/the-country-list/btn.vue'
 import CountrySelect from 'src/layouts/components/the-country-list/country-select.vue'
 import { getCurrentCountry } from 'src/misc/country-decider'
+import { transformCodeToSlug } from 'src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
   components: { Btn, CountrySelect },
@@ -112,7 +113,7 @@ export default defineComponent({
         await useRouter().push({
           name: 'origin',
           params: {
-            originCode: originCode,
+            originSlug: transformCodeToSlug(originCode),
             locale: useI18n().locale,
           },
         })

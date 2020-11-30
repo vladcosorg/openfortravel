@@ -4,6 +4,7 @@ export default {
     forbidden: 'Forbidden',
     conditional: 'Conditional',
   },
+
   intro: {
     title: 'I want to travel',
     btn: 'Search',
@@ -81,6 +82,7 @@ export default {
       hero: 'Find out which destinations are open or reopening soon',
     },
     country: {
+      route: 'country',
       meta: {
         title: 'Travel destinations from {origin}',
       },

@@ -14,6 +14,9 @@ export function useVuexRawState<T>(path: string): T {
   return get(useStore().state, path)
 }
 
+export function useRawVuexGetter<T>(getter: string): T {
+  return useStore().getters[getter]
+}
 export function useVuexGetter<T>(getter: string): ComputedRef<T> {
   return computed<T>(() => useStore().getters[getter])
 }
@@ -41,23 +44,6 @@ export function useVuexActionDispatcherWithReactivePayload(
       promise.then(() => {
         loadingReference.value = false
       })
-    }
-
-    await promise
-  }
-}
-export function useVuexActionDispatcher<T>(
-  action: string,
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/no-explicit-any
-  payload: any,
-  loadingReference?: Ref<boolean>,
-): { (): Promise<void> } {
-  return async () => {
-    const promise = useVuexAction(action, payload)
-
-    if (loadingReference) {
-      loadingReference.value = true
-      promise.then(() => (loadingReference.value = false))
     }
 
     await promise

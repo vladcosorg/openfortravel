@@ -1,7 +1,12 @@
 import { boot } from 'quasar/wrappers'
 import Vue from 'vue'
 import { extend } from 'vue-auto-i18n'
-import VueI18n, { LocaleMessageObject, LocaleMessages, Values } from 'vue-i18n'
+import VueI18n, {
+  IVueI18n,
+  LocaleMessageObject,
+  LocaleMessages,
+  Values,
+} from 'vue-i18n'
 
 import Locale = VueI18n.Locale
 
@@ -12,10 +17,11 @@ declare module 'vue/types/vue' {
 }
 Vue.use(VueI18n)
 
-export const i18n = new VueI18n({
+export const i18n = (new VueI18n({
   locale: 'en',
   fallbackLocale: 'en',
-})
+  silentTranslationWarn: true,
+}) as unknown) as IVueI18n
 
 export const t = (key: string, values?: Values): string => {
   return <string>i18n.t(key, values)

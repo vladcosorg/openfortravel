@@ -99,10 +99,9 @@ import { computed, defineComponent, ref } from '@vue/composition-api'
 import InlineSvg from 'vue-inline-svg'
 
 import { useStore } from 'src/composables/use-plugins'
-import CountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 
 export default defineComponent({
-  components: { CountryList, InlineSvg },
+  components: { InlineSvg },
   setup() {
     const handStartedRaising = ref(false)
     const handFinishedRaising = ref(false)

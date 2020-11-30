@@ -13,7 +13,7 @@ import {
   updateOriginField,
 } from 'src/api/destinations/repository'
 import { useAsyncState } from 'src/composables/use-async'
-import { getCountryCodes } from 'src/misc/country-list'
+import { getCountryCodes } from 'src/modules/country-list/country-list-helpers'
 
 type UpdateFunc = <
   K extends keyof PlainDestination,

@@ -1,4 +1,4 @@
-import { getLabelForCountryCode } from 'src/misc/country-list'
+import { getLabelForCountryCode } from 'src/modules/country-list/country-list-helpers'
 
 export interface DestinationDocument {
   infoLink?: string

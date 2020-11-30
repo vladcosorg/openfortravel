@@ -33,6 +33,7 @@ module.exports = configure(function (context) {
       'i18n',
       'language-detector',
       'country-detector',
+      'country-loader',
     ],
 
     vendor: {

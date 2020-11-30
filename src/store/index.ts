@@ -1,10 +1,9 @@
 import { store } from 'quasar/wrappers'
 import Vuex from 'vuex'
 
-import { CountryList } from 'src/misc/country-list'
+import countryList from 'src/modules/country-list/country-list-store'
 import countryPage from 'src/pages/country/country-store'
 import destinationPage from 'src/pages/destination/destination-store'
-
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation
@@ -12,7 +11,6 @@ import destinationPage from 'src/pages/destination/destination-store'
 
 export interface StateInterface {
   countrySelectorLoading: boolean
-  countryList: CountryList
   detectedCountry: string
 }
 
@@ -25,18 +23,20 @@ export default store(function ({ Vue }) {
     modules: {
       destinationPage,
       countryPage,
+      modules: {
+        namespaced: true,
+        modules: {
+          countryList,
+        },
+      },
     },
     state: {
       countrySelectorLoading: false,
-      countryList: {},
       detectedCountry: 'us',
     },
     mutations: {
       setCountrySelectorLoading(state, value: boolean) {
         state.countrySelectorLoading = value
-      },
-      setCountryList(state: StateInterface, list: CountryList) {
-        state.countryList = list
       },
       setDetectedCountry(state: StateInterface, country: string) {
         state.detectedCountry = country
@@ -44,14 +44,7 @@ export default store(function ({ Vue }) {
     },
 
     actions: {},
-    getters: {
-      getCountryListObjects(state) {
-        return Object.keys(state.countryList).map((key) => ({
-          value: key.toLowerCase(),
-          label: state.countryList[key],
-        }))
-      },
-    },
+    getters: {},
     strict: !!process.env.DEV,
   })
 })

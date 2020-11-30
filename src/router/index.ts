@@ -4,34 +4,36 @@ import { Store } from 'vuex'
 
 import { StateInterface } from '../store'
 
+// eslint-disable-next-line import/no-unused-modules
 export default route<Store<StateInterface>>(function ({ Vue }) {
   Vue.use(VueRouter)
-  const Router = new VueRouter({
+  return new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes: [
       {
         path: '/admin',
-        component: () => {
+        component: () =>
           import(
-            /* webpackChunkName: "admin" */
+            /* webpackChunkName: "admin-layout" */
             'layouts/admin-layout.vue'
-          )
-        },
+          ),
 
         children: [
           {
             name: 'admin-index',
             path: 'list',
             component: () =>
-              /* webpackChunkName: "admin" */
-              import('src/pages/admin/list/list-page.vue'),
+              import(
+                /* webpackChunkName: "admin-list" */
+                'src/pages/admin/list/list-page.vue'
+              ),
           },
           {
             name: 'admin-country',
             path: 'country/:originCode',
             component: () =>
               import(
-                /* webpackChunkName: "admin" */
+                /* webpackChunkName: "admin-country" */
                 'src/pages/admin/edit/edit-page.vue'
               ),
             props: true,
@@ -42,16 +44,21 @@ export default route<Store<StateInterface>>(function ({ Vue }) {
         path: '/:locale/',
         component: () =>
           import(
-            /* webpackChunkName: "front" */
+            /* webpackChunkName: "main-layout" */
             'layouts/main-layout.vue'
           ),
         props(route) {
           const props = {
+            showTravelBar: false,
             fullHeight: false,
           }
           switch (route.name) {
             case 'index':
               props.fullHeight = true
+              props.showTravelBar = true
+              break
+            case 'origin':
+              props.showTravelBar = true
               break
           }
 
@@ -68,7 +75,7 @@ export default route<Store<StateInterface>>(function ({ Vue }) {
           },
           {
             name: 'origin',
-            path: 'country/:originCode/',
+            path: 'country/:originSlug/',
             component: () =>
               import(
                 /* webpackChunkName: "page-origin" */
@@ -105,6 +112,4 @@ export default route<Store<StateInterface>>(function ({ Vue }) {
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE,
   })
-
-  return Router
 })

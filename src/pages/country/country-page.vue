@@ -73,15 +73,19 @@ import {
   ionAlertCircleOutline as conditionalIcon,
   ionCloseCircleOutline as forbiddenIcon,
 } from '@quasar/extras/ionicons-v5'
-import { computed, defineComponent, toRefs, watch } from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import { getStatusListMap, getStatusMapper } from 'src/api/restrictions/helper'
-import { useI18n, useStore } from 'src/composables/use-plugins'
+import { useI18n, useRouter, useStore } from 'src/composables/use-plugins'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
+import { useVuexRawState } from 'src/composables/use-vuex'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
-import { getLabelForCountryCode } from 'src/misc/country-list'
+import {
+  getLabelForCountryCode,
+  transformSlugToCode,
+} from 'src/modules/country-list/country-list-helpers'
 import DestinationGroup from 'src/pages/country/components/destination-group.vue'
 import {
   useFilterableFlatDestinations,
@@ -98,15 +102,52 @@ export default defineComponent({
   },
   components: { TheCountryList, DestinationGroup, Portal, TheFlagBackground },
   props: {
-    originCode: {
+    originSlug: {
       type: String,
       required: true,
     },
   },
-  setup(props) {
-    const { originCode } = toRefs(props)
+  async beforeRouteUpdate(to, from, next) {
+    if (to.params.locale !== from.params.locale) {
+      await useVuexRawState('modules.countryList.fetchingPromise')
+      const mapCu = useStore().getters[
+        'modules/countryList/getCountryKebabList'
+      ]
 
-    const { destinationsRef, isLoadingRef } = useGroupedDestinations(originCode)
+      if (mapCu[to.params.originSlug]) {
+        next()
+        return
+      }
+
+      const map = useStore().getters[
+        'modules/countryList/getPreviousToCurrentCountryList'
+      ]
+
+      const newSlug = map[from.params.originSlug]
+      const resolvedRoute = useRouter().resolve({
+        params: { locale: to.params.locale, originSlug: newSlug },
+      })
+
+      next(resolvedRoute.location)
+    } else {
+      next()
+    }
+  },
+  setup(props) {
+    const memorizedValueRef = ref()
+    const originCodeRef = computed(() => {
+      const newValue = transformSlugToCode(props.originSlug)
+
+      if (newValue) {
+        memorizedValueRef.value = newValue
+      }
+
+      return memorizedValueRef.value
+    })
+
+    const { destinationsRef, isLoadingRef } = useGroupedDestinations(
+      originCodeRef,
+    )
     const {
       filterRef,
       filteredDestinationsRef,
@@ -119,6 +160,7 @@ export default defineComponent({
     })
 
     return {
+      originCode: originCodeRef,
       filter: filterRef,
       isFiltering: isFilteringRef,
       isFilteredListLoading: filterLoadingRef,

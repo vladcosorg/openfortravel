@@ -155,7 +155,7 @@ import {
 } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
-import { getLabelForCountryCode } from 'src/misc/country-list'
+import { getLabelForCountryCode } from 'src/modules/country-list/country-list-helpers'
 import ReturnWay from 'src/pages/destination/components/return-way.vue'
 import {
   getDestination,

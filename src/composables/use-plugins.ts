@@ -1,5 +1,5 @@
 import { Cookies } from 'quasar'
-import VueI18n from 'vue-i18n'
+import { IVueI18n } from 'vue-i18n'
 import VueRouter from 'vue-router'
 import { Store } from 'vuex'
 
@@ -19,6 +19,6 @@ export function useCookies(): Cookies {
   return cookies
 }
 
-export function useI18n(): VueI18n {
+export function useI18n(): IVueI18n {
   return i18n
 }
