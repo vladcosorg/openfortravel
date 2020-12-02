@@ -3,13 +3,14 @@ import { Route } from 'vue-router'
 
 import { fetchCurrentCountryCode } from 'src/api/ip-api'
 import { cookies, storeInstance } from 'src/boot/store'
+import { transformSlugToCode } from 'src/modules/country-list/country-list-helpers'
 
 export async function decideOnCountry(
   route: Route,
   cookies: Cookies,
 ): Promise<string> {
   const countryCodeSources: (() => string | Promise<string>)[] = [
-    () => route.params.originCode,
+    () => transformSlugToCode(route.params.originSlug),
     () => cookies.get('country'),
     fetchCurrentCountryCode,
   ]

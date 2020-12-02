@@ -33,8 +33,8 @@
         :to="{
           name: 'destination',
           params: {
-            originCode: destination.origin,
-            destinationCode: destination.destination,
+            originSlug: destination.originSlug,
+            destinationSlug: destination.destinationSlug,
           },
         }"
         @click.native="isClicked = true"
@@ -117,8 +117,8 @@
         :to="{
           name: 'destination',
           params: {
-            originCode: destination.origin,
-            destinationCode: destination.destination,
+            originSlug: destination.originSlug,
+            destinationSlug: destination.destinationSlug,
           },
         }"
       >

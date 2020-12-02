@@ -14,7 +14,7 @@
         :loading="isGoingBack.state"
         :to="{
           name: 'origin',
-          params: { originCode: restriction.origin },
+          params: { originSlug: restriction.originSlug },
         }"
         @click="isGoingBack.toggle"
       />
@@ -136,7 +136,7 @@
       align="left"
       :to="{
         name: 'origin',
-        params: { originCode: restriction.origin },
+        params: { originSlug: restriction.originSlug },
       }"
       @click="isGoingBack.toggle"
     />
@@ -144,10 +144,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, toRefs } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import { RestrictionStatus } from 'src/api/restrictions/models'
+import { useComputedMemorized } from 'src/composables/use-computed-vmodel'
 import { useI18n } from 'src/composables/use-plugins'
 import {
   useAggregatedLoader,
@@ -155,7 +156,10 @@ import {
 } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
-import { getLabelForCountryCode } from 'src/modules/country-list/country-list-helpers'
+import {
+  getLabelForCountryCode,
+  transformSlugToCode,
+} from 'src/modules/country-list/country-list-helpers'
 import ReturnWay from 'src/pages/destination/components/return-way.vue'
 import {
   getDestination,
@@ -179,20 +183,23 @@ export default defineComponent({
   },
   components: { ReturnWay, TheCountryList, Portal, TheFlagBackground },
   props: {
-    originCode: {
+    originSlug: {
       type: String,
       required: true,
     },
-    destinationCode: {
+    destinationSlug: {
       type: String,
       required: true,
     },
   },
   setup(props) {
-    const {
-      originCode: originCodeRef,
-      destinationCode: destinationCodeRef,
-    } = toRefs(props)
+    const originCodeRef = useComputedMemorized(() =>
+      transformSlugToCode(props.originSlug),
+    )
+
+    const destinationCodeRef = useComputedMemorized(() =>
+      transformSlugToCode(props.destinationSlug),
+    )
 
     const {
       restrictionRef,
@@ -221,6 +228,8 @@ export default defineComponent({
     )
 
     return {
+      originCode: originCodeRef,
+      destinationCode: destinationCodeRef,
       restriction: restrictionRef,
       destination: destinationRef,
       loading: useAggregatedLoader(

@@ -1,14 +1,13 @@
 import {
-  getCurrentInstance,
   computed,
-  WritableComputedRef,
+  ComputedRef,
+  getCurrentInstance,
+  Ref,
   ref,
   UnwrapRef,
-  Ref,
-  ComputedRef,
+  WritableComputedRef,
 } from '@vue/composition-api'
 
-// eslint-disable-next-line import/no-unused-modules
 export function useClosedLoopModel<T>(
   defaultValue: T,
 ): {
@@ -91,4 +90,20 @@ export function useBufferedModel<T>(
     reset,
     isBuffering,
   }
+}
+
+/**
+ * Returns the last non-falsy value
+ * @param getter
+ */
+export function useComputedMemorized<T>(getter: () => T): ComputedRef<T> {
+  const memorizedValueRef = ref()
+  return computed(() => {
+    const newValue = getter()
+
+    if (newValue) {
+      memorizedValueRef.value = newValue
+    }
+    return memorizedValueRef.value
+  })
 }

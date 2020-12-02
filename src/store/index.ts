@@ -1,4 +1,5 @@
 import { store } from 'quasar/wrappers'
+import { LocaleMessageObject } from 'vue-i18n'
 import Vuex from 'vuex'
 
 import countryList from 'src/modules/country-list/country-list-store'
@@ -12,6 +13,9 @@ import destinationPage from 'src/pages/destination/destination-store'
 export interface StateInterface {
   countrySelectorLoading: boolean
   detectedCountry: string
+  localizedRoutes: Record<string, string>
+  locales: LocaleMessageObject
+  currentLocale: string
 }
 
 // eslint-disable-next-line import/no-unused-modules
@@ -33,6 +37,9 @@ export default store(function ({ Vue }) {
     state: {
       countrySelectorLoading: false,
       detectedCountry: 'us',
+      localizedRoutes: {},
+      locales: {},
+      currentLocale: 'en',
     },
     mutations: {
       setCountrySelectorLoading(state, value: boolean) {
@@ -40,6 +47,12 @@ export default store(function ({ Vue }) {
       },
       setDetectedCountry(state: StateInterface, country: string) {
         state.detectedCountry = country
+      },
+      setLocales(state: StateInterface, locales: LocaleMessageObject) {
+        state.locales = locales
+      },
+      setCurrentLocale(state: StateInterface, currentLocale: string) {
+        state.currentLocale = currentLocale
       },
     },
 

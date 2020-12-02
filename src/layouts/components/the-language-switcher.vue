@@ -54,17 +54,18 @@ export default defineComponent({
       get() {
         return root.$i18n.locale
       },
-      set(locale: string) {
+      async set(locale: string) {
         loading.value = true
-        setTimeout(() => (loading.value = false), 1000)
         const to = root.$router.resolve({ params: { locale } })
         useCookies().set('locale', locale, {
           path: '/',
         })
-        useRouter()
+        // await changeLanguage(locale)
+        await useRouter()
           .push(to.location)
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           .catch(() => {})
+        setTimeout(() => (loading.value = false), 1000)
       },
     })
 

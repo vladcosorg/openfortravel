@@ -73,17 +73,18 @@ import {
   ionAlertCircleOutline as conditionalIcon,
   ionCloseCircleOutline as forbiddenIcon,
 } from '@quasar/extras/ionicons-v5'
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { computed, defineComponent, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import { getStatusListMap, getStatusMapper } from 'src/api/restrictions/helper'
+import { useComputedMemorized } from 'src/composables/use-computed-vmodel'
 import { useI18n, useRouter, useStore } from 'src/composables/use-plugins'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
-import { useVuexRawState } from 'src/composables/use-vuex'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import {
   getLabelForCountryCode,
+  getMappedCountrySlugOrUndefined,
   transformSlugToCode,
 } from 'src/modules/country-list/country-list-helpers'
 import DestinationGroup from 'src/pages/country/components/destination-group.vue'
@@ -107,43 +108,32 @@ export default defineComponent({
       required: true,
     },
   },
-  async beforeRouteUpdate(to, from, next) {
+
+  async beforeRouteEnter(to, from, next) {
     if (to.params.locale !== from.params.locale) {
-      await useVuexRawState('modules.countryList.fetchingPromise')
-      const mapCu = useStore().getters[
-        'modules/countryList/getCountryKebabList'
-      ]
+      getMappedCountrySlugOrUndefined(
+        from.params.originSlug,
+        to.params.originSlug,
+      ).then((originSlug) => {
+        if (!originSlug) {
+          return next()
+        }
 
-      if (mapCu[to.params.originSlug]) {
-        next()
-        return
-      }
+        const resolvedRoute = useRouter().resolve({
+          name: to.name,
+          params: { locale: to.params.locale, originSlug },
+        })
 
-      const map = useStore().getters[
-        'modules/countryList/getPreviousToCurrentCountryList'
-      ]
-
-      const newSlug = map[from.params.originSlug]
-      const resolvedRoute = useRouter().resolve({
-        params: { locale: to.params.locale, originSlug: newSlug },
+        return next(resolvedRoute.href)
       })
-
-      next(resolvedRoute.location)
     } else {
       next()
     }
   },
   setup(props) {
-    const memorizedValueRef = ref()
-    const originCodeRef = computed(() => {
-      const newValue = transformSlugToCode(props.originSlug)
-
-      if (newValue) {
-        memorizedValueRef.value = newValue
-      }
-
-      return memorizedValueRef.value
-    })
+    const originCodeRef = useComputedMemorized(() =>
+      transformSlugToCode(props.originSlug),
+    )
 
     const { destinationsRef, isLoadingRef } = useGroupedDestinations(
       originCodeRef,

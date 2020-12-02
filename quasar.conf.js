@@ -30,6 +30,7 @@ module.exports = configure(function (context) {
       'vue',
       'composition-api',
       'store',
+      { path: 'ssr-url-decoder', client: false },
       'i18n',
       'language-detector',
       'country-detector',

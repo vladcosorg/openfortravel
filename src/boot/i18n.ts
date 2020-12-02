@@ -1,4 +1,7 @@
 import { boot } from 'quasar/wrappers'
+
+import { reloadRoutes } from 'src/router'
+
 import Vue from 'vue'
 import { extend } from 'vue-auto-i18n'
 import VueI18n, {
@@ -32,27 +35,53 @@ export async function changeLanguage(lang: Locale): Promise<void> {
     return
   }
 
-  try {
-    const response = (await import(
-      /* webpackChunkName: "lang-[request]" */ `src/i18n/${lang}.ts`
-    )) as { default: LocaleMessageObject }
-    i18n.setLocaleMessage(lang, response.default)
-  } catch {
-    //one
+  if (!i18n.messages[lang]) {
+    try {
+      const response = (await import(
+        /* webpackChunkName: "lang-[request]" */ `src/i18n/${lang}.ts`
+      )) as { default: LocaleMessageObject }
+      i18n.setLocaleMessage(lang, response.default)
+    } catch {
+      //one
+    }
   }
+
   i18n.locale = lang
 }
 
-export default boot(async ({ app }) => {
-  if (process.env.SERVER) {
+export default boot(async ({ app, router, store, ssrContext }) => {
+  if (ssrContext) {
     const { default: messages } = (await import('src/i18n')) as LocaleMessages
     Object.entries(messages).map(([locale, messageObject]) =>
       i18n.setLocaleMessage(locale, messageObject as LocaleMessageObject),
     )
+
+    const detectedLocale = extractLanguageFromURL(ssrContext?.url)
+
+    if (detectedLocale) {
+      i18n.locale = detectedLocale
+      store.commit('setCurrentLocale', detectedLocale)
+
+      const fallbackLocale = i18n.fallbackLocale as string
+      const ssrLocales: LocaleMessageObject = {
+        [fallbackLocale]: i18n.getLocaleMessage(fallbackLocale),
+      }
+
+      if (detectedLocale !== fallbackLocale) {
+        ssrLocales[detectedLocale] = i18n.getLocaleMessage(detectedLocale)
+      }
+      if (store) {
+        store.commit('setLocales', ssrLocales)
+      }
+    }
   } else {
-    const { default: fallbackMessages } = await import('src/i18n/en')
-    i18n.setLocaleMessage('en', fallbackMessages)
+    i18n.locale = store.state.currentLocale
+    Object.entries(store.state.locales).map(([locale, messageObject]) =>
+      i18n.setLocaleMessage(locale, messageObject as LocaleMessageObject),
+    )
   }
+
+  reloadRoutes(router, ssrContext)
 
   extend({
     i18nPluginInstance: i18n,
@@ -63,3 +92,11 @@ export default boot(async ({ app }) => {
   })
   app.i18n = i18n
 })
+
+function extractLanguageFromURL(url?: string): string | undefined {
+  if (!url) {
+    return
+  }
+  const matches = url.match(/\/([a-z]{2})\/?.*/)
+  return matches !== null ? matches[1] : undefined
+}

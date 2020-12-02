@@ -1,20 +1,31 @@
+import { QSsrContext } from '@quasar/app'
 import { route } from 'quasar/wrappers'
 import VueRouter from 'vue-router'
 import { Store } from 'vuex'
 
 import { StateInterface } from '../store'
 
+import { i18n } from 'src/boot/i18n'
+import { getCookiesAPI } from 'src/misc/misc'
+
 // eslint-disable-next-line import/no-unused-modules
-export default route<Store<StateInterface>>(function ({ Vue }) {
+export default route<Store<StateInterface>>(async function ({
+  Vue,
+  ssrContext,
+}) {
   Vue.use(VueRouter)
+  return createRouter(ssrContext)
+})
+
+function createRouter(ssrContext: QSsrContext | null | undefined): VueRouter {
   return new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes: [
       {
-        path: '/admin',
+        path: '/:locale/admin',
         component: () =>
           import(
-            /* webpackChunkName: "admin-layout" */
+            /* webpackChunkName: "admin-layout"  */
             'layouts/admin-layout.vue'
           ),
 
@@ -39,6 +50,21 @@ export default route<Store<StateInterface>>(function ({ Vue }) {
             props: true,
           },
         ],
+      },
+      {
+        path: '/',
+        beforeEnter(to, from, next) {
+          const cookiesAPI = getCookiesAPI(ssrContext)
+          let locale: string = cookiesAPI.get('locale')
+          if (!locale) {
+            locale = ssrContext
+              ? ssrContext.req.acceptsLanguages()[0].toLowerCase().split('-')[0]
+              : navigator.language.toLowerCase().split('-')[0]
+            cookiesAPI.set('locale', locale)
+          }
+
+          return next({ name: 'index', params: { locale } })
+        },
       },
       {
         path: '/:locale/',
@@ -75,7 +101,7 @@ export default route<Store<StateInterface>>(function ({ Vue }) {
           },
           {
             name: 'origin',
-            path: 'country/:originSlug/',
+            path: `${i18n.t('page.country.route')}/:originSlug/`,
             component: () =>
               import(
                 /* webpackChunkName: "page-origin" */
@@ -85,7 +111,7 @@ export default route<Store<StateInterface>>(function ({ Vue }) {
           },
           {
             name: 'destination',
-            path: 'country/:originCode/destination/:destinationCode/',
+            path: 'country/:originSlug/destination/:destinationSlug/',
             component: () =>
               import(
                 /* webpackChunkName: "page-destination" */
@@ -112,4 +138,14 @@ export default route<Store<StateInterface>>(function ({ Vue }) {
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE,
   })
-})
+}
+
+export function reloadRoutes(
+  router: VueRouter,
+  ssrContext: QSsrContext | null | undefined,
+): void {
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const freshRouter = createRouter(ssrContext) as any
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ;(router as any).matcher = freshRouter.matcher
+}

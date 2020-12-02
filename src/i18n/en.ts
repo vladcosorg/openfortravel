@@ -82,7 +82,7 @@ export default {
       hero: 'Find out which destinations are open or reopening soon',
     },
     country: {
-      route: 'country',
+      route: 'travel/from',
       meta: {
         title: 'Travel destinations from {origin}',
       },

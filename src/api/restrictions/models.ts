@@ -1,5 +1,8 @@
 import { getFullDescription, getShortDescription } from 'src/models/description'
-import { getLabelForCountryCode } from 'src/modules/country-list/country-list-helpers'
+import {
+  getLabelForCountryCode,
+  transformCodeToSlug,
+} from 'src/modules/country-list/country-list-helpers'
 
 export enum RestrictionStatus {
   ALLOWED = 'allowed',
@@ -45,8 +48,16 @@ export class Restriction implements PlainRestriction {
     return getLabelForCountryCode(this.origin)
   }
 
+  get originSlug(): string {
+    return transformCodeToSlug(this.origin)
+  }
+
   get destinationLabel(): string {
     return getLabelForCountryCode(this.destination)
+  }
+
+  get destinationSlug(): string {
+    return transformCodeToSlug(this.destination)
   }
 
   get shortDescription(): string {

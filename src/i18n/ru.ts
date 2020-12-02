@@ -11,4 +11,9 @@ export default {
   description: {
     intro: 'Путешествие из {origin} в {destination} ',
   },
+  page: {
+    country: {
+      route: 'путешествовать/из',
+    },
+  },
 }

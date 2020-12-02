@@ -102,8 +102,8 @@ export default defineComponent({
           await useRouter().push({
             name: 'destination',
             params: {
-              originCode: originCode,
-              destinationCode: destinationCode,
+              originSlug: transformCodeToSlug(originCode),
+              destinationSlug: transformCodeToSlug(destinationCode),
               locale: useI18n().locale,
             },
           })
