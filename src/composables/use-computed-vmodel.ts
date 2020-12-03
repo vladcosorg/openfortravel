@@ -8,6 +8,7 @@ import {
   WritableComputedRef,
 } from '@vue/composition-api'
 
+// eslint-disable-next-line import/no-unused-modules
 export function useClosedLoopModel<T>(
   defaultValue: T,
 ): {

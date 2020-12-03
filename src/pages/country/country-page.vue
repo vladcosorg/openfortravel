@@ -110,7 +110,7 @@ export default defineComponent({
   },
 
   async beforeRouteEnter(to, from, next) {
-    if (to.params.locale !== from.params.locale) {
+    if (to.name && to.params.locale !== from.params.locale) {
       getMappedCountrySlugOrUndefined(
         from.params.originSlug,
         to.params.originSlug,
@@ -119,16 +119,17 @@ export default defineComponent({
           return next()
         }
 
-        const resolvedRoute = useRouter().resolve({
-          name: to.name,
-          params: { locale: to.params.locale, originSlug },
-        })
-
-        return next(resolvedRoute.href)
+        if (to.name) {
+          const resolvedRoute = useRouter().resolve({
+            name: to.name,
+            params: { locale: to.params.locale, originSlug },
+          })
+          return next(resolvedRoute.href)
+        }
       })
-    } else {
-      next()
     }
+
+    return next()
   },
   setup(props) {
     const originCodeRef = useComputedMemorized(() =>

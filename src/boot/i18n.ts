@@ -1,7 +1,4 @@
 import { boot } from 'quasar/wrappers'
-
-import { reloadRoutes } from 'src/router'
-
 import Vue from 'vue'
 import { extend } from 'vue-auto-i18n'
 import VueI18n, {
@@ -9,9 +6,10 @@ import VueI18n, {
   LocaleMessageObject,
   LocaleMessages,
   Values,
+  Locale,
 } from 'vue-i18n'
 
-import Locale = VueI18n.Locale
+import { reloadRoutes } from 'src/router'
 
 declare module 'vue/types/vue' {
   interface Vue {
