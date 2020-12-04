@@ -10,6 +10,7 @@
 const path = require('path')
 
 const { configure } = require('quasar/wrappers')
+const SitemapPlugin = require('sitemap-webpack-plugin').default
 
 module.exports = configure(function (context) {
   return {
@@ -91,6 +92,19 @@ module.exports = configure(function (context) {
             loader: 'eslint-loader',
             exclude: /node_modules/,
           })
+
+          cfg.plugins.push(
+            new SitemapPlugin({
+              base: 'https://mysite.com',
+              paths: require('./quasar.conf/sitemap'),
+              options: {
+                filename: 'sitemap.xml',
+                // the following are the defaults for all paths. You can set them separately per path in the paths array
+                lastmod: true,
+                changefreq: 'weekly',
+              },
+            }),
+          )
 
           // cfg.output.publicPath = 'https://storage.googleapis.com/oftassets/'
         }

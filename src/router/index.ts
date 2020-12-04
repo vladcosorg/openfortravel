@@ -6,7 +6,14 @@ import { Store } from 'vuex'
 import { StateInterface } from '../store'
 
 import { i18n } from 'src/boot/i18n'
+import { useRouter } from 'src/composables/use-plugins'
 import { getCookiesAPI } from 'src/misc/misc'
+import {
+  getMappedCountrySlugOrUndefined,
+  transformCanonicalSlugToCode,
+  transformDestinationSlugToCode,
+  transformOriginSlugToCode,
+} from 'src/modules/country-list/country-list-helpers'
 
 // eslint-disable-next-line import/no-unused-modules
 export default route<Store<StateInterface>>(async function ({
@@ -102,24 +109,103 @@ function createRouter(ssrContext: QSsrContext | null | undefined): VueRouter {
           {
             name: 'origin',
             path: `${i18n.t('page.country.route')}/:originSlug/`,
+            // alias: 'travel/from/:originSlug/',
             component: () =>
               import(
                 /* webpackChunkName: "page-origin" */
                 'pages/country/country-page.vue'
               ),
-            props: true,
+            props(route) {
+              return {
+                originCode: transformOriginSlugToCode(
+                  route.params.originSlug,
+                  true,
+                ),
+              }
+            },
+            beforeEnter(to, from, next) {
+              if (to.name && to.params.locale !== from.params.locale) {
+                getMappedCountrySlugOrUndefined(
+                  from.params.originSlug,
+                  to.params.originSlug,
+                ).then((originSlug) => {
+                  if (!originSlug) {
+                    return next()
+                  }
+
+                  if (to.name) {
+                    const resolvedRoute = useRouter().resolve({
+                      name: to.name,
+                      params: { locale: to.params.locale, originSlug },
+                    })
+                    return next(resolvedRoute.href)
+                  }
+                })
+              }
+
+              return next()
+            },
+          },
+          {
+            name: 'origin-fallback',
+            path: 'travel/from/:originSlug/',
+            component: () =>
+              import(
+                /* webpackChunkName: "page-origin" */
+                'pages/country/country-page.vue'
+              ),
+            props(route) {
+              return {
+                originCode: transformCanonicalSlugToCode(
+                  route.params.originSlug,
+                ),
+                isFallback: true,
+              }
+            },
           },
           {
             name: 'destination',
             path: `${i18n.t('page.country.route')}/:originSlug/${i18n.t(
               'page.destination.route',
             )}/:destinationSlug/`,
+            // alias: 'travel/from/:originSlug/to/:destinationSlug',
             component: () =>
               import(
                 /* webpackChunkName: "page-destination" */
                 'pages/destination/destination-page.vue'
               ),
-            props: true,
+            props(route) {
+              return {
+                originCode: transformOriginSlugToCode(
+                  route.params.originSlug,
+                  true,
+                ),
+                destinationCode: transformDestinationSlugToCode(
+                  route.params.destinationSlug,
+                ),
+              }
+            },
+          },
+          {
+            name: 'destination-fallback',
+            path: 'travel/from/:originSlug/to/:destinationSlug',
+            // alias: 'travel/from/:originSlug/to/:destinationSlug',
+            component: () =>
+              import(
+                /* webpackChunkName: "page-destination" */
+                'pages/destination/destination-page.vue'
+              ),
+            props(route) {
+              return {
+                originCode: transformCanonicalSlugToCode(
+                  route.params.originSlug,
+                ),
+                destinationCode: transformCanonicalSlugToCode(
+                  route.params.destinationSlug,
+                ),
+                isFallback: true,
+              }
+            },
           },
         ],
       },
@@ -150,4 +236,8 @@ export function reloadRoutes(
   const freshRouter = createRouter(ssrContext) as any
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
   ;(router as any).matcher = freshRouter.matcher
+}
+
+export function pathToURL(path: string): string {
+  return `${process.env.APP_URL}${path}`
 }

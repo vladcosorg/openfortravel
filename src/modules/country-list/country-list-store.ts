@@ -3,18 +3,16 @@ import kebabCase from 'lodash/kebabCase'
 import transform from 'lodash/transform'
 import { Module } from 'vuex'
 
-import {
-  CountryList,
-  transformCodeToDestinationSlug,
-  transformCodeToOriginSlug,
-} from 'src/modules/country-list/country-list-helpers'
+import { CountryList } from 'src/modules/country-list/country-list-helpers'
 import { StateInterface } from 'src/store'
 
 class State {
   countryList: CountryList = {}
   countryListOrigin: CountryList = {}
-  countryListDestination?: CountryList
-  previousCountryList: CountryList = {}
+  countryListDestination: CountryList = {}
+  canonicalSlugToCountryCodeMap: CountryList = {}
+  slugMigrationOriginMap: CountryList = {}
+  slugMigrationDestinationMap: CountryList = {}
   fetchingPromise: Promise<unknown> = Promise.resolve()
 }
 
@@ -38,47 +36,27 @@ export default {
       return Object.keys(state.countryList)
     },
     originKebabList(state, getters) {
-      // eslint-disable-next-line unicorn/no-reduce
-      return (getters.countryCodes as string[]).reduce<Record<string, string>>(
-        (kebabList, key) => {
-          kebabList[kebabCase(getters.originLabels[key])] = key
-          return kebabList
-        },
-        {},
-      )
+      return generateSlugKebabMap(getters.originLabels)
     },
     destinationKebabList(state, getters) {
-      // eslint-disable-next-line unicorn/no-reduce
-      return Object.keys(state.countryList).reduce<Record<string, string>>(
-        (kebabList, key) => {
-          kebabList[kebabCase(getters.destinationLabels[key])] = key
-          return kebabList
-        },
-        {},
-      )
-    },
-    getPreviousToCurrentCountryList(state, getters) {
-      // eslint-disable-next-line unicorn/no-reduce
-      return Object.keys(state.previousCountryList).reduce<
-        Record<string, string>
-      >((kebabList, key) => {
-        kebabList[
-          transformCodeToOriginSlug(key, state.previousCountryList[key])
-        ] = getters.originLabels[key]
-        kebabList[
-          transformCodeToDestinationSlug(key, state.previousCountryList[key])
-        ] = getters.originLabels[key]
-        return kebabList
-      }, {})
+      return generateSlugKebabMap(getters.destinationLabels)
     },
   },
   mutations: {
     setCountryList(state: State, list: CountryList) {
-      state.previousCountryList = state.countryList
       state.countryList = list
+    },
+    setSlugMigrationOriginMap(state: State, migrationMap: CountryList) {
+      state.slugMigrationOriginMap = migrationMap
+    },
+    setSlugMigrationDestinationMap(state: State, migrationMap: CountryList) {
+      state.slugMigrationDestinationMap = migrationMap
     },
     setCountryListOrigin(state: State, list: CountryList) {
       state.countryListOrigin = list
+    },
+    setCanonicalSlugToCountryCodeMap(state: State, list: CountryList) {
+      state.canonicalSlugToCountryCodeMap = list
     },
     setCountryListDestination(state: State, list: CountryList) {
       state.countryListDestination = list
@@ -88,39 +66,74 @@ export default {
     },
   },
   actions: {
-    fetchCountryList({ commit }, locale: string) {
+    fetchCountryList({ commit, state, getters }, locale: string) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       commit(
         'setPromise',
         import(
           /* webpackChunkName: "country-list-[request]" */ `i18n-iso-countries/langs/${locale}.json`
         ).then((response) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-          let translations = response.default.countries as CountryList
-          translations = transform(
-            translations,
-            (list: CountryList, label: string | string[], code: string) => {
-              list[code.toLowerCase()] = getFirstLabel(label)
-            },
-          )
-          commit('setCountryList', Object.freeze(translations))
+          const countryList = normalizeCountryListResponse(response)
 
-          if (locale !== 'ru') {
+          const oldOriginLabels = getters.originLabels
+          const oldDestinationLabels = getters.destinationLabels
+          commit('setCountryList', Object.freeze(countryList))
+
+          const promises = []
+
+          if (locale === 'ru') {
+            promises.push(
+              import('src/i18n/declensions-ru/origin.json').then((response) => {
+                commit('setCountryListOrigin', response.default)
+              }),
+              import('src/i18n/declensions-ru/destination.json').then(
+                (response) => {
+                  commit('setCountryListDestination', response.default)
+                },
+              ),
+            )
+          } else {
             commit('setCountryListOrigin', {})
             commit('setCountryListDestination', {})
-            return response
           }
 
-          return Promise.all([
-            import('src/i18n/declensions-ru/origin.json').then((response) => {
-              commit('setCountryListOrigin', response.default)
-            }),
-            import('src/i18n/declensions-ru/destination.json').then(
-              (response) => {
-                commit('setCountryListDestination', response.default)
-              },
-            ),
-          ])
+          Promise.all(promises).then(() => {
+            if (!isEmpty(state.countryList)) {
+              commit(
+                'setSlugMigrationOriginMap',
+                generateMigrationMap(countryList, oldOriginLabels),
+              )
+              commit(
+                'setSlugMigrationDestinationMap',
+                generateMigrationMap(countryList, oldDestinationLabels),
+              )
+            }
+          })
+
+          if (isEmpty(state.canonicalSlugToCountryCodeMap)) {
+            if (locale !== 'en') {
+              promises.push(
+                import('i18n-iso-countries/langs/en.json').then(
+                  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  (response: any) => {
+                    commit(
+                      'setCanonicalSlugToCountryCodeMap',
+                      generateSlugKebabMap(
+                        normalizeCountryListResponse(response),
+                      ),
+                    )
+                  },
+                ),
+              )
+            } else {
+              commit(
+                'setCanonicalSlugToCountryCodeMap',
+                generateSlugKebabMap(countryList),
+              )
+            }
+          }
+
+          return Promise.all(promises)
         }),
       )
     },
@@ -133,4 +146,32 @@ function getFirstLabel(label: string | string[]): string {
   }
 
   return label
+}
+
+function generateSlugKebabMap(list: CountryList): Record<string, string> {
+  return Object.keys(list).reduce<Record<string, string>>((kebabList, key) => {
+    kebabList[kebabCase(list[key])] = key
+    return kebabList
+  }, {})
+}
+function normalizeCountryListResponse(response: {
+  default: { countries: CountryList }
+}) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+  const translations = response.default.countries
+  return transform(
+    translations,
+    (list: CountryList, label: string | string[], code: string) => {
+      list[code.toLowerCase()] = getFirstLabel(label)
+    },
+  )
+}
+
+function generateMigrationMap(current: CountryList, previous: CountryList) {
+  const map: CountryList = {}
+  Object.keys(previous).forEach((countryCode) => {
+    map[kebabCase(previous[countryCode])] = kebabCase(current[countryCode])
+  })
+
+  return map
 }

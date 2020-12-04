@@ -82,10 +82,11 @@ import { useI18n, useRouter, useStore } from 'src/composables/use-plugins'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
+import { generateCanonicalBlock } from 'src/misc/meta'
 import {
   getLabelForCountryCode,
   getMappedCountrySlugOrUndefined,
-  transformOriginSlugToCode,
+  transformCodeToOriginSlug,
 } from 'src/modules/country-list/country-list-helpers'
 import DestinationGroup from 'src/pages/country/components/destination-group.vue'
 import {
@@ -94,22 +95,45 @@ import {
 } from 'src/pages/country/composable'
 
 export default defineComponent({
-  meta({ originCode }: { originCode: string }) {
-    return {
+  meta({
+    originCode,
+    isFallback,
+  }: {
+    originCode: string
+    isFallback: boolean
+  }) {
+    const meta = {
       title: useI18n().t('page.country.meta.title', {
         origin: getLabelForCountryCode(originCode),
       }),
+      link: {
+        ...(isFallback && {
+          canonical: generateCanonicalBlock({
+            name: 'origin',
+            params: {
+              originSlug: transformCodeToOriginSlug(originCode),
+            },
+          }),
+        }),
+      },
     }
+
+    return meta
   },
   components: { TheCountryList, DestinationGroup, Portal, TheFlagBackground },
   props: {
-    originSlug: {
+    originCode: {
       type: String,
-      required: true,
+      // required: true,
+    },
+    isFallback: {
+      type: Boolean,
+      default: false,
     },
   },
 
-  async beforeRouteEnter(to, from, next) {
+  async beforeRouteEnterr(to, from, next) {
+    console.log(to, from)
     if (to.name && to.params.locale !== from.params.locale) {
       getMappedCountrySlugOrUndefined(
         from.params.originSlug,
@@ -132,9 +156,7 @@ export default defineComponent({
     return next()
   },
   setup(props) {
-    const originCodeRef = useComputedMemorized(() =>
-      transformOriginSlugToCode(props.originSlug),
-    )
+    const originCodeRef = useComputedMemorized(() => props.originCode)
 
     const { destinationsRef, isLoadingRef } = useGroupedDestinations(
       originCodeRef,
@@ -151,7 +173,6 @@ export default defineComponent({
     })
 
     return {
-      originCode: originCodeRef,
       filter: filterRef,
       isFiltering: isFilteringRef,
       isFilteredListLoading: filterLoadingRef,

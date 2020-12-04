@@ -156,10 +156,11 @@ import {
 } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
+import { generateCanonicalBlock } from 'src/misc/meta'
 import {
   getLabelForCountryCode,
-  transformDestinationSlugToCode,
-  transformOriginSlugToCode,
+  transformCodeToDestinationSlug,
+  transformCodeToOriginSlug,
 } from 'src/modules/country-list/country-list-helpers'
 import ReturnWay from 'src/pages/destination/components/return-way.vue'
 import {
@@ -171,36 +172,48 @@ export default defineComponent({
   meta({
     originCode,
     destinationCode,
+    isFallback,
   }: {
     originCode: string
     destinationCode: string
+    isFallback: boolean
   }) {
     return {
       title: useI18n().t('page.destination.meta.title', {
         origin: getLabelForCountryCode(originCode),
         destination: getLabelForCountryCode(destinationCode),
       }),
+      link: {
+        ...(isFallback && {
+          canonical: generateCanonicalBlock({
+            name: 'destination',
+            params: {
+              originSlug: transformCodeToOriginSlug(originCode),
+              destinationSlug: transformCodeToDestinationSlug(originCode),
+            },
+          }),
+        }),
+      },
     }
   },
   components: { ReturnWay, TheCountryList, Portal, TheFlagBackground },
   props: {
-    originSlug: {
+    originCode: {
       type: String,
-      required: true,
+      // required: true,
     },
-    destinationSlug: {
+    destinationCode: {
       type: String,
-      required: true,
+      // required: true,
+    },
+    isFallback: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
-    const originCodeRef = useComputedMemorized(() =>
-      transformOriginSlugToCode(props.originSlug),
-    )
-
-    const destinationCodeRef = useComputedMemorized(() =>
-      transformDestinationSlugToCode(props.destinationSlug),
-    )
+    const originCodeRef = useComputedMemorized(() => props.originCode)
+    const destinationCodeRef = useComputedMemorized(() => props.destinationCode)
 
     const {
       restrictionRef,
@@ -229,8 +242,6 @@ export default defineComponent({
     )
 
     return {
-      originCode: originCodeRef,
-      destinationCode: destinationCodeRef,
       restriction: restrictionRef,
       destination: destinationRef,
       loading: useAggregatedLoader(

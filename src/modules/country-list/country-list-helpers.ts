@@ -19,8 +19,31 @@ export function transformCodeToDestinationSlug(
   return kebabCase(label ?? getDestinationLabelForCountryCode(countryCode))
 }
 
-export function transformOriginSlugToCode(countrySlug: string): string {
-  return useStore().getters['modules/countryList/originKebabList'][countrySlug]
+export function transformOriginSlugToCode(
+  countrySlug: string,
+  lookInMigration = false,
+): string {
+  const originSlugToCodeMap = useStore().getters[
+    'modules/countryList/originKebabList'
+  ]
+  let countryCode = originSlugToCodeMap[countrySlug]
+
+  if (lookInMigration && !countryCode) {
+    const migrationSlugMap = useVuexRawState<CountryList>(
+      'modules.countryList.slugMigrationOriginMap',
+    )
+
+    countryCode = originSlugToCodeMap[migrationSlugMap[countrySlug]]
+  }
+
+  return countryCode
+}
+
+export function transformCanonicalSlugToCode(countrySlug: string): string {
+  const slugMap = useVuexRawState<CountryList>(
+    'modules.countryList.canonicalSlugToCountryCodeMap',
+  )
+  return slugMap[countrySlug]
 }
 
 export function transformDestinationSlugToCode(countrySlug: string): string {
@@ -62,9 +85,7 @@ export async function getMappedCountrySlugOrUndefined(
   if (mapCu[toSlug]) {
     return
   }
-
-  const map = useStore().getters[
-    'modules/countryList/getPreviousToCurrentCountryList'
-  ]
+  const storage = `slugMigration${type[0].toUpperCase()}${type.slice(1)}Map`
+  const map = useVuexRawState<CountryList>(`modules.countryList.${storage}`)
   return map[fromSlug]
 }
