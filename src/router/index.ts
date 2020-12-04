@@ -111,7 +111,9 @@ function createRouter(ssrContext: QSsrContext | null | undefined): VueRouter {
           },
           {
             name: 'destination',
-            path: 'country/:originSlug/destination/:destinationSlug/',
+            path: `${i18n.t('page.country.route')}/:originSlug/${i18n.t(
+              'page.destination.route',
+            )}/:destinationSlug/`,
             component: () =>
               import(
                 /* webpackChunkName: "page-destination" */

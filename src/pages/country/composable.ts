@@ -13,7 +13,7 @@ import { useFilterableCollection } from 'src/composables/use-misc'
 import { useLoading } from 'src/composables/use-promise-loading'
 import {
   useProperVuexActionDispatcher,
-  useVuexGetter,
+  useVuexReactiveGetter,
 } from 'src/composables/use-vuex'
 import { GroupedDestinations } from 'src/pages/country/country-store'
 
@@ -30,7 +30,7 @@ export function useGroupedDestinations(
     'countryPage/fetchCountryDestinations',
     loading,
   )
-  const destinationsRef = useVuexGetter<GroupedDestinationObjects>(
+  const destinationsRef = useVuexReactiveGetter<GroupedDestinationObjects>(
     'countryPage/getDestinationObjects',
   )
 

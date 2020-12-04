@@ -98,6 +98,7 @@ export default {
       },
     },
     destination: {
+      route: 'to',
       meta: {
         title:
           'Latest information on travelling from {origin} to {destination}',

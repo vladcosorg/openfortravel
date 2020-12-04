@@ -11,7 +11,7 @@ import { Restriction } from 'src/api/restrictions/models'
 import { useLoading } from 'src/composables/use-promise-loading'
 import {
   useVuexActionDispatcherWithReactivePayload,
-  useVuexGetter,
+  useVuexReactiveGetter,
 } from 'src/composables/use-vuex'
 
 export function getRestriction(
@@ -22,7 +22,7 @@ export function getRestriction(
   restrictionRef: ComputedRef<Restriction>
   loadingRef: Ref<boolean>
 } {
-  const restrictionRef = useVuexGetter<Restriction>(
+  const restrictionRef = useVuexReactiveGetter<Restriction>(
     `destinationPage/get${returnDirection ? 'Return' : ''}Restriction`,
   )
   const { loading: loadingRef } = useLoading()
@@ -48,7 +48,7 @@ export function getDestination(
   destinationRef: ComputedRef<Destination>
   loadingRef: Ref<boolean>
 } {
-  const destinationRef = useVuexGetter<Destination>(
+  const destinationRef = useVuexReactiveGetter<Destination>(
     'destinationPage/getDestination',
   )
   const { loading: loadingRef } = useLoading()

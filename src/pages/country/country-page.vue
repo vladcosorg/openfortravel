@@ -85,7 +85,7 @@ import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import {
   getLabelForCountryCode,
   getMappedCountrySlugOrUndefined,
-  transformSlugToCode,
+  transformOriginSlugToCode,
 } from 'src/modules/country-list/country-list-helpers'
 import DestinationGroup from 'src/pages/country/components/destination-group.vue'
 import {
@@ -133,7 +133,7 @@ export default defineComponent({
   },
   setup(props) {
     const originCodeRef = useComputedMemorized(() =>
-      transformSlugToCode(props.originSlug),
+      transformOriginSlugToCode(props.originSlug),
     )
 
     const { destinationsRef, isLoadingRef } = useGroupedDestinations(

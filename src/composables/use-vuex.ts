@@ -14,10 +14,10 @@ export function useVuexRawState<T>(path: string): T {
   return get(useStore().state, path)
 }
 
-export function useRawVuexGetter<T>(getter: string): T {
+export function useVuexRawGetter<T>(getter: string): T {
   return useStore().getters[getter]
 }
-export function useVuexGetter<T>(getter: string): ComputedRef<T> {
+export function useVuexReactiveGetter<T>(getter: string): ComputedRef<T> {
   return computed<T>(() => useStore().getters[getter])
 }
 

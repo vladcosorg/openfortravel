@@ -15,5 +15,17 @@ export default {
     country: {
       route: 'путешествовать/из',
     },
+    destination: {
+      route: 'в',
+    },
+  },
+  components: {
+    theCountryList: {
+      title: 'Я хочу путешествовать',
+      titleIntro: 'Я хочу путешествовать из',
+      from: 'Из',
+      to: 'В',
+      btn: 'Искать',
+    },
   },
 }

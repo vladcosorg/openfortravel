@@ -1,7 +1,10 @@
 import { getFullDescription, getShortDescription } from 'src/models/description'
 import {
+  getDestinationLabelForCountryCode,
   getLabelForCountryCode,
-  transformCodeToSlug,
+  getOriginLabelForCountryCode,
+  transformCodeToDestinationSlug,
+  transformCodeToOriginSlug,
 } from 'src/modules/country-list/country-list-helpers'
 
 export enum RestrictionStatus {
@@ -45,19 +48,27 @@ export class Restriction implements PlainRestriction {
   }
 
   get originLabel(): string {
+    return getOriginLabelForCountryCode(this.origin)
+  }
+
+  get originNominativeLabel(): string {
     return getLabelForCountryCode(this.origin)
   }
 
   get originSlug(): string {
-    return transformCodeToSlug(this.origin)
+    return transformCodeToOriginSlug(this.origin)
   }
 
   get destinationLabel(): string {
+    return getDestinationLabelForCountryCode(this.destination)
+  }
+
+  get destinationNominativeLabel(): string {
     return getLabelForCountryCode(this.destination)
   }
 
   get destinationSlug(): string {
-    return transformCodeToSlug(this.destination)
+    return transformCodeToDestinationSlug(this.destination)
   }
 
   get shortDescription(): string {

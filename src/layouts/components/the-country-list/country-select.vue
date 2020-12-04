@@ -71,8 +71,11 @@ import { computed, defineComponent, ref, toRef } from '@vue/composition-api'
 import InvisibleNativeSelect from 'src/components/invisible-native-select.vue'
 import { useStore } from 'src/composables/use-plugins'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
-import { useVuexGetter } from 'src/composables/use-vuex'
-import { getLabelForCountryCode } from 'src/modules/country-list/country-list-helpers'
+import { useVuexRawGetter } from 'src/composables/use-vuex'
+import {
+  getDestinationLabelForCountryCode,
+  getOriginLabelForCountryCode,
+} from 'src/modules/country-list/country-list-helpers'
 
 export interface ListItem {
   value: string
@@ -84,6 +87,10 @@ type List = ListItem[]
 export default defineComponent({
   components: { InvisibleNativeSelect },
   props: {
+    isDestination: {
+      type: Boolean,
+      default: false,
+    },
     value: {
       type: String,
       required: true,
@@ -100,9 +107,16 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const fullList = useVuexGetter<List>(
-      'modules/countryList/getCountryListObjects',
-    )
+    const fullList = computed<List>(() => {
+      const list = props.isDestination
+        ? useVuexRawGetter('modules/countryList/destinationLabels')
+        : useVuexRawGetter('modules/countryList/originLabels')
+
+      return Object.keys(list).map((key) => ({
+        value: key,
+        label: list[key],
+      }))
+    })
     const filteredList = ref<List | undefined>()
     const countryList = computed({
       get(): List {
@@ -134,7 +148,9 @@ export default defineComponent({
     const currentCountry = computed<ListItem | undefined>({
       get() {
         return {
-          label: getLabelForCountryCode(props.value),
+          label: props.isDestination
+            ? getDestinationLabelForCountryCode(props.value)
+            : getOriginLabelForCountryCode(props.value),
           value: props.value,
         }
       },

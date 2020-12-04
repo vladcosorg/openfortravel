@@ -158,7 +158,8 @@ import TheCountryList from 'src/layouts/components/the-country-list/the-country-
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import {
   getLabelForCountryCode,
-  transformSlugToCode,
+  transformDestinationSlugToCode,
+  transformOriginSlugToCode,
 } from 'src/modules/country-list/country-list-helpers'
 import ReturnWay from 'src/pages/destination/components/return-way.vue'
 import {
@@ -194,11 +195,11 @@ export default defineComponent({
   },
   setup(props) {
     const originCodeRef = useComputedMemorized(() =>
-      transformSlugToCode(props.originSlug),
+      transformOriginSlugToCode(props.originSlug),
     )
 
     const destinationCodeRef = useComputedMemorized(() =>
-      transformSlugToCode(props.destinationSlug),
+      transformDestinationSlugToCode(props.destinationSlug),
     )
 
     const {

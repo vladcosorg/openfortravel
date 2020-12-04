@@ -41,6 +41,7 @@
         v-if="currentDestination"
         :key="currentDestination"
         v-model="currentDestination"
+        is-destination
         :loading="loading"
       >
         <template #default>
@@ -81,7 +82,10 @@ import { useClosureLoading } from 'src/composables/use-promise-loading'
 import Btn from 'src/layouts/components/the-country-list/btn.vue'
 import CountrySelect from 'src/layouts/components/the-country-list/country-select.vue'
 import { getCurrentCountry } from 'src/misc/country-decider'
-import { transformCodeToSlug } from 'src/modules/country-list/country-list-helpers'
+import {
+  transformCodeToDestinationSlug,
+  transformCodeToOriginSlug,
+} from 'src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
   components: { Btn, CountrySelect },
@@ -102,8 +106,8 @@ export default defineComponent({
           await useRouter().push({
             name: 'destination',
             params: {
-              originSlug: transformCodeToSlug(originCode),
-              destinationSlug: transformCodeToSlug(destinationCode),
+              originSlug: transformCodeToOriginSlug(originCode),
+              destinationSlug: transformCodeToDestinationSlug(destinationCode),
               locale: useI18n().locale,
             },
           })
@@ -113,7 +117,7 @@ export default defineComponent({
         await useRouter().push({
           name: 'origin',
           params: {
-            originSlug: transformCodeToSlug(originCode),
+            originSlug: transformCodeToOriginSlug(originCode),
             locale: useI18n().locale,
           },
         })

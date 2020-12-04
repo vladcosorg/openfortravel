@@ -59,13 +59,14 @@
 
         <q-item-section>
           <q-item-label v-if="returning" :class="[$style.label, 'full-width']">
-            {{ destination.originLabel }} → {{ destination.destinationLabel }}
+            {{ destination.originNominativeLabel }} →
+            {{ destination.destinationNominativeLabel }}
           </q-item-label>
           <q-item-label
             v-else
             :class="[$style.label, 'ellipsis-improved', 'full-width']"
           >
-            {{ destination.destinationLabel }}
+            {{ destination.destinationNominativeLabel }}
           </q-item-label>
           <q-item-label
             caption
