@@ -5,9 +5,8 @@ import { Store } from 'vuex'
 
 import { StateInterface } from '../store'
 
-import { i18n } from 'src/boot/i18n'
+import { getLocaleCookie, i18n, setLocaleCookie } from 'src/boot/i18n'
 import { useRouter } from 'src/composables/use-plugins'
-import { getCookiesAPI } from 'src/misc/misc'
 import {
   getMappedCountrySlugOrUndefined,
   transformCanonicalSlugToCode,
@@ -61,13 +60,13 @@ function createRouter(ssrContext: QSsrContext | null | undefined): VueRouter {
       {
         path: '/',
         beforeEnter(to, from, next) {
-          const cookiesAPI = getCookiesAPI(ssrContext)
-          let locale: string = cookiesAPI.get('locale')
+          let locale: string = getLocaleCookie(ssrContext)
           if (!locale) {
             locale = ssrContext
               ? ssrContext.req.acceptsLanguages()[0].toLowerCase().split('-')[0]
               : navigator.language.toLowerCase().split('-')[0]
-            cookiesAPI.set('locale', locale)
+
+            setLocaleCookie(locale, ssrContext)
           }
 
           return next({ name: 'index', params: { locale } })

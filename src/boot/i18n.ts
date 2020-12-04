@@ -1,3 +1,4 @@
+import { QSsrContext } from '@quasar/app'
 import { boot } from 'quasar/wrappers'
 import Vue from 'vue'
 import { extend } from 'vue-auto-i18n'
@@ -9,6 +10,7 @@ import VueI18n, {
   Locale,
 } from 'vue-i18n'
 
+import { getCookiesAPI } from 'src/misc/misc'
 import { reloadRoutes } from 'src/router'
 
 declare module 'vue/types/vue' {
@@ -26,6 +28,21 @@ export const i18n = (new VueI18n({
 
 export const t = (key: string, values?: Values): string => {
   return <string>i18n.t(key, values)
+}
+
+export function setLocaleCookie(
+  locale: string,
+  ssrContext: QSsrContext | null | undefined,
+): void {
+  getCookiesAPI(ssrContext).set('locale', locale, {
+    path: '/',
+  })
+}
+
+export function getLocaleCookie(
+  ssrContext: QSsrContext | null | undefined,
+): string {
+  return getCookiesAPI(ssrContext).get('locale')
 }
 
 export async function changeLanguage(lang: Locale): Promise<void> {
