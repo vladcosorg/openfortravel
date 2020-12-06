@@ -39,10 +39,10 @@ module.exports.extendApp = function ({ app, ssr }) {
       cache.set(hash, response.data)
       console.log('Saved in cache ' + hash)
     } catch (error) {
-      console.log(error)
+      // console.log(error)
       return res.send(error.response.data)
     }
-    console.log(response.data)
+    // console.log(response.data)
     return res.json(response.data)
   })
   /*

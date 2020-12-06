@@ -69,8 +69,8 @@
 
 <script lang="ts">
 import {
-  ionCheckmarkCircleOutline as allowedIcon,
   ionAlertCircleOutline as conditionalIcon,
+  ionCheckmarkCircleOutline as allowedIcon,
   ionCloseCircleOutline as forbiddenIcon,
 } from '@quasar/extras/ionicons-v5'
 import { computed, defineComponent, watch } from '@vue/composition-api'
@@ -78,14 +78,13 @@ import { Portal } from 'portal-vue'
 
 import { getStatusListMap, getStatusMapper } from 'src/api/restrictions/helper'
 import { useComputedMemorized } from 'src/composables/use-computed-vmodel'
-import { useI18n, useRouter, useStore } from 'src/composables/use-plugins'
+import { useI18n, useStore } from 'src/composables/use-plugins'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import { generateCanonicalBlock } from 'src/misc/meta'
 import {
   getLabelForCountryCode,
-  getMappedCountrySlugOrUndefined,
   transformCodeToOriginSlug,
 } from 'src/modules/country-list/country-list-helpers'
 import DestinationGroup from 'src/pages/country/components/destination-group.vue'
@@ -102,7 +101,7 @@ export default defineComponent({
     originCode: string
     isFallback: boolean
   }) {
-    const meta = {
+    return {
       title: useI18n().t('page.country.meta.title', {
         origin: getLabelForCountryCode(originCode),
       }),
@@ -117,46 +116,19 @@ export default defineComponent({
         }),
       },
     }
-
-    return meta
   },
   components: { TheCountryList, DestinationGroup, Portal, TheFlagBackground },
   props: {
-    originCode: {
+    unsafeOriginCode: {
       type: String,
-      // required: true,
     },
     isFallback: {
       type: Boolean,
       default: false,
     },
   },
-
-  async beforeRouteEnterr(to, from, next) {
-    console.log(to, from)
-    if (to.name && to.params.locale !== from.params.locale) {
-      getMappedCountrySlugOrUndefined(
-        from.params.originSlug,
-        to.params.originSlug,
-      ).then((originSlug) => {
-        if (!originSlug) {
-          return next()
-        }
-
-        if (to.name) {
-          const resolvedRoute = useRouter().resolve({
-            name: to.name,
-            params: { locale: to.params.locale, originSlug },
-          })
-          return next(resolvedRoute.href)
-        }
-      })
-    }
-
-    return next()
-  },
   setup(props) {
-    const originCodeRef = useComputedMemorized(() => props.originCode)
+    const originCodeRef = useComputedMemorized(() => props.unsafeOriginCode)
 
     const { destinationsRef, isLoadingRef } = useGroupedDestinations(
       originCodeRef,
@@ -173,6 +145,7 @@ export default defineComponent({
     })
 
     return {
+      originCode: originCodeRef,
       filter: filterRef,
       isFiltering: isFilteringRef,
       isFilteredListLoading: filterLoadingRef,

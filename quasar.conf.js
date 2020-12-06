@@ -30,10 +30,10 @@ module.exports = configure(function (context) {
     boot: [
       'vue',
       'composition-api',
+      'homepage-locale-redirect',
       'store',
       { path: 'ssr-url-decoder', client: false },
       'i18n',
-      'language-detector',
       'country-detector',
       'country-loader',
     ],
@@ -109,6 +109,7 @@ module.exports = configure(function (context) {
           // cfg.output.publicPath = 'https://storage.googleapis.com/oftassets/'
         }
 
+        cfg.resolve.alias['vue-auto-i18n'] = path.resolve('../vue-auto-i18n')
         cfg.module.rules.push({
           test: /\.vue$/,
           loader: 'vue-svg-inline-loader',
@@ -162,6 +163,9 @@ module.exports = configure(function (context) {
         contentBase: path.join(__dirname, 'public'),
 
         extensions: ['svg', 'webp'],
+      },
+      watchOptions: {
+        ignored: [/node_modules(\\+|\/)+(?!vue-auto-i18n)/],
       },
     },
 

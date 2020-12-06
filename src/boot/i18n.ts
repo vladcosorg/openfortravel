@@ -10,7 +10,13 @@ import VueI18n, {
   Locale,
 } from 'vue-i18n'
 
+import { useRouter } from 'src/composables/use-plugins'
+import { useVuexRawState } from 'src/composables/use-vuex'
 import { getCookiesAPI } from 'src/misc/misc'
+import {
+  CountryList,
+  preloadLocalizedListLanguage,
+} from 'src/modules/country-list/country-list-helpers'
 import { reloadRoutes } from 'src/router'
 
 declare module 'vue/types/vue' {
@@ -45,11 +51,36 @@ export function getLocaleCookie(
   return getCookiesAPI(ssrContext).get('locale')
 }
 
-export async function changeLanguage(lang: Locale): Promise<void> {
-  if (i18n.locale === lang) {
+export async function forwardToLocalizedURL() {
+  const currentRoute = useRouter().currentRoute
+  const params: Record<string, string> = { locale: i18n.locale }
+  if (currentRoute.params.originSlug) {
+    params['originSlug'] = useVuexRawState<CountryList>(
+      'modules.countryList.slugMigrationOriginMap',
+    )[currentRoute.params.originSlug]
+  }
+  const to = useRouter().resolve({ params })
+  await useRouter()
+    .push(to.href)
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    .catch(() => {})
+}
+
+export async function changeLocale(newLocale: Locale): Promise<void> {
+  if (i18n.locale === newLocale) {
     return
   }
 
+  await preloadLocalizedListLanguage(newLocale)
+  await preloadLanguageFiles(newLocale)
+
+  i18n.locale = newLocale
+
+  reloadRoutes()
+  await forwardToLocalizedURL()
+}
+
+async function preloadLanguageFiles(lang: Locale): Promise<void> {
   if (!i18n.messages[lang]) {
     try {
       const response = (await import(
@@ -60,11 +91,9 @@ export async function changeLanguage(lang: Locale): Promise<void> {
       //one
     }
   }
-
-  i18n.locale = lang
 }
 
-export default boot(async ({ app, router, store, ssrContext }) => {
+export default boot(async ({ app, store, ssrContext }) => {
   if (ssrContext) {
     const { default: messages } = (await import('src/i18n')) as LocaleMessages
     Object.entries(messages).map(([locale, messageObject]) =>
@@ -77,14 +106,24 @@ export default boot(async ({ app, router, store, ssrContext }) => {
       i18n.locale = detectedLocale
       store.commit('setCurrentLocale', detectedLocale)
 
+      await extend({
+        i18nPluginInstance: i18n,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        apiKey: process.env.TRANSLATION_API_KEY!,
+        sourceLanguage: 'en',
+        apiProxyURL: 'http://localhost:8080/translate',
+      })
+
       const fallbackLocale = i18n.fallbackLocale as string
       const ssrLocales: LocaleMessageObject = {
         [fallbackLocale]: i18n.getLocaleMessage(fallbackLocale),
       }
 
-      if (detectedLocale !== fallbackLocale) {
+      const allLocales = i18n.messages
+      if (detectedLocale !== fallbackLocale && allLocales[detectedLocale]) {
         ssrLocales[detectedLocale] = i18n.getLocaleMessage(detectedLocale)
       }
+
       if (store) {
         store.commit('setLocales', ssrLocales)
       }
@@ -96,16 +135,10 @@ export default boot(async ({ app, router, store, ssrContext }) => {
     )
   }
 
-  reloadRoutes(router, ssrContext)
+  reloadRoutes()
 
-  extend({
-    i18nPluginInstance: i18n,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    apiKey: process.env.TRANSLATION_API_KEY!,
-    sourceLanguage: 'en',
-    apiProxyURL: '/translate',
-  })
   app.i18n = i18n
+  console.log('lold3')
 })
 
 function extractLanguageFromURL(url?: string): string | undefined {

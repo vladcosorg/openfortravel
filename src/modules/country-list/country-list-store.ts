@@ -28,7 +28,7 @@ export default {
         : state.countryListOrigin
     },
     destinationLabels: (state) => {
-      return isEmpty(state.countryListOrigin)
+      return isEmpty(state.countryListDestination)
         ? state.countryList
         : state.countryListDestination
     },
@@ -66,76 +66,60 @@ export default {
     },
   },
   actions: {
-    fetchCountryList({ commit, state, getters }, locale: string) {
+    async fetchCountryList(
+      { commit, state, getters },
+      locale: string,
+    ): Promise<void> {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      commit(
-        'setPromise',
-        import(
-          /* webpackChunkName: "country-list-[request]" */ `i18n-iso-countries/langs/${locale}.json`
-        ).then((response) => {
-          const countryList = normalizeCountryListResponse(response)
-
-          const oldOriginLabels = getters.originLabels
-          const oldDestinationLabels = getters.destinationLabels
-          commit('setCountryList', Object.freeze(countryList))
-
-          const promises = []
-
-          if (locale === 'ru') {
-            promises.push(
-              import('src/i18n/declensions-ru/origin.json').then((response) => {
-                commit('setCountryListOrigin', response.default)
-              }),
-              import('src/i18n/declensions-ru/destination.json').then(
-                (response) => {
-                  commit('setCountryListDestination', response.default)
-                },
-              ),
-            )
-          } else {
-            commit('setCountryListOrigin', {})
-            commit('setCountryListDestination', {})
-          }
-
-          Promise.all(promises).then(() => {
-            if (!isEmpty(state.countryList)) {
-              commit(
-                'setSlugMigrationOriginMap',
-                generateMigrationMap(countryList, oldOriginLabels),
-              )
-              commit(
-                'setSlugMigrationDestinationMap',
-                generateMigrationMap(countryList, oldDestinationLabels),
-              )
-            }
-          })
-
-          if (isEmpty(state.canonicalSlugToCountryCodeMap)) {
-            if (locale !== 'en') {
-              promises.push(
-                import('i18n-iso-countries/langs/en.json').then(
-                  //eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  (response: any) => {
-                    commit(
-                      'setCanonicalSlugToCountryCodeMap',
-                      generateSlugKebabMap(
-                        normalizeCountryListResponse(response),
-                      ),
-                    )
-                  },
-                ),
-              )
-            } else {
-              commit(
-                'setCanonicalSlugToCountryCodeMap',
-                generateSlugKebabMap(countryList),
-              )
-            }
-          }
-
-          return Promise.all(promises)
-        }),
+      const response = await import(
+        /* webpackChunkName: "country-list-[request]" */ `i18n-iso-countries/langs/${locale}.json`
       )
+
+      const countryList = normalizeCountryListResponse(response)
+
+      const oldOriginLabels = Object.assign({}, getters.originLabels)
+      const oldDestinationLabels = Object.assign({}, getters.destinationLabels)
+      // debugger
+      commit('setCountryList', Object.freeze(countryList))
+
+      if (locale === 'ru') {
+        const response = await import('src/i18n/declensions-ru/origin.json')
+        commit('setCountryListOrigin', response.default)
+        const response2 = await import(
+          'src/i18n/declensions-ru/destination.json'
+        )
+        commit('setCountryListDestination', response2.default)
+      } else {
+        commit('setCountryListOrigin', {})
+        commit('setCountryListDestination', {})
+      }
+
+      if (!isEmpty(state.countryList)) {
+        commit(
+          'setSlugMigrationOriginMap',
+          generateMigrationMap(getters.originLabels, oldOriginLabels),
+        )
+        commit(
+          'setSlugMigrationDestinationMap',
+          generateMigrationMap(getters.destinationLabels, oldDestinationLabels),
+        )
+      }
+
+      if (isEmpty(state.canonicalSlugToCountryCodeMap)) {
+        if (locale !== 'en') {
+          //eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const response: any = await import('i18n-iso-countries/langs/en.json')
+          commit(
+            'setCanonicalSlugToCountryCodeMap',
+            generateSlugKebabMap(normalizeCountryListResponse(response)),
+          )
+        } else {
+          commit(
+            'setCanonicalSlugToCountryCodeMap',
+            generateSlugKebabMap(countryList),
+          )
+        }
+      }
     },
   },
 } as Module<State, StateInterface>

@@ -40,8 +40,8 @@ import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 
+import { changeLocale } from 'src/boot/i18n'
 import SimpleSelect from 'src/components/simple-select.vue'
-import { useCookies, useRouter } from 'src/composables/use-plugins'
 import { useLoading } from 'src/composables/use-promise-loading'
 
 export default defineComponent({
@@ -56,16 +56,8 @@ export default defineComponent({
       },
       async set(locale: string) {
         loading.value = true
-        const to = root.$router.resolve({ params: { locale } })
-        useCookies().set('locale', locale, {
-          path: '/',
-        })
-        // await changeLanguage(locale)
-        await useRouter()
-          .push(to.location)
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          .catch(() => {})
-        setTimeout(() => (loading.value = false), 1000)
+        await changeLocale(locale)
+        setTimeout(() => (loading.value = false), 500)
       },
     })
 

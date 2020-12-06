@@ -1,29 +1,24 @@
-import { QSsrContext } from '@quasar/app'
 import { route } from 'quasar/wrappers'
 import VueRouter from 'vue-router'
 import { Store } from 'vuex'
 
 import { StateInterface } from '../store'
 
-import { getLocaleCookie, i18n, setLocaleCookie } from 'src/boot/i18n'
+import { i18n } from 'src/boot/i18n'
 import { useRouter } from 'src/composables/use-plugins'
 import {
-  getMappedCountrySlugOrUndefined,
   transformCanonicalSlugToCode,
   transformDestinationSlugToCode,
   transformOriginSlugToCode,
 } from 'src/modules/country-list/country-list-helpers'
 
 // eslint-disable-next-line import/no-unused-modules
-export default route<Store<StateInterface>>(async function ({
-  Vue,
-  ssrContext,
-}) {
+export default route<Store<StateInterface>>(async function ({ Vue }) {
   Vue.use(VueRouter)
-  return createRouter(ssrContext)
+  return createRouter()
 })
 
-function createRouter(ssrContext: QSsrContext | null | undefined): VueRouter {
+function createRouter(): VueRouter {
   return new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes: [
@@ -59,18 +54,6 @@ function createRouter(ssrContext: QSsrContext | null | undefined): VueRouter {
       },
       {
         path: '/',
-        beforeEnter(to, from, next) {
-          let locale: string = getLocaleCookie(ssrContext)
-          if (!locale) {
-            locale = ssrContext
-              ? ssrContext.req.acceptsLanguages()[0].toLowerCase().split('-')[0]
-              : navigator.language.toLowerCase().split('-')[0]
-
-            setLocaleCookie(locale, ssrContext)
-          }
-
-          return next({ name: 'index', params: { locale } })
-        },
       },
       {
         path: '/:locale/',
@@ -116,33 +99,10 @@ function createRouter(ssrContext: QSsrContext | null | undefined): VueRouter {
               ),
             props(route) {
               return {
-                originCode: transformOriginSlugToCode(
+                unsafeOriginCode: transformOriginSlugToCode(
                   route.params.originSlug,
-                  true,
                 ),
               }
-            },
-            beforeEnter(to, from, next) {
-              if (to.name && to.params.locale !== from.params.locale) {
-                getMappedCountrySlugOrUndefined(
-                  from.params.originSlug,
-                  to.params.originSlug,
-                ).then((originSlug) => {
-                  if (!originSlug) {
-                    return next()
-                  }
-
-                  if (to.name) {
-                    const resolvedRoute = useRouter().resolve({
-                      name: to.name,
-                      params: { locale: to.params.locale, originSlug },
-                    })
-                    return next(resolvedRoute.href)
-                  }
-                })
-              }
-
-              return next()
             },
           },
           {
@@ -155,7 +115,7 @@ function createRouter(ssrContext: QSsrContext | null | undefined): VueRouter {
               ),
             props(route) {
               return {
-                originCode: transformCanonicalSlugToCode(
+                unsafeOriginCode: transformCanonicalSlugToCode(
                   route.params.originSlug,
                 ),
                 isFallback: true,
@@ -227,14 +187,11 @@ function createRouter(ssrContext: QSsrContext | null | undefined): VueRouter {
   })
 }
 
-export function reloadRoutes(
-  router: VueRouter,
-  ssrContext: QSsrContext | null | undefined,
-): void {
+export function reloadRoutes(): void {
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const freshRouter = createRouter(ssrContext) as any
+  const freshRouter = createRouter() as any
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(router as any).matcher = freshRouter.matcher
+  ;(useRouter() as any).matcher = freshRouter.matcher
 }
 
 export function pathToURL(path: string): string {
