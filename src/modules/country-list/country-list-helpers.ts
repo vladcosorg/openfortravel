@@ -74,18 +74,6 @@ export function getDestinationLabelForCountryCode(countryCode: string): string {
   ]
 }
 
-export async function getMappedCountrySlugOrUndefined(
-  fromSlug: string,
-  toSlug: string,
-  type: 'origin' | 'destination' = 'origin',
-): Promise<string | undefined> {
-  await useVuexRawState('modules.countryList.fetchingPromise')
-  const mapCu = useStore().getters[`modules/countryList/${type}KebabList`]
-
-  if (mapCu[toSlug]) {
-    return
-  }
-  const storage = `slugMigration${type[0].toUpperCase()}${type.slice(1)}Map`
-  const map = useVuexRawState<CountryList>(`modules.countryList.${storage}`)
-  return map[fromSlug]
+export function preloadLocalizedListLanguage(locale: string): Promise<void> {
+  return useStore().dispatch('modules/countryList/fetchCountryList', locale)
 }
