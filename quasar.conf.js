@@ -109,7 +109,6 @@ module.exports = configure(function (context) {
           // cfg.output.publicPath = 'https://storage.googleapis.com/oftassets/'
         }
 
-        cfg.resolve.alias['vue-auto-i18n'] = path.resolve('../vue-auto-i18n')
         cfg.module.rules.push({
           test: /\.vue$/,
           loader: 'vue-svg-inline-loader',

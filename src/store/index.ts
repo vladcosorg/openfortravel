@@ -15,7 +15,7 @@ export interface StateInterface {
   detectedCountry: string
   localizedRoutes: Record<string, string>
   locales: LocaleMessageObject
-  currentLocale: string
+  serverLocale: string
 }
 
 // eslint-disable-next-line import/no-unused-modules
@@ -39,7 +39,7 @@ export default store(function ({ Vue }) {
       detectedCountry: 'us',
       localizedRoutes: {},
       locales: {},
-      currentLocale: 'en',
+      serverLocale: 'en',
     },
     mutations: {
       setCountrySelectorLoading(state, value: boolean) {
@@ -51,8 +51,8 @@ export default store(function ({ Vue }) {
       setLocales(state: StateInterface, locales: LocaleMessageObject) {
         state.locales = locales
       },
-      setCurrentLocale(state: StateInterface, currentLocale: string) {
-        state.currentLocale = currentLocale
+      setServerLocale(state: StateInterface, serverLocale: string) {
+        state.serverLocale = serverLocale
       },
     },
 

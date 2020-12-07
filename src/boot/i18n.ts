@@ -1,7 +1,7 @@
 import { QSsrContext } from '@quasar/app'
 import { boot } from 'quasar/wrappers'
 import Vue from 'vue'
-import { extend } from 'vue-auto-i18n'
+import { extendWithAutoI18n } from 'vue-auto-i18n'
 import VueI18n, {
   IVueI18n,
   LocaleMessageObject,
@@ -9,7 +9,9 @@ import VueI18n, {
   Values,
   Locale,
 } from 'vue-i18n'
+import { Store } from 'vuex'
 
+import { eventBus } from 'src/boot/vue'
 import { useRouter } from 'src/composables/use-plugins'
 import { useVuexRawState } from 'src/composables/use-vuex'
 import { getCookiesAPI } from 'src/misc/misc'
@@ -18,6 +20,7 @@ import {
   preloadLocalizedListLanguage,
 } from 'src/modules/country-list/country-list-helpers'
 import { reloadRoutes } from 'src/router'
+import { StateInterface } from 'src/store'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -94,51 +97,51 @@ async function preloadLanguageFiles(lang: Locale): Promise<void> {
 }
 
 export default boot(async ({ app, store, ssrContext }) => {
+  let currentLocale = store.state.serverLocale
+  const translate = extendWithAutoI18n({
+    i18nPluginInstance: i18n,
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    apiKey: process.env.TRANSLATION_API_KEY!,
+    sourceLanguage: 'en',
+    apiProxyURL: `${process.env.APP_URL}translate`,
+    automatic: false,
+    blacklistedPaths: ['page.country.route', 'page.destination.route'],
+  })
+
   if (ssrContext) {
-    const { default: messages } = (await import('src/i18n')) as LocaleMessages
-    Object.entries(messages).map(([locale, messageObject]) =>
-      i18n.setLocaleMessage(locale, messageObject as LocaleMessageObject),
-    )
+    currentLocale = extractLanguageFromURL(ssrContext?.url) ?? currentLocale
+  }
 
-    const detectedLocale = extractLanguageFromURL(ssrContext?.url)
+  if (ssrContext) {
+    const { default: messages } = await import('src/i18n')
+    preloadLocalesIntoI18nPlugin(messages as LocaleMessages)
 
-    if (detectedLocale) {
-      i18n.locale = detectedLocale
-      store.commit('setCurrentLocale', detectedLocale)
+    i18n.locale = currentLocale
+    store.commit('setServerLocale', currentLocale)
 
-      await extend({
-        i18nPluginInstance: i18n,
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        apiKey: process.env.TRANSLATION_API_KEY!,
-        sourceLanguage: 'en',
-        apiProxyURL: 'http://localhost:8080/translate',
-      })
-
-      const fallbackLocale = i18n.fallbackLocale as string
-      const ssrLocales: LocaleMessageObject = {
-        [fallbackLocale]: i18n.getLocaleMessage(fallbackLocale),
-      }
-
-      const allLocales = i18n.messages
-      if (detectedLocale !== fallbackLocale && allLocales[detectedLocale]) {
-        ssrLocales[detectedLocale] = i18n.getLocaleMessage(detectedLocale)
-      }
-
-      if (store) {
-        store.commit('setLocales', ssrLocales)
-      }
-    }
+    await translate(currentLocale)
+    pushRequiredLocalesToClientStore(currentLocale, store)
   } else {
-    i18n.locale = store.state.currentLocale
-    Object.entries(store.state.locales).map(([locale, messageObject]) =>
-      i18n.setLocaleMessage(locale, messageObject as LocaleMessageObject),
-    )
+    preloadLocalesIntoI18nPlugin(store.state.locales)
+    i18n.locale = currentLocale
+
+    eventBus.$on('locale-change', async (newLocale: string) => {
+      if (i18n.locale === newLocale) {
+        return
+      }
+
+      await preloadLocalizedListLanguage(newLocale)
+      await preloadLanguageFiles(newLocale)
+      await translate(newLocale)
+      i18n.locale = newLocale
+
+      reloadRoutes()
+      await forwardToLocalizedURL()
+    })
   }
 
   reloadRoutes()
-
   app.i18n = i18n
-  console.log('lold3')
 })
 
 function extractLanguageFromURL(url?: string): string | undefined {
@@ -147,4 +150,27 @@ function extractLanguageFromURL(url?: string): string | undefined {
   }
   const matches = url.match(/\/([a-z]{2})\/?.*/)
   return matches !== null ? matches[1] : undefined
+}
+
+function preloadLocalesIntoI18nPlugin(localeMessageCollection: LocaleMessages) {
+  Object.entries(localeMessageCollection).map(([locale, messageObject]) =>
+    i18n.setLocaleMessage(locale, messageObject as LocaleMessageObject),
+  )
+}
+
+function pushRequiredLocalesToClientStore(
+  currentLocale: string,
+  store: Store<StateInterface>,
+) {
+  const fallbackLocale = i18n.fallbackLocale as string
+  const ssrLocales: LocaleMessageObject = {
+    [fallbackLocale]: i18n.getLocaleMessage(fallbackLocale),
+  }
+
+  const allLocales = i18n.messages
+  if (currentLocale !== fallbackLocale && allLocales[currentLocale]) {
+    ssrLocales[currentLocale] = i18n.getLocaleMessage(currentLocale)
+  }
+
+  store.commit('setLocales', ssrLocales)
 }
