@@ -1,4 +1,5 @@
 import { QSsrContext } from '@quasar/app'
+import kebabCase from 'lodash/kebabCase'
 import { boot } from 'quasar/wrappers'
 import Vue from 'vue'
 import { extendWithAutoI18n } from 'vue-auto-i18n'
@@ -29,11 +30,16 @@ declare module 'vue/types/vue' {
 }
 Vue.use(VueI18n)
 
-export const i18n = (new VueI18n({
-  locale: 'en',
-  fallbackLocale: 'en',
-  silentTranslationWarn: true,
-}) as unknown) as IVueI18n
+export const i18n = createVueI18n()
+
+export function createVueI18n(messages?: LocaleMessages): IVueI18n {
+  return (new VueI18n({
+    locale: 'en',
+    fallbackLocale: 'en',
+    silentTranslationWarn: true,
+    messages,
+  }) as unknown) as IVueI18n
+}
 
 export const t = (key: string, values?: Values): string => {
   return <string>i18n.t(key, values)
@@ -54,7 +60,7 @@ export function getLocaleCookie(
   return getCookiesAPI(ssrContext).get('locale')
 }
 
-export async function forwardToLocalizedURL() {
+export async function forwardToLocalizedURL(): Promise<void> {
   const currentRoute = useRouter().currentRoute
   const params: Record<string, string> = { locale: i18n.locale }
   if (currentRoute.params.originSlug) {
@@ -67,6 +73,11 @@ export async function forwardToLocalizedURL() {
     .push(to.href)
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     .catch(() => {})
+}
+
+export function convertCountryLabelToSlug(countryName: string) {
+  countryName = kebabCase(countryName.toLowerCase())
+  return countryName
 }
 
 export async function changeLocale(newLocale: Locale): Promise<void> {

@@ -97,7 +97,9 @@ export function useBufferedModel<T>(
  * Returns the last non-falsy value
  * @param getter
  */
-export function useComputedMemorized<T>(getter: () => T): ComputedRef<T> {
+export function useComputedMemorized<T>(
+  getter: () => T,
+): ComputedRef<Exclude<T, null | undefined>> {
   const memorizedValueRef = ref()
   return computed(() => {
     const newValue = getter()

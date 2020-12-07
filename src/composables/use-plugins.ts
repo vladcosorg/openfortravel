@@ -16,7 +16,7 @@ export function useStore(): Store<StateInterface> {
 export function useRouter(): VueRouter {
   return routerInstance
 }
-
+// eslint-disable-next-line import/no-unused-modules
 export function useCookies(): Cookies {
   return cookies
 }

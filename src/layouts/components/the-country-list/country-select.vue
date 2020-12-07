@@ -73,6 +73,7 @@ import { useStore } from 'src/composables/use-plugins'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 import { useVuexRawGetter } from 'src/composables/use-vuex'
 import {
+  CountryList,
   getDestinationLabelForCountryCode,
   getOriginLabelForCountryCode,
 } from 'src/modules/country-list/country-list-helpers'
@@ -109,8 +110,8 @@ export default defineComponent({
   setup(props, { emit }) {
     const fullList = computed<List>(() => {
       const list = props.isDestination
-        ? useVuexRawGetter('modules/countryList/destinationLabels')
-        : useVuexRawGetter('modules/countryList/originLabels')
+        ? useVuexRawGetter<CountryList>('modules/countryList/destinationLabels')
+        : useVuexRawGetter<CountryList>('modules/countryList/originLabels')
 
       return Object.keys(list).map((key) => ({
         value: key,

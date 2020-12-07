@@ -19,8 +19,8 @@
     "serve": "cd dist/ssr && npm start",
     "build-deploy": "yarn run build && yarn run deploy",
     "deploy": "gcloud app deploy dist/ssr/app.yaml --quiet",
-    "build-flags": "ts-node src/bin/build-flags.ts",
-    "build-sitemap": "node quasar.conf/sitemap.js",
+    "build-flags": "ts-nodesrc/bin/build-flags.ts",
+    "build-sitemap": "ts-node -r tsconfig-paths/register  quasar.conf/sitemap.ts",
     "upload-assets": "cd dist/ssr && CLOUDSDK_PYTHON=/usr/bin/python2.7 gsutil -m cp -r -z css,html,js,map,svg ./www/** gs://oftassets",
     "gsutil": "CLOUDSDK_PYTHON=/usr/bin/python2.7 gsutil"
   },

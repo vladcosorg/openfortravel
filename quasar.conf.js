@@ -163,9 +163,6 @@ module.exports = configure(function (context) {
 
         extensions: ['svg', 'webp'],
       },
-      watchOptions: {
-        ignored: [/node_modules(\\+|\/)+(?!vue-auto-i18n)/],
-      },
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework

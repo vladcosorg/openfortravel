@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://openfortravel.org/sitemap-index.xml

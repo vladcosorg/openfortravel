@@ -1,8 +1,10 @@
 import isEmpty from 'lodash/isEmpty'
 import kebabCase from 'lodash/kebabCase'
+import mapValues from 'lodash/mapValues'
 import transform from 'lodash/transform'
 import { Module } from 'vuex'
 
+import { convertCountryLabelToSlug } from 'src/boot/i18n'
 import { CountryList } from 'src/modules/country-list/country-list-helpers'
 import { StateInterface } from 'src/store'
 
@@ -148,6 +150,26 @@ function normalizeCountryListResponse(response: {
     (list: CountryList, label: string | string[], code: string) => {
       list[code.toLowerCase()] = getFirstLabel(label)
     },
+  )
+}
+
+export function convertCountryListResponseToCountryLabelMap(
+  countries: CountryList,
+) {
+  const countryMap: CountryList = {}
+  for (const [countryCode, countryName] of Object.entries(countries)) {
+    countryMap[countryCode.toLowerCase()] = getFirstLabel(countryName)
+  }
+
+  return countryMap
+}
+
+export function convertCountryListResponseToCountrySlugMap(
+  countries: CountryList,
+) {
+  return mapValues(
+    convertCountryListResponseToCountryLabelMap(countries),
+    (countryLabel) => convertCountryLabelToSlug(countryLabel),
   )
 }
 
