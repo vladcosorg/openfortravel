@@ -1,4 +1,6 @@
 // eslint-disable-next-line import/no-unused-modules
+import path from 'path'
+
 import languages from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 import { simpleSitemapAndIndex, SitemapItemLoose } from 'sitemap'
 
@@ -69,7 +71,7 @@ async function main() {
 
   await simpleSitemapAndIndex({
     hostname: 'https://openfortravel.org',
-    destinationDir: './dist/ssr',
+    destinationDir: path.resolve('./public'),
     sourceData: paths as SitemapItemLoose[],
     gzip: false,
   })
