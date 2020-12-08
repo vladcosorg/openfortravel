@@ -10,7 +10,13 @@
       <invisible-native-select v-bind="$props" v-on="$listeners" />
     </template>
   </q-field>
-  <q-select v-else emit-value v-bind="$attrs" v-on="$listeners" />
+  <q-select
+    v-else
+    emit-value
+    v-bind="{ ...$props, ...$attrs }"
+    options-selected-class="text-bold text-white"
+    v-on="$listeners"
+  />
 </template>
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@vue/composition-api'

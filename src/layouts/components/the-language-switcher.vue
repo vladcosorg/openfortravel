@@ -1,15 +1,15 @@
 <template>
-  <!--  <simple-select-->
-  <!--    v-model="currentLanguage"-->
-  <!--    :options="languageList"-->
-  <!--    bg-color="accent"-->
-  <!--    :loading="loading"-->
-  <!--    borderless-->
-  <!--    emit-value-->
-  <!--    options-dense-->
-  <!--    :class="[$style.select]"-->
-  <!--    :dropdown-icon="icon"-->
-  <!--  />-->
+  <simple-select
+    v-model="currentLanguage"
+    :options="languageList"
+    bg-color="accent"
+    :loading="loading"
+    borderless
+    emit-value
+    options-dense
+    :class="[$style.select]"
+    :dropdown-icon="icon"
+  />
 </template>
 <style lang="scss" module>
 .select {
