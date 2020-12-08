@@ -34,4 +34,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-.env
+.env.*
+gcloud/dev-serviceaccount.json

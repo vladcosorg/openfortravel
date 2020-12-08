@@ -16,7 +16,7 @@
     "build": "quasar build -m ssr && cp app.yaml dist/ssr/app.yaml",
     "serve-build": "cd dist/ssr && npm start",
     "build-serve": "quasar build -m ssr && cd dist/ssr && npm start",
-    "serve": "cd dist/ssr && npm start",
+    "serve": "cd dist/ssr && GOOGLE_APPLICATION_CREDENTIALS=\"../../gcloud/dev-serviceaccount.json\" npm start",
     "build-deploy": "yarn run build && yarn run deploy",
     "deploy": "gcloud app deploy dist/ssr/app.yaml --quiet",
     "build-flags": "ts-node src/bin/build-flags.ts",
@@ -25,6 +25,7 @@
     "gsutil": "CLOUDSDK_PYTHON=/usr/bin/python2.7 gsutil"
   },
   "dependencies": {
+    "@google-cloud/secret-manager": "^3.2.3",
     "@quasar/extras": "^1.0.0",
     "@vue/composition-api": "^0.6.4",
     "@vueuse/core": "^2.0.35",

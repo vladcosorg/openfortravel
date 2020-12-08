@@ -109,12 +109,14 @@ async function preloadLanguageFiles(lang: Locale): Promise<void> {
 
 export default boot(async ({ app, store, ssrContext }) => {
   let currentLocale = store.state.serverLocale
+
+  // eslint-disable-next-line unused-imports/no-unused-vars-ts
   const translate = extendWithAutoI18n({
     i18nPluginInstance: i18n,
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     apiKey: process.env.TRANSLATION_API_KEY!,
     sourceLanguage: 'en',
-    apiProxyURL: `${process.env.APP_URL}translate`,
+    apiProxyURL: `${process.env.PROJECT_URL}/translate`,
     automatic: false,
     blacklistedPaths: ['page.country.route', 'page.destination.route'],
   })

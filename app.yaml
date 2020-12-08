@@ -1,4 +1,1 @@
 runtime: nodejs12
-env_variables:
-  TRANSLATION_API_KEY: AIzaSyDLn6MaU29dCc4aPY5ydhyyczdudFjhOAU
-  APP_URL: https://openfortravel.org

@@ -11,19 +11,36 @@
  * development server, but such updates are costly since the dev-server needs a reboot.
  */
 
-module.exports.extendApp = function ({ app, ssr }) {
+module.exports.extendApp = async function ({ app, ssr }) {
   const express = require('express')
   const LRU = require('lru-cache')
+  const path = require('path')
   const axios = require('axios')
+  if (process.env.NODE_ENV === 'development') {
+    require('dotenv').config({ path: path.resolve('.env.development.node') })
+  } else {
+    const {
+      SecretManagerServiceClient,
+    } = require('@google-cloud/secret-manager')
+    const client = new SecretManagerServiceClient()
+    const [accessResponse] = await client.accessSecretVersion({
+      name: 'projects/678272975127/secrets/TRANSLATION_API_KEY/versions/latest',
+    })
+
+    process.env.TRANSLATION_API_KEY = accessResponse.payload.data.toString()
+  }
+
   const cache = new LRU()
   app.use(express.urlencoded({ extended: true }))
   app.post('/translate', async (req, res) => {
     let response = ''
     try {
-      const body = new URLSearchParams(req.body)
+      const params = new URLSearchParams(req.body)
+      console.log(process.env.TRANSLATION_API_KEY)
+      params.set('key', process.env.TRANSLATION_API_KEY)
       const hash = require('crypto')
         .createHash('md5')
-        .update(body.toString(), 'utf8')
+        .update(params.toString(), 'utf8')
         .digest('hex')
 
       if (cache.has(hash)) {
@@ -33,7 +50,7 @@ module.exports.extendApp = function ({ app, ssr }) {
 
       response = await axios.post(
         'https://translation.googleapis.com/language/translate/v2',
-        new URLSearchParams(req.body),
+        params,
       )
 
       cache.set(hash, response.data)
