@@ -68,6 +68,13 @@ export async function forwardToLocalizedURL(): Promise<void> {
       'modules.countryList.slugMigrationOriginMap',
     )[currentRoute.params.originSlug]
   }
+
+  if (currentRoute.params.destinationSlug) {
+    params['destinationSlug'] = useVuexRawState<CountryList>(
+      'modules.countryList.slugMigrationDestinationMap',
+    )[currentRoute.params.destinationSlug]
+  }
+
   const to = useRouter().resolve({ params })
   await useRouter()
     .push(to.href)

@@ -127,12 +127,13 @@ export function createGenericRouter(
               ),
             props(route) {
               return {
-                originCode: transformOriginSlugToCode(
+                unsafeOriginCode: transformOriginSlugToCode(
                   route.params.originSlug,
                   true,
                 ),
-                destinationCode: transformDestinationSlugToCode(
+                unsafeDestinationCode: transformDestinationSlugToCode(
                   route.params.destinationSlug,
+                  true,
                 ),
               }
             },
@@ -148,10 +149,10 @@ export function createGenericRouter(
               ),
             props(route) {
               return {
-                originCode: transformCanonicalSlugToCode(
+                unsafeOriginCode: transformCanonicalSlugToCode(
                   route.params.originSlug,
                 ),
-                destinationCode: transformCanonicalSlugToCode(
+                unsafeDestinationCode: transformCanonicalSlugToCode(
                   route.params.destinationSlug,
                 ),
                 isFallback: true,

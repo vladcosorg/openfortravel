@@ -57,9 +57,7 @@ export default {
     },
     selfIsolation: {
       label: 'Self-isolation',
-      // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-      value: (context: { named: (arg0: string) => number }) =>
-        context.named('days') > 0 ? `${context.named('days')}` : 'Not needed',
+      days: '{number} days',
       staticValue: {
         true: 'Required',
         false: 'Not needed',

@@ -46,10 +46,24 @@ export function transformCanonicalSlugToCode(countrySlug: string): string {
   return slugMap[countrySlug]
 }
 
-export function transformDestinationSlugToCode(countrySlug: string): string {
-  return useStore().getters['modules/countryList/destinationKebabList'][
-    countrySlug
+export function transformDestinationSlugToCode(
+  countrySlug: string,
+  lookInMigration = false,
+): string {
+  const destinationSlugToCodeMap = useStore().getters[
+    'modules/countryList/destinationKebabList'
   ]
+  let countryCode = destinationSlugToCodeMap[countrySlug]
+
+  if (lookInMigration && !countryCode) {
+    const migrationSlugMap = useVuexRawState<CountryList>(
+      'modules.countryList.slugMigrationDestinationMap',
+    )
+
+    countryCode = destinationSlugToCodeMap[migrationSlugMap[countrySlug]]
+  }
+
+  return countryCode
 }
 
 export function getCountryCodes(): string[] {

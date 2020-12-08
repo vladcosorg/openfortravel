@@ -115,13 +115,16 @@
             <q-item-label caption>{{
               $t('restriction.selfIsolation.label')
             }}</q-item-label>
-            <q-item-label>
+            <q-item-label v-if="restriction.selfIsolation > 0">
               {{
-                $t(`restriction.selfIsolation.value`, {
+                $t('restriction.selfIsolation.days', {
                   days: restriction.selfIsolation,
                 })
               }}</q-item-label
             >
+            <q-item-label v-else>
+              {{ $t('restriction.selfIsolation.staticValue.false') }}
+            </q-item-label>
           </q-item-section>
         </q-item>
       </template>
@@ -198,11 +201,11 @@ export default defineComponent({
   },
   components: { ReturnWay, TheCountryList, Portal, TheFlagBackground },
   props: {
-    originCode: {
+    unsafeOriginCode: {
       type: String,
       // required: true,
     },
-    destinationCode: {
+    unsafeDestinationCode: {
       type: String,
       // required: true,
     },
@@ -212,8 +215,10 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const originCodeRef = useComputedMemorized(() => props.originCode)
-    const destinationCodeRef = useComputedMemorized(() => props.destinationCode)
+    const originCodeRef = useComputedMemorized(() => props.unsafeOriginCode)
+    const destinationCodeRef = useComputedMemorized(
+      () => props.unsafeDestinationCode,
+    )
 
     const {
       restrictionRef,
@@ -242,6 +247,8 @@ export default defineComponent({
     )
 
     return {
+      originCode: originCodeRef,
+      destinationCode: destinationCodeRef,
       restriction: restrictionRef,
       destination: destinationRef,
       loading: useAggregatedLoader(
