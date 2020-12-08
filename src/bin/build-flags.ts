@@ -55,7 +55,7 @@ async function build() {
       webp: await sharp(
         path.join(sourceDirPath, 'png100px', `${fileBasename}.png`),
       )
-        .resize(40)
+        .resize(undefined, 40)
         .webp({ reductionEffort: 6 })
         .toBuffer(),
     }
@@ -65,7 +65,7 @@ async function build() {
       webp: await sharp(
         path.join(sourceDirPath, 'png100px', `${fileBasename}.png`),
       )
-        .resize(80)
+        .resize(undefined, 80)
         .webp({ reductionEffort: 6 })
         .toBuffer(),
     }
