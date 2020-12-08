@@ -1,10 +1,14 @@
 <template>
-  <q-field
-    v-if="$q.platform.is.mobile"
+  <component
+    :is="isMobile ? 'q-field' : 'q-select'"
+    v-model="currentCountry"
+    v-bind="componentArgs"
     standout
     :loading="aggregatedLoading"
     stack-label
-    :class="['full-width', $style.field]"
+    :dropdown-icon="icon"
+    :options="countryList"
+    :class="['full-width text-h6', $style.field]"
   >
     <template v-if="showPrefixText" #before>
       <div :class="[$style.prefix, 'montserrat', 'text-subtitle2']">
@@ -12,7 +16,7 @@
       </div>
     </template>
 
-    <template #control>
+    <template v-if="isMobile" #control>
       <transition
         appear
         enter-active-class="animated fadeIn"
@@ -28,7 +32,7 @@
       </transition>
     </template>
 
-    <template #append>
+    <template v-if="isMobile" #append>
       <invisible-native-select
         v-model="currentCountryValueRef"
         :options="countryList"
@@ -39,7 +43,7 @@
     <template #after>
       <slot name="after"></slot>
     </template>
-  </q-field>
+  </component>
 </template>
 
 <style lang="scss" module>
@@ -107,7 +111,7 @@ export default defineComponent({
       default: true,
     },
   },
-  setup(props, { emit }) {
+  setup(props, { emit, root }) {
     const fullList = computed<List>(() => {
       const list = props.isDestination
         ? useVuexRawGetter<CountryList>('modules/countryList/destinationLabels')
@@ -146,7 +150,7 @@ export default defineComponent({
       },
     })
 
-    const currentCountry = computed<ListItem | undefined>({
+    const currentCountry = computed<ListItem>({
       get() {
         return {
           label: props.isDestination
@@ -155,8 +159,8 @@ export default defineComponent({
           value: props.value,
         }
       },
-      set(value) {
-        emit('input', value)
+      set(item) {
+        currentCountryValueRef.value = item.value
       },
     })
 
@@ -171,7 +175,27 @@ export default defineComponent({
       })
     }
 
+    const isMobile = computed(() => root.$q.platform.is.mobile)
+    const componentArgs = computed(() => {
+      if (isMobile.value) {
+        return {}
+      }
+
+      return {
+        dropdownIcon: icon,
+        options: countryList,
+        behaviour: 'menu',
+        optionsCover: true,
+        useInput: true,
+        hideSelected: true,
+        fillInput: true,
+        optionsSelectedClass: 'text-bold text-white',
+      }
+    })
+
     return {
+      isMobile,
+      componentArgs,
       aggregatedLoading: loadingRef,
       countryList,
       currentCountry,

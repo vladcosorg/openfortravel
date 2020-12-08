@@ -3,7 +3,7 @@
     <div class="text-h6 montserrat text-center q-mb-xl">
       {{ $t('page.index.hero') }}
     </div>
-    <boy :class="['q-mb-xl']" />
+    <!--    <boy :class="['q-mb-xl']" />-->
     <div :class="['relative-position', 'text-center']">
       <!--      <animated-arrow :class="$style.arrow" />-->
       <the-country-list />
