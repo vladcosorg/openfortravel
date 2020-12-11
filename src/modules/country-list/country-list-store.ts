@@ -2,11 +2,11 @@ import isEmpty from 'lodash/isEmpty'
 import kebabCase from 'lodash/kebabCase'
 import mapValues from 'lodash/mapValues'
 import transform from 'lodash/transform'
-import { Module } from 'vuex'
+import {Module} from 'vuex'
 
-import { convertCountryLabelToSlug } from 'src/boot/i18n'
-import { CountryList } from 'src/modules/country-list/country-list-helpers'
-import { StateInterface } from 'src/store'
+import {convertCountryLabelToSlug} from 'src/boot/i18n'
+import {CountryList} from 'src/modules/country-list/country-list-helpers'
+import {StateInterface} from 'src/store'
 
 class State {
   countryList: CountryList = {}
@@ -69,19 +69,21 @@ export default {
   },
   actions: {
     async fetchCountryList(
-      { commit, state, getters },
+      {commit, state, getters},
       locale: string,
     ): Promise<void> {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const response = await import(
-        /* webpackChunkName: "country-list-[request]" */ `i18n-iso-countries/langs/${locale}.json`
-      )
 
-      const countryList = normalizeCountryListResponse(response)
+      let countryList
+      try {
+        const response = await loadCountryListForLocale(locale)
+        countryList = normalizeCountryListResponse(response)
+      } catch {
+        const response = await loadCountryListForLocale('en')
+        countryList = normalizeCountryListResponse(response)
+      }
 
       const oldOriginLabels = Object.assign({}, getters.originLabels)
       const oldDestinationLabels = Object.assign({}, getters.destinationLabels)
-      // debugger
       commit('setCountryList', Object.freeze(countryList))
 
       if (locale === 'ru') {
@@ -89,7 +91,7 @@ export default {
         commit('setCountryListOrigin', response.default)
         const response2 = await import(
           'src/i18n/declensions-ru/destination.json'
-        )
+          )
         commit('setCountryListDestination', response2.default)
       } else {
         commit('setCountryListOrigin', {})
@@ -140,6 +142,7 @@ function generateSlugKebabMap(list: CountryList): Record<string, string> {
     return kebabList
   }, {})
 }
+
 function normalizeCountryListResponse(response: {
   default: { countries: CountryList }
 }) {
@@ -180,4 +183,11 @@ function generateMigrationMap(current: CountryList, previous: CountryList) {
   })
 
   return map
+}
+
+
+async function loadCountryListForLocale(locale: string) {
+  return await import(
+    /* webpackChunkName: "country-list-[request]" */ `i18n-iso-countries/langs/${locale}.json`
+    )
 }
