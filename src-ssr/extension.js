@@ -36,7 +36,6 @@ module.exports.extendApp = async function ({ app, ssr }) {
     let response = ''
     try {
       const params = new URLSearchParams(req.body)
-      console.log(process.env.TRANSLATION_API_KEY)
       params.set('key', process.env.TRANSLATION_API_KEY)
       const hash = require('crypto')
         .createHash('md5')
@@ -52,15 +51,13 @@ module.exports.extendApp = async function ({ app, ssr }) {
         'https://translation.googleapis.com/language/translate/v2',
         params,
       )
-
       cache.set(hash, response.data)
       console.log('Saved in cache ' + hash)
     } catch (error) {
-      // console.log(error)
-      return res.send(error.response.data)
+      return res.status(error.response.status).send( error.response.data)
     }
-    // console.log(response.data)
-    return res.json(response.data)
+
+    return res.status(response.status).json(response.data)
   })
   /*
      Extend the parts of the express app that you
