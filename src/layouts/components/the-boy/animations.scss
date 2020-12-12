@@ -133,10 +133,11 @@ $hand-top-position-y: -140px;
 
 @keyframes rightHand {
   0% {
-    transform: translate($hand-top-position-x, $hand-top-position-y)
+    transform: translate($hand-top-position-x, $hand-top-position-y);
   }
   100% {
-    transform: skew(4deg, 4deg) translate($hand-top-position-x, $hand-top-position-y) rotate(-35deg);
+    transform: skew(4deg, 4deg)
+      translate($hand-top-position-x, $hand-top-position-y) rotate(-35deg);
   }
 }
 
@@ -156,7 +157,7 @@ $hand-top-position-y: -140px;
     transform: translate(0px, 0px);
   }
   100% {
-    transform: translate($hand-top-position-x, $hand-top-position-y)
+    transform: translate($hand-top-position-x, $hand-top-position-y);
   }
 }
 
