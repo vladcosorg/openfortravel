@@ -11,13 +11,17 @@
  * development server, but such updates are costly since the dev-server needs a reboot.
  */
 
-module.exports.extendApp = async function ({ app, ssr }) {
+module.exports.extendApp = async function ({app, ssr}) {
   const express = require('express')
   const LRU = require('lru-cache')
   const path = require('path')
   const axios = require('axios')
+  const {Storage} = require('@google-cloud/storage')
+  const storage = new Storage()
+  const bucket = storage.bucket('translation-cache');
+
   if (process.env.NODE_ENV === 'development') {
-    require('dotenv').config({ path: path.resolve('.env.development.node') })
+    require('dotenv').config({path: path.resolve('.env.development.node')})
   } else {
     const {
       SecretManagerServiceClient,
@@ -31,7 +35,7 @@ module.exports.extendApp = async function ({ app, ssr }) {
   }
 
   const cache = new LRU()
-  app.use(express.urlencoded({ extended: true }))
+  app.use(express.urlencoded({extended: true}))
   app.post('/translate', async (req, res) => {
     let response = ''
     try {
@@ -41,10 +45,12 @@ module.exports.extendApp = async function ({ app, ssr }) {
         .createHash('md5')
         .update(params.toString(), 'utf8')
         .digest('hex')
-
       if (cache.has(hash)) {
-        console.log('From cache!')
         return res.send(cache.get(hash))
+      } else if ((await bucket.file(`${hash}`).exists())[0]) {
+        const [contents] = await bucket.file(`${hash}`).download()
+        cache.set(hash, contents)
+        return res.json(JSON.parse(contents.toString()))
       }
 
       response = await axios.post(
@@ -52,17 +58,13 @@ module.exports.extendApp = async function ({ app, ssr }) {
         params,
       )
       cache.set(hash, response.data)
+      await bucket.file(`${hash}`).save(JSON.stringify(response.data))
       console.log('Saved in cache ' + hash)
     } catch (error) {
-      return res.status(error.response.status).send( error.response.data)
+      console.log(error)
+      return res.status(error.response.status).send(error.response.data)
     }
 
     return res.status(response.status).json(response.data)
   })
-  /*
-     Extend the parts of the express app that you
-     want to use with development server too.
-
-     Example: app.use(), app.get() etc
-  */
 }

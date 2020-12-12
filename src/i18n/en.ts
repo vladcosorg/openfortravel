@@ -16,9 +16,9 @@ export default {
     },
     status: {
       allowed:
-        'is <b>@.lower:restriction.travel.value.allowed</b> without any restrictions. ',
+        'is <b translate="no">@.lower:restriction.travel.value.allowed</b> without any restrictions. ',
       forbidden:
-        'is <b>@.lower:restriction.travel.value.forbidden</b> with some exceptions. Please consult the country page for more info. ',
+        'is <b translate="no">@.lower:restriction.travel.value.forbidden</b> with some exceptions. Please consult the country page for more info. ',
       conditional:
         'is allowed with some conditions. Please consult the country page for more info.',
     },
