@@ -1,8 +1,8 @@
 // eslint-disable-next-line import/no-unused-modules
 import path from 'path'
 
-import languages from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 import { simpleSitemapAndIndex, SitemapItemLoose } from 'sitemap'
+import languages from 'vue-auto-i18n/dist/supported-languages/google.json'
 
 import { createVueI18n } from 'src/boot/i18n'
 import messages from 'src/i18n'
@@ -18,7 +18,7 @@ async function main() {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('i18n-iso-countries/langs/en.json').countries,
   )
-  languages.map(({ value: locale }) => {
+  languages.forEach((locale) => {
     i18n.locale = locale
     const router = createGenericRouter(i18n)
     paths.push({
@@ -69,12 +69,14 @@ async function main() {
     })
   })
 
-  await simpleSitemapAndIndex({
+  return paths
+}
+
+main().then((paths) =>
+  simpleSitemapAndIndex({
     hostname: 'https://openfortravel.org',
     destinationDir: path.resolve('./public'),
     sourceData: paths as SitemapItemLoose[],
     gzip: false,
-  })
-}
-
-main().then(() => console.log('Done'))
+  }),
+)

@@ -20,10 +20,18 @@ const firebaseApp =
 
 const firestore = firebaseApp.firestore()
 
-const countryCollection = firestore.collection('countries').withConverter(destinationDataConverter)
+const countryCollection = firestore
+  .collection('countries')
+  .withConverter(destinationDataConverter)
 const restrictionCollection = firestore
   .collection('restrictions')
   .withConverter(restrictionDataConverter)
 
 // eslint-disable-next-line import/no-unused-modules
-export { firestore, firebaseApp, countryCollection, firebase, restrictionCollection }
+export {
+  firestore,
+  firebaseApp,
+  countryCollection,
+  firebase,
+  restrictionCollection,
+}

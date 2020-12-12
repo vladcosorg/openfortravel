@@ -15,7 +15,9 @@ export async function findOrigin(code: string): Promise<PlainDestination> {
   return data
 }
 
-export async function findOriginAsRichObject(code: string): Promise<Destination> {
+export async function findOriginAsRichObject(
+  code: string,
+): Promise<Destination> {
   return wrapWithRichDestinationObject(await findOrigin(code))
 }
 

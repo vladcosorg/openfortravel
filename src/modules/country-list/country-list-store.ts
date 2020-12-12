@@ -2,11 +2,11 @@ import isEmpty from 'lodash/isEmpty'
 import kebabCase from 'lodash/kebabCase'
 import mapValues from 'lodash/mapValues'
 import transform from 'lodash/transform'
-import {Module} from 'vuex'
+import { Module } from 'vuex'
 
-import {convertCountryLabelToSlug} from 'src/boot/i18n'
-import {CountryList} from 'src/modules/country-list/country-list-helpers'
-import {StateInterface} from 'src/store'
+import { convertCountryLabelToSlug } from 'src/boot/i18n'
+import { CountryList } from 'src/modules/country-list/country-list-helpers'
+import { StateInterface } from 'src/store'
 
 class State {
   countryList: CountryList = {}
@@ -69,10 +69,9 @@ export default {
   },
   actions: {
     async fetchCountryList(
-      {commit, state, getters},
+      { commit, state, getters },
       locale: string,
     ): Promise<void> {
-
       let countryList
       try {
         const response = await loadCountryListForLocale(locale)
@@ -91,7 +90,7 @@ export default {
         commit('setCountryListOrigin', response.default)
         const response2 = await import(
           'src/i18n/declensions-ru/destination.json'
-          )
+        )
         commit('setCountryListDestination', response2.default)
       } else {
         commit('setCountryListOrigin', {})
@@ -185,9 +184,8 @@ function generateMigrationMap(current: CountryList, previous: CountryList) {
   return map
 }
 
-
 async function loadCountryListForLocale(locale: string) {
   return await import(
     /* webpackChunkName: "country-list-[request]" */ `i18n-iso-countries/langs/${locale}.json`
-    )
+  )
 }

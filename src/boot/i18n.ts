@@ -1,14 +1,16 @@
 import { QSsrContext } from '@quasar/app'
 import kebabCase from 'lodash/kebabCase'
+import union from 'lodash/union'
 import { boot } from 'quasar/wrappers'
 import Vue from 'vue'
 import { extendWithAutoI18n } from 'vue-auto-i18n'
+import autoLanguages from 'vue-auto-i18n/dist/supported-languages/google.json'
 import VueI18n, {
   IVueI18n,
+  Locale,
   LocaleMessageObject,
   LocaleMessages,
   Values,
-  Locale,
 } from 'vue-i18n'
 import { Store } from 'vuex'
 
@@ -114,7 +116,7 @@ async function preloadLanguageFiles(lang: Locale): Promise<void> {
   }
 }
 
-export default boot(async ({ app, store, ssrContext }) => {
+export default boot(async ({ app, store, ssrContext, redirect }) => {
   let currentLocale = store.state.serverLocale
 
   // eslint-disable-next-line unused-imports/no-unused-vars-ts
@@ -139,7 +141,16 @@ export default boot(async ({ app, store, ssrContext }) => {
     i18n.locale = currentLocale
     store.commit('setServerLocale', currentLocale)
 
-    await translate(currentLocale)
+    try {
+      await translate(currentLocale)
+    } catch {
+      redirect('/en/')
+      return
+    }
+    store.commit(
+      'setAvailableLocales',
+      union(Object.keys(messages), autoLanguages),
+    )
     pushRequiredLocalesToClientStore(currentLocale, store)
   } else {
     preloadLocalesIntoI18nPlugin(store.state.locales)

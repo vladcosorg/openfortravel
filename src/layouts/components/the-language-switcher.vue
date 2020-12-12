@@ -43,12 +43,17 @@ import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value
 import SimpleSelect from 'src/components/simple-select.vue'
 import { useEventBus } from 'src/composables/use-plugins'
 import { useLoading } from 'src/composables/use-promise-loading'
+import { useVuexRawState } from 'src/composables/use-vuex'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
   components: { SimpleSelect },
   setup(props, { root }) {
-    const languageList = Object.freeze(langs)
+    const availableLocales = useVuexRawState<string[]>('availableLocales')
+    const languageList = Object.freeze(
+      langs.filter((langPair) => availableLocales.includes(langPair.value)),
+    )
+
     const { loading } = useLoading(false)
     const currentLanguage = computed({
       get() {

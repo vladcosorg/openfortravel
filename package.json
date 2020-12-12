@@ -20,9 +20,9 @@
     "build-deploy": "yarn run build && yarn run deploy",
     "deploy": "gcloud app deploy dist/ssr/app.yaml --quiet",
     "build-flags": "ts-node src/bin/build-flags.ts",
-    "build-sitemap": "ts-node -r tsconfig-paths/register src/bin/build-sitemap.ts",
+    "build-sitemap": "node --max-old-space-size=4096 -- node_modules/.bin/ts-node -P tsconfig.json -r tsconfig-paths/register src/bin/build-sitemap.ts",
     "upload-assets": "cd dist/ssr && CLOUDSDK_PYTHON=/usr/bin/python2.7 gsutil -m cp -r -z css,html,js,map,svg ./www/** gs://oftassets",
-    "delete-translation-cache":  "gsutil -m rm -f gs://translation-cache/** "
+    "delete-translation-cache": "gsutil -m rm -f gs://translation-cache/** "
   },
   "dependencies": {
     "@google-cloud/secret-manager": "^3.2.3",
@@ -41,7 +41,7 @@
     "quasar": "^1.0.0",
     "svg-country-flags": "^1.2.7",
     "typescript": "4.0.*",
-    "vue-auto-i18n": "^0.7.0",
+    "vue-auto-i18n": "^0.7.3",
     "vue-i18n": "^8.0.0",
     "vue-inline-svg": "^2.0.0",
     "vue-lazy-hydration": "^1.0.0-beta.14"

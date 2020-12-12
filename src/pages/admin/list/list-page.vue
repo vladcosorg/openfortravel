@@ -14,7 +14,13 @@
       >
         <template #header-cell-country="props">
           <q-th :props="props">
-            <q-input v-model="filter" label="Filter by name" label-color="grey-6" dense autofocus />
+            <q-input
+              v-model="filter"
+              label="Filter by name"
+              label-color="grey-6"
+              dense
+              autofocus
+            />
           </q-th>
         </template>
         <template #body-cell-bestByDate="props">

@@ -12,7 +12,10 @@ export function generateIDFromEntity(restriction: PlainRestriction): string {
   return generateID(restriction.origin, restriction.destination)
 }
 
-export function generateID(originCode: string, destinationCode: string): string {
+export function generateID(
+  originCode: string,
+  destinationCode: string,
+): string {
   return `${originCode}${destinationCode}`
 }
 
