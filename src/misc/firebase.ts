@@ -26,6 +26,9 @@ const countryCollection = firestore
 const restrictionCollection = firestore
   .collection('restrictions')
   .withConverter(restrictionDataConverter)
+const subscriptionCollection = firestore
+  .collection('subscriptions')
+  .withConverter(restrictionDataConverter)
 
 // eslint-disable-next-line import/no-unused-modules
 export {
@@ -34,4 +37,5 @@ export {
   countryCollection,
   firebase,
   restrictionCollection,
+  subscriptionCollection
 }

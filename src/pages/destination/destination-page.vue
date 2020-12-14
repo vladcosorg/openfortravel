@@ -30,6 +30,7 @@
         :origin-code="destinationCode"
         :destination-code="originCode"
       />
+
     </the-country-list>
 
     <div v-if="loading" class="text-subtitle1 column flex-center">
@@ -129,6 +130,7 @@
         </q-item>
       </template>
     </q-list>
+
     <q-btn
       class="q-mt-md full-width"
       color="accent"
@@ -159,6 +161,7 @@ import {
 } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
+import TheSubscribeForm from 'src/layouts/components/the-subscribe-form.vue';
 import { generateCanonicalBlock } from 'src/misc/meta'
 import {
   getLabelForCountryCode,
@@ -199,7 +202,7 @@ export default defineComponent({
       },
     }
   },
-  components: { ReturnWay, TheCountryList, Portal, TheFlagBackground },
+  components: {TheSubscribeForm, ReturnWay, TheCountryList, Portal, TheFlagBackground },
   props: {
     unsafeOriginCode: {
       type: String,

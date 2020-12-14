@@ -36,6 +36,9 @@ module.exports.extendApp = async function ({ app, ssr }) {
 
   const cache = new LRU()
   app.use(express.urlencoded({ extended: true }))
+  app.post('/subscribe', async (req, res) => {
+    return res.status(200).json({})
+  })
   app.post('/translate', async (req, res) => {
     let response = ''
     try {

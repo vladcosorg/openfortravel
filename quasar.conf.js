@@ -9,7 +9,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 
-const { configure } = require('quasar/wrappers')
+const {configure} = require('quasar/wrappers')
 
 module.exports = configure(function (context) {
   return {
@@ -27,11 +27,12 @@ module.exports = configure(function (context) {
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/boot-files
     boot: [
+      'axios',
       'vue',
       'composition-api',
       'homepage-locale-redirect',
       'store',
-      { path: 'ssr-url-decoder', client: false },
+      {path: 'ssr-url-decoder', client: false},
       'i18n',
       'country-detector',
       'country-loader',
@@ -106,7 +107,7 @@ module.exports = configure(function (context) {
                     onlyMatchedOnce: false,
                   },
                 },
-                { cleanupIDs: false },
+                {cleanupIDs: false},
               ],
             },
           },
@@ -161,6 +162,8 @@ module.exports = configure(function (context) {
           position: 'bottom',
           skipHijack: true,
         },
+        notify: {
+        }
       },
 
       // Possible values for "importStrategy":
@@ -176,7 +179,7 @@ module.exports = configure(function (context) {
       // directives: [],
       components: [],
       // Quasar plugins
-      plugins: ['Cookies', 'Meta'],
+      plugins: ['Cookies', 'Meta', 'Notify'],
     },
 
     // animations: 'all', // --- includes all animations

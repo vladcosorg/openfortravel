@@ -1,25 +1,27 @@
 <template>
-  <div class="text-center q-my-lg q-mx-md">
-    <div class="text-subtitle1 text-uppercase text-bold montserrat q-mb-lg">
-      Languages
-    </div>
-    <div
-      :class="[
+  <div>
+    <div class="text-center q-my-lg q-mx-md">
+      <div class="text-subtitle1 text-uppercase text-bold montserrat q-mb-lg">
+        Languages
+      </div>
+      <div
+        :class="[
         $style.languages,
         'text-subtitle2',
         'text-primary',
         'q-gutter-sm',
       ]"
-    >
-      <router-link
-        v-for="lang in langs"
-        :key="lang.value"
-        :to="{ params: { locale: lang.value } }"
       >
-        {{ lang.label }}
-      </router-link>
+        <router-link
+          v-for="lang in langs"
+          :key="lang.value"
+          :to="{ params: { locale: lang.value } }"
+        >
+          {{ lang.label }}
+        </router-link>
+      </div>
+      <div class="q-mt-md text-caption">Copyright 2020</div>
     </div>
-    <div class="q-mt-md text-caption">Copyright 2020</div>
   </div>
 </template>
 
@@ -37,8 +39,10 @@
 import { defineComponent } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 
+import TheSubscribeForm from 'src/layouts/components/the-subscribe-form.vue';
+
 export default defineComponent({
-  components: {},
+  components: {TheSubscribeForm},
   props: {},
   setup() {
     return { langs: Object.freeze(langs) }
