@@ -1,4 +1,4 @@
-import * as firebase from 'firebase/app'
+import firebase from 'firebase/app'
 
 import 'firebase/firestore'
 import { dataConverter as destinationDataConverter } from 'src/api/destinations/common'

@@ -1,4 +1,4 @@
-import type * as firebase from 'firebase'
+import type firebase from 'firebase/app'
 import pick from 'lodash/pick'
 
 import {

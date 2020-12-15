@@ -22,19 +22,19 @@
             closing
           </div>
         </q-card-section>
-        <q-card-section class="q-pt-xs q-pb-md">
-          <q-input
-            ref="emailField"
-            v-model="email"
-            lazy-rules
-            :rules="[isValidEmail]"
-            type="email"
-            autofocus
-            standout
-            placeholder="Please enter your email"
-            :readonly="isLoading || isSubscribed"
-          />
-        </q-card-section>
+<q-card-section class="q-pt-xs q-pb-md">
+  <q-input
+    ref="emailField"
+    v-model="email"
+    lazy-rules
+    :rules="[isValidEmail]"
+    type="email"
+    autofocus
+    standout
+    placeholder="Please enter your email"
+    :readonly="isLoading || isSubscribed"
+  />
+</q-card-section>
         <!--        <q-card-section class="text-caption text-grey-5 q-pt-none">-->
         <!--          You will not receive any marketing emails, offers or any other kind of spam.-->
         <!--        </q-card-section>-->
@@ -46,6 +46,7 @@ text-color="grey-4"
 label="Close"
 @click="$emit('input', false)"
 />
+
           <q-btn
             class="full-height"
             type="submit"

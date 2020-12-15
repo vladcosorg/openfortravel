@@ -7,6 +7,7 @@ import { fetchCurrentCountryCode } from 'src/api/ip-api'
 import { cookies, storeInstance } from 'src/boot/store'
 import { transformOriginSlugToCode } from 'src/modules/country-list/country-list-helpers'
 
+
 export async function decideOnCountry(
   route: Route,
   cookies: Cookies,
@@ -26,11 +27,9 @@ export async function decideOnCountry(
 
   return 'us'
 }
-
 export function getCurrentCountry(): string {
   return storeInstance.state.detectedCountry
 }
-
 export function persistCountry(countryCode: string): void {
   if (getCurrentCountry() === countryCode) {
     return
