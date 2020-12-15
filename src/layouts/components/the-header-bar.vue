@@ -20,13 +20,12 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { PortalTarget } from 'portal-vue'
-import LazyHydrate from 'vue-lazy-hydration'
 
 import LanguageSwitcher from 'src/layouts/components/the-language-switcher.vue'
 import Logo from 'src/layouts/components/the-logo.vue'
 
 export default defineComponent({
-  components: { LanguageSwitcher, Logo, LazyHydrate, PortalTarget },
+  components: { LanguageSwitcher, Logo, PortalTarget },
   setup() {
     return {}
   },

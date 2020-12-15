@@ -50,7 +50,7 @@ export function useVuexActionDispatcherWithReactivePayload(
   }
 }
 
-export function useProperVuexActionDispatcher<T>(
+export function useProperVuexActionDispatcher(
   action: string,
 
   loadingReference?: Ref<boolean>,

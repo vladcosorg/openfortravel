@@ -134,7 +134,6 @@ module.exports = {
     'arrow-body-style': ['warn', 'as-needed'],
     'prefer-arrow-callback': 'warn',
     curly: 'warn',
-    'no-confusing-arrow': ['error', { allowParens: false }],
     'vue/html-self-closing': [
       'error',
       {
@@ -143,6 +142,20 @@ module.exports = {
         },
       },
     ],
+
+    'vue/component-name-in-template-casing': [
+      'error',
+      'kebab-case',
+      {
+        registeredComponentsOnly: true,
+        ignores: [],
+      },
+    ],
+    'vue/no-bare-strings-in-template': 'warn',
+    'vue/no-empty-component-block': 'warn',
+    'vue/no-useless-v-bind': 'warn',
+    'vue/component-tags-order': 'off',
+    'vue/require-default-prop': 'off',
   },
   settings: {
     'import/parsers': {

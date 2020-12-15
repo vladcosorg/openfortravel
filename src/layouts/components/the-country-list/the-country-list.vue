@@ -4,7 +4,7 @@
     leave-active-class="animated bounceInUp"
   >
     <div :class="['row', $style.row, 'justify-center', 'q-gutter-y-md']">
-      <div :class="[$style.intro, 'montserrat text-h5', 'text-center']">
+      <div :class="[$style.intro, ' text-h5', 'text-center']">
         {{ $t('components.theCountryList')[isIntro ? 'titleIntro' : 'title'] }}
       </div>
 
@@ -79,7 +79,6 @@ import { computed, defineComponent } from '@vue/composition-api'
 
 import { useI18n, useRouter } from 'src/composables/use-plugins'
 import { useClosureLoading } from 'src/composables/use-promise-loading'
-import Btn from 'src/layouts/components/the-country-list/btn.vue'
 import CountrySelect from 'src/layouts/components/the-country-list/country-select.vue'
 import { getCurrentCountry } from 'src/misc/country-decider'
 import {
@@ -88,15 +87,16 @@ import {
 } from 'src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
-  components: { Btn, CountrySelect },
+  components: { CountrySelect },
   props: {
     originCode: {
       type: String,
-      required: false,
+      default: undefined,
     },
     destinationCode: {
       type: String,
       required: false,
+      default: undefined,
     },
   },
   setup(props) {

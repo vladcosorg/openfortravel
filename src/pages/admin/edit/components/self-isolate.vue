@@ -19,8 +19,6 @@
   </q-input>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import { defineComponent, toRefs } from '@vue/composition-api'
 

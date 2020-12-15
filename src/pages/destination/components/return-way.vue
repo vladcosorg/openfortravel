@@ -22,12 +22,11 @@
 <script lang="ts">
 import { defineComponent, toRefs } from '@vue/composition-api'
 
-import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import DestinationItem from 'src/pages/country/components/destination-item.vue'
 import { getRestriction } from 'src/pages/destination/destination-composable'
 
 export default defineComponent({
-  components: { DestinationItem, TheFlagBackground },
+  components: { DestinationItem },
   props: {
     compact: {
       type: Boolean,

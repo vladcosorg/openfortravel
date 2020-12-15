@@ -1,11 +1,10 @@
 <template>
   <q-page :class="['column fit justify-around no-wrap', $style.page]">
-    <div class="text-h6 montserrat text-center q-mb-xl">
+    <div class="text-h6 text-center q-mb-xl">
       {{ $t('page.index.hero') }}
     </div>
     <boy :class="['q-mb-xl']" />
     <div :class="['relative-position', 'text-center']">
-      <!--      <animated-arrow :class="$style.arrow" />-->
       <the-country-list />
     </div>
   </q-page>
@@ -27,13 +26,11 @@
 import { defineComponent } from '@vue/composition-api'
 import { hydrateWhenIdle } from 'vue-lazy-hydration'
 
-import AnimatedArrow from 'src/layouts/components/the-animated-arrow.vue'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 
 export default defineComponent({
   components: {
     TheCountryList,
-    AnimatedArrow,
     Boy: hydrateWhenIdle(
       () => import('src/layouts/components/the-boy/the-boy.vue'),
       {},

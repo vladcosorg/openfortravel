@@ -116,10 +116,7 @@
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
 
-import Flag from 'src/components/flag.vue'
-
 export default defineComponent({
-  components: { Flag },
   inheritAttrs: false,
   props: {
     value: {
@@ -151,7 +148,6 @@ export default defineComponent({
       isSubscribed,
       closingCountdown,
       async onSubmit() {
-        console.log(emailField.value)
         emailField.value.validate()
         if (!emailField.value.hasError) {
           isLoading.value = true

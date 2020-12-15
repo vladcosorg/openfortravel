@@ -39,7 +39,7 @@
     </div>
     <div
       v-else
-      class="text-subtitle1 montserrat text-center"
+      class="text-subtitle1 text-center"
       v-html="restriction.description"
     />
 
@@ -160,7 +160,6 @@ import {
 } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
-import TheSubscribeForm from 'src/layouts/components/the-subscribe-form.vue'
 import { generateCanonicalBlock } from 'src/misc/meta'
 import {
   getLabelForCountryCode,
@@ -202,7 +201,6 @@ export default defineComponent({
     }
   },
   components: {
-    TheSubscribeForm,
     ReturnWay,
     TheCountryList,
     Portal,
@@ -211,11 +209,11 @@ export default defineComponent({
   props: {
     unsafeOriginCode: {
       type: String,
-      // required: true,
+      default: undefined,
     },
     unsafeDestinationCode: {
       type: String,
-      // required: true,
+      default: undefined,
     },
     isFallback: {
       type: Boolean,

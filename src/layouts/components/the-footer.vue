@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="text-center q-my-lg q-mx-md">
-      <div class="text-subtitle1 text-uppercase text-bold montserrat q-mb-lg">
+      <div class="text-subtitle1 text-uppercase text-bold q-mb-lg">
         Languages
       </div>
       <div
@@ -39,10 +39,7 @@
 import { defineComponent } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 
-import TheSubscribeForm from 'src/layouts/components/the-subscribe-form.vue'
-
 export default defineComponent({
-  components: { TheSubscribeForm },
   props: {},
   setup() {
     return { langs: Object.freeze(langs) }

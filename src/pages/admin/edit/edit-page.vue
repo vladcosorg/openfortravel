@@ -135,19 +135,13 @@ import {
   useRestrictionListFilteredByDestination,
   useRestrictionPersister,
 } from 'src/api/restrictions/composables'
-import InputDate from 'src/components/input-date.vue'
-import InPlaceField from 'src/pages/admin/edit/components/in-place-field.vue'
 import SelfIsolate from 'src/pages/admin/edit/components/self-isolate.vue'
-import StatusInput from 'src/pages/admin/edit/components/status-input.vue'
 import TableHeader from 'src/pages/admin/edit/components/table-header.vue'
 import TestRequired from 'src/pages/admin/edit/components/test-required.vue'
 
 export default defineComponent({
   components: {
     SelfIsolate,
-    InPlaceField,
-    InputDate,
-    StatusInput,
     TableHeader,
     TestRequired,
   },

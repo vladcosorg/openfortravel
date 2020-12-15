@@ -11,7 +11,7 @@
     :class="['full-width text-h6', $style.field]"
   >
     <template v-if="showPrefixText" #before>
-      <div :class="[$style.prefix, 'montserrat', 'text-subtitle2']">
+      <div :class="[$style.prefix, 'text-subtitle2']">
         <slot name="default" />
       </div>
     </template>
@@ -41,7 +41,7 @@
     </template>
 
     <template #after>
-      <slot name="after"/>
+      <slot name="after" />
     </template>
   </component>
 </template>

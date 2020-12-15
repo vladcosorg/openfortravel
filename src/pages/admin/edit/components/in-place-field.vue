@@ -51,7 +51,6 @@
   </div>
 </template>
 
-<style lang="scss" module></style>
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
