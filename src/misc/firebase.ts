@@ -38,5 +38,5 @@ export {
   countryCollection,
   firebase,
   restrictionCollection,
-  subscriptionCollection
+  subscriptionCollection,
 }

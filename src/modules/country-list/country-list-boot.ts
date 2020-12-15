@@ -5,13 +5,13 @@ import { useStore } from 'src/composables/use-plugins'
 
 export default boot(async ({ app, ssrContext }) => {
   ;(app.i18n as IVueI18n).vm.$watch(
-'locale',
-async (currentLocale: string) => {
-  await useStore().dispatch(
-    'modules/countryList/fetchCountryList',
-    currentLocale.split('-')[0],
-  )
-},
+    'locale',
+    async (currentLocale: string) => {
+      await useStore().dispatch(
+        'modules/countryList/fetchCountryList',
+        currentLocale.split('-')[0],
+      )
+    },
     { immediate: !!ssrContext },
   )
 })

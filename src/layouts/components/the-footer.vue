@@ -6,11 +6,11 @@
       </div>
       <div
         :class="[
-        $style.languages,
-        'text-subtitle2',
-        'text-primary',
-        'q-gutter-sm',
-      ]"
+          $style.languages,
+          'text-subtitle2',
+          'text-primary',
+          'q-gutter-sm',
+        ]"
       >
         <router-link
           v-for="lang in langs"
@@ -39,10 +39,10 @@
 import { defineComponent } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 
-import TheSubscribeForm from 'src/layouts/components/the-subscribe-form.vue';
+import TheSubscribeForm from 'src/layouts/components/the-subscribe-form.vue'
 
 export default defineComponent({
-  components: {TheSubscribeForm},
+  components: { TheSubscribeForm },
   props: {},
   setup() {
     return { langs: Object.freeze(langs) }

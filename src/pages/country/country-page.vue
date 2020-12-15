@@ -5,11 +5,9 @@
     </portal>
     <the-country-list :origin-code="originCode" class="q-mb-md" />
 
-
     <div class="column justify-center q-gutter-md">
       <div class="text-h6 text-center text-uppercase">Destinations</div>
       <q-input
-
         v-model="filter"
         :placeholder="$t('page.country.quickSearch')"
         :loading="isFilteredListLoading"
@@ -22,12 +20,24 @@
           <q-icon name="search" />
         </template>
         <template #after>
-          <q-btn icon="notifications_none" class="full-height" type="submit"   unelevated color="secondary" text-color="primary" @click="promptVisible = true" >
+          <q-btn
+            icon="notifications_none"
+            class="full-height"
+            type="submit"
+            unelevated
+            color="secondary"
+            text-color="primary"
+            @click="promptVisible = true"
+          >
             Subscribe
           </q-btn>
         </template>
       </q-input>
-      <the-subscribe-form v-if="promptVisible" v-model="promptVisible" :origin="originCode"/>
+      <the-subscribe-form
+        v-if="promptVisible"
+        v-model="promptVisible"
+        :origin="originCode"
+      />
 
       <destination-group
         v-if="isFiltering"
@@ -48,9 +58,7 @@
       />
     </div>
     <q-list dense bordered separator padding class="rounded-borders">
-      <q-item-label header>{{
-          $t('page.country.stats.header')
-        }}</q-item-label>
+      <q-item-label header>{{ $t('page.country.stats.header') }}</q-item-label>
 
       <q-item
         v-for="(statusLabel, status) in statuses"
@@ -78,7 +86,7 @@ import {
   ionCheckmarkCircleOutline as allowedIcon,
   ionCloseCircleOutline as forbiddenIcon,
 } from '@quasar/extras/ionicons-v5'
-import {computed, defineComponent, ref, watch} from '@vue/composition-api'
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import { getStatusListMap, getStatusMapper } from 'src/api/restrictions/helper'
@@ -87,7 +95,7 @@ import { useI18n, useStore } from 'src/composables/use-plugins'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
-import TheSubscribeForm from 'src/layouts/components/the-subscribe-form.vue';
+import TheSubscribeForm from 'src/layouts/components/the-subscribe-form.vue'
 import { generateCanonicalBlock } from 'src/misc/meta'
 import {
   getLabelForCountryCode,
@@ -123,7 +131,13 @@ export default defineComponent({
       },
     }
   },
-  components: {TheSubscribeForm, TheCountryList, DestinationGroup, Portal, TheFlagBackground },
+  components: {
+    TheSubscribeForm,
+    TheCountryList,
+    DestinationGroup,
+    Portal,
+    TheFlagBackground,
+  },
   props: {
     unsafeOriginCode: {
       type: String,
@@ -175,7 +189,7 @@ export default defineComponent({
           (status) => destinationsRef.value[status]?.length,
         )
       }),
-      promptVisible: ref(false)
+      promptVisible: ref(false),
     }
   },
 })

@@ -1,97 +1,140 @@
 <template>
-  <q-dialog v-if="value !== undefined" full-width v-bind="$props" v-on="$listeners">
+  <q-dialog
+    v-if="value !== undefined"
+    full-width
+    v-bind="$props"
+    v-on="$listeners"
+  >
     <div>
-      <q-card square class="bg-blue-grey-10 relative-position" tag="form" novalidate @submit.prevent.stop="onSubmit">
+      <q-card
+        square
+        class="bg-blue-grey-10 relative-position"
+        tag="form"
+        novalidate
+        @submit.prevent.stop="onSubmit"
+      >
         <q-card-section class="bg-blue-grey-9">
-          <div class=" text-uppercase">Subscribe for notifications</div>
+          <div class="text-uppercase">Subscribe for notifications</div>
         </q-card-section>
         <q-card-section>
-          <div class="text-body2 text-grey-5 ">Get notified when any destinations to or from Moldova are opening or
+          <div class="text-body2 text-grey-5">
+            Get notified when any destinations to or from Moldova are opening or
             closing
           </div>
         </q-card-section>
         <q-card-section class="q-pt-xs q-pb-md">
-          <q-input ref="emailField"
-                   v-model="email"
-                   lazy-rules
-                   :rules="[isValidEmail]"
-                   type="email" autofocus standout
-                   placeholder="Please enter your email"
-                   :readonly="isLoading || isSubscribed"
+          <q-input
+            ref="emailField"
+            v-model="email"
+            lazy-rules
+            :rules="[isValidEmail]"
+            type="email"
+            autofocus
+            standout
+            placeholder="Please enter your email"
+            :readonly="isLoading || isSubscribed"
           />
         </q-card-section>
-<!--        <q-card-section class="text-caption text-grey-5 q-pt-none">-->
-<!--          You will not receive any marketing emails, offers or any other kind of spam.-->
-<!--        </q-card-section>-->
-        <q-separator dark/>
+        <!--        <q-card-section class="text-caption text-grey-5 q-pt-none">-->
+        <!--          You will not receive any marketing emails, offers or any other kind of spam.-->
+        <!--        </q-card-section>-->
+        <q-separator dark />
         <q-card-actions align="right" class="text-primary">
-          <q-btn flat text-color="grey-4" label="Close" @click="$emit('input', false)"/>
+<q-btn
+flat
+text-color="grey-4"
+label="Close"
+@click="$emit('input', false)"
+/>
           <q-btn
             class="full-height"
-            type="submit" unelevated
-            color="secondary" text-color="primary"
+            type="submit"
+            unelevated
+            color="secondary"
+            text-color="primary"
             :label="buttonLabel"
             :icon-right="isSubscribed ? 'check' : undefined"
             :loading="isLoading"
             :disable="isLoading || isSubscribed"
-
           />
         </q-card-actions>
       </q-card>
-      <q-linear-progress v-if="isLoading || isSubscribed" :reverse="!isLoading" :indeterminate="isLoading" :value="closingCountdown" color="secondary"/>
+      <q-linear-progress
+        v-if="isLoading || isSubscribed"
+        :reverse="!isLoading"
+        :indeterminate="isLoading"
+        :value="closingCountdown"
+        color="secondary"
+      />
     </div>
   </q-dialog>
   <div v-else>
-    <form :class="[$style.form, 'q-pa-md']" class="bg-blue-grey-10" @submit="onSubmit">
-      <div class="text-h6 q-mb-md text-uppercase">Subscribe for travel updates</div>
+    <form
+      :class="[$style.form, 'q-pa-md']"
+      class="bg-blue-grey-10"
+      @submit="onSubmit"
+    >
+      <div class="text-h6 q-mb-md text-uppercase">
+        Subscribe for travel updates
+      </div>
 
-      <q-input ref="emailField" v-model="email" type="email" required standout placeholder="Please insert your email">
+      <q-input
+        ref="emailField"
+        v-model="email"
+        type="email"
+        required
+        standout
+        placeholder="Please insert your email"
+      >
         <template #after>
-          <q-btn class="full-height" type="submit" unelevated color="secondary" text-color="primary"
-                 label="Subscribe"/>
+          <q-btn
+            class="full-height"
+            type="submit"
+            unelevated
+            color="secondary"
+            text-color="primary"
+            label="Subscribe"
+          />
         </template>
       </q-input>
 
       <div class="text-caption text-grey-5 q-pt-md">
-        You will not receive any marketing emails, offers or any other kind of spam.
+        You will not receive any marketing emails, offers or any other kind of
+        spam.
       </div>
     </form>
   </div>
-
 </template>
 
 <style module>
 .form {
-//margin-left: -16px; //margin-right: -16px; width: 100%;
+  //margin-left: -16px; //margin-right: -16px; width: 100%;
 }
-
 </style>
 
-
 <script lang="ts">
-import {defineComponent, ref} from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 
-import Flag from 'src/components/flag.vue';
-
+import Flag from 'src/components/flag.vue'
 
 export default defineComponent({
-  components: {Flag},
+  components: { Flag },
   inheritAttrs: false,
   props: {
     value: {
       type: Boolean,
-      default: false
+      default: false,
     },
     origin: {
       type: String,
-      required: true
+      required: true,
     },
     destination: {
       type: String,
-      required: false
-    }
+      required: false,
+    },
   },
-  setup(props, {root, emit}) {
+  setup(props, { root, emit }) {
     const email = ref('')
     const emailField = ref()
     const isLoading = ref(false)
@@ -113,7 +156,7 @@ export default defineComponent({
           isLoading.value = true
           const payload = new URLSearchParams({
             origin: props.origin,
-            email: email.value
+            email: email.value,
           })
 
           if (props.destination) {
@@ -127,7 +170,7 @@ export default defineComponent({
             root.$q.notify({
               icon: 'done',
               color: 'positive',
-              message: 'You have been successfully subscribed'
+              message: 'You have been successfully subscribed',
             })
           } catch {
             isSubscribed.value = false
@@ -136,7 +179,7 @@ export default defineComponent({
           isLoading.value = false
           const intervalID = setInterval(() => {
             closingCountdown.value = closingCountdown.value + 0.05
-            if (closingCountdown.value >= 1 || !props.value){
+            if (closingCountdown.value >= 1 || !props.value) {
               clearInterval(intervalID)
               emit('input', false)
               isSubscribed.value = false
@@ -144,10 +187,9 @@ export default defineComponent({
             }
           }, 150)
         }
-
       },
       isValidEmail() {
-        return /^.+@.+\..+$/.test(email.value) || 'Please provide a valid email';
+        return /^.+@.+\..+$/.test(email.value) || 'Please provide a valid email'
       },
     }
   },

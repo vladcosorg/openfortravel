@@ -1,4 +1,3 @@
-
 export interface SubscriptionDocument {
   emails?: string[]
   origin?: string
@@ -16,12 +15,11 @@ export const defaults: PlainSubscription = {
 export class Subscription implements SubscriptionDocument {
   public readonly origin!: string
   public readonly destination!: string
-  public readonly emails!:string[]
+  public readonly emails!: string[]
 
   constructor(document: PlainSubscription) {
     Object.assign(this, document)
   }
-
 
   public toPlainObject(): PlainSubscription {
     return { ...this }
