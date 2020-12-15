@@ -131,13 +131,13 @@ module.exports = {
     'no-console': 'warn',
     'vue/no-v-html': 'off',
     'unicorn/no-reduce': 'off',
+    'arrow-body-style': ['error', 'as-needed'],
   },
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
       'vue-eslint-parser': ['.vue'],
     },
-
     'import/resolver': {
       typescript: {
         project: [

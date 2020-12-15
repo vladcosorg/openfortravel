@@ -169,9 +169,9 @@ export default defineComponent({
       update: { (callback: { (): void }): void },
     ) => {
       update(() => {
-        countryList.value = fullList.value.filter((listItem: ListItem) => {
-          return listItem.label.toLowerCase().includes(currentValue)
-        })
+        countryList.value = fullList.value.filter((listItem: ListItem) =>
+          listItem.label.toLowerCase().includes(currentValue),
+        )
       })
     }
 

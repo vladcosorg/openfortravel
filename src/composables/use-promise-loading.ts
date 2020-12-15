@@ -42,14 +42,13 @@ export function useClosureCollectionLoading(
 
   closures = (mapValues(
     closures,
-    (callback: Callback): Callback => {
-      return async function (...args: unknown[]) {
+    (callback: Callback): Callback =>
+      async function (...args: unknown[]) {
         loading.value = true
         const result = await callback(...args)
         loading.value = false
         return result
-      }
-    },
+      },
   ) as unknown) as CallbackCollection
 
   return {

@@ -26,15 +26,12 @@ export default {
     return new State()
   },
   getters: {
-    getRestriction: (state): Restriction => {
-      return wrapWithRichRestrictionObject(state.restriction)
-    },
-    getReturnRestriction: (state): Restriction => {
-      return wrapWithRichRestrictionObject(state.returnRestriction)
-    },
-    getDestination: (state): Destination => {
-      return wrapWithRichDestinationObject(state.destination)
-    },
+    getRestriction: (state): Restriction =>
+      wrapWithRichRestrictionObject(state.restriction),
+    getReturnRestriction: (state): Restriction =>
+      wrapWithRichRestrictionObject(state.returnRestriction),
+    getDestination: (state): Destination =>
+      wrapWithRichDestinationObject(state.destination),
   },
   mutations: {
     setRestriction(state: State, restriction: PlainRestriction): void {

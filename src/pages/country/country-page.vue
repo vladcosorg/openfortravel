@@ -184,11 +184,9 @@ export default defineComponent({
         conditional: 'warning',
         forbidden: 'negative',
       },
-      stats: computed(() => {
-        return getStatusMapper(
-          (status) => destinationsRef.value[status]?.length,
-        )
-      }),
+      stats: computed(() =>
+        getStatusMapper((status) => destinationsRef.value[status]?.length),
+      ),
       promptVisible: ref(false),
     }
   },

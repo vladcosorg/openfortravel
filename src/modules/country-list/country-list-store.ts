@@ -24,16 +24,14 @@ export default {
     return new State()
   },
   getters: {
-    originLabels: (state) => {
-      return isEmpty(state.countryListOrigin)
+    originLabels: (state) =>
+      isEmpty(state.countryListOrigin)
         ? state.countryList
-        : state.countryListOrigin
-    },
-    destinationLabels: (state) => {
-      return isEmpty(state.countryListDestination)
+        : state.countryListOrigin,
+    destinationLabels: (state) =>
+      isEmpty(state.countryListDestination)
         ? state.countryList
-        : state.countryListDestination
-    },
+        : state.countryListDestination,
     countryCodes(state): string[] {
       return Object.keys(state.countryList)
     },

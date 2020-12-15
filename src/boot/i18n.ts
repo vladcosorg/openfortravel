@@ -43,9 +43,8 @@ export function createVueI18n(messages?: LocaleMessages): IVueI18n {
   }) as unknown) as IVueI18n
 }
 
-export const t = (key: string, values?: Values): string => {
-  return <string>i18n.t(key, values)
-}
+export const t = (key: string, values?: Values): string =>
+  <string>i18n.t(key, values)
 
 export function setLocaleCookie(
   locale: string,

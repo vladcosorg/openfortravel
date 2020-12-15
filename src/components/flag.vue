@@ -35,9 +35,9 @@ export default defineComponent({
     },
   },
   setup(prop) {
-    const placeholder = computed<string>(() => {
-      return `flags/blurry/${prop.countryCode}.webp`
-    })
+    const placeholder = computed<string>(
+      () => `flags/blurry/${prop.countryCode}.webp`,
+    )
 
     const src = computed<string>(() => {
       if (prop.type === 'blurry') {

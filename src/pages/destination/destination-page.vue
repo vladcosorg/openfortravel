@@ -242,9 +242,7 @@ export default defineComponent({
       [RestrictionStatus.FORBIDDEN]: 'red',
     }
 
-    const statusColor = computed(() => {
-      return statusMap[restrictionRef.value.status]
-    })
+    const statusColor = computed(() => statusMap[restrictionRef.value.status])
 
     const testingColor = computed(() =>
       getBooleanColor(restrictionRef.value.testRequired),

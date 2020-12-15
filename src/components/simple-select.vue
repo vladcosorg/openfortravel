@@ -47,11 +47,12 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const currentOptionRef = computed(() => {
-      return (props.options.find(
-        (option) => option.value === props.value,
-      ) as unknown) as SelectItem
-    })
+    const currentOptionRef = computed(
+      () =>
+        (props.options.find(
+          (option) => option.value === props.value,
+        ) as unknown) as SelectItem,
+    )
 
     const currentLabelRef = computed(() => currentOptionRef.value?.value)
 

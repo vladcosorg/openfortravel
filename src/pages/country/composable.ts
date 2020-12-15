@@ -61,17 +61,17 @@ export function useFilterableFlatDestinations(
     collection,
     loading: filterLoading,
     isFiltering,
-  } = useFilterableCollection(flatDestinationsRef, (input, filterValue) => {
-    return input
-      .filter((destination) => {
-        return destination.destinationLabel.toLowerCase().includes(filterValue)
-      })
+  } = useFilterableCollection(flatDestinationsRef, (input, filterValue) =>
+    input
+      .filter((destination) =>
+        destination.destinationLabel.toLowerCase().includes(filterValue),
+      )
       .sort(
         (destinationA, destinationB) =>
           destinationA.destinationLabel.indexOf(filterValue) -
           destinationB.destinationLabel.indexOf(filterValue),
-      )
-  })
+      ),
+  )
 
   return {
     filteredDestinationsRef: collection,

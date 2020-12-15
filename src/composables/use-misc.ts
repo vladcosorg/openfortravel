@@ -14,9 +14,7 @@ export function useFilterableCollection<T>(
 
   const debouncedFilter = useDebounce(filter, 500)
   const isFiltering = computed(() => debouncedFilter.value.length > 0)
-  const loading = computed(() => {
-    return filter.value !== debouncedFilter.value
-  })
+  const loading = computed(() => filter.value !== debouncedFilter.value)
 
   const filteredCollection = computed(() => {
     if (isFiltering.value) {

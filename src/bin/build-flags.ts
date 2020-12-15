@@ -16,12 +16,12 @@ function getSmallestBufferExt(
   return (Object.keys(bufferCollection) as Array<
     keyof typeof bufferCollection
     // eslint-disable-next-line unicorn/no-reduce
-  >).reduce((savedKey, currentKey) => {
-    return bufferCollection[savedKey].byteLength >
-      bufferCollection[currentKey].byteLength
+  >).reduce((savedKey, currentKey) =>
+    bufferCollection[savedKey].byteLength >
+    bufferCollection[currentKey].byteLength
       ? currentKey
-      : savedKey
-  })
+      : savedKey,
+  )
 }
 
 async function build() {
