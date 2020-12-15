@@ -3,6 +3,7 @@ import * as firebase from 'firebase/app'
 import 'firebase/firestore'
 import { dataConverter as destinationDataConverter } from 'src/api/destinations/common'
 import { dataConverter as restrictionDataConverter } from 'src/api/restrictions/common'
+import { dataConverter as subscriptionDataConverter } from 'src/api/subscriptions/common'
 
 const firebaseApp =
   firebase.apps.length > 0
@@ -28,7 +29,7 @@ const restrictionCollection = firestore
   .withConverter(restrictionDataConverter)
 const subscriptionCollection = firestore
   .collection('subscriptions')
-  .withConverter(restrictionDataConverter)
+  .withConverter(subscriptionDataConverter)
 
 // eslint-disable-next-line import/no-unused-modules
 export {

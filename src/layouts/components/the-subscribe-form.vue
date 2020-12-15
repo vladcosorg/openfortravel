@@ -1,10 +1,12 @@
 <template>
   <q-dialog v-if="value !== undefined" full-width v-bind="$props" v-on="$listeners">
     <div>
-      <q-card square class="bg-blue-grey-10" tag="form" novalidate @submit.prevent.stop="onSubmit">
+      <q-card square class="bg-blue-grey-10 relative-position" tag="form" novalidate @submit.prevent.stop="onSubmit">
+        <q-card-section class="bg-blue-grey-9">
+          <div class=" text-uppercase">Subscribe for notifications</div>
+        </q-card-section>
         <q-card-section>
-          <div class="text-h6">Subscribe for travel updates</div>
-          <div class="text-body2 text-grey-5">Get notified when any destinations to or from Moldova are opening or
+          <div class="text-body2 text-grey-5 ">Get notified when any destinations to or from Moldova are opening or
             closing
           </div>
         </q-card-section>
@@ -18,9 +20,9 @@
                    :readonly="isLoading || isSubscribed"
           />
         </q-card-section>
-        <q-card-section class="text-caption text-grey-5 q-pt-none">
-          You will not receive any marketing emails, offers or any other kind of spam.
-        </q-card-section>
+<!--        <q-card-section class="text-caption text-grey-5 q-pt-none">-->
+<!--          You will not receive any marketing emails, offers or any other kind of spam.-->
+<!--        </q-card-section>-->
         <q-separator dark/>
         <q-card-actions align="right" class="text-primary">
           <q-btn flat text-color="grey-4" label="Close" @click="$emit('input', false)"/>
@@ -36,7 +38,7 @@
           />
         </q-card-actions>
       </q-card>
-      <q-linear-progress v-if="isLoading || isSubscribed"  :value="closingCountdown" color="secondary"/>
+      <q-linear-progress v-if="isLoading || isSubscribed" :reverse="!isLoading" :indeterminate="isLoading" :value="closingCountdown" color="secondary"/>
     </div>
   </q-dialog>
   <div v-else>
@@ -69,7 +71,11 @@
 <script lang="ts">
 import {defineComponent, ref} from '@vue/composition-api'
 
+import Flag from 'src/components/flag.vue';
+
+
 export default defineComponent({
+  components: {Flag},
   inheritAttrs: false,
   props: {
     value: {
@@ -101,11 +107,13 @@ export default defineComponent({
       isSubscribed,
       closingCountdown,
       async onSubmit() {
+        console.log(emailField.value)
         emailField.value.validate()
         if (!emailField.value.hasError) {
           isLoading.value = true
           const payload = new URLSearchParams({
             origin: props.origin,
+            email: email.value
           })
 
           if (props.destination) {
@@ -129,7 +137,6 @@ export default defineComponent({
           const intervalID = setInterval(() => {
             closingCountdown.value = closingCountdown.value + 0.05
             if (closingCountdown.value >= 1 || !props.value){
-              console.log('cleared')
               clearInterval(intervalID)
               emit('input', false)
               isSubscribed.value = false
