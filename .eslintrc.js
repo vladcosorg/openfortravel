@@ -50,8 +50,9 @@ module.exports = {
     'plugin:import/typescript',
 
     'prettier',
-    'prettier/@typescript-eslint',
     'prettier/vue',
+    'prettier/unicorn',
+    'prettier/@typescript-eslint',
   ],
 
   plugins: [
@@ -62,7 +63,6 @@ module.exports = {
     'vue',
     'import',
     'unused-imports',
-    // 'unicorn',
   ],
 
   globals: {

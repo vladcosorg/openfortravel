@@ -24,9 +24,11 @@ export async function decideOnCountry(
 
   return 'us'
 }
+
 export function getCurrentCountry(): string {
   return storeInstance.state.detectedCountry
 }
+
 export function persistCountry(countryCode: string): void {
   if (getCurrentCountry() === countryCode) {
     return
