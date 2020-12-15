@@ -130,7 +130,7 @@ module.exports = {
     'unicorn/filename-case': 'off',
     'no-console': 'warn',
     'vue/no-v-html': 'off',
-    'unicorn/no-reduce': 'off'
+    'unicorn/no-reduce': 'off',
   },
   settings: {
     'import/parsers': {
@@ -140,7 +140,10 @@ module.exports = {
 
     'import/resolver': {
       typescript: {
-        project: ['tsconfig.json', 'node_modules/@quasar/app/tsconfig-preset.json'],
+        project: [
+          'tsconfig.json',
+          'node_modules/@quasar/app/tsconfig-preset.json',
+        ],
       },
     },
   },
