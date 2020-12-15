@@ -16,7 +16,7 @@
         stack-label
         dark
       >
-        <template v-slot:prepend>
+        <template #prepend>
           <q-icon name="search" />
         </template>
         <template #after>

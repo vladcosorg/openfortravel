@@ -53,7 +53,7 @@
             placeholder="Search country"
             @focus="filter = ''"
           >
-            <template v-slot:append>
+            <template #append>
               <q-icon name="search" />
             </template>
           </q-input>

@@ -31,8 +31,8 @@ export interface SelectItem {
 export type SelectList = SelectItem[]
 
 export default defineComponent({
-  inheritAttrs: false,
   components: { InvisibleNativeSelect },
+  inheritAttrs: false,
   props: {
     value: {
       required: true,
