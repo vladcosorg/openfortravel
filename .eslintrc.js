@@ -131,7 +131,18 @@ module.exports = {
     'no-console': 'warn',
     'vue/no-v-html': 'off',
     'unicorn/no-reduce': 'off',
-    'arrow-body-style': ['error', 'as-needed'],
+    'arrow-body-style': ['warn', 'as-needed'],
+    'prefer-arrow-callback': 'warn',
+    curly: 'warn',
+    'no-confusing-arrow': ['error', { allowParens: false }],
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: {
+          void: 'any',
+        },
+      },
+    ],
   },
   settings: {
     'import/parsers': {

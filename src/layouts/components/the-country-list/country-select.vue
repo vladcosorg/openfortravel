@@ -41,7 +41,7 @@
     </template>
 
     <template #after>
-      <slot name="after"></slot>
+      <slot name="after"/>
     </template>
   </component>
 </template>

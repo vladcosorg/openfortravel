@@ -20,7 +20,7 @@ export interface StateInterface {
 }
 
 // eslint-disable-next-line import/no-unused-modules
-export default store(function ({ Vue }) {
+export default store(({ Vue }) => {
   Vue.use(Vuex)
 
   // eslint-disable-next-line import/no-named-as-default-member

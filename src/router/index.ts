@@ -9,7 +9,7 @@ import { useRouter } from 'src/composables/use-plugins'
 import { createGenericRouter } from 'src/router/routes'
 
 // eslint-disable-next-line import/no-unused-modules
-export default route<Store<StateInterface>>(async function ({ Vue }) {
+export default route<Store<StateInterface>>(async ({ Vue }) => {
   Vue.use(VueRouter)
   return createRouter()
 })
