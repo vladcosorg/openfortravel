@@ -19,20 +19,20 @@ declare module 'vue-lazy-hydration' {
     }
   > & { functional: false }
 
-  export function hydrateSsrOnly(
+  export function hydrateNever(
     component: AsyncComponent | Component,
   ): AsyncComponent | Component
   export function hydrateWhenIdle(
     component: AsyncComponent | Component,
-    options: { ignoredProps?: string[] },
+    options?: { ignoredProps?: string[] },
   ): AsyncComponent | Component
   export function hydrateWhenVisible(
     component: AsyncComponent | Component,
-    options: { ignoredProps?: string[]; observerOptions?: string[] },
+    options?: { ignoredProps?: string[]; observerOptions?: string[] },
   ): AsyncComponent | Component
   export function hydrateOnInteraction(
     component: AsyncComponent | Component,
-    options: { event?: string; ignoredProps?: string[] },
+    options?: { event?: string; ignoredProps?: string[] },
   ): AsyncComponent | Component
 
   export default LazyHydrate

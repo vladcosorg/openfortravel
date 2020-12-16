@@ -14,26 +14,18 @@
 .page {
   z-index: 2;
 }
-.arrow {
-  position: absolute;
-  //top: 0;
-  //left: 0;
-  //width: 100%;
-  //transform: translateY(-100%);
-}
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { hydrateWhenIdle } from 'vue-lazy-hydration'
+import { hydrateOnInteraction, hydrateWhenIdle } from 'vue-lazy-hydration'
 
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 
 export default defineComponent({
   components: {
-    TheCountryList,
-    Boy: hydrateWhenIdle(
+    TheCountryList: hydrateWhenIdle(TheCountryList),
+    Boy: hydrateOnInteraction(
       () => import('src/layouts/components/the-boy/the-boy.vue'),
-      {},
     ),
   },
   name: 'PageIndex',

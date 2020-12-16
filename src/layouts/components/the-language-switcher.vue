@@ -16,13 +16,17 @@
   :global {
     .q-field__control {
       border-radius: 14px;
-      min-height: auto;
       padding: 0 8px;
       font-size: 0.75rem;
     }
+    .q-field__control,
+    .q-field__native {
+      // 'Important' needed to increase specificity against native quasar styles
+      min-height: auto !important;
+    }
     .q-field__native,
     .q-field__append {
-      color: $primary;
+      color: $primary !important;
       font-weight: bold;
       text-transform: uppercase;
       min-height: auto;

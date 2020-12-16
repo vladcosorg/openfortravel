@@ -28,15 +28,18 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { PortalTarget } from 'portal-vue'
+import { hydrateNever, hydrateWhenIdle } from 'vue-lazy-hydration'
 
 import { useI18n } from 'src/composables/use-plugins'
-import TheFooter from 'src/layouts/components/the-footer.vue'
-import HeaderBar from 'src/layouts/components/the-header-bar.vue'
 
 export default defineComponent({
   components: {
-    TheFooter,
-    HeaderBar,
+    TheFooter: hydrateNever(
+      () => import('src/layouts/components/the-footer.vue'),
+    ),
+    HeaderBar: hydrateWhenIdle(
+      () => import('src/layouts/components/the-header-bar.vue'),
+    ),
     PortalTarget,
   },
   meta: {
