@@ -17,11 +17,11 @@
         dark
       >
         <template #prepend>
-          <q-icon name="search" />
+          <q-icon :name="iconSearch" />
         </template>
         <template #after>
           <q-btn
-            icon="notifications_none"
+            :icon="iconSubscribe"
             class="full-height"
             type="submit"
             unelevated
@@ -86,6 +86,10 @@ import {
   ionCheckmarkCircleOutline as allowedIcon,
   ionCloseCircleOutline as forbiddenIcon,
 } from '@quasar/extras/ionicons-v5'
+import {
+  matSearch as iconSearch,
+  matNotificationsNone as iconSubscribe,
+} from '@quasar/extras/material-icons'
 import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
@@ -188,6 +192,8 @@ export default defineComponent({
         getStatusMapper((status) => destinationsRef.value[status]?.length),
       ),
       promptVisible: ref(false),
+      iconSearch,
+      iconSubscribe,
     }
   },
 })

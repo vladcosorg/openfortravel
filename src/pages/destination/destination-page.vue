@@ -10,7 +10,7 @@
       <q-btn
         unelevated
         color="primary"
-        icon="arrow_back"
+        :icon="arrowBack"
         :loading="isGoingBack.state"
         :to="{
           name: 'origin',
@@ -133,7 +133,7 @@
     <q-btn
       class="q-mt-md full-width"
       color="accent"
-      icon="arrow_back"
+      :icon="arrowBack"
       outline
       :label="$t('page.destination.backToList')"
       :loading="isGoingBack.state"
@@ -148,6 +148,7 @@
 </template>
 
 <script lang="ts">
+import { matArrowBack as arrowBack } from '@quasar/extras/material-icons'
 import { computed, defineComponent } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
@@ -263,6 +264,7 @@ export default defineComponent({
       testingColor,
       insuranceColor,
       isGoingBack: useLoadingSwitch(),
+      arrowBack,
     }
   },
 })

@@ -58,9 +58,8 @@ module.exports = configure((context) => ({
     // 'themify',
     // 'line-awesome',
     // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
-
     // 'roboto-font', // optional, you are not bound to it
-    'material-icons', // optional, you are not bound to it
+    // 'material-icons', // optional, you are not bound to it
   ],
 
   // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
@@ -76,7 +75,7 @@ module.exports = configure((context) => ({
     // preloadChunks: true,
     // showProgress: false,
     // gzip: true,
-    analyze: true,
+    // analyze: true,
     // Options below are automatically set depending on the env, set them if you want to override
     // extractCSS: false,
     // minify: false,

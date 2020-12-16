@@ -1,6 +1,7 @@
 import { IVueI18n } from 'vue-i18n'
 import VueRouter, { RouterOptions } from 'vue-router'
 
+import MainLayout from 'src/layouts/main-layout.vue'
 import {
   transformCanonicalSlugToCode,
   transformDestinationSlugToCode,
@@ -49,11 +50,7 @@ export function createGenericRouter(
       },
       {
         path: '/:locale/',
-        component: () =>
-          import(
-            /* webpackChunkName: "main-layout" */
-            'layouts/main-layout.vue'
-          ),
+        component: MainLayout,
         props(route) {
           const props = {
             showTravelBar: false,

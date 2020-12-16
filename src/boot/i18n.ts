@@ -116,6 +116,12 @@ async function preloadLanguageFiles(lang: Locale): Promise<void> {
 }
 
 export default boot(async ({ app, store, ssrContext, redirect }) => {
+  import(
+    /* webpackPrefetch: true */
+    /* webpackPreload: true */
+    /* webpackChunkName: "main-layout" */
+    'layouts/main-layout.vue'
+  )
   let currentLocale = store.state.serverLocale
 
   // eslint-disable-next-line unused-imports/no-unused-vars-ts
