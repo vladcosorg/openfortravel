@@ -1,5 +1,4 @@
 import { QSsrContext } from '@quasar/app'
-import kebabCase from 'lodash/kebabCase'
 import union from 'lodash/union'
 import { boot } from 'quasar/wrappers'
 import Vue from 'vue'
@@ -14,9 +13,9 @@ import VueI18n, {
 } from 'vue-i18n'
 import { Store } from 'vuex'
 
+import { useRouter } from '@/shared/src/composables/use-plugins'
+import { useVuexRawState } from '@/shared/src/composables/use-vuex'
 import { eventBus } from 'src/boot/vue'
-import { useRouter } from 'src/composables/use-plugins'
-import { useVuexRawState } from 'src/composables/use-vuex'
 import { getCookiesAPI } from 'src/misc/misc'
 import {
   CountryList,
@@ -81,11 +80,6 @@ export async function forwardToLocalizedURL(): Promise<void> {
     .push(to.href)
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     .catch(() => {})
-}
-
-export function convertCountryLabelToSlug(countryName: string) {
-  countryName = kebabCase(countryName.toLowerCase())
-  return countryName
 }
 
 export async function changeLocale(newLocale: Locale): Promise<void> {

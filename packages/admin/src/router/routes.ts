@@ -13,7 +13,7 @@ const routes: RouteConfig[] = [
     children: [
       {
         name: 'admin-index',
-        path: 'list',
+        path: '/',
         component: ListPage,
       },
       // {

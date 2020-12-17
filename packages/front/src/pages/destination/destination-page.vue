@@ -152,13 +152,13 @@ import { matArrowBack as arrowBack } from '@quasar/extras/material-icons'
 import { computed, defineComponent } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
-import { RestrictionStatus } from 'src/api/restrictions/models'
-import { useComputedMemorized } from 'src/composables/use-computed-vmodel'
-import { useI18n } from 'src/composables/use-plugins'
+import { useComputedMemorized } from '@/shared/src/composables/use-computed-vmodel'
 import {
   useAggregatedLoader,
   useLoadingSwitch,
-} from 'src/composables/use-promise-loading'
+} from '@/shared/src/composables/use-promise-loading'
+import { RestrictionStatus } from 'src/api/restrictions/models'
+import { useI18n } from 'src/composables/use-plugins'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import { generateCanonicalBlock } from 'src/misc/meta'

@@ -8,13 +8,13 @@ import {
   WritableComputedRef,
 } from '@vue/composition-api'
 
-import { Restriction } from 'src/api/restrictions/models'
-import { useFilterableCollection } from 'src/composables/use-misc'
-import { useLoading } from 'src/composables/use-promise-loading'
+import { useFilterableCollection } from '@/shared/src/composables/use-misc'
+import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import {
   useProperVuexActionDispatcher,
   useVuexReactiveGetter,
-} from 'src/composables/use-vuex'
+} from '@/shared/src/composables/use-vuex'
+import { Restriction } from 'src/api/restrictions/models'
 import { GroupedDestinations } from 'src/pages/country/country-store'
 
 type GroupedDestinationObjects = GroupedDestinations<Restriction>

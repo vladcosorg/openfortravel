@@ -19,9 +19,10 @@ const extension = require('./extension')
 const app = express()
 const port = process.env.PORT || 3000
 
-const serve = (path, cache) => express.static(ssr.resolveWWW(path), {
-  maxAge: cache ? 1000 * 60 * 60 * 24 * 30 : 0
-})
+const serve = (path, cache) =>
+  express.static(ssr.resolveWWW(path), {
+    maxAge: cache ? 1000 * 60 * 60 * 24 * 30 : 0,
+  })
 
 // gzip
 app.use(compression({ threshold: 0 }))
@@ -76,13 +77,11 @@ app.get(ssr.resolveUrl('*'), (req, res) => {
       if (err.url) {
         if (err.code) res.redirect(err.code, err.url)
         else res.redirect(err.url)
-      }
-      else if (err.code === 404) {
+      } else if (err.code === 404) {
         // Should reach here only if no "catch-all" route
         // is defined in /src/routes
         res.status(404).send('404 | Page Not Found')
-      }
-      else {
+      } else {
         // Render Error Page or
         // create a route (/src/routes) for an error page and redirect to it
         res.status(500).send('500 | Internal Server Error')
@@ -92,8 +91,7 @@ app.get(ssr.resolveUrl('*'), (req, res) => {
           console.error(err.stack)
         }
       }
-    }
-    else {
+    } else {
       res.send(html)
     }
   })

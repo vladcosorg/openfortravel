@@ -1,6 +1,6 @@
 import { RawLocation } from 'vue-router'
 
-import { useRouter } from 'src/composables/use-plugins'
+import { useRouter } from '@/shared/src/composables/use-plugins'
 import { pathToURL } from 'src/router'
 
 export function generateCanonicalBlock(

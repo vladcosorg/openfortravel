@@ -98,7 +98,7 @@
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import InlineSvg from 'vue-inline-svg'
 
-import { useStore } from 'src/composables/use-plugins'
+import { useStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { InlineSvg },

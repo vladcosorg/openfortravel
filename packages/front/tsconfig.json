@@ -3,5 +3,5 @@
     "baseUrl": "./"
   },
   "extends": "../../tsconfig.json",
-  "exclude": ["./dist", ".quasar", "node_modules", "../../node_modules"],
+  "exclude": ["./dist", ".quasar", "node_modules", "../../node_modules"]
 }

@@ -72,10 +72,10 @@
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent, ref, toRef } from '@vue/composition-api'
 
+import { useStore } from '@/shared/src/composables/use-plugins'
+import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
+import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 import InvisibleNativeSelect from 'src/components/invisible-native-select.vue'
-import { useStore } from 'src/composables/use-plugins'
-import { useAggregatedLoader } from 'src/composables/use-promise-loading'
-import { useVuexRawGetter } from 'src/composables/use-vuex'
 import {
   CountryList,
   getDestinationLabelForCountryCode,

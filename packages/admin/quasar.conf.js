@@ -16,6 +16,7 @@ module.exports = configure((context) => ({
   // https://quasar.dev/quasar-cli/supporting-ts
   supportTS: {
     tsCheckerConfig: {
+      configFile: path.resolve('./tsconfig.json'),
       eslint: true,
     },
   },
@@ -49,12 +50,14 @@ module.exports = configure((context) => ({
     // extractCSS: false,
     // minify: false,
     chainWebpack(config) {
-      config.plugins.delete('ts-checker')
+      // config.plugins.delete('ts-checker')
     },
     // https://quasar.dev/quasar-cli/handling-webpack
     extendWebpack(config) {
       config.resolve.plugins = [new TsconfigPathsPlugin()]
-
+      config.resolve.alias = {
+        app: config.resolve.alias.app,
+      }
       // linting is slow in TS projects, we execute it only for production builds
       if (context.prod) {
         config.module.rules.push({

@@ -25,7 +25,7 @@ import { defineComponent, toRefs } from '@vue/composition-api'
 import {
   useBufferedModel,
   usePassthroughModel,
-} from 'src/composables/use-computed-vmodel'
+} from '@/shared/src/composables/use-computed-vmodel'
 
 export default defineComponent({
   props: {

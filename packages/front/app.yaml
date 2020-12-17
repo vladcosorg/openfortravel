@@ -1,2 +1,2 @@
 runtime: nodejs12
-default_expiration: "360d"
+default_expiration: '360d'

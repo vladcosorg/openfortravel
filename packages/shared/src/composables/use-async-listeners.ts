@@ -4,7 +4,7 @@ import {
   Loading,
   useClosureCollectionLoading,
   CallbackCollection,
-} from 'src/composables/use-promise-loading'
+} from '@/shared/src/composables/use-promise-loading'
 
 export function useAsyncListeners(): {
   listeners: CallbackCollection

@@ -4,8 +4,8 @@ import { Store } from 'vuex'
 
 import { StateInterface } from '../store'
 
+import { useRouter } from '@/shared/src/composables/use-plugins'
 import { i18n } from 'src/boot/i18n'
-import { useRouter } from 'src/composables/use-plugins'
 import { createGenericRouter } from 'src/router/routes'
 
 // eslint-disable-next-line import/no-unused-modules

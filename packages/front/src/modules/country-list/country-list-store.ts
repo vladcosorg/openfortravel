@@ -4,7 +4,6 @@ import mapValues from 'lodash/mapValues'
 import transform from 'lodash/transform'
 import { Module } from 'vuex'
 
-import { convertCountryLabelToSlug } from 'src/boot/i18n'
 import { CountryList } from 'src/modules/country-list/country-list-helpers'
 import { StateInterface } from 'src/store'
 
@@ -186,4 +185,9 @@ async function loadCountryListForLocale(locale: string) {
   return await import(
     /* webpackChunkName: "country-list-[request]" */ `i18n-iso-countries/langs/${locale}.json`
   )
+}
+
+export function convertCountryLabelToSlug(countryName: string) {
+  countryName = kebabCase(countryName.toLowerCase())
+  return countryName
 }

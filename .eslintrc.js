@@ -98,20 +98,20 @@ module.exports = {
       'warn',
       { 'newlines-between': 'always', alphabetize: { order: 'asc' } },
     ],
-    'import/no-unused-modules': [
-      'warn',
-      {
-        unusedExports: true,
-        missingExports: true,
-        ignoreExports: [
-          '**/*.d.ts',
-          '**/babel.config.js',
-          '**/quasar.conf.js',
-          '**/*.vue',
-          '**/src/boot/*.ts',
-        ],
-      },
-    ],
+    // 'import/no-unused-modules': [
+    //   'warn',
+    //   {
+    //     unusedExports: true,
+    //     missingExports: true,
+    //     ignoreExports: [
+    //       '**/*.d.ts',
+    //       '**/babel.config.js',
+    //       '**/quasar.conf.js',
+    //       '**/*.vue',
+    //       '**/src/boot/*.ts',
+    //     ],
+    //   },
+    // ],
     'import/newline-after-import': 'warn',
     'unused-imports/no-unused-imports-ts': 'error',
     'unused-imports/no-unused-vars-ts': [

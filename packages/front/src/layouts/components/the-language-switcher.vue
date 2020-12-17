@@ -44,10 +44,10 @@ import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 
+import { useLoading } from '@/shared/src/composables/use-promise-loading'
+import { useVuexRawState } from '@/shared/src/composables/use-vuex'
 import SimpleSelect from 'src/components/simple-select.vue'
 import { useEventBus } from 'src/composables/use-plugins'
-import { useLoading } from 'src/composables/use-promise-loading'
-import { useVuexRawState } from 'src/composables/use-vuex'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
