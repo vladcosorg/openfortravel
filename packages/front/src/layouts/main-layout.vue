@@ -28,13 +28,13 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { PortalTarget } from 'portal-vue'
-import { hydrateNever, hydrateWhenIdle } from 'vue-lazy-hydration'
+import { hydrateWhenIdle, hydrateWhenVisible } from 'vue-lazy-hydration'
 
 import { useI18n } from 'src/composables/use-plugins'
 
 export default defineComponent({
   components: {
-    TheFooter: hydrateNever(
+    TheFooter: hydrateWhenVisible(
       () => import('src/layouts/components/the-footer.vue'),
     ),
     HeaderBar: hydrateWhenIdle(

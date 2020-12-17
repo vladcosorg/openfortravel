@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "allowJs": true,
+
     // `baseUrl` must be placed on the extending configuration in devland, or paths won't be recognized
     "esModuleInterop": true,
     "module": "esnext",
@@ -16,7 +16,9 @@
     "lib": ["es2019", "DOM", "ES6", "DOM.Iterable", "ScriptHost"],
     // Quasar-defined webpack aliases
     "paths": {
-      "src/*": ["src/*"]
+      "src/*": ["src/*"],
+      "@shared/*": ["../shared/*"],
+      "@/*": ["../*"],
     },
     // Forces quasar typings to be included, even if they aren't referenced directly
     // Removing this would break `quasar/wrappers` imports if `quasar`
@@ -34,5 +36,5 @@
   },
   // Needed to avoid files copied into 'dist' folder (eg. a `.d.ts` file inside `src-ssr` folder)
   // to be evaluated by TS when their original files has been updated
-  "exclude": ["/dist", ".quasar", "node_modules"]
+  "exclude": ["./dist", ".quasar", "node_modules"]
 }

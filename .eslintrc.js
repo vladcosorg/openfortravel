@@ -1,4 +1,4 @@
-const { resolve } = require('path')
+const { resolve } = require("path");
 module.exports = {
   // https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
   // This option interrupts the configuration hierarchy at this file
@@ -12,12 +12,12 @@ module.exports = {
     // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser#configuration
     // https://github.com/TypeStrong/fork-ts-checker-webpack-plugin#eslint
     // Needed to make the parser take into account 'vue' files
-    extraFileExtensions: ['.vue'],
-    parser: '@typescript-eslint/parser',
-    project: resolve(__dirname, './tsconfig.json'),
+    extraFileExtensions: [".vue"],
+    parser: "@typescript-eslint/parser",
+    project: "./packages/**/tsconfig.json",
     tsconfigRootDir: __dirname,
     ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
-    sourceType: 'module', // Allows for the use of imports
+    sourceType: "module", // Allows for the use of imports
   },
 
   env: {
@@ -28,10 +28,10 @@ module.exports = {
   extends: [
     //
     // Base ESLint recommended rules
-    'eslint:recommended',
+    "eslint:recommended",
     // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#usage
     // ESLint typescript rules
-    'plugin:@typescript-eslint/recommended',
+    "plugin:@typescript-eslint/recommended",
     // consider disabling this class of rules if linting takes too long
     // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
     // Uncomment any of the lines below to choose desired strictness,
@@ -39,30 +39,30 @@ module.exports = {
     // See https://eslint.vuejs.org/rules/#available-rules
     // 'plugin:vue/essential', // Priority A: Essential (Error Prevention)
     // 'plugin:vue/strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
-    'plugin:vue/recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
+    "plugin:vue/recommended", // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
     // https://github.com/prettier/eslint-config-prettier#installation
     // usage with Prettier, provided by 'eslint-config-prettier'.
 
-    'plugin:unicorn/recommended',
+    "plugin:unicorn/recommended",
 
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:import/typescript',
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
 
-    'prettier',
-    'prettier/vue',
-    'prettier/unicorn',
-    'prettier/@typescript-eslint',
+    "prettier",
+    "prettier/vue",
+    "prettier/unicorn",
+    "prettier/@typescript-eslint",
   ],
 
   plugins: [
     // required to apply rules which need type information
-    '@typescript-eslint',
+    "@typescript-eslint",
     // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-file
     // required to lint *.vue files
-    'vue',
-    'import',
-    'unused-imports',
+    "vue",
+    "import",
+    "unused-imports",
   ],
 
   globals: {
@@ -76,7 +76,7 @@ module.exports = {
 
   // add your custom rules here
   rules: {
-    'prefer-promise-reject-errors': 'off',
+    "prefer-promise-reject-errors": "off",
     // '@typescript-eslint/no-unsafe-call': 'off',
     // '@typescript-eslint/no-unsafe-assignment': 'off',
     // '@typescript-eslint/no-unsafe-return': 'off',
@@ -84,91 +84,88 @@ module.exports = {
     // '@typescript-eslint/no-floating-promises': 'off',
     //
     // // TypeScript
-    quotes: ['warn', 'single', { avoidEscape: true }],
+    quotes: ["warn", "single", { avoidEscape: true }],
     // '@typescript-eslint/explicit-function-return-type': 'off',
     // '@typescript-eslint/explicit-module-boundary-types': 'off',
     //
     // // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'import/no-unresolved': [2, { ignore: ['.vue$'] }],
-    'import/extensions': ['warn', 'always', { js: 'never', ts: 'never' }],
-    'import/order': [
-      'warn',
-      { 'newlines-between': 'always', alphabetize: { order: 'asc' } },
+    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
+    "import/no-unresolved": [2, { ignore: [".vue$"] }],
+    "import/extensions": ["warn", "always", { js: "never", ts: "never" }],
+    "import/order": [
+      "warn",
+      { "newlines-between": "always", alphabetize: { order: "asc" } },
     ],
-    'import/no-unused-modules': [
-      'warn',
+    "import/no-unused-modules": [
+      "warn",
       {
         unusedExports: true,
         missingExports: true,
         ignoreExports: [
-          '**/*.d.ts',
-          'babel.config.js',
-          'quasar.conf.js',
-          '**/*.vue',
-          '**/src/boot/*.ts',
+          "**/*.d.ts",
+          "**/babel.config.js",
+          "**/quasar.conf.js",
+          "**/*.vue",
+          "**/src/boot/*.ts",
         ],
       },
     ],
-    'import/newline-after-import': 'warn',
-    'unused-imports/no-unused-imports-ts': 'error',
-    'unused-imports/no-unused-vars-ts': [
-      'error',
+    "import/newline-after-import": "warn",
+    "unused-imports/no-unused-imports-ts": "error",
+    "unused-imports/no-unused-vars-ts": [
+      "error",
       {
-        vars: 'all',
-        varsIgnorePattern: '^_',
-        args: 'after-used',
-        argsIgnorePattern: '^_',
+        vars: "all",
+        varsIgnorePattern: "^_",
+        args: "after-used",
+        argsIgnorePattern: "^_",
       },
     ],
 
-    'unicorn/prevent-abbreviations': 'off',
-    'unicorn/numeric-separators-style': 'warn',
-    'unicorn/no-unsafe-regex': 'warn',
-    'unicorn/no-unused-properties': 'warn',
-    'unicorn/prefer-replace-all': 'warn',
-    'unicorn/filename-case': 'off',
-    'no-console': 'warn',
-    'vue/no-v-html': 'off',
-    'unicorn/no-reduce': 'off',
-    'arrow-body-style': ['warn', 'as-needed'],
-    'prefer-arrow-callback': 'warn',
-    curly: 'warn',
-    'vue/html-self-closing': [
-      'error',
+    "unicorn/prevent-abbreviations": "off",
+    "unicorn/numeric-separators-style": "warn",
+    "unicorn/no-unsafe-regex": "warn",
+    "unicorn/no-unused-properties": "warn",
+    "unicorn/prefer-replace-all": "warn",
+    "unicorn/filename-case": "off",
+    "no-console": "warn",
+    "vue/no-v-html": "off",
+    "unicorn/no-reduce": "off",
+    "arrow-body-style": ["warn", "as-needed"],
+    "prefer-arrow-callback": "warn",
+    curly: "warn",
+    "vue/html-self-closing": [
+      "error",
       {
         html: {
-          void: 'any',
+          void: "any",
         },
       },
     ],
 
-    'vue/component-name-in-template-casing': [
-      'error',
-      'kebab-case',
+    "vue/component-name-in-template-casing": [
+      "error",
+      "kebab-case",
       {
         registeredComponentsOnly: true,
         ignores: [],
       },
     ],
-    'vue/no-bare-strings-in-template': 'warn',
-    'vue/no-empty-component-block': 'warn',
-    'vue/no-useless-v-bind': 'warn',
-    'vue/component-tags-order': 'off',
-    'vue/require-default-prop': 'off',
+    "vue/no-bare-strings-in-template": "warn",
+    "vue/no-empty-component-block": "warn",
+    "vue/no-useless-v-bind": "warn",
+    "vue/component-tags-order": "off",
+    "vue/require-default-prop": "off",
   },
   settings: {
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-      'vue-eslint-parser': ['.vue'],
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"],
+      "vue-eslint-parser": [".vue"],
     },
-    'import/resolver': {
+    "import/resolver": {
       typescript: {
-        project: [
-          'tsconfig.json',
-          'node_modules/@quasar/app/tsconfig-preset.json',
-        ],
+        project: ["tsconfig.json"],
       },
     },
   },
-}
+};

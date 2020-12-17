@@ -17,13 +17,13 @@
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { hydrateOnInteraction, hydrateWhenIdle } from 'vue-lazy-hydration'
+import { hydrateOnInteraction } from 'vue-lazy-hydration'
 
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 
 export default defineComponent({
   components: {
-    TheCountryList: hydrateWhenIdle(TheCountryList),
+    TheCountryList: hydrateOnInteraction(TheCountryList),
     Boy: hydrateOnInteraction(
       () => import('src/layouts/components/the-boy/the-boy.vue'),
     ),

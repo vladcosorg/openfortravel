@@ -10,6 +10,7 @@
 const path = require('path')
 
 const { configure } = require('quasar/wrappers')
+const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin')
 
 module.exports = configure((context) => ({
   // https://quasar.dev/quasar-cli/supporting-ts
@@ -81,10 +82,12 @@ module.exports = configure((context) => ({
     // minify: false,
 
     // https://quasar.dev/quasar-cli/handling-webpack
-    extendWebpack(cfg) {
+    extendWebpack(config) {
+      config.resolve.plugins = [new TsconfigPathsPlugin()]
+
       // linting is slow in TS projects, we execute it only for production builds
       if (context.prod) {
-        cfg.module.rules.push({
+        config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
@@ -94,7 +97,7 @@ module.exports = configure((context) => ({
         // cfg.output.publicPath = 'https://storage.googleapis.com/oftassets/'
       }
 
-      cfg.module.rules.push({
+      config.module.rules.push({
         test: /\.vue$/,
         loader: 'vue-svg-inline-loader',
         options: {

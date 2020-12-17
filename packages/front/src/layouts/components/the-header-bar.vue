@@ -20,14 +20,14 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { PortalTarget } from 'portal-vue'
-import { hydrateNever, hydrateWhenIdle } from 'vue-lazy-hydration'
+import { hydrateWhenIdle } from 'vue-lazy-hydration'
 
 export default defineComponent({
   components: {
     LanguageSwitcher: hydrateWhenIdle(
       () => import('src/layouts/components/the-language-switcher.vue'),
     ),
-    Logo: hydrateNever(() => import('src/layouts/components/the-logo.vue')),
+    Logo: hydrateWhenIdle(() => import('src/layouts/components/the-logo.vue')),
     PortalTarget,
   },
   setup() {

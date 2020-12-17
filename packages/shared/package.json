@@ -1,0 +1,8 @@
+{
+  "name": "shared",
+  "version": "0.3.1",
+  "description": "A Quasar Framework app",
+  "productName": "Open For Travel Guide",
+  "author": "chetzof <vcosvic@gmail.com>",
+  "private": true
+}
