@@ -27,7 +27,11 @@ module.exports = configure((context) => ({
   // app boot file (/src/boot)
   // --> boot files are part of "main.js"
   // https://quasar.dev/quasar-cli/boot-files
-  boot: ['~shared/src/boot/composition-api', '~shared/src/boot/use-setter'],
+  boot: [
+    '~shared/src/boot/composition-api',
+    '~shared/src/boot/use-setter',
+    'misc',
+  ],
 
   // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
   css: ['app.sass'],
@@ -50,13 +54,17 @@ module.exports = configure((context) => ({
     // extractCSS: false,
     // minify: false,
     chainWebpack(config) {
-      // config.plugins.delete('ts-checker')
+      if (context.debug) {
+        config.plugins.delete('hashed-module-ids')
+        config.optimization.namedModules(true)
+      }
     },
     // https://quasar.dev/quasar-cli/handling-webpack
     extendWebpack(config) {
       config.resolve.plugins = [new TsconfigPathsPlugin()]
       config.resolve.alias = {
         app: config.resolve.alias.app,
+        boot: config.resolve.alias.boot,
       }
       // linting is slow in TS projects, we execute it only for production builds
       if (context.prod) {
@@ -81,7 +89,7 @@ module.exports = configure((context) => ({
       contentBase: path.join(__dirname, 'public'),
     },
   },
-
+  extras: ['material-icons'],
   // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
   framework: {
     iconSet: 'material-icons', // Quasar icon set

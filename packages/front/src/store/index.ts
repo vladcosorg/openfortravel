@@ -2,7 +2,7 @@ import { store } from 'quasar/wrappers'
 import { LocaleMessageObject } from 'vue-i18n'
 import Vuex from 'vuex'
 
-import countryList from 'src/modules/country-list/country-list-store'
+import countryList from '@/shared/src/modules/country-list/country-list-store'
 import countryPage from 'src/pages/country/country-store'
 import destinationPage from 'src/pages/destination/destination-store'
 /*

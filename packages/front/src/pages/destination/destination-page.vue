@@ -157,16 +157,16 @@ import {
   useAggregatedLoader,
   useLoadingSwitch,
 } from '@/shared/src/composables/use-promise-loading'
+import {
+  getLabelForCountryCode,
+  transformCodeToDestinationSlug,
+  transformCodeToOriginSlug,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 import { RestrictionStatus } from 'src/api/restrictions/models'
 import { useI18n } from 'src/composables/use-plugins'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import { generateCanonicalBlock } from 'src/misc/meta'
-import {
-  getLabelForCountryCode,
-  transformCodeToDestinationSlug,
-  transformCodeToOriginSlug,
-} from 'src/modules/country-list/country-list-helpers'
 import ReturnWay from 'src/pages/destination/components/return-way.vue'
 import {
   getDestination,

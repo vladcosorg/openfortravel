@@ -4,10 +4,10 @@ import path from 'path'
 import { simpleSitemapAndIndex, SitemapItemLoose } from 'sitemap'
 import languages from 'vue-auto-i18n/dist/supported-languages/google.json'
 
+import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
+import { convertCountryListResponseToCountrySlugMap } from '@/shared/src/modules/country-list/country-list-store'
 import { createVueI18n } from 'src/boot/i18n'
 import messages from 'src/i18n'
-import { CountryList } from 'src/modules/country-list/country-list-helpers'
-import { convertCountryListResponseToCountrySlugMap } from 'src/modules/country-list/country-list-store'
 import { createGenericRouter } from 'src/router/routes'
 
 const i18n = createVueI18n(messages)

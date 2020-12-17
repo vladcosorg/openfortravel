@@ -2,6 +2,7 @@ import { Ref } from '@vue/composition-api'
 import keyBy from 'lodash/keyBy'
 
 import { useAsyncState } from '@/shared/src/composables/use-async'
+import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 import {
   createDummyDestination,
   createDummyPlainDestination,
@@ -13,7 +14,6 @@ import {
   findOrigins,
   updateOriginField,
 } from 'src/api/destinations/repository'
-import { getCountryCodes } from 'src/modules/country-list/country-list-helpers'
 
 type UpdateFunc = <
   K extends keyof PlainDestination,

@@ -79,13 +79,13 @@ import { computed, defineComponent } from '@vue/composition-api'
 
 import { useRouter } from '@/shared/src/composables/use-plugins'
 import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
-import { useI18n } from 'src/composables/use-plugins'
-import CountrySelect from 'src/layouts/components/the-country-list/country-select.vue'
-import { getCurrentCountry } from 'src/misc/country-decider'
 import {
   transformCodeToDestinationSlug,
   transformCodeToOriginSlug,
-} from 'src/modules/country-list/country-list-helpers'
+} from '@/shared/src/modules/country-list/country-list-helpers'
+import { useI18n } from 'src/composables/use-plugins'
+import CountrySelect from 'src/layouts/components/the-country-list/country-select.vue'
+import { getCurrentCountry } from 'src/misc/country-decider'
 
 export default defineComponent({
   components: { CountrySelect },

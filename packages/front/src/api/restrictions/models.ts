@@ -1,11 +1,11 @@
-import { getFullDescription, getShortDescription } from 'src/models/description'
 import {
   getDestinationLabelForCountryCode,
   getLabelForCountryCode,
   getOriginLabelForCountryCode,
   transformCodeToDestinationSlug,
   transformCodeToOriginSlug,
-} from 'src/modules/country-list/country-list-helpers'
+} from '@/shared/src/modules/country-list/country-list-helpers'
+import { getFullDescription, getShortDescription } from 'src/models/description'
 
 export enum RestrictionStatus {
   ALLOWED = 'allowed',

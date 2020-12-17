@@ -15,12 +15,12 @@ import { Store } from 'vuex'
 
 import { useRouter } from '@/shared/src/composables/use-plugins'
 import { useVuexRawState } from '@/shared/src/composables/use-vuex'
-import { eventBus } from 'src/boot/vue'
-import { getCookiesAPI } from 'src/misc/misc'
 import {
   CountryList,
   preloadLocalizedListLanguage,
-} from 'src/modules/country-list/country-list-helpers'
+} from '@/shared/src/modules/country-list/country-list-helpers'
+import { eventBus } from 'src/boot/vue'
+import { getCookiesAPI } from 'src/misc/misc'
 import { reloadRoutes } from 'src/router'
 import { StateInterface } from 'src/store'
 

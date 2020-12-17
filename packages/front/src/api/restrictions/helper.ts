@@ -1,6 +1,7 @@
 import zipObject from 'lodash/zipObject'
 import { TranslateResult } from 'vue-i18n'
 
+import { getCountryCodes as getAllCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 import {
   PlainRestriction,
   Restriction,
@@ -12,7 +13,6 @@ import {
   findRestrictionsByOrigin,
 } from 'src/api/restrictions/repository'
 import { i18n } from 'src/boot/i18n'
-import { getCountryCodes as getAllCountryCodes } from 'src/modules/country-list/country-list-helpers'
 
 export async function generateRestrictionListByDestination(
   destinationCode: string,

@@ -96,16 +96,16 @@ import { Portal } from 'portal-vue'
 import { useComputedMemorized } from '@/shared/src/composables/use-computed-vmodel'
 import { useStore } from '@/shared/src/composables/use-plugins'
 import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
+import {
+  getLabelForCountryCode,
+  transformCodeToOriginSlug,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 import { getStatusListMap, getStatusMapper } from 'src/api/restrictions/helper'
 import { useI18n } from 'src/composables/use-plugins'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
 import TheSubscribeForm from 'src/layouts/components/the-subscribe-form.vue'
 import { generateCanonicalBlock } from 'src/misc/meta'
-import {
-  getLabelForCountryCode,
-  transformCodeToOriginSlug,
-} from 'src/modules/country-list/country-list-helpers'
 import DestinationGroup from 'src/pages/country/components/destination-group.vue'
 import {
   useFilterableFlatDestinations,

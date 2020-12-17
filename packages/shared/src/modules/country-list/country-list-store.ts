@@ -1,11 +1,9 @@
+import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import isEmpty from 'lodash/isEmpty'
 import kebabCase from 'lodash/kebabCase'
 import mapValues from 'lodash/mapValues'
 import transform from 'lodash/transform'
 import { Module } from 'vuex'
-
-import { CountryList } from 'src/modules/country-list/country-list-helpers'
-import { StateInterface } from 'src/store'
 
 class State {
   countryList: CountryList = {}
@@ -83,10 +81,12 @@ export default {
       commit('setCountryList', Object.freeze(countryList))
 
       if (locale === 'ru') {
-        const response = await import('src/i18n/declensions-ru/origin.json')
+        const response = await import(
+          '@/front/src/i18n/declensions-ru/origin.json'
+        )
         commit('setCountryListOrigin', response.default)
         const response2 = await import(
-          'src/i18n/declensions-ru/destination.json'
+          '@/front/src/i18n/declensions-ru/destination.json'
         )
         commit('setCountryListDestination', response2.default)
       } else {
@@ -122,7 +122,7 @@ export default {
       }
     },
   },
-} as Module<State, StateInterface>
+} as Module<State, any>
 
 function getFirstLabel(label: string | string[]): string {
   if (Array.isArray(label)) {

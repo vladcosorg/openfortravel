@@ -1,1 +1,1 @@
-export { default } from 'src/modules/country-list/country-list-boot'
+export { default } from '@/shared/src/modules/country-list/country-list-boot'
