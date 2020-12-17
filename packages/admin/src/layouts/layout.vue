@@ -1,0 +1,19 @@
+<template>
+  <q-layout view="hhr lpr ffr">
+    <q-header reveal> Openfortravel </q-header>
+    <q-footer>
+      <q-toolbar style="background-color: #222930">
+        <q-toolbar-title>Footer</q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
+    <q-page-container class="window-height column">
+      <router-view />
+    </q-page-container>
+  </q-layout>
+</template>
+
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+
+export default defineComponent({})
+</script>

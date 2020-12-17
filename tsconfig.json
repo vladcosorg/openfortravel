@@ -16,9 +16,8 @@
     "lib": ["es2019", "DOM", "ES6", "DOM.Iterable", "ScriptHost"],
     // Quasar-defined webpack aliases
     "paths": {
-      "src/*": ["src/*"],
-      "@shared/*": ["../shared/*"],
-      "@/*": ["../*"],
+      "src/*": ["../front/src/*"],
+      "@/*": ["../*"]
     },
     // Forces quasar typings to be included, even if they aren't referenced directly
     // Removing this would break `quasar/wrappers` imports if `quasar`

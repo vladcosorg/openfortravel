@@ -1,9 +1,12 @@
 {
   "name": "example-monorepo",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "front": "yarn workspace front",
+    "admin": "yarn workspace admin",
     "shared": "yarn workspace shared"
   }
 }

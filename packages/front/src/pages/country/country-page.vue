@@ -93,9 +93,10 @@ import {
 import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
+import { useStore } from '@/shared/src/composables/use-plugins'
 import { getStatusListMap, getStatusMapper } from 'src/api/restrictions/helper'
 import { useComputedMemorized } from 'src/composables/use-computed-vmodel'
-import { useI18n, useStore } from 'src/composables/use-plugins'
+import { useI18n } from 'src/composables/use-plugins'
 import { useAggregatedLoader } from 'src/composables/use-promise-loading'
 import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
