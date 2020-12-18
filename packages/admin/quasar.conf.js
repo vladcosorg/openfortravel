@@ -16,8 +16,18 @@ module.exports = configure((context) => ({
   // https://quasar.dev/quasar-cli/supporting-ts
   supportTS: {
     tsCheckerConfig: {
-      configFile: path.resolve('./tsconfig.json'),
-      eslint: true,
+      lool: true,
+      // typescript: {
+      //   enabled: true,
+      tsconfig: path.resolve('./tsconfig.json'),
+      tsconfigPath: path.resolve('./tsconfig.json'),
+      // },
+      // eslint: undefined,
+    },
+    tsLoaderConfig: {
+      // transpileOnly: false,
+      // configFile: path.resolve('./tsconfig.json'),
+      // context: path.resolve('./'),
     },
   },
 
@@ -58,6 +68,7 @@ module.exports = configure((context) => ({
         config.plugins.delete('hashed-module-ids')
         config.optimization.namedModules(true)
       }
+      // config.plugins.delete('ts-checker')
     },
     // https://quasar.dev/quasar-cli/handling-webpack
     extendWebpack(config) {
@@ -68,12 +79,12 @@ module.exports = configure((context) => ({
       }
       // linting is slow in TS projects, we execute it only for production builds
       if (context.prod) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /node_modules/,
-        })
+        // config.module.rules.push({
+        //   enforce: 'pre',
+        //   test: /\.(js|vue)$/,
+        //   loader: 'eslint-loader',
+        //   exclude: /node_modules/,
+        // })
       }
     },
   },
