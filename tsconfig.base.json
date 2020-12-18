@@ -1,6 +1,7 @@
 {
   "extends": "./node_modules/@quasar/app/tsconfig-preset.json",
   "compilerOptions": {
+    "lib": ["es2019", "DOM", "ES6", "DOM.Iterable", "ScriptHost"],
     "skipLibCheck": true,
     "paths": {
       "src/*": ["src/*"],

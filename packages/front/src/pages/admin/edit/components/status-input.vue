@@ -17,8 +17,8 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
-import { useAsyncListeners } from '@/shared/src/composables/use-async-listeners'
 import { getStatusListPairs } from '@/shared/src/api/restrictions/helper'
+import { useAsyncListeners } from '@/shared/src/composables/use-async-listeners'
 
 export default defineComponent({
   components: {},

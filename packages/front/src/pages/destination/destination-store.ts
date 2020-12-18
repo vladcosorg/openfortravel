@@ -1,5 +1,6 @@
 import { Module } from 'vuex'
 
+import { StateInterface } from '@/front/src/store'
 import {
   createDummyPlainDestination,
   wrapWithRichDestinationObject,
@@ -18,7 +19,6 @@ import {
   Restriction,
 } from '@/shared/src/api/restrictions/models'
 import { findRestrictionByOriginAndDestination } from '@/shared/src/api/restrictions/repository'
-import { StateInterface } from '@/front/src/store'
 
 class State {
   public restriction = createDummyPlainRestriction()

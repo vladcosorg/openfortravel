@@ -1,7 +1,7 @@
 import Vue from 'vue'
+import { IVueI18n } from 'vue-i18n'
 import VueRouter from 'vue-router'
 import { Store } from 'vuex'
-import VueI18n, { IVueI18n } from 'vue-i18n'
 
 let storeInstance: Store<never>
 

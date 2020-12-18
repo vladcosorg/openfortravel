@@ -152,6 +152,16 @@ import { matArrowBack as arrowBack } from '@quasar/extras/material-icons'
 import { computed, defineComponent } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
+import { useI18n } from '@/front/src/composables/use-plugins'
+import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
+import TheFlagBackground from '@/front/src/layouts/components/the-flag-background.vue'
+import { generateCanonicalBlock } from '@/front/src/misc/meta'
+import ReturnWay from '@/front/src/pages/destination/components/return-way.vue'
+import {
+  getDestination,
+  getRestriction,
+} from '@/front/src/pages/destination/destination-composable'
+import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useComputedMemorized } from '@/shared/src/composables/use-computed-vmodel'
 import {
   useAggregatedLoader,
@@ -162,16 +172,6 @@ import {
   transformCodeToDestinationSlug,
   transformCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
-import { useI18n } from '@/front/src/composables/use-plugins'
-import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
-import TheFlagBackground from '@/front/src/layouts/components/the-flag-background.vue'
-import { generateCanonicalBlock } from '@/front/src/misc/meta'
-import ReturnWay from '@/front/src/pages/destination/components/return-way.vue'
-import {
-  getDestination,
-  getRestriction,
-} from '@/front/src/pages/destination/destination-composable'
 
 export default defineComponent({
   meta({

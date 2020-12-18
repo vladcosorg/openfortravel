@@ -93,17 +93,6 @@ import {
 import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
-import { useComputedMemorized } from '@/shared/src/composables/use-computed-vmodel'
-import { useStore } from '@/shared/src/composables/use-plugins'
-import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
-import {
-  getLabelForCountryCode,
-  transformCodeToOriginSlug,
-} from '@/shared/src/modules/country-list/country-list-helpers'
-import {
-  getStatusListMap,
-  getStatusMapper,
-} from '@/shared/src/api/restrictions/helper'
 import { useI18n } from '@/front/src/composables/use-plugins'
 import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from '@/front/src/layouts/components/the-flag-background.vue'
@@ -114,6 +103,17 @@ import {
   useFilterableFlatDestinations,
   useGroupedDestinations,
 } from '@/front/src/pages/country/composable'
+import {
+  getStatusListMap,
+  getStatusMapper,
+} from '@/shared/src/api/restrictions/helper'
+import { useComputedMemorized } from '@/shared/src/composables/use-computed-vmodel'
+import { useStore } from '@/shared/src/composables/use-plugins'
+import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
+import {
+  getLabelForCountryCode,
+  transformCodeToOriginSlug,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
   meta({

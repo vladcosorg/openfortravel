@@ -6,13 +6,13 @@ import {
   watch,
 } from '@vue/composition-api'
 
+import { Destination } from '@/shared/src/api/destinations/models'
+import { Restriction } from '@/shared/src/api/restrictions/models'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import {
   useVuexActionDispatcherWithReactivePayload,
   useVuexReactiveGetter,
 } from '@/shared/src/composables/use-vuex'
-import { Destination } from '@/shared/src/api/destinations/models'
-import { Restriction } from '@/shared/src/api/restrictions/models'
 
 export function getRestriction(
   originCodeRef: Ref<string>,

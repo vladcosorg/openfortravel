@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "quasar dev -m ssr",
     "lint": "eslint --ext .js,.ts,.vue ./src",
-    "fix": "eslint --fix --ext .js,.ts,.vue  ./",
+    "fix": "eslint --fix --ext .js,.ts,.vue ./ && yarn format",
     "format": "prettier --write  .",
     "test": "echo \"No test specified\" && exit 0",
     "fake-server": "json-server --watch db.json",

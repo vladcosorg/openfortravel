@@ -8,5 +8,8 @@
     "front": "yarn workspace front",
     "admin": "yarn workspace admin",
     "shared": "yarn workspace shared"
+  },
+  "devDependencies": {
+    "prettier": "^2.2.1"
   }
 }

@@ -4,5 +4,9 @@
   "description": "A Quasar Framework app",
   "productName": "Open For Travel Guide",
   "author": "chetzof <vcosvic@gmail.com>",
-  "private": true
+  "private": true,
+  "scripts": {
+    "fix": "eslint --fix --ext .js,.ts,.vue ./ && yarn format",
+    "format": "prettier --write  ."
+  }
 }

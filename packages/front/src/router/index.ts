@@ -4,9 +4,9 @@ import { Store } from 'vuex'
 
 import { StateInterface } from '../store'
 
-import { useRouter } from '@/shared/src/composables/use-plugins'
 import { i18n } from '@/front/src/boot/i18n'
 import { createGenericRouter } from '@/front/src/router/routes'
+import { useRouter } from '@/shared/src/composables/use-plugins'
 
 // eslint-disable-next-line import/no-unused-modules
 export default route<Store<StateInterface>>(async ({ Vue }) => {

@@ -1,10 +1,4 @@
-import VueI18n, {
-  IVueI18n,
-  Locale,
-  LocaleMessageObject,
-  LocaleMessages,
-  Values,
-} from 'vue-i18n'
+import VueI18n, { IVueI18n, LocaleMessages } from 'vue-i18n'
 
 export function createVueI18n(messages?: LocaleMessages): IVueI18n {
   return (new VueI18n({

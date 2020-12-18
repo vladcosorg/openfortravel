@@ -4,11 +4,11 @@ import path from 'path'
 import { simpleSitemapAndIndex, SitemapItemLoose } from 'sitemap'
 import languages from 'vue-auto-i18n/dist/supported-languages/google.json'
 
+import { createGenericRouter } from '@/front/src/router/routes'
+import messages from '@/shared/src/i18n'
+import { createVueI18n } from '@/shared/src/misc/i18n'
 import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import { convertCountryListResponseToCountrySlugMap } from '@/shared/src/modules/country-list/country-list-store'
-import messages from '@/shared/src/i18n'
-import { createGenericRouter } from '@/front/src/router/routes'
-import { createVueI18n } from '@/shared/src/misc/i18n'
 
 const i18n = createVueI18n(messages)
 

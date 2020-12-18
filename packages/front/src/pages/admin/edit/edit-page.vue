@@ -130,14 +130,14 @@
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
 
+import SelfIsolate from '@/front/src/pages/admin/edit/components/self-isolate.vue'
+import TableHeader from '@/front/src/pages/admin/edit/components/table-header.vue'
+import TestRequired from '@/front/src/pages/admin/edit/components/test-required.vue'
 import {
   useRestrictionCollectionPersister,
   useRestrictionListFilteredByDestination,
   useRestrictionPersister,
 } from '@/shared/src/api/restrictions/composables'
-import SelfIsolate from '@/front/src/pages/admin/edit/components/self-isolate.vue'
-import TableHeader from '@/front/src/pages/admin/edit/components/table-header.vue'
-import TestRequired from '@/front/src/pages/admin/edit/components/test-required.vue'
 
 export default defineComponent({
   components: {

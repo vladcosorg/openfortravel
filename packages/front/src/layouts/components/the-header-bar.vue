@@ -27,7 +27,9 @@ export default defineComponent({
     LanguageSwitcher: hydrateWhenIdle(
       () => import('@/front/src/layouts/components/the-language-switcher.vue'),
     ),
-    Logo: hydrateWhenIdle(() => import('@/front/src/layouts/components/the-logo.vue')),
+    Logo: hydrateWhenIdle(
+      () => import('@/front/src/layouts/components/the-logo.vue'),
+    ),
     PortalTarget,
   },
   setup() {

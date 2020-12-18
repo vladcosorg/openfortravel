@@ -65,10 +65,10 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-import { useDestination } from '@/shared/src/api/destinations/composables'
-import InputDate from '@/admin/src/pages/edit/components/input-date.vue'
 import InPlaceField from '@/admin/src/pages/edit/components/in-place-field.vue'
+import InputDate from '@/admin/src/pages/edit/components/input-date.vue'
 import TestRequired from '@/admin/src/pages/edit/components/test-required.vue'
+import { useDestination } from '@/shared/src/api/destinations/composables'
 
 export default defineComponent({
   components: { InPlaceField, InputDate, TestRequired },

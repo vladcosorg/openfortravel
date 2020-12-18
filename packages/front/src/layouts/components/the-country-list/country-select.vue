@@ -72,6 +72,7 @@
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent, ref, toRef } from '@vue/composition-api'
 
+import InvisibleNativeSelect from '@/front/src/components/invisible-native-select.vue'
 import { useStore } from '@/shared/src/composables/use-plugins'
 import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
 import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
@@ -80,7 +81,6 @@ import {
   getDestinationLabelForCountryCode,
   getOriginLabelForCountryCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import InvisibleNativeSelect from '@/front/src/components/invisible-native-select.vue'
 
 export interface ListItem {
   value: string
@@ -137,7 +137,7 @@ export default defineComponent({
     })
 
     const loadingRef = useAggregatedLoader(
-      computed(() => useStore().state.countrySelectorLoading),
+      computed(() => useStore().state['countrySelectorLoading']),
       toRef(props, 'loading'),
     )
 

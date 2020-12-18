@@ -1,9 +1,10 @@
-import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import isEmpty from 'lodash/isEmpty'
 import kebabCase from 'lodash/kebabCase'
 import mapValues from 'lodash/mapValues'
 import transform from 'lodash/transform'
 import { Module } from 'vuex'
+
+import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 
 class State {
   countryList: CountryList = {}

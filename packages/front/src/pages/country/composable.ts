@@ -8,14 +8,14 @@ import {
   WritableComputedRef,
 } from '@vue/composition-api'
 
+import { GroupedDestinations } from '@/front/src/pages/country/country-store'
+import { Restriction } from '@/shared/src/api/restrictions/models'
 import { useFilterableCollection } from '@/shared/src/composables/use-misc'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import {
   useProperVuexActionDispatcher,
   useVuexReactiveGetter,
 } from '@/shared/src/composables/use-vuex'
-import { Restriction } from '@/shared/src/api/restrictions/models'
-import { GroupedDestinations } from '@/front/src/pages/country/country-store'
 
 type GroupedDestinationObjects = GroupedDestinations<Restriction>
 

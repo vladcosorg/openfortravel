@@ -5,7 +5,6 @@ import Vue from 'vue'
 import { extendWithAutoI18n } from 'vue-auto-i18n'
 import autoLanguages from 'vue-auto-i18n/dist/supported-languages/google.json'
 import VueI18n, {
-  IVueI18n,
   Locale,
   LocaleMessageObject,
   LocaleMessages,
@@ -13,17 +12,17 @@ import VueI18n, {
 } from 'vue-i18n'
 import { Store } from 'vuex'
 
-import { setVueI18n, useRouter } from '@/shared/src/composables/use-plugins'
-import { useVuexRawState } from '@/shared/src/composables/use-vuex'
-import {
-  CountryList,
-  preloadLocalizedListLanguage,
-} from '@/shared/src/modules/country-list/country-list-helpers'
 import { eventBus } from '@/front/src/boot/vue'
 import { getCookiesAPI } from '@/front/src/misc/misc'
 import { reloadRoutes } from '@/front/src/router'
 import { StateInterface } from '@/front/src/store'
+import { setVueI18n, useRouter } from '@/shared/src/composables/use-plugins'
+import { useVuexRawState } from '@/shared/src/composables/use-vuex'
 import { createVueI18n } from '@/shared/src/misc/i18n'
+import {
+  CountryList,
+  preloadLocalizedListLanguage,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 
 declare module 'vue/types/vue' {
   interface Vue {
