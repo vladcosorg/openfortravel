@@ -3,8 +3,8 @@ import { boot } from 'quasar/wrappers'
 import VueRouter from 'vue-router'
 import { Store } from 'vuex'
 
-import { getCookiesAPI } from 'src/misc/misc'
-import { StateInterface } from 'src/store'
+import { getCookiesAPI } from '@/front/src/misc/misc'
+import { StateInterface } from '@/front/src/store'
 
 export let storeInstance: Store<StateInterface>
 export let routerInstance: VueRouter

@@ -17,7 +17,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-import Logo from 'src/layouts/components/the-logo.vue'
+import Logo from '@/front/src/layouts/components/the-logo.vue'
 
 export default defineComponent({
   components: { Logo },

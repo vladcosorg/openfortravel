@@ -5,12 +5,12 @@ import {
   generateRestrictionListByDestination,
   sortByOrigin,
   wrapCollectionWithRichObject,
-} from 'src/api/restrictions/helper'
-import { Restriction } from 'src/api/restrictions/models'
+} from '@/front/src/api/restrictions/helper'
+import { Restriction } from '@/front/src/api/restrictions/models'
 import {
   persistRestriction,
   persistRestrictionCollection,
-} from 'src/api/restrictions/persisters'
+} from '@/front/src/api/restrictions/persisters'
 
 type PersistOneFunc = <K extends keyof Restriction>(
   field: K,

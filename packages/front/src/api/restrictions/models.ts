@@ -5,7 +5,7 @@ import {
   transformCodeToDestinationSlug,
   transformCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { getFullDescription, getShortDescription } from 'src/models/description'
+import { getFullDescription, getShortDescription } from '@/front/src/models/description'
 
 export enum RestrictionStatus {
   ALLOWED = 'allowed',

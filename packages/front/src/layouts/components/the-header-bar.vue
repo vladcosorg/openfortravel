@@ -25,9 +25,9 @@ import { hydrateWhenIdle } from 'vue-lazy-hydration'
 export default defineComponent({
   components: {
     LanguageSwitcher: hydrateWhenIdle(
-      () => import('src/layouts/components/the-language-switcher.vue'),
+      () => import('@/front/src/layouts/components/the-language-switcher.vue'),
     ),
-    Logo: hydrateWhenIdle(() => import('src/layouts/components/the-logo.vue')),
+    Logo: hydrateWhenIdle(() => import('@/front/src/layouts/components/the-logo.vue')),
     PortalTarget,
   },
   setup() {

@@ -2,7 +2,7 @@
   <q-btn
     size="14px"
     color="secondary"
-    :icon="`img:${require('src/assets/search.svg')}`"
+    :icon="`img:${require('@/front/src/assets/search.svg')}`"
     text-color="primary"
     :percentage="20"
     v-bind="$attrs"

@@ -7,13 +7,13 @@ import {
   createDummyDestination,
   createDummyPlainDestination,
   wrapCollectionWithRichObject,
-} from 'src/api/destinations/helper'
-import { Destination, PlainDestination } from 'src/api/destinations/models'
+} from '@/front/src/api/destinations/helper'
+import { Destination, PlainDestination } from '@/front/src/api/destinations/models'
 import {
   findOriginAsRichObject,
   findOrigins,
   updateOriginField,
-} from 'src/api/destinations/repository'
+} from '@/front/src/api/destinations/repository'
 
 type UpdateFunc = <
   K extends keyof PlainDestination,

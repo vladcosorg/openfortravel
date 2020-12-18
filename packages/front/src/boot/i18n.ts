@@ -19,10 +19,10 @@ import {
   CountryList,
   preloadLocalizedListLanguage,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { eventBus } from 'src/boot/vue'
-import { getCookiesAPI } from 'src/misc/misc'
-import { reloadRoutes } from 'src/router'
-import { StateInterface } from 'src/store'
+import { eventBus } from '@/front/src/boot/vue'
+import { getCookiesAPI } from '@/front/src/misc/misc'
+import { reloadRoutes } from '@/front/src/router'
+import { StateInterface } from '@/front/src/store'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -128,7 +128,7 @@ export default boot(async ({ app, store, ssrContext, redirect }) => {
   }
 
   if (ssrContext) {
-    const { default: messages } = await import('src/i18n')
+    const { default: messages } = await import('@/front/src/i18n')
     preloadLocalesIntoI18nPlugin(messages as LocaleMessages)
 
     i18n.locale = currentLocale

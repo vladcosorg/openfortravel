@@ -46,8 +46,8 @@ import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value
 
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import { useVuexRawState } from '@/shared/src/composables/use-vuex'
-import SimpleSelect from 'src/components/simple-select.vue'
-import { useEventBus } from 'src/composables/use-plugins'
+import SimpleSelect from '@/front/src/components/simple-select.vue'
+import { useEventBus } from '@/front/src/composables/use-plugins'
 
 export default defineComponent({
   name: 'LanguageSwitcher',

@@ -162,16 +162,16 @@ import {
   transformCodeToDestinationSlug,
   transformCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { RestrictionStatus } from 'src/api/restrictions/models'
-import { useI18n } from 'src/composables/use-plugins'
-import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
-import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
-import { generateCanonicalBlock } from 'src/misc/meta'
-import ReturnWay from 'src/pages/destination/components/return-way.vue'
+import { RestrictionStatus } from '@/front/src/api/restrictions/models'
+import { useI18n } from '@/front/src/composables/use-plugins'
+import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
+import TheFlagBackground from '@/front/src/layouts/components/the-flag-background.vue'
+import { generateCanonicalBlock } from '@/front/src/misc/meta'
+import ReturnWay from '@/front/src/pages/destination/components/return-way.vue'
 import {
   getDestination,
   getRestriction,
-} from 'src/pages/destination/destination-composable'
+} from '@/front/src/pages/destination/destination-composable'
 
 export default defineComponent({
   meta({

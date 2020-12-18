@@ -176,8 +176,8 @@
 import { ionBaseballOutline as icon } from '@quasar/extras/ionicons-v5'
 import { defineComponent, PropType, ref } from '@vue/composition-api'
 
-import { Restriction } from 'src/api/restrictions/models'
-import Flag from 'src/components/flag.vue'
+import { Restriction } from '@/front/src/api/restrictions/models'
+import Flag from '@/front/src/components/flag.vue'
 
 export default defineComponent({
   components: { Flag },

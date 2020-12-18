@@ -1,5 +1,5 @@
-import { Restriction } from 'src/api/restrictions/models'
-import { t } from 'src/boot/i18n'
+import { Restriction } from '@/front/src/api/restrictions/models'
+import { t } from '@/front/src/boot/i18n'
 
 export function getShortDescription(
   restriction: Restriction,

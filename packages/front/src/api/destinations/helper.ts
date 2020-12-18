@@ -2,7 +2,7 @@ import {
   Destination,
   DestinationDefaults,
   PlainDestination,
-} from 'src/api/destinations/models'
+} from '@/front/src/api/destinations/models'
 
 export function createDummyPlainDestination(
   mergeFields: Partial<PlainDestination> = {},

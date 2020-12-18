@@ -6,7 +6,7 @@ import {
   Restriction,
   restrictionDefaults,
   RestrictionDocument,
-} from 'src/api/restrictions/models'
+} from '@/front/src/api/restrictions/models'
 
 export function generateIDFromEntity(restriction: PlainRestriction): string {
   return generateID(restriction.origin, restriction.destination)

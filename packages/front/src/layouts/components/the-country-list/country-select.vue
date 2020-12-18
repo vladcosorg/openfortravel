@@ -80,7 +80,7 @@ import {
   getDestinationLabelForCountryCode,
   getOriginLabelForCountryCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import InvisibleNativeSelect from 'src/components/invisible-native-select.vue'
+import InvisibleNativeSelect from '@/front/src/components/invisible-native-select.vue'
 
 export interface ListItem {
   value: string

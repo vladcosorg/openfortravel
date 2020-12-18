@@ -3,8 +3,8 @@ import { LocaleMessageObject } from 'vue-i18n'
 import Vuex from 'vuex'
 
 import countryList from '@/shared/src/modules/country-list/country-list-store'
-import countryPage from 'src/pages/country/country-store'
-import destinationPage from 'src/pages/destination/destination-store'
+import countryPage from '@/front/src/pages/country/country-store'
+import destinationPage from '@/front/src/pages/destination/destination-store'
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation

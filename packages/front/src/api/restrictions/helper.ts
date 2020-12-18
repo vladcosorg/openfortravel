@@ -7,12 +7,12 @@ import {
   Restriction,
   restrictionDefaults,
   RestrictionStatus,
-} from 'src/api/restrictions/models'
+} from '@/front/src/api/restrictions/models'
 import {
   findRestrictionsByDestination,
   findRestrictionsByOrigin,
-} from 'src/api/restrictions/repository'
-import { i18n } from 'src/boot/i18n'
+} from '@/front/src/api/restrictions/repository'
+import { i18n } from '@/front/src/boot/i18n'
 
 export async function generateRestrictionListByDestination(
   destinationCode: string,

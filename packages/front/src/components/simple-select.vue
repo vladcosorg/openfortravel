@@ -21,7 +21,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@vue/composition-api'
 
-import InvisibleNativeSelect from 'src/components/invisible-native-select.vue'
+import InvisibleNativeSelect from '@/front/src/components/invisible-native-select.vue'
 
 export interface SelectItem {
   value: string

@@ -27,7 +27,7 @@
               :loading="loading"
               unelevated
               color="secondary"
-              :icon="`img:${require('src/assets/search.svg')}`"
+              :icon="`img:${require('@/front/src/assets/search.svg')}`"
               style="height: 100%"
               @click="navigateToPage(currentOrigin)"
             >
@@ -83,9 +83,9 @@ import {
   transformCodeToDestinationSlug,
   transformCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { useI18n } from 'src/composables/use-plugins'
-import CountrySelect from 'src/layouts/components/the-country-list/country-select.vue'
-import { getCurrentCountry } from 'src/misc/country-decider'
+import { useI18n } from '@/front/src/composables/use-plugins'
+import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
+import { getCurrentCountry } from '@/front/src/misc/country-decider'
 
 export default defineComponent({
   components: { CountrySelect },

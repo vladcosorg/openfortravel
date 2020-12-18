@@ -140,8 +140,8 @@ export default defineComponent({
       const country = useStore().state.detectedCountry
       // eslint-disable-next-line no-undef
       return require(country === 'md'
-        ? 'src/assets/boy/boy-md.svg'
-        : 'src/assets/boy/boy.svg')
+        ? '@/front/src/assets/boy/boy-md.svg'
+        : '@/front/src/assets/boy/boy.svg')
     })
 
     return {

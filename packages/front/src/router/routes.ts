@@ -6,7 +6,7 @@ import {
   transformDestinationSlugToCode,
   transformOriginSlugToCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import MainLayout from 'src/layouts/main-layout.vue'
+import MainLayout from '@/front/src/layouts/main-layout.vue'
 
 export function createGenericRouter(
   i18n: IVueI18n,
@@ -44,7 +44,7 @@ export function createGenericRouter(
             path: '',
             component: () =>
               import(
-                /* webpackChunkName: "page-index" */ 'src/pages/index-page.vue'
+                /* webpackChunkName: "page-index" */ '@/front/src/pages/index-page.vue'
               ),
           },
           {
@@ -54,7 +54,7 @@ export function createGenericRouter(
             component: () =>
               import(
                 /* webpackChunkName: "page-origin" */
-                'src/pages/country/country-page.vue'
+                '@/front/src/pages/country/country-page.vue'
               ),
             props(route) {
               return {
@@ -70,7 +70,7 @@ export function createGenericRouter(
             component: () =>
               import(
                 /* webpackChunkName: "page-origin" */
-                'src/pages/country/country-page.vue'
+                '@/front/src/pages/country/country-page.vue'
               ),
             props(route) {
               return {
@@ -90,7 +90,7 @@ export function createGenericRouter(
             component: () =>
               import(
                 /* webpackChunkName: "page-destination" */
-                'src/pages/destination/destination-page.vue'
+                '@/front/src/pages/destination/destination-page.vue'
               ),
             props(route) {
               return {
@@ -112,7 +112,7 @@ export function createGenericRouter(
             component: () =>
               import(
                 /* webpackChunkName: "page-destination" */
-                'src/pages/destination/destination-page.vue'
+                '@/front/src/pages/destination/destination-page.vue'
               ),
             props(route) {
               return {
@@ -135,7 +135,7 @@ export function createGenericRouter(
         path: '*',
         component: () =>
           import(
-            /* webpackChunkName: "page-error" */ 'src/pages/error-404-page.vue'
+            /* webpackChunkName: "page-error" */ '@/front/src/pages/error-404-page.vue'
           ),
       },
     ],

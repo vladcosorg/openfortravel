@@ -134,10 +134,10 @@ import {
   useRestrictionCollectionPersister,
   useRestrictionListFilteredByDestination,
   useRestrictionPersister,
-} from 'src/api/restrictions/composables'
-import SelfIsolate from 'src/pages/admin/edit/components/self-isolate.vue'
-import TableHeader from 'src/pages/admin/edit/components/table-header.vue'
-import TestRequired from 'src/pages/admin/edit/components/test-required.vue'
+} from '@/front/src/api/restrictions/composables'
+import SelfIsolate from '@/front/src/pages/admin/edit/components/self-isolate.vue'
+import TableHeader from '@/front/src/pages/admin/edit/components/table-header.vue'
+import TestRequired from '@/front/src/pages/admin/edit/components/test-required.vue'
 
 export default defineComponent({
   components: {

@@ -100,17 +100,17 @@ import {
   getLabelForCountryCode,
   transformCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { getStatusListMap, getStatusMapper } from 'src/api/restrictions/helper'
-import { useI18n } from 'src/composables/use-plugins'
-import TheCountryList from 'src/layouts/components/the-country-list/the-country-list.vue'
-import TheFlagBackground from 'src/layouts/components/the-flag-background.vue'
-import TheSubscribeForm from 'src/layouts/components/the-subscribe-form.vue'
-import { generateCanonicalBlock } from 'src/misc/meta'
-import DestinationGroup from 'src/pages/country/components/destination-group.vue'
+import { getStatusListMap, getStatusMapper } from '@/front/src/api/restrictions/helper'
+import { useI18n } from '@/front/src/composables/use-plugins'
+import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
+import TheFlagBackground from '@/front/src/layouts/components/the-flag-background.vue'
+import TheSubscribeForm from '@/front/src/layouts/components/the-subscribe-form.vue'
+import { generateCanonicalBlock } from '@/front/src/misc/meta'
+import DestinationGroup from '@/front/src/pages/country/components/destination-group.vue'
 import {
   useFilterableFlatDestinations,
   useGroupedDestinations,
-} from 'src/pages/country/composable'
+} from '@/front/src/pages/country/composable'
 
 export default defineComponent({
   meta({

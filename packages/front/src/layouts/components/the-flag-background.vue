@@ -71,7 +71,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-import Flag from 'src/components/flag.vue'
+import Flag from '@/front/src/components/flag.vue'
 
 export default defineComponent({
   components: { Flag },

@@ -2,8 +2,8 @@
 import firebase from 'firebase/app'
 
 import 'firebase/firestore'
-import { dataConverter as destinationDataConverter } from 'src/api/destinations/common'
-import { dataConverter as restrictionDataConverter } from 'src/api/restrictions/common'
+import { dataConverter as destinationDataConverter } from '@/front/src/api/destinations/common'
+import { dataConverter as restrictionDataConverter } from '@/front/src/api/restrictions/common'
 
 const firebaseApp =
   firebase.apps.length > 0

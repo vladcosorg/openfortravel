@@ -22,8 +22,8 @@
 <script lang="ts">
 import { defineComponent, toRefs } from '@vue/composition-api'
 
-import DestinationItem from 'src/pages/country/components/destination-item.vue'
-import { getRestriction } from 'src/pages/destination/destination-composable'
+import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
+import { getRestriction } from '@/front/src/pages/destination/destination-composable'
 
 export default defineComponent({
   components: { DestinationItem },

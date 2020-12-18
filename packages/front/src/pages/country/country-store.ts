@@ -4,13 +4,13 @@ import {
   generateRestrictionListByOrigin,
   sortByDestination,
   wrapCollectionWithRichObject,
-} from 'src/api/restrictions/helper'
+} from '@/front/src/api/restrictions/helper'
 import {
   PlainRestriction,
   Restriction,
   RestrictionStatus,
-} from 'src/api/restrictions/models'
-import { StateInterface } from 'src/store'
+} from '@/front/src/api/restrictions/models'
+import { StateInterface } from '@/front/src/store'
 
 export type GroupedDestinations<T = PlainRestriction> = {
   [key in RestrictionStatus]?: T[]
