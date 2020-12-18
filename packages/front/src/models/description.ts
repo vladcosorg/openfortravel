@@ -1,16 +1,16 @@
-import { Restriction } from '@/front/src/api/restrictions/models'
-import { t } from '@/front/src/boot/i18n'
+import { Restriction } from '@/shared/src/api/restrictions/models'
+import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export function getShortDescription(
   restriction: Restriction,
   returning = false,
 ): string {
   return [
-    t(`description.intro.${returning ? 'return' : 'travel'}`, {
+    useVueI18n().t(`description.intro.${returning ? 'return' : 'travel'}`, {
       origin: restriction.originLabel,
       destination: restriction.destinationLabel,
     }),
-    t(`description.status.${restriction.status}`),
+    useVueI18n().t(`description.status.${restriction.status}`),
   ].join(' ')
 }
 
@@ -21,8 +21,8 @@ export function getFullDescription(
   return (
     getShortDescription(restriction, returning) +
     [
-      t(`description.testing.${restriction.testRequired}`),
-      t(`description.insurance.${restriction.insuranceRequired}`),
+      useVueI18n().t(`description.testing.${restriction.testRequired}`),
+      useVueI18n().t(`description.insurance.${restriction.insuranceRequired}`),
     ].join(' ')
   )
 }

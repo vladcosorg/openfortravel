@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { Store } from 'vuex'
+import VueI18n, { IVueI18n } from 'vue-i18n'
 
 let storeInstance: Store<never>
 
@@ -28,4 +29,14 @@ export function setRouter(instance: VueRouter) {
 
 export function useRouter(): VueRouter {
   return routerInstance
+}
+
+let i18nInstance: IVueI18n
+
+export function setVueI18n(instance: typeof i18nInstance) {
+  i18nInstance = instance
+}
+
+export function useVueI18n(): typeof i18nInstance {
+  return i18nInstance
 }

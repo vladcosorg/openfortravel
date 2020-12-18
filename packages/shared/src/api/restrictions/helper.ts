@@ -7,12 +7,12 @@ import {
   Restriction,
   restrictionDefaults,
   RestrictionStatus,
-} from '@/front/src/api/restrictions/models'
+} from '@/shared/src/api/restrictions/models'
 import {
   findRestrictionsByDestination,
   findRestrictionsByOrigin,
-} from '@/front/src/api/restrictions/repository'
-import { i18n } from '@/front/src/boot/i18n'
+} from '@/shared/src/api/restrictions/repository'
+import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export async function generateRestrictionListByDestination(
   destinationCode: string,
@@ -108,7 +108,7 @@ export function getStatusListMap(): Record<RestrictionStatus, TranslateResult> {
   const keys = getStatusList()
   return zipObject(
     keys,
-    keys.map((status) => i18n.t(`status.${status}`)),
+    keys.map((status) => useVueI18n().t(`status.${status}`)),
   ) as Record<RestrictionStatus, TranslateResult>
 }
 
@@ -117,7 +117,7 @@ export function getStatusListPairs(): {
   value: RestrictionStatus
 }[] {
   return Object.values(RestrictionStatus).map((value) => ({
-    label: i18n.t(`status.${value}`),
+    label: useVueI18n().t(`status.${value}`),
     value,
   }))
 }

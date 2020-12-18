@@ -134,7 +134,7 @@ import {
   useRestrictionCollectionPersister,
   useRestrictionListFilteredByDestination,
   useRestrictionPersister,
-} from '@/front/src/api/restrictions/composables'
+} from '@/shared/src/api/restrictions/composables'
 import SelfIsolate from '@/front/src/pages/admin/edit/components/self-isolate.vue'
 import TableHeader from '@/front/src/pages/admin/edit/components/table-header.vue'
 import TestRequired from '@/front/src/pages/admin/edit/components/test-required.vue'

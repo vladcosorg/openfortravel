@@ -16,18 +16,7 @@ module.exports = configure((context) => ({
   // https://quasar.dev/quasar-cli/supporting-ts
   supportTS: {
     tsCheckerConfig: {
-      // lool: true,
-      // typescript: {
-      //   enabled: true,
-      // tsconfig: path.resolve('./tsconfig.json'),
-      // tsconfigPath: path.resolve('./tsconfig.json'),
-      // },
-      // eslint: undefined,
-    },
-    tsLoaderConfig: {
-      // transpileOnly: false,
-      // configFile: path.resolve('./tsconfig.json'),
-      // context: path.resolve('./'),
+      eslint: true,
     },
   },
 
@@ -38,9 +27,9 @@ module.exports = configure((context) => ({
   // --> boot files are part of "main.js"
   // https://quasar.dev/quasar-cli/boot-files
   boot: [
-    // '~shared/src/boot/composition-api',
-    // '~shared/src/boot/use-setter',
-    // 'misc',
+    '~shared/src/boot/composition-api',
+    '~shared/src/boot/use-setter',
+    'misc',
   ],
 
   // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

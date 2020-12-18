@@ -1,9 +1,9 @@
 <template>
-  <q-field borderless dense :loading="loading">
+  <q-field v-bind="$attrs" borderless dense :loading="loading">
     <template #control>
       <q-option-group
         v-model="internalValue"
-        :options="statuses"
+        :options="options"
         type="radio"
         color="secondary"
         inline
@@ -18,20 +18,20 @@
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
 import { useAsyncListeners } from '@/shared/src/composables/use-async-listeners'
-import { getStatusListPairs } from '@/shared/src/api/restrictions/helper'
 
 export default defineComponent({
   components: {},
   props: {
     value: {
-      type: String,
+      type: Boolean,
       required: false,
       default: undefined,
     },
   },
   setup(props) {
-    const fallbackValueStorage = ref<string | undefined>()
-    const internalValue = computed<string | undefined>({
+    const { loading, listeners } = useAsyncListeners()
+    const fallbackValueStorage = ref<boolean | undefined>()
+    const internalValue = computed<boolean | undefined>({
       get() {
         if (props.value === undefined) {
           return fallbackValueStorage.value
@@ -43,8 +43,15 @@ export default defineComponent({
         fallbackValueStorage.value = value
       },
     })
-    const { loading, listeners } = useAsyncListeners()
-    return { statuses: getStatusListPairs(), listeners, loading, internalValue }
+    return {
+      internalValue,
+      listeners,
+      loading,
+      options: [
+        { label: 'Yes', value: true },
+        { label: 'No', value: false },
+      ],
+    }
   },
 })
 </script>

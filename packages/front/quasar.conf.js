@@ -16,7 +16,7 @@ module.exports = configure((context) => ({
   // https://quasar.dev/quasar-cli/supporting-ts
   supportTS: {
     tsCheckerConfig: {
-      eslint: true,
+      // eslint: true,
     },
   },
 
@@ -29,7 +29,8 @@ module.exports = configure((context) => ({
   boot: [
     'axios',
     'vue',
-    'composition-api',
+    '~shared/src/boot/composition-api',
+    '~shared/src/boot/use-setter',
     'homepage-locale-redirect',
     'store',
     { path: 'ssr-url-decoder', client: false },
@@ -70,7 +71,7 @@ module.exports = configure((context) => ({
     // Add dependencies for transpiling with Babel (Array of string/regex)
     // (from node_modules, which are by default not transpiled).
     // Applies only if "transpile" is set to true.
-    // transpileDependencies: [],
+    transpileDependencies: ['@vueuse', 'vue-demi'],
 
     // rtl: false, // https://quasar.dev/options/rtl-support
     // preloadChunks: true,
@@ -87,13 +88,12 @@ module.exports = configure((context) => ({
 
       // linting is slow in TS projects, we execute it only for production builds
       if (context.prod) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /node_modules/,
-        })
-
+        // config.module.rules.push({
+        //   enforce: 'pre',
+        //   test: /\.(js|vue)$/,
+        //   loader: 'eslint-loader',
+        //   exclude: /node_modules/,
+        // })
         // cfg.output.publicPath = 'https://storage.googleapis.com/oftassets/'
       }
 
@@ -115,6 +115,10 @@ module.exports = configure((context) => ({
       })
     },
     chainWebpack(cfg) {
+      if (context.debug) {
+        cfg.plugins.delete('hashed-module-ids')
+        cfg.optimization.namedModules(true)
+      }
       cfg.module
         .rule('images')
         .use('url-loader')
@@ -122,20 +126,6 @@ module.exports = configure((context) => ({
           options.limit = 1000
           return options
         })
-      // cfg.plugins.store.delete('preload')
-      // cfg.plugins.store.delete('prefetch')
-      // cfg.plugins.delete('preload')
-      // cfg.plugins.delete('prefetch')
-      // chain
-      //   .plugin('prefetch')
-      //   .use(PreloadWebpackPlugin, [
-      //     {
-      //       rel: 'prefetch',
-      //       include: 'asyncChunks',
-      //       fileBlacklist: [/pdfmake.+\.js$/, /canvg.+\.js$/, /xlsx.+\.js$/],
-      //     },
-      //   ])
-      //   .after('html-webpack')
     },
   },
 

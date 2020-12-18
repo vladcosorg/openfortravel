@@ -13,7 +13,7 @@ import VueI18n, {
 } from 'vue-i18n'
 import { Store } from 'vuex'
 
-import { useRouter } from '@/shared/src/composables/use-plugins'
+import { setVueI18n, useRouter } from '@/shared/src/composables/use-plugins'
 import { useVuexRawState } from '@/shared/src/composables/use-vuex'
 import {
   CountryList,
@@ -23,6 +23,7 @@ import { eventBus } from '@/front/src/boot/vue'
 import { getCookiesAPI } from '@/front/src/misc/misc'
 import { reloadRoutes } from '@/front/src/router'
 import { StateInterface } from '@/front/src/store'
+import { createVueI18n } from '@/shared/src/misc/i18n'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -32,15 +33,6 @@ declare module 'vue/types/vue' {
 Vue.use(VueI18n)
 
 export const i18n = createVueI18n()
-
-export function createVueI18n(messages?: LocaleMessages): IVueI18n {
-  return (new VueI18n({
-    locale: 'en',
-    fallbackLocale: 'en',
-    silentTranslationWarn: true,
-    messages,
-  }) as unknown) as IVueI18n
-}
 
 export const t = (key: string, values?: Values): string =>
   <string>i18n.t(key, values)
@@ -100,7 +92,7 @@ async function preloadLanguageFiles(lang: Locale): Promise<void> {
   if (!i18n.messages[lang]) {
     try {
       const response = (await import(
-        /* webpackChunkName: "lang-[request]" */ `src/i18n/${lang}.ts`
+        /* webpackChunkName: "lang-[request]" */ `../../../shared/src/i18n/${lang}.ts`
       )) as { default: LocaleMessageObject }
       i18n.setLocaleMessage(lang, response.default)
     } catch {
@@ -128,7 +120,7 @@ export default boot(async ({ app, store, ssrContext, redirect }) => {
   }
 
   if (ssrContext) {
-    const { default: messages } = await import('@/front/src/i18n')
+    const { default: messages } = await import('@/shared/src/i18n')
     preloadLocalesIntoI18nPlugin(messages as LocaleMessages)
 
     i18n.locale = currentLocale
@@ -166,6 +158,7 @@ export default boot(async ({ app, store, ssrContext, redirect }) => {
 
   reloadRoutes()
   app.i18n = i18n
+  setVueI18n(i18n)
 })
 
 function extractLanguageFromURL(url?: string): string | undefined {

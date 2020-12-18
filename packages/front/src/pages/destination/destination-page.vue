@@ -162,7 +162,7 @@ import {
   transformCodeToDestinationSlug,
   transformCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { RestrictionStatus } from '@/front/src/api/restrictions/models'
+import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useI18n } from '@/front/src/composables/use-plugins'
 import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from '@/front/src/layouts/components/the-flag-background.vue'

@@ -1,11 +1,14 @@
 import {
   createDummyPlainDestination,
   wrapWithRichDestinationObject,
-} from '@/front/src/api/destinations/helper'
-import { Destination, PlainDestination } from '@/front/src/api/destinations/models'
+} from '@/shared/src/api/destinations/helper'
+import {
+  Destination,
+  PlainDestination,
+} from '@/shared/src/api/destinations/models'
 
 export async function findOrigin(code: string): Promise<PlainDestination> {
-  const { countryCollection } = await import('@/front/src/misc/firebase')
+  const { countryCollection } = await import('@/shared/src/misc/firebase')
   const doc = await countryCollection.doc(code).get()
   const data = doc.data()
   if (!data) {
@@ -22,7 +25,7 @@ export async function findOriginAsRichObject(
 }
 
 export async function findOrigins(): Promise<PlainDestination[]> {
-  const { countryCollection } = await import('@/front/src/misc/firebase')
+  const { countryCollection } = await import('@/shared/src/misc/firebase')
   const results = await countryCollection.get()
 
   return results.docs.map((snapshot) => snapshot.data())
@@ -32,7 +35,7 @@ async function updateOriginDocument(
   reference: string,
   object: Partial<PlainDestination>,
 ): Promise<void> {
-  const { countryCollection } = await import('@/front/src/misc/firebase')
+  const { countryCollection } = await import('@/shared/src/misc/firebase')
   await countryCollection.doc(reference).set(object, { merge: true })
 }
 

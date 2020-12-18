@@ -100,7 +100,10 @@ import {
   getLabelForCountryCode,
   transformCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { getStatusListMap, getStatusMapper } from '@/front/src/api/restrictions/helper'
+import {
+  getStatusListMap,
+  getStatusMapper,
+} from '@/shared/src/api/restrictions/helper'
 import { useI18n } from '@/front/src/composables/use-plugins'
 import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from '@/front/src/layouts/components/the-flag-background.vue'

@@ -11,8 +11,8 @@ import {
   useVuexActionDispatcherWithReactivePayload,
   useVuexReactiveGetter,
 } from '@/shared/src/composables/use-vuex'
-import { Destination } from '@/front/src/api/destinations/models'
-import { Restriction } from '@/front/src/api/restrictions/models'
+import { Destination } from '@/shared/src/api/destinations/models'
+import { Restriction } from '@/shared/src/api/restrictions/models'
 
 export function getRestriction(
   originCodeRef: Ref<string>,

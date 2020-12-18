@@ -46,8 +46,8 @@
 import { defineComponent, ref } from '@vue/composition-api'
 import { formatDistanceToNow, isPast, parseISO } from 'date-fns'
 
-import { useDestinations } from '@/front/src/api/destinations/composables'
-import { Destination } from '@/front/src/api/destinations/models'
+import { useDestinations } from '@/shared/src/api/destinations/composables'
+import { Destination } from '@/shared/src/api/destinations/models'
 import { useRouter } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({

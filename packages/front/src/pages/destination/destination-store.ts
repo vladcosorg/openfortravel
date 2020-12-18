@@ -3,15 +3,21 @@ import { Module } from 'vuex'
 import {
   createDummyPlainDestination,
   wrapWithRichDestinationObject,
-} from '@/front/src/api/destinations/helper'
-import { Destination, PlainDestination } from '@/front/src/api/destinations/models'
-import { findOrigin } from '@/front/src/api/destinations/repository'
+} from '@/shared/src/api/destinations/helper'
+import {
+  Destination,
+  PlainDestination,
+} from '@/shared/src/api/destinations/models'
+import { findOrigin } from '@/shared/src/api/destinations/repository'
 import {
   createDummyPlainRestriction,
   wrapWithRichRestrictionObject,
-} from '@/front/src/api/restrictions/helper'
-import { PlainRestriction, Restriction } from '@/front/src/api/restrictions/models'
-import { findRestrictionByOriginAndDestination } from '@/front/src/api/restrictions/repository'
+} from '@/shared/src/api/restrictions/helper'
+import {
+  PlainRestriction,
+  Restriction,
+} from '@/shared/src/api/restrictions/models'
+import { findRestrictionByOriginAndDestination } from '@/shared/src/api/restrictions/repository'
 import { StateInterface } from '@/front/src/store'
 
 class State {

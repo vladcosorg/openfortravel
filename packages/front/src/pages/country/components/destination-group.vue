@@ -20,7 +20,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@vue/composition-api'
 
-import { Restriction } from '@/front/src/api/restrictions/models'
+import { Restriction } from '@/shared/src/api/restrictions/models'
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
 
 export default defineComponent({

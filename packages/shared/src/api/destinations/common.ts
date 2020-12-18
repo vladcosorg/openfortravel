@@ -5,7 +5,7 @@ import {
   Destination,
   DestinationDocument,
   PlainDestination,
-} from '@/front/src/api/destinations/models'
+} from '@/shared/src/api/destinations/models'
 
 export const dataConverter: firebase.firestore.FirestoreDataConverter<PlainDestination> = {
   toFirestore(destination: PlainDestination): DestinationDocument {

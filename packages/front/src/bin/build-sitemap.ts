@@ -6,9 +6,9 @@ import languages from 'vue-auto-i18n/dist/supported-languages/google.json'
 
 import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import { convertCountryListResponseToCountrySlugMap } from '@/shared/src/modules/country-list/country-list-store'
-import { createVueI18n } from '@/front/src/boot/i18n'
-import messages from '@/front/src/i18n'
+import messages from '@/shared/src/i18n'
 import { createGenericRouter } from '@/front/src/router/routes'
+import { createVueI18n } from '@/shared/src/misc/i18n'
 
 const i18n = createVueI18n(messages)
 
@@ -36,11 +36,11 @@ async function main() {
       } else {
         countriesFrom = convertCountryListResponseToCountrySlugMap(
           // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require('@/front/src/i18n/declensions-ru/origin.json'),
+          require('@/shared/src/i18n/declensions-ru/origin.json'),
         )
         countriesTo = convertCountryListResponseToCountrySlugMap(
           // eslint-disable-next-line @typescript-eslint/no-var-requires
-          require('@/front/src/i18n/declensions-ru/destination.json'),
+          require('@/shared/src/i18n/declensions-ru/destination.json'),
         )
       }
     } catch {

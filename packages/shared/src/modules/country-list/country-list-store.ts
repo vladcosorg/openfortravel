@@ -82,11 +82,11 @@ export default {
 
       if (locale === 'ru') {
         const response = await import(
-          '@/front/src/i18n/declensions-ru/origin.json'
+          '@/shared/src/i18n/declensions-ru/origin.json'
         )
         commit('setCountryListOrigin', response.default)
         const response2 = await import(
-          '@/front/src/i18n/declensions-ru/destination.json'
+          '@/shared/src/i18n/declensions-ru/destination.json'
         )
         commit('setCountryListDestination', response2.default)
       } else {
