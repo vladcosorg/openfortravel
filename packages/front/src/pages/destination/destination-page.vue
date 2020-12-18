@@ -105,7 +105,7 @@
               <a
                 v-if="destination.healthDeclarationDocURL"
                 :href="destination.healthDeclarationDocURL"
-                >Fill online</a
+                >{{ $t('page.destination.fillDeclaration') }}</a
               >
             </q-item-label>
           </q-item-section>

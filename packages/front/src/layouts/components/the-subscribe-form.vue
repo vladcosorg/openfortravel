@@ -14,12 +14,13 @@
         @submit.prevent.stop="onSubmit"
       >
         <q-card-section class="bg-blue-grey-9">
-          <div class="text-uppercase">Subscribe for notifications</div>
+          <div class="text-uppercase">
+            {{ $t('components.subscribe.title') }}
+          </div>
         </q-card-section>
         <q-card-section>
           <div class="text-body2 text-grey-5">
-            Get notified when any destinations to or from Moldova are opening or
-            closing
+            {{ $t('components.subscribe.subtitle') }}
           </div>
         </q-card-section>
         <q-card-section class="q-pt-xs q-pb-md">
@@ -30,8 +31,9 @@
             :rules="[isValidEmail]"
             type="email"
             autofocus
+            no-error-icon
             standout
-            placeholder="Please enter your email"
+            :placeholder="$t('components.subscribe.placeholder')"
             :readonly="isLoading || isSubscribed"
           />
         </q-card-section>
@@ -43,7 +45,7 @@
           <q-btn
             flat
             text-color="grey-4"
-            label="Close"
+            :label="$t('components.subscribe.close')"
             @click="$emit('input', false)"
           />
 
@@ -54,7 +56,7 @@
             color="secondary"
             text-color="primary"
             :label="buttonLabel"
-            :icon-right="isSubscribed ? 'check' : undefined"
+            :icon-right="isSubscribed ? matDone : undefined"
             :loading="isLoading"
             :disable="isLoading || isSubscribed"
           />
@@ -69,42 +71,7 @@
       />
     </div>
   </q-dialog>
-  <div v-else>
-    <form
-      :class="[$style.form, 'q-pa-md']"
-      class="bg-blue-grey-10"
-      @submit="onSubmit"
-    >
-      <div class="text-h6 q-mb-md text-uppercase">
-        Subscribe for travel updates
-      </div>
-
-      <q-input
-        ref="emailField"
-        v-model="email"
-        type="email"
-        required
-        standout
-        placeholder="Please insert your email"
-      >
-        <template #after>
-          <q-btn
-            class="full-height"
-            type="submit"
-            unelevated
-            color="secondary"
-            text-color="primary"
-            label="Subscribe"
-          />
-        </template>
-      </q-input>
-
-      <div class="text-caption text-grey-5 q-pt-md">
-        You will not receive any marketing emails, offers or any other kind of
-        spam.
-      </div>
-    </form>
-  </div>
+  <div v-else />
 </template>
 
 <style module>
@@ -114,7 +81,10 @@
 </style>
 
 <script lang="ts">
+import { matDone } from '@quasar/extras/material-icons'
 import { defineComponent, ref } from '@vue/composition-api'
+
+import { useI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   inheritAttrs: false,
@@ -133,10 +103,11 @@ export default defineComponent({
     },
   },
   setup(props, { root, emit }) {
+    const i18n = useI18n()
     const email = ref('')
     const emailField = ref()
     const isLoading = ref(false)
-    const buttonLabel = ref('Subscribe')
+    const buttonLabel = ref(i18n.t('components.subscribe.action'))
     const isSubscribed = ref(false)
     const closingCountdown = ref(0)
 
@@ -147,6 +118,7 @@ export default defineComponent({
       buttonLabel,
       isSubscribed,
       closingCountdown,
+      matDone,
       async onSubmit() {
         emailField.value.validate()
         if (!emailField.value.hasError) {
@@ -162,12 +134,12 @@ export default defineComponent({
 
           try {
             await root.$axios.post('/subscribe', payload)
-            buttonLabel.value = 'Subscribed'
+            buttonLabel.value = i18n.t('components.subscribe.actionDone')
             isSubscribed.value = true
             root.$q.notify({
-              icon: 'done',
+              icon: matDone,
               color: 'positive',
-              message: 'You have been successfully subscribed',
+              message: i18n.t('components.subscribe.notification'),
             })
           } catch {
             isSubscribed.value = false
@@ -186,7 +158,10 @@ export default defineComponent({
         }
       },
       isValidEmail() {
-        return /^.+@.+\..+$/.test(email.value) || 'Please provide a valid email'
+        return (
+          /^.+@.+\..+$/.test(email.value) ||
+          i18n.t('components.subscribe.invalidEmailWarning')
+        )
       },
     }
   },

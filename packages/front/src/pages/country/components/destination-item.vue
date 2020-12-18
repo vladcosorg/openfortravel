@@ -59,8 +59,12 @@
 
         <q-item-section>
           <q-item-label v-if="returning" :class="[$style.label, 'full-width']">
-            {{ destination.originNominativeLabel }} →
-            {{ destination.destinationNominativeLabel }}
+            {{
+              $t('components.destinationItem.titleWithDirection', {
+                from: destination.originNominativeLabel,
+                to: destination.destinationNominativeLabel,
+              })
+            }}
           </q-item-label>
           <q-item-label
             v-else

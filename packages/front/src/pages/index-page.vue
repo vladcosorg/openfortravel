@@ -28,7 +28,6 @@ export default defineComponent({
       () => import('@/front/src/layouts/components/the-boy/the-boy.vue'),
     ),
   },
-  name: 'PageIndex',
   meta: {},
 })
 </script>

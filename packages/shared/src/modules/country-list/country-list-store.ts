@@ -123,7 +123,7 @@ export default {
       }
     },
   },
-} as Module<State, any>
+} as Module<State, never>
 
 function getFirstLabel(label: string | string[]): string {
   if (Array.isArray(label)) {
@@ -166,7 +166,7 @@ export function convertCountryListResponseToCountryLabelMap(
 
 export function convertCountryListResponseToCountrySlugMap(
   countries: CountryList,
-) {
+): Record<string, string> {
   return mapValues(
     convertCountryListResponseToCountryLabelMap(countries),
     (countryLabel) => convertCountryLabelToSlug(countryLabel),

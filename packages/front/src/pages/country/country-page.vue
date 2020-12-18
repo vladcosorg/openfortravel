@@ -6,7 +6,9 @@
     <the-country-list :origin-code="originCode" class="q-mb-md" />
 
     <div class="column justify-center q-gutter-md">
-      <div class="text-h6 text-center text-uppercase">Destinations</div>
+      <div class="text-h6 text-center text-uppercase">
+        {{ $t('page.country.destinations') }}
+      </div>
       <q-input
         v-model="filter"
         :placeholder="$t('page.country.quickSearch')"
@@ -29,7 +31,7 @@
             text-color="primary"
             @click="promptVisible = true"
           >
-            Subscribe
+            {{ $t('components.subscribe.action') }}
           </q-btn>
         </template>
       </q-input>

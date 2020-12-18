@@ -2,7 +2,7 @@
   <div>
     <div class="text-center q-my-lg q-mx-md">
       <div class="text-subtitle1 text-uppercase text-bold q-mb-lg">
-        Languages
+        {{ $t('components.footer.languages') }}
       </div>
       <div
         :class="[
@@ -20,7 +20,9 @@
           {{ lang.label }}
         </router-link>
       </div>
-      <div class="q-mt-md text-caption">Copyright 2020</div>
+      <div class="q-mt-md text-caption">
+        {{ $t('components.footer.copyright') }}
+      </div>
     </div>
   </div>
 </template>

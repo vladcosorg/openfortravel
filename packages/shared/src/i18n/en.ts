@@ -85,6 +85,7 @@ export default {
         title: 'Travel destinations from {origin}',
       },
       quickSearch: 'Quick country search',
+      destinations: 'Destinations',
       stats: {
         header: 'Quick stats',
         country: 'country|countries',
@@ -105,6 +106,11 @@ export default {
       seeReturnPage: 'See return travel',
       backToList: 'Back to list',
       returnWay: 'Return way',
+      fillDeclaration: 'Fill online',
+    },
+    404: {
+      title: 404,
+      subtitle: 'Oops. Nothing here...',
     },
   },
   components: {
@@ -114,6 +120,24 @@ export default {
       from: 'From',
       to: 'To',
       btn: 'Search',
+    },
+    subscribe: {
+      action: 'Subscribe',
+      actionDone: 'Subscribed',
+      notification: 'You have been successfully subscribed',
+      invalidEmailWarning: 'Please provide a valid email',
+      title: 'Subscribe for notifications',
+      subtitle:
+        'Get notified when any destinations to or from Moldova are opening or closing',
+      placeholder: 'Please enter your email',
+      close: 'Close',
+    },
+    destinationItem: {
+      titleWithDirection: '{from} → {to}',
+    },
+    footer: {
+      languages: 'Languages',
+      copyright: 'Copyright 2020',
     },
   },
 }
