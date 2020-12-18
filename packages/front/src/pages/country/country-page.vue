@@ -93,7 +93,6 @@ import {
 import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
-import { useI18n } from '@/front/src/composables/use-plugins'
 import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from '@/front/src/layouts/components/the-flag-background.vue'
 import TheSubscribeForm from '@/front/src/layouts/components/the-subscribe-form.vue'
@@ -108,7 +107,7 @@ import {
   getStatusMapper,
 } from '@/shared/src/api/restrictions/helper'
 import { useComputedMemorized } from '@/shared/src/composables/use-computed-vmodel'
-import { useStore } from '@/shared/src/composables/use-plugins'
+import { useStore, useI18n } from '@/shared/src/composables/use-plugins'
 import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
 import {
   getLabelForCountryCode,

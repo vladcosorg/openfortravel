@@ -11,7 +11,7 @@ import {
   findRestrictionsByDestination,
   findRestrictionsByOrigin,
 } from '@/shared/src/api/restrictions/repository'
-import { useVueI18n } from '@/shared/src/composables/use-plugins'
+import { useI18n } from '@/shared/src/composables/use-plugins'
 import { getCountryCodes as getAllCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export async function generateRestrictionListByDestination(
@@ -108,7 +108,7 @@ export function getStatusListMap(): Record<RestrictionStatus, TranslateResult> {
   const keys = getStatusList()
   return zipObject(
     keys,
-    keys.map((status) => useVueI18n().t(`status.${status}`)),
+    keys.map((status) => useI18n().t(`status.${status}`)),
   ) as Record<RestrictionStatus, TranslateResult>
 }
 
@@ -117,7 +117,7 @@ export function getStatusListPairs(): {
   value: RestrictionStatus
 }[] {
   return Object.values(RestrictionStatus).map((value) => ({
-    label: useVueI18n().t(`status.${value}`),
+    label: useI18n().t(`status.${value}`),
     value,
   }))
 }

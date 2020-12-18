@@ -30,7 +30,7 @@ import { defineComponent } from '@vue/composition-api'
 import { PortalTarget } from 'portal-vue'
 import { hydrateWhenIdle, hydrateWhenVisible } from 'vue-lazy-hydration'
 
-import { useI18n } from '@/front/src/composables/use-plugins'
+import { useI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: {

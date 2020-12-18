@@ -155,7 +155,7 @@ function normalizeCountryListResponse(response: {
 
 export function convertCountryListResponseToCountryLabelMap(
   countries: CountryList,
-) {
+): Record<string, string> {
   const countryMap: CountryList = {}
   for (const [countryCode, countryName] of Object.entries(countries)) {
     countryMap[countryCode.toLowerCase()] = getFirstLabel(countryName)
@@ -188,7 +188,7 @@ async function loadCountryListForLocale(locale: string) {
   )
 }
 
-export function convertCountryLabelToSlug(countryName: string) {
+export function convertCountryLabelToSlug(countryName: string): string {
   countryName = kebabCase(countryName.toLowerCase())
   return countryName
 }

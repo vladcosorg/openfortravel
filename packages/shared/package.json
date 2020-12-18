@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "fix": "eslint --fix --ext .js,.ts,.vue ./ && yarn format",
-    "format": "prettier --write  ."
+    "format": "prettier --write  .",
+    "lint": "eslint --ext .js,.ts,.vue ./src"
   }
 }

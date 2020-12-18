@@ -77,10 +77,9 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
-import { useI18n } from '@/front/src/composables/use-plugins'
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import { getCurrentCountry } from '@/front/src/misc/country-decider'
-import { useRouter } from '@/shared/src/composables/use-plugins'
+import { useRouter, useI18n } from '@/shared/src/composables/use-plugins'
 import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
 import {
   transformCodeToDestinationSlug,

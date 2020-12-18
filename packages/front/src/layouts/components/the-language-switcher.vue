@@ -45,7 +45,7 @@ import { computed, defineComponent } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 
 import SimpleSelect from '@/front/src/components/simple-select.vue'
-import { useEventBus } from '@/front/src/composables/use-plugins'
+import { useEventBus } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import { useVuexRawState } from '@/shared/src/composables/use-vuex'
 

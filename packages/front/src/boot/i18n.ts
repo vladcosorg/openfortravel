@@ -12,11 +12,14 @@ import VueI18n, {
 } from 'vue-i18n'
 import { Store } from 'vuex'
 
-import { eventBus } from '@/front/src/boot/vue'
 import { getCookiesAPI } from '@/front/src/misc/misc'
 import { reloadRoutes } from '@/front/src/router'
 import { StateInterface } from '@/front/src/store'
-import { setVueI18n, useRouter } from '@/shared/src/composables/use-plugins'
+import {
+  setI18n,
+  useEventBus,
+  useRouter,
+} from '@/shared/src/composables/use-plugins'
 import { useVuexRawState } from '@/shared/src/composables/use-vuex'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 import {
@@ -140,7 +143,7 @@ export default boot(async ({ app, store, ssrContext, redirect }) => {
     preloadLocalesIntoI18nPlugin(store.state.locales)
     i18n.locale = currentLocale
 
-    eventBus.$on('locale-change', async (newLocale: string) => {
+    useEventBus().$on('locale-change', async (newLocale: string) => {
       if (i18n.locale === newLocale) {
         return
       }
@@ -157,7 +160,7 @@ export default boot(async ({ app, store, ssrContext, redirect }) => {
 
   reloadRoutes()
   app.i18n = i18n
-  setVueI18n(i18n)
+  setI18n(i18n)
 })
 
 function extractLanguageFromURL(url?: string): string | undefined {

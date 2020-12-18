@@ -1,5 +1,5 @@
 import { store } from 'quasar/wrappers'
-import Vuex from 'vuex'
+import Vuex, { Store } from 'vuex'
 
 import countryList from '@/shared/src/modules/country-list/country-list-store'
 
@@ -13,7 +13,7 @@ export interface StateInterface {
 export default store(({ Vue }) => {
   Vue.use(Vuex)
 
-  return new Vuex.Store<StateInterface>({
+  return new Store<StateInterface>({
     modules: {
       modules: {
         namespaced: true,
