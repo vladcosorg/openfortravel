@@ -66,9 +66,9 @@
 import { defineComponent } from '@vue/composition-api'
 
 import { useDestination } from '@/front/src/api/destinations/composables'
-import InputDate from 'src/components/input-date.vue'
-import InPlaceField from 'src/pages/edit/components/in-place-field.vue'
-import TestRequired from 'src/pages/edit/components/test-required.vue'
+import InputDate from '@/admin/src/components/input-date.vue'
+import InPlaceField from '@/admin/src/pages/edit/components/in-place-field.vue'
+import TestRequired from '@/admin/src/pages/edit/components/test-required.vue'
 
 export default defineComponent({
   components: { InPlaceField, InputDate, TestRequired },

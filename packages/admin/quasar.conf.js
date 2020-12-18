@@ -16,11 +16,11 @@ module.exports = configure((context) => ({
   // https://quasar.dev/quasar-cli/supporting-ts
   supportTS: {
     tsCheckerConfig: {
-      lool: true,
+      // lool: true,
       // typescript: {
       //   enabled: true,
-      tsconfig: path.resolve('./tsconfig.json'),
-      tsconfigPath: path.resolve('./tsconfig.json'),
+      // tsconfig: path.resolve('./tsconfig.json'),
+      // tsconfigPath: path.resolve('./tsconfig.json'),
       // },
       // eslint: undefined,
     },
@@ -38,13 +38,13 @@ module.exports = configure((context) => ({
   // --> boot files are part of "main.js"
   // https://quasar.dev/quasar-cli/boot-files
   boot: [
-    '~shared/src/boot/composition-api',
-    '~shared/src/boot/use-setter',
-    'misc',
+    // '~shared/src/boot/composition-api',
+    // '~shared/src/boot/use-setter',
+    // 'misc',
   ],
 
   // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
-  css: ['app.sass'],
+  // css: ['app.sass'],
 
   // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
   build: {
@@ -73,10 +73,10 @@ module.exports = configure((context) => ({
     // https://quasar.dev/quasar-cli/handling-webpack
     extendWebpack(config) {
       config.resolve.plugins = [new TsconfigPathsPlugin()]
-      config.resolve.alias = {
-        app: config.resolve.alias.app,
-        boot: config.resolve.alias.boot,
-      }
+      // config.resolve.alias = {
+      //   app: config.resolve.alias.app,
+      //   boot: config.resolve.alias.boot,
+      // }
       // linting is slow in TS projects, we execute it only for production builds
       if (context.prod) {
         // config.module.rules.push({
