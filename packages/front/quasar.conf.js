@@ -93,6 +93,14 @@ module.exports = configure((context) => ({
           loader: 'eslint-loader',
           exclude: /node_modules/,
         })
+
+        if (config.optimization.minimizer) {
+          const terserOptions =
+            config.optimization.minimizer[0].options.terserOptions
+          terserOptions.compress['drop_console'] = true
+          terserOptions.output = { comments: false }
+        }
+
         // cfg.output.publicPath = 'https://storage.googleapis.com/oftassets/'
       }
 
@@ -113,12 +121,12 @@ module.exports = configure((context) => ({
         },
       })
     },
-    chainWebpack(cfg) {
+    chainWebpack(config) {
       if (context.debug) {
-        cfg.plugins.delete('hashed-module-ids')
-        cfg.optimization.namedModules(true)
+        config.plugins.delete('hashed-module-ids')
+        config.optimization.namedModules(true)
       }
-      cfg.module
+      config.module
         .rule('images')
         .use('url-loader')
         .tap((options) => {
