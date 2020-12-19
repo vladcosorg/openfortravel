@@ -1,11 +1,11 @@
 import { Cookies } from 'quasar'
-import { boot } from 'quasar/wrappers'
-import VueRouter from 'vue-router'
-import { Store } from 'vuex'
 
 import { getCookiesAPI } from '@/front/src/misc/misc'
 import { StateInterface } from '@/front/src/store'
 import { setCookies } from '@/shared/src/composables/use-plugins'
+import { boot } from 'quasar/wrappers'
+import VueRouter from 'vue-router'
+import { Store } from 'vuex'
 
 export let storeInstance: Store<StateInterface>
 export let routerInstance: VueRouter

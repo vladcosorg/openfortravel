@@ -1,3 +1,11 @@
+import { GroupedDestinations } from '@/front/src/pages/country/country-store'
+import { Restriction } from '@/shared/src/api/restrictions/models'
+import { useFilterableCollection } from '@/shared/src/composables/use-misc'
+import { useLoading } from '@/shared/src/composables/use-promise-loading'
+import {
+  useProperVuexActionDispatcher,
+  useVuexReactiveGetter,
+} from '@/shared/src/composables/use-vuex'
 import {
   computed,
   ComputedRef,
@@ -7,15 +15,6 @@ import {
   watch,
   WritableComputedRef,
 } from '@vue/composition-api'
-
-import { GroupedDestinations } from '@/front/src/pages/country/country-store'
-import { Restriction } from '@/shared/src/api/restrictions/models'
-import { useFilterableCollection } from '@/shared/src/composables/use-misc'
-import { useLoading } from '@/shared/src/composables/use-promise-loading'
-import {
-  useProperVuexActionDispatcher,
-  useVuexReactiveGetter,
-} from '@/shared/src/composables/use-vuex'
 
 type GroupedDestinationObjects = GroupedDestinations<Restriction>
 

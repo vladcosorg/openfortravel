@@ -6,8 +6,7 @@
   "author": "chetzof <vcosvic@gmail.com>",
   "private": true,
   "scripts": {
-    "fix": "eslint --fix --ext .js,.ts,.vue ./ && yarn format",
-    "format": "prettier --write  .",
-    "lint": "eslint --ext .js,.ts,.vue ./"
+    "fix": "eslint --fix . && prettier --write  .",
+    "lint": "eslint  ."
   }
 }

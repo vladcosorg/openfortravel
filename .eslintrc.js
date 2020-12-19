@@ -98,20 +98,23 @@ module.exports = {
       'warn',
       { 'newlines-between': 'always', alphabetize: { order: 'asc' } },
     ],
-    // 'import/no-unused-modules': [
-    //   'warn',
-    //   {
-    //     unusedExports: true,
-    //     missingExports: true,
-    //     ignoreExports: [
-    //       '**/*.d.ts',
-    //       '**/babel.config.js',
-    //       '**/quasar.conf.js',
-    //       '**/*.vue',
-    //       '**/src/boot/*.ts',
-    //     ],
-    //   },
-    // ],
+    'import/no-unused-modules': [
+      'warn',
+      {
+        unusedExports: true,
+        missingExports: true,
+        src: ['..'],
+        ignoreExports: [
+          '**/*.d.ts',
+          '**/babel.config.js',
+          '**/quasar.conf.js',
+          '**/*.vue',
+          '**/src/boot/*.ts',
+          '**/router/index.ts',
+          '**/store/index.ts',
+        ],
+      },
+    ],
     'import/newline-after-import': 'warn',
     'unused-imports/no-unused-imports-ts': 'error',
     'unused-imports/no-unused-vars-ts': [
@@ -160,13 +163,18 @@ module.exports = {
     'vue/require-default-prop': 'off',
   },
   settings: {
+    'import/internal-regex': /^front|admin|shared$/,
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
       'vue-eslint-parser': ['.vue'],
     },
     'import/resolver': {
+      alias: {
+        map: [['@', '..']],
+        extensions: ['.ts', '.js', '.vue'],
+      },
       typescript: {
-        project: ['tsconfig.json'],
+        project: ['packages/*/tsconfig.json', 'tsconfig.json'],
       },
     },
   },
@@ -175,6 +183,20 @@ module.exports = {
       files: 'packages/admin/**/*.*',
       rules: {
         'vue/no-bare-strings-in-template': 'off',
+      },
+    },
+    {
+      files: 'packages/shared/**/*.*',
+      rules: {
+        'import/no-unused-modules': [
+          'warn',
+          {
+            unusedExports: true,
+            missingExports: true,
+            src: ['..'],
+            ignoreExports: ['**/*.d.ts', '**/src/boot/*.ts'],
+          },
+        ],
       },
     },
   ],

@@ -8,8 +8,8 @@
   "scripts": {
     "seq": "npm-run-all",
     "dev": "quasar dev -m spa",
-    "lint": "eslint --ext .js,.ts,.vue ./src",
-    "fix": "eslint --fix --ext .js,.ts,.vue ./ && yarn format",
+    "lint": "eslint .",
+    "fix": "eslint --fix . && yarn format",
     "format": "prettier --write  .",
     "typecheck": "tsc -p tsconfig.json",
     "build": "quasar build -m spa",

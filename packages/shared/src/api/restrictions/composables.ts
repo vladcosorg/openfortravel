@@ -1,5 +1,3 @@
-import { ref, Ref } from '@vue/composition-api'
-
 import {
   generateRestrictionListByDestination,
   sortByOrigin,
@@ -11,6 +9,7 @@ import {
   persistRestrictionCollection,
 } from '@/shared/src/api/restrictions/persisters'
 import { useAsyncState } from '@/shared/src/composables/use-async'
+import { ref, Ref } from '@vue/composition-api'
 
 type PersistOneFunc = <K extends keyof Restriction>(
   field: K,

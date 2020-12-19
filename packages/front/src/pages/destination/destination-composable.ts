@@ -1,11 +1,3 @@
-import {
-  ComputedRef,
-  onMounted,
-  onServerPrefetch,
-  Ref,
-  watch,
-} from '@vue/composition-api'
-
 import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
@@ -13,6 +5,13 @@ import {
   useVuexActionDispatcherWithReactivePayload,
   useVuexReactiveGetter,
 } from '@/shared/src/composables/use-vuex'
+import {
+  ComputedRef,
+  onMounted,
+  onServerPrefetch,
+  Ref,
+  watch,
+} from '@vue/composition-api'
 
 export function getRestriction(
   originCodeRef: Ref<string>,

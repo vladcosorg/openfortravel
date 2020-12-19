@@ -1,16 +1,4 @@
 import { QSsrContext } from '@quasar/app'
-import union from 'lodash/union'
-import { boot } from 'quasar/wrappers'
-import Vue from 'vue'
-import { extendWithAutoI18n } from 'vue-auto-i18n'
-import autoLanguages from 'vue-auto-i18n/dist/supported-languages/google.json'
-import VueI18n, {
-  Locale,
-  LocaleMessageObject,
-  LocaleMessages,
-  Values,
-} from 'vue-i18n'
-import { Store } from 'vuex'
 
 import { getCookiesAPI } from '@/front/src/misc/misc'
 import { reloadRoutes } from '@/front/src/router'
@@ -26,6 +14,18 @@ import {
   CountryList,
   preloadLocalizedListLanguage,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import union from 'lodash/union'
+import { boot } from 'quasar/wrappers'
+import Vue from 'vue'
+import { extendWithAutoI18n } from 'vue-auto-i18n'
+import autoLanguages from 'vue-auto-i18n/dist/supported-languages/google.json'
+import VueI18n, {
+  Locale,
+  LocaleMessageObject,
+  LocaleMessages,
+  Values,
+} from 'vue-i18n'
+import { Store } from 'vuex'
 
 declare module 'vue/types/vue' {
   interface Vue {

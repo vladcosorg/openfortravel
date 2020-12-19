@@ -1,10 +1,10 @@
+import countryPage from '@/front/src/pages/country/country-store'
+import destinationPage from '@/front/src/pages/destination/destination-store'
+import countryList from '@/shared/src/modules/country-list/country-list-store'
 import { store } from 'quasar/wrappers'
 import { LocaleMessageObject } from 'vue-i18n'
 import Vuex from 'vuex'
 
-import countryPage from '@/front/src/pages/country/country-store'
-import destinationPage from '@/front/src/pages/destination/destination-store'
-import countryList from '@/shared/src/modules/country-list/country-list-store'
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation

@@ -1,4 +1,5 @@
 import { Cookies } from 'quasar'
+
 import Vue from 'vue'
 import { IVueI18n } from 'vue-i18n'
 import VueRouter from 'vue-router'

@@ -1,10 +1,9 @@
-import { boot } from 'quasar/wrappers'
-
 import {
   decideOnCountry,
   persistCountry,
 } from '@/front/src/misc/country-decider'
 import { getCookiesAPI } from '@/front/src/misc/misc'
+import { boot } from 'quasar/wrappers'
 
 export default boot(({ router, ssrContext }) => {
   router.afterEach(async (to) => {

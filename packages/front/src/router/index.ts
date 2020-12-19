@@ -1,12 +1,11 @@
-import { route } from 'quasar/wrappers'
-import VueRouter from 'vue-router'
-import { Store } from 'vuex'
-
 import { StateInterface } from '../store'
 
 import { i18n } from '@/front/src/boot/i18n'
 import { createGenericRouter } from '@/front/src/router/routes'
 import { useRouter } from '@/shared/src/composables/use-plugins'
+import { route } from 'quasar/wrappers'
+import VueRouter from 'vue-router'
+import { Store } from 'vuex'
 
 // eslint-disable-next-line import/no-unused-modules
 export default route<Store<StateInterface>>(async ({ Vue }) => {

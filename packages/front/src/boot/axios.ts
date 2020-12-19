@@ -1,5 +1,6 @@
-import axios, { AxiosInstance } from 'axios'
 import { Notify } from 'quasar'
+
+import axios, { AxiosInstance } from 'axios'
 import { boot } from 'quasar/wrappers'
 
 declare module 'vue/types/vue' {

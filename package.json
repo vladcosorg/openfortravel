@@ -10,6 +10,7 @@
     "shared": "yarn workspace shared"
   },
   "devDependencies": {
+    "eslint-import-resolver-alias": "^1.1.2",
     "prettier": "^2.2.1"
   }
 }

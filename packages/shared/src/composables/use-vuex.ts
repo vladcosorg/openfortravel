@@ -1,8 +1,7 @@
+import { useStore } from '@/shared/src/composables/use-plugins'
 import { computed, ComputedRef, isRef, Ref, unref } from '@vue/composition-api'
 import get from 'lodash/get'
 import mapValues from 'lodash/mapValues'
-
-import { useStore } from '@/shared/src/composables/use-plugins'
 
 // eslint-disable-next-line import/no-unused-modules
 export function useVuexComputedState<T>(path: string): ComputedRef<T> {

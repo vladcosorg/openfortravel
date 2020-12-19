@@ -1,10 +1,9 @@
-import kebabCase from 'lodash/kebabCase'
-
 import { useStore } from '@/shared/src/composables/use-plugins'
 import {
   useVuexRawGetter,
   useVuexRawState,
 } from '@/shared/src/composables/use-vuex'
+import kebabCase from 'lodash/kebabCase'
 
 export type CountryList = Record<string, string>
 

@@ -1,12 +1,11 @@
-import { IVueI18n } from 'vue-i18n'
-import VueRouter, { RouterOptions } from 'vue-router'
-
 import MainLayout from '@/front/src/layouts/main-layout.vue'
 import {
   transformCanonicalSlugToCode,
   transformDestinationSlugToCode,
   transformOriginSlugToCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import { IVueI18n } from 'vue-i18n'
+import VueRouter, { RouterOptions } from 'vue-router'
 
 export function createGenericRouter(
   i18n: IVueI18n,
