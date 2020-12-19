@@ -16,7 +16,7 @@ module.exports = configure((context) => ({
   // https://quasar.dev/quasar-cli/supporting-ts
   supportTS: {
     tsCheckerConfig: {
-      // eslint: true,
+      eslint: true,
     },
   },
 
@@ -70,7 +70,7 @@ module.exports = configure((context) => ({
     // Add dependencies for transpiling with Babel (Array of string/regex)
     // (from node_modules, which are by default not transpiled).
     // Applies only if "transpile" is set to true.
-    transpileDependencies: ['@vueuse', 'vue-demi'],
+    // transpileDependencies: ['@vueuse', 'vue-demi'],
 
     // rtl: false, // https://quasar.dev/options/rtl-support
     // preloadChunks: true,
@@ -87,12 +87,12 @@ module.exports = configure((context) => ({
 
       // linting is slow in TS projects, we execute it only for production builds
       if (context.prod) {
-        // config.module.rules.push({
-        //   enforce: 'pre',
-        //   test: /\.(js|vue)$/,
-        //   loader: 'eslint-loader',
-        //   exclude: /node_modules/,
-        // })
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /node_modules/,
+        })
         // cfg.output.publicPath = 'https://storage.googleapis.com/oftassets/'
       }
 

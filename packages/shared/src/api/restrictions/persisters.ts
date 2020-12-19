@@ -1,6 +1,6 @@
 import { generateIDFromEntity } from '@/shared/src/api/restrictions/common'
 import { PlainRestriction } from '@/shared/src/api/restrictions/models'
-import { importFirebase } from 'src/misc/misc'
+import { importFirebase } from '@/shared/src/misc/misc'
 
 export async function persistRestriction(
   restriction: PlainRestriction,

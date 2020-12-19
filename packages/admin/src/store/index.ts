@@ -1,14 +1,12 @@
 import { store } from 'quasar/wrappers'
-import Vuex, { Store } from 'vuex'
+import Vuex, { Module, Store } from 'vuex'
 
-import countryList from '@/shared/src/modules/country-list/country-list-store'
+import countryList, {
+  CountryListState,
+} from '@/shared/src/modules/country-list/country-list-store'
 
-export interface StateInterface {
-  // Define your own store structure, using submodules if needed
-  // example: ExampleStateInterface;
-  // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
-  example: unknown
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface StateInterface {}
 
 export default store(({ Vue }) => {
   Vue.use(Vuex)
@@ -18,7 +16,7 @@ export default store(({ Vue }) => {
       modules: {
         namespaced: true,
         modules: {
-          countryList,
+          countryList: countryList as Module<CountryListState, StateInterface>,
         },
       },
     },

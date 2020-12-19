@@ -91,7 +91,7 @@ export default defineComponent({
           },
         },
       ],
-      goTo: async (event: unknown, destination: Destination) => {
+      goTo: async (_event: unknown, destination: Destination) => {
         await useRouter().push({
           name: 'admin-country',
           params: {

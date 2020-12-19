@@ -34,10 +34,10 @@ export default {
     countryCodes(state): string[] {
       return Object.keys(state.countryList)
     },
-    originKebabList(state, getters) {
+    originKebabList(_state, getters) {
       return generateSlugKebabMap(getters.originLabels)
     },
-    destinationKebabList(state, getters) {
+    destinationKebabList(_state, getters) {
       return generateSlugKebabMap(getters.destinationLabels)
     },
   },

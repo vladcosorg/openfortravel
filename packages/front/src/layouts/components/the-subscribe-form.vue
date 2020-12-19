@@ -139,7 +139,7 @@ export default defineComponent({
             root.$q.notify({
               icon: matDone,
               color: 'positive',
-              message: i18n.t('components.subscribe.notification'),
+              message: i18n.t('components.subscribe.notification') as string,
             })
           } catch {
             isSubscribed.value = false

@@ -52,7 +52,7 @@ import { useVuexRawState } from '@/shared/src/composables/use-vuex'
 export default defineComponent({
   name: 'LanguageSwitcher',
   components: { SimpleSelect },
-  setup(props, { root }) {
+  setup(_props, { root }) {
     const availableLocales = useVuexRawState<string[]>('availableLocales')
     const languageList = Object.freeze(
       langs.filter((langPair) => availableLocales.includes(langPair.value)),

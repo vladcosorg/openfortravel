@@ -6,7 +6,7 @@ import {
   Destination,
   PlainDestination,
 } from '@/shared/src/api/destinations/models'
-import { importFirebase } from 'src/misc/misc'
+import { importFirebase } from '@/shared/src/misc/misc'
 
 export async function findOrigin(code: string): Promise<PlainDestination> {
   const { countryCollection } = await importFirebase()

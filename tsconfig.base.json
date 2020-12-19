@@ -3,18 +3,16 @@
   "compilerOptions": {
     "lib": ["es2019", "DOM", "ES6", "DOM.Iterable", "ScriptHost"],
     "skipLibCheck": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "useDefineForClassFields": true,
+    "forceConsistentCasingInFileNames": true,
     "paths": {
-      "src/*": ["src/*"],
-      "app/*": ["*"],
-      "components/*": ["src/components/*"],
-      "layouts/*": ["src/layouts/*"],
-      "pages/*": ["src/pages/*"],
-      "assets/*": ["src/assets/*"],
-      "boot/*": ["src/boot/*"],
       "@/*": ["../*"]
     }
   },
-  "include": ["**/*"],
   "ts-node": {
     "transpileOnly": true,
     // these options are overrides used only by ts-node
