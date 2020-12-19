@@ -1,5 +1,5 @@
-import { Cookies } from 'quasar'
-
+import { QSsrContext } from '@quasar/app'
+import { Cookies, LooseDictionary } from 'quasar'
 import Vue from 'vue'
 import { IVueI18n } from 'vue-i18n'
 import VueRouter from 'vue-router'
@@ -42,8 +42,10 @@ export function useI18n(): typeof i18nInstance {
 
 let cookiesInstance: Cookies
 
-export function setCookies(instance: typeof cookiesInstance): void {
-  cookiesInstance = instance
+export function initCookies(ssrContext?: QSsrContext | null): void {
+  cookiesInstance = process.env.SERVER
+    ? Cookies.parseSSR(ssrContext as LooseDictionary)
+    : Cookies
 }
 
 export function useCookies(): typeof cookiesInstance {

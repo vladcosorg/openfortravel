@@ -1,7 +1,6 @@
-/* eslint-disable import/no-named-as-default-member */
 import firebase from 'firebase/app'
-
 import 'firebase/firestore'
+
 import { dataConverter as destinationDataConverter } from '@/shared/src/api/destinations/common'
 import { dataConverter as restrictionDataConverter } from '@/shared/src/api/restrictions/common'
 

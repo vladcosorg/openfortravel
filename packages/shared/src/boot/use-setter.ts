@@ -1,7 +1,13 @@
-import { setRouter, setStore } from '@/shared/src/composables/use-plugins'
 import { boot } from 'quasar/wrappers'
 
-export default boot(({ store, router }) => {
+import {
+  initCookies,
+  setRouter,
+  setStore,
+} from '@/shared/src/composables/use-plugins'
+
+export default boot(({ store, router, ssrContext }) => {
   setRouter(router)
   setStore(store)
+  initCookies(ssrContext)
 })

@@ -32,7 +32,6 @@ module.exports = configure((context) => ({
     '~shared/src/boot/composition-api',
     '~shared/src/boot/use-setter',
     'homepage-locale-redirect',
-    'store',
     { path: 'ssr-url-decoder', client: false },
     'i18n',
     'country-detector',

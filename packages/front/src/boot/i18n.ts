@@ -1,4 +1,16 @@
 import { QSsrContext } from '@quasar/app'
+import union from 'lodash/union'
+import { boot } from 'quasar/wrappers'
+import Vue from 'vue'
+import { extendWithAutoI18n } from 'vue-auto-i18n'
+import autoLanguages from 'vue-auto-i18n/dist/supported-languages/google.json'
+import VueI18n, {
+  Locale,
+  LocaleMessageObject,
+  LocaleMessages,
+  Values,
+} from 'vue-i18n'
+import { Store } from 'vuex'
 
 import { getCookiesAPI } from '@/front/src/misc/misc'
 import { reloadRoutes } from '@/front/src/router'
@@ -14,18 +26,6 @@ import {
   CountryList,
   preloadLocalizedListLanguage,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import union from 'lodash/union'
-import { boot } from 'quasar/wrappers'
-import Vue from 'vue'
-import { extendWithAutoI18n } from 'vue-auto-i18n'
-import autoLanguages from 'vue-auto-i18n/dist/supported-languages/google.json'
-import VueI18n, {
-  Locale,
-  LocaleMessageObject,
-  LocaleMessages,
-  Values,
-} from 'vue-i18n'
-import { Store } from 'vuex'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -93,8 +93,9 @@ export async function changeLocale(newLocale: Locale): Promise<void> {
 async function preloadLanguageFiles(lang: Locale): Promise<void> {
   if (!i18n.messages[lang]) {
     try {
+      // eslint-disable-next-line import/dynamic-import-chunkname
       const response = (await import(
-        /* webpackChunkName: "lang-[request]" */ `../../../shared/src/i18n/${lang}.ts`
+        /* webpackChunkName: "lang-[request]" */ `@/shared/src/i18n/${lang}.ts`
       )) as { default: LocaleMessageObject }
       i18n.setLocaleMessage(lang, response.default)
     } catch {
@@ -122,7 +123,9 @@ export default boot(async ({ app, store, ssrContext, redirect }) => {
   }
 
   if (ssrContext) {
-    const { default: messages } = await import('@/shared/src/i18n')
+    const { default: messages } = await import(
+      /* webpackChunkName: "all-i18n" */ '@/shared/src/i18n'
+    )
     preloadLocalesIntoI18nPlugin(messages as LocaleMessages)
 
     i18n.locale = currentLocale

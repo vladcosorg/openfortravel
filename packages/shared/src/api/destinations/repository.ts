@@ -6,9 +6,10 @@ import {
   Destination,
   PlainDestination,
 } from '@/shared/src/api/destinations/models'
+import { importFirebase } from 'src/misc/misc'
 
 export async function findOrigin(code: string): Promise<PlainDestination> {
-  const { countryCollection } = await import('@/shared/src/misc/firebase')
+  const { countryCollection } = await importFirebase()
   const doc = await countryCollection.doc(code).get()
   const data = doc.data()
   if (!data) {
@@ -25,7 +26,7 @@ export async function findOriginAsRichObject(
 }
 
 export async function findOrigins(): Promise<PlainDestination[]> {
-  const { countryCollection } = await import('@/shared/src/misc/firebase')
+  const { countryCollection } = await importFirebase()
   const results = await countryCollection.get()
 
   return results.docs.map((snapshot) => snapshot.data())
@@ -35,7 +36,7 @@ async function updateOriginDocument(
   reference: string,
   object: Partial<PlainDestination>,
 ): Promise<void> {
-  const { countryCollection } = await import('@/shared/src/misc/firebase')
+  const { countryCollection } = await importFirebase()
   await countryCollection.doc(reference).set(object, { merge: true })
 }
 

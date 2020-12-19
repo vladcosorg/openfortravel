@@ -1,10 +1,12 @@
-import countryPage from '@/front/src/pages/country/country-store'
-import destinationPage from '@/front/src/pages/destination/destination-store'
-import countryList from '@/shared/src/modules/country-list/country-list-store'
 import { store } from 'quasar/wrappers'
 import { LocaleMessageObject } from 'vue-i18n'
-import Vuex from 'vuex'
+import Vuex, { Module } from 'vuex'
 
+import countryPage from '@/front/src/pages/country/country-store'
+import type { CountryListState } from '@/shared/src/modules/country-list/country-list-store'
+import countryList from '@/shared/src/modules/country-list/country-list-store'
+
+import destinationPage from '../pages/destination/destination-store'
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation
@@ -31,7 +33,7 @@ export default store(({ Vue }) => {
       modules: {
         namespaced: true,
         modules: {
-          countryList,
+          countryList: countryList as Module<CountryListState, StateInterface>,
         },
       },
     },

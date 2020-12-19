@@ -3,11 +3,12 @@ import {
   PlainRestriction,
   restrictionDefaults,
 } from '@/shared/src/api/restrictions/models'
+import { importFirebase } from 'src/misc/misc'
 
 export async function findRestrictionsByOrigin(
   originCode: string,
 ): Promise<PlainRestriction[]> {
-  const { restrictionCollection } = await import('@/shared/src/misc/firebase')
+  const { restrictionCollection } = await importFirebase()
   const results = await restrictionCollection
     .where('origin', '==', originCode)
     .get()
@@ -18,7 +19,7 @@ export async function findRestrictionsByOrigin(
 export async function findRestrictionsByDestination(
   destinationCode: string,
 ): Promise<PlainRestriction[]> {
-  const { restrictionCollection } = await import('@/shared/src/misc/firebase')
+  const { restrictionCollection } = await importFirebase()
   const results = await restrictionCollection
     .where('destination', '==', destinationCode)
     .get()
@@ -30,7 +31,7 @@ export async function findRestrictionByOriginAndDestination(
   originCode: string,
   destinationCode: string,
 ): Promise<PlainRestriction> {
-  const { restrictionCollection } = await import('@/shared/src/misc/firebase')
+  const { restrictionCollection } = await importFirebase()
   const doc = await restrictionCollection
     .doc(generateID(originCode, destinationCode))
     .get()

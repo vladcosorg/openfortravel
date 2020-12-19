@@ -1,3 +1,5 @@
+import { Module } from 'vuex'
+
 import { StateInterface } from '@/front/src/store'
 import {
   generateRestrictionListByOrigin,
@@ -9,7 +11,6 @@ import {
   Restriction,
   RestrictionStatus,
 } from '@/shared/src/api/restrictions/models'
-import { Module } from 'vuex'
 
 export type GroupedDestinations<T = PlainRestriction> = {
   [key in RestrictionStatus]?: T[]

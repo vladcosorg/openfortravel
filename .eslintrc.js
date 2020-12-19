@@ -58,9 +58,6 @@ module.exports = {
   plugins: [
     // required to apply rules which need type information
     '@typescript-eslint',
-    // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-file
-    // required to lint *.vue files
-    'vue',
     'import',
     'unused-imports',
   ],
@@ -77,6 +74,12 @@ module.exports = {
   // add your custom rules here
   rules: {
     'prefer-promise-reject-errors': 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': 'warn',
+    'arrow-body-style': ['warn', 'as-needed'],
+    'prefer-arrow-callback': 'warn',
+    curly: 'warn',
+
     // '@typescript-eslint/no-unsafe-call': 'off',
     // '@typescript-eslint/no-unsafe-assignment': 'off',
     // '@typescript-eslint/no-unsafe-return': 'off',
@@ -88,15 +91,24 @@ module.exports = {
     // '@typescript-eslint/explicit-function-return-type': 'off',
     // '@typescript-eslint/explicit-module-boundary-types': 'off',
     //
-    // // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    // 'import/no-unresolved': [2, { ignore: ['.vue$'] }],
-    'import/no-unresolved': 'off',
+
+    'import/no-unresolved': 'warn',
     'import/extensions': ['warn', 'always', { js: 'never', ts: 'never' }],
-    'import/extensions': 'off',
     'import/order': [
       'warn',
-      { 'newlines-between': 'always', alphabetize: { order: 'asc' } },
+      {
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc' },
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'sibling',
+          'parent',
+          'index',
+          'object',
+        ],
+      },
     ],
     'import/no-unused-modules': [
       'warn',
@@ -116,6 +128,13 @@ module.exports = {
       },
     ],
     'import/newline-after-import': 'warn',
+    'import/dynamic-import-chunkname': [
+      'warn',
+      {
+        webpackChunknameFormat: '[a-zA-Z0-57-9-/_]+',
+      },
+    ],
+
     'unused-imports/no-unused-imports-ts': 'error',
     'unused-imports/no-unused-vars-ts': [
       'error',
@@ -133,12 +152,9 @@ module.exports = {
     'unicorn/no-unused-properties': 'warn',
     'unicorn/prefer-replace-all': 'warn',
     'unicorn/filename-case': 'off',
-    'no-console': 'warn',
-    'vue/no-v-html': 'off',
     'unicorn/no-reduce': 'off',
-    'arrow-body-style': ['warn', 'as-needed'],
-    'prefer-arrow-callback': 'warn',
-    curly: 'warn',
+
+    'vue/no-v-html': 'off',
     'vue/html-self-closing': [
       'error',
       {
@@ -163,9 +179,7 @@ module.exports = {
     'vue/require-default-prop': 'off',
   },
   settings: {
-    'import/internal-regex': /^front|admin|shared$/,
     'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
       'vue-eslint-parser': ['.vue'],
     },
     'import/resolver': {
@@ -174,7 +188,7 @@ module.exports = {
         extensions: ['.ts', '.js', '.vue'],
       },
       typescript: {
-        project: ['packages/*/tsconfig.json', 'tsconfig.json'],
+        project: ['tsconfig.json'],
       },
     },
   },
@@ -194,7 +208,7 @@ module.exports = {
             unusedExports: true,
             missingExports: true,
             src: ['..'],
-            ignoreExports: ['**/*.d.ts', '**/src/boot/*.ts'],
+            ignoreExports: ['**/boot/*', '**/*.d.ts'],
           },
         ],
       },

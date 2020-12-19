@@ -1,9 +1,10 @@
+import { boot } from 'quasar/wrappers'
+
 import {
   changeLocale,
   getLocaleCookie,
   setLocaleCookie,
 } from '@/front/src/boot/i18n'
-import { boot } from 'quasar/wrappers'
 
 export default boot(async ({ router, ssrContext }) => {
   router.beforeEach(async (to, from, next) => {

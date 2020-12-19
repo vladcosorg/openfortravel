@@ -1,6 +1,7 @@
-import countryList from '@/shared/src/modules/country-list/country-list-store'
 import { store } from 'quasar/wrappers'
 import Vuex, { Store } from 'vuex'
+
+import countryList from '@/shared/src/modules/country-list/country-list-store'
 
 export interface StateInterface {
   // Define your own store structure, using submodules if needed

@@ -1,9 +1,9 @@
 import { Cookies } from 'quasar'
-
-import { cookies, storeInstance } from '@/front/src/boot/store'
-import { fetchCurrentCountryCode } from '@/shared/src/api/ip-api'
-import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
 import { Route } from 'vue-router'
+
+import { fetchCurrentCountryCode } from '@/shared/src/api/ip-api'
+import { useCookies, useStore } from '@/shared/src/composables/use-plugins'
+import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export async function decideOnCountry(
   route: Route,
@@ -26,7 +26,7 @@ export async function decideOnCountry(
 }
 
 export function getCurrentCountry(): string {
-  return storeInstance.state.detectedCountry
+  return useStore().state['detectedCountry']
 }
 
 export function persistCountry(countryCode: string): void {
@@ -34,8 +34,8 @@ export function persistCountry(countryCode: string): void {
     return
   }
 
-  storeInstance.commit('setDetectedCountry', countryCode)
-  cookies.set('country', countryCode, {
+  useStore().commit('setDetectedCountry', countryCode)
+  useCookies().set('country', countryCode, {
     path: '/',
   })
 }

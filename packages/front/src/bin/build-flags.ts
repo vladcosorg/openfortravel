@@ -3,9 +3,8 @@ import { promises as fs, rmdirSync } from 'fs'
 import path from 'path'
 import { cwd, env } from 'process'
 
-import sharp from 'sharp'
-
 import globby from 'globby'
+import sharp from 'sharp'
 
 const rootDirPath = env.PWD || cwd()
 const sourceDirPath = path.join(rootDirPath, 'node_modules/svg-country-flags/')

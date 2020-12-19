@@ -1,10 +1,11 @@
+import type firebase from 'firebase/app'
+import omit from 'lodash/omit'
+
 import {
   Destination,
   DestinationDocument,
   PlainDestination,
 } from '@/shared/src/api/destinations/models'
-import type firebase from 'firebase/app'
-import omit from 'lodash/omit'
 
 export const dataConverter: firebase.firestore.FirestoreDataConverter<PlainDestination> = {
   toFirestore(destination: PlainDestination): DestinationDocument {

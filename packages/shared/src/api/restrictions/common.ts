@@ -1,11 +1,12 @@
+import type firebase from 'firebase/app'
+import pick from 'lodash/pick'
+
 import {
   PlainRestriction,
   Restriction,
   restrictionDefaults,
   RestrictionDocument,
 } from '@/shared/src/api/restrictions/models'
-import type firebase from 'firebase/app'
-import pick from 'lodash/pick'
 
 export function generateIDFromEntity(restriction: PlainRestriction): string {
   return generateID(restriction.origin, restriction.destination)
