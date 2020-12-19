@@ -1,9 +1,11 @@
 const { resolve } = require('path')
+
 module.exports = {
   // https://eslint.org/docs/user-guide/configuring#configuration-cascading-and-hierarchy
   // This option interrupts the configuration hierarchy at this file
   // Remove this if you have an higher level ESLint config file (it usually happens into a monorepos)
   root: true,
+  ignorePatterns: ['.eslintrc.js'],
 
   // https://eslint.vuejs.org/user-guide/#how-to-use-custom-parser
   // Must use parserOptions instead of "parser" to allow vue-eslint-parser to keep working
@@ -211,6 +213,12 @@ module.exports = {
             ignoreExports: ['**/boot/*', '**/*.d.ts'],
           },
         ],
+      },
+    },
+    {
+      files: '*.*',
+      rules: {
+        'import/no-unused-modules': 'off',
       },
     },
   ],
