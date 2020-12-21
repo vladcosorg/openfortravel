@@ -1,15 +1,21 @@
 import { boot } from 'quasar/wrappers'
+import { Route } from 'vue-router'
 
 import {
   decideOnCountry,
   persistCountry,
 } from '@/front/src/misc/country-decider'
-import { getCookiesAPI } from '@/front/src/misc/misc'
 
-export default boot(({ router, ssrContext }) => {
-  router.afterEach(async (to) => {
-    const cookies = getCookiesAPI(ssrContext)
-    const country = await decideOnCountry(to, cookies)
-    persistCountry(country)
-  })
+export default boot(async ({ router }) => {
+  if (process.env.SERVER) {
+    await detectAndRememberDefaultCountry(router.currentRoute)
+  } else {
+    router.afterEach(async (to) => {
+      await detectAndRememberDefaultCountry(to)
+    })
+  }
 })
+
+export async function detectAndRememberDefaultCountry(route: Route) {
+  persistCountry(await decideOnCountry(route))
+}

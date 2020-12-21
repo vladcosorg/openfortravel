@@ -17,7 +17,7 @@ const compression = require('compression')
 const ssr = require('quasar-ssr')
 ssr.mergeRendererOptions({
   shouldPrefetch: (file) => {
-    return ['country-list', 'admin', 'lang', '0.'].every(
+    return ['countries', 'lang', '0.', 'declension', 'all-i18n'].every(
       (item) => !file.includes(item),
     )
   },

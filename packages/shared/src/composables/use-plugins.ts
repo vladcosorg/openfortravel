@@ -1,5 +1,7 @@
 import { QSsrContext } from '@quasar/app'
-import { Cookies, LooseDictionary } from 'quasar'
+import { matError } from '@quasar/extras/material-icons'
+import ky from 'ky-universal'
+import { Cookies, LooseDictionary, Notify } from 'quasar'
 import Vue from 'vue'
 import { IVueI18n } from 'vue-i18n'
 import VueRouter from 'vue-router'
@@ -50,4 +52,22 @@ export function initCookies(ssrContext?: QSsrContext | null): void {
 
 export function useCookies(): typeof cookiesInstance {
   return cookiesInstance
+}
+
+export function useKy(): typeof ky {
+  return ky.create({
+    hooks: {
+      afterResponse: [
+        async (_request, _options, response) => {
+          if (!response.ok) {
+            Notify.create({
+              icon: matError,
+              color: 'negative',
+              message: 'An error occured. Please try again later.',
+            })
+          }
+        },
+      ],
+    },
+  })
 }

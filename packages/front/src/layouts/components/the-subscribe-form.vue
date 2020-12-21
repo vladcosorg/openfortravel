@@ -84,7 +84,7 @@
 import { matDone } from '@quasar/extras/material-icons'
 import { defineComponent, ref } from '@vue/composition-api'
 
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { useI18n, useKy } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   inheritAttrs: false,
@@ -133,7 +133,7 @@ export default defineComponent({
           }
 
           try {
-            await root.$axios.post('/subscribe', payload)
+            await useKy().post('/subscribe', { body: payload })
             buttonLabel.value = i18n.t('components.subscribe.actionDone')
             isSubscribed.value = true
             root.$q.notify({

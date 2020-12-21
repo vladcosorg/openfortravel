@@ -27,7 +27,6 @@ module.exports = configure((context) => ({
   // --> boot files are part of "main.js"
   // https://quasar.dev/quasar-cli/boot-files
   boot: [
-    'axios',
     'vue',
     '~shared/src/boot/composition-api',
     '~shared/src/boot/use-setter',

@@ -1,17 +1,13 @@
-import { Cookies } from 'quasar'
 import { Route } from 'vue-router'
 
 import { fetchCurrentCountryCode } from '@/shared/src/api/ip-api'
 import { useCookies, useStore } from '@/shared/src/composables/use-plugins'
 import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
-export async function decideOnCountry(
-  route: Route,
-  cookies: Cookies,
-): Promise<string> {
+export async function decideOnCountry(route: Route): Promise<string> {
   const countryCodeSources: (() => string | Promise<string>)[] = [
     () => transformOriginSlugToCode(route.params.originSlug),
-    () => cookies.get('country'),
+    () => useCookies().get('country'),
     fetchCurrentCountryCode,
   ]
 

@@ -7,7 +7,6 @@
     :loading="aggregatedLoading"
     stack-label
     :dropdown-icon="icon"
-    :options="countryList"
     :class="['full-width text-h6', $style.field]"
   >
     <template v-if="showPrefixText" #before>

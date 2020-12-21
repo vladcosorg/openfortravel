@@ -8,5 +8,17 @@
   "scripts": {
     "fix": "eslint --fix . && prettier --write  .",
     "lint": "eslint  ."
+  },
+  "workspaces": {
+    "nohoist": [
+      "firebase",
+      "@vueuse/core",
+      "ky",
+      "ky-universal"
+    ]
+  },
+  "dependencies": {
+    "ky": "^0.25.1",
+    "ky-universal": "^0.8.2"
   }
 }
