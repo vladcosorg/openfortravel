@@ -59,7 +59,8 @@ export default {
 
       // We're using this flag to disable fetching from remote database on server for performance reasons
       // The data will be fetched on client thanks to the forceRefetch flag
-      const isServer = (process.env.SERVER as unknown) as boolean
+      // const isServer = (process.env.SERVER as unknown) as boolean
+      const isServer = false
       commit('setDestinations', {
         countryDestinations: await generateRestrictionListByOrigin(
           originCode,
