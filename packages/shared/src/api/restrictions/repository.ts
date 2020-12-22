@@ -9,6 +9,7 @@ export async function findRestrictionsByOrigin(
   originCode: string,
 ): Promise<PlainRestriction[]> {
   const { restrictionCollection } = await importFirebase()
+
   const results = await restrictionCollection
     .where('origin', '==', originCode)
     .get()

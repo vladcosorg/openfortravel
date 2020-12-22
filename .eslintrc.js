@@ -24,6 +24,7 @@ module.exports = {
 
   env: {
     browser: true,
+    node: true,
   },
 
   // Rules order is important, please avoid shuffling them

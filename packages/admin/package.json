@@ -18,6 +18,13 @@
     "serve": "cd dist/ssr && GOOGLE_APPLICATION_CREDENTIALS=\"../../gcloud/dev-serviceaccount.json\" npm start",
     "deploy": "cp app.yaml dist/ssr/app.yaml && gcloud app deploy dist/ssr/app.yaml --quiet"
   },
+  "nohoist": [
+    "firebase",
+    "@vueuse/core",
+    "ky",
+    "ky-universal",
+    "@quasar/*"
+  ],
   "dependencies": {
     "@google-cloud/secret-manager": "^3.2.3",
     "@quasar/extras": "^1.0.0",

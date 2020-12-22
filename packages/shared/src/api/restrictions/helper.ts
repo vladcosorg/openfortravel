@@ -29,8 +29,11 @@ export async function generateRestrictionListByDestination(
 
 export async function generateRestrictionListByOrigin(
   originCode: string,
+  useOnlyFallbacks: boolean,
 ): Promise<PlainRestriction[]> {
-  const realRestrictions = await findRestrictionsByOrigin(originCode)
+  const realRestrictions: PlainRestriction[] = useOnlyFallbacks
+    ? []
+    : await findRestrictionsByOrigin(originCode)
   const fallbackRestrictions = generateFallbackRestrictions(
     realRestrictions,
     originCode,

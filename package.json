@@ -7,7 +7,8 @@
   "scripts": {
     "front": "yarn workspace front",
     "admin": "yarn workspace admin",
-    "shared": "yarn workspace shared"
+    "shared": "yarn workspace shared",
+    "reinstall": "rm -rf ./node_modules && rm -rf ./packages/*/node_modules && yarn install"
   },
   "devDependencies": {
     "eslint-import-resolver-alias": "^1.1.2",

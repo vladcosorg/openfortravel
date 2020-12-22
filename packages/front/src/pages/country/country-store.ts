@@ -38,10 +38,17 @@ export default {
       {
         originCode,
         countryDestinations,
-      }: { originCode: string; countryDestinations: PlainRestriction[] },
+        forceRefetch,
+      }: {
+        originCode: string
+        countryDestinations: PlainRestriction[]
+        forceRefetch: boolean
+      },
     ) {
       state.destinations = countryDestinations
-      state.originCode = originCode
+      if (!forceRefetch) {
+        state.originCode = originCode
+      }
     },
   },
   actions: {
@@ -50,9 +57,16 @@ export default {
         return
       }
 
+      // We're using this flag to disable fetching from remote database on server for performance reasons
+      // The data will be fetched on client thanks to the forceRefetch flag
+      const isServer = (process.env.SERVER as unknown) as boolean
       commit('setDestinations', {
-        countryDestinations: await generateRestrictionListByOrigin(originCode),
+        countryDestinations: await generateRestrictionListByOrigin(
+          originCode,
+          isServer,
+        ),
         originCode,
+        forceRefetch: isServer,
       })
     },
   },
