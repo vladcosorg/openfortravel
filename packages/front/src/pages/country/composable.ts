@@ -1,5 +1,4 @@
 import {
-  computed,
   ComputedRef,
   onMounted,
   onServerPrefetch,
@@ -8,7 +7,6 @@ import {
   WritableComputedRef,
 } from '@vue/composition-api'
 
-import { GroupedDestinations } from '@/front/src/pages/country/country-store'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 import { useFilterableCollection } from '@/shared/src/composables/use-misc'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
@@ -17,12 +15,10 @@ import {
   useVuexReactiveGetter,
 } from '@/shared/src/composables/use-vuex'
 
-type GroupedDestinationObjects = GroupedDestinations<Restriction>
-
 export function useGroupedDestinations(
   originCodeRef: Ref<string>,
 ): {
-  destinationsRef: ComputedRef<GroupedDestinationObjects>
+  destinationsRef: ComputedRef<Restriction[]>
   isLoadingRef: Ref<boolean>
 } {
   const { loading } = useLoading(false)
@@ -30,7 +26,7 @@ export function useGroupedDestinations(
     'countryPage/fetchCountryDestinations',
     loading,
   )
-  const destinationsRef = useVuexReactiveGetter<GroupedDestinationObjects>(
+  const destinationsRef = useVuexReactiveGetter<Restriction[]>(
     'countryPage/getDestinationObjects',
   )
 
@@ -45,23 +41,19 @@ export function useGroupedDestinations(
 }
 
 export function useFilterableFlatDestinations(
-  destinationsRef: ComputedRef<GroupedDestinationObjects>,
+  destinationsRef: ComputedRef<Restriction[]>,
 ): {
   filterLoadingRef: Ref<boolean>
   filteredDestinationsRef: ComputedRef<Restriction[]>
   filterRef: WritableComputedRef<string>
   isFilteringRef: ComputedRef<boolean>
 } {
-  const flatDestinationsRef = computed(
-    () => Object.values(destinationsRef.value).flat() as Restriction[],
-  )
-
   const {
     filter,
     collection,
     loading: filterLoading,
     isFiltering,
-  } = useFilterableCollection(flatDestinationsRef, (input, filterValue) =>
+  } = useFilterableCollection(destinationsRef, (input, filterValue) =>
     input
       .filter((destination) =>
         destination.destinationLabel.toLowerCase().includes(filterValue),

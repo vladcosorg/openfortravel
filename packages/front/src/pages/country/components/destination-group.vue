@@ -1,10 +1,5 @@
 <template>
   <q-list class="rounded-borders">
-    <q-item-label v-if="showHeader" header :class="[`text-${groupColor}`]">
-      <q-icon size="sm" :name="groupIcon" />
-      {{ groupName }}
-    </q-item-label>
-
     <q-no-ssr>
       <template #default>
         <q-intersection
@@ -49,23 +44,7 @@ export default defineComponent({
       required: false,
       type: Boolean,
     },
-    groupName: {
-      required: false,
-      type: String,
-    },
-    groupIcon: {
-      required: false,
-      type: String,
-    },
-    groupColor: {
-      required: false,
-      type: String,
-    },
-    showHeader: {
-      required: false,
-      type: Boolean,
-      default: true,
-    },
+
     destinations: {
       type: Array as PropType<Restriction[]>,
       required: false,

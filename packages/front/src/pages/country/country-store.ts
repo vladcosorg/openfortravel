@@ -12,10 +12,6 @@ import {
   RestrictionStatus,
 } from '@/shared/src/api/restrictions/models'
 
-export type GroupedDestinations<T = PlainRestriction> = {
-  [key in RestrictionStatus]?: T[]
-}
-
 class State {
   public destinations: PlainRestriction[] = []
   public originCode?: string
@@ -27,9 +23,9 @@ export default {
     return new State()
   },
   getters: {
-    getDestinationObjects: (state): GroupedDestinations<Restriction> => {
+    getDestinationObjects: (state): Restriction[] => {
       const wrappedList = wrapCollectionWithRichObject(state.destinations)
-      return groupByStatus(sortByDestination(wrappedList))
+      return sortedByStatus(sortByDestination(wrappedList))
     },
   },
   mutations: {
@@ -73,16 +69,15 @@ export default {
   },
 } as Module<State, StateInterface>
 
-function groupByStatus<T extends Restriction>(
-  destinations: T[],
-): GroupedDestinations<T> {
+function sortedByStatus(destinations: Restriction[]): Restriction[] {
   const allStatuses = Object.values(RestrictionStatus)
-  return Object.assign(
+  const grouped = Object.assign(
     {},
     ...allStatuses.map((status) => ({
       [status]: destinations.filter(
         (destination) => destination.status === status,
       ),
     })),
-  ) as GroupedDestinations<T>
+  ) as Record<string, Restriction[]>
+  return Object.values(grouped).flat()
 }

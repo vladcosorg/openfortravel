@@ -12,7 +12,7 @@
       <q-input
         v-model="filter"
         :placeholder="$t('page.country.quickSearch')"
-        :loading="isFilteredListLoading"
+        :loading="isListLoading"
         standout
         dense
         stack-label
@@ -42,21 +42,8 @@
       />
 
       <destination-group
-        v-if="isFiltering"
-        :loading="isFilteredListLoading"
-        :show-header="false"
+        :loading="isListLoading"
         :destinations="filteredFlatDestinations"
-      />
-      <destination-group
-        v-for="(destinations, status) in groupedDestinations"
-        v-else
-        :key="status"
-        :show-header="false"
-        :loading="isGroupedListLoading"
-        :group-name="$t('status')[status]"
-        :group-icon="statusIcon[status]"
-        :group-color="statusColors[status]"
-        :destinations="destinations"
       />
     </div>
     <q-list dense bordered separator padding class="rounded-borders">
@@ -68,7 +55,7 @@
         :class="`text-${statusColors[status]}`"
       >
         <q-item-section>
-          <q-item-label v-if="isGroupedListLoading">
+          <q-item-label v-if="isListLoading">
             <q-skeleton type="text" />
           </q-item-label>
           <q-item-label v-else>
@@ -83,11 +70,6 @@
 </template>
 
 <script lang="ts">
-import {
-  ionAlertCircleOutline as conditionalIcon,
-  ionCheckmarkCircleOutline as allowedIcon,
-  ionCloseCircleOutline as forbiddenIcon,
-} from '@quasar/extras/ionicons-v5'
 import {
   matSearch as iconSearch,
   matNotificationsNone as iconSubscribe,
@@ -166,7 +148,6 @@ export default defineComponent({
       filterRef,
       filteredDestinationsRef,
       filterLoadingRef,
-      isFilteringRef,
     } = useFilterableFlatDestinations(destinationsRef)
 
     watch(isLoadingRef, (newValue) => {
@@ -176,25 +157,21 @@ export default defineComponent({
     return {
       originCode: originCodeRef,
       filter: filterRef,
-      isFiltering: isFilteringRef,
-      isFilteredListLoading: filterLoadingRef,
-      isGroupedListLoading: isLoadingRef,
       isListLoading: useAggregatedLoader(filterLoadingRef, isLoadingRef),
-      groupedDestinations: destinationsRef,
       filteredFlatDestinations: filteredDestinationsRef,
       statuses: getStatusListMap(),
-      statusIcon: {
-        allowed: allowedIcon,
-        conditional: conditionalIcon,
-        forbidden: forbiddenIcon,
-      },
       statusColors: {
         allowed: 'positive',
         conditional: 'warning',
         forbidden: 'negative',
       },
       stats: computed(() =>
-        getStatusMapper((status) => destinationsRef.value[status]?.length),
+        getStatusMapper(
+          (status) =>
+            destinationsRef.value.filter(
+              (destination) => destination.status === status,
+            ).length,
+        ),
       ),
       promptVisible: ref(false),
       iconSearch,
