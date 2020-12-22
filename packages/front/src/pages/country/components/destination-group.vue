@@ -4,16 +4,35 @@
       <q-icon size="sm" :name="groupIcon" />
       {{ groupName }}
     </q-item-label>
-    <q-intersection
-      v-for="(destination, index) in items"
-      :key="index"
-      style="min-height: 95px"
-      transition="fade"
-      class="q-mb-md"
-      ssr-prerender
-    >
-      <destination-item :loading="loading" :destination="destination" />
-    </q-intersection>
+
+    <q-no-ssr>
+      <template #default>
+        <q-intersection
+          v-for="(destination, index) in items"
+          :key="index"
+          style="min-height: 95px"
+          transition="fade"
+          class="q-mb-md"
+        >
+          <destination-item :loading="loading" :destination="destination" />
+        </q-intersection>
+      </template>
+      <template #placeholder>
+        <router-link
+          v-for="(destination, index) in items"
+          :key="index"
+          :to="{
+            name: 'destination',
+            params: {
+              originSlug: destination.originSlug,
+              destinationSlug: destination.destinationSlug,
+            },
+          }"
+        >
+          {{ destination.destinationLabel }}
+        </router-link>
+      </template>
+    </q-no-ssr>
   </q-list>
 </template>
 
