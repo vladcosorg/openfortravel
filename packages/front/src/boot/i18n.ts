@@ -3,7 +3,7 @@ import union from 'lodash/union'
 import { boot } from 'quasar/wrappers'
 import Vue from 'vue'
 import { extendWithAutoI18n } from 'vue-auto-i18n'
-import autoLanguages from 'vue-auto-i18n/dist/supported-languages/google.json'
+import autoLanguages from 'vue-auto-i18n/supported-languages/google.json'
 import VueI18n, {
   Locale,
   LocaleMessageObject,

@@ -2,7 +2,7 @@
 import path from 'path'
 
 import { simpleSitemapAndIndex, SitemapItemLoose } from 'sitemap'
-import languages from 'vue-auto-i18n/dist/supported-languages/google.json'
+import languages from 'vue-auto-i18n/supported-languages/google.json'
 
 import { createGenericRouter } from '@/front/src/router/routes'
 import messages from '@/shared/src/i18n'
@@ -18,7 +18,7 @@ async function main() {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('i18n-iso-countries/langs/en.json').countries,
   )
-  languages.forEach((locale) => {
+  languages.forEach((locale: string) => {
     i18n.locale = locale
     const router = createGenericRouter(i18n)
     paths.push({

@@ -22,14 +22,13 @@ import { defineComponent } from '@vue/composition-api'
 import { PortalTarget } from 'portal-vue'
 import { hydrateWhenIdle } from 'vue-lazy-hydration'
 
+import LanguageSwitcher from '@/front/src/layouts/components/the-language-switcher.vue'
+import Logo from '@/front/src/layouts/components/the-logo.vue'
+
 export default defineComponent({
   components: {
-    LanguageSwitcher: hydrateWhenIdle(
-      () => import('@/front/src/layouts/components/the-language-switcher.vue'),
-    ),
-    Logo: hydrateWhenIdle(
-      () => import('@/front/src/layouts/components/the-logo.vue'),
-    ),
+    LanguageSwitcher: hydrateWhenIdle(LanguageSwitcher),
+    Logo: hydrateWhenIdle(Logo),
     PortalTarget,
   },
   setup() {

@@ -182,7 +182,7 @@ export default defineComponent({
 
       return {
         dropdownIcon: icon,
-        options: countryList,
+        options: countryList.value,
         behaviour: 'menu',
         optionsCover: true,
         useInput: true,

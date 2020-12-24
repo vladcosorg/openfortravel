@@ -16,6 +16,8 @@ export default boot(async ({ router }) => {
   }
 })
 
-export async function detectAndRememberDefaultCountry(route: Route) {
+export async function detectAndRememberDefaultCountry(
+  route: Route,
+): Promise<void> {
   persistCountry(await decideOnCountry(route))
 }

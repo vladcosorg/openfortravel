@@ -30,16 +30,14 @@ import { defineComponent } from '@vue/composition-api'
 import { PortalTarget } from 'portal-vue'
 import { hydrateWhenIdle, hydrateWhenVisible } from 'vue-lazy-hydration'
 
+import TheFooter from '@/front/src/layouts/components/the-footer.vue'
+import HeaderBar from '@/front/src/layouts/components/the-header-bar.vue'
 import { useI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: {
-    TheFooter: hydrateWhenVisible(
-      () => import('@/front/src/layouts/components/the-footer.vue'),
-    ),
-    HeaderBar: hydrateWhenIdle(
-      () => import('@/front/src/layouts/components/the-header-bar.vue'),
-    ),
+    TheFooter: hydrateWhenVisible(TheFooter),
+    HeaderBar: hydrateWhenIdle(HeaderBar),
     PortalTarget,
   },
   meta: {
