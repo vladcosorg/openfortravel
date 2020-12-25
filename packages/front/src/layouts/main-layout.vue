@@ -10,7 +10,7 @@
       :class="[
         $style.container,
         'q-px-md',
-        fullHeight && !$q.platform.is.ios ? 'window-height' : '',
+        fullHeight && !$q.platform.is.ios ? 'wwindow-height' : '',
       ]"
     >
       <router-view class="q-pb-md" />

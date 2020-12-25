@@ -74,6 +74,7 @@ async function main() {
 
 main().then((paths) =>
   simpleSitemapAndIndex({
+    limit: 10_000,
     hostname: 'https://openfortravel.org',
     destinationDir: path.resolve('./public'),
     sourceData: paths as SitemapItemLoose[],

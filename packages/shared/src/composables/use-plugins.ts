@@ -53,6 +53,14 @@ export function useCookies(): typeof cookiesInstance {
   return cookiesInstance
 }
 
+let ssrContext: QSsrContext | null | undefined
+export function setSSRContext(instance: typeof ssrContext): void {
+  ssrContext = instance
+}
+export function useSSRContext(): typeof ssrContext {
+  return ssrContext
+}
+
 export function useKy(): typeof ky {
   return ky.create({
     hooks: {

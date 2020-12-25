@@ -41,7 +41,7 @@
 </style>
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 
 import SimpleSelect from '@/front/src/components/simple-select.vue'
@@ -54,6 +54,7 @@ export default defineComponent({
   components: { SimpleSelect },
   setup(_props, { root }) {
     const availableLocales = useVuexRawState<string[]>('availableLocales')
+    const upcomingLocale = ref<string | undefined>()
     const languageList = Object.freeze(
       langs.filter((langPair) => availableLocales.includes(langPair.value)),
     )
@@ -61,13 +62,22 @@ export default defineComponent({
     const { loading } = useLoading(false)
     const currentLanguage = computed({
       get() {
-        return root.$i18n.locale
+        if (root.$i18n.locale === upcomingLocale.value) {
+          upcomingLocale.value = undefined
+        }
+
+        if (upcomingLocale.value === undefined) {
+          return root.$i18n.locale
+        }
+
+        return upcomingLocale.value
       },
       async set(locale: string) {
         loading.value = true
-        useEventBus().$emit('locale-change', locale)
-        // await changeLocale(locale)
-        setTimeout(() => (loading.value = false), 500)
+        upcomingLocale.value = locale
+        useEventBus().$emit('locale-change', locale, () => {
+          loading.value = false
+        })
       },
     })
 

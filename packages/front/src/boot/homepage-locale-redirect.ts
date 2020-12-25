@@ -1,30 +1,20 @@
 import { boot } from 'quasar/wrappers'
 
-import {
-  changeLocale,
-  getLocaleCookie,
-  setLocaleCookie,
-} from '@/front/src/boot/i18n'
+import { loadLocale } from '@/front/src/boot/i18n'
+import { inferLocaleFromClient } from '@/front/src/misc/locale'
 
-export default boot(async ({ router, ssrContext }) => {
-  router.beforeEach(async (to, from, next) => {
+export default boot(async ({ router }) => {
+  router.beforeEach(async (to, _from, next) => {
     if (to.path === '/') {
-      let locale: string = getLocaleCookie(ssrContext)
-      if (!locale) {
-        locale = ssrContext
-          ? ssrContext.req.acceptsLanguages()[0].toLowerCase().split('-')[0]
-          : navigator.language.toLowerCase().split('-')[0]
-
-        setLocaleCookie(locale, ssrContext)
-      }
-
-      await changeLocale(locale)
+      const locale = inferLocaleFromClient()
+      await loadLocale(locale)
       return next({ name: 'index', params: { locale } })
     }
 
-    if (from.params.locale && to.params.locale !== from.params.locale) {
-      await changeLocale(to.params.locale)
-    }
+    // if (from.params.locale && to.params.locale !== from.params.locale) {
+    //   console.log('eee')
+    //   await changeLocale(to.params.locale)
+    // }
 
     next()
   })

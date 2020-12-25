@@ -108,7 +108,7 @@ export default {
       returnWay: 'Return way',
       fillDeclaration: 'Fill online',
     },
-    404: {
+    notFound: {
       title: 404,
       subtitle: 'Oops. Nothing here...',
     },

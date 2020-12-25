@@ -1,4 +1,3 @@
-import { QSsrContext } from '@quasar/app'
 import union from 'lodash/union'
 import { boot } from 'quasar/wrappers'
 import { extendWithAutoI18n } from 'vue-auto-i18n'
@@ -11,7 +10,6 @@ import VueI18n, {
 } from 'vue-i18n'
 import { Store } from 'vuex'
 
-import { getCookiesAPI } from '@/front/src/misc/misc'
 import { reloadRoutes } from '@/front/src/router'
 import { StateInterface } from '@/front/src/store'
 import {
@@ -37,22 +35,7 @@ export const i18n = createVueI18n()
 export const t = (key: string, values?: Values): string =>
   <string>i18n.t(key, values)
 
-export function setLocaleCookie(
-  locale: string,
-  ssrContext: QSsrContext | null | undefined,
-): void {
-  getCookiesAPI(ssrContext).set('locale', locale, {
-    path: '/',
-  })
-}
-
-export function getLocaleCookie(
-  ssrContext: QSsrContext | null | undefined,
-): string {
-  return getCookiesAPI(ssrContext).get('locale')
-}
-
-export async function forwardToLocalizedURL(): Promise<void> {
+export function getLocalizedURL(): string {
   const currentRoute = useRouter().currentRoute
   const params: Record<string, string> = { locale: i18n.locale }
   if (currentRoute.params.originSlug) {
@@ -67,14 +50,17 @@ export async function forwardToLocalizedURL(): Promise<void> {
     )[currentRoute.params.destinationSlug]
   }
 
-  const to = useRouter().resolve({ params })
+  return useRouter().resolve({ params }).href
+}
+
+export async function forwardToLocalizedURL(): Promise<void> {
   await useRouter()
-    .push(to.href)
+    .push(getLocalizedURL())
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     .catch(() => {})
 }
 
-export async function changeLocale(newLocale: Locale): Promise<void> {
+export async function loadLocale(newLocale: Locale): Promise<string | void> {
   if (i18n.locale === newLocale) {
     return
   }
@@ -85,7 +71,6 @@ export async function changeLocale(newLocale: Locale): Promise<void> {
   i18n.locale = newLocale
 
   reloadRoutes()
-  await forwardToLocalizedURL()
 }
 
 async function preloadLanguageFiles(lang: Locale): Promise<void> {
@@ -144,19 +129,23 @@ export default boot(async ({ app, store, ssrContext, redirect }) => {
     preloadLocalesIntoI18nPlugin(store.state.locales)
     i18n.locale = currentLocale
 
-    useEventBus().$on('locale-change', async (newLocale: string) => {
-      if (i18n.locale === newLocale) {
-        return
-      }
+    useEventBus().$on(
+      'locale-change',
+      async (newLocale: string, done: () => void) => {
+        if (i18n.locale === newLocale) {
+          return
+        }
 
-      await preloadLocalizedListLanguage(newLocale)
-      await preloadLanguageFiles(newLocale)
-      await translate(newLocale)
-      i18n.locale = newLocale
+        await preloadLocalizedListLanguage(newLocale)
+        await preloadLanguageFiles(newLocale)
+        await translate(newLocale)
+        i18n.locale = newLocale
 
-      reloadRoutes()
-      await forwardToLocalizedURL()
-    })
+        reloadRoutes()
+        await forwardToLocalizedURL()
+        done()
+      },
+    )
   }
 
   reloadRoutes()
@@ -191,6 +180,5 @@ function pushRequiredLocalesToClientStore(
   if (currentLocale !== fallbackLocale && allLocales[currentLocale]) {
     ssrLocales[currentLocale] = i18n.getLocaleMessage(currentLocale)
   }
-
   store.commit('setLocales', ssrLocales)
 }

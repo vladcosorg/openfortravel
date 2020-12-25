@@ -3,10 +3,10 @@
     class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center"
   >
     <div>
-      <div style="font-size: 30vh">{{ $t('page.404.title') }}</div>
+      <div style="font-size: 30vh">{{ $t('page.notFound.title') }}</div>
 
       <div class="text-h2" style="opacity: 0.4">
-        {{ $t('page.404.subtitle') }}
+        {{ $t('page.notFound.subtitle') }}
       </div>
 
       <q-btn
