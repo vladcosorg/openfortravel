@@ -1,5 +1,4 @@
 import { QSsrContext } from '@quasar/app'
-import { matError } from '@quasar/extras/material-icons'
 import ky from 'ky-universal'
 import { Cookies, LooseDictionary, Notify } from 'quasar'
 import Vue from 'vue'
@@ -60,8 +59,11 @@ export function useKy(): typeof ky {
       afterResponse: [
         async (_request, _options, response) => {
           if (!response.ok) {
+            // const { default: matError } = await import(
+            //   '@quasar/extras/material-icons'
+            // )
             Notify.create({
-              icon: matError,
+              // icon: matError,
               color: 'negative',
               message: 'An error occured. Please try again later.',
             })

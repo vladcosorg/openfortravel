@@ -144,6 +144,9 @@
       }"
       @click="isGoingBack.toggle"
     />
+    <portal to="footer">
+      <the-subscribe-form-inline :origin="originCode" />
+    </portal>
   </q-page>
 </template>
 
@@ -154,6 +157,7 @@ import { Portal } from 'portal-vue'
 
 import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from '@/front/src/layouts/components/the-flag-background.vue'
+import TheSubscribeFormInline from '@/front/src/layouts/components/the-subscribe-form-inline.vue'
 import { generateCanonicalBlock } from '@/front/src/misc/meta'
 import ReturnWay from '@/front/src/pages/destination/components/return-way.vue'
 import {
@@ -202,6 +206,7 @@ export default defineComponent({
     }
   },
   components: {
+    TheSubscribeFormInline,
     ReturnWay,
     TheCountryList,
     Portal,

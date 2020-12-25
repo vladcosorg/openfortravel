@@ -1,5 +1,6 @@
 <template>
   <div>
+    <portal-target name="footer" />
     <div class="text-center q-my-lg q-mx-md">
       <div class="text-subtitle1 text-uppercase text-bold q-mb-lg">
         {{ $t('components.footer.languages') }}
@@ -40,8 +41,12 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
+import { PortalTarget } from 'portal-vue'
 
 export default defineComponent({
+  components: {
+    PortalTarget,
+  },
   props: {},
   setup() {
     return { langs: Object.freeze(langs) }

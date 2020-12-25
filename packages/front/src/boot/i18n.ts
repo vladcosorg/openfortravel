@@ -1,7 +1,6 @@
 import { QSsrContext } from '@quasar/app'
 import union from 'lodash/union'
 import { boot } from 'quasar/wrappers'
-import Vue from 'vue'
 import { extendWithAutoI18n } from 'vue-auto-i18n'
 import autoLanguages from 'vue-auto-i18n/supported-languages/google.json'
 import VueI18n, {
@@ -32,7 +31,6 @@ declare module 'vue/types/vue' {
     i18n: VueI18n
   }
 }
-Vue.use(VueI18n)
 
 export const i18n = createVueI18n()
 

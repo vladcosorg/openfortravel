@@ -1,13 +1,8 @@
 <template>
-  <!--  <q-dialog-->
-  <!--    v-if="value !== undefined"-->
-  <!--    full-width-->
-  <!--    v-bind="$props"-->
-  <!--    v-on="$listeners"-->
-  <!--  >-->
   <div>
     <q-card
       square
+      flat
       class="bg-blue-grey-10 relative-position"
       tag="form"
       novalidate
@@ -70,8 +65,6 @@
       color="secondary"
     />
   </div>
-  <!--  </q-dialog>-->
-  <!--  <div v-else />-->
 </template>
 
 <style module>
