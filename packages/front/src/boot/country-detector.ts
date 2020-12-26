@@ -1,23 +1,16 @@
 import { boot } from 'quasar/wrappers'
-import { Route } from 'vue-router'
 
 import {
   decideOnCountry,
-  persistCountry,
+  setCurrentCountry,
 } from '@/front/src/misc/country-decider'
 
 export default boot(async ({ router }) => {
   if (process.env.SERVER) {
-    await detectAndRememberDefaultCountry(router.currentRoute)
+    setCurrentCountry(await decideOnCountry(router.currentRoute, true), false)
   } else {
     router.afterEach(async (to) => {
-      await detectAndRememberDefaultCountry(to)
+      setCurrentCountry(await decideOnCountry(to, false), true)
     })
   }
 })
-
-export async function detectAndRememberDefaultCountry(
-  route: Route,
-): Promise<void> {
-  persistCountry(await decideOnCountry(route))
-}

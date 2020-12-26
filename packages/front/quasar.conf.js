@@ -34,7 +34,6 @@ module.exports = configure((context) => ({
     { path: 'ssr-url-decoder', client: false },
     'i18n',
     'country-detector',
-    'country-loader',
   ],
 
   vendor: {

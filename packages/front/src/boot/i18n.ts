@@ -31,6 +31,18 @@ declare module 'vue/types/vue' {
 }
 
 export const i18n = createVueI18n()
+const translate = extendWithAutoI18n({
+  i18nPluginInstance: i18n,
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  apiKey: process.env.TRANSLATION_API_KEY!,
+  sourceLanguage: 'en',
+  apiProxyURL: `${process.env.PROJECT_URL}/translate`,
+  automatic: true,
+  blacklistedPaths: ['page.country.route', 'page.destination.route'],
+  onReady() {
+    useEventBus().$emit('translation-ready')
+  },
+})
 
 export const t = (key: string, values?: Values): string =>
   <string>i18n.t(key, values)
@@ -90,17 +102,6 @@ async function preloadLanguageFiles(lang: Locale): Promise<void> {
 export default boot(async ({ app, store, ssrContext, redirect }) => {
   let currentLocale = store.state.serverLocale
 
-  // eslint-disable-next-line unused-imports/no-unused-vars-ts
-  const translate = extendWithAutoI18n({
-    i18nPluginInstance: i18n,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    apiKey: process.env.TRANSLATION_API_KEY!,
-    sourceLanguage: 'en',
-    apiProxyURL: `${process.env.PROJECT_URL}/translate`,
-    automatic: false,
-    blacklistedPaths: ['page.country.route', 'page.destination.route'],
-  })
-
   if (ssrContext) {
     currentLocale = extractLanguageFromURL(ssrContext?.url) ?? currentLocale
   }
@@ -110,7 +111,7 @@ export default boot(async ({ app, store, ssrContext, redirect }) => {
       /* webpackChunkName: "all-i18n" */ '@/shared/src/i18n'
     )
     preloadLocalesIntoI18nPlugin(messages as LocaleMessages)
-
+    await preloadLocalizedListLanguage(currentLocale)
     i18n.locale = currentLocale
     store.commit('setServerLocale', currentLocale)
 
@@ -135,15 +136,16 @@ export default boot(async ({ app, store, ssrContext, redirect }) => {
         if (i18n.locale === newLocale) {
           return
         }
-
-        await preloadLocalizedListLanguage(newLocale)
-        await preloadLanguageFiles(newLocale)
-        await translate(newLocale)
         i18n.locale = newLocale
+        useEventBus().$on('translation-ready', async () => {
+          await preloadLocalizedListLanguage(newLocale)
+          await preloadLanguageFiles(newLocale)
+          // await translate(newLocale)
 
-        reloadRoutes()
-        await forwardToLocalizedURL()
-        done()
+          reloadRoutes()
+          await forwardToLocalizedURL()
+          done()
+        })
       },
     )
   }
