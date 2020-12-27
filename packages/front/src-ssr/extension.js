@@ -75,8 +75,8 @@ module.exports.extendApp = async function ({ app, ssr }) {
   })
 
   app.post('/subscribe', async (req, res) => {
-    const origin = req.body.origin
-    const destination = req.body.destination
+    const origin = req.body.originCode
+    const destination = req.body.destinationCode
     const email = req.body.email
     if (!/^[a-z]{2}$/.test(origin)) {
       return res.status(400).send('Invalid origin')

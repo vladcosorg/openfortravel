@@ -127,8 +127,17 @@ export default {
       notification: 'You have been successfully subscribed',
       invalidEmailWarning: 'Please provide a valid email',
       title: 'Subscribe for notifications',
-      subtitle:
-        'Get notified when any destinations to or from Moldova are opening or closing',
+
+      subtitle: {
+        origin:
+          'Get notified when any restrictions are added or liften to any destinations from {origin}',
+        destination: {
+          isForbidden:
+            'Get notified once the restrictions are lifted on the route {origin} → {destination}',
+          isAllowed:
+            'Get notified in case of any travel restrictions on the route {origin} → {destination}',
+        },
+      },
       placeholder: 'Please enter your email',
       close: 'Close',
     },

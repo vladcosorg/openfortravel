@@ -35,7 +35,7 @@
           </q-btn>
         </template>
       </q-input>
-      <the-subscribe-form
+      <dialog-subscribe-form
         v-if="promptVisible"
         v-model="promptVisible"
         :origin="originCode"
@@ -79,9 +79,9 @@ import { Portal } from 'portal-vue'
 
 import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
 import TheFlagBackground from '@/front/src/layouts/components/the-flag-background.vue'
-import TheSubscribeForm from '@/front/src/layouts/components/the-subscribe-form.vue'
 import { generateCanonicalBlock } from '@/front/src/misc/meta'
 import DestinationGroup from '@/front/src/pages/country/components/destination-group.vue'
+import DialogSubscribeForm from '@/front/src/pages/country/components/dialog-subscribe-form.vue'
 import {
   useFilterableFlatDestinations,
   useGroupedDestinations,
@@ -123,7 +123,7 @@ export default defineComponent({
     }
   },
   components: {
-    TheSubscribeForm,
+    DialogSubscribeForm,
     TheCountryList,
     DestinationGroup,
     Portal,
