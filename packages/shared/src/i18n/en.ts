@@ -77,7 +77,8 @@ export default {
   },
   page: {
     index: {
-      hero: 'Find out which destinations are open or reopening soon',
+      hero:
+        'Find out which destinations are <span>open</span> or <span>reopening</span> soon',
     },
     country: {
       route: 'travel/from',

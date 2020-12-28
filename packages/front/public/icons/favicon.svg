@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <style>
+      .cls-1{fill:#eba200;}.cls-2{fill:#3b4aec;}.cls-3{fill:#0d2499;}.cls-4{fill:#fff;}.cls-5{fill:#222930;}
+      @media (prefers-color-scheme: dark) {
+      .cls-1{fill:#eba200;}.cls-2{fill:#556aff;}.cls-3{fill:#294baa;}.cls-4{fill:#fff;}.cls-5{fill:#222930;}
+      }
+    </style>
+  </defs>
+  <title>deschis_1</title>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_1-2" data-name="Layer 1">
+      <path class="cls-1" d="M22.71,20,32,17.64h0a9.71,9.71,0,0,0-11.66-7.06Z"/>
+      <path class="cls-1" d="M25.72,19.19l-.91,3.66h0a3.84,3.84,0,0,0,4.64-2.74Z"/>
+      <path class="cls-2"
+            d="M22.48,12.2A8.83,8.83,0,1,0,9.71,24.39L7.87,30.67l2.91.85A11.69,11.69,0,0,0,25.3,23.61h0A11.64,11.64,0,0,0,22.48,12.2Z"/>
+      <path class="cls-3"
+            d="M12.42,17.5h0L7.81,21.55a8.59,8.59,0,0,0,1.9,2.84L7.87,30.67a8.06,8.06,0,0,0,3.84-1.86h0A8,8,0,0,0,12.42,17.5Z"/>
+      <path class="cls-2" d="M11.34,27h0A8,8,0,0,1,0,26.28H0l12.05-10.6h0A8,8,0,0,1,11.34,27Z"/>
+      <path class="cls-2"
+            d="M15.15,1.73a4.7,4.7,0,0,0-6.61-.67l1.71,2.1A4.69,4.69,0,0,0,5.13,7.32l9.35,1h0A4.68,4.68,0,0,0,15.15,1.73Z"/>
+      <ellipse class="cls-4" cx="19.99" cy="16.21" rx="2.54" ry="2.54"/>
+      <circle class="cls-5" cx="20.83" cy="15.76" r="1.38"/>
+    </g>
+  </g>
+</svg>

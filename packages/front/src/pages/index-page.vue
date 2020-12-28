@@ -1,8 +1,9 @@
 <template>
   <q-page :class="['column fit justify-around no-wrap', $style.page]">
-    <div class="text-h6 text-center q-mb-xl">
-      {{ $t('page.index.hero') }}
-    </div>
+    <div
+      :class="[$style.hero, 'text-h5  text-center q-mb-xl']"
+      v-html="$t('page.index.hero')"
+    />
     <boy :class="['q-mb-xl']" />
     <div :class="['relative-position', 'text-center']">
       <the-country-list />
@@ -13,6 +14,9 @@
 <style lang="scss" module>
 .page {
   z-index: 2;
+}
+.hero span {
+  font-weight: bold;
 }
 </style>
 <script lang="ts">

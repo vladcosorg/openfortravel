@@ -13,7 +13,14 @@
         fullHeight && !$q.platform.is.ios ? 'wwindow-height' : '',
       ]"
     >
-      <router-view class="q-pb-md" />
+      <transition
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut"
+        appear
+        :duration="500"
+      >
+        <router-view class="q-pb-md" />
+      </transition>
     </q-page-container>
     <the-footer />
   </q-layout>

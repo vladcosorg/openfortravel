@@ -28,7 +28,7 @@ export default defineComponent({
     },
     isSubscribed: { type: Boolean, default: false },
   },
-  setup(props) {
+  setup() {
     return { matDone }
   },
 })

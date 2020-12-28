@@ -191,7 +191,7 @@ module.exports = {
         extensions: ['.ts', '.js', '.vue'],
       },
       typescript: {
-        project: ['tsconfig.json'],
+        project: 'packages/*/tsconfig.json',
       },
     },
   },
