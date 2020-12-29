@@ -86,7 +86,7 @@ export default {
         title: 'Travel destinations from {origin}',
       },
       quickSearch: 'Quick country search',
-      destinations: 'Destinations',
+      destinations: 'To Destinations',
       stats: {
         header: 'Quick stats',
         country: 'country|countries',
@@ -144,6 +144,16 @@ export default {
     },
     destinationItem: {
       titleWithDirection: '{from} → {to}',
+      riskLevel: {
+        title: 'COVID-19 Risk Level',
+        values: {
+          'no-data': 'No data',
+          low: 'Low',
+          moderate: 'Moderate',
+          high: 'High',
+          'very-high': 'Very high',
+        },
+      },
     },
     footer: {
       languages: 'Languages',

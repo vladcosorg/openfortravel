@@ -5,11 +5,16 @@
         <q-intersection
           v-for="(destination, index) in items"
           :key="index"
-          style="min-height: 95px"
-          transition="fade"
+          style="min-height: 188px"
           class="q-mb-md"
         >
-          <destination-item :loading="loading" :destination="destination" />
+          <destination-item
+            :loading="loading"
+            :destination="destination"
+            :country="
+              destination ? countries.get(destination.destination) : undefined
+            "
+          />
         </q-intersection>
       </template>
       <template #placeholder>
@@ -35,6 +40,7 @@
 import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
+import { CountryMap } from '@/front/src/pages/country/country-store'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
@@ -44,7 +50,10 @@ export default defineComponent({
       required: false,
       type: Boolean,
     },
-
+    countries: {
+      type: Map as PropType<CountryMap>,
+      required: false,
+    },
     destinations: {
       type: Array as PropType<Restriction[]>,
       required: false,

@@ -77,7 +77,7 @@ async function persistToFirestore(input: Records) {
     console.log(`Added ${code} with value ${value}`)
     batch.set(
       collection.doc(code),
-      { safetyLevel: value },
+      { riskLevel: value },
       {
         merge: true,
       },

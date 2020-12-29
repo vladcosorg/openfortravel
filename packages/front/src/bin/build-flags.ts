@@ -1,15 +1,15 @@
 // eslint-disable-next-line import/no-unused-modules
 import { promises as fs, rmdirSync } from 'fs'
 import path from 'path'
-import { cwd, env } from 'process'
 
 import globby from 'globby'
 import sharp from 'sharp'
 
-const rootDirPath = env.PWD || cwd()
-const sourceDirPath = path.join(rootDirPath, 'node_modules/svg-country-flags/')
+const rootDirPath = path.resolve('./')
+const sourceDirPath = path.dirname(
+  require.resolve('svg-country-flags/package.json'),
+)
 const destinationDirPath = path.join(rootDirPath, 'public/flags')
-
 function getSmallestBufferExt(
   bufferCollection: Record<'svg' | 'webp', Buffer>,
 ): 'svg' | 'webp' {

@@ -1,10 +1,10 @@
 import * as functions from 'firebase-functions'
 
-import { recalculateSafetyLevels } from '@/functions/src/safety-level-calculator'
+import { runScraper } from '@/functions/src/cdc-scraper'
 
 export const safetyLevelCalculatorJob = functions.pubsub
   .schedule('every 48 hours')
   .onRun(async () => {
-    await recalculateSafetyLevels()
+    await runScraper()
     return
   })

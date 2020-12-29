@@ -1,10 +1,19 @@
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
+export enum RiskLevel {
+  NO_DATA = 'no-data',
+  LOW = 'low',
+  MODERATE = 'moderate',
+  HIGH = 'high',
+  VERY_HIGH = 'very-high',
+}
+
 export interface DestinationDocument {
   infoLink?: string
   bestByDate?: string
   isHealthDeclarationRequired?: boolean
   healthDeclarationDocURL?: string
+  riskLevel: RiskLevel
 }
 
 export interface PlainDestination extends DestinationDocument {
@@ -17,6 +26,7 @@ export class DestinationDefaults implements PlainDestination {
   public readonly bestByDate = ''
   public readonly isHealthDeclarationRequired = false
   public readonly healthDeclarationDocURL = ''
+  public readonly riskLevel = RiskLevel.NO_DATA
 
   get name(): string {
     return getLabelForCountryCode(this.countryCode)

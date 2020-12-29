@@ -44,6 +44,7 @@
       <destination-group
         :loading="isListLoading"
         :destinations="filteredFlatDestinations"
+        :countries="countries"
       />
     </div>
     <q-list dense bordered separator padding class="rounded-borders">
@@ -83,6 +84,7 @@ import { generateCanonicalBlock } from '@/front/src/misc/meta'
 import DestinationGroup from '@/front/src/pages/country/components/destination-group.vue'
 import DialogSubscribeForm from '@/front/src/pages/country/components/dialog-subscribe-form.vue'
 import {
+  useCountries,
   useFilterableFlatDestinations,
   useGroupedDestinations,
 } from '@/front/src/pages/country/composable'
@@ -141,23 +143,30 @@ export default defineComponent({
   setup(props) {
     const originCodeRef = useComputedMemorized(() => props.unsafeOriginCode)
 
-    const { destinationsRef, isLoadingRef } = useGroupedDestinations(
-      originCodeRef,
-    )
+    const { countries, isLoading: isCountryListLoading } = useCountries()
+    const {
+      destinationsRef,
+      isLoadingRef: isDestinationListLoading,
+    } = useGroupedDestinations(originCodeRef)
     const {
       filterRef,
       filteredDestinationsRef,
       filterLoadingRef,
     } = useFilterableFlatDestinations(destinationsRef)
 
-    watch(isLoadingRef, (newValue) => {
+    watch(isDestinationListLoading, (newValue) => {
       useStore().commit('setCountrySelectorLoading', newValue)
     })
 
     return {
+      countries,
       originCode: originCodeRef,
       filter: filterRef,
-      isListLoading: useAggregatedLoader(filterLoadingRef, isLoadingRef),
+      isListLoading: useAggregatedLoader(
+        filterLoadingRef,
+        isDestinationListLoading,
+        isCountryListLoading,
+      ),
       filteredFlatDestinations: filteredDestinationsRef,
       statuses: getStatusListMap(),
       statusColors: {

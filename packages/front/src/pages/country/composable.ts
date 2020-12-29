@@ -7,6 +7,8 @@ import {
   WritableComputedRef,
 } from '@vue/composition-api'
 
+import { CountryMap } from '@/front/src/pages/country/country-store'
+import { RiskLevel } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 import { useFilterableCollection } from '@/shared/src/composables/use-misc'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
@@ -14,6 +16,23 @@ import {
   useProperVuexActionDispatcher,
   useVuexReactiveGetter,
 } from '@/shared/src/composables/use-vuex'
+
+export function useCountries(): {
+  countries: ComputedRef<CountryMap>
+  isLoading: Ref<boolean>
+} {
+  const { loading: isLoading } = useLoading(false)
+  const fetcher = useProperVuexActionDispatcher(
+    'countryPage/fetchCountries',
+    isLoading,
+  )
+  onMounted(fetcher)
+
+  return {
+    isLoading,
+    countries: useVuexReactiveGetter<CountryMap>('countryPage/countryList'),
+  }
+}
 
 export function useGroupedDestinations(
   originCodeRef: Ref<string>,
@@ -23,11 +42,11 @@ export function useGroupedDestinations(
 } {
   const { loading } = useLoading(false)
   const fetcher = useProperVuexActionDispatcher(
-    'countryPage/fetchCountryDestinations',
+    'countryPage/fetchRestrictions',
     loading,
   )
   const destinationsRef = useVuexReactiveGetter<Restriction[]>(
-    'countryPage/getDestinationObjects',
+    'countryPage/restrictionList',
   )
 
   onServerPrefetch(() => fetcher(originCodeRef.value))
@@ -70,5 +89,23 @@ export function useFilterableFlatDestinations(
     filterRef: filter,
     isFilteringRef: isFiltering,
     filterLoadingRef: filterLoading,
+  }
+}
+
+export function riskLevelColor(riskLevel: RiskLevel): string {
+  switch (riskLevel) {
+    case RiskLevel.NO_DATA:
+      return 'text-grey-13'
+    case RiskLevel.LOW:
+      return 'text-green-13'
+    case RiskLevel.MODERATE:
+      return 'text-yellow-9'
+    case RiskLevel.HIGH:
+      return 'text-orange'
+    case RiskLevel.VERY_HIGH:
+      return 'text-red-13'
+
+    default:
+      throw new Error(`Unmapped risk level "${riskLevel}"`)
   }
 }

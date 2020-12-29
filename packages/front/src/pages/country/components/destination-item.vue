@@ -1,32 +1,41 @@
 <template>
-  <q-item v-if="loading" :class="[$style.item, 'rounded-borders']">
-    <q-item-section avatar>
-      <q-skeleton type="QAvatar" />
-    </q-item-section>
+  <q-item
+    v-if="loading"
+    :class="[$style.item, 'rounded-borders q-pa-md']"
+    style="min-height: 188px"
+  >
     <q-item-section>
+      <q-item-label :class="[$style.label, ' q-mb-sm']">
+        <q-skeleton type="text" height="3rem" width="65%" />
+      </q-item-label>
+      <q-item-label :class="['text-subtitle2']">
+        <q-skeleton type="text" height="1.5rem" width="45%" />
+      </q-item-label>
+      <q-item-label :class="['q-py-xs', $style.description]">
+        <q-skeleton type="text" height="1rem" />
+      </q-item-label>
       <q-item-label>
-        <q-skeleton type="text" height="1.8rem" />
+        <q-skeleton type="text" height="10px" width="25%" />
       </q-item-label>
-      <q-item-label caption>
-        <q-skeleton type="text" width="90%" height="10px" />
-        <q-skeleton type="text" height="10px" />
-        <q-skeleton type="text" height="10px" width="75%" />
-      </q-item-label>
-      <q-item-label class="q-gutter-xs row">
-        <q-skeleton
-          v-for="cnt in 3"
-          :key="cnt"
-          type="QBadge"
-          height="0.9rem"
-          width="3rem"
-        />
+      <q-item-label class="q-gutter-sm">
+        <q-item-label class="q-gutter-xs row">
+          <q-skeleton
+            v-for="cnt in 3"
+            :key="cnt"
+            type="QBadge"
+            height="0.9rem"
+            width="3rem"
+          />
+        </q-item-label>
       </q-item-label>
     </q-item-section>
+    <q-inner-loading :showing="isClicked" />
   </q-item>
+
   <q-item
     v-else
     v-ripple
-    :class="[$style.item, destination.status, 'rounded-borders']"
+    :class="[$style.item, destination.status, 'rounded-borders q-pa-md']"
     clickable
     :to="{
       name: 'destination',
@@ -38,25 +47,14 @@
     @click.native="isClicked = true"
   >
     <transition appear enter-active-class="animated fadeIn">
-      <flag
-        type="blurry"
-        :class="$style.bg"
-        :country-code="destination.destination"
-      />
+      <flag :class="$style.bg" :country-code="destination.destination" />
     </transition>
 
-    <q-item-section avatar>
-      <q-avatar>
-        <flag
-          type="responsive"
-          :class="$style.flag"
-          :country-code="destination.destination"
-        />
-      </q-avatar>
-    </q-item-section>
-
     <q-item-section>
-      <q-item-label v-if="returning" :class="[$style.label, 'full-width']">
+      <q-item-label
+        v-if="returning"
+        :class="[$style.label, 'full-width text-h5']"
+      >
         {{
           $t('components.destinationItem.titleWithDirection', {
             from: destination.originNominativeLabel,
@@ -66,20 +64,33 @@
       </q-item-label>
       <q-item-label
         v-else
-        :class="[$style.label, 'ellipsis-improved', 'full-width']"
+        :class="[$style.label, 'ellipsis-improved full-width  text-h5 q-mb-sm']"
       >
         {{ destination.destinationNominativeLabel }}
       </q-item-label>
       <q-item-label
-        caption
-        class="text-blue-grey-2 ellipsis-3-lines"
+        :class="[riskLevelColor(country.riskLevel), 'text-subtitle2']"
+      >
+        {{ $t('components.destinationItem.riskLevel.title') }}:
+        {{
+          $t('components.destinationItem.riskLevel.values')[country.riskLevel]
+        }}
+      </q-item-label>
+      <q-item-label
+        :class="[
+          'text-body2 text-blue-grey-2 ellipsis-3-lines q-py-xs',
+          $style.description,
+        ]"
         v-html="
           returning
             ? destination.returnShortDescription
             : destination.shortDescription
         "
       />
-      <q-item-label class="q-gutter-xs">
+      <q-item-label class="text-caption text-blue-grey-13">
+        Last updated: 31/12/2020
+      </q-item-label>
+      <q-item-label class="q-gutter-sm">
         <q-badge
           v-if="destination.status === 'allowed'"
           color="green-14"
@@ -115,8 +126,6 @@
 
 <style lang="scss" module>
 .label {
-  font-size: 1rem;
-  font-weight: 400;
 }
 
 .bg {
@@ -125,8 +134,13 @@
   top: 0;
   width: 100%;
   height: 100%;
-  filter: grayscale(10%) opacity(20%);
   object-fit: fill;
+  mask-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.01) 50%,
+    rgba(0, 0, 0, 0.05) 70%,
+    rgba(0, 0, 0, 0.15)
+  );
 }
 
 .item {
@@ -135,17 +149,21 @@
   overflow: hidden;
   border: 2px solid rgba($grey, 0.3);
 
-  &:global(.allowed) {
-    border: 2px solid rgba($positive, 0.3);
-  }
+  //&:global(.allowed) {
+  //  border: 1px solid rgba($positive, 0.3);
+  //}
+  //
+  //&:global(.conditional) {
+  //  border: 2px solid rgba($warning, 0.3);
+  //}
+  //
+  //&:global(.forbidden) {
+  //  border: 2px solid rgba($negative, 0.3);
+  //}
+}
 
-  &:global(.conditional) {
-    border: 2px solid rgba($warning, 0.3);
-  }
-
-  &:global(.forbidden) {
-    border: 2px solid rgba($negative, 0.3);
-  }
+.description {
+  line-height: 1.5em !important;
 }
 
 .flag {
@@ -157,10 +175,15 @@
 </style>
 
 <script lang="ts">
-import { ionBaseballOutline as icon } from '@quasar/extras/ionicons-v5'
+import {
+  ionBaseballOutline as icon,
+  ionAlertCircleOutline as warningIcon,
+} from '@quasar/extras/ionicons-v5'
 import { defineComponent, PropType, ref } from '@vue/composition-api'
 
 import Flag from '@/front/src/components/flag.vue'
+import { riskLevelColor } from '@/front/src/pages/country/composable'
+import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
@@ -177,12 +200,17 @@ export default defineComponent({
     destination: {
       type: Object as PropType<Restriction>,
     },
+    country: {
+      type: Object as PropType<Destination>,
+    },
   },
 
   setup() {
     return {
+      riskLevelColor,
       isClicked: ref(false),
       icon,
+      warningIcon,
     }
   },
 })
