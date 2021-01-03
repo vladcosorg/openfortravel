@@ -34,6 +34,7 @@ module.exports = configure((context) => ({
     { path: 'ssr-url-decoder', client: false },
     'i18n',
     'country-detector',
+    { path: 'gtag', server: false },
   ],
 
   vendor: {

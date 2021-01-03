@@ -78,7 +78,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
-import { getCurrentCountry } from '@/front/src/misc/country-decider'
+import { getCurrentCountryCode } from '@/front/src/misc/country-decider'
 import { useRouter, useI18n } from '@/shared/src/composables/use-plugins'
 import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
 import {
@@ -126,7 +126,7 @@ export default defineComponent({
 
     const originValueRef = computed({
       get() {
-        return props.originCode ?? getCurrentCountry()
+        return props.originCode ?? getCurrentCountryCode()
       },
       set(newOriginCode) {
         navigateToPage(newOriginCode, destinationValueRef.value)

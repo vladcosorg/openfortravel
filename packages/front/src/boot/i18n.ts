@@ -10,6 +10,7 @@ import VueI18n, {
 } from 'vue-i18n'
 import { Store } from 'vuex'
 
+import { setQuasarLocale } from '@/front/src/misc/quasar-i18n'
 import { reloadRoutes } from '@/front/src/router'
 import { StateInterface } from '@/front/src/store'
 import {
@@ -23,6 +24,7 @@ import {
   CountryList,
   preloadLocalizedListLanguage,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import { preloadLocalizedNationalities } from '@/shared/src/modules/nationality/nationality-helpers'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -38,7 +40,11 @@ const translate = extendWithAutoI18n({
   sourceLanguage: 'en',
   apiProxyURL: `${process.env.PROJECT_URL}/translate`,
   automatic: true,
-  blacklistedPaths: ['page.country.route', 'page.destination.route'],
+  blacklistedPaths: [
+    'page.country.route',
+    'page.destination.route',
+    'page.index.route',
+  ],
   onReady() {
     useEventBus().$emit('translation-ready')
   },
@@ -112,6 +118,8 @@ export default boot(async ({ app, store, ssrContext, redirect }) => {
     )
     preloadLocalesIntoI18nPlugin(messages as LocaleMessages)
     await preloadLocalizedListLanguage(currentLocale)
+    await preloadLocalizedNationalities(currentLocale)
+    await setQuasarLocale(currentLocale, ssrContext)
     i18n.locale = currentLocale
     store.commit('setServerLocale', currentLocale)
 
@@ -159,7 +167,7 @@ function extractLanguageFromURL(url?: string): string | undefined {
   if (!url) {
     return
   }
-  const matches = url.match(/\/([a-z]{2})\/?.*/)
+  const matches = url.match(/\/([a-z]+)\/?.*/)
   return matches !== null ? matches[1] : undefined
 }
 

@@ -4,3 +4,15 @@ export async function importFirebase() {
     /* webpackChunkName: "firebase" */ '@/shared/src/misc/firebase'
   )
 }
+
+export function transformKeys<T extends Record<string, unknown>>(
+  inputObject: T,
+  transformCallback: (key: string) => string,
+): T {
+  return Object.fromEntries(
+    Object.entries(inputObject).map(([key, value]) => [
+      transformCallback(key),
+      value,
+    ]),
+  ) as T
+}

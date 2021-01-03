@@ -5,6 +5,9 @@ import Vuex, { Module } from 'vuex'
 import countryPage from '@/front/src/pages/country/country-store'
 import type { CountryListState } from '@/shared/src/modules/country-list/country-list-store'
 import countryList from '@/shared/src/modules/country-list/country-list-store'
+import nationalities, {
+  NationalityState,
+} from '@/shared/src/modules/nationality/nationality-store'
 
 import destinationPage from '../pages/destination/destination-store'
 /*
@@ -34,6 +37,10 @@ export default store(({ Vue }) => {
         namespaced: true,
         modules: {
           countryList: countryList as Module<CountryListState, StateInterface>,
+          nationalities: nationalities as Module<
+            NationalityState,
+            StateInterface
+          >,
         },
       },
     },

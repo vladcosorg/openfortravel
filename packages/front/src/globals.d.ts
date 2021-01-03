@@ -7,3 +7,9 @@ declare module 'vue/types/vue' {
     $style: { [key: string]: string }
   }
 }
+
+declare global {
+  interface Window {
+    dataLayer: any[]
+  }
+}

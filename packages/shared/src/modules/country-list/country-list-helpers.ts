@@ -5,6 +5,10 @@ import {
   useVuexRawGetter,
   useVuexRawState,
 } from '@/shared/src/composables/use-vuex'
+import {
+  DestinationSlug,
+  OriginSlug,
+} from '@/shared/src/modules/country-list/country-list-types'
 
 export type CountryList = Record<string, string>
 
@@ -23,20 +27,20 @@ export function transformCodeToDestinationSlug(
 }
 
 export function transformOriginSlugToCode(
-  countrySlug: string,
+  originSlug: OriginSlug,
   lookInMigration = false,
 ): string {
   const originSlugToCodeMap = useStore().getters[
     'modules/countryList/originKebabList'
   ]
-  let countryCode = originSlugToCodeMap[countrySlug]
+  let countryCode = originSlugToCodeMap[originSlug]
 
   if (lookInMigration && !countryCode) {
     const migrationSlugMap = useVuexRawState<CountryList>(
       'modules.countryList.slugMigrationOriginMap',
     )
 
-    countryCode = originSlugToCodeMap[migrationSlugMap[countrySlug]]
+    countryCode = originSlugToCodeMap[migrationSlugMap[originSlug]]
   }
 
   return countryCode
@@ -50,7 +54,7 @@ export function transformCanonicalSlugToCode(countrySlug: string): string {
 }
 
 export function transformDestinationSlugToCode(
-  countrySlug: string,
+  countrySlug: DestinationSlug,
   lookInMigration = false,
 ): string {
   const destinationSlugToCodeMap = useStore().getters[

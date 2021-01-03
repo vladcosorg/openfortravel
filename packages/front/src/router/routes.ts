@@ -14,9 +14,7 @@ export function createGenericRouter(
   return new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes: [
-      {
-        path: '/',
-      },
+      { name: 'index-nolocale-nocountry', path: '/' },
       {
         path: '/:locale/',
         component: () =>
@@ -42,12 +40,27 @@ export function createGenericRouter(
         },
         children: [
           {
-            name: 'index',
+            name: 'index-redirect',
             path: '',
             component: () =>
               import(
                 /* webpackChunkName: "page-index" */ '@/front/src/pages/index-page.vue'
               ),
+          },
+          {
+            name: 'index-targeted',
+            path: `${i18n.t('page.index.route')}/:originSlug/`,
+            component: () =>
+              import(
+                /* webpackChunkName: "page-index" */ '@/front/src/pages/index-page.vue'
+              ),
+            props(route) {
+              return {
+                unsafeOriginCode: transformOriginSlugToCode(
+                  route.params.originSlug,
+                ),
+              }
+            },
           },
           {
             name: 'origin',

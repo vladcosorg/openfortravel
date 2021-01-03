@@ -1,16 +1,15 @@
 <template>
-  <div style="margin-left: -16px; margin-right: -16px">
-    <q-card flat square :class="[$style.card, 'bg-blue-grey-10', 'col']">
-      <q-card-section>
-        <div class="text-subtitle1">{{ $t('page.destination.returnWay') }}</div>
-        <destination-item
-          returning
-          :destination="restriction"
-          :loading="loading"
-        />
-      </q-card-section>
-    </q-card>
-  </div>
+  <q-card square flat :class="['bg-blue-grey-10', 'col']">
+    <q-card-section>
+      <div class="text-h6">{{ $t('page.destination.returnWay') }}</div>
+      <destination-item
+        returning
+        :destination="restriction"
+        :country="destination"
+        :loading="loading"
+      />
+    </q-card-section>
+  </q-card>
 </template>
 
 <style lang="scss" module>
@@ -23,7 +22,11 @@
 import { defineComponent, toRefs } from '@vue/composition-api'
 
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
-import { getRestriction } from '@/front/src/pages/destination/destination-composable'
+import {
+  getDestination,
+  getRestriction,
+} from '@/front/src/pages/destination/destination-composable'
+import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
   components: { DestinationItem },
@@ -43,14 +46,19 @@ export default defineComponent({
   },
   setup(props) {
     const { originCode, destinationCode } = toRefs(props)
-    const { restrictionRef, loadingRef } = getRestriction(
+    const { restrictionRef, loadingRef: restrictionIsLoading } = getRestriction(
       originCode,
+      destinationCode,
+      true,
+    )
+    const { destinationRef, loadingRef: destinationIsLoading } = getDestination(
       destinationCode,
       true,
     )
     return {
       restriction: restrictionRef,
-      loading: loadingRef,
+      destination: destinationRef,
+      loading: useAggregatedLoader(restrictionIsLoading, destinationIsLoading),
     }
   },
 })

@@ -5,7 +5,7 @@
         <q-intersection
           v-for="(destination, index) in items"
           :key="index"
-          style="min-height: 188px"
+          style="min-height: 212px"
           class="q-mb-md"
         >
           <destination-item
@@ -18,19 +18,31 @@
         </q-intersection>
       </template>
       <template #placeholder>
-        <router-link
-          v-for="(destination, index) in items"
-          :key="index"
-          :to="{
-            name: 'destination',
-            params: {
-              originSlug: destination.originSlug,
-              destinationSlug: destination.destinationSlug,
-            },
-          }"
-        >
-          {{ destination.destinationLabel }}
-        </router-link>
+        <ul>
+          <li v-for="(destination, index) in items" :key="index">
+            <router-link
+              :title="
+                $t('components.destinationItem.ssrAttrTitle', {
+                  to: destination.destinationLabel,
+                })
+              "
+              :to="{
+                name: 'destination',
+                params: {
+                  originSlug: destination.originSlug,
+                  destinationSlug: destination.destinationSlug,
+                },
+              }"
+            >
+              {{
+                $t('components.destinationItem.ssrTitle', {
+                  from: destination.originLabel,
+                  to: destination.destinationLabel,
+                })
+              }}
+            </router-link>
+          </li>
+        </ul>
       </template>
     </q-no-ssr>
   </q-list>

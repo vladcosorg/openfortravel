@@ -78,33 +78,18 @@ export default {
       { commit, state, getters },
       locale: string,
     ): Promise<void> {
-      let countryList
-      try {
-        const response = await loadCountryListForLocale(locale)
-        countryList = normalizeCountryListResponse(response)
-      } catch {
-        const response = await loadCountryListForLocale('en')
-        countryList = normalizeCountryListResponse(response)
-      }
-
       const oldOriginLabels = Object.assign({}, getters.originLabels)
       const oldDestinationLabels = Object.assign({}, getters.destinationLabels)
-      commit('setCountryList', Object.freeze(countryList))
 
-      if (locale === 'ru') {
-        const response = await import(
-          /* webpackChunkName: "declension-ru-origin" */
-          '@/shared/src/i18n/declensions-ru/origin.json'
-        )
-        commit('setCountryListOrigin', response.default)
-        const response2 = await import(
-          /* webpackChunkName: "declension-ru-destination" */
-          '@/shared/src/i18n/declensions-ru/destination.json'
-        )
-        commit('setCountryListDestination', response2.default)
-      } else {
+      const response = await loadCountryListForLocale(locale)
+      commit('setCountryList', Object.freeze(response.origin))
+
+      if (locale !== 'ru') {
         commit('setCountryListOrigin', {})
         commit('setCountryListDestination', {})
+      } else {
+        commit('setCountryListOrigin', response.origin)
+        commit('setCountryListDestination', response.destination)
       }
 
       if (!isEmpty(state.countryList)) {
@@ -132,7 +117,7 @@ export default {
         } else {
           commit(
             'setCanonicalSlugToCountryCodeMap',
-            generateSlugKebabMap(countryList),
+            generateSlugKebabMap(response.origin),
           )
         }
       }
@@ -148,16 +133,33 @@ function getFirstLabel(label: string | string[]): string {
   return label
 }
 
-function generateSlugKebabMap(list: CountryList): Record<string, string> {
+export function generateSlugKebabMap(
+  list: CountryList,
+): Record<string, string> {
   return Object.keys(list).reduce<Record<string, string>>((kebabList, key) => {
     kebabList[kebabCase(list[key])] = key
     return kebabList
   }, {})
 }
 
-function normalizeCountryListResponse(response: {
-  default: { countries: CountryList }
-}) {
+export function generateCodeToSlugMap(
+  list: CountryList,
+): Record<string, string> {
+  return mapValues(list, (countryName) => kebabCase(countryName))
+}
+
+export function convertCountryNameToSlug(countryName: string): string {
+  return kebabCase(countryName)
+}
+
+type DynamicCountryListResponse = {
+  default: {
+    countries: CountryList
+  }
+}
+export function normalizeCountryListResponse(
+  response: DynamicCountryListResponse,
+): CountryList {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
   const translations = response.default.countries
   return transform(
@@ -197,11 +199,54 @@ function generateMigrationMap(current: CountryList, previous: CountryList) {
   return map
 }
 
-async function loadCountryListForLocale(locale: string) {
-  // eslint-disable-next-line import/dynamic-import-chunkname
-  return await import(
-    /* webpackChunkName: "countries-[request]" */ `i18n-iso-countries/langs/${locale}.json`
-  )
+export async function loadSimpleCountryList(
+  locale: string,
+): Promise<DynamicCountryListResponse> {
+  try {
+    // eslint-disable-next-line import/dynamic-import-chunkname
+    return await import(
+      /* webpackChunkName: "countries-[request]" */ `i18n-iso-countries/langs/${locale}.json`
+    )
+  } catch {
+    // eslint-disable-next-line import/dynamic-import-chunkname
+    return ((await import(
+      /* webpackChunkName: "countries-[request]" */ 'i18n-iso-countries/langs/en.json'
+    )) as unknown) as DynamicCountryListResponse
+  }
+}
+
+export async function loadDualCountryListForLocale(): Promise<{
+  origin: CountryList
+  destination: CountryList
+}> {
+  return {
+    origin: (
+      await import(
+        /* webpackChunkName: "declension-ru-origin" */
+        '@/shared/src/i18n/declensions-ru/origin.json'
+      )
+    ).default,
+    destination: (
+      await import(
+        /* webpackChunkName: "declension-ru-destination" */
+        '@/shared/src/i18n/declensions-ru/destination.json'
+      )
+    ).default,
+  }
+}
+
+export async function loadCountryListForLocale(
+  locale: string,
+): Promise<{ origin: CountryList; destination: CountryList }> {
+  if (locale === 'ru') {
+    return await loadDualCountryListForLocale()
+  }
+
+  const list = normalizeCountryListResponse(await loadSimpleCountryList(locale))
+  return {
+    origin: list,
+    destination: list,
+  }
 }
 
 function convertCountryLabelToSlug(countryName: string): string {

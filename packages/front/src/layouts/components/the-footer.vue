@@ -16,14 +16,28 @@
         <router-link
           v-for="lang in langs"
           :key="lang.value"
+          rel="alternate"
+          :hreflang="lang.value"
           :to="{ params: { locale: lang.value } }"
         >
           {{ lang.label }}
         </router-link>
       </div>
       <div class="q-mt-md text-caption">
-        {{ $t('components.footer.copyright') }}
+        {{
+          $t('components.footer.disclaimer', {
+            date: lastUpdated,
+          })
+        }}
       </div>
+      <div
+        class="q-mt-md text-caption"
+        v-html="
+          $t('components.footer.lastUpdated', {
+            date: lastUpdated,
+          })
+        "
+      />
     </div>
   </div>
 </template>
@@ -42,6 +56,7 @@
 import { defineComponent } from '@vue/composition-api'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 import { PortalTarget } from 'portal-vue'
+import { date } from 'quasar'
 
 export default defineComponent({
   components: {
@@ -49,7 +64,10 @@ export default defineComponent({
   },
   props: {},
   setup() {
-    return { langs: Object.freeze(langs) }
+    return {
+      langs: Object.freeze(langs),
+      lastUpdated: date.formatDate(Date.now(), 'DD MMMM YYYY'),
+    }
   },
 })
 </script>

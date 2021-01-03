@@ -5,6 +5,7 @@
     </portal>
     <the-country-list :origin-code="originCode" class="q-mb-md" />
 
+    {{ getNationalityOrFallback(originCode) }}
     <div class="column justify-center q-gutter-md">
       <div class="text-h6 text-center text-uppercase">
         {{ $t('page.country.destinations') }}
@@ -99,6 +100,7 @@ import {
   getLabelForCountryCode,
   transformCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import { getNationalityOrFallback } from '@/shared/src/modules/nationality/nationality-helpers'
 
 export default defineComponent({
   meta({
@@ -185,6 +187,7 @@ export default defineComponent({
       promptVisible: ref(false),
       iconSearch,
       iconSubscribe,
+      getNationalityOrFallback,
     }
   },
 })

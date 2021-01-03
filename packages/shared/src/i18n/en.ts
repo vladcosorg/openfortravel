@@ -33,12 +33,20 @@ export default {
     },
   },
   restriction: {
+    updated: {
+      label: 'Updated {days} days ago',
+    },
     travel: {
       label: 'Travel',
       value: {
         allowed: 'Allowed',
         forbidden: 'Forbidden',
         conditional: 'Conditional',
+      },
+      badgeValue: {
+        allowed: 'Entry Allowed',
+        forbidden: 'Entry Forbidden',
+        conditional: 'Entry Conditional',
       },
     },
     testing: {
@@ -73,17 +81,24 @@ export default {
     },
   },
   meta: {
-    title: 'Travel destinations during COVID-19 pandemic',
+    title: 'updated {date}',
+    description:
+      'Get the latest recommendations for international travel from {country}. We provide info on all travel warnings, exceptions, lifted bans, closed borders and temporary flight restriction end dates. Be aware of any PCR tests and COVID-19 vaccine passports that may be required at the border.',
   },
   page: {
     index: {
-      hero:
-        'Find out which destinations are <span>open</span> or <span>reopening</span> soon',
+      route: 'from',
+      hero: 'Coronavirus Travel Advisory for {country} citizens',
+      meta: {
+        title:
+          'COVID-19 flight & travel bans to foreign countries for {nationality}',
+      },
     },
     country: {
       route: 'travel/from',
       meta: {
-        title: 'Travel destinations from {origin}',
+        title:
+          '{origin} COVID-19 Travel Restrictions and Bans Listed By Destination',
       },
       quickSearch: 'Quick country search',
       destinations: 'To Destinations',
@@ -101,7 +116,7 @@ export default {
       route: 'to',
       meta: {
         title:
-          'Latest information on travelling from {origin} to {destination}',
+          '{destination} travel restrictions from {origin}: flight restrictions, quarantine measures,  COVID-19 vaccine passport  and other entry requirements',
       },
       title: 'Latest information on travelling from {origin} to {destination}',
       seeReturnPage: 'See return travel',
@@ -117,7 +132,7 @@ export default {
   components: {
     theCountryList: {
       title: 'I want to travel',
-      titleIntro: 'I want to travel from',
+      titleIntro: 'Or try another country',
       from: 'From',
       to: 'To',
       btn: 'Search',
@@ -144,6 +159,9 @@ export default {
     },
     destinationItem: {
       titleWithDirection: '{from} → {to}',
+      readMore: 'Read more',
+      ssrAttrTitle: 'See COVID-19 travel restrictions to {to}',
+      ssrTitle: 'Travel restrictions for travel from {from} to {to}',
       riskLevel: {
         title: 'COVID-19 Risk Level',
         values: {
@@ -157,7 +175,12 @@ export default {
     },
     footer: {
       languages: 'Languages',
-      copyright: 'Copyright 2020',
+      lastUpdated: 'Last updated on <br><b>{date}</b>',
+      disclaimer:
+        'Our website offers up-to-date information on flight restrictions,  travel bans, quarantine measures,  COVID-19 vaccine passport and other entry requirements, border closures due to coronavirus pandemic. We do our best to keep the information update but let us know if something needs correction.  Wherever you’re flying from, please always check government advice before booking.',
     },
+  },
+  misc: {
+    countryCitizen: '{country} citizens',
   },
 }

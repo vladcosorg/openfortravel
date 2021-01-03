@@ -24,6 +24,7 @@ class State {
   public restriction = createDummyPlainRestriction()
   public returnRestriction = createDummyPlainRestriction()
   public destination = createDummyPlainDestination()
+  public returnDestination = createDummyPlainDestination()
 }
 
 export default {
@@ -38,6 +39,8 @@ export default {
       wrapWithRichRestrictionObject(state.returnRestriction),
     getDestination: (state): Destination =>
       wrapWithRichDestinationObject(state.destination),
+    getReturnDestination: (state): Destination =>
+      wrapWithRichDestinationObject(state.returnDestination),
   },
   mutations: {
     setRestriction(state: State, restriction: PlainRestriction): void {
@@ -48,6 +51,9 @@ export default {
     },
     setDestination(state: State, destination: PlainDestination): void {
       state.destination = destination
+    },
+    setReturnDestination(state: State, destination: PlainDestination): void {
+      state.returnDestination = destination
     },
   },
   actions: {
@@ -100,6 +106,12 @@ export default {
         return
       }
       commit('setDestination', await findOrigin(destinationCode))
+    },
+    async fetchReturnDestination({ commit, state }, destinationCode: string) {
+      if (state.returnDestination.countryCode === destinationCode) {
+        return
+      }
+      commit('setReturnDestination', await findOrigin(destinationCode))
     },
   },
 } as Module<State, StateInterface>

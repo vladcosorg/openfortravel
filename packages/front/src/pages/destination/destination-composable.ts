@@ -44,21 +44,29 @@ export function getRestriction(
 
 export function getDestination(
   destinationCodeRef: Ref<string>,
+  returnDirection = false,
 ): {
   destinationRef: ComputedRef<Destination>
   loadingRef: Ref<boolean>
 } {
-  const destinationRef = useVuexReactiveGetter<Destination>(
-    'destinationPage/getDestination',
-  )
   const { loading: loadingRef } = useLoading()
   const fetcher = useVuexActionDispatcherWithReactivePayload(
-    'destinationPage/fetchDestination',
+    returnDirection
+      ? 'destinationPage/fetchReturnDestination'
+      : 'destinationPage/fetchDestination',
     destinationCodeRef,
     loadingRef,
   )
+
   onServerPrefetch(fetcher)
   onMounted(fetcher)
 
-  return { destinationRef, loadingRef }
+  return {
+    destinationRef: useVuexReactiveGetter<Destination>(
+      returnDirection
+        ? 'destinationPage/getReturnDestination'
+        : 'destinationPage/getDestination',
+    ),
+    loadingRef,
+  }
 }

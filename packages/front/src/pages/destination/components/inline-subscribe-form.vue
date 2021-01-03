@@ -3,7 +3,7 @@
     <q-card
       square
       flat
-      class="bg-blue-grey-10 relative-position"
+      class="relative-position"
       tag="form"
       novalidate
       @submit.prevent.stop="onSubmit"

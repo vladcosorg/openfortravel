@@ -24,13 +24,7 @@
       :origin-code="originCode"
       :destination-code="destinationCode"
       class="q-mb-xl"
-    >
-      <return-way
-        compact
-        :origin-code="destinationCode"
-        :destination-code="originCode"
-      />
-    </the-country-list>
+    />
 
     <div v-if="loading" class="text-subtitle1 column flex-center">
       <q-skeleton type="text" width="100%" />
@@ -145,6 +139,11 @@
       @click="isGoingBack.toggle"
     />
     <portal to="footer">
+      <return-way
+        compact
+        :origin-code="destinationCode"
+        :destination-code="originCode"
+      />
       <inline-subscribe-form :restriction="restriction" />
     </portal>
   </q-page>
@@ -231,7 +230,6 @@ export default defineComponent({
     const destinationCodeRef = useComputedMemorized(
       () => props.unsafeDestinationCode,
     )
-
     const {
       restrictionRef,
       loadingRef: restrictionLoadingRef,

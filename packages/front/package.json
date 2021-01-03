@@ -20,7 +20,7 @@
     "build-deploy": "yarn run build && yarn run deploy",
     "deploy": "cp app.yaml dist/ssr/app.yaml && gcloud app deploy dist/ssr/app.yaml --quiet",
     "build-flags": "ts-node src/bin/build-flags.ts",
-    "build-sitemap": "node -- node_modules/.bin/ts-node -P tsconfig.json -r tsconfig-paths/register src/bin/build-sitemap.ts",
+    "build-sitemap": "rm -rf public/sitemap && node -- node_modules/.bin/ts-node -P tsconfig.json -r tsconfig-paths/register src/bin/build-sitemap.ts",
     "build-stats": "node -- node_modules/.bin/ts-node -P tsconfig.json -r tsconfig-paths/register ../functions/src/safety-level-calculator.ts",
     "upload-assets": "cd dist/ssr && CLOUDSDK_PYTHON=/usr/bin/python2.7 gsutil -m cp -r -z css,html,js,map,svg ./www/** gs://oftassets",
     "delete-translation-cache": "gsutil -m rm -f gs://translation-cache/** "
@@ -31,7 +31,8 @@
       "@vueuse/core",
       "ky",
       "ky-universal",
-      "encoding"
+      "encoding",
+      "node-fetch"
     ]
   },
   "dependencies": {
@@ -46,6 +47,7 @@
     "date-fns": "^2.16.1",
     "firebase": "^8.2.0",
     "i18n-iso-countries": "^6.0.0",
+    "i18n-nationality": "^1.1.1",
     "iso-language-list": "^0.3.3",
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2",

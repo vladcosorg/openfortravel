@@ -2,7 +2,7 @@
   <q-item
     v-if="loading"
     :class="[$style.item, 'rounded-borders q-pa-md']"
-    style="min-height: 188px"
+    style="min-height: 212px"
   >
     <q-item-section>
       <q-item-label :class="[$style.label, ' q-mb-sm']">
@@ -53,7 +53,7 @@
     <q-item-section>
       <q-item-label
         v-if="returning"
-        :class="[$style.label, 'full-width text-h5']"
+        :class="[$style.label, 'full-width  text-h5 q-mb-sm']"
       >
         {{
           $t('components.destinationItem.titleWithDirection', {
@@ -64,9 +64,39 @@
       </q-item-label>
       <q-item-label
         v-else
-        :class="[$style.label, 'ellipsis-improved full-width  text-h5 q-mb-sm']"
+        :class="[$style.label, 'ellipsis-improved full-width  text-h5']"
       >
         {{ destination.destinationNominativeLabel }}
+      </q-item-label>
+
+      <q-item-label class="q-gutter-sm q-mb-md">
+        <q-badge
+          v-if="destination.status === 'allowed'"
+          color="positive"
+          text-color="dark"
+        >
+          {{ $t('restriction.travel.badgeValue')[destination.status] }}
+        </q-badge>
+        <q-badge
+          v-if="destination.status === 'conditional'"
+          color="warning"
+          text-color="dark"
+        >
+          {{ $t('restriction.travel.badgeValue')[destination.status] }}
+        </q-badge>
+        <q-badge
+          v-if="destination.status === 'forbidden'"
+          color="negative"
+          text-color="white"
+        >
+          {{ $t('restriction.travel.badgeValue')[destination.status] }}
+        </q-badge>
+        <q-badge v-if="destination.needsSelfIsolation()" color="extra-purple">
+          {{ $t('restriction.selfIsolation.label') }}
+        </q-badge>
+        <q-badge v-if="destination.testRequired" color="extra-purple">
+          {{ $t('restriction.testing.label') }}
+        </q-badge>
       </q-item-label>
       <q-item-label
         :class="[riskLevelColor(country.riskLevel), 'text-subtitle2']"
@@ -78,48 +108,30 @@
       </q-item-label>
       <q-item-label
         :class="[
-          'text-body2 text-blue-grey-2 ellipsis-3-lines q-py-xs',
+          'text-body2 text-blue-grey-2 ellipsis-3-lines q-mb-sm',
           $style.description,
         ]"
-        v-html="
-          returning
-            ? destination.returnShortDescription
-            : destination.shortDescription
-        "
-      />
-      <q-item-label class="text-caption text-blue-grey-13">
-        Last updated: 31/12/2020
+      >
+        <div
+          v-html="
+            returning
+              ? destination.returnShortDescription
+              : destination.shortDescription
+          "
+        />
       </q-item-label>
-      <q-item-label class="q-gutter-sm">
-        <q-badge
-          v-if="destination.status === 'allowed'"
-          color="green-14"
-          text-color="dark"
-        >
-          {{ $t('restriction.travel.value')[destination.status] }}
-        </q-badge>
-        <q-badge
-          v-if="destination.status === 'conditional'"
-          color="warning"
-          text-color="dark"
-        >
-          {{ $t('restriction.travel.value')[destination.status] }}
-        </q-badge>
-        <q-badge
-          v-if="destination.status === 'forbidden'"
-          color="negative"
-          text-color="white"
-        >
-          {{ $t('restriction.travel.value')[destination.status] }}
-        </q-badge>
-        <q-badge v-if="destination.needsSelfIsolation()" color="deep-purple">
-          {{ $t('restriction.selfIsolation.label') }}
-        </q-badge>
-        <q-badge v-if="destination.testRequired" color="deep-purple">
-          {{ $t('restriction.testing.label') }}
-        </q-badge>
+      <q-item-label class="row">
+        <q-btn
+          outline
+          size="sm"
+          :label="$t('components.destinationItem.readMore')"
+        />
+        <span class="col text-caption text-blue-grey-13 text-right">
+          {{ $t('restriction.updated.label', { days: 3 }) }}
+        </span>
       </q-item-label>
     </q-item-section>
+
     <q-inner-loading :showing="isClicked" />
   </q-item>
 </template>
