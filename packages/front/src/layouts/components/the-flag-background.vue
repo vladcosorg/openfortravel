@@ -34,8 +34,8 @@
 .flagBg {
   position: absolute;
   left: 0;
-  top: 0;
   margin: 0;
+  opacity: 0.4;
   width: 100%;
   height: 250px;
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));

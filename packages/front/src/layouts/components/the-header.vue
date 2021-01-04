@@ -1,25 +1,24 @@
 <template>
-  <div :class="['col-2  text-center']">
-    <div class="row items-center justify-center">
-      <portal-target name="top-left" class="col" />
-      <logo class="col-auto" />
-      <div class="col row justify-center">
-        <language-switcher />
-      </div>
-    </div>
-  </div>
+  <q-header class="q-py-sm" height-hint="82">
+    <q-toolbar>
+      <q-btn flat dense round :icon="menu" @click="$emit('input', true)" />
+      <q-space />
+      <logo />
+      <q-space />
+      <language-switcher />
+    </q-toolbar>
+  </q-header>
 </template>
 
 <style lang="scss" module>
 .logo {
   height: auto;
-  width: 140px;
   cursor: pointer;
 }
 </style>
 <script lang="ts">
+import { matMenu as menu } from '@quasar/extras/material-icons'
 import { defineComponent } from '@vue/composition-api'
-import { PortalTarget } from 'portal-vue'
 import { hydrateWhenIdle } from 'vue-lazy-hydration'
 
 import LanguageSwitcher from '@/front/src/layouts/components/the-language-switcher.vue'
@@ -29,10 +28,17 @@ export default defineComponent({
   components: {
     LanguageSwitcher: hydrateWhenIdle(LanguageSwitcher),
     Logo: hydrateWhenIdle(Logo),
-    PortalTarget,
+  },
+  props: {
+    value: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup() {
-    return {}
+    return {
+      menu,
+    }
   },
 })
 </script>

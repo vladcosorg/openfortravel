@@ -147,6 +147,7 @@
   width: 100%;
   height: 100%;
   object-fit: fill;
+  filter: grayscale(90%);
   mask-image: linear-gradient(
     90deg,
     rgba(0, 0, 0, 0.01) 50%,

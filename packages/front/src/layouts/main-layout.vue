@@ -1,54 +1,62 @@
 <template>
   <q-layout view="hhr lpr ffr">
-    <portal-target name="top" slim />
-
-    <q-header class="bg-transparent">
-      <header-bar class="q-pb-lg" />
-    </q-header>
+    <the-header v-model="menuOpen" />
+    <the-drawer v-model="menuOpen" />
 
     <q-page-container
       :class="[
-        $style.container,
+        'bg-primary',
         'q-px-md',
         fullHeight && !$q.platform.is.ios ? 'wwindow-height' : '',
+        $style.container,
       ]"
     >
+      <portal-target name="top" slim />
       <transition
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeOut"
         appear
         :duration="500"
       >
-        <router-view class="q-pb-md" />
+        <router-view class="q-pb-md q-pt-xl" />
       </transition>
     </q-page-container>
     <the-footer />
   </q-layout>
 </template>
 <style lang="scss" module>
+.header {
+  //background-color: #14171a;
+  //background: linear-gradient(
+  //  to bottom,
+  //  rgba(18, 18, 18, 0.7) 70%,
+  //  rgba(0, 0, 0, 0)
+  //);
+}
 .container {
   overflow-x: hidden;
-  background-color: #222930;
   color: white;
 }
 </style>
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 import { merge } from 'lodash'
 import { PortalTarget } from 'portal-vue'
 import { date } from 'quasar'
 import { hydrateWhenIdle, hydrateWhenVisible } from 'vue-lazy-hydration'
 
+import TheDrawer from '@/front/src/layouts/components/the-drawer.vue'
 import TheFooter from '@/front/src/layouts/components/the-footer.vue'
-import HeaderBar from '@/front/src/layouts/components/the-header-bar.vue'
+import TheHeader from '@/front/src/layouts/components/the-header.vue'
 import { getCurrentCountryLabel } from '@/front/src/misc/country-decider'
 import { useMeta } from '@/front/src/modules/langhref/langhref-composable'
 import { useI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: {
+    TheDrawer,
     TheFooter: hydrateWhenVisible(TheFooter),
-    HeaderBar: hydrateWhenIdle(HeaderBar),
+    TheHeader: hydrateWhenIdle(TheHeader),
     PortalTarget,
   },
   meta({ meta }: { meta: Record<string, string> }) {
@@ -84,7 +92,9 @@ export default defineComponent({
     },
   },
   setup() {
+    const menuOpen = ref(false)
     return {
+      menuOpen,
       meta: useMeta(),
     }
   },

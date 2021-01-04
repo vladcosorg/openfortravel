@@ -2,7 +2,8 @@
   <router-link :class="$style.link" :to="route">
     <img
       svg-inline
-      :class="[$style.logo, 'q-pa-md']"
+      :class="[$style.logo]"
+      style="height: 60px"
       src="src/assets/logo.svg"
     />
   </router-link>
@@ -10,9 +11,9 @@
 
 <style lang="scss" module>
 .logo {
-  background-color: $secondary;
-  height: auto;
-  width: 140px;
+  //background-color: $secondary;
+  //height: auto;
+  //width: 140px;
   cursor: pointer;
   &:focus {
     outline: none;
