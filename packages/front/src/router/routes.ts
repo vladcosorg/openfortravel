@@ -2,7 +2,6 @@ import { IVueI18n } from 'vue-i18n'
 import VueRouter, { RouterOptions } from 'vue-router'
 
 import {
-  transformCanonicalSlugToCode,
   transformDestinationSlugToCode,
   transformOriginSlugToCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
@@ -47,25 +46,10 @@ export function createGenericRouter(
                 /* webpackChunkName: "page-index" */ '@/front/src/pages/index-page.vue'
               ),
           },
-          {
-            name: 'index-targeted',
-            path: `${i18n.t('page.index.route')}/:originSlug/`,
-            component: () =>
-              import(
-                /* webpackChunkName: "page-index" */ '@/front/src/pages/index-page.vue'
-              ),
-            props(route) {
-              return {
-                unsafeOriginCode: transformOriginSlugToCode(
-                  route.params.originSlug,
-                ),
-              }
-            },
-          },
+
           {
             name: 'origin',
             path: `${i18n.t('page.country.route')}/:originSlug/`,
-            // alias: 'travel/from/:originSlug/',
             component: () =>
               import(
                 /* webpackChunkName: "page-origin" */
@@ -79,23 +63,23 @@ export function createGenericRouter(
               }
             },
           },
-          {
-            name: 'origin-fallback',
-            path: 'travel/from/:originSlug/',
-            component: () =>
-              import(
-                /* webpackChunkName: "page-origin" */
-                '@/front/src/pages/country/country-page.vue'
-              ),
-            props(route) {
-              return {
-                unsafeOriginCode: transformCanonicalSlugToCode(
-                  route.params.originSlug,
-                ),
-                isFallback: true,
-              }
-            },
-          },
+          // {
+          //   name: 'origin-fallback',
+          //   path: 'travel/from/:origin/',
+          //   component: () =>
+          //     import(
+          //       /* webpackChunkName: "page-origin" */
+          //       '@/front/src/pages/country/country-page.vue'
+          //     ),
+          //   props(route) {
+          //     return {
+          //       unsafeOriginCode: transformCanonicalSlugToCode(
+          //         route.params.originSlug,
+          //       ),
+          //       isFallback: true,
+          //     }
+          //   },
+          // },
           {
             name: 'destination',
             path: `${i18n.t('page.country.route')}/:originSlug/${i18n.t(
@@ -120,24 +104,39 @@ export function createGenericRouter(
               }
             },
           },
+          // {
+          //   name: 'destination-fallback',
+          //   path: 'travel/from/:originSlug/to/:destinationSlug',
+          //   // alias: 'travel/from/:originSlug/to/:destinationSlug',
+          //   component: () =>
+          //     import(
+          //       /* webpackChunkName: "page-destination" */
+          //       '@/front/src/pages/destination/destination-page.vue'
+          //     ),
+          //   props(route) {
+          //     return {
+          //       unsafeOriginCode: transformCanonicalSlugToCode(
+          //         route.params.originSlug,
+          //       ),
+          //       unsafeDestinationCode: transformCanonicalSlugToCode(
+          //         route.params.destinationSlug,
+          //       ),
+          //       isFallback: true,
+          //     }
+          //   },
+          // },
           {
-            name: 'destination-fallback',
-            path: 'travel/from/:originSlug/to/:destinationSlug',
-            // alias: 'travel/from/:originSlug/to/:destinationSlug',
+            name: 'index-targeted',
+            path: `${i18n.t('page.index.route')}/:originSlug/`,
             component: () =>
               import(
-                /* webpackChunkName: "page-destination" */
-                '@/front/src/pages/destination/destination-page.vue'
+                /* webpackChunkName: "page-index" */ '@/front/src/pages/index-page.vue'
               ),
             props(route) {
               return {
-                unsafeOriginCode: transformCanonicalSlugToCode(
+                unsafeOriginCode: transformOriginSlugToCode(
                   route.params.originSlug,
                 ),
-                unsafeDestinationCode: transformCanonicalSlugToCode(
-                  route.params.destinationSlug,
-                ),
-                isFallback: true,
               }
             },
           },

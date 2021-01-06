@@ -134,7 +134,7 @@
       align="left"
       :to="{
         name: 'origin',
-        params: { originSlug: restriction.originSlug },
+        params: { locale: $i18n.locale, originSlug: restriction.originSlug },
       }"
       @click="isGoingBack.toggle"
     />

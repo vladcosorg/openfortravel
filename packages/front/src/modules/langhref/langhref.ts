@@ -1,7 +1,9 @@
+import { IVueI18n } from 'vue-i18n'
 import VueRouter from 'vue-router'
 
 import { createGenericRouter } from '@/front/src/router/routes'
 import { useI18n, useRouter } from '@/shared/src/composables/use-plugins'
+import { createVueI18n } from '@/shared/src/misc/i18n'
 import {
   getTranslatedOrTranslatableLocales,
   Locale,
@@ -65,10 +67,14 @@ async function getLocalizedDestinationSlug(
   return destinationSlugCache[destinationSlug][locale]
 }
 
+let clonedI18n: IVueI18n
 function getLocalizedRouter(locale: string): VueRouter {
-  const i18n = useI18n()
-  i18n.locale = locale
-  return createGenericRouter(i18n)
+  if (!clonedI18n) {
+    clonedI18n = createVueI18n(useI18n().messages)
+  }
+
+  clonedI18n.locale = locale
+  return createGenericRouter(clonedI18n)
 }
 
 type HreflangList = Record<

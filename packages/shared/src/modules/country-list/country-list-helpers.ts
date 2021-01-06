@@ -1,5 +1,6 @@
 import kebabCase from 'lodash/kebabCase'
 
+import { LanguageLocale } from '@/front/src/modules/i18n/types'
 import { useStore } from '@/shared/src/composables/use-plugins'
 import {
   useVuexRawGetter,
@@ -95,6 +96,8 @@ export function getDestinationLabelForCountryCode(countryCode: string): string {
   ]
 }
 
-export function preloadLocalizedListLanguage(locale: string): Promise<void> {
+export function preloadCountryListForLocale(
+  locale: LanguageLocale,
+): Promise<void> {
   return useStore().dispatch('modules/countryList/fetchCountryList', locale)
 }

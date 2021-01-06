@@ -2,27 +2,6 @@
   <div>
     <portal-target name="footer" />
     <div class="text-center q-my-lg q-mx-md">
-      <div class="text-subtitle1 text-uppercase text-bold q-mb-lg">
-        {{ $t('components.footer.languages') }}
-      </div>
-      <div
-        :class="[
-          $style.languages,
-          'text-subtitle2',
-          'text-primary',
-          'q-gutter-sm',
-        ]"
-      >
-        <router-link
-          v-for="lang in langs"
-          :key="lang.value"
-          rel="alternate"
-          :hreflang="lang.value"
-          :to="{ params: { locale: lang.value } }"
-        >
-          {{ lang.label }}
-        </router-link>
-      </div>
       <div class="q-mt-md text-caption">
         {{
           $t('components.footer.disclaimer', {

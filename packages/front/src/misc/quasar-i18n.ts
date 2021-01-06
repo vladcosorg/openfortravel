@@ -1,7 +1,7 @@
 import { QSsrContext } from '@quasar/app'
 import { Quasar } from 'quasar'
 
-export async function setQuasarLocale(
+export async function preloadQuasarLocale(
   locale: string,
   ssrContext: QSsrContext,
 ): Promise<void> {

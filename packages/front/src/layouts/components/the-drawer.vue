@@ -28,8 +28,5 @@ import { defineComponent } from '@vue/composition-api'
 export default defineComponent({
   components: {},
   props: {},
-  setup(props) {
-    return {}
-  },
 })
 </script>
