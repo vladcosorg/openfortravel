@@ -50,7 +50,7 @@ import TheFooter from '@/front/src/layouts/components/the-footer.vue'
 import TheHeader from '@/front/src/layouts/components/the-header.vue'
 import { getCurrentCountryLabel } from '@/front/src/misc/country-decider'
 import { useMeta } from '@/front/src/modules/langhref/langhref-composable'
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { useI18n, useRouter } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: {
@@ -60,9 +60,13 @@ export default defineComponent({
     PortalTarget,
   },
   meta({ meta }: { meta: Record<string, string> }) {
+    const title = useI18n().t(
+      `page.${useRouter().currentRoute.name}.meta.title`,
+    )
+    const titleSuffix = useI18n().t('meta.titleSuffix')
     return merge(
       {
-        title: ' ',
+        title: `${title} - ${titleSuffix}`,
         titleTemplate: (title: string) => {
           const mainTitle = useI18n().t('meta.title', {
             date: date.formatDate(Date.now(), 'MMMM YYYY'),

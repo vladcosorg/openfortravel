@@ -10,5 +10,21 @@
 .extra-purple
   color: $extra
 
+.text-dark-blue
+  color: $dark-blue !important
+
+.bg-dark-blue
+  background-color: $dark-blue
+
 .bg-extra-purple
   background-color: $extra
+
+
+.content-page
+  $content-tags: (h1: map-get($headings, "h5"), h2: map-get($headings, "h6"), h3: map-get($headings, "h6"), h4: map-get($headings, "h6"), h5: map-get($headings, "h6"), h6: map-get($headings, "h6"))
+  @each $heading, $value in $content-tags
+    #{$heading}
+      font-size: map-get($value, "size")
+      font-weight: map-get($value, "weight")
+      line-height: map-get($value, "line-height")
+      letter-spacing: map-get($value, "letter-spacing")

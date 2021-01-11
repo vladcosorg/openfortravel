@@ -7,6 +7,7 @@ import {
   simpleSitemapAndIndex,
   SitemapItemLoose,
 } from 'sitemap'
+import { LocaleMessages } from 'vue-i18n'
 import VueRouter, { Location } from 'vue-router'
 
 import { createGenericRouter } from '@/front/src/router/routes'
@@ -17,7 +18,7 @@ import { transformKeys } from '@/shared/src/misc/misc'
 import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import { convertCountryListResponseToCountrySlugMap } from '@/shared/src/modules/country-list/country-list-store'
 
-const i18n = createVueI18n(messages)
+const i18n = createVueI18n((messages as unknown) as LocaleMessages)
 const countryCodes = Object.keys(
   convertCountryListResponseToCountrySlugMap(
     // eslint-disable-next-line @typescript-eslint/no-var-requires

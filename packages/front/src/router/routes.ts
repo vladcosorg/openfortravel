@@ -46,7 +46,22 @@ export function createGenericRouter(
                 /* webpackChunkName: "page-index" */ '@/front/src/pages/index-page.vue'
               ),
           },
-
+          {
+            name: 'privacy',
+            path: 'privacy-policy',
+            component: () =>
+              import(
+                /* webpackChunkName: "page-privacy-policy" */ '@/front/src/pages/privacy-policy.vue'
+              ),
+          },
+          {
+            name: 'terms',
+            path: 'terms-and-conditions',
+            component: () =>
+              import(
+                /* webpackChunkName: "page-terms" */ '@/front/src/pages/terms.vue'
+              ),
+          },
           {
             name: 'origin',
             path: `${i18n.t('page.country.route')}/:originSlug/`,

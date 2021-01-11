@@ -16,5 +16,5 @@ export async function fetchAllLocaleMessages(): Promise<LocaleMessages> {
   const { default: messages } = await import(
     /* webpackChunkName: "all-i18n" */ '@/shared/src/i18n'
   )
-  return messages
+  return (messages as unknown) as LocaleMessages
 }

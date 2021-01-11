@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   status: {
     allowed: 'Allowed',
     forbidden: 'Forbidden',
@@ -82,16 +82,36 @@ export default {
   },
   meta: {
     title: 'updated {date}',
+    titleSuffix: 'COVID-19 flight & travel bans to foreign countries',
     description:
       'Get the latest recommendations for international travel from {country}. We provide info on all travel warnings, exceptions, lifted bans, closed borders and temporary flight restriction end dates. Be aware of any PCR tests and COVID-19 vaccine passports that may be required at the border.',
   },
   page: {
     index: {
+      link: 'Home',
       route: 'from',
       hero: 'Coronavirus Travel Advisory for {country} citizens',
       meta: {
         title:
           'COVID-19 flight & travel bans to foreign countries for {nationality}',
+      },
+    },
+    privacy: {
+      link: 'Privacy Policy',
+      meta: {
+        title: '@:page.privacy.link',
+      },
+    },
+    terms: {
+      link: 'Terms and Conditions',
+      meta: {
+        title: '@:page.terms.link',
+      },
+    },
+    contact: {
+      link: 'Contact Us',
+      meta: {
+        title: '@:page.contact.link',
       },
     },
     country: {
