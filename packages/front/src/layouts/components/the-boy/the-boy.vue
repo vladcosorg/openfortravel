@@ -2,7 +2,7 @@
   <inline-svg
     :src="svg"
     :class="{
-      [$style.boy]: true,
+      [$style.boy]: false,
       [$style['handFinishedRaising']]: handFinishedRaising,
     }"
     @loaded="loaded"

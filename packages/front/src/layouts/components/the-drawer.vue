@@ -1,5 +1,5 @@
 <template>
-  <q-drawer v-bind="$attrs" v-on="$listeners">
+  <q-drawer v-bind="$attrs" behavior="mobile" v-on="$listeners">
     <q-scroll-area class="fit">
       <q-list padding>
         <q-item
@@ -23,7 +23,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-import TheDarkModeToggle from '@/front/src/layouts/components/the-dark-mode-toggle.vue'
+import TheDarkModeToggle from '@/front/src/layouts/components/the-header/the-dark-mode-toggle.vue'
 import { useI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({

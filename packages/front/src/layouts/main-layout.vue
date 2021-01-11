@@ -1,7 +1,6 @@
 <template>
   <q-layout view="hhr lpr ffr">
-    <the-header v-model="menuOpen" />
-    <the-drawer v-model="menuOpen" />
+    <the-header />
 
     <q-page-container
       :class="[
@@ -39,22 +38,20 @@
 }
 </style>
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { merge } from 'lodash'
 import { PortalTarget } from 'portal-vue'
 import { date } from 'quasar'
 import { hydrateWhenIdle, hydrateWhenVisible } from 'vue-lazy-hydration'
 
-import TheDrawer from '@/front/src/layouts/components/the-drawer.vue'
 import TheFooter from '@/front/src/layouts/components/the-footer.vue'
-import TheHeader from '@/front/src/layouts/components/the-header.vue'
+import TheHeader from '@/front/src/layouts/components/the-header/the-header.vue'
 import { getCurrentCountryLabel } from '@/front/src/misc/country-decider'
 import { useMeta } from '@/front/src/modules/langhref/langhref-composable'
 import { useI18n, useRouter } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: {
-    TheDrawer,
     TheFooter: hydrateWhenVisible(TheFooter),
     TheHeader: hydrateWhenIdle(TheHeader),
     PortalTarget,
@@ -96,9 +93,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const menuOpen = ref(false)
     return {
-      menuOpen,
       meta: useMeta(),
     }
   },

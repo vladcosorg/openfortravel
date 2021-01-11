@@ -153,6 +153,7 @@ module.exports = configure((context) => ({
   framework: {
     iconSet: 'material-icons', // Quasar icon set
     lang: 'en-us', // Quasar language pack
+    cssAddon: true,
     config: {
       dark: true,
       loadingBar: {

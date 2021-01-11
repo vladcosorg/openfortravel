@@ -4,7 +4,7 @@
       svg-inline
       :class="[$style.logo]"
       style="height: 60px"
-      src="src/assets/logo.svg"
+      src="../../../assets/logo.svg"
     />
   </router-link>
 </template>
