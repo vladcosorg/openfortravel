@@ -2,6 +2,7 @@ import {
   getFullDescription,
   getShortDescription,
 } from '@/front/src/models/description'
+import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import {
   getDestinationLabelForCountryCode,
   getLabelForCountryCode,
@@ -61,6 +62,10 @@ export class Restriction implements PlainRestriction {
 
   get originSlug(): string {
     return transformCodeToOriginSlug(this.origin)
+  }
+
+  get destinationContinent(): string | undefined {
+    return getMappedContinentID(this.destination)
   }
 
   get destinationLabel(): string {

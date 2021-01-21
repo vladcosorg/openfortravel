@@ -4,15 +4,14 @@ import {
   ComputedRef,
   onMounted,
   onServerPrefetch,
+  ref,
   Ref,
   watch,
-  WritableComputedRef,
 } from '@vue/composition-api'
 
 import { CountryMap } from '@/front/src/pages/country/country-store'
 import { RiskLevel } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
-import { useFilterableCollection } from '@/shared/src/composables/use-misc'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import {
   useProperVuexActionDispatcher,
@@ -65,36 +64,91 @@ export function useGroupedDestinations(
   }
 }
 
-export function useFilterableFlatDestinations(
-  destinationsRef: ComputedRef<Restriction[]>,
-): {
-  filterLoadingRef: Ref<boolean>
-  filteredDestinationsRef: ComputedRef<Restriction[]>
-  filterRef: WritableComputedRef<string>
-  isFilteringRef: ComputedRef<boolean>
+type InputFilter = (input: Restriction[]) => Restriction[]
+export function useFilterer(
+  input: ComputedRef<Restriction[]>,
+  filters: InputFilter[],
+): ComputedRef<Restriction[]> {
+  return computed(() =>
+    filters.reduce((restrictions, filter) => filter(restrictions), input.value),
+  )
+}
+
+export function useCountryMatchFilter(): {
+  filterValue: Ref<string>
+  filterFunction: InputFilter
 } {
-  const {
-    filter,
-    collection,
-    loading: filterLoading,
-    isFiltering,
-  } = useFilterableCollection(destinationsRef, (input, filterValue) =>
-    input
-      .filter((destination) =>
-        destination.destinationLabel.toLowerCase().includes(filterValue),
+  const filterValue = ref('')
+
+  const filterFunction: InputFilter = (input: Restriction[]) => {
+    if (!filterValue.value) {
+      return input
+    }
+
+    return input
+      .filter((restriction) =>
+        restriction.destinationLabel.toLowerCase().includes(filterValue.value),
       )
       .sort(
         (destinationA, destinationB) =>
-          destinationA.destinationLabel.indexOf(filterValue) -
-          destinationB.destinationLabel.indexOf(filterValue),
-      ),
-  )
+          destinationA.destinationLabel.indexOf(filterValue.value) -
+          destinationB.destinationLabel.indexOf(filterValue.value),
+      )
+  }
 
   return {
-    filteredDestinationsRef: collection,
-    filterRef: filter,
-    isFilteringRef: isFiltering,
-    filterLoadingRef: filterLoading,
+    filterValue,
+    filterFunction,
+  }
+}
+
+export function useTabFilter(): {
+  filterValue: Ref<string>
+  filterFunction: InputFilter
+} {
+  const filterValue = ref('')
+
+  const filterFunction: InputFilter = (input: Restriction[]) => {
+    if (!filterValue.value) {
+      return input
+    }
+
+    return input.filter(
+      (restriction) => restriction.destinationContinent === filterValue.value,
+    )
+  }
+
+  return {
+    filterValue,
+    filterFunction,
+  }
+}
+
+export function useRestrictionFilterer(
+  input: Ref<Restriction[]>,
+): {
+  countryMatchFilterValue: Ref<string>
+  tabFilterValue: Ref<string>
+  destinations: Ref<Restriction[]>
+} {
+  const {
+    filterValue: countryMatchFilterValue,
+    filterFunction: countryMatchFilterFunction,
+  } = useCountryMatchFilter()
+  const {
+    filterValue: tabFilterValue,
+    filterFunction: tabFilterFunction,
+  } = useTabFilter()
+
+  const destinations = useFilterer(input, [
+    countryMatchFilterFunction,
+    tabFilterFunction,
+  ])
+
+  return {
+    countryMatchFilterValue,
+    tabFilterValue,
+    destinations,
   }
 }
 

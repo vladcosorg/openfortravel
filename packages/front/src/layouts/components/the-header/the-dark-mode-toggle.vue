@@ -28,8 +28,8 @@ export default defineComponent({
   components: {},
   props: {},
   setup(_props, { root }) {
-    const cookieValue = root.$q.cookies.get<number>('dark')
-    if (cookieValue !== undefined) {
+    const cookieValue = root.$q.cookies.get<number | null>('dark')
+    if (cookieValue !== null) {
       root.$q.dark.set(cookieValue === 1)
     }
 

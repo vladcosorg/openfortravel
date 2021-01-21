@@ -39,6 +39,10 @@ export default defineComponent({
         return props.value
       },
       set(newValue) {
+        if (newValue === 'all') {
+          newValue = undefined
+        }
+
         emit('input', newValue)
       },
     })

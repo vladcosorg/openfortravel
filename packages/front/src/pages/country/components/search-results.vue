@@ -11,13 +11,14 @@
       <div class="text-h6 text-center text-uppercase">
         {{ $t('page.country.destinations') }}
       </div>
-      <search-tabs v-model="currentTab" :origin-code="originCode" />
+      <search-tabs v-model="tabFilterValue" :origin-code="originCode" />
       <q-input
-        v-model="filter"
+        v-model="countryMatchFilterValue"
         :placeholder="$t('page.country.quickSearch')"
         :loading="isListLoading"
         standout
         dense
+        debounce="300"
         stack-label
         dark
       >
@@ -47,7 +48,7 @@
       <destination-group
         class="q-mt-xs"
         :loading="isListLoading"
-        :destinations="filteredFlatDestinations"
+        :destinations="destinations"
         :countries="countries"
       />
     </div>
@@ -70,9 +71,9 @@ import DialogSubscribeForm from '@/front/src/pages/country/components/dialog-sub
 import SearchTabs from '@/front/src/pages/country/components/search-tabs.vue'
 import {
   getBreadcrumbs,
-  useFilterableFlatDestinations,
   useGroupedDestinations,
   useCountries,
+  useRestrictionFilterer,
 } from '@/front/src/pages/country/composable'
 import { useStore } from '@/shared/src/composables/use-plugins'
 import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
@@ -93,32 +94,31 @@ export default defineComponent({
   },
   setup(props) {
     const originCode = toRef(props, 'originCode')
-    const currentTab = ref('')
     const { countries, isLoading: isCountryListLoading } = useCountries()
     const {
       destinationsRef,
       isLoadingRef: isDestinationListLoading,
     } = useGroupedDestinations(originCode)
-    const {
-      filterRef,
-      filteredDestinationsRef,
-      filterLoadingRef,
-    } = useFilterableFlatDestinations(destinationsRef)
 
     watch(isDestinationListLoading, (newValue) => {
       useStore().commit('setCountrySelectorLoading', newValue)
     })
 
+    const {
+      countryMatchFilterValue,
+      tabFilterValue,
+      destinations,
+    } = useRestrictionFilterer(destinationsRef)
+
     return {
       countries,
-      currentTab,
-      filter: filterRef,
+      tabFilterValue,
+      countryMatchFilterValue,
       isListLoading: useAggregatedLoader(
-        filterLoadingRef,
         isCountryListLoading,
         isDestinationListLoading,
       ),
-      filteredFlatDestinations: filteredDestinationsRef,
+      destinations,
       promptVisible: ref(false),
       iconSearch,
       iconSubscribe,
