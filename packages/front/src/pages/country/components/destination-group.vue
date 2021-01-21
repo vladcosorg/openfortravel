@@ -1,52 +1,93 @@
 <template>
-  <q-list class="rounded-borders">
-    <q-no-ssr>
-      <template #default>
-        <q-intersection
-          v-for="(destination, index) in items"
-          :key="index"
-          style="min-height: 212px"
-          class="q-mb-md"
-        >
-          <destination-item
-            :loading="loading"
-            :destination="destination"
-            :country="
-              destination ? countries.get(destination.destination) : undefined
+  <div v-if="true" class="q-mt-lg">
+    <div :class="`rounded-borders ${$style.grid} q-col-gutter-lg`">
+      <q-intersection
+        v-for="(destination, index) in items"
+        :key="index"
+        :class="[$style.gridItem, 'col']"
+      >
+        <destination-item
+          :loading="loading"
+          :destination="destination"
+          :country="
+            destination ? countries.get(destination.destination) : undefined
+          "
+        />
+      </q-intersection>
+    </div>
+  </div>
+  <q-no-ssr v-else :class="`rounded-borders ${$style.grid}`">
+    <template #default />
+    <template #placeholder>
+      <ul>
+        <li v-for="(destination, index) in items" :key="index">
+          <router-link
+            :title="
+              $t('components.destinationItem.ssrAttrTitle', {
+                to: destination.destinationLabel,
+              })
             "
-          />
-        </q-intersection>
-      </template>
-      <template #placeholder>
-        <ul>
-          <li v-for="(destination, index) in items" :key="index">
-            <router-link
-              :title="
-                $t('components.destinationItem.ssrAttrTitle', {
-                  to: destination.destinationLabel,
-                })
-              "
-              :to="{
-                name: 'destination',
-                params: {
-                  originSlug: destination.originSlug,
-                  destinationSlug: destination.destinationSlug,
-                },
-              }"
-            >
-              {{
-                $t('components.destinationItem.ssrTitle', {
-                  from: destination.originLabel,
-                  to: destination.destinationLabel,
-                })
-              }}
-            </router-link>
-          </li>
-        </ul>
-      </template>
-    </q-no-ssr>
-  </q-list>
+            :to="{
+              name: 'destination',
+              params: {
+                originSlug: destination.originSlug,
+                destinationSlug: destination.destinationSlug,
+              },
+            }"
+          >
+            {{
+              $t('components.destinationItem.ssrTitle', {
+                from: destination.originLabel,
+                to: destination.destinationLabel,
+              })
+            }}
+          </router-link>
+        </li>
+      </ul>
+    </template>
+  </q-no-ssr>
 </template>
+<style lang="scss" module>
+.grid {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  //display: grid;
+  //grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  //grid-auto-rows: 1fr;
+  //grid-gap: map-get($space-sm, 'x');
+
+  //display: flex;
+  //flex-wrap: wrap;
+  @media (min-width: $breakpoint-sm-min) {
+    //grid-gap: map-get($space-lg, 'x');
+  }
+
+  :after {
+    content: '';
+    flex: auto;
+  }
+
+  :global {
+    .q-intersection {
+      height: 164px;
+      @media (min-width: $breakpoint-sm-min) {
+        height: 295px;
+      }
+
+      min-width: 275px;
+    }
+    .q-intersection > div {
+      height: 100%;
+    }
+  }
+}
+
+.gridItem {
+  :global {
+  }
+}
+</style>
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@vue/composition-api'

@@ -1,5 +1,26 @@
 <template>
   <select
+    v-if="isGroupedList"
+    v-model="currentValueRef"
+    :class="$style.nativeSelect"
+    @touchstart="isOptionListInitializedRef = true"
+  >
+    <optgroup
+      v-for="(options, label) in lazyOptionListRef"
+      :key="label"
+      :label="label"
+    >
+      <option
+        v-for="(option, index) in options"
+        :key="index"
+        :value="option.value"
+      >
+        {{ option.label }}
+      </option>
+    </optgroup>
+  </select>
+  <select
+    v-else
     v-model="currentValueRef"
     :class="$style.nativeSelect"
     @touchstart="isOptionListInitializedRef = true"
@@ -26,7 +47,7 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
 
 export interface SelectItem {
   value: string
@@ -36,14 +57,13 @@ export interface SelectItem {
 export type SelectList = SelectItem[]
 
 export default defineComponent({
-  components: {},
   props: {
     value: {
-      required: true,
+      required: false,
       type: String,
     },
     options: {
-      type: Array as PropType<SelectList>,
+      type: [Array, Object],
       required: true,
     },
     dropdownIcon: {
@@ -52,7 +72,7 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const currentValueRef = computed<string>({
+    const currentValueRef = computed<string | undefined>({
       get() {
         return props.value
       },
@@ -60,6 +80,8 @@ export default defineComponent({
         emit('input', value)
       },
     })
+
+    const isGroupedList = computed(() => !Array.isArray(props.options))
 
     const isOptionListInitializedRef = ref(false)
     const lazyOptionListRef = computed(() => {
@@ -70,6 +92,7 @@ export default defineComponent({
     })
 
     return {
+      isGroupedList,
       lazyOptionListRef,
       isOptionListInitializedRef,
       currentValueRef,

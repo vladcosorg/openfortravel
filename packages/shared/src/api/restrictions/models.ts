@@ -12,6 +12,7 @@ import {
 
 export enum RestrictionStatus {
   ALLOWED = 'allowed',
+  ALLOWED_SOON = 'allowed_soon',
   CONDITIONAL = 'conditional',
   FORBIDDEN = 'forbidden',
 }

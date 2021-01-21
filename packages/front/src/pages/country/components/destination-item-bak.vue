@@ -1,0 +1,230 @@
+<template>
+  <q-item
+    v-if="loading"
+    :class="[$style.item, 'rounded-borders q-pa-md']"
+    style="min-height: 212px"
+  >
+    <q-item-section>
+      <q-item-label :class="[$style.label, ' q-mb-sm']">
+        <q-skeleton type="text" height="3rem" width="65%" />
+      </q-item-label>
+      <q-item-label :class="['text-subtitle2']">
+        <q-skeleton type="text" height="1.5rem" width="45%" />
+      </q-item-label>
+      <q-item-label :class="['q-py-xs', $style.description]">
+        <q-skeleton type="text" height="1rem" />
+      </q-item-label>
+      <q-item-label>
+        <q-skeleton type="text" height="10px" width="25%" />
+      </q-item-label>
+      <q-item-label class="q-gutter-sm">
+        <q-item-label class="q-gutter-xs row">
+          <q-skeleton
+            v-for="cnt in 3"
+            :key="cnt"
+            type="QBadge"
+            height="0.9rem"
+            width="3rem"
+          />
+        </q-item-label>
+      </q-item-label>
+    </q-item-section>
+    <q-inner-loading :showing="isClicked" />
+  </q-item>
+
+  <q-item
+    v-else
+    v-ripple
+    :class="[$style.item, destination.status, 'rounded-borders q-pa-md']"
+    clickable
+    :to="{
+      name: 'destination',
+      params: {
+        originSlug: destination.originSlug,
+        destinationSlug: destination.destinationSlug,
+      },
+    }"
+    @click.native="isClicked = true"
+  >
+    <transition appear enter-active-class="animated fadeIn">
+      <flag :class="$style.bg" :country-code="destination.destination" />
+    </transition>
+
+    <q-item-section>
+      <q-item-label
+        v-if="returning"
+        :class="[$style.label, 'full-width  text-h5 q-mb-sm']"
+      >
+        {{
+          $t('components.destinationItem.titleWithDirection', {
+            from: destination.originNominativeLabel,
+            to: destination.destinationNominativeLabel,
+          })
+        }}
+      </q-item-label>
+      <q-item-label
+        v-else
+        :class="[$style.label, 'ellipsis-improved full-width  text-h5']"
+      >
+        {{ destination.destinationNominativeLabel }}
+      </q-item-label>
+
+      <q-item-label class="q-gutter-sm q-mb-md">
+        <q-badge
+          v-if="destination.status === 'allowed'"
+          color="positive"
+          text-color="dark"
+        >
+          {{ $t('restriction.travel.badgeValue')[destination.status] }}
+        </q-badge>
+        <q-badge
+          v-if="destination.status === 'conditional'"
+          color="warning"
+          text-color="dark"
+        >
+          {{ $t('restriction.travel.badgeValue')[destination.status] }}
+        </q-badge>
+        <q-badge
+          v-if="destination.status === 'forbidden'"
+          color="negative"
+          text-color="white"
+        >
+          {{ $t('restriction.travel.badgeValue')[destination.status] }}
+        </q-badge>
+        <q-badge v-if="destination.needsSelfIsolation()" color="extra-purple">
+          {{ $t('restriction.selfIsolation.label') }}
+        </q-badge>
+        <q-badge v-if="destination.testRequired" color="extra-purple">
+          {{ $t('restriction.testing.label') }}
+        </q-badge>
+      </q-item-label>
+      <q-item-label
+        :class="[riskLevelColor(country.riskLevel), 'text-subtitle2']"
+      >
+        {{ $t('components.destinationItem.riskLevel.title') }}:
+        {{
+          $t('components.destinationItem.riskLevel.values')[country.riskLevel]
+        }}
+      </q-item-label>
+      <q-item-label
+        :class="[
+          'text-body2 text-blue-grey-2 ellipsis-3-lines q-mb-sm',
+          $style.description,
+        ]"
+      >
+        <div
+          v-html="
+            returning
+              ? destination.returnShortDescription
+              : destination.shortDescription
+          "
+        />
+      </q-item-label>
+      <q-item-label class="row">
+        <q-btn
+          outline
+          size="sm"
+          :label="$t('components.destinationItem.readMore')"
+        />
+        <span class="col text-caption text-blue-grey-13 text-right">
+          {{ $t('restriction.updated.label', { days: 3 }) }}
+        </span>
+      </q-item-label>
+    </q-item-section>
+
+    <q-inner-loading :showing="isClicked" />
+  </q-item>
+</template>
+
+<style lang="scss" module>
+.label {
+}
+
+.bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  filter: grayscale(90%);
+  mask-image: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.01) 50%,
+    rgba(0, 0, 0, 0.05) 70%,
+    rgba(0, 0, 0, 0.15)
+  );
+}
+
+.item {
+  position: relative;
+  margin-bottom: 10px;
+  overflow: hidden;
+  border: 2px solid rgba($grey, 0.3);
+
+  //&:global(.allowed) {
+  //  border: 1px solid rgba($positive, 0.3);
+  //}
+  //
+  //&:global(.conditional) {
+  //  border: 2px solid rgba($warning, 0.3);
+  //}
+  //
+  //&:global(.forbidden) {
+  //  border: 2px solid rgba($negative, 0.3);
+  //}
+}
+
+.description {
+  line-height: 1.5em !important;
+}
+
+.flag {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+</style>
+
+<script lang="ts">
+import {
+  ionBaseballOutline as icon,
+  ionAlertCircleOutline as warningIcon,
+} from '@quasar/extras/ionicons-v5'
+import { defineComponent, PropType, ref } from '@vue/composition-api'
+
+import Flag from '@/front/src/components/flag.vue'
+import { riskLevelColor } from '@/front/src/pages/country/composable'
+import { Destination } from '@/shared/src/api/destinations/models'
+import { Restriction } from '@/shared/src/api/restrictions/models'
+
+export default defineComponent({
+  components: { Flag },
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    returning: {
+      type: Boolean,
+      default: false,
+    },
+    destination: {
+      type: Object as PropType<Restriction>,
+    },
+    country: {
+      type: Object as PropType<Destination>,
+    },
+  },
+
+  setup() {
+    return {
+      riskLevelColor,
+      isClicked: ref(false),
+      icon,
+      warningIcon,
+    }
+  },
+})
+</script>

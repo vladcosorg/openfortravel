@@ -1,4 +1,6 @@
+import { matFlightTakeoff } from '@quasar/extras/material-icons'
 import {
+  computed,
   ComputedRef,
   onMounted,
   onServerPrefetch,
@@ -16,6 +18,10 @@ import {
   useProperVuexActionDispatcher,
   useVuexReactiveGetter,
 } from '@/shared/src/composables/use-vuex'
+import {
+  getLabelForCountryCode,
+  transformCodeToOriginSlug,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 
 export function useCountries(): {
   countries: ComputedRef<CountryMap>
@@ -95,17 +101,33 @@ export function useFilterableFlatDestinations(
 export function riskLevelColor(riskLevel: RiskLevel): string {
   switch (riskLevel) {
     case RiskLevel.NO_DATA:
-      return 'text-grey-13'
+      return 'text-positive'
     case RiskLevel.LOW:
-      return 'text-green-13'
+      return 'text-info'
     case RiskLevel.MODERATE:
-      return 'text-yellow-9'
+      return 'text-warning'
     case RiskLevel.HIGH:
-      return 'text-orange'
+      return 'text-negative'
     case RiskLevel.VERY_HIGH:
-      return 'text-red-13'
+      return 'text-negative text-bold'
 
     default:
       throw new Error(`Unmapped risk level "${riskLevel}"`)
   }
+}
+
+export function getBreadcrumbs(
+  originCode: Ref<string>,
+  isLoading: Ref<boolean>,
+): ComputedRef {
+  return computed(() => ({
+    originSlug: transformCodeToOriginSlug(originCode.value),
+    items: [
+      {
+        label: `Destinations from ${getLabelForCountryCode(originCode.value)}`,
+        icon: matFlightTakeoff,
+      },
+    ],
+    loading: isLoading.value,
+  }))
 }

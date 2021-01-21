@@ -1842,9 +1842,9 @@
     "@typescript-eslint/types" "4.12.0"
     eslint-visitor-keys "^2.0.0"
 
-"@vitalets/google-translate-api@git+https://github.com/vkedwardli/google-translate-api.git#batchexecute":
+"@vitalets/google-translate-api@https://github.com/vkedwardli/google-translate-api.git#batchexecute":
   version "4.0.0"
-  resolved "git+https://github.com/vkedwardli/google-translate-api.git#2e8cd6baed2a169a7f3f70bcb20ceaf7a5532fe2"
+  resolved "https://github.com/vkedwardli/google-translate-api.git#2e8cd6baed2a169a7f3f70bcb20ceaf7a5532fe2"
   dependencies:
     configstore "^5.0.1"
     got "^9.6.0"
@@ -3534,6 +3534,16 @@ cosmiconfig@^5.0.0:
     is-directory "^0.3.1"
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
+
+countries-list@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/countries-list/-/countries-list-2.6.1.tgz#d479757ac873b1e596ccea0a925962d20396c0cb"
+  integrity sha512-jXM1Nv3U56dPQ1DsUSsEaGmLHburo4fnB7m+1yhWDUVvx5gXCd1ok/y3gXCjXzhqyawG+igcPYcAl4qjkvopaQ==
+
+countup.js@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/countup.js/-/countup.js-2.0.7.tgz#56b72a87fc0ee3cadb38356c246ccac88fb0a8cc"
+  integrity sha512-FO0nQdvG1iQwHp28wdvkErxnNUSbdkzztqZ6YNHKLHydngD2tdiKEW8dFrqpahF3tj+Ma70h0vyYrCBzxlVWdg==
 
 crc-32@^1.2.0:
   version "1.2.0"
@@ -8680,7 +8690,7 @@ postcss-value-parser@^3.0.0:
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-3.3.1.tgz#9ff822547e2893213cf1c30efa51ac5fd1ba8281"
   integrity sha512-pISE66AbVkp4fDQ7VHBwRNXzAAKJjw4Vw7nWI/+Q3vuly7SNfgYXvm6i5IgFylHGK5sP/xHAbB7N49OS4gWNyQ==
 
-postcss-value-parser@^4.0.2, postcss-value-parser@^4.1.0:
+postcss-value-parser@^4.0.2, postcss-value-parser@^4.0.3, postcss-value-parser@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.1.0.tgz#443f6a20ced6481a2bda4fa8532a6e55d789a2cb"
   integrity sha512-97DXOFbQJhk71ne5/Mt6cOu6yxsSfM0QGQyl0L25Gca4yGWEGJaig7l7gbCX623VqTBNGLRLaVUCnNkcedlRSQ==
@@ -9316,6 +9326,13 @@ reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+
+rfs@^9.0.3:
+  version "9.0.3"
+  resolved "https://registry.yarnpkg.com/rfs/-/rfs-9.0.3.tgz#6200ef283a081b01cbf07e2e3c7fe4c14cc3f07b"
+  integrity sha512-LL3eu6iqrJ0I/duHollplc2Tjc33AS7HmfqiAtHZD34Sq+L4+/96nYEN7YfT+vCLbeeB4mbMFpeg2mtxn5qNGA==
+  dependencies:
+    postcss-value-parser "^4.0.3"
 
 rgb-regex@^1.0.1:
   version "1.0.1"
@@ -10948,6 +10965,11 @@ vue-auto-i18n@1.1.0-beta.8:
     lodash "^4.17.20"
     lodash-es "^4.17.20"
     node-fetch "^2.6.1"
+
+vue-countup-v2@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/vue-countup-v2/-/vue-countup-v2-4.0.0.tgz#061a1ac8ee4aa207bb9d23d2bcc1d53a5f7c3675"
+  integrity sha512-XjKeHo1ndRlJtXvHd6B1eWOpbrJDdNU3rdYZwVPv2YlUXbvthsBT4kms5Fc/mn9RdXPrMX2H/ktAAQtKjWFisw==
 
 vue-demi@latest:
   version "0.6.0"

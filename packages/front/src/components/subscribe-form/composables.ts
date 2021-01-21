@@ -1,21 +1,27 @@
-import { matDone } from '@quasar/extras/material-icons'
-import { Ref, ref } from '@vue/composition-api'
-import { Notify } from 'quasar'
+import { Ref } from '@vue/composition-api'
 
-import { useI18n, useKy } from '@/shared/src/composables/use-plugins'
+import { useRequestDispatcher as useGenericRequestDispatcher } from '@/front/src/composables/request-dispatcher'
+import { useKy, useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export function useRequestDispatcher(): {
   isLoading: Ref<boolean>
-  isSubscribed: Ref<boolean>
+  isSuccessful: Ref<boolean | undefined>
   sendRequest: (
     email: string,
     originCode: string,
     destinationCode?: string,
   ) => void
+  reset: () => void
 } {
-  const isLoading = ref(false)
-  const isSubscribed = ref(false)
-  const sendRequest = (
+  const {
+    isSuccessful,
+    isLoading,
+    dispatcher,
+    reset,
+  } = useGenericRequestDispatcher()
+  const { t } = useVueI18n()
+
+  const sendRequest = async (
     email: string,
     originCode: string,
     destinationCode?: string,
@@ -27,25 +33,12 @@ export function useRequestDispatcher(): {
     if (destinationCode) {
       payload.set('destinationCode', destinationCode)
     }
-    isLoading.value = true
 
-    useKy()
-      .post('/subscribe', { body: payload })
-      .then(() => {
-        isSubscribed.value = true
-        Notify.create({
-          icon: matDone,
-          color: 'positive',
-          message: useI18n().t('components.subscribe.notification') as string,
-        })
-      })
-      .catch(() => {
-        isSubscribed.value = false
-      })
-      .finally(() => {
-        isLoading.value = false
-      })
+    await dispatcher(
+      useKy().post('/subscribe', { body: payload }),
+      t('components.subscribe.notification') as string,
+    )
   }
 
-  return { isSubscribed, isLoading, sendRequest }
+  return { isSuccessful, isLoading, sendRequest, reset }
 }

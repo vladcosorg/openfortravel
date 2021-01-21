@@ -1,215 +1,80 @@
 <template>
-  <q-page>
-    <portal to="top">
-      <the-flag-background
-        :first-country-code="originCode"
-        :second-country-code="destinationCode"
+  <inner-page disable-container disable-margins>
+    <portal to="under-header">
+      <the-breadcrumbs
+        :origin-slug="restriction.originSlug"
+        :items="breadcrumbs"
+        :loading="loading"
       />
     </portal>
-    <portal to="top-left">
-      <q-btn
-        unelevated
-        color="primary"
-        :icon="arrowBack"
-        :loading="isGoingBack.state"
-        :to="{
-          name: 'origin',
-          params: { originSlug: restriction.originSlug },
-        }"
-        @click="isGoingBack.toggle"
-      />
-    </portal>
-
-    <the-country-list
+    <the-search-header
       :origin-code="originCode"
       :destination-code="destinationCode"
-      class="q-mb-xl"
     />
-
-    <div v-if="loading" class="text-subtitle1 column flex-center">
-      <q-skeleton type="text" width="100%" />
-      <q-skeleton type="text" width="70%" />
-      <q-skeleton type="text" width="95%" />
+    <div class="container">
+      <div class="row q-col-gutter-xl">
+        <div class="col-md col-12">
+          <description
+            class="text-subtitle1 text-sm-left text-center q-mb-lg"
+            :restriction="restriction"
+            :loading="loading"
+          />
+          <property-list
+            class="q-mx-xs-sm q-mx-none"
+            :destination="destination"
+            :restriction="restriction"
+            :loading="loading"
+          />
+        </div>
+        <div class="col-md col-12">
+          <div class="q-pb-xl">
+            <h4 class="q-mb-md">{{ $t('page.destination.returnWay') }}</h4>
+            <return-way
+              compact
+              :origin-code="destinationCode"
+              :destination-code="originCode"
+            />
+          </div>
+          <section>
+            <inline-subscribe-form no-autofocus :restriction="restriction" />
+          </section>
+        </div>
+      </div>
     </div>
-    <div
-      v-else
-      class="text-subtitle1 text-center"
-      v-html="restriction.description"
-    />
-
-    <q-list class="q-mt-md text-subtitle1">
-      <template v-if="loading" #default>
-        <q-item v-for="index in 5" :key="index">
-          <q-item-section>
-            <q-item-label caption>
-              <q-skeleton type="text" width="20%" />
-            </q-item-label>
-            <q-item-label>
-              <q-skeleton type="text" width="40%" />
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-      </template>
-      <template v-else #default>
-        <q-item v-ripple clickable>
-          <q-item-section>
-            <q-item-label caption>{{
-              $t('restriction.travel.label')
-            }}</q-item-label>
-            <q-item-label :class="['text-uppercase', `text-${statusColor}-6`]">
-              {{ $t(`restriction.travel.value`)[restriction.status] }}
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <q-item-label caption>{{
-              $t('restriction.testing.label')
-            }}</q-item-label>
-            <q-item-label :class="[`text-${testingColor}-6`]">
-              {{
-                $t(`restriction.testing.value`)[restriction.testRequired]
-              }}</q-item-label
-            >
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <q-item-label caption>{{
-              $t('restriction.insurance.label')
-            }}</q-item-label>
-            <q-item-label :class="[`text-${insuranceColor}-6`]">
-              {{
-                $t(`restriction.insurance.value`)[restriction.insuranceRequired]
-              }}</q-item-label
-            >
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <q-item-label caption>{{
-              $t('restriction.healthDeclaration.label')
-            }}</q-item-label>
-            <q-item-label>
-              {{
-                $t(`restriction.healthDeclaration.value`)[
-                  destination.isHealthDeclarationRequired
-                ]
-              }}
-              <a
-                v-if="destination.healthDeclarationDocURL"
-                :href="destination.healthDeclarationDocURL"
-                >{{ $t('page.destination.fillDeclaration') }}</a
-              >
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section>
-            <q-item-label caption>{{
-              $t('restriction.selfIsolation.label')
-            }}</q-item-label>
-            <q-item-label v-if="restriction.selfIsolation > 0">
-              {{
-                $t('restriction.selfIsolation.days', {
-                  days: restriction.selfIsolation,
-                })
-              }}</q-item-label
-            >
-            <q-item-label v-else>
-              {{ $t('restriction.selfIsolation.staticValue.false') }}
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-      </template>
-    </q-list>
-
-    <q-btn
-      class="q-mt-md full-width"
-      color="accent"
-      :icon="arrowBack"
-      outline
-      :label="$t('page.destination.backToList')"
-      :loading="isGoingBack.state"
-      align="left"
-      :to="{
-        name: 'origin',
-        params: { locale: $i18n.locale, originSlug: restriction.originSlug },
-      }"
-      @click="isGoingBack.toggle"
-    />
-    <portal to="footer">
-      <return-way
-        compact
-        :origin-code="destinationCode"
-        :destination-code="originCode"
-      />
-      <inline-subscribe-form :restriction="restriction" />
-    </portal>
-  </q-page>
+  </inner-page>
 </template>
 
 <script lang="ts">
-import { matArrowBack as arrowBack } from '@quasar/extras/material-icons'
+import { matFlightLand, matFlightTakeoff } from '@quasar/extras/material-icons'
 import { computed, defineComponent } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
-import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
-import TheFlagBackground from '@/front/src/layouts/components/the-flag-background.vue'
-import { generateCanonicalBlock } from '@/front/src/misc/meta'
+import InnerPage from '@/front/src/components/inner-page.vue'
+import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
+import TheSearchHeader from '@/front/src/layouts/components/the-search-header.vue'
+import Description from '@/front/src/pages/destination/components/description.vue'
 import InlineSubscribeForm from '@/front/src/pages/destination/components/inline-subscribe-form.vue'
+import PropertyList from '@/front/src/pages/destination/components/property-list.vue'
 import ReturnWay from '@/front/src/pages/destination/components/return-way.vue'
 import {
   getDestination,
   getRestriction,
 } from '@/front/src/pages/destination/destination-composable'
-import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
+import { meta } from '@/front/src/pages/destination/destination-meta'
 import { useComputedMemorized } from '@/shared/src/composables/use-computed-vmodel'
-import { useI18n } from '@/shared/src/composables/use-plugins'
-import {
-  useAggregatedLoader,
-  useLoadingSwitch,
-} from '@/shared/src/composables/use-promise-loading'
-import {
-  getLabelForCountryCode,
-  transformCodeToDestinationSlug,
-  transformCodeToOriginSlug,
-} from '@/shared/src/modules/country-list/country-list-helpers'
+import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
-  meta({
-    originCode,
-    destinationCode,
-    isFallback,
-  }: {
-    originCode: string
-    destinationCode: string
-    isFallback: boolean
-  }) {
-    return {
-      title: useI18n().t('page.destination.meta.title', {
-        origin: getLabelForCountryCode(originCode),
-        destination: getLabelForCountryCode(destinationCode),
-      }),
-      link: {
-        ...(isFallback && {
-          canonical: generateCanonicalBlock({
-            name: 'destination',
-            params: {
-              originSlug: transformCodeToOriginSlug(originCode),
-              destinationSlug: transformCodeToDestinationSlug(originCode),
-            },
-          }),
-        }),
-      },
-    }
-  },
+  meta,
   components: {
+    TheSearchHeader,
+    TheBreadcrumbs,
+    Description,
+    PropertyList,
+    InnerPage,
     InlineSubscribeForm,
     ReturnWay,
-    TheCountryList,
     Portal,
-    TheFlagBackground,
   },
   props: {
     unsafeOriginCode: {
@@ -238,22 +103,23 @@ export default defineComponent({
       destinationRef,
       loadingRef: destinationLoadingRef,
     } = getDestination(destinationCodeRef)
-    const statusMap = {
-      [RestrictionStatus.ALLOWED]: 'green',
-      [RestrictionStatus.CONDITIONAL]: 'orange',
-      [RestrictionStatus.FORBIDDEN]: 'red',
-    }
 
-    const statusColor = computed(() => statusMap[restrictionRef.value.status])
-
-    const testingColor = computed(() =>
-      getBooleanColor(restrictionRef.value.testRequired),
-    )
-
-    const insuranceColor = computed(() =>
-      getBooleanColor(restrictionRef.value.insuranceRequired),
-    )
-
+    const breadcrumbs = computed(() => [
+      {
+        label: `Destinations from ${restrictionRef.value.originLabel}`,
+        to: {
+          name: 'origin',
+          params: {
+            originSlug: restrictionRef.value.originSlug,
+          },
+        },
+        icon: matFlightTakeoff,
+      },
+      {
+        label: `Travel to ${restrictionRef.value.destinationLabel}`,
+        icon: matFlightLand,
+      },
+    ])
     return {
       originCode: originCodeRef,
       destinationCode: destinationCodeRef,
@@ -263,14 +129,8 @@ export default defineComponent({
         restrictionLoadingRef,
         destinationLoadingRef,
       ),
-      statusColor,
-      testingColor,
-      insuranceColor,
-      isGoingBack: useLoadingSwitch(),
-      arrowBack,
+      breadcrumbs,
     }
   },
 })
-
-const getBooleanColor = (value: boolean) => (value ? 'red' : 'green')
 </script>

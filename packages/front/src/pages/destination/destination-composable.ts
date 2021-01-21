@@ -60,6 +60,7 @@ export function getDestination(
 
   onServerPrefetch(fetcher)
   onMounted(fetcher)
+  watch([destinationCodeRef], fetcher)
 
   return {
     destinationRef: useVuexReactiveGetter<Destination>(

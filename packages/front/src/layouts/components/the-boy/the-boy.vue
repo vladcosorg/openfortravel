@@ -1,12 +1,15 @@
 <template>
-  <inline-svg
-    :src="svg"
-    :class="{
-      [$style.boy]: false,
-      [$style['handFinishedRaising']]: handFinishedRaising,
-    }"
-    @loaded="loaded"
-  />
+  <div class="relative-position">
+    <img svg-inline src="../../../assets/home.svg" />
+    <inline-svg
+      :src="svg"
+      :class="{
+        [$style.boy]: true,
+        [$style['handFinishedRaising']]: handFinishedRaising,
+      }"
+      @loaded="loaded"
+    />
+  </div>
 </template>
 
 <style lang="scss" module>
@@ -42,6 +45,10 @@
 
 .boy {
   overflow: visible !important;
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  width: 70%;
 
   :global(#boy) {
     @extend .transform;

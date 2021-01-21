@@ -1,11 +1,8 @@
 <template>
   <q-layout view="hhr lpr ffr">
     <the-header />
-
     <q-page-container
       :class="[
-        'bg-primary',
-        'q-px-md',
         fullHeight && !$q.platform.is.ios ? 'wwindow-height' : '',
         $style.container,
       ]"
@@ -15,26 +12,17 @@
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeOut"
         appear
-        :duration="500"
+        :duration="100"
       >
-        <router-view class="q-pb-md q-pt-xl" />
+        <router-view />
       </transition>
     </q-page-container>
     <the-footer />
   </q-layout>
 </template>
 <style lang="scss" module>
-.header {
-  //background-color: #14171a;
-  //background: linear-gradient(
-  //  to bottom,
-  //  rgba(18, 18, 18, 0.7) 70%,
-  //  rgba(0, 0, 0, 0)
-  //);
-}
 .container {
   overflow-x: hidden;
-  color: white;
 }
 </style>
 <script lang="ts">
@@ -44,7 +32,7 @@ import { PortalTarget } from 'portal-vue'
 import { date } from 'quasar'
 import { hydrateWhenIdle, hydrateWhenVisible } from 'vue-lazy-hydration'
 
-import TheFooter from '@/front/src/layouts/components/the-footer.vue'
+import TheFooter from '@/front/src/layouts/components/the-footer/the-footer.vue'
 import TheHeader from '@/front/src/layouts/components/the-header/the-header.vue'
 import { getCurrentCountryLabel } from '@/front/src/misc/country-decider'
 import { useMeta } from '@/front/src/modules/langhref/langhref-composable'

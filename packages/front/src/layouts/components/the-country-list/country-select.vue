@@ -2,39 +2,36 @@
   <component
     :is="isMobile ? 'q-field' : 'q-select'"
     v-model="currentCountry"
+    :label="isMobile ? label : undefined"
     v-bind="componentArgs"
     standout
     :loading="aggregatedLoading"
     stack-label
     :dropdown-icon="icon"
-    :class="['full-width text-h6', $style.field]"
+    :class="['text-h6', $style.field]"
+    @filter="filterCountryList"
   >
-    <template v-if="showPrefixText" #before>
+    <template v-if="showPrefixText && !isMobile && label" #prepend>
       <div :class="[$style.prefix, 'text-subtitle2']">
-        <slot name="default" />
+        {{ label }}
       </div>
     </template>
-
     <template v-if="isMobile" #control>
-      <transition
-        appear
-        enter-active-class="animated fadeIn"
-        leave-active-class="animated fadeOutRight"
-        mode="out-in"
+      <div
+        v-if="currentCountry"
+        :class="`self-center full-width no-outline text-h6 ${$style.label}`"
       >
-        <div
-          :key="currentCountry.value"
-          :class="['self-center full-width no-outline text-h6', $style.label]"
-        >
-          {{ currentCountry.label }}
-        </div>
-      </transition>
+        {{ currentCountry.label }}
+      </div>
+      <div v-else class="text-primary-subtle">
+        {{ $t('components.theCountryList.placeholder') }}
+      </div>
     </template>
 
     <template v-if="isMobile" #append>
       <invisible-native-select
         v-model="currentCountryValueRef"
-        :options="countryList"
+        :options="nativeList"
       />
       <q-icon :name="icon" />
     </template>
@@ -54,7 +51,7 @@
   }
 }
 .prefix {
-  text-shadow: 1px 1px 5px $primary;
+  text-shadow: 1px 1px 5px $dark;
   font-weight: bold;
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -97,7 +94,7 @@ export default defineComponent({
     },
     value: {
       type: String,
-      required: true,
+      required: false,
     },
     loading: {
       type: Boolean,
@@ -109,8 +106,17 @@ export default defineComponent({
       required: false,
       default: true,
     },
+    label: {
+      type: String,
+      required: false,
+    },
   },
   setup(props, { emit, root }) {
+    const isMobile = computed(() => root.$q.platform.is.mobile)
+    const nativeList = computed<CountryList>(() =>
+      useVuexRawGetter<CountryList>('modules/countryList/originByContinent'),
+    )
+
     const fullList = computed<List>(() => {
       const list = props.isDestination
         ? useVuexRawGetter<CountryList>('modules/countryList/destinationLabels')
@@ -140,7 +146,7 @@ export default defineComponent({
       toRef(props, 'loading'),
     )
 
-    const currentCountryValueRef = computed<string>({
+    const currentCountryValueRef = computed<string | undefined>({
       get() {
         return props.value
       },
@@ -149,8 +155,12 @@ export default defineComponent({
       },
     })
 
-    const currentCountry = computed<ListItem>({
+    const currentCountry = computed<ListItem | undefined>({
       get() {
+        if (!props.value) {
+          return
+        }
+
         return {
           label: props.isDestination
             ? getDestinationLabelForCountryCode(props.value)
@@ -159,7 +169,7 @@ export default defineComponent({
         }
       },
       set(item) {
-        currentCountryValueRef.value = item.value
+        currentCountryValueRef.value = item?.value
       },
     })
 
@@ -174,7 +184,6 @@ export default defineComponent({
       })
     }
 
-    const isMobile = computed(() => root.$q.platform.is.mobile)
     const componentArgs = computed(() => {
       if (isMobile.value) {
         return {}
@@ -193,6 +202,7 @@ export default defineComponent({
     })
 
     return {
+      nativeList,
       isMobile,
       componentArgs,
       aggregatedLoading: loadingRef,

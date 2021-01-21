@@ -1,23 +1,22 @@
 <template>
-  <div>
+  <div class="text-center text-caption q-ma-xl text-primary-subtle">
     <portal-target name="footer" />
-    <div class="text-center q-my-lg q-mx-md">
-      <div class="q-mt-md text-caption">
-        {{
-          $t('components.footer.disclaimer', {
-            date: lastUpdated,
-          })
-        }}
-      </div>
-      <div
-        class="q-mt-md text-caption"
-        v-html="
-          $t('components.footer.lastUpdated', {
-            date: lastUpdated,
-          })
-        "
-      />
+    <the-footer-menu class="q-mb-lg" />
+    <div class="q-mb-lg">
+      {{
+        $t('components.footer.disclaimer', {
+          date: lastUpdated,
+        })
+      }}
     </div>
+    <div
+      class="q-mb-lg"
+      v-html="
+        $t('components.footer.lastUpdated', {
+          date: lastUpdated,
+        })
+      "
+    />
   </div>
 </template>
 
@@ -37,8 +36,11 @@ import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value
 import { PortalTarget } from 'portal-vue'
 import { date } from 'quasar'
 
+import TheFooterMenu from '@/front/src/layouts/components/the-footer/the-footer-menu.vue'
+
 export default defineComponent({
   components: {
+    TheFooterMenu,
     PortalTarget,
   },
   props: {},

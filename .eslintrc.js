@@ -197,7 +197,11 @@ module.exports = {
   },
   overrides: [
     {
-      files: 'packages/admin/**/*.*',
+      files: [
+        'packages/admin/**/*.*',
+        'packages/front/**/privacy-policy.vue',
+        'packages/front/**/terms.vue',
+      ],
       rules: {
         'vue/no-bare-strings-in-template': 'off',
       },

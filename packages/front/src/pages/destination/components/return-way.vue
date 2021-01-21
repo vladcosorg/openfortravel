@@ -1,22 +1,11 @@
 <template>
-  <q-card square flat :class="['bg-blue-grey-10', 'col']">
-    <q-card-section>
-      <div class="text-h6">{{ $t('page.destination.returnWay') }}</div>
-      <destination-item
-        returning
-        :destination="restriction"
-        :country="destination"
-        :loading="loading"
-      />
-    </q-card-section>
-  </q-card>
+  <destination-item
+    returning
+    :destination="restriction"
+    :country="destination"
+    :loading="loading"
+  />
 </template>
-
-<style lang="scss" module>
-.card {
-  width: 100vw;
-}
-</style>
 
 <script lang="ts">
 import { defineComponent, toRefs } from '@vue/composition-api'

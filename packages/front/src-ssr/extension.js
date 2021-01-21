@@ -16,7 +16,9 @@ module.exports.extendApp = async function ({ app, ssr }) {
 
   app.use(express.urlencoded({ extended: true }))
 
-  await require('./env')
+  await require('./env')()
+  // require('./fix-dark-mode-flash')(app)
   require('./handlers/translate')(app)
   require('./handlers/subscribe')(app)
+  require('./handlers/send-message')(app)
 }

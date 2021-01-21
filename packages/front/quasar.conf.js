@@ -35,6 +35,7 @@ module.exports = configure((context) => ({
     'i18n',
     'country-detector',
     { path: 'gtag', server: false },
+    { path: 'ssr-data-preload', client: false },
   ],
 
   vendor: {

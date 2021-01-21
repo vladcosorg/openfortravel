@@ -1,139 +1,84 @@
 <template>
-  <q-item
-    v-if="loading"
-    :class="[$style.item, 'rounded-borders q-pa-md']"
-    style="min-height: 212px"
+  <q-card
+    v-if="!loading"
+    flat
+    class="bg-elevation-1 full-height relative-position"
   >
-    <q-item-section>
-      <q-item-label :class="[$style.label, ' q-mb-sm']">
-        <q-skeleton type="text" height="3rem" width="65%" />
-      </q-item-label>
-      <q-item-label :class="['text-subtitle2']">
-        <q-skeleton type="text" height="1.5rem" width="45%" />
-      </q-item-label>
-      <q-item-label :class="['q-py-xs', $style.description]">
-        <q-skeleton type="text" height="1rem" />
-      </q-item-label>
-      <q-item-label>
-        <q-skeleton type="text" height="10px" width="25%" />
-      </q-item-label>
-      <q-item-label class="q-gutter-sm">
-        <q-item-label class="q-gutter-xs row">
-          <q-skeleton
-            v-for="cnt in 3"
-            :key="cnt"
-            type="QBadge"
-            height="0.9rem"
-            width="3rem"
-          />
-        </q-item-label>
-      </q-item-label>
-    </q-item-section>
-    <q-inner-loading :showing="isClicked" />
-  </q-item>
+    <router-link
+      v-ripple
+      class="column full-height"
+      style="text-decoration: none; color: inherit"
+      clickable
+      :to="{
+        name: 'destination',
+        params: {
+          originSlug: destination.originSlug,
+          destinationSlug: destination.destinationSlug,
+        },
+      }"
+      @click.native="isClicked = true"
+    >
+      <q-card-section>
+        <h5 :class="`ellipsis-improved full-width ${$style.label}`">
+          {{ destination.destinationNominativeLabel }}
+        </h5>
 
-  <q-item
-    v-else
-    v-ripple
-    :class="[$style.item, destination.status, 'rounded-borders q-pa-md']"
-    clickable
-    :to="{
-      name: 'destination',
-      params: {
-        originSlug: destination.originSlug,
-        destinationSlug: destination.destinationSlug,
-      },
-    }"
-    @click.native="isClicked = true"
-  >
-    <transition appear enter-active-class="animated fadeIn">
-      <flag :class="$style.bg" :country-code="destination.destination" />
-    </transition>
+        <div :class="[riskLevelColor(country.riskLevel)]">
+          {{ $t('components.destinationItem.riskLevel.title') }}:
+          {{
+            $t('components.destinationItem.riskLevel.values')[country.riskLevel]
+          }}
+        </div>
+      </q-card-section>
+      <q-separator inset />
 
-    <q-item-section>
-      <q-item-label
-        v-if="returning"
-        :class="[$style.label, 'full-width  text-h5 q-mb-sm']"
-      >
-        {{
-          $t('components.destinationItem.titleWithDirection', {
-            from: destination.originNominativeLabel,
-            to: destination.destinationNominativeLabel,
-          })
-        }}
-      </q-item-label>
-      <q-item-label
-        v-else
-        :class="[$style.label, 'ellipsis-improved full-width  text-h5']"
-      >
-        {{ destination.destinationNominativeLabel }}
-      </q-item-label>
+      <q-card-section class="gt-xs" style="flex-grow: 1">
+        <div v-html="destination.shortDescription" />
+      </q-card-section>
 
-      <q-item-label class="q-gutter-sm q-mb-md">
-        <q-badge
-          v-if="destination.status === 'allowed'"
-          color="positive"
-          text-color="dark"
-        >
-          {{ $t('restriction.travel.badgeValue')[destination.status] }}
-        </q-badge>
-        <q-badge
-          v-if="destination.status === 'conditional'"
-          color="warning"
-          text-color="dark"
-        >
-          {{ $t('restriction.travel.badgeValue')[destination.status] }}
-        </q-badge>
-        <q-badge
-          v-if="destination.status === 'forbidden'"
-          color="negative"
-          text-color="white"
-        >
-          {{ $t('restriction.travel.badgeValue')[destination.status] }}
-        </q-badge>
-        <q-badge v-if="destination.needsSelfIsolation()" color="extra-purple">
-          {{ $t('restriction.selfIsolation.label') }}
-        </q-badge>
-        <q-badge v-if="destination.testRequired" color="extra-purple">
-          {{ $t('restriction.testing.label') }}
-        </q-badge>
-      </q-item-label>
-      <q-item-label
-        :class="[riskLevelColor(country.riskLevel), 'text-subtitle2']"
-      >
-        {{ $t('components.destinationItem.riskLevel.title') }}:
-        {{
-          $t('components.destinationItem.riskLevel.values')[country.riskLevel]
-        }}
-      </q-item-label>
-      <q-item-label
-        :class="[
-          'text-body2 text-blue-grey-2 ellipsis-3-lines q-mb-sm',
-          $style.description,
-        ]"
-      >
-        <div
-          v-html="
-            returning
-              ? destination.returnShortDescription
-              : destination.shortDescription
-          "
-        />
-      </q-item-label>
-      <q-item-label class="row">
-        <q-btn
-          outline
-          size="sm"
-          :label="$t('components.destinationItem.readMore')"
-        />
-        <span class="col text-caption text-blue-grey-13 text-right">
-          {{ $t('restriction.updated.label', { days: 3 }) }}
-        </span>
-      </q-item-label>
-    </q-item-section>
-
-    <q-inner-loading :showing="isClicked" />
-  </q-item>
+      <q-card-section>
+        <div class="q-gutter-x-xs">
+          <q-badge
+            v-if="destination.status === 'allowed'"
+            color="positive"
+            text-color="dark"
+          >
+            {{ $t('restriction.travel.badgeValue')[destination.status] }}
+          </q-badge>
+          <q-badge
+            v-if="destination.status === 'conditional'"
+            color="warning"
+            text-color="dark"
+          >
+            {{ $t('restriction.travel.badgeValue')[destination.status] }}
+          </q-badge>
+          <q-badge
+            v-if="destination.status === 'forbidden'"
+            color="negative"
+            text-color="white"
+          >
+            {{ $t('restriction.travel.badgeValue')[destination.status] }}
+          </q-badge>
+          <q-badge
+            v-if="!destination.needsSelfIsolation()"
+            color="warning"
+            text-color="primary-inverse"
+          >
+            {{ $t('restriction.selfIsolation.label') }}
+          </q-badge>
+          <q-badge v-if="destination.testRequired" color="extra-purple">
+            {{ $t('restriction.testing.label') }}
+          </q-badge>
+        </div>
+      </q-card-section>
+      <!--      <q-btn-->
+      <!--        unelevated-->
+      <!--        color="elevation-1"-->
+      <!--        :label="$t('components.destinationItem.readMore')"-->
+      <!--      />-->
+      <!--      <flag :country-code="destination.destination" :class="$style.flag" />-->
+    </router-link>
+  </q-card>
 </template>
 
 <style lang="scss" module>

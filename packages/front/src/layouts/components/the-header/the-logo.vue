@@ -11,12 +11,14 @@
 
 <style lang="scss" module>
 .logo {
-  //background-color: $secondary;
-  //height: auto;
-  //width: 140px;
   cursor: pointer;
   &:focus {
     outline: none;
+  }
+  :global {
+    #Layer_1-2 path:first-child {
+      fill: var(--q-color-primary);
+    }
   }
 }
 </style>

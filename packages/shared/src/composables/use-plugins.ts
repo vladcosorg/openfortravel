@@ -2,11 +2,11 @@ import { QSsrContext } from '@quasar/app'
 import ky from 'ky-universal'
 import { Cookies, LooseDictionary, Notify } from 'quasar'
 import Vue from 'vue'
-import { IVueI18n } from 'vue-i18n'
+import VueI18n, { IVueI18n } from 'vue-i18n'
 import VueRouter from 'vue-router'
 import { Store } from 'vuex'
-
-let storeInstance: Store<never>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let storeInstance: Store<any>
 
 export function setStore(instance: typeof storeInstance): void {
   storeInstance = instance
@@ -39,6 +39,15 @@ export function setI18n(instance: typeof i18nInstance): void {
 
 export function useI18n(): typeof i18nInstance {
   return i18nInstance
+}
+
+export function useVueI18n(): {
+  t: (key: VueI18n.Path, values?: VueI18n.Values) => VueI18n.TranslateResult
+  i18n: typeof i18nInstance
+} {
+  const i18n = useI18n()
+  const unbound = i18n.t
+  return { i18n, t: unbound.bind(i18n) }
 }
 
 let cookiesInstance: Cookies

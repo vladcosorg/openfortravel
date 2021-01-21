@@ -1,18 +1,7 @@
 <template>
-  <q-dialog
-    v-if="value !== undefined"
-    full-width
-    v-bind="$props"
-    v-on="$listeners"
-  >
+  <q-dialog v-if="value !== undefined" v-bind="$props" v-on="$listeners">
     <div>
-      <q-card
-        square
-        class="bg-blue-grey-10 relative-position"
-        tag="form"
-        novalidate
-        @submit.prevent.stop="onSubmit"
-      >
+      <q-form class="bg-blue-grey-10" @submit.prevent.stop="onSubmit">
         <q-card-section class="bg-blue-grey-9">
           <div class="text-uppercase">
             {{ $t('components.subscribe.title') }}
@@ -24,12 +13,11 @@
           </div>
         </q-card-section>
         <q-card-section class="q-pt-xs q-pb-md">
-          <email-input
+          <rich-email-input
             v-model="email"
             autofocus
             :is-loading="isLoading"
-            :is-subscribed="isSubscribed"
-            @validation="isFormValid = $event"
+            :is-successful="isSuccessful"
           />
         </q-card-section>
         <q-separator dark />
@@ -40,14 +28,17 @@
             :label="$t('components.subscribe.close')"
             @click="$emit('input', false)"
           />
+
           <submit-button
+            :label="$t('components.subscribe.action')"
+            :success-label="$t('components.subscribe.actionDone')"
             :is-loading="isLoading"
-            :is-subscribed="isSubscribed"
+            :is-successful="isSuccessful"
           />
         </q-card-actions>
-      </q-card>
+      </q-form>
       <q-linear-progress
-        v-if="isLoading || isSubscribed"
+        v-if="isLoading || isSuccessful"
         :reverse="!isLoading"
         :indeterminate="isLoading"
         :value="closingCountdown"
@@ -60,12 +51,12 @@
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
 
+import RichEmailInput from '@/front/src/components/form/rich-email-input.vue'
+import SubmitButton from '@/front/src/components/form/submit-button.vue'
 import { useRequestDispatcher } from '@/front/src/components/subscribe-form/composables'
-import EmailInput from '@/front/src/components/subscribe-form/email-input.vue'
-import SubmitButton from '@/front/src/components/subscribe-form/submit-button.vue'
 
 export default defineComponent({
-  components: { SubmitButton, EmailInput },
+  components: { RichEmailInput, SubmitButton },
   inheritAttrs: false,
   props: {
     value: {
@@ -78,29 +69,29 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const { isLoading, isSubscribed, sendRequest } = useRequestDispatcher()
+    const {
+      isLoading,
+      isSuccessful,
+      sendRequest,
+      reset,
+    } = useRequestDispatcher()
     const email = ref('')
     const closingCountdown = ref(0)
-    const isFormValid = ref(false)
     return {
       email,
       isLoading,
-      isSubscribed,
+      isSuccessful,
       closingCountdown,
-      isFormValid,
-      onSubmit() {
-        if (isFormValid.value) {
-          sendRequest(email.value, props.origin)
-
-          const intervalID = setInterval(() => {
-            closingCountdown.value = closingCountdown.value + 0.05
-            if (closingCountdown.value >= 1 || !props.value) {
-              clearInterval(intervalID)
-              emit('input', false)
-              isSubscribed.value = false
-            }
-          }, 150)
-        }
+      async onSubmit() {
+        await sendRequest(email.value, props.origin)
+        const intervalID = setInterval(() => {
+          closingCountdown.value = closingCountdown.value + 0.05
+          if (closingCountdown.value >= 1 || !props.value) {
+            clearInterval(intervalID)
+            emit('input', false)
+            reset()
+          }
+        }, 150)
       },
     }
   },

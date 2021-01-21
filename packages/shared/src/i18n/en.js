@@ -39,9 +39,10 @@ module.exports = {
     travel: {
       label: 'Travel',
       value: {
-        allowed: 'Allowed',
-        forbidden: 'Forbidden',
-        conditional: 'Conditional',
+        allowed: 'No restrictions',
+        allowedSoon: 'Reopening soon',
+        forbidden: 'Completely closed',
+        conditional: 'Partially open',
       },
       badgeValue: {
         allowed: 'Entry Allowed',
@@ -90,7 +91,52 @@ module.exports = {
     index: {
       link: 'Home',
       route: 'from',
-      hero: 'Coronavirus Travel Advisory for {country} citizens',
+      sections: {
+        hero: {
+          title: 'COVID-19 travel ban info <br> for travellers from',
+          subtitle: `Where can I travel during pandemic as a {country} citizen?<br> Do I
+            need a COVID-19 vaccine passport at the border control?<br/> You’ve got
+            questions - we’ve got answers!`,
+          button: 'Show me destinations',
+        },
+        stats: {
+          title: 'Destination statistics',
+          types: {
+            allowed: {
+              title: '@:restriction.travel.value.allowed',
+              valueSuffix:
+                'countries have no travel restrictions <br> for <b>{nationality}</b>',
+              description:
+                'The country has no formal restrictions on entry by air, but is still monitoring the situation and may have other travel policies in place like mandatory testing or quarantines upon arrival.',
+            },
+            allowed_soon: {
+              title: '@:restriction.travel.value.allowedSoon',
+              valueSuffix:
+                'countries are opening soon <br> for <b>{nationality}</b>',
+              description:
+                'The country has announced a specific date for reopening, but certain entry requirements may still apply.',
+            },
+            forbidden: {
+              title: '@:restriction.travel.value.forbidden',
+              valueSuffix:
+                'countries are completely closed <br> for <b>{nationality}</b>',
+              description:
+                'Only citizens, residents returning home, or people in other special circumstances may enter the country.',
+            },
+            conditional: {
+              title: '@:restriction.travel.value.conditional',
+              valueSuffix:
+                'countries are partially open <br> for <b>{nationality}</b>',
+              description:
+                'Entrance into the country may depend on the traveler’s citizenship, point of origin, or other specific regulations.',
+            },
+          },
+          noChanges: 'no change from yesterday',
+        },
+        countries: {
+          title: 'Explore restrictions from other countries',
+        },
+      },
       meta: {
         title:
           'COVID-19 flight & travel bans to foreign countries for {nationality}',
@@ -110,11 +156,16 @@ module.exports = {
     },
     contact: {
       link: 'Contact Us',
+      pageTitle: '@:page.contact.link',
       meta: {
         title: '@:page.contact.link',
       },
+      messageField: 'Your message *',
+      sendButton: 'Send message',
+      messageSent: 'The message has been sent successfully',
     },
     country: {
+      link: 'Destinations',
       route: 'travel/from',
       meta: {
         title:
@@ -122,14 +173,8 @@ module.exports = {
       },
       quickSearch: 'Quick country search',
       destinations: 'To Destinations',
-      stats: {
-        header: 'Quick stats',
-        country: 'country|countries',
-        values: {
-          allowed: 'No limitations',
-          conditional: 'Some limitations',
-          forbidden: 'Entry forbidden',
-        },
+      tab: {
+        all: 'All regions',
       },
     },
     destination: {
@@ -150,18 +195,31 @@ module.exports = {
     },
   },
   components: {
+    drawer: {
+      darkMode: 'Dark mode',
+    },
+
+    form: {
+      input: {
+        emptyField: 'This field should not be empty',
+      },
+      email: {
+        placeholder: 'Your email',
+        invalidEmail: 'Please provide a valid email',
+      },
+    },
     theCountryList: {
       title: 'I want to travel',
       titleIntro: 'Or try another country',
       from: 'From',
       to: 'To',
       btn: 'Search',
+      placeholder: 'Please select a country',
     },
     subscribe: {
       action: 'Subscribe',
       actionDone: 'Subscribed',
       notification: 'You have been successfully subscribed',
-      invalidEmailWarning: 'Please provide a valid email',
       title: 'Subscribe for notifications',
 
       subtitle: {
@@ -174,7 +232,7 @@ module.exports = {
             'Get notified in case of any travel restrictions on the route {origin} → {destination}',
         },
       },
-      placeholder: 'Please enter your email',
+
       close: 'Close',
     },
     destinationItem: {
@@ -202,5 +260,13 @@ module.exports = {
   },
   misc: {
     countryCitizen: '{country} citizens',
+    continents: {
+      na: 'North America',
+      eu: 'Europe',
+      as: 'Asia',
+      sa: 'South America',
+      oc: 'Australia & Oceania',
+      af: 'Africa',
+    },
   },
 }

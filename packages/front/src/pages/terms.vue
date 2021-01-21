@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h1 class="text-h4 text-center">Terms and Conditions</h1>
+  <inner-page title="Terms and Conditions">
     <div class="content-page">
       <p>Last updated: January 10, 2021</p>
       <p>
@@ -289,11 +288,15 @@
         </li>
       </ul>
     </div>
-  </div>
+  </inner-page>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-export default defineComponent({})
+import InnerPage from '@/front/src/components/inner-page.vue'
+
+export default defineComponent({
+  components: { InnerPage },
+})
 </script>

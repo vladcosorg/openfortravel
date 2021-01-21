@@ -1,0 +1,22 @@
+@function create_colour_map($color, $percentage)
+  $map: (base: $color, light: lighten($color, $percentage), dark: darken($color, $percentage))
+  @return $map
+
+$statuses-base: ('forbidden': #F08A69, 'conditional': #EED46A, 'allowed-soon':#7DC6FA, 'allowed': #75D4B8 )
+$statuses: ()
+
+@each $key, $value in $statuses-base
+  $map: ()
+  $map: map-merge($map, ($key: create_colour_map($value, 0%)) )
+  $statuses: map-merge($statuses, $map)
+
+@each $theme in (dark, light)
+  .body--#{$theme}
+    @each $label, $value in $statuses
+      --q-color-status-#{$label}: #{map-get($value, $theme)}
+
+@each $label, $value in $statuses
+  .text-#{$label}
+    color: var(--q-color-status-#{$label}) !important
+  .bg-#{$label}
+    background-color: var(--q-color-status-#{$label}) !important

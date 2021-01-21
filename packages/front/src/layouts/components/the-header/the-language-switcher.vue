@@ -26,7 +26,7 @@
     }
     .q-field__native,
     .q-field__append {
-      color: $primary !important;
+      color: $dark !important;
       font-weight: bold;
       text-transform: uppercase;
       min-height: auto;

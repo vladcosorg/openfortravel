@@ -11,7 +11,9 @@ export function createGenericRouter(
   options?: RouterOptions,
 ): VueRouter {
   return new VueRouter({
-    scrollBehavior: () => ({ x: 0, y: 0 }),
+    scrollBehavior: function (to) {
+      return to.hash ? { selector: to.hash } : { x: 0, y: 0 }
+    },
     routes: [
       { name: 'index-nolocale-nocountry', path: '/' },
       {
@@ -24,11 +26,13 @@ export function createGenericRouter(
           const props = {
             showTravelBar: false,
             fullHeight: false,
+            containerize: true,
           }
           switch (route.name) {
-            case 'index':
+            case 'index-targeted':
               props.fullHeight = true
               props.showTravelBar = true
+              props.containerize = false
               break
             case 'origin':
               props.showTravelBar = true
@@ -43,7 +47,7 @@ export function createGenericRouter(
             path: '',
             component: () =>
               import(
-                /* webpackChunkName: "page-index" */ '@/front/src/pages/index-page.vue'
+                /* webpackChunkName: "page-index" */ '@/front/src/pages/index/index-page.vue'
               ),
           },
           {
@@ -60,6 +64,14 @@ export function createGenericRouter(
             component: () =>
               import(
                 /* webpackChunkName: "page-terms" */ '@/front/src/pages/terms.vue'
+              ),
+          },
+          {
+            name: 'contact',
+            path: 'contact-us',
+            component: () =>
+              import(
+                /* webpackChunkName: "page-contact" */ '@/front/src/pages/contact/contact.vue'
               ),
           },
           {
@@ -145,7 +157,7 @@ export function createGenericRouter(
             path: `${i18n.t('page.index.route')}/:originSlug/`,
             component: () =>
               import(
-                /* webpackChunkName: "page-index" */ '@/front/src/pages/index-page.vue'
+                /* webpackChunkName: "page-index" */ '@/front/src/pages/index/index-page.vue'
               ),
             props(route) {
               return {

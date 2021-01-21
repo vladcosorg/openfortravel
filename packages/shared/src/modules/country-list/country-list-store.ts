@@ -4,8 +4,9 @@ import mapValues from 'lodash/mapValues'
 import transform from 'lodash/transform'
 import { Module } from 'vuex'
 
+import { useVueI18n } from '@/shared/src/composables/use-plugins'
+import { transformKeys } from '@/shared/src/misc/misc'
 import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
-
 // eslint-disable-next-line import/no-unused-modules
 export class CountryListState {
   countryList: CountryList = {}
@@ -16,6 +17,8 @@ export class CountryListState {
   slugMigrationDestinationMap: CountryList = {}
   fetchingPromise: Promise<unknown> = Promise.resolve()
 }
+
+export type GroupedCountryList = Record<string, string[]>
 
 export default {
   namespaced: true,
@@ -39,6 +42,13 @@ export default {
     },
     destinationKebabList(_state, getters) {
       return generateSlugKebabMap(getters.destinationLabels)
+    },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    originByContinent(_state, getters, rootState: any) {
+      return groupCountriesByContinents(
+        rootState.countryToContinentMap,
+        getters.originLabels,
+      )
     },
   },
   mutations: {
@@ -252,4 +262,39 @@ export async function loadCountryListForLocale(
 function convertCountryLabelToSlug(countryName: string): string {
   countryName = kebabCase(countryName.toLowerCase())
   return countryName
+}
+
+function groupCountriesByContinents(
+  continentList: string,
+  countryList: Record<string, string>,
+): Record<string, { value: string; label: string }[]> {
+  const { t } = useVueI18n()
+
+  let output = Object.entries<string>(continentList).reduce<
+    Record<string, { value: string; label: string }[]>
+  >(
+    (formattedList, [countryISO, continent]) => {
+      const countryLabel = countryList[countryISO]
+
+      if (!formattedList[continent]) {
+        formattedList[continent] = []
+      }
+
+      formattedList[continent].push({ value: countryISO, label: countryLabel })
+
+      return formattedList
+    },
+    { eu: [], na: [], as: [], sa: [] },
+  )
+
+  output = transformKeys(
+    output,
+    (continentID) => t(`misc.continents.${continentID}`) as string,
+  )
+
+  output = mapValues(output, (countryList) =>
+    countryList.sort((a, b) => a.label.localeCompare(b.label)),
+  )
+
+  return output
 }

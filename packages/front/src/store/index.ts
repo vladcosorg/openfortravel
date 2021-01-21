@@ -22,6 +22,7 @@ export interface StateInterface {
   locales: LocaleMessageObject
   serverLocale: string
   availableLocales: string[]
+  countryToContinentMap: Record<string, string>
 }
 
 // eslint-disable-next-line import/no-unused-modules
@@ -51,8 +52,12 @@ export default store(({ Vue }) => {
       locales: {},
       serverLocale: 'en',
       availableLocales: [],
+      countryToContinentMap: {},
     },
     mutations: {
+      setCountryToContinentMap(state, map: Record<string, string>) {
+        state.countryToContinentMap = map
+      },
       setCountrySelectorLoading(state, value: boolean) {
         state.countrySelectorLoading = value
       },

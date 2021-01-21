@@ -1,35 +1,51 @@
 <template>
   <div class="row items-center q-gutter-x-md">
-    <div class="q-gutter-x-md gt-xs">
-      <a href="javascript:void(0)" class="text-white"> Pull requests </a>
-      <a href="javascript:void(0)" class="text-white"> Issues </a>
-      <a href="javascript:void(0)" class="text-white"> Marketplace </a>
-      <a href="javascript:void(0)" class="text-white"> Explore </a>
+    <div :class="['q-gutter-x-md gt-sm text-white', $style.links]">
+      <router-link
+        v-for="(title, url, index) in menuItems"
+        :key="index"
+        :to="url"
+        exact
+        >{{ title }}</router-link
+      >
     </div>
     <q-btn
       flat
       dense
       round
       :icon="$q.screen.lt.md ? menuIcon : moreIcon"
+      color="primary"
       @click="$emit('input', true)"
     />
   </div>
 </template>
 
-<style lang="scss" module></style>
+<style lang="scss" module>
+.links {
+  & > a {
+    color: var(--q-color-primary);
+  }
+  :global(.router-link-active) {
+    color: var(--q-color-secondary);
+    font-weight: bold;
+  }
+}
+</style>
 
 <script lang="ts">
 import {
   matMenu as menuIcon,
   matMoreVert as moreIcon,
 } from '@quasar/extras/material-icons'
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
+
+import { getShortHeaderMenuItems } from '@/front/src/misc/menu'
 
 export default defineComponent({
   components: {},
   props: {},
   setup() {
-    return { menuIcon, moreIcon }
+    return { menuItems: computed(getShortHeaderMenuItems), menuIcon, moreIcon }
   },
 })
 </script>

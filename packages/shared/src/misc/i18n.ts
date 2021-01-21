@@ -1,5 +1,9 @@
 import Vue from 'vue'
-import { integrateWithVueI18n, TranslationService } from 'vue-auto-i18n'
+import {
+  integrateWithVueI18n,
+  TranslationService,
+  ManualTranslator,
+} from 'vue-auto-i18n'
 import VueI18n, {
   IVueI18n,
   Locale,
@@ -19,7 +23,7 @@ export function createVueI18n(messages?: LocaleMessages): IVueI18n {
   }) as unknown) as IVueI18n
 }
 
-export function createAutoI18n(i18n: IVueI18n) {
+export function createAutoI18n(i18n: IVueI18n): ManualTranslator {
   return integrateWithVueI18n({
     i18nPluginInstance: i18n,
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

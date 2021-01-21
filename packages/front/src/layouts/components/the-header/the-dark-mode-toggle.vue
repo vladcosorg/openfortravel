@@ -1,8 +1,8 @@
 }
 <template>
-  <q-item v-ripple tag="label">
+  <q-item tag="label">
     <q-item-section>
-      <q-item-label>Dark mode</q-item-label>
+      <q-item-label>{{ $t('components.drawer.darkMode') }}</q-item-label>
     </q-item-section>
     <q-item-section side>
       <q-toggle
@@ -28,19 +28,22 @@ export default defineComponent({
   components: {},
   props: {},
   setup(_props, { root }) {
+    const cookieValue = root.$q.cookies.get<number>('dark')
+    if (cookieValue !== undefined) {
+      root.$q.dark.set(cookieValue === 1)
+    }
+
     const darkMode = computed<boolean>({
       get() {
         return root.$q.dark.isActive
       },
       set(newDarkModeStatus) {
         root.$q.dark.set(newDarkModeStatus)
-        root.$q.cookies.set('dark', newDarkModeStatus, {
+        root.$q.cookies.set('dark', newDarkModeStatus ? '1' : '0', {
           path: '/',
         })
       },
     })
-
-    darkMode.value = root.$q.cookies.get('dark') ?? true
 
     return { darkMode, lightIcon, darkIcon }
   },
