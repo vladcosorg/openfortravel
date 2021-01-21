@@ -26,24 +26,9 @@
           <q-icon :name="iconSearch" />
         </template>
         <template #after>
-          <q-btn
-            :icon="iconSubscribe"
-            class="full-height"
-            type="submit"
-            unelevated
-            color="secondary"
-            text-color="dark"
-            @click="promptVisible = true"
-          >
-            {{ $t('components.subscribe.action') }}
-          </q-btn>
+          <subscribe-button :origin-code="originCode" />
         </template>
       </q-input>
-      <dialog-subscribe-form
-        v-if="promptVisible"
-        v-model="promptVisible"
-        :origin="originCode"
-      />
 
       <destination-group
         class="q-mt-xs"
@@ -58,17 +43,14 @@
 <style lang="scss" module></style>
 
 <script lang="ts">
-import {
-  matNotificationsNone as iconSubscribe,
-  matSearch as iconSearch,
-} from '@quasar/extras/material-icons'
-import { defineComponent, ref, toRef, watch } from '@vue/composition-api'
+import { matSearch as iconSearch } from '@quasar/extras/material-icons'
+import { defineComponent, toRef, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import DestinationGroup from '@/front/src/pages/country/components/destination-group.vue'
-import DialogSubscribeForm from '@/front/src/pages/country/components/dialog-subscribe-form.vue'
 import SearchTabs from '@/front/src/pages/country/components/search-tabs.vue'
+import SubscribeButton from '@/front/src/pages/country/components/subscribe-button.vue'
 import {
   getBreadcrumbs,
   useGroupedDestinations,
@@ -80,9 +62,9 @@ import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loadin
 
 export default defineComponent({
   components: {
+    SubscribeButton,
     SearchTabs,
     TheBreadcrumbs,
-    DialogSubscribeForm,
     DestinationGroup,
     Portal,
   },
@@ -119,9 +101,7 @@ export default defineComponent({
         isDestinationListLoading,
       ),
       destinations,
-      promptVisible: ref(false),
       iconSearch,
-      iconSubscribe,
       breadcrumbs: getBreadcrumbs(originCode, isDestinationListLoading),
     }
   },
