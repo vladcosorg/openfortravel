@@ -40,6 +40,7 @@
           </section>
         </div>
       </div>
+      <questions class="q-mt-xl" :restriction="restriction" />
     </div>
   </inner-page>
 </template>
@@ -55,6 +56,7 @@ import TheSearchHeader from '@/front/src/layouts/components/the-search-header.vu
 import Description from '@/front/src/pages/destination/components/description.vue'
 import InlineSubscribeForm from '@/front/src/pages/destination/components/inline-subscribe-form.vue'
 import PropertyList from '@/front/src/pages/destination/components/property-list.vue'
+import Questions from '@/front/src/pages/destination/components/questions.vue'
 import ReturnWay from '@/front/src/pages/destination/components/return-way.vue'
 import {
   getDestination,
@@ -67,6 +69,7 @@ import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loadin
 export default defineComponent({
   meta,
   components: {
+    Questions,
     TheSearchHeader,
     TheBreadcrumbs,
     Description,

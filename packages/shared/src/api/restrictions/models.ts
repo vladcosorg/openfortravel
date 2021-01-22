@@ -1,7 +1,7 @@
 import {
   getFullDescription,
   getShortDescription,
-} from '@/front/src/models/description'
+} from '@/front/src/models/content'
 import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import {
   getDestinationLabelForCountryCode,
