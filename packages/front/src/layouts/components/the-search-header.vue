@@ -1,14 +1,16 @@
 <template>
-  <div class="bg-elevation-1 overflow-auto q-py-xl q-mb-xl relative-position">
+  <div
+    class="bg-elevation-1 overflow-auto q-py-md q-py-sm-lg q-mb-xl relative-position"
+  >
     <!--    <the-flag-background-->
     <!--      :first-country-code="originCode"-->
     <!--      :second-country-code="destinationCode"-->
     <!--    />-->
     <div class="container">
       <the-country-list
-        class="q-mb-xl"
         :origin-code="originCode"
         :destination-code="destinationCode"
+        show-destination-if-empty
       />
     </div>
   </div>

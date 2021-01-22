@@ -1,6 +1,7 @@
 <template>
   <q-page :class="['column', $style.page]">
     <section-intro :origin-code="originCode" />
+    <section-recent :origin-code="originCode" />
     <section-stats :origin-code="originCode" />
     <section-countries />
   </q-page>
@@ -16,6 +17,7 @@ import { defineComponent } from '@vue/composition-api'
 
 import SectionCountries from '@/front/src/pages/index/components/section-countries.vue'
 import SectionIntro from '@/front/src/pages/index/components/section-intro.vue'
+import SectionRecent from '@/front/src/pages/index/components/section-recent.vue'
 import SectionStats from '@/front/src/pages/index/components/section-stats.vue'
 import { useComputedMemorized } from '@/shared/src/composables/use-computed-vmodel'
 import { useI18n } from '@/shared/src/composables/use-plugins'
@@ -30,6 +32,7 @@ export default defineComponent({
     }
   },
   components: {
+    SectionRecent,
     SectionCountries,
     SectionStats,
     SectionIntro,

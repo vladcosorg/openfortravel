@@ -1,5 +1,11 @@
 <template>
-  <q-tabs v-model="internalValue" no-caps active-color="secondary">
+  <q-tabs
+    v-model="internalValue"
+    no-caps
+    dense
+    narrow-indicator
+    active-color="secondary"
+  >
     <q-tab name="all" :label="$t('page.country.tab.all')" />
     <q-tab
       v-for="(continentLabel, continentId) in continentList"

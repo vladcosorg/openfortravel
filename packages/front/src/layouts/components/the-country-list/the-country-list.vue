@@ -4,7 +4,8 @@
       'row',
       $style.row,
       'justify-center',
-      'q-col-gutter-lg',
+      'q-col-gutter-md',
+      'q-col-gutter-sm-lg',
       'q-px-md-xl',
     ]"
   >
@@ -12,43 +13,53 @@
       {{ $t('components.theCountryList')[isIntro ? 'titleIntro' : 'title'] }}
     </div>
 
-    <country-select
-      :key="currentOrigin"
-      v-model="currentOrigin"
-      class="col-sm col-12"
-      :loading="loading"
-      :label="$t('components.theCountryList.from')"
-      :show-prefix-text="!!originCode"
-    >
-      <template v-if="!originCode && !destinationCode" #after>
-        <transition
-          :duration="30000"
-          appear
-          enter-active-class="animated bounce slower"
+    <div class="col">
+      <div class="relative-position row">
+        <country-select
+          :key="currentOrigin"
+          v-model="currentOrigin"
+          class="col-sm col-12"
+          :loading="loading"
+          :label="$t('components.theCountryList.from')"
+          :show-prefix-text="!!originCode"
         >
-          <q-btn
-            :loading="loading"
-            unelevated
-            color="secondary"
-            :icon="`img:${require('@/front/src/assets/search.svg')}`"
-            style="height: 100%"
-            @click="navigateToPage(currentOrigin)"
-          >
-            <q-tooltip> {{ $t('components.theCountryList.btn') }}</q-tooltip>
-          </q-btn>
-        </transition>
-      </template>
-    </country-select>
-
-    <country-select
-      v-if="destinationCode || showDestinationIfEmpty"
-      :key="currentDestination"
-      v-model="currentDestination"
-      is-destination
-      :loading="loading"
-      class="col-sm col-12"
-      :label="$t('components.theCountryList.to')"
-    />
+          <template v-if="!originCode && !destinationCode" #after>
+            <transition
+              :duration="30000"
+              appear
+              enter-active-class="animated bounce slower"
+            >
+              <q-btn
+                :loading="loading"
+                unelevated
+                color="secondary"
+                :icon="`img:${require('@/front/src/assets/search.svg')}`"
+                style="height: 100%"
+                @click="navigateToPage(currentOrigin)"
+              >
+                <q-tooltip>
+                  {{ $t('components.theCountryList.btn') }}</q-tooltip
+                >
+              </q-btn>
+            </transition>
+          </template>
+        </country-select>
+        <swapper
+          v-if="destinationCode || showDestinationIfEmpty"
+          :destination-code="destinationCode"
+          @click="navigateToPage(destinationCode, originCode)"
+        />
+        <country-select
+          v-if="destinationCode || showDestinationIfEmpty"
+          :key="currentDestination"
+          v-model="currentDestination"
+          is-destination
+          :loading="loading"
+          class="col-sm col-12 q-mt-xs"
+          :label="$t('components.theCountryList.to')"
+        />
+      </div>
+    </div>
 
     <slot />
   </div>
@@ -78,6 +89,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
+import Swapper from '@/front/src/layouts/components/the-country-list/swapper.vue'
 import { getCurrentCountryCode } from '@/front/src/misc/country-decider'
 import { useRouter, useI18n } from '@/shared/src/composables/use-plugins'
 import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
@@ -87,7 +99,7 @@ import {
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
-  components: { CountrySelect },
+  components: { Swapper, CountrySelect },
   props: {
     originCode: {
       type: String,

@@ -7,6 +7,7 @@
     standout
     :loading="aggregatedLoading"
     stack-label
+    :placeholder="$t('components.theCountryList.placeholder')"
     :dropdown-icon="icon"
     :class="['text-h6', $style.field]"
     @filter="filterCountryList"
@@ -33,7 +34,6 @@
         v-model="currentCountryValueRef"
         :options="nativeList"
       />
-      <q-icon :name="icon" />
     </template>
 
     <template #after>
@@ -44,6 +44,7 @@
 
 <style lang="scss" module>
 .field {
+  //background-color: #32498b;
   :global {
     .q-field__before {
       width: 20%;
