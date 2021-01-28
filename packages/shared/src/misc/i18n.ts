@@ -48,6 +48,7 @@ class SSRProxy implements TranslationService {
         new URLSearchParams({
           targetLanguage,
         }),
+      { method: 'POST' },
     )
     return await response.json()
   }

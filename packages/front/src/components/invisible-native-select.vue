@@ -6,12 +6,12 @@
     @touchstart="isOptionListInitializedRef = true"
   >
     <optgroup
-      v-for="(options, label) in lazyOptionListRef"
+      v-for="(subOptions, label) in lazyOptionListRef"
       :key="label"
       :label="label"
     >
       <option
-        v-for="(option, index) in options"
+        v-for="(option, index) in subOptions"
         :key="index"
         :value="option.value"
       >

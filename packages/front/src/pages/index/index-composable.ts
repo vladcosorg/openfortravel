@@ -8,6 +8,13 @@ import {
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { getCurrentNationality } from '@/shared/src/modules/nationality/nationality-helpers'
 
+export const statusColorMap = {
+  [RestrictionStatus.ALLOWED]: 'positive',
+  [RestrictionStatus.ALLOWED_SOON]: 'info',
+  [RestrictionStatus.CONDITIONAL]: 'warning',
+  [RestrictionStatus.FORBIDDEN]: 'negative',
+}
+
 export function useStats(
   destinations: ComputedRef<Restriction[]>,
 ): ComputedRef<
@@ -23,19 +30,14 @@ export function useStats(
   >
 > {
   const { t } = useVueI18n()
-  const colorMap = {
-    [RestrictionStatus.ALLOWED]: 'bg-positive',
-    [RestrictionStatus.ALLOWED_SOON]: 'bg-info',
-    [RestrictionStatus.CONDITIONAL]: 'bg-warning',
-    [RestrictionStatus.FORBIDDEN]: 'bg-negative',
-  }
+
   return computed(() =>
     getStatusMapper((status) => ({
       title: t(`page.index.sections.stats.types.${status}.title`) as string,
       description: t(
         `page.index.sections.stats.types.${status}.description`,
       ) as string,
-      colorClass: colorMap[status],
+      colorClass: `bg-${statusColorMap[status]}`,
       value: destinations.value.filter(
         (destination) => destination.status === status,
       ).length,

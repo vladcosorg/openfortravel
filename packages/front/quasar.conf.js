@@ -84,6 +84,18 @@ module.exports = configure((context) => ({
     // https://quasar.dev/quasar-cli/handling-webpack
     extendWebpack(config) {
       config.resolve.plugins = [new TsconfigPathsPlugin()]
+      if (!config.externals) {
+        config.externals = []
+      } else {
+        config.externals = [config.externals]
+      }
+      config.externals.push((context, request, callback) => {
+        if (/xlsx|canvg|pdfmake/.test(request)) {
+          // eslint-disable-next-line unicorn/no-null
+          return callback(null, 'commonjs ' + request)
+        }
+        callback()
+      })
 
       // linting is slow in TS projects, we execute it only for production builds
       if (context.prod) {

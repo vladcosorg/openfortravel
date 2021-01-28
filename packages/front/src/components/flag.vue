@@ -47,7 +47,8 @@ export default defineComponent({
       return `flags/svg/${prop.countryCode}.svg`
     })
 
-    const srcset = computed(() => {
+    // eslint-disable-next-line vue/return-in-computed-property
+    const srcset = computed<string | undefined>(() => {
       if (process.env.DEV) {
         return `flags/svg/${prop.countryCode}.svg`
       }

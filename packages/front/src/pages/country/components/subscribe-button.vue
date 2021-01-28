@@ -19,8 +19,6 @@
   </div>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import { matNotificationsNone as iconSubscribe } from '@quasar/extras/material-icons'
 import { defineComponent, ref } from '@vue/composition-api'

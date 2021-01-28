@@ -63,6 +63,7 @@ export default defineComponent({
     const currentLanguage = computed({
       get() {
         if (root.$i18n.locale === upcomingLocale.value) {
+          // eslint-disable-next-line vue/no-side-effects-in-computed-properties
           upcomingLocale.value = undefined
         }
 

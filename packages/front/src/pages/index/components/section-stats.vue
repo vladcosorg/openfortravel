@@ -1,11 +1,27 @@
 <template>
   <section :class="`${$style.stats} q-py-xl`">
     <div class="container q-my-sm-xl">
-      <h3 class="text-center q-mb-sm-xl q-pb-xl">
-        {{ $t('page.index.sections.stats.title') }}
-      </h3>
+      <div class="q-mb-sm-xl q-pb-xl text-center">
+        <h3 class="text-bold">
+          {{ $t('page.index.sections.stats.title') }}
+        </h3>
+        <h5 class="text-subtitle1">
+          Countries include sovereign states, overseas terriotories
+        </h5>
+      </div>
+      <lazy-hydrate
+        v-if="$q.platform.is.desktop"
+        never
+        :trigger-hydration="loadMap"
+      >
+        <section-map
+          class="q-mb-xl"
+          :origin-code="originCode"
+          :restrictions="restrictions"
+        />
+      </lazy-hydrate>
 
-      <div class="row q-col-gutter-xl items-stretch">
+      <div :class="['row q-col-gutter-xl items-stretch', $style.data]">
         <div
           v-for="category in stats"
           :key="category.title"
@@ -55,13 +71,13 @@
     background-image: url('../../../assets/stats.svg');
     background-repeat: repeat-x;
     background-position: bottom;
-    background-size: auto 60%;
+    background-size: auto 30%;
   }
 }
 </style>
 
 <script lang="ts">
-import { defineComponent, toRef } from '@vue/composition-api'
+import { defineComponent, onMounted, ref, toRef } from '@vue/composition-api'
 import { hydrateWhenVisible } from 'vue-lazy-hydration'
 
 import { useGroupedDestinations } from '@/front/src/pages/country/composable'
@@ -69,6 +85,10 @@ import { useStats } from '@/front/src/pages/index/index-composable'
 
 export default defineComponent({
   components: {
+    SectionMap: () =>
+      import(
+        /* webpackChunkName: "map-comp" */ '@/front/src/pages/index/components/section-map.vue'
+      ),
     CountUp: hydrateWhenVisible(
       () => import(/* webpackChunkName: "countup" */ 'vue-countup-v2'),
     ),
@@ -80,13 +100,22 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const loadMap = ref(false)
     const {
-      destinationsRef: destinations,
+      destinationsRef: restrictions,
       isLoadingRef: isLoading,
     } = useGroupedDestinations(toRef(props, 'originCode'))
 
-    const stats = useStats(destinations)
-    return { stats, isLoading }
+    onMounted(() => {
+      const scrollHandler = function () {
+        loadMap.value = true
+        window.removeEventListener('scroll', scrollHandler, false)
+      }
+      window.addEventListener('scroll', scrollHandler, false)
+    })
+
+    const stats = useStats(restrictions)
+    return { stats, isLoading, restrictions, loadMap }
   },
 })
 </script>

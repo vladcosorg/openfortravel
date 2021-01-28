@@ -16,9 +16,17 @@ const compression = require('compression')
 const ssr = require('quasar-ssr')
 ssr.mergeRendererOptions({
   shouldPrefetch: (file) => {
-    return ['countries', 'lang', '0.', 'declension', 'all-i18n'].every(
-      (item) => !file.includes(item),
-    )
+    return [
+      'countries',
+      'lang',
+      '0.',
+      'declension',
+      'all-i18n',
+      'chart',
+      'pdfmake',
+      'xlsx',
+      'canvg',
+    ].every((item) => !file.includes(item))
   },
 })
 const extension = require('./extension')

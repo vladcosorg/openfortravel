@@ -139,13 +139,11 @@ import {
 } from '@quasar/extras/ionicons-v5'
 import { defineComponent, PropType, ref } from '@vue/composition-api'
 
-import Flag from '@/front/src/components/flag.vue'
 import { riskLevelColor } from '@/front/src/pages/country/composable'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
-  components: { Flag },
   props: {
     loading: {
       type: Boolean,

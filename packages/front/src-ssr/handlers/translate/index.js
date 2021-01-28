@@ -5,7 +5,7 @@ const sourceTranslations = require('shared/src/i18n/en')
 const cache = [new InMemoryCache(), new CloudStorageCache()]
 
 module.exports = function (app) {
-  app.get('/translate', async (req, res) => {
+  app.post('/translate', async (req, res) => {
     const targetLanguage = req.query.targetLanguage
     if (
       !targetLanguage ||

@@ -19,8 +19,6 @@
   </q-input>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import { matSearch as iconSearch } from '@quasar/extras/material-icons'
 import { defineComponent } from '@vue/composition-api'
@@ -43,7 +41,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props) {
+  setup() {
     return { iconSearch }
   },
 })
