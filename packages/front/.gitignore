@@ -36,3 +36,9 @@ yarn-error.log*
 
 .env.*
 gcloud/dev-serviceaccount.json
+
+firebase-debug.log*
+firebase-debug.*.log*
+
+# Firebase cache
+.firebase/
