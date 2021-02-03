@@ -1,0 +1,21 @@
+{
+  "name": "firebase",
+  "version": "0.3.1",
+  "engines": {
+    "node": "12"
+  },
+  "scripts": {
+    "adhoc": "GOOGLE_APPLICATION_CREDENTIALS=\"../../credentials/gcloud.json\" ts-node run.ts"
+  },
+  "main": "run.js",
+  "devDependencies": {
+    "firebase-admin": "^9.2.0",
+    "ts-node": "^9.0.0"
+  },
+  "workspaces": {
+    "nohoist": [
+      "**"
+    ]
+  },
+  "private": true
+}

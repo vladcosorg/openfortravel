@@ -11,7 +11,10 @@
     "fix": "yarn lint --fix && yarn format"
   },
   "dependencies": {
-    "countries-list": "^2.6.1"
+    "firebase": "^8.2.0",
+    "countries-list": "^2.6.1",
+    "ky": "^0.25.1",
+    "ky-universal": "^0.8.2"
   },
   "devDependencies": {
     "prettier": "^2.1.1"

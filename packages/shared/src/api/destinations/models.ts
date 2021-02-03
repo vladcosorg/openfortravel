@@ -1,3 +1,5 @@
+import type firebase from 'firebase/app'
+
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export enum RiskLevel {
@@ -11,9 +13,14 @@ export enum RiskLevel {
 export interface DestinationDocument {
   infoLink?: string
   bestByDate?: string
+  lastUpdated?: firebase.firestore.Timestamp
   isHealthDeclarationRequired?: boolean
   healthDeclarationDocURL?: string
   riskLevel: RiskLevel
+  internalInfo?: string
+  testOnArrival?: false
+  testValidityInHours?: number
+  proofOfRecoveryInDays?: number
 }
 
 export interface PlainDestination extends DestinationDocument {
@@ -27,6 +34,10 @@ export class DestinationDefaults implements PlainDestination {
   public readonly isHealthDeclarationRequired = false
   public readonly healthDeclarationDocURL = ''
   public readonly riskLevel = RiskLevel.NO_DATA
+  public readonly testValidityInHours = 48
+  public readonly selfIsolationInDays = 14
+  public readonly testOnArrival = false
+  public readonly proofOfRecoveryInDays = 0
 
   get name(): string {
     return getLabelForCountryCode(this.countryCode)

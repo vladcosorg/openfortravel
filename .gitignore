@@ -3,3 +3,7 @@ node_modules
 .thumbs.db
 .idea
 .ultra.cache.json
+firebase-debug.log*
+firebase-debug.*.log*
+.firebase/
+credentials

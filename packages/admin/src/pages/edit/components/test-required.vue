@@ -1,6 +1,7 @@
 <template>
   <q-field v-bind="$attrs" borderless dense :loading="loading">
     <template #control>
+      <span v-if="label" class="col-12 q-mb-sm">{{ label }}</span>
       <q-option-group
         v-model="internalValue"
         :options="options"
@@ -22,6 +23,9 @@ import { useAsyncListeners } from '@/shared/src/composables/use-async-listeners'
 export default defineComponent({
   components: {},
   props: {
+    label: {
+      type: String,
+    },
     value: {
       type: Boolean,
       required: false,

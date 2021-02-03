@@ -4,12 +4,16 @@ export function getMappedContinentID(countryISO: string): string | undefined {
   return useStore().state.countryToContinentMap[countryISO]
 }
 
+export function getOrderedListOfContinentIDs(): string[] {
+  return ['na', 'eu', 'as', 'sa', 'oc', 'af']
+}
+
 export function getContinentList(
   prioritizeContinent?: string,
 ): Record<string, string> {
   const list: Record<string, string> = {}
-  const { t } = useVueI18n()
-  let orderedList = ['na', 'eu', 'as', 'sa', 'oc', 'af']
+
+  let orderedList = getOrderedListOfContinentIDs()
   if (prioritizeContinent) {
     orderedList = [
       prioritizeContinent,
@@ -17,6 +21,11 @@ export function getContinentList(
     ]
   }
 
-  orderedList.forEach((id) => (list[id] = t(`misc.continents.${id}`) as string))
+  orderedList.forEach((id) => (list[id] = getContinentLabel(id)))
   return list
+}
+
+export function getContinentLabel(continentID: string): string {
+  const { t } = useVueI18n()
+  return t(`misc.continents.${continentID}`) as string
 }

@@ -38,7 +38,7 @@ module.exports = configure((context) => ({
   // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
   build: {
     vueRouterMode: 'history', // available values: 'hash', 'history'
-
+    transpile: false,
     // Add dependencies for transpiling with Babel (Array of string/regex)
     // (from node_modules, which are by default not transpiled).
     // Applies only if "transpile" is set to true.
@@ -111,7 +111,7 @@ module.exports = configure((context) => ({
     // directives: [],
     components: [],
     // Quasar plugins
-    plugins: [],
+    plugins: ['Dialog', 'LocalStorage'],
   },
 
   // animations: 'all', // --- includes all animations

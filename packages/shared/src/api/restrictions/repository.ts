@@ -12,6 +12,7 @@ export async function findRestrictionsByOrigin(
 
   const results = await restrictionCollection
     .where('origin', '==', originCode)
+    .limit(50)
     .get()
 
   return results.docs.map((snapshot) => snapshot.data())
@@ -27,6 +28,26 @@ export async function findRestrictionsByDestination(
 
   return results.docs.map((snapshot) => snapshot.data())
 }
+
+// export async function findRestrictionsByDestination(
+//   destinationCode: string,
+// ): Promise<PlainRestriction[]> {
+//   const key = `restrictions/destination/${destinationCode}`
+//   let data: PlainRestriction[] | null = LocalStorage.getItem(key)
+//
+//   if (!data) {
+//     const { restrictionCollection } = await importFirebase()
+//     const results = await restrictionCollection
+//       .where('destination', '==', destinationCode)
+//       .get()
+//     data = results.docs.map((snapshot) => snapshot.data())
+//     if (data.length > 0) {
+//       LocalStorage.set(`restrictions/destination/${destinationCode}`, data)
+//     }
+//   }
+//
+//   return data
+// }
 
 export async function findRestrictionByOriginAndDestination(
   originCode: string,

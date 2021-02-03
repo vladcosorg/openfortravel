@@ -1,5 +1,5 @@
 import { boot } from 'quasar/wrappers'
-import VueI18n from 'vue-i18n'
+import VueI18n, { LocaleMessages } from 'vue-i18n'
 
 import { setI18n } from '@/shared/src/composables/use-plugins'
 import messages from '@/shared/src/i18n'
@@ -9,5 +9,5 @@ import { preloadCountryListForLocale } from '@/shared/src/modules/country-list/c
 export default boot(async ({ Vue }) => {
   await preloadCountryListForLocale('en')
   Vue.use(VueI18n)
-  setI18n(createVueI18n(messages))
+  setI18n(createVueI18n((messages as unknown) as LocaleMessages))
 })

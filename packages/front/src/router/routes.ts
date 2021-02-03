@@ -45,10 +45,6 @@ export function createGenericRouter(
           {
             name: 'index-redirect',
             path: '',
-            component: () =>
-              import(
-                /* webpackChunkName: "page-index" */ '@/front/src/pages/index/index-page.vue'
-              ),
           },
           {
             name: 'privacy',

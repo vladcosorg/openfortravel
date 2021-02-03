@@ -12,7 +12,6 @@ import {
 import { findOrigins } from '@/shared/src/api/destinations/repository'
 import {
   generateRestrictionListByOrigin,
-  sortByDestination,
   wrapCollectionWithRichObject,
 } from '@/shared/src/api/restrictions/helper'
 import {
@@ -20,6 +19,7 @@ import {
   Restriction,
   RestrictionStatus,
 } from '@/shared/src/api/restrictions/models'
+import { sortByStatusAndAlphabetically } from '@/shared/src/api/restrictions/sorters'
 import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export type CountryMap = Map<string, Destination>
@@ -38,7 +38,7 @@ export default {
   getters: {
     restrictionList: (state): Restriction[] => {
       const wrappedList = wrapCollectionWithRichObject(state.restrictions)
-      return sortedByStatus(sortByDestination(wrappedList))
+      return sortByStatusAndAlphabetically(wrappedList)
     },
     countryList: (state): CountryMap => {
       const countryObjects = state.countries.reduce(

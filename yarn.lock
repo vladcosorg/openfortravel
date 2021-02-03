@@ -10218,7 +10218,7 @@ scope-analyzer@^2.0.1:
     estree-is-function "^1.0.0"
     get-assigned-identifiers "^1.1.0"
 
-scrape-it@^5.2.4:
+scrape-it@5.2.4:
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/scrape-it/-/scrape-it-5.2.4.tgz#47e0353b9c5318fd721b8af7672a75d6f136ccca"
   integrity sha512-9bffnLGnCFbEAFbAeJnnHenf+a44/OmYZvH/tDx8VgNgUOKztJD83lzuWZ0zYvp4XOKwEth0UfohSez7wEYhhA==

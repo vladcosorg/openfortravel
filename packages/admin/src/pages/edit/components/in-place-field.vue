@@ -4,13 +4,18 @@
       <slot
         v-if="isEditing"
         name="edit"
-        v-bind="{ label, loading, value: internalValue, updateValue }"
+        v-bind="{
+          label,
+          loading,
+          value: internalValue,
+          updateValue,
+          updateVmodel,
+        }"
       >
         <q-input
           v-model="internalValue"
           :label="label"
           outlined
-          dense
           :loading="loading"
           type="url"
           debounce="300"
@@ -21,18 +26,18 @@
       <q-field
         v-if="!isEditing"
         outlined
-        dense
         :loading="loading"
         :label="label"
         stack-label
         readonly
         label-color="white"
+        class=""
       >
         <template #control>
           <slot name="view" :value="value">
             <div
-              class="self-center no-outline ellipsis"
-              style="white-space: normal"
+              class="self-center no-outline ellipsis-improved self-stretch"
+              style="white-space: normal; overflow-wrap: anywhere"
               tabindex="0"
             >
               {{ value }}
@@ -46,7 +51,7 @@
       color="secondary"
       :icon="isEditing ? 'done' : 'edit'"
       flat
-      @click="toggleEditing"
+      @click="toggleEditing()"
     />
   </div>
 </template>
@@ -84,9 +89,11 @@ export default defineComponent({
 
     const isEditing = ref<boolean>(false)
 
+    const updateVmodel = (value: string) => {
+      internalValue.value = value
+    }
     const toggleEditing = () => {
       isEditing.value = !isEditing.value
-
       if (buffer.value != undefined) {
         updateValue(buffer.value)
       }
@@ -101,6 +108,7 @@ export default defineComponent({
     }
 
     return {
+      updateVmodel,
       isEditing,
       internalValue,
       toggleEditing,

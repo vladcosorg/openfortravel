@@ -12,6 +12,7 @@ import {
   findRestrictionsByOrigin,
 } from '@/shared/src/api/restrictions/repository'
 import { useI18n } from '@/shared/src/composables/use-plugins'
+import { getOrderedListOfContinentIDs } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import { getCountryCodes as getAllCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export async function generateRestrictionListByDestination(
@@ -74,8 +75,12 @@ export function sortByOrigin(collection: Restriction[]): Restriction[] {
 }
 
 export function sortByDestination(collection: Restriction[]): Restriction[] {
-  return collection.sort((a, b) =>
-    a.destinationLabel.localeCompare(b.destinationLabel),
+  const continentIDs = getOrderedListOfContinentIDs()
+  return collection.sort(
+    (a, b) =>
+      // a.destinationLabel.localeCompare(b.destinationLabel),
+      continentIDs.indexOf(a.originContinent!) -
+      continentIDs.indexOf(b.originContinent!),
   )
 }
 

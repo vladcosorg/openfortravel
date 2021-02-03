@@ -23,7 +23,7 @@ export interface RestrictionDocument {
   notes?: string
   testRequired?: boolean
   insuranceRequired?: boolean
-  selfIsolation?: number
+  selfIsolation?: boolean
   origin?: string
   destination?: string
 }
@@ -35,7 +35,7 @@ export const restrictionDefaults: PlainRestriction = {
   notes: '',
   testRequired: false,
   insuranceRequired: false,
-  selfIsolation: 0,
+  selfIsolation: false,
   origin: 'us',
   destination: 'us',
 }
@@ -46,7 +46,7 @@ export class Restriction implements PlainRestriction {
   public readonly notes = ''
   public readonly testRequired = false
   public readonly insuranceRequired = false
-  public readonly selfIsolation = 0
+  public readonly selfIsolation = false
   public readonly isForbidden = false
   constructor(document: PlainRestriction) {
     Object.assign(this, document)
@@ -62,6 +62,10 @@ export class Restriction implements PlainRestriction {
 
   get originSlug(): string {
     return transformCodeToOriginSlug(this.origin)
+  }
+
+  get originContinent(): string | undefined {
+    return getMappedContinentID(this.origin)
   }
 
   get destinationContinent(): string | undefined {
@@ -97,7 +101,7 @@ export class Restriction implements PlainRestriction {
       return RestrictionStatus.FORBIDDEN
     }
 
-    if (this.selfIsolation > 0) {
+    if (this.selfIsolation) {
       return RestrictionStatus.CONDITIONAL
     }
 
@@ -109,7 +113,7 @@ export class Restriction implements PlainRestriction {
   }
 
   public needsSelfIsolation(): boolean {
-    return this.selfIsolation > 0
+    return this.selfIsolation
   }
 
   public toPlainRestriction(): PlainRestriction {

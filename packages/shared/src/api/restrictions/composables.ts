@@ -52,9 +52,12 @@ export function useRestrictionPersister(): PersistOneFunc {
 
 export function useRestrictionCollectionPersister(
   restrictionListRef: Ref<Restriction[]>,
+  selection?: Ref<Restriction[]>,
 ): PersistAllFunc {
   return async (field, value) => {
-    restrictionListRef.value.map((restriction) => (restriction[field] = value))
+    const list = selection?.value.length ? selection : restrictionListRef
+
+    list.value.map((restriction) => (restriction[field] = value))
     await persistRestrictionCollection(restrictionListRef.value)
   }
 }
