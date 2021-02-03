@@ -1,10 +1,7 @@
 <template>
-  <q-card
-    v-if="!loading"
-    flat
-    class="bg-elevation-1 full-height relative-position"
-  >
+  <q-card flat class="bg-elevation-1 full-height relative-position">
     <router-link
+      v-if="!loading"
       v-ripple
       class="column full-height"
       style="text-decoration: none; color: inherit"
@@ -22,7 +19,6 @@
         <h5 :class="`ellipsis-improved full-width ${$style.label}`">
           {{ destination.destinationNominativeLabel }}
         </h5>
-
         <div :class="[riskLevelColor(country.riskLevel)]">
           {{ $t('components.destinationItem.riskLevel.title') }}:
           {{
@@ -30,6 +26,7 @@
           }}
         </div>
       </q-card-section>
+
       <q-separator inset />
 
       <q-card-section class="gt-xs" style="flex-grow: 1">
@@ -71,13 +68,38 @@
           </q-badge>
         </div>
       </q-card-section>
-      <!--      <q-btn-->
-      <!--        unelevated-->
-      <!--        color="elevation-1"-->
-      <!--        :label="$t('components.destinationItem.readMore')"-->
-      <!--      />-->
-      <!--      <flag :country-code="destination.destination" :class="$style.flag" />-->
     </router-link>
+    <q-item
+      v-else
+      :class="[$style.item, 'rounded-borders q-pa-md']"
+      style="min-height: 212px"
+    >
+      <q-item-section>
+        <q-item-label :class="[' q-mb-sm']">
+          <q-skeleton type="text" height="3rem" width="65%" />
+        </q-item-label>
+        <q-item-label :class="['text-subtitle2']">
+          <q-skeleton type="text" height="1.5rem" width="45%" />
+        </q-item-label>
+        <q-item-label :class="['q-py-xs']">
+          <q-skeleton type="text" height="1rem" />
+        </q-item-label>
+        <q-item-label>
+          <q-skeleton type="text" height="10px" width="25%" />
+        </q-item-label>
+        <q-item-label class="q-gutter-sm">
+          <q-item-label class="q-gutter-xs row">
+            <q-skeleton
+              v-for="cnt in 3"
+              :key="cnt"
+              type="QBadge"
+              height="0.9rem"
+              width="3rem"
+            />
+          </q-item-label>
+        </q-item-label>
+      </q-item-section>
+    </q-item>
   </q-card>
 </template>
 

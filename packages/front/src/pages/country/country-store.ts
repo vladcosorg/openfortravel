@@ -17,7 +17,6 @@ import {
 import {
   PlainRestriction,
   Restriction,
-  RestrictionStatus,
 } from '@/shared/src/api/restrictions/models'
 import { sortByStatusAndAlphabetically } from '@/shared/src/api/restrictions/sorters'
 import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
@@ -115,16 +114,3 @@ export default {
     },
   },
 } as Module<State, StateInterface>
-
-function sortedByStatus(destinations: Restriction[]): Restriction[] {
-  const allStatuses = Object.values(RestrictionStatus)
-  const grouped = Object.assign(
-    {},
-    ...allStatuses.map((status) => ({
-      [status]: destinations.filter(
-        (destination) => destination.status === status,
-      ),
-    })),
-  ) as Record<string, Restriction[]>
-  return Object.values(grouped).flat()
-}

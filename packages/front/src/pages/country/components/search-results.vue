@@ -19,7 +19,7 @@
       />
 
       <destination-group
-        class="q-mt-xs"
+        class="q-mt-lg"
         :loading="isListLoading"
         :destinations="destinations"
         :countries="countries"

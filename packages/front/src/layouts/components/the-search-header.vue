@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-elevation-1 overflow-auto q-py-md q-py-sm-lg q-mb-xl relative-position"
+    class="bg-elevation-1 overflow-auto q-pb-lg q-pt-md q-mb-xl relative-position"
   >
     <div class="container">
       <the-country-list
