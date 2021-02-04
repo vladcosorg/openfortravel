@@ -64,6 +64,7 @@ import {
 } from '@/front/src/pages/destination/destination-composable'
 import { meta } from '@/front/src/pages/destination/destination-meta'
 import { useComputedMemorized } from '@/shared/src/composables/use-computed-vmodel'
+import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
@@ -94,6 +95,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { t } = useVueI18n()
     const originCodeRef = useComputedMemorized(() => props.unsafeOriginCode)
     const destinationCodeRef = useComputedMemorized(
       () => props.unsafeDestinationCode,
@@ -109,7 +111,9 @@ export default defineComponent({
 
     const breadcrumbs = computed(() => [
       {
-        label: `Destinations from ${restrictionRef.value.originLabel}`,
+        label: t('page.country.breadcrumb', {
+          country: restrictionRef.value.originLabel,
+        }),
         to: {
           name: 'origin',
           params: {
@@ -119,7 +123,9 @@ export default defineComponent({
         icon: matFlightTakeoff,
       },
       {
-        label: `Travel to ${restrictionRef.value.destinationLabel}`,
+        label: t('page.destination.breadcrumb', {
+          country: restrictionRef.value.destinationLabel,
+        }),
         icon: matFlightLand,
       },
     ])

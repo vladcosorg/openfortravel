@@ -65,22 +65,12 @@
 </style>
 
 <script lang="ts">
-import {
-  outlinedLocalPolice as borderIcon,
-  outlinedCoronavirus as testIcon,
-  outlinedMedicalServices as insuranceIcon,
-  outlinedHttps as houseIcon,
-  outlinedBallot as declarationIcon,
-} from '@quasar/extras/material-icons-outlined'
 import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import PropertyListPlaceholders from '@/front/src/pages/destination/components/property-list-placeholders.vue'
+import { getSummaryItems } from '@/front/src/pages/destination/destination-summary'
 import { Destination } from '@/shared/src/api/destinations/models'
-import {
-  Restriction,
-  RestrictionStatus,
-} from '@/shared/src/api/restrictions/models'
-import { useVueI18n } from '@/shared/src/composables/use-plugins'
+import { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
   components: { PropertyListPlaceholders },
@@ -99,64 +89,9 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { t } = useVueI18n()
-    const statusMap = {
-      [RestrictionStatus.ALLOWED]: '',
-      [RestrictionStatus.CONDITIONAL]: 'text-warning',
-      [RestrictionStatus.FORBIDDEN]: 'text-negative',
-      [RestrictionStatus.ALLOWED_SOON]: 'text-info',
-    }
-
-    const properties = computed(() => [
-      {
-        label: t('restriction.travel.label'),
-        value: t(`restriction.travel.value.${props.restriction.status}`),
-        caption: 'No additional requirements at the border',
-        icon: borderIcon,
-        valueClasses: statusMap[props.restriction.status],
-      },
-      {
-        label: t('restriction.testing.label'),
-        value: t(`restriction.testing.value.${props.restriction.testRequired}`),
-        caption: 'No additional requirements at the border',
-        valueClasses: props.restriction.testRequired ? 'text-negative' : '',
-        icon: testIcon,
-      },
-      {
-        label: t('restriction.insurance.label'),
-        value: t(
-          `restriction.insurance.value.${props.restriction.insuranceRequired}`,
-        ),
-        caption: 'No additional requirements at the border',
-        icon: insuranceIcon,
-        valueClasses: props.restriction.insuranceRequired
-          ? 'text-negative'
-          : '',
-      },
-      {
-        label: t('restriction.healthDeclaration.label'),
-        value: t(
-          `restriction.healthDeclaration.value.${
-            props.destination.isHealthDeclarationRequired ? 'true' : 'false'
-          }`,
-        ),
-        caption: 'No additional requirements at the border',
-        icon: declarationIcon,
-      },
-      {
-        label: t('restriction.selfIsolation.label'),
-        value:
-          props.restriction.selfIsolation > 0
-            ? t('restriction.selfIsolation.days', {
-                number: props.restriction.selfIsolation,
-              })
-            : t('restriction.selfIsolation.staticValue.false'),
-        caption: 'No additional requirements at the border',
-        icon: houseIcon,
-        valueClasses:
-          props.restriction.selfIsolation > 0 ? 'text-negative' : 'text-info',
-      },
-    ])
+    const properties = computed(() =>
+      getSummaryItems(props.restriction, props.destination),
+    )
 
     return {
       properties,

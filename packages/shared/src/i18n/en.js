@@ -56,6 +56,18 @@ module.exports = {
         true: 'Required',
         false: 'Not needed',
       },
+      caption: {
+        pcr: {
+          true:
+            'Medical certificate with a negative COVID-19 PCR test result issued within {hrs} hours prior to arrival.',
+          false:
+            'At this time you are not required to bring a COVID-19 PCR test certificate with you.',
+        },
+        proof: {
+          true:
+            'Alternatively, proof of having recovered from COVID-19 in the {days} days preceding travel is also accepted.',
+        },
+      },
     },
     insurance: {
       label: 'Additional Health Insurance',
@@ -78,6 +90,12 @@ module.exports = {
       value: {
         true: 'Required',
         false: 'Not needed',
+      },
+      caption: {
+        true:
+          'You will have to fill and sign a declaration form upon arrival. It contains your contact information and your health indicators at the time of travel',
+        false:
+          'At this time the authorities are not requesting that you provide any additional health information upon arrival.',
       },
     },
   },
@@ -171,6 +189,7 @@ module.exports = {
         title:
           '{origin} COVID-19 Travel Restrictions and Bans Listed By Destination',
       },
+      breadcrumb: 'From {country}',
       quickSearch: 'Quick country search',
       destinations: 'To Destinations',
       tab: {
@@ -183,6 +202,7 @@ module.exports = {
         title:
           '{destination} travel restrictions from {origin}: flight restrictions, quarantine measures,  COVID-19 vaccine passport  and other entry requirements',
       },
+      breadcrumb: 'To {country}',
       title: 'Latest information on travelling from {origin} to {destination}',
       seeReturnPage: 'See return travel',
       backToList: 'Back to list',

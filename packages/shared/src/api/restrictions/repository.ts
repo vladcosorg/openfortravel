@@ -12,7 +12,7 @@ export async function findRestrictionsByOrigin(
 
   const results = await restrictionCollection
     .where('origin', '==', originCode)
-    .limit(1)
+    // .limit(1)
     .get()
 
   return results.docs.map((snapshot) => snapshot.data())

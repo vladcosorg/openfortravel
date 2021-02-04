@@ -12,6 +12,7 @@ import {
 import { CountryMap } from '@/front/src/pages/country/country-store'
 import { RiskLevel } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
+import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import {
   useProperVuexActionDispatcher,
@@ -174,11 +175,14 @@ export function getBreadcrumbs(
   originCode: Ref<string>,
   isLoading: Ref<boolean>,
 ): ComputedRef {
+  const { t } = useVueI18n()
   return computed(() => ({
     originSlug: transformCodeToOriginSlug(originCode.value),
     items: [
       {
-        label: `Destinations from ${getLabelForCountryCode(originCode.value)}`,
+        label: t('page.country.breadcrumb', {
+          country: getLabelForCountryCode(originCode.value),
+        }),
         icon: matFlightTakeoff,
       },
     ],

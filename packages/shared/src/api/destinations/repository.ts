@@ -27,8 +27,8 @@ export async function findOriginAsRichObject(
 
 export async function findOrigins(): Promise<PlainDestination[]> {
   const { countryCollection } = await importFirebase()
-  const results = await countryCollection.limit(1).get()
-  // const results = await countryCollection.get()
+  // const results = await countryCollection.limit(1).get()
+  const results = await countryCollection.get()
 
   return results.docs.map((snapshot) => snapshot.data())
 }
