@@ -70,7 +70,7 @@ module.exports = configure((context) => ({
   // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
   build: {
     vueRouterMode: 'history', // available values: 'hash', 'history'
-    transpile: context.prod,
+    transpile: context.prod && !context.debug,
     // Add dependencies for transpiling with Babel (Array of string/regex)
     // (from node_modules, which are by default not transpiled).
     // Applies only if "transpile" is set to true.
@@ -83,7 +83,7 @@ module.exports = configure((context) => ({
     // analyze: true,
     // Options below are automatically set depending on the env, set them if you want to override
     // extractCSS: false,
-    // minify: false,
+    minify: !context.debug,
 
     // https://quasar.dev/quasar-cli/handling-webpack
     extendWebpack(config) {
@@ -102,7 +102,7 @@ module.exports = configure((context) => ({
       })
 
       // linting is slow in TS projects, we execute it only for production builds
-      if (context.prod) {
+      if (context.prod && !context.debug) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -136,6 +136,7 @@ module.exports = configure((context) => ({
           },
         },
       })
+
       config.plugins.push(
         new FilterWarningsPlugin({
           exclude: /Critical dependency|dependency is an expression|require function is used|keyv|got/,
@@ -151,6 +152,7 @@ module.exports = configure((context) => ({
         config.plugins.delete('hashed-module-ids')
         config.optimization.namedModules(true)
       }
+
       config.module
         .rule('images')
         .use('url-loader')
