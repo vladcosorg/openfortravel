@@ -45,5 +45,5 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
           credentials: ${{ secrets.GCP_SA_KEY }}
-          working_directory: ./packages/front/dist
+          working_directory: ./packages/front/dist/ssr
 
