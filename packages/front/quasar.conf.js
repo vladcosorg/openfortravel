@@ -14,6 +14,9 @@ const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin')
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin')
 
 module.exports = configure((context) => ({
+  sourceFiles: {
+    rootComponent: 'src/app.vue',
+  },
   // https://quasar.dev/quasar-cli/supporting-ts
   supportTS: {
     tsCheckerConfig: {
