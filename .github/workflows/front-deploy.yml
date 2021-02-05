@@ -13,7 +13,11 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: yarn --frozen-lockfile
+      - uses: bahmutov/npm-install@v1
+        with:
+          working-directory: |
+            ./packages/front
+            ./packages/shared
       - run: yarn build
         working-directory: ./packages/front
         env:
