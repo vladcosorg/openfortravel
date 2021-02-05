@@ -13,29 +13,17 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: Set yarn cache directory
-        run: echo "::set-env name=YARN_CACHE::$(yarn cache dir)"
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-      - name: Cache node modules
-        id: lerna-yarn-cache
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
+      - name: Restore yarn workspaces
+        id: yarn-cache
+        uses: actions/cache@master
         with:
           path: |
-            ${{ env.YARN_CACHE }}
             node_modules
             */*/node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install dependencies if needed.
-        if: steps.lerna-yarn-cache.outputs.cache-hit != 'true'
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install --ignore-platform --frozen-lockfile
-
       - run: yarn build
         working-directory: ./packages/front
         env:
