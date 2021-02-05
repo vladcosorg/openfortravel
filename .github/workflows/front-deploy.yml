@@ -14,12 +14,14 @@ jobs:
         with:
           node-version: 14
       - run: yarn --frozen-lockfile
-      - run: yarn workspace front run build
       - run: yarn build
+        working-directory: ./packages/front
+        env:
+          PROJECT_URL: https://openfortravel.org
       - id: deploy
         uses: google-github-actions/deploy-appengine@main
         with:
           project_id: ${{ secrets.GCP_PROJECT }}
           credentials: ${{ secrets.GCP_SA_KEY }}
-          working_directory: packages/front/dist
+          working_directory: ./packages/front/dist
 
