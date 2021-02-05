@@ -202,9 +202,9 @@ export function convertCountryListResponseToCountrySlugMap(
 
 function generateMigrationMap(current: CountryList, previous: CountryList) {
   const map: CountryList = {}
-  Object.keys(previous).forEach((countryCode) => {
+  for (const countryCode of Object.keys(previous)) {
     map[kebabCase(previous[countryCode])] = kebabCase(current[countryCode])
-  })
+  }
 
   return map
 }

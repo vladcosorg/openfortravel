@@ -25,7 +25,7 @@ export async function generateRestrictionListByDestination(
     'destination',
     'origin',
   )
-  return realRestrictions.concat(fallbackRestrictions)
+  return [...realRestrictions, ...fallbackRestrictions]
 }
 
 export async function generateRestrictionListByOrigin(
@@ -41,7 +41,7 @@ export async function generateRestrictionListByOrigin(
     'origin',
     'destination',
   )
-  return realRestrictions.concat(fallbackRestrictions)
+  return [...realRestrictions, ...fallbackRestrictions]
 }
 
 function generateFallbackRestrictions(

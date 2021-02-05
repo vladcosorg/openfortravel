@@ -103,14 +103,16 @@ export default defineComponent({
   },
   setup(props) {
     const renderIndex = ref(15)
-    const inView = ref<boolean[]>(new Array(250).fill(false))
+    const inView = ref<boolean[]>(
+      Array.from<boolean>({ length: 250 }).fill(false),
+    )
 
     const items = computed(() => {
       if (!props.loading) {
         return props.destinations
       }
 
-      return new Array(5)
+      return Array.from({ length: 5 })
     })
 
     watch(

@@ -44,6 +44,14 @@ module.exports = {
         forbidden: 'Completely closed',
         conditional: 'Partially open',
       },
+      caption: {
+        forbidden: 'Some exceptions apply',
+        allowed:
+          'You might have to follow some procedures in order to cross the border. Please read below to inform yourself.',
+        allowedSoon: '',
+        conditional:
+          'Please read carefully the information below in order to understant if you meet the requirements.',
+      },
       badgeValue: {
         allowed: 'Entry Allowed',
         forbidden: 'Entry Forbidden',
@@ -51,7 +59,11 @@ module.exports = {
       },
     },
     testing: {
-      label: 'COVID test',
+      label: 'Testing Required',
+      extendedLabel: {
+        pcrTest: 'Negative COVID-19 viral test',
+        orRecoveryProof: ' or Recovery Proof',
+      },
       value: {
         true: 'Required',
         false: 'Not needed',
@@ -59,14 +71,18 @@ module.exports = {
       caption: {
         pcr: {
           true:
-            'Medical certificate with a negative COVID-19 PCR test result issued within {hrs} hours prior to arrival.',
+            'COVID-19 PCR, LAMP or antigent test result issued within <b>{hrs} hours</b> prior to arrival.',
           false:
             'At this time you are not required to bring a COVID-19 PCR test certificate with you.',
         },
-        proof: {
-          true:
-            'Alternatively, proof of having recovered from COVID-19 in the {days} days preceding travel is also accepted.',
-        },
+        proof:
+          'Alternatively, proof of having recovered from COVID-19 in the {days} days preceding travel is also accepted.',
+        testOnArrival:
+          'The test can be taken on arrival for an additional fee and quarantine awaiting for results. ',
+      },
+      badges: {
+        onArrival: 'Test on arrival',
+        recoveryCertificate: 'COVID-19 recovery certificate',
       },
     },
     insurance: {
@@ -88,14 +104,17 @@ module.exports = {
       label: 'Health Declaration',
       // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
       value: {
-        true: 'Required',
+        online: 'Completed online before arrival',
+        true: 'Yes',
         false: 'Not needed',
       },
       caption: {
         true:
-          'You will have to fill and sign a declaration form upon arrival. It contains your contact information and your health indicators at the time of travel',
+          'A completed Passenger Information Form must be presented upon arrival. Usually it is provided by the airlines upon boarding.',
         false:
           'At this time the authorities are not requesting that you provide any additional health information upon arrival.',
+        online:
+          'You must complete this form online before you arrive. <a target="_blank" href="{url}">Click here</a> to view the form.',
       },
     },
   },
@@ -208,6 +227,12 @@ module.exports = {
       backToList: 'Back to list',
       returnWay: 'Return way',
       fillDeclaration: 'Fill online',
+      widgets: {
+        info: {
+          title: 'Local resources',
+          subtitle: 'Please carefully read all the information below ',
+        },
+      },
     },
     notFound: {
       title: 404,

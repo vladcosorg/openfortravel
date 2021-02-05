@@ -46,8 +46,6 @@ async function main() {
       createLocalizedEntry({ name: 'index-targeted' }, originKeys, {
         changefreq: EnumChangefreq.MONTHLY,
       }),
-    )
-    paths.push(
       createLocalizedEntry({ name: 'origin' }, originKeys, {
         changefreq: EnumChangefreq.WEEKLY,
       }),
@@ -162,9 +160,9 @@ function getGroupedLocalizedSlugs() {
     { origin: Record<string, string>; destination: Record<string, string> }
   > = {}
 
-  getTranslatedOrTranslatableLocales().forEach(
-    (locale) => (localizedSlugs[locale] = getSlugsForLocale(locale)),
-  )
+  for (const locale of getTranslatedOrTranslatableLocales()) {
+    localizedSlugs[locale] = getSlugsForLocale(locale)
+  }
 
   const groupedLocalizedSlugs: Record<
     string,

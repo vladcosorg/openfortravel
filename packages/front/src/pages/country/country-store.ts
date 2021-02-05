@@ -49,9 +49,9 @@ export default {
         new Map(),
       )
 
-      getCountryCodes().forEach((countryCode) => {
+      for (const countryCode of getCountryCodes()) {
         if (countryObjects.has(countryCode)) {
-          return
+          continue
         }
 
         countryObjects.set(
@@ -60,7 +60,7 @@ export default {
             countryCode,
           }),
         )
-      })
+      }
 
       return countryObjects
     },

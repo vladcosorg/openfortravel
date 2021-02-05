@@ -13,12 +13,12 @@
     "test": "echo \"No test specified\" && exit 0",
     "fake-server": "json-server --watch db.json",
     "typecheck": "tsc -p tsconfig.json",
-    "build": "quasar build -m ssr",
+    "build": "quasar build -m ssr && cp app.yaml dist/ssr/app.yaml",
     "serve-build": "cd dist/ssr && npm start",
     "build-serve": "quasar build -m ssr && cd dist/ssr && npm start",
     "serve": "cd dist/ssr && GOOGLE_APPLICATION_CREDENTIALS=\"../../gcloud/dev-serviceaccount.json\" npm start",
     "build-deploy": "yarn run build && yarn run deploy",
-    "deploy": "cp app.yaml dist/ssr/app.yaml && gcloud app deploy dist/ssr/app.yaml --quiet",
+    "deploy": "gcloud app deploy dist/ssr/app.yaml --quiet",
     "build-flags": "ts-node src/bin/build-flags.ts",
     "build-sitemap": "rm -rf public/sitemap && node -- node_modules/.bin/ts-node -P tsconfig.json -r tsconfig-paths/register src/bin/build-sitemap.ts",
     "build-stats": "node -- node_modules/.bin/ts-node -P tsconfig.json -r tsconfig-paths/register ../functions/src/safety-level-calculator.ts",
@@ -33,7 +33,8 @@
       "ky/*",
       "ky-universal",
       "encoding",
-      "node-fetch"
+      "node-fetch",
+      "webpack-filter-warnings-plugin"
     ]
   },
   "dependencies": {

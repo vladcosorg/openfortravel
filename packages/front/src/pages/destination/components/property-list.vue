@@ -26,9 +26,20 @@
               {{ item.value }}
             </span>
           </q-item-label>
-          <q-item-label caption class="text-primary-subtle q-pt-xs">{{
-            item.caption
-          }}</q-item-label>
+          <q-item-label
+            caption
+            class="text-primary-subtle q-pt-xs"
+            v-html="item.caption"
+          />
+          <q-item-label v-if="item.badges">
+            <q-badge
+              v-for="(badge, key) in item.badges"
+              :key="key"
+              outline
+              :color="badge.color"
+              :label="badge.label"
+            />
+          </q-item-label>
         </q-item-section>
       </q-item>
     </template>

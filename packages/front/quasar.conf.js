@@ -11,6 +11,7 @@ const path = require('path')
 
 const { configure } = require('quasar/wrappers')
 const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin')
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin')
 
 module.exports = configure((context) => ({
   // https://quasar.dev/quasar-cli/supporting-ts
@@ -132,6 +133,15 @@ module.exports = configure((context) => ({
           },
         },
       })
+      config.plugins.push(
+        new FilterWarningsPlugin({
+          exclude: /Critical dependency|dependency is an expression|require function is used|keyv|got/,
+        }),
+      )
+      if (!config.stats) {
+        config.stats = {}
+      }
+      config.stats.warningsFilter = [/dependency/]
     },
     chainWebpack(config) {
       if (context.debug) {

@@ -21,7 +21,9 @@ export function getContinentList(
     ]
   }
 
-  orderedList.forEach((id) => (list[id] = getContinentLabel(id)))
+  for (const id of orderedList) {
+    list[id] = getContinentLabel(id)
+  }
   return list
 }
 

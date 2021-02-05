@@ -1,0 +1,25 @@
+name: Front deploy
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: yarn --frozen-lockfile
+      - run: yarn workspace run build
+      - run: yarn build
+      - id: deploy
+        uses: google-github-actions/deploy-appengine@main
+        with:
+          project_id: ${{ secrets.GCP_PROJECT }}
+          credentials: ${{ secrets.GCP_SA_KEY }}
+          working_directory: packages/front/dist
+

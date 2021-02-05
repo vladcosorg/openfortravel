@@ -2,7 +2,7 @@ import { QSsrContext } from '@quasar/app'
 import ky from 'ky-universal'
 import { Cookies, LooseDictionary, Notify } from 'quasar'
 import Vue from 'vue'
-import VueI18n, { IVueI18n } from 'vue-i18n'
+import VueI18n, { IVueI18n, TranslateResult } from 'vue-i18n'
 import VueRouter from 'vue-router'
 import { Store } from 'vuex'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,13 +41,17 @@ export function useI18n(): typeof i18nInstance {
   return i18nInstance
 }
 
-export function useVueI18n(): {
-  t: (key: VueI18n.Path, values?: VueI18n.Values) => VueI18n.TranslateResult
+type Translator<T extends TranslateResult> = (
+  key: VueI18n.Path,
+  values?: VueI18n.Values,
+) => T
+export function useVueI18n<T extends TranslateResult>(): {
+  t: Translator<T>
   i18n: typeof i18nInstance
 } {
   const i18n = useI18n()
   const unbound = i18n.t
-  return { i18n, t: unbound.bind(i18n) }
+  return { i18n, t: (unbound.bind(i18n) as unknown) as Translator<T> }
 }
 
 let cookiesInstance: Cookies

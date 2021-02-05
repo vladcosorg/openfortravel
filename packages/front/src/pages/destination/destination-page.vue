@@ -35,8 +35,22 @@
               :destination-code="originCode"
             />
           </div>
-          <section>
+          <section class="q-pb-xl">
             <inline-subscribe-form no-autofocus :restriction="restriction" />
+          </section>
+          <section
+            v-if="destination.infoLink"
+            class="bg-elevation-1 rounded-borders q-pa-lg"
+          >
+            <div class="text-h6">
+              {{ $t('page.destination.widgets.info.title') }}
+            </div>
+            <div class="text-body2 text-grey-5 q-mb-md">
+              {{ $t('page.destination.widgets.info.subtitle') }}
+            </div>
+            <a target="_blank" :href="destination.infoLink">
+              {{ destination.infoLink }}
+            </a>
           </section>
         </div>
       </div>

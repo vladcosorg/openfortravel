@@ -60,9 +60,9 @@ export default defineComponent({
           acc.set(restriction.originLabel, restriction)
 
           if (aliases[restriction.origin]) {
-            aliases[restriction.origin].forEach((alias) =>
-              acc.set(alias, restriction),
-            )
+            for (const alias of aliases[restriction.origin]) {
+              acc.set(alias, restriction)
+            }
           }
           return acc
         },

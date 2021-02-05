@@ -155,7 +155,7 @@ module.exports = {
     'unicorn/no-unused-properties': 'warn',
     'unicorn/prefer-replace-all': 'warn',
     'unicorn/filename-case': 'off',
-    'unicorn/no-reduce': 'off',
+    'unicorn/no-array-reduce': 'off',
 
     'vue/no-v-html': 'off',
     'vue/html-self-closing': [
