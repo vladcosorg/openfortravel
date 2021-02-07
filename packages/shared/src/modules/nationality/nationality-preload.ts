@@ -7,7 +7,6 @@ import { Nationalities } from '@/shared/src/modules/nationality/nationality-stor
 export type PreloadedNationalityList = Record<Locale, Nationalities>
 export function preloadNationalities(): PreloadedNationalityList {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
   const context = (require as any).context(
     'i18n-nationality/langs/',
     true,

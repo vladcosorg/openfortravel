@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   failed: 'Action failed',
   success: 'русский',
   allowed: 'Разрешено',

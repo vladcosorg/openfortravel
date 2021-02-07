@@ -7,14 +7,14 @@ export async function fetchMessagesForLocale(
 ): Promise<LocaleMessageObject> {
   // eslint-disable-next-line import/dynamic-import-chunkname
   const response: { default: LocaleMessageObject } = await import(
-    /* webpackChunkName: "lang-[request]" */ `@/shared/src/i18n/${lang}.ts`
+    /* webpackChunkName: "lang-[request]" */ `../../../../shared/src/i18n/${lang}.js`
   )
   return response.default
 }
 
 export async function fetchAllLocaleMessages(): Promise<LocaleMessages> {
   const { default: messages } = await import(
-    /* webpackChunkName: "all-i18n" */ '@/shared/src/i18n'
+    /* webpackChunkName: "all-i18n" */ '../../../../shared/src/i18n/index.js'
   )
   return (messages as unknown) as LocaleMessages
 }

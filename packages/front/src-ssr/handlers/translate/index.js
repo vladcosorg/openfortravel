@@ -1,6 +1,7 @@
 const { translateMessageObject, InMemoryCache } = require('vue-auto-i18n')
 const CloudStorageCache = require('./cloud-storage-cache')
-const sourceTranslations = require('shared/src/i18n/en')
+const sourceTranslations = require('shared/src/i18n')
+const _ = require('lodash')
 
 const cache = [new InMemoryCache(), new CloudStorageCache()]
 
@@ -16,7 +17,7 @@ module.exports = function (app) {
     }
 
     const response = await translateMessageObject(
-      sourceTranslations,
+      sourceTranslations['en'],
       req.query.targetLanguage,
       {
         cache,
@@ -27,6 +28,11 @@ module.exports = function (app) {
         ],
       },
     )
+
+    const existingTranslations = sourceTranslations[req.query.targetLanguage]
+    if (existingTranslations !== undefined) {
+      _.merge(response, existingTranslations)
+    }
 
     return res.status(200).json(response)
   })
