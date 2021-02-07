@@ -1,5 +1,7 @@
 import { Module } from 'vuex'
 
+import { normalizeFormat } from '@/shared/src/modules/nationality/nationality-helpers'
+
 export type Nationalities = Record<string, string>
 // eslint-disable-next-line import/no-unused-modules
 export class NationalityState {
@@ -29,15 +31,10 @@ export default {
         /* webpackChunkName: "nationality-[request]" */ `i18n-nationality/langs/${locale}.json`
       )) as { default: { nationalities: Nationalities } }
 
-      const normalizedResponse = Object.fromEntries(
-        Object.entries(
-          response.default.nationalities,
-        ).map(([countryCode, nationality]) => [
-          countryCode.toLowerCase(),
-          nationality,
-        ]),
+      commit(
+        'setNationalities',
+        normalizeFormat(response.default.nationalities),
       )
-      commit('setNationalities', normalizedResponse)
     },
   },
 } as Module<NationalityState, never>

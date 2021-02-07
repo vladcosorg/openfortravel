@@ -7,6 +7,7 @@ import { Module } from 'vuex'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { transformKeys } from '@/shared/src/misc/misc'
 import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
+import { CountrySlugType } from '@/shared/src/modules/country-list/country-list-types'
 // eslint-disable-next-line import/no-unused-modules
 export class CountryListState {
   countryList: CountryList = {}

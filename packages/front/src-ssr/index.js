@@ -12,7 +12,7 @@
  */
 const express = require('express')
 const compression = require('compression')
-
+const LRU = require('lru-cache')
 const ssr = require('quasar-ssr')
 ssr.mergeRendererOptions({
   shouldPrefetch: (file) => {
@@ -32,6 +32,7 @@ ssr.mergeRendererOptions({
 const extension = require('./extension')
 const app = express()
 const port = process.env.PORT || 3000
+const microCache = new LRU()
 
 const serve = (path, cache) =>
   express.static(ssr.resolveWWW(path), {
@@ -86,6 +87,10 @@ app.get(ssr.resolveUrl('*'), (req, res) => {
   // res.setHeader('Content-Security-Policy', 'sandbox') // this will lockdown your server!!!
   // here are a few that you might like to consider adding to your CSP
   // object-src, media-src, script-src, frame-src, unsafe-inline
+  const hit = microCache.get(req.url)
+  if (hit) {
+    return res.end(hit)
+  }
 
   ssr.renderToString({ req, res }, (err, html) => {
     if (err) {
@@ -107,6 +112,7 @@ app.get(ssr.resolveUrl('*'), (req, res) => {
       }
     } else {
       res.send(html)
+      microCache.set(req.url, html)
     }
   })
 })

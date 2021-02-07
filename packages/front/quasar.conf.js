@@ -32,6 +32,7 @@ module.exports = configure((context) => ({
   // https://quasar.dev/quasar-cli/boot-files
   boot: [
     'vue',
+    { path: 'node-cache', client: false },
     '~shared/src/boot/composition-api',
     '~shared/src/boot/use-setter',
     'homepage-locale-redirect',

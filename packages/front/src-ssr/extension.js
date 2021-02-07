@@ -10,11 +10,16 @@
  * Note: Changes to this file (but not any file it imports!) are picked up by the
  * development server, but such updates are costly since the dev-server needs a reboot.
  */
-
+const LRU = require('lru-cache')
+const sharedCache = new LRU()
 module.exports.extendApp = async function ({ app, ssr }) {
   const express = require('express')
 
   app.use(express.urlencoded({ extended: true }))
+  app.use(function (req, res, next) {
+    req.sharedCache = sharedCache
+    next()
+  })
 
   await require('./env')()
   // require('./fix-dark-mode-flash')(app)

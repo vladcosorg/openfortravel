@@ -1,5 +1,6 @@
 import { QSsrContext } from '@quasar/app'
 import ky from 'ky-universal'
+import type LRUCache from 'lru-cache'
 import { Cookies, LooseDictionary, Notify } from 'quasar'
 import Vue from 'vue'
 import VueI18n, { IVueI18n, TranslateResult } from 'vue-i18n'
@@ -72,6 +73,15 @@ export function setSSRContext(instance: typeof ssrContext): void {
 }
 export function useSSRContext(): typeof ssrContext {
   return ssrContext
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let sharedCache: LRUCache<string, any> | undefined
+export function setSharedCache(instance: typeof sharedCache): void {
+  sharedCache = instance
+}
+export function useSharedCache(): typeof sharedCache {
+  return sharedCache
 }
 
 export function useKy(): typeof ky {

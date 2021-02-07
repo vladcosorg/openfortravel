@@ -1,21 +1,9 @@
-import { IVueI18n } from 'vue-i18n'
-import VueRouter from 'vue-router'
+import mapValues from 'lodash/mapValues'
 
-import { createGenericRouter } from '@/front/src/router/routes'
-import { useI18n, useRouter } from '@/shared/src/composables/use-plugins'
-import { createVueI18n } from '@/shared/src/misc/i18n'
-import {
-  getTranslatedOrTranslatableLocales,
-  Locale,
-} from '@/shared/src/misc/locales'
-import {
-  transformDestinationSlugToCode,
-  transformOriginSlugToCode,
-} from '@/shared/src/modules/country-list/country-list-helpers'
-import {
-  convertCountryNameToSlug,
-  loadCountryListForLocale,
-} from '@/shared/src/modules/country-list/country-list-store'
+import { serverCache } from '@/front/src/misc/server-cache'
+import { resolveRoute } from '@/front/src/router/route-preloader'
+import { useRouter } from '@/shared/src/composables/use-plugins'
+import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
 import {
   CountryCode,
   CountrySlug,
@@ -23,6 +11,7 @@ import {
   DestinationSlug,
   OriginSlug,
 } from '@/shared/src/modules/country-list/country-list-types'
+import { Locale } from '@/shared/src/modules/language/locales'
 
 type LocalizedSlugList = Record<Locale, CountrySlug>
 
@@ -30,51 +19,46 @@ async function getAllI18nSlugs(
   countryCode: CountryCode,
   type: CountrySlugType,
 ): Promise<LocalizedSlugList> {
-  const output: LocalizedSlugList = {}
-  for (const locale of getTranslatedOrTranslatableLocales()) {
-    const countryList = await loadCountryListForLocale(locale)
-    output[locale] = convertCountryNameToSlug(countryList[type][countryCode])
-  }
-
-  return output
+  return mapValues(serverCache.countryList, (item) => item[type][countryCode])
 }
 
 const originSlugCache: Record<string, LocalizedSlugList> = {}
-async function getLocalizedOriginSlug(originSlug: OriginSlug, locale: string) {
+async function getLocalizedOriginSlug(
+  originSlug: OriginSlug,
+  sourceLocale: string,
+  targetLocale: string,
+) {
   if (!originSlugCache[originSlug]) {
-    const originCode = transformOriginSlugToCode(originSlug)
-
+    const originCode =
+      serverCache.countrySlugMap[sourceLocale][CountrySlugType.ORIGIN][
+        originSlug
+      ]
     originSlugCache[originSlug] = await getAllI18nSlugs(
       originCode,
       CountrySlugType.ORIGIN,
     )
   }
-  return originSlugCache[originSlug][locale]
+  return originSlugCache[originSlug][targetLocale]
 }
 
 const destinationSlugCache: Record<string, LocalizedSlugList> = {}
+
 async function getLocalizedDestinationSlug(
   destinationSlug: DestinationSlug,
-  locale: string,
+  sourceLocale: string,
+  targetLocale: string,
 ) {
   if (!destinationSlugCache[destinationSlug]) {
-    const originCode = transformDestinationSlugToCode(destinationSlug)
+    const destinationCode =
+      serverCache.countrySlugMap[sourceLocale][CountrySlugType.ORIGIN][
+        destinationSlug
+      ]
     destinationSlugCache[destinationSlug] = await getAllI18nSlugs(
-      originCode,
+      destinationCode,
       CountrySlugType.DESTINATION,
     )
   }
-  return destinationSlugCache[destinationSlug][locale]
-}
-
-let clonedI18n: IVueI18n
-function getLocalizedRouter(locale: string): VueRouter {
-  if (!clonedI18n) {
-    clonedI18n = createVueI18n(useI18n().messages)
-  }
-
-  clonedI18n.locale = locale
-  return createGenericRouter(clonedI18n)
+  return destinationSlugCache[destinationSlug][targetLocale]
 }
 
 type HreflangList = Record<
@@ -85,7 +69,11 @@ export async function generateHreflangTags(): Promise<HreflangList> {
   const currentRoute = useRouter().currentRoute
   const list: HreflangList = {}
 
-  for (const locale of getTranslatedOrTranslatableLocales()) {
+  if (!currentRoute.name) {
+    return list
+  }
+
+  for (const locale of serverCache.availableLocales) {
     const item = {
       href: 'https://openfortravel.org',
       rel: 'alternate',
@@ -98,6 +86,7 @@ export async function generateHreflangTags(): Promise<HreflangList> {
         case 'originSlug':
           localizedParams[paramName] = await getLocalizedOriginSlug(
             paramValue,
+            currentRoute.params.locale,
             locale,
           )
           break
@@ -105,6 +94,7 @@ export async function generateHreflangTags(): Promise<HreflangList> {
         case 'destinationSlug':
           localizedParams[paramName] = await getLocalizedDestinationSlug(
             paramValue,
+            currentRoute.params.locale,
             locale,
           )
           break
@@ -114,13 +104,8 @@ export async function generateHreflangTags(): Promise<HreflangList> {
           break
       }
     }
-    item.href += getLocalizedRouter(locale).resolve(
-      {
-        name: currentRoute.name as string,
-        params: localizedParams,
-      },
-      currentRoute,
-    ).href
+
+    item.href += resolveRoute(currentRoute.name, locale, localizedParams)
 
     if (currentRoute.params.originSlug) {
       item.hreflang += `-${transformOriginSlugToCode(

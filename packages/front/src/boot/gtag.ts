@@ -4,9 +4,11 @@ import { boot } from 'quasar/wrappers'
 import { useCookies } from '@/shared/src/composables/use-plugins'
 
 export default boot(({ router }) => {
-  router.afterEach(async (to) => {
-    logPage(to.path)
-  })
+  if (process.env.PROD) {
+    router.afterEach(async (to) => {
+      logPage(to.path)
+    })
+  }
 })
 
 function logPage(path: string): void {

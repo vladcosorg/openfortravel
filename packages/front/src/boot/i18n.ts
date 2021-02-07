@@ -2,35 +2,32 @@ import { boot } from 'quasar/wrappers'
 import VueI18n, { Locale, Values } from 'vue-i18n'
 
 import { preloadQuasarLocale } from '@/front/src/misc/quasar-i18n'
-import { fetchAllLocaleMessages } from '@/front/src/modules/i18n/fetchers'
+import { serverCache } from '@/front/src/misc/server-cache'
 import {
   preloadLocaleIntoPluginOnDemand,
   preloadLocaleMessageCollectionIntoPlugin,
   pushRequiredLocalesToStore,
 } from '@/front/src/modules/i18n/loaders'
 import { LanguageLocale } from '@/front/src/modules/i18n/types'
-import { reloadRoutes } from '@/front/src/router'
+import { reloadRoutes } from '@/front/src/router/helpers'
 import {
   setI18n,
   useEventBus,
   useRouter,
 } from '@/shared/src/composables/use-plugins'
-import { useVuexRawState } from '@/shared/src/composables/use-vuex'
+import { useVuexRawStateProperty } from '@/shared/src/composables/use-vuex'
 import { createAutoI18n, createVueI18n } from '@/shared/src/misc/i18n'
-import { getTranslatedOrTranslatableLocales } from '@/shared/src/misc/locales'
 import {
   CountryList,
   preloadCountryListForLocale,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { preloadNationalityListForLocale } from '@/shared/src/modules/nationality/nationality-helpers'
 
 declare module 'vue/types/vue' {
   interface Vue {
     i18n: VueI18n
   }
 }
-
-export const i18n = createVueI18n()
+export const i18n = createVueI18n(serverCache.i18nMessages)
 const translate = createAutoI18n(i18n)
 
 export const t = (key: string, values?: Values): string =>
@@ -82,12 +79,7 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
   }
 
   if (ssrContext) {
-    preloadLocaleMessageCollectionIntoPlugin(
-      i18n,
-      await fetchAllLocaleMessages(),
-    )
     await preloadCountryListForLocale(currentLocale)
-    await preloadNationalityListForLocale(currentLocale)
     await preloadQuasarLocale(currentLocale, ssrContext)
 
     i18n.locale = currentLocale
