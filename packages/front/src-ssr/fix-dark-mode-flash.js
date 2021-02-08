@@ -12,7 +12,7 @@ function modifyResponseBody(req, res, next) {
         JSON.parse(require('cookie').parse(req.headers.cookie || '').qs),
       )
     } catch (e) {}
-    console.log(state)
+
     if (state && state.settings && state.settings.isDark) {
       arguments[0] = arguments[0].replace(/body--light/gm, 'body--dark')
     }

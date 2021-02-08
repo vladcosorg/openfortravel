@@ -70,7 +70,6 @@ export async function loadLocale(newLocale: Locale): Promise<string | void> {
 }
 let translate: ManualTranslator
 export default boot(async ({ app, store, ssrContext, redirect, router }) => {
-  // console.log(  useSharedCache()?.dump())
   if (!translate) {
     translate = createAutoI18n(i18n, (useSharedCache() as unknown) as CacheType)
   }
