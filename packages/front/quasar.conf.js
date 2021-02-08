@@ -88,6 +88,7 @@ module.exports = configure((context) => ({
 
     // https://quasar.dev/quasar-cli/handling-webpack
     extendWebpack(config) {
+      config.resolve.alias['@'] = path.resolve(__dirname, '../..')
       config.resolve.plugins = [new TsconfigPathsPlugin()]
       if (!config.externals) {
         config.externals = []
