@@ -12064,10 +12064,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-auto-i18n@1.1.0-beta.11:
-  version "1.1.0-beta.11"
-  resolved "https://registry.yarnpkg.com/vue-auto-i18n/-/vue-auto-i18n-1.1.0-beta.11.tgz#998070537170738e74df9d00a19d5af584f04042"
-  integrity sha512-v5LmFJAUqICrbl6ido8saJB8ZkmuYgDQxb8RWbVswcqVfyzG1kPOs1ZPVqCw9L3ESesC7sBOmsOVmIGs9Et8sg==
+vue-auto-i18n@1.1.0-beta.12:
+  version "1.1.0-beta.12"
+  resolved "https://registry.yarnpkg.com/vue-auto-i18n/-/vue-auto-i18n-1.1.0-beta.12.tgz#00f4e719ed61744366830a61327e7f6964bfb5fc"
+  integrity sha512-eal96rawbzOtSB2uzide+b0LoKQFBubRf0Bme7L3PqHnmk+BK1hN7rVYFneLuWbjwAT91i8cfjJ3dYha+9Kmig==
   dependencies:
     "@vitalets/google-translate-api" "^5.0.0"
     flat "^5.0.2"

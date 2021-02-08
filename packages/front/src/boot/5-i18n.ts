@@ -1,5 +1,6 @@
 import { boot } from 'quasar/wrappers'
-import VueI18n, { Locale, Values } from 'vue-i18n'
+import { CacheType, ManualTranslator } from 'vue-auto-i18n'
+import VueI18n, { Locale } from 'vue-i18n'
 
 import { preloadQuasarLocale } from '@/front/src/misc/quasar-i18n'
 import { serverCache } from '@/front/src/misc/server-cache'
@@ -14,6 +15,7 @@ import {
   setI18n,
   useEventBus,
   useRouter,
+  useSharedCache,
 } from '@/shared/src/composables/use-plugins'
 import { useVuexRawStateProperty } from '@/shared/src/composables/use-vuex'
 import { createAutoI18n, createVueI18n } from '@/shared/src/misc/i18n'
@@ -28,10 +30,6 @@ declare module 'vue/types/vue' {
   }
 }
 export const i18n = createVueI18n(serverCache.i18nMessages)
-const translate = createAutoI18n(i18n)
-
-export const t = (key: string, values?: Values): string =>
-  <string>i18n.t(key, values)
 
 export function getLocalizedURL(): string {
   const currentRoute = useRouter().currentRoute
@@ -70,8 +68,13 @@ export async function loadLocale(newLocale: Locale): Promise<string | void> {
 
   reloadRoutes()
 }
-
+let translate: ManualTranslator
 export default boot(async ({ app, store, ssrContext, redirect, router }) => {
+  // console.log(  useSharedCache()?.dump())
+  if (!translate) {
+    translate = createAutoI18n(i18n, (useSharedCache() as unknown) as CacheType)
+  }
+
   let currentLocale = store.state.serverLocale
 
   if (ssrContext) {
@@ -132,7 +135,7 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
           return
         }
 
-        await preloadLocaleIntoPluginOnDemand(newLocale, i18n)
+        // await preloadLocaleIntoPluginOnDemand(newLocale, i18n)
         await preloadCountryListForLocale(newLocale)
         i18n.locale = newLocale
         reloadRoutes()
@@ -150,7 +153,7 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
         if (i18n.locale === newLocale) {
           return
         }
-        await preloadLocaleIntoPluginOnDemand(newLocale, i18n)
+        // await preloadLocaleIntoPluginOnDemand(newLocale, i18n)
         await preloadCountryListForLocale(newLocale)
 
         i18n.locale = newLocale
@@ -163,9 +166,9 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
     )
   }
 
-  reloadRoutes()
   app.i18n = i18n
   setI18n(i18n)
+  reloadRoutes()
 })
 
 export function extractLanguageFromURL(

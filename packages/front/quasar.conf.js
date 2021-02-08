@@ -31,16 +31,16 @@ module.exports = configure((context) => ({
   // --> boot files are part of "main.js"
   // https://quasar.dev/quasar-cli/boot-files
   boot: [
-    'vue',
-    { path: 'node-cache', client: false },
+    '1-vue',
+    { path: '2-node-cache', client: false },
     '~shared/src/boot/composition-api',
     '~shared/src/boot/use-setter',
-    'homepage-locale-redirect',
-    { path: 'ssr-url-decoder', client: false },
-    'i18n',
-    'country-detector',
-    { path: 'gtag', server: false },
-    { path: 'ssr-data-preload', client: false },
+    '3-homepage-locale-redirect',
+    { path: '4-ssr-url-decoder', client: false },
+    '5-i18n',
+    '6-country-detector',
+    { path: '7-gtag', server: false },
+    { path: '8-ssr-data-preload', client: false },
   ],
 
   vendor: {

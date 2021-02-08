@@ -1,7 +1,10 @@
 import mapValues from 'lodash/mapValues'
 
 import { serverCache } from '@/front/src/misc/server-cache'
-import { resolveRoute } from '@/front/src/router/route-preloader'
+import {
+  resolveRoute,
+  routesThatNeedLocalization,
+} from '@/front/src/router/route-preloader'
 import { useRouter } from '@/shared/src/composables/use-plugins'
 import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
 import {
@@ -69,7 +72,10 @@ export async function generateHreflangTags(): Promise<HreflangList> {
   const currentRoute = useRouter().currentRoute
   const list: HreflangList = {}
 
-  if (!currentRoute.name) {
+  if (
+    !currentRoute.name ||
+    !routesThatNeedLocalization.includes(currentRoute.name)
+  ) {
     return list
   }
 

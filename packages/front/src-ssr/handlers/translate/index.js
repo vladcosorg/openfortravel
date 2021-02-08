@@ -3,9 +3,8 @@ const CloudStorageCache = require('./cloud-storage-cache')
 const sourceTranslations = require('shared/src/i18n')
 const _ = require('lodash')
 
-const cache = [new InMemoryCache(), new CloudStorageCache()]
-
-module.exports = function (app) {
+module.exports = function (app, sharedCache) {
+  const cache = [sharedCache, new CloudStorageCache()]
   app.post('/translate', async (req, res) => {
     const targetLanguage = req.query.targetLanguage
     if (

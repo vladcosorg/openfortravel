@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers'
 
-import { loadLocale } from '@/front/src/boot/i18n'
+import { loadLocale } from '@/front/src/boot/5-i18n'
 import {
   decideOnCountry,
   getCurrentOriginSlug,

@@ -3,6 +3,7 @@ import {
   integrateWithVueI18n,
   TranslationService,
   ManualTranslator,
+  CacheType,
 } from 'vue-auto-i18n'
 import VueI18n, {
   IVueI18n,
@@ -23,7 +24,10 @@ export function createVueI18n(messages?: LocaleMessages): IVueI18n {
   }) as unknown) as IVueI18n
 }
 
-export function createAutoI18n(i18n: IVueI18n): ManualTranslator {
+export function createAutoI18n(
+  i18n: IVueI18n,
+  cache?: CacheType,
+): ManualTranslator {
   return integrateWithVueI18n({
     i18nPluginInstance: i18n,
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -38,6 +42,7 @@ export function createAutoI18n(i18n: IVueI18n): ManualTranslator {
     onReady() {
       useEventBus().$emit('translation-ready')
     },
+    cache,
   })
 }
 
