@@ -22,7 +22,7 @@ jobs:
             */*/node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        if: steps.yarn-cache.outputs.cache-hit != 'truee'
         run: yarn install --ignore-platform --frozen-lockfile
       - run: yarn build
         working-directory: ./packages/front
