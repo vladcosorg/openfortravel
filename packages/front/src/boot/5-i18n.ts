@@ -68,6 +68,7 @@ export async function loadLocale(newLocale: Locale): Promise<string | void> {
 
   reloadRoutes()
 }
+
 let translate: ManualTranslator
 export default boot(async ({ app, store, ssrContext, redirect, router }) => {
   if (!translate) {
@@ -81,12 +82,10 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
   }
 
   if (ssrContext) {
-    await preloadCountryListForLocale(currentLocale)
     await preloadQuasarLocale(currentLocale, ssrContext)
 
     i18n.locale = currentLocale
     store.commit('setServerLocale', currentLocale)
-
     try {
       await translate(currentLocale)
     } catch {
@@ -152,10 +151,10 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
         if (i18n.locale === newLocale) {
           return
         }
-        // await preloadLocaleIntoPluginOnDemand(newLocale, i18n)
         await preloadCountryListForLocale(newLocale)
 
         i18n.locale = newLocale
+
         useEventBus().$on('translation-ready', async () => {
           reloadRoutes()
           await forwardToLocalizedURL()

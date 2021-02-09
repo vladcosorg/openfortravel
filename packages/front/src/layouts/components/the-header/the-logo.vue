@@ -1,5 +1,5 @@
 <template>
-  <router-link :class="$style.link" :to="route">
+  <router-link :class="$style.link" :to="homeURL">
     <img
       svg-inline
       :class="[$style.logo]"
@@ -25,18 +25,12 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-import { getCurrentOriginSlug } from '@/front/src/misc/country-decider'
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { getMenuItemURL } from '@/front/src/misc/menu'
 
 export default defineComponent({
   setup() {
-    const route = {
-      name: 'index-targeted',
-      locale: useI18n().locale,
-      originSlug: getCurrentOriginSlug(),
-    }
     return {
-      route,
+      homeURL: getMenuItemURL('index'),
     }
   },
 })

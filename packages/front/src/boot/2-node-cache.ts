@@ -4,8 +4,9 @@ import VueI18n from 'vue-i18n'
 import messages from '@/shared/src/i18n/index.js'
 import { loadContinentMap } from '@/shared/src/modules/continent-map/ssr-loader'
 import {
-  generateCountryLists,
-  generateSlugToCodeMapperList,
+  generateCountryCodeToLabelList,
+  generateCountryCodeToSlugList,
+  generateCountrySlugToCodeList,
 } from '@/shared/src/modules/country-list/country-list-node-preload'
 import { getTranslatedOrTranslatableLocales } from '@/shared/src/modules/language/locales'
 
@@ -29,11 +30,14 @@ serverCache.localizedRoutes = pregenerateLocalizableRouter()
 serverCache.nationalities = preloadNationalities()
 
 promises.push(
-  generateSlugToCodeMapperList(serverCache.availableLocales).then(
-    (map) => (serverCache.countrySlugMap = map),
+  generateCountryCodeToLabelList(serverCache.availableLocales).then(
+    (map) => (serverCache.countryCodeToLabelMap = map),
   ),
-  generateCountryLists(serverCache.availableLocales).then(
-    (map) => (serverCache.countryList = map),
+  generateCountrySlugToCodeList(serverCache.availableLocales).then(
+    (map) => (serverCache.countrySlugToCodeMap = map),
+  ),
+  generateCountryCodeToSlugList(serverCache.availableLocales).then(
+    (map) => (serverCache.countryCodeToSlugMap = map),
   ),
 )
 

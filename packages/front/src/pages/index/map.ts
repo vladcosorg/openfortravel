@@ -214,7 +214,7 @@ function configureLine(lineTemplate: MapArc): void {
   lineTemplate.line.stroke = color('white')
   lineTemplate.line.filters.push(new DropShadowFilter())
   lineTemplate.line.strokeDasharray = '4,6'
-  lineTemplate.line.strokeWidth = 4
+  lineTemplate.line.strokeWidth = 2
   lineTemplate.line.strokeLinecap = 'round'
 }
 

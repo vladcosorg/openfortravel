@@ -8,8 +8,9 @@ class ServerCache {
   public i18nMessages!: LocaleMessages
   public localizedRoutes!: Record<string, Record<string, string>>
   public availableLocales!: LocaleList
-  public countrySlugMap!: Record<string, CountryListTypes>
-  public countryList!: Record<string, CountryListTypes>
+  public countryCodeToLabelMap!: Record<string, CountryListTypes>
+  public countrySlugToCodeMap!: Record<string, CountryListTypes>
+  public countryCodeToSlugMap!: Record<string, CountryListTypes>
   public continentMap!: Record<string, string>
   public nationalities!: PreloadedNationalityList
 }

@@ -22,7 +22,10 @@ async function getAllI18nSlugs(
   countryCode: CountryCode,
   type: CountrySlugType,
 ): Promise<LocalizedSlugList> {
-  return mapValues(serverCache.countryList, (item) => item[type][countryCode])
+  return mapValues(
+    serverCache.countryCodeToSlugMap,
+    (item) => item[type][countryCode],
+  )
 }
 
 const originSlugCache: Record<string, LocalizedSlugList> = {}
@@ -33,7 +36,7 @@ async function getLocalizedOriginSlug(
 ) {
   if (!originSlugCache[originSlug]) {
     const originCode =
-      serverCache.countrySlugMap[sourceLocale][CountrySlugType.ORIGIN][
+      serverCache.countrySlugToCodeMap[sourceLocale][CountrySlugType.ORIGIN][
         originSlug
       ]
     originSlugCache[originSlug] = await getAllI18nSlugs(
@@ -53,7 +56,7 @@ async function getLocalizedDestinationSlug(
 ) {
   if (!destinationSlugCache[destinationSlug]) {
     const destinationCode =
-      serverCache.countrySlugMap[sourceLocale][CountrySlugType.ORIGIN][
+      serverCache.countrySlugToCodeMap[sourceLocale][CountrySlugType.ORIGIN][
         destinationSlug
       ]
     destinationSlugCache[destinationSlug] = await getAllI18nSlugs(

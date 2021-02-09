@@ -35,12 +35,13 @@ module.exports = configure((context) => ({
     { path: '2-node-cache', client: false },
     '~shared/src/boot/composition-api',
     '~shared/src/boot/use-setter',
-    '3-homepage-locale-redirect',
     { path: '4-ssr-url-decoder', client: false },
     '5-i18n',
+    { path: '3-ssr-data-preload', client: false },
     '6-country-detector',
     { path: '7-gtag', server: false },
-    { path: '8-ssr-data-preload', client: false },
+
+    '3-homepage-locale-redirect',
   ],
 
   vendor: {

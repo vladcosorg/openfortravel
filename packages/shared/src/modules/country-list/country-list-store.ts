@@ -16,7 +16,8 @@ export class CountryListState {
   canonicalSlugToCountryCodeMap: CountryList = {}
   slugMigrationOriginMap: CountryList = {}
   slugMigrationDestinationMap: CountryList = {}
-  fetchingPromise: Promise<unknown> = Promise.resolve()
+  originSlugMap: CountryList = {}
+  destinationSlugMap: CountryList = {}
 }
 
 export type GroupedCountryList = Record<string, string[]>
@@ -37,12 +38,6 @@ export default {
         : state.countryListDestination,
     countryCodes(state): string[] {
       return Object.keys(state.countryList)
-    },
-    originKebabList(_state, getters) {
-      return generateSlugKebabMap(getters.originLabels)
-    },
-    destinationKebabList(_state, getters) {
-      return generateSlugKebabMap(getters.destinationLabels)
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     originByContinent(_state, getters, rootState: any) {
@@ -80,8 +75,11 @@ export default {
     setCountryListDestination(state: CountryListState, list: CountryList) {
       state.countryListDestination = list
     },
-    setPromise(state: CountryListState, promise: Promise<unknown>) {
-      state.fetchingPromise = promise
+    setOriginSlugMap(state: CountryListState, list: CountryList) {
+      state.originSlugMap = list
+    },
+    setDestinationSlugMap(state: CountryListState, list: CountryList) {
+      state.destinationSlugMap = list
     },
   },
   actions: {
@@ -92,15 +90,19 @@ export default {
       const oldOriginLabels = Object.assign({}, getters.originLabels)
       const oldDestinationLabels = Object.assign({}, getters.destinationLabels)
 
-      const response = await loadCountryListForLocale(locale)
-      commit('setCountryList', Object.freeze(response.origin))
-
+      const { origin, destination } = await loadCountryListForLocale(locale)
+      commit('setCountryList', Object.freeze(origin))
       if (locale !== 'ru') {
         commit('setCountryListOrigin', {})
         commit('setCountryListDestination', {})
+        commit('setOriginSlugMap', generateSlugKebabMap(origin))
+        commit('setDestinationSlugMap', generateSlugKebabMap(origin))
       } else {
-        commit('setCountryListOrigin', response.origin)
-        commit('setCountryListDestination', response.destination)
+        commit('setCountryListOrigin', origin)
+        commit('setCountryListDestination', destination)
+
+        commit('setOriginSlugMap', generateSlugKebabMap(origin))
+        commit('setDestinationSlugMap', generateSlugKebabMap(destination))
       }
 
       if (!isEmpty(state.countryList)) {
@@ -112,25 +114,6 @@ export default {
           'setSlugMigrationDestinationMap',
           generateMigrationMap(getters.destinationLabels, oldDestinationLabels),
         )
-      }
-
-      if (isEmpty(state.canonicalSlugToCountryCodeMap)) {
-        if (locale !== 'en') {
-          //eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const response: any = await import(
-            /* webpackChunkName: "lang-en" */
-            'i18n-iso-countries/langs/en.json'
-          )
-          commit(
-            'setCanonicalSlugToCountryCodeMap',
-            generateSlugKebabMap(normalizeCountryListResponse(response)),
-          )
-        } else {
-          commit(
-            'setCanonicalSlugToCountryCodeMap',
-            generateSlugKebabMap(response.origin),
-          )
-        }
       }
     },
   },
