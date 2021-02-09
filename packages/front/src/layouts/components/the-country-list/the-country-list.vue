@@ -24,24 +24,23 @@
           :show-prefix-text="!!originCode"
         >
           <template v-if="!originCode && !destinationCode" #after>
-            <transition
-              :duration="30000"
-              appear
-              enter-active-class="animated bounce slower"
+            <q-btn
+              :loading="loading"
+              unelevated
+              color="secondary"
+              style="height: 100%"
+              @click="navigateToPage(currentOrigin)"
             >
-              <q-btn
-                :loading="loading"
-                unelevated
-                color="secondary"
-                :icon="`img:${require('@/front/src/assets/search.svg')}`"
-                style="height: 100%"
-                @click="navigateToPage(currentOrigin)"
-              >
-                <q-tooltip>
-                  {{ $t('components.theCountryList.btn') }}</q-tooltip
-                >
-              </q-btn>
-            </transition>
+              <img
+                aria-hidden="true"
+                role="img"
+                width="24"
+                height="24"
+                :src="require('@/front/src/assets/search.svg')"
+                class="q-icon notranslate"
+              />
+              <q-tooltip> {{ $t('components.theCountryList.btn') }}</q-tooltip>
+            </q-btn>
           </template>
         </country-select>
         <swapper

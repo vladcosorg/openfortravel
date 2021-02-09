@@ -16,6 +16,7 @@
 @import 'animations';
 
 .transform {
+  will-change: transform;
   transform-box: fill-box;
   transform-origin: center;
 }
@@ -91,6 +92,7 @@
 
   :global(#without-legs),
   :global(#torso-shadow) {
+    will-change: transform;
     @extend .transform;
     animation: torsoMovement 10s 4s alternate infinite ease-in-out;
   }
