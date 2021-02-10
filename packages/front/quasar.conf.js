@@ -120,7 +120,7 @@ module.exports = configure((context) => ({
           terserOptions.output = { comments: false }
         }
 
-        // cfg.output.publicPath = 'https://storage.googleapis.com/oftassets/'
+        config.output.publicPath = 'https://cdn.openfortravel.org/www/'
       }
 
       config.module.rules.push({
