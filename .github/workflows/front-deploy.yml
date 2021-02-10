@@ -1,7 +1,7 @@
 name: Front deploy
 on:
   push:
-    paths:
+    paths-ignore:
       - '!packages/admin/**'
     branches:
       - master
