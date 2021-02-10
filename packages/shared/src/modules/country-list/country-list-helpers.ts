@@ -1,4 +1,4 @@
-import kebabCase from 'lodash/kebabCase'
+import { kebabCase } from 'lodash-es'
 
 import { LanguageLocale } from '@/front/src/modules/i18n/types'
 import { useStore } from '@/shared/src/composables/use-plugins'

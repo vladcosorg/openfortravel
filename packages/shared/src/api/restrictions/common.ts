@@ -1,5 +1,5 @@
 import type firebase from 'firebase/app'
-import pick from 'lodash/pick'
+import { pick } from 'lodash-es'
 
 import {
   PlainRestriction,

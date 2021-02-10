@@ -1,5 +1,5 @@
 import type firebase from 'firebase/app'
-import omit from 'lodash/omit'
+import { omit } from 'lodash-es'
 
 import {
   Destination,

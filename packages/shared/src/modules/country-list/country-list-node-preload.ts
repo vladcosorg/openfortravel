@@ -1,5 +1,4 @@
-import invert from 'lodash/invert'
-import mapValues from 'lodash/mapValues'
+import { invert, mapValues } from 'lodash-es'
 import { Locale } from 'vue-i18n'
 
 import {

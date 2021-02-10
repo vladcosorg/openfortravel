@@ -1,5 +1,5 @@
 import { computed, ComputedRef, Ref, ref } from '@vue/composition-api'
-import mapValues from 'lodash/mapValues'
+import { mapValues } from 'lodash-es'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/no-explicit-any
 type FlexCallback = { (...args: any[]): Promise<unknown> }

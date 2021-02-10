@@ -38,7 +38,8 @@
     "lodash": "^4.17.20",
     "quasar": "^1.0.0",
     "ky": "^0.25.1",
-    "ky-universal": "^0.8.2"
+    "ky-universal": "^0.8.2",
+    "lodash-es": "^4.17.20"
   },
   "devDependencies": {
     "typescript": "^4.1.3",

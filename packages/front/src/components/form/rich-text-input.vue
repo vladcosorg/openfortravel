@@ -46,8 +46,7 @@ import {
   matPriorityHigh as errorIcon,
 } from '@quasar/extras/material-icons'
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import defer from 'lodash/defer'
-import throttle from 'lodash/throttle'
+import { defer, throttle } from 'lodash-es'
 
 import { useI18n } from '@/shared/src/composables/use-plugins'
 

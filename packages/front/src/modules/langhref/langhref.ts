@@ -1,4 +1,4 @@
-import mapValues from 'lodash/mapValues'
+import { mapValues } from 'lodash-es'
 
 import { serverCache } from '@/front/src/misc/server-cache'
 import {

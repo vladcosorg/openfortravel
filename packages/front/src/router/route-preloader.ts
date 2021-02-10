@@ -1,4 +1,4 @@
-import set from 'lodash/set'
+import { set } from 'lodash-es'
 import { IVueI18n } from 'vue-i18n'
 import VueRouter from 'vue-router'
 
