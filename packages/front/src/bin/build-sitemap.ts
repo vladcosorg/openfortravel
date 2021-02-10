@@ -185,7 +185,8 @@ main().then((paths) =>
   simpleSitemapAndIndex({
     limit: 100,
     hostname: 'https://openfortravel.org',
-    destinationDir: path.resolve('./public/sitemap'),
+    sitemapHostname: 'https://cdn.openfortravel.org/sitemap/',
+    destinationDir: path.resolve('./var/sitemap'),
     sourceData: paths as SitemapItemLoose[],
     gzip: false,
   }),
