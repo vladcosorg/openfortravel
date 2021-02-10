@@ -15,7 +15,7 @@ import {
   MapPolygonSeries,
 } from '@amcharts/amcharts4/maps'
 import animated from '@amcharts/amcharts4/themes/animated'
-import { random } from 'lodash'
+import random from 'lodash/random'
 import { colors } from 'quasar'
 
 import { statusColorMap } from '@/front/src/pages/index/index-composable'

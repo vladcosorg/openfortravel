@@ -27,7 +27,7 @@
 </style>
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { merge } from 'lodash'
+import merge from 'lodash/merge'
 import { PortalTarget } from 'portal-vue'
 import { date } from 'quasar'
 import { hydrateWhenIdle, hydrateWhenVisible } from 'vue-lazy-hydration'

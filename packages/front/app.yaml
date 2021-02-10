@@ -7,17 +7,3 @@ handlers:
     script: auto
     secure: always
     redirect_http_response_code: 301
-  - url: /(.*\.(gif|png|jpg|css|js|svg|ico))$
-    static_files: www/\1
-    upload: www/.*\.(gif|png|jpg|css|js|svg|ico)$
-    expiration: '300d'
-
-  - url: /js
-    static_dir: www/js
-    expiration: '300d'
-  - url: /css
-    static_dir: www/css
-    expiration: '300d'
-  - url: /img
-    static_dir: www/img
-    expiration: '300d'

@@ -1,5 +1,5 @@
 import countryList from 'countries-list/dist/countries.json'
-import { mapValues } from 'lodash'
+import mapValues from 'lodash/mapValues'
 
 import { transformKeys } from '@/shared/src/misc/misc'
 
