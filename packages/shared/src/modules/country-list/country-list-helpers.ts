@@ -5,6 +5,7 @@ import { useStore } from '@/shared/src/composables/use-plugins'
 import {
   useVuexRawGetter,
   useVuexRawState,
+  useVuexRawStateProperty,
 } from '@/shared/src/composables/use-vuex'
 import { CountryListState } from '@/shared/src/modules/country-list/country-list-store'
 import {
@@ -39,7 +40,7 @@ export function transformOriginSlugToCode(
   let countryCode = originSlugToCodeMap[originSlug]
 
   if (lookInMigration && !countryCode) {
-    const migrationSlugMap = useVuexRawState<CountryList>(
+    const migrationSlugMap = useVuexRawStateProperty<CountryList>(
       'modules.countryList.slugMigrationOriginMap',
     )
 
@@ -50,7 +51,7 @@ export function transformOriginSlugToCode(
 }
 
 export function transformCanonicalSlugToCode(countrySlug: string): string {
-  const slugMap = useVuexRawState<CountryList>(
+  const slugMap = useVuexRawStateProperty<CountryList>(
     'modules.countryList.canonicalSlugToCountryCodeMap',
   )
   return slugMap[countrySlug]
@@ -67,7 +68,7 @@ export function transformDestinationSlugToCode(
   let countryCode = destinationSlugToCodeMap[countrySlug]
 
   if (lookInMigration && !countryCode) {
-    const migrationSlugMap = useVuexRawState<CountryList>(
+    const migrationSlugMap = useVuexRawStateProperty<CountryList>(
       'modules.countryList.slugMigrationDestinationMap',
     )
 
@@ -82,9 +83,9 @@ export function getCountryCodes(): string[] {
 }
 
 export function getLabelForCountryCode(countryCode: string): string {
-  return useVuexRawState<CountryList>('modules.countryList.countryList')[
-    countryCode
-  ]
+  return useVuexRawStateProperty<CountryList>(
+    'modules.countryList.countryList',
+  )[countryCode]
 }
 
 export function getOriginLabelForCountryCode(countryCode: string): string {

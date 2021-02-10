@@ -35,13 +35,13 @@ export function getLocalizedURL(): string {
   const currentRoute = useRouter().currentRoute
   const params: Record<string, string> = { locale: i18n.locale }
   if (currentRoute.params.originSlug) {
-    params['originSlug'] = useVuexRawState<CountryList>(
+    params['originSlug'] = useVuexRawStateProperty<CountryList>(
       'modules.countryList.slugMigrationOriginMap',
     )[currentRoute.params.originSlug]
   }
 
   if (currentRoute.params.destinationSlug) {
-    params['destinationSlug'] = useVuexRawState<CountryList>(
+    params['destinationSlug'] = useVuexRawStateProperty<CountryList>(
       'modules.countryList.slugMigrationDestinationMap',
     )[currentRoute.params.destinationSlug]
   }
@@ -92,7 +92,7 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
       redirect('/en/from/united-states-of-america')
       return
     }
-    store.commit('setAvailableLocales', getTranslatedOrTranslatableLocales())
+
     pushRequiredLocalesToStore(i18n, currentLocale, store)
   } else {
     preloadLocaleMessageCollectionIntoPlugin(i18n, store.state.locales)

@@ -20,7 +20,7 @@ export class CountryListState {
   destinationSlugMap: CountryList = {}
 }
 
-export type GroupedCountryList = Record<string, string[]>
+export type CountryListTypes = { [index in CountrySlugType]: CountryList }
 
 export default {
   namespaced: true,

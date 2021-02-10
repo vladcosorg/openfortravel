@@ -128,6 +128,5 @@ export async function generateHreflangTags(): Promise<HreflangList> {
       list['default'] = { ...item, hreflang: 'x-default' }
     }
   }
-
   return list
 }

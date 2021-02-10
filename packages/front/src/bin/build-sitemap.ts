@@ -13,10 +13,10 @@ import VueRouter, { Location } from 'vue-router'
 import { createGenericRouter } from '@/front/src/router/routes'
 import messages from '@/shared/src/i18n/index.js'
 import { createVueI18n } from '@/shared/src/misc/i18n'
-import { getTranslatedOrTranslatableLocales } from '@/shared/src/misc/locales'
 import { transformKeys } from '@/shared/src/misc/misc'
 import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import { convertCountryListResponseToCountrySlugMap } from '@/shared/src/modules/country-list/country-list-store'
+import { getTranslatedOrTranslatableLocales } from '@/shared/src/modules/language/locales'
 
 const i18n = createVueI18n((messages as unknown) as LocaleMessages)
 const countryCodes = Object.keys(

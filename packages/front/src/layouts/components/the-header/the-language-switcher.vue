@@ -47,13 +47,15 @@ import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value
 import SimpleSelect from '@/front/src/components/simple-select.vue'
 import { useEventBus } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
-import { useVuexRawState } from '@/shared/src/composables/use-vuex'
+import { useVuexRawStateProperty } from '@/shared/src/composables/use-vuex'
 
 export default defineComponent({
   name: 'LanguageSwitcher',
   components: { SimpleSelect },
   setup(_props, { root }) {
-    const availableLocales = useVuexRawState<string[]>('availableLocales')
+    const availableLocales = useVuexRawStateProperty<string[]>(
+      'availableLocales',
+    )
     const upcomingLocale = ref<string | undefined>()
     const languageList = Object.freeze(
       langs.filter((langPair) => availableLocales.includes(langPair.value)),
