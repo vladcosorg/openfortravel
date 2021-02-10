@@ -28,8 +28,6 @@ jobs:
         run: yarn install --ignore-platform --frozen-lockfile
       - run: yarn build
         working-directory: ./packages/front
-        env:
-          PROJECT_URL: https://openfortravel.org
       - id: deploy
         uses: google-github-actions/deploy-appengine@main
         with:

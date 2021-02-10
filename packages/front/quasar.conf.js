@@ -71,6 +71,11 @@ module.exports = configure((context) => ({
 
   // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
   build: {
+    env: {
+      PROJECT_URL: context.prod
+        ? 'https://openfortravel.org'
+        : 'http://localhost:8080',
+    },
     vueRouterMode: 'history', // available values: 'hash', 'history'
     transpile: context.prod && !context.debug,
     // Add dependencies for transpiling with Babel (Array of string/regex)
