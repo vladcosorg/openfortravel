@@ -2,7 +2,8 @@
 .thumbs.db
 node_modules
 
-public/sitemap/*.xml
+/var
+!/var/.gitkeep
 
 # Quasar core related directories
 .quasar
