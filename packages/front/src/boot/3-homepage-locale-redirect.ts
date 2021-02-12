@@ -1,12 +1,12 @@
 import { boot } from 'quasar/wrappers'
 
-import { loadLocale } from '@/front/src/boot/5-i18n'
 import {
   decideOnCountry,
   getCurrentOriginSlug,
   setCurrentCountry,
 } from '@/front/src/misc/country-decider'
 import { inferLocaleFromClient } from '@/front/src/misc/locale'
+import { loadLocale } from '@/front/src/modules/i18n/boot'
 
 export default boot(async ({ router }) => {
   router.beforeEach(async (to, _from, next) => {

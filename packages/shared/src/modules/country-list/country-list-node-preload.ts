@@ -30,7 +30,7 @@ export async function generateCountryCodeToSlugList(
         convertCountryNameToSlug(value),
       ),
 
-      destination: mapValues(countryList.origin, (value) =>
+      destination: mapValues(countryList.destination, (value) =>
         convertCountryNameToSlug(value),
       ),
     }
@@ -53,7 +53,7 @@ export async function generateCountrySlugToCodeList(
       ),
 
       destination: invert(
-        mapValues(countryList.origin, (value) =>
+        mapValues(countryList.destination, (value) =>
           convertCountryNameToSlug(value),
         ),
       ),

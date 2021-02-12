@@ -6,7 +6,7 @@
     narrow-indicator
     active-color="secondary"
   >
-    <q-tab name="all" :label="$t('page.country.tab.all')" />
+    <q-tab name="all" :label="$t('page.country.tab.all')" />d
     <q-tab
       v-for="(continentLabel, continentId) in continentList"
       :key="continentId"
