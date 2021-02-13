@@ -10,8 +10,8 @@
  * Note: Changes to this file (but not any file it imports!) are picked up by the
  * development server, but such updates are costly since the dev-server needs a reboot.
  */
-const LRU = require('lru-cache')
-const sharedCache = new LRU()
+const { InMemoryCache } = require('vue-auto-i18n')
+const sharedCache = new InMemoryCache()
 module.exports.extendApp = async function ({ app, ssr }) {
   const express = require('express')
 

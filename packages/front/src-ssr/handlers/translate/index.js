@@ -1,10 +1,9 @@
-const { translateMessageObject, InMemoryCache } = require('vue-auto-i18n')
+const { translateMessageObject } = require('vue-auto-i18n')
 const CloudStorageCache = require('./cloud-storage-cache')
 const sourceTranslations = require('shared/src/i18n')
 const _ = require('lodash')
 
 module.exports = function (app, sharedCache) {
-  const cache = [sharedCache, new CloudStorageCache()]
   app.post('/translate', async (req, res) => {
     const targetLanguage = req.query.targetLanguage
     if (
@@ -19,7 +18,7 @@ module.exports = function (app, sharedCache) {
       sourceTranslations['en'],
       req.query.targetLanguage,
       {
-        cache,
+        cache: [sharedCache, new CloudStorageCache()],
         blacklistedPaths: [
           'page.country.route',
           'page.destination.route',

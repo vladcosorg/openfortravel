@@ -22,6 +22,7 @@ export interface StateInterface {
   locales: LocaleMessageObject
   serverLocale: string
   availableLocales: string[]
+  labeledLocales: Record<string, string>[]
   countryToContinentMap: Record<string, string>
 }
 
@@ -52,6 +53,7 @@ export default store(({ Vue }) => {
       locales: {},
       serverLocale: 'en',
       availableLocales: [],
+      labeledLocales: [],
       countryToContinentMap: {},
     },
     mutations: {
@@ -69,6 +71,12 @@ export default store(({ Vue }) => {
       },
       setAvailableLocales(state: StateInterface, locales: string[]) {
         state.availableLocales = locales
+      },
+      setLabeledLocales(
+        state: StateInterface,
+        locales: StateInterface['labeledLocales'],
+      ) {
+        state.labeledLocales = locales
       },
       setServerLocale(state: StateInterface, serverLocale: string) {
         state.serverLocale = serverLocale

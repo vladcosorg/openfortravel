@@ -1,4 +1,4 @@
-import { isEmpty, kebabCase, mapValues, transform } from 'lodash-es'
+import { kebabCase, mapValues, transform } from 'lodash-es'
 import { Module } from 'vuex'
 
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
@@ -10,9 +10,7 @@ export class CountryListState {
   countryList: CountryList = {}
   countryListOrigin: CountryList = {}
   countryListDestination: CountryList = {}
-  canonicalSlugToCountryCodeMap: CountryList = {}
-  slugMigrationOriginMap: CountryList = {}
-  slugMigrationDestinationMap: CountryList = {}
+  slugMap: CountryList = {}
   originSlugMap: CountryList = {}
   destinationSlugMap: CountryList = {}
 }
@@ -25,93 +23,39 @@ export default {
     return new CountryListState()
   },
   getters: {
-    originLabels: (state) =>
-      isEmpty(state.countryListOrigin)
-        ? state.countryList
-        : state.countryListOrigin,
-    destinationLabels: (state) =>
-      isEmpty(state.countryListDestination)
-        ? state.countryList
-        : state.countryListDestination,
     countryCodes(state): string[] {
       return Object.keys(state.countryList)
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    originByContinent(_state, getters, rootState: any) {
+    originByContinent(state, _getters, rootState: any) {
       return groupCountriesByContinents(
         rootState.countryToContinentMap,
-        getters.originLabels,
+        state.countryListOrigin,
       )
     },
   },
   mutations: {
     setCountryList(state: CountryListState, list: CountryList) {
       state.countryList = list
-    },
-    setSlugMigrationOriginMap(
-      state: CountryListState,
-      migrationMap: CountryList,
-    ) {
-      state.slugMigrationOriginMap = migrationMap
-    },
-    setSlugMigrationDestinationMap(
-      state: CountryListState,
-      migrationMap: CountryList,
-    ) {
-      state.slugMigrationDestinationMap = migrationMap
+      state.countryListOrigin = list
+      state.countryListDestination = list
     },
     setCountryListOrigin(state: CountryListState, list: CountryList) {
       state.countryListOrigin = list
     },
-    setCanonicalSlugToCountryCodeMap(
-      state: CountryListState,
-      list: CountryList,
-    ) {
-      state.canonicalSlugToCountryCodeMap = list
-    },
     setCountryListDestination(state: CountryListState, list: CountryList) {
       state.countryListDestination = list
+    },
+    setSlugMap(state: CountryListState, list: CountryList) {
+      state.slugMap = list
+      state.originSlugMap = list
+      state.destinationSlugMap = list
     },
     setOriginSlugMap(state: CountryListState, list: CountryList) {
       state.originSlugMap = list
     },
     setDestinationSlugMap(state: CountryListState, list: CountryList) {
       state.destinationSlugMap = list
-    },
-  },
-  actions: {
-    async fetchCountryList(
-      { commit, state, getters },
-      locale: string,
-    ): Promise<void> {
-      const oldOriginLabels = Object.assign({}, getters.originLabels)
-      const oldDestinationLabels = Object.assign({}, getters.destinationLabels)
-
-      const { origin, destination } = await loadCountryListForLocale(locale)
-      commit('setCountryList', Object.freeze(origin))
-      if (locale !== 'ru') {
-        commit('setCountryListOrigin', {})
-        commit('setCountryListDestination', {})
-        commit('setOriginSlugMap', generateSlugKebabMap(origin))
-        commit('setDestinationSlugMap', generateSlugKebabMap(origin))
-      } else {
-        commit('setCountryListOrigin', origin)
-        commit('setCountryListDestination', destination)
-
-        commit('setOriginSlugMap', generateSlugKebabMap(origin))
-        commit('setDestinationSlugMap', generateSlugKebabMap(destination))
-      }
-
-      if (!isEmpty(state.countryList)) {
-        commit(
-          'setSlugMigrationOriginMap',
-          generateMigrationMap(getters.originLabels, oldOriginLabels),
-        )
-        commit(
-          'setSlugMigrationDestinationMap',
-          generateMigrationMap(getters.destinationLabels, oldDestinationLabels),
-        )
-      }
     },
   },
 } as Module<CountryListState, never>
@@ -179,15 +123,6 @@ export function convertCountryListResponseToCountrySlugMap(
     convertCountryListResponseToCountryLabelMap(countries),
     (countryLabel) => convertCountryLabelToSlug(countryLabel),
   )
-}
-
-function generateMigrationMap(current: CountryList, previous: CountryList) {
-  const map: CountryList = {}
-  for (const countryCode of Object.keys(previous)) {
-    map[kebabCase(previous[countryCode])] = kebabCase(current[countryCode])
-  }
-
-  return map
 }
 
 export async function loadSimpleCountryList(

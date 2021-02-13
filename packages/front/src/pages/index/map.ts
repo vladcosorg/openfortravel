@@ -5,7 +5,6 @@ import {
   color,
   create,
   DropShadowFilter,
-  useTheme,
 } from '@amcharts/amcharts4/core'
 import {
   MapArc,
@@ -14,7 +13,6 @@ import {
   MapPolygon,
   MapPolygonSeries,
 } from '@amcharts/amcharts4/maps'
-import animated from '@amcharts/amcharts4/themes/animated'
 import { random } from 'lodash-es'
 import { colors } from 'quasar'
 
@@ -38,7 +36,7 @@ export function createChart(
   originCode: string,
   restrictions: Restriction[],
 ): MapChart {
-  useTheme(animated)
+  // useTheme(animated)
   const chart = createAndConfigureChart(domElement)
 
   const polygonSeries = createAndConfiguredPolygonSeries(

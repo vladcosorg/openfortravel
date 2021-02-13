@@ -8,7 +8,7 @@ export function useVuexComputedState<T>(path: string): ComputedRef<T> {
   return computed(() => get(useStore().state, path))
 }
 
-export function useVuexRawState<T>(
+export function useStateProperty<T>(
   property: keyof T,
   module?: string,
 ): T[keyof T] {
@@ -17,6 +17,13 @@ export function useVuexRawState<T>(
     path = [module, property]
   }
   return get(useStore().state, path.join('.'))
+}
+
+export function useReactiveStateProperty<T>(
+  property: keyof T,
+  module?: string,
+): ComputedRef<T[keyof T]> {
+  return computed(() => useStateProperty(property, module))
 }
 
 // eslint-disable-next-line import/no-unused-modules

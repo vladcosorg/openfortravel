@@ -24,7 +24,11 @@
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
 import { PortalTarget } from 'portal-vue'
-import { hydrateWhenIdle } from 'vue-lazy-hydration'
+import {
+  hydrateNever,
+  hydrateOnInteraction,
+  hydrateWhenIdle,
+} from 'vue-lazy-hydration'
 
 import TheDrawer from '@/front/src/layouts/components/the-drawer.vue'
 import TheLanguageSwitcher from '@/front/src/layouts/components/the-header/the-language-switcher.vue'
@@ -33,10 +37,10 @@ import TheMenu from '@/front/src/layouts/components/the-header/the-menu.vue'
 
 export default defineComponent({
   components: {
-    TheMenu,
-    TheDrawer,
-    TheLanguageSwitcher: hydrateWhenIdle(TheLanguageSwitcher),
-    Logo: hydrateWhenIdle(Logo),
+    TheMenu: hydrateWhenIdle(TheMenu),
+    TheDrawer: hydrateWhenIdle(TheDrawer),
+    TheLanguageSwitcher: hydrateOnInteraction(TheLanguageSwitcher),
+    Logo: hydrateNever(Logo),
     PortalTarget,
   },
   props: {

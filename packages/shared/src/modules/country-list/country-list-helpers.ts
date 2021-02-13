@@ -1,11 +1,8 @@
 import { kebabCase } from 'lodash-es'
 
-import { LanguageLocale } from '@/front/src/modules/i18n/types'
-import { useStore } from '@/shared/src/composables/use-plugins'
 import {
   useVuexRawGetter,
-  useVuexRawState,
-  useVuexRawStateProperty,
+  useStateProperty,
 } from '@/shared/src/composables/use-vuex'
 import { CountryListState } from '@/shared/src/modules/country-list/country-list-store'
 import {
@@ -29,53 +26,22 @@ export function transformCodeToDestinationSlug(
   return kebabCase(label ?? getDestinationLabelForCountryCode(countryCode))
 }
 
-export function transformOriginSlugToCode(
-  originSlug: OriginSlug,
-  lookInMigration = false,
-): string {
-  const originSlugToCodeMap = useVuexRawState<CountryListState>(
+export function transformOriginSlugToCode(originSlug: OriginSlug): string {
+  const originSlugToCodeMap = useStateProperty<CountryListState>(
     'originSlugMap',
     'modules.countryList',
   )
-  let countryCode = originSlugToCodeMap[originSlug]
-
-  if (lookInMigration && !countryCode) {
-    const migrationSlugMap = useVuexRawStateProperty<CountryList>(
-      'modules.countryList.slugMigrationOriginMap',
-    )
-
-    countryCode = originSlugToCodeMap[migrationSlugMap[originSlug]]
-  }
-
-  return countryCode
-}
-
-export function transformCanonicalSlugToCode(countrySlug: string): string {
-  const slugMap = useVuexRawStateProperty<CountryList>(
-    'modules.countryList.canonicalSlugToCountryCodeMap',
-  )
-  return slugMap[countrySlug]
+  return originSlugToCodeMap[originSlug]
 }
 
 export function transformDestinationSlugToCode(
   countrySlug: DestinationSlug,
-  lookInMigration = false,
 ): string {
-  const destinationSlugToCodeMap = useVuexRawState<CountryListState>(
+  const destinationSlugToCodeMap = useStateProperty<CountryListState>(
     'destinationSlugMap',
     'modules.countryList',
   )
-  let countryCode = destinationSlugToCodeMap[countrySlug]
-
-  if (lookInMigration && !countryCode) {
-    const migrationSlugMap = useVuexRawStateProperty<CountryList>(
-      'modules.countryList.slugMigrationDestinationMap',
-    )
-
-    countryCode = destinationSlugToCodeMap[migrationSlugMap[countrySlug]]
-  }
-
-  return countryCode
+  return destinationSlugToCodeMap[countrySlug]
 }
 
 export function getCountryCodes(): string[] {
@@ -83,25 +49,27 @@ export function getCountryCodes(): string[] {
 }
 
 export function getLabelForCountryCode(countryCode: string): string {
-  return useVuexRawStateProperty<CountryList>(
-    'modules.countryList.countryList',
-  )[countryCode]
+  return getOriginLabelForCountryCode(countryCode)
+}
+
+export function getOriginLabels(): CountryList {
+  return useStateProperty<CountryListState>(
+    'countryListOrigin',
+    'modules.countryList',
+  )
+}
+
+export function getDestinationLabels(): CountryList {
+  return useStateProperty<CountryListState>(
+    'countryListDestination',
+    'modules.countryList',
+  )
 }
 
 export function getOriginLabelForCountryCode(countryCode: string): string {
-  return useVuexRawGetter<CountryList>('modules/countryList/originLabels')[
-    countryCode
-  ]
+  return getOriginLabels()[countryCode]
 }
 
 export function getDestinationLabelForCountryCode(countryCode: string): string {
-  return useVuexRawGetter<CountryList>('modules/countryList/destinationLabels')[
-    countryCode
-  ]
-}
-
-export function preloadCountryListForLocale(
-  locale: LanguageLocale,
-): Promise<void> {
-  return useStore().dispatch('modules/countryList/fetchCountryList', locale)
+  return getDestinationLabels()[countryCode]
 }

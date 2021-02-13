@@ -18,15 +18,14 @@ import { hydrateWhenIdle, hydrateWhenVisible } from 'vue-lazy-hydration'
 import SectionCountries from '@/front/src/pages/index/components/section-countries.vue'
 import SectionIntro from '@/front/src/pages/index/components/section-intro.vue'
 import SectionStats from '@/front/src/pages/index/components/section-stats.vue'
-import { useComputedMemorized } from '@/shared/src/composables/use-computed-vmodel'
 import { useI18n } from '@/shared/src/composables/use-plugins'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
-  meta({ unsafeOriginCode }: { unsafeOriginCode: string }) {
+  meta({ originCode }: { originCode: string }) {
     return {
       title: useI18n().t('page.index.meta.title', {
-        nationality: getLabelForCountryCode(unsafeOriginCode),
+        nationality: getLabelForCountryCode(originCode),
       }),
     }
   },
@@ -36,17 +35,10 @@ export default defineComponent({
     SectionCountries: hydrateWhenVisible(SectionCountries),
   },
   props: {
-    unsafeOriginCode: {
+    originCode: {
       type: String,
       required: true,
     },
-  },
-  setup(props) {
-    const originCode = useComputedMemorized(() => props.unsafeOriginCode)
-
-    return {
-      originCode,
-    }
   },
 })
 </script>

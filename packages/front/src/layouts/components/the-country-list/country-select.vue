@@ -76,7 +76,9 @@ import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 import {
   CountryList,
   getDestinationLabelForCountryCode,
+  getDestinationLabels,
   getOriginLabelForCountryCode,
+  getOriginLabels,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export interface ListItem {
@@ -120,8 +122,8 @@ export default defineComponent({
 
     const fullList = computed<List>(() => {
       const list = props.isDestination
-        ? useVuexRawGetter<CountryList>('modules/countryList/destinationLabels')
-        : useVuexRawGetter<CountryList>('modules/countryList/originLabels')
+        ? getOriginLabels()
+        : getDestinationLabels()
 
       return Object.keys(list).map((key) => ({
         value: key,

@@ -74,35 +74,15 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
             ),
           props(route) {
             return {
-              unsafeOriginCode: transformOriginSlugToCode(
-                route.params.originSlug,
-              ),
+              originCode: transformOriginSlugToCode(route.params.originSlug),
             }
           },
         },
-        // {
-        //   name: 'origin-fallback',
-        //   path: 'travel/from/:origin/',
-        //   component: () =>
-        //     import(
-        //       /* webpackChunkName: "page-origin" */
-        //       '@/front/src/pages/country/country-page.vue'
-        //     ),
-        //   props(route) {
-        //     return {
-        //       unsafeOriginCode: transformCanonicalSlugToCode(
-        //         route.params.originSlug,
-        //       ),
-        //       isFallback: true,
-        //     }
-        //   },
-        // },
         {
           name: 'destination',
           path: `${i18n.t('page.country.route')}/:originSlug/${i18n.t(
             'page.destination.route',
           )}/:destinationSlug/`,
-          // alias: 'travel/from/:originSlug/to/:destinationSlug',
           component: () =>
             import(
               /* webpackChunkName: "page-destination" */
@@ -110,38 +90,13 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
             ),
           props(route) {
             return {
-              unsafeOriginCode: transformOriginSlugToCode(
-                route.params.originSlug,
-                true,
-              ),
-              unsafeDestinationCode: transformDestinationSlugToCode(
+              originCode: transformOriginSlugToCode(route.params.originSlug),
+              destinationCode: transformDestinationSlugToCode(
                 route.params.destinationSlug,
-                true,
               ),
             }
           },
         },
-        // {
-        //   name: 'destination-fallback',
-        //   path: 'travel/from/:originSlug/to/:destinationSlug',
-        //   // alias: 'travel/from/:originSlug/to/:destinationSlug',
-        //   component: () =>
-        //     import(
-        //       /* webpackChunkName: "page-destination" */
-        //       '@/front/src/pages/destination/destination-page.vue'
-        //     ),
-        //   props(route) {
-        //     return {
-        //       unsafeOriginCode: transformCanonicalSlugToCode(
-        //         route.params.originSlug,
-        //       ),
-        //       unsafeDestinationCode: transformCanonicalSlugToCode(
-        //         route.params.destinationSlug,
-        //       ),
-        //       isFallback: true,
-        //     }
-        //   },
-        // },
         {
           name: 'index-targeted',
           path: `${i18n.t('page.index.route')}/:originSlug/`,
@@ -151,9 +106,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
             ),
           props(route) {
             return {
-              unsafeOriginCode: transformOriginSlugToCode(
-                route.params.originSlug,
-              ),
+              originCode: transformOriginSlugToCode(route.params.originSlug),
             }
           },
         },

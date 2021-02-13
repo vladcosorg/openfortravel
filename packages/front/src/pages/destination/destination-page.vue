@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { matFlightLand, matFlightTakeoff } from '@quasar/extras/material-icons'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, toRefs } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
@@ -77,7 +77,6 @@ import {
   getRestriction,
 } from '@/front/src/pages/destination/destination-composable'
 import { meta } from '@/front/src/pages/destination/destination-meta'
-import { useComputedMemorized } from '@/shared/src/composables/use-computed-vmodel'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
 
@@ -95,13 +94,13 @@ export default defineComponent({
     Portal,
   },
   props: {
-    unsafeOriginCode: {
+    originCode: {
       type: String,
-      default: undefined,
+      required: true,
     },
-    unsafeDestinationCode: {
+    destinationCode: {
       type: String,
-      default: undefined,
+      required: true,
     },
     isFallback: {
       type: Boolean,
@@ -110,18 +109,16 @@ export default defineComponent({
   },
   setup(props) {
     const { t } = useVueI18n()
-    const originCodeRef = useComputedMemorized(() => props.unsafeOriginCode)
-    const destinationCodeRef = useComputedMemorized(
-      () => props.unsafeDestinationCode,
-    )
+    const { originCode, destinationCode } = toRefs(props)
+
     const {
       restrictionRef,
       loadingRef: restrictionLoadingRef,
-    } = getRestriction(originCodeRef, destinationCodeRef)
+    } = getRestriction(originCode, destinationCode)
     const {
       destinationRef,
       loadingRef: destinationLoadingRef,
-    } = getDestination(destinationCodeRef)
+    } = getDestination(destinationCode)
 
     const breadcrumbs = computed(() => [
       {
@@ -144,8 +141,6 @@ export default defineComponent({
       },
     ])
     return {
-      originCode: originCodeRef,
-      destinationCode: destinationCodeRef,
       restriction: restrictionRef,
       destination: destinationRef,
       loading: useAggregatedLoader(

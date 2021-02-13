@@ -26,6 +26,7 @@ declare module 'vue/types/vue' {
 export const i18n = createVueI18n(serverCache.i18nMessages)
 
 export default boot(async ({ app, store, ssrContext, redirect, router }) => {
+  console.log('Language is not rememberred')
   const isClient = !ssrContext
   app.i18n = i18n
   setI18n(i18n)

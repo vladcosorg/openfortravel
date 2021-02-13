@@ -49,13 +49,6 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
-export interface SelectItem {
-  value: string
-  label: string
-}
-
-export type SelectList = SelectItem[]
-
 export default defineComponent({
   props: {
     value: {
@@ -83,7 +76,7 @@ export default defineComponent({
 
     const isGroupedList = computed(() => !Array.isArray(props.options))
 
-    const isOptionListInitializedRef = ref(false)
+    const isOptionListInitializedRef = ref(true)
     const lazyOptionListRef = computed(() => {
       if (isOptionListInitializedRef.value === true) {
         return props.options
