@@ -1,7 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import VueI18n from 'vue-i18n'
 
-import { preloadQuasarLocale } from '@/front/src/misc/quasar-i18n'
 import { serverCache } from '@/front/src/misc/server-cache'
 import {
   autoTranslateIfNecessary,
@@ -40,7 +39,6 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
   setLocale(currentLocale)
 
   if (ssrContext) {
-    await preloadQuasarLocale(currentLocale, ssrContext)
     store.commit('setServerLocale', currentLocale)
     reloadRoutes()
 

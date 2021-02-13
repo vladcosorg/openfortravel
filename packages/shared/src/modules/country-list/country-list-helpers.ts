@@ -1,10 +1,6 @@
 import { kebabCase } from 'lodash-es'
 
-import {
-  useVuexRawGetter,
-  useStateProperty,
-} from '@/shared/src/composables/use-vuex'
-import { CountryListState } from '@/shared/src/modules/country-list/country-list-store'
+import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 import {
   DestinationSlug,
   OriginSlug,
@@ -27,19 +23,18 @@ export function transformCodeToDestinationSlug(
 }
 
 export function transformOriginSlugToCode(originSlug: OriginSlug): string {
-  const originSlugToCodeMap = useStateProperty<CountryListState>(
-    'originSlugMap',
-    'modules.countryList',
+  const originSlugToCodeMap = useVuexRawGetter<CountryList>(
+    'modules/countryList/originSlugMap',
   )
+
   return originSlugToCodeMap[originSlug]
 }
 
 export function transformDestinationSlugToCode(
   countrySlug: DestinationSlug,
 ): string {
-  const destinationSlugToCodeMap = useStateProperty<CountryListState>(
-    'destinationSlugMap',
-    'modules.countryList',
+  const destinationSlugToCodeMap = useVuexRawGetter<CountryList>(
+    'modules/countryList/originSlugMap',
   )
   return destinationSlugToCodeMap[countrySlug]
 }
@@ -53,19 +48,14 @@ export function getLabelForCountryCode(countryCode: string): string {
 }
 
 export function getOriginLabels(): CountryList {
-  return useStateProperty<CountryListState>(
-    'countryListOrigin',
-    'modules.countryList',
-  )
+  return useVuexRawGetter<CountryList>('modules/countryList/countryListOrigin')
 }
 
 export function getDestinationLabels(): CountryList {
-  return useStateProperty<CountryListState>(
-    'countryListDestination',
-    'modules.countryList',
+  return useVuexRawGetter<CountryList>(
+    'modules/countryList/countryListDestination',
   )
 }
-
 export function getOriginLabelForCountryCode(countryCode: string): string {
   return getOriginLabels()[countryCode]
 }

@@ -116,9 +116,9 @@ export default defineComponent({
   },
   setup(props, { emit, root }) {
     const isMobile = computed(() => root.$q.platform.is.mobile)
-    const nativeList = computed<CountryList>(() =>
-      useVuexRawGetter<CountryList>('modules/countryList/originByContinent'),
-    )
+    // eslint-disable-next-line unicorn/consistent-function-scoping
+    const nativeList = (): CountryList =>
+      useVuexRawGetter<CountryList>('modules/countryList/originByContinent')
 
     const fullList = computed<List>(() => {
       const list = props.isDestination

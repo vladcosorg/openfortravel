@@ -48,6 +48,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
+import { isFunction } from 'lodash-es'
 
 export default defineComponent({
   props: {
@@ -56,7 +57,7 @@ export default defineComponent({
       type: String,
     },
     options: {
-      type: [Array, Object],
+      type: [Array, Object, Function],
       required: true,
     },
     dropdownIcon: {
@@ -76,10 +77,10 @@ export default defineComponent({
 
     const isGroupedList = computed(() => !Array.isArray(props.options))
 
-    const isOptionListInitializedRef = ref(true)
+    const isOptionListInitializedRef = ref(false)
     const lazyOptionListRef = computed(() => {
       if (isOptionListInitializedRef.value === true) {
-        return props.options
+        return isFunction(props.options) ? props.options() : props.options
       }
       return [{ value: '', label: 'Loading' }]
     })

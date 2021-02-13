@@ -1,30 +1,54 @@
 import { invert, mapValues } from 'lodash-es'
 import { Locale } from 'vue-i18n'
 
+import { importAll } from '@/front/src/misc/misc'
+import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import {
+  convertCountryListResponseToCountryLabelMap,
   convertCountryNameToSlug,
   CountryListTypes,
-  loadCountryListForLocale,
 } from '@/shared/src/modules/country-list/country-list-store'
-import { LocaleList } from '@/shared/src/modules/language/locales'
 
-export async function generateCountryCodeToLabelList(
-  availableLocales: LocaleList,
-): Promise<Record<Locale, CountryListTypes>> {
-  const output: Record<Locale, CountryListTypes> = {}
-  for (const locale of availableLocales) {
-    output[locale] = await loadCountryListForLocale(locale)
+type CountryListCollection = Record<string, CountryListTypes>
+export function preloadCountryList(): CountryListCollection {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const context = (require as any).context(
+    'i18n-iso-countries/langs/',
+    true,
+    /\.json$/,
+  )
+  const content = importAll<
+    Array<{
+      locale: string
+      countries: CountryList
+    }>
+  >(context)
+  const output: CountryListCollection = {}
+
+  for (const list of content) {
+    if (list.locale === 'ru') {
+      output[list.locale] = {
+        origin: require('@/shared/src/i18n/declensions-ru/origin.json'),
+        destination: require('@/shared/src/i18n/declensions-ru/destination.json'),
+      }
+    } else {
+      const processedList = convertCountryListResponseToCountryLabelMap(
+        list.countries,
+      )
+      output[list.locale] = {
+        origin: processedList,
+        destination: processedList,
+      }
+    }
   }
   return output
 }
 
-export async function generateCountryCodeToSlugList(
-  availableLocales: LocaleList,
-): Promise<Record<Locale, CountryListTypes>> {
+export function generateCountryCodeToSlugList(
+  collection: CountryListCollection,
+): CountryListCollection {
   const output: Record<Locale, CountryListTypes> = {}
-  for (const locale of availableLocales) {
-    const countryList = await loadCountryListForLocale(locale)
-
+  for (const [locale, countryList] of Object.entries(collection)) {
     output[locale] = {
       origin: mapValues(countryList.origin, (value) =>
         convertCountryNameToSlug(value),
@@ -38,13 +62,11 @@ export async function generateCountryCodeToSlugList(
   return output
 }
 
-export async function generateCountrySlugToCodeList(
-  availableLocales: LocaleList,
-): Promise<Record<Locale, CountryListTypes>> {
+export function generateCountrySlugToCodeList(
+  collection: CountryListCollection,
+): CountryListCollection {
   const output: Record<Locale, CountryListTypes> = {}
-  for (const locale of availableLocales) {
-    const countryList = await loadCountryListForLocale(locale)
-
+  for (const [locale, countryList] of Object.entries(collection)) {
     output[locale] = {
       origin: invert(
         mapValues(countryList.origin, (value) =>

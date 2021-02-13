@@ -312,6 +312,7 @@ module.exports = {
       sa: 'South America',
       oc: 'Australia & Oceania',
       af: 'Africa',
+      an: 'Antarctica',
     },
   },
   faq: {

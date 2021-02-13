@@ -7,9 +7,9 @@ import { pregenerateLocalizableRouter } from '@/front/src/router/route-preloader
 import messages from '@/shared/src/i18n/index.js'
 import { loadContinentMap } from '@/shared/src/modules/continent-map/ssr-loader'
 import {
-  generateCountryCodeToLabelList,
   generateCountryCodeToSlugList,
   generateCountrySlugToCodeList,
+  preloadCountryList,
 } from '@/shared/src/modules/country-list/country-list-node-preload'
 import { getTranslatedOrTranslatableLocales } from '@/shared/src/modules/language/locales'
 import { preloadNationalities } from '@/shared/src/modules/nationality/nationality-preload'
@@ -30,17 +30,12 @@ serverCache.continentMap = loadContinentMap()
 serverCache.i18nMessages = (messages as unknown) as LocaleMessages
 serverCache.localizedRoutes = pregenerateLocalizableRouter()
 serverCache.nationalities = preloadNationalities()
-
-promises.push(
-  generateCountryCodeToLabelList(serverCache.availableLocales).then(
-    (map) => (serverCache.countryCodeToLabelMap = map),
-  ),
-  generateCountrySlugToCodeList(serverCache.availableLocales).then(
-    (map) => (serverCache.countrySlugToCodeMap = map),
-  ),
-  generateCountryCodeToSlugList(serverCache.availableLocales).then(
-    (map) => (serverCache.countryCodeToSlugMap = map),
-  ),
+serverCache.countryCodeToLabelMap = preloadCountryList()
+serverCache.countrySlugToCodeMap = generateCountrySlugToCodeList(
+  serverCache.countryCodeToLabelMap,
+)
+serverCache.countryCodeToSlugMap = generateCountryCodeToSlugList(
+  serverCache.countryCodeToLabelMap,
 )
 
 export default boot(async () => {

@@ -14,6 +14,7 @@ class ServerCache {
   public countryCodeToSlugMap!: Record<string, CountryListTypes>
   public continentMap!: Record<string, string>
   public nationalities!: PreloadedNationalityList
+  public quasarLocales!: Record<string, string>
 
   public translateOriginSlug(
     currentSlug: string,

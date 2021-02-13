@@ -1,11 +1,11 @@
-import { kebabCase, mapValues, transform } from 'lodash-es'
+import { isEmpty, kebabCase, mapValues } from 'lodash-es'
 import { Module } from 'vuex'
 
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { transformKeys } from '@/shared/src/misc/misc'
 import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import { CountrySlugType } from '@/shared/src/modules/country-list/country-list-types'
-// eslint-disable-next-line import/no-unused-modules
+
 export class CountryListState {
   countryList: CountryList = {}
   countryListOrigin: CountryList = {}
@@ -23,22 +23,38 @@ export default {
     return new CountryListState()
   },
   getters: {
+    countryListOrigin(state): CountryListState['countryListOrigin'] {
+      return isEmpty(state.countryListOrigin)
+        ? state.countryList
+        : state.countryListOrigin
+    },
+    countryListDestination(state): CountryListState['countryListDestination'] {
+      return isEmpty(state.countryListDestination)
+        ? state.countryList
+        : state.countryListDestination
+    },
+    originSlugMap(state): CountryListState['originSlugMap'] {
+      return isEmpty(state.originSlugMap) ? state.slugMap : state.originSlugMap
+    },
+    destinationSlugMap(state): CountryListState['destinationSlugMap'] {
+      return isEmpty(state.destinationSlugMap)
+        ? state.slugMap
+        : state.destinationSlugMap
+    },
     countryCodes(state): string[] {
       return Object.keys(state.countryList)
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    originByContinent(state, _getters, rootState: any) {
+    originByContinent(_state, getters, rootState: any) {
       return groupCountriesByContinents(
         rootState.countryToContinentMap,
-        state.countryListOrigin,
+        getters['countryListOrigin'],
       )
     },
   },
   mutations: {
     setCountryList(state: CountryListState, list: CountryList) {
       state.countryList = list
-      state.countryListOrigin = list
-      state.countryListDestination = list
     },
     setCountryListOrigin(state: CountryListState, list: CountryList) {
       state.countryListOrigin = list
@@ -48,8 +64,6 @@ export default {
     },
     setSlugMap(state: CountryListState, list: CountryList) {
       state.slugMap = list
-      state.originSlugMap = list
-      state.destinationSlugMap = list
     },
     setOriginSlugMap(state: CountryListState, list: CountryList) {
       state.originSlugMap = list
@@ -68,44 +82,11 @@ function getFirstLabel(label: string | string[]): string {
   return label
 }
 
-export function generateSlugKebabMap(
-  list: CountryList,
-): Record<string, string> {
-  return Object.keys(list).reduce<Record<string, string>>((kebabList, key) => {
-    kebabList[kebabCase(list[key])] = key
-    return kebabList
-  }, {})
-}
-
-export function generateCodeToSlugMap(
-  list: CountryList,
-): Record<string, string> {
-  return mapValues(list, (countryName) => kebabCase(countryName))
-}
-
 export function convertCountryNameToSlug(countryName: string): string {
   return kebabCase(countryName)
 }
 
-type DynamicCountryListResponse = {
-  default: {
-    countries: CountryList
-  }
-}
-export function normalizeCountryListResponse(
-  response: DynamicCountryListResponse,
-): CountryList {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-  const translations = response.default.countries
-  return transform(
-    translations,
-    (list: CountryList, label: string | string[], code: string) => {
-      list[code.toLowerCase()] = getFirstLabel(label)
-    },
-  )
-}
-
-function convertCountryListResponseToCountryLabelMap(
+export function convertCountryListResponseToCountryLabelMap(
   countries: CountryList,
 ): Record<string, string> {
   const countryMap: CountryList = {}
@@ -123,56 +104,6 @@ export function convertCountryListResponseToCountrySlugMap(
     convertCountryListResponseToCountryLabelMap(countries),
     (countryLabel) => convertCountryLabelToSlug(countryLabel),
   )
-}
-
-export async function loadSimpleCountryList(
-  locale: string,
-): Promise<DynamicCountryListResponse> {
-  try {
-    // eslint-disable-next-line import/dynamic-import-chunkname
-    return await import(
-      /* webpackChunkName: "countries-[request]" */ `i18n-iso-countries/langs/${locale}.json`
-    )
-  } catch {
-    // eslint-disable-next-line import/dynamic-import-chunkname
-    return ((await import(
-      /* webpackChunkName: "countries-[request]" */ 'i18n-iso-countries/langs/en.json'
-    )) as unknown) as DynamicCountryListResponse
-  }
-}
-
-export async function loadDualCountryListForLocale(): Promise<{
-  origin: CountryList
-  destination: CountryList
-}> {
-  return {
-    origin: (
-      await import(
-        /* webpackChunkName: "declension-ru-origin" */
-        '@/shared/src/i18n/declensions-ru/origin.json'
-      )
-    ).default,
-    destination: (
-      await import(
-        /* webpackChunkName: "declension-ru-destination" */
-        '@/shared/src/i18n/declensions-ru/destination.json'
-      )
-    ).default,
-  }
-}
-
-export async function loadCountryListForLocale(
-  locale: string,
-): Promise<{ origin: CountryList; destination: CountryList }> {
-  if (locale === 'ru') {
-    return await loadDualCountryListForLocale()
-  }
-
-  const list = normalizeCountryListResponse(await loadSimpleCountryList(locale))
-  return {
-    origin: list,
-    destination: list,
-  }
 }
 
 function convertCountryLabelToSlug(countryName: string): string {
