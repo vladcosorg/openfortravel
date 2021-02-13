@@ -1,6 +1,6 @@
 <template>
   <q-page :class="['column', $style.page]">
-    <section-intro v-if="true" :origin-code="originCode" />
+    <section-intro :origin-code="originCode" />
     <section-stats :origin-code="originCode" />
     <section-countries />
   </q-page>

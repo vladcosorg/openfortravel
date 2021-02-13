@@ -18,6 +18,7 @@
           class="q-mb-xl"
           :origin-code="originCode"
           :restrictions="restrictions"
+          :is-loading="isLoading"
         />
       </lazy-hydrate>
 

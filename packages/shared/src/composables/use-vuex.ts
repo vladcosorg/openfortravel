@@ -69,7 +69,6 @@ export function useVuexActionDispatcherWithReactivePayload(
 
 export function useProperVuexActionDispatcher(
   action: string,
-
   loadingReference?: Ref<boolean>,
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/no-explicit-any
 ): (payload: any) => Promise<void> {

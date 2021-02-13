@@ -1,13 +1,5 @@
 <template>
   <div :class="['relative-position']">
-    <transition leave-active-class="animated fadeOut slower">
-      <img
-        v-if="loading !== false"
-        class="absolute-full"
-        src="../../../assets/map.svg"
-      />
-    </transition>
-
     <div ref="chartContainer" :class="[$style.chart]" />
     <q-spinner
       v-if="loading"
@@ -40,7 +32,9 @@ import {
   onUnmounted,
   PropType,
   ref,
+  watch,
 } from '@vue/composition-api'
+import { defer } from 'lodash-es'
 
 import { Restriction } from '@/shared/src/api/restrictions/models'
 
@@ -53,6 +47,10 @@ export default defineComponent({
     },
     restrictions: {
       type: Array as PropType<Restriction[]>,
+      required: true,
+    },
+    isLoading: {
+      type: Boolean,
       required: true,
     },
   },
@@ -70,27 +68,41 @@ export default defineComponent({
         chart.dispose()
       }
 
-      chart = createChart(
-        chartContainer.value,
-        props.originCode,
-        props.restrictions,
-      )
-      chart.events.once('ready', () => {
-        chart.events.once('appeared', () => {
-          loading.value = false
-        })
+      watch(
+        () => props.isLoading,
+        (isLoading: boolean) => {
+          if (isLoading) {
+            return
+          }
 
-        chart.hidden = false
-        chart.appear()
-      })
+          defer(() => {
+            chart = createChart(
+              chartContainer.value,
+              props.originCode,
+              props.restrictions,
+            )
+            chart.events.once('ready', () => {
+              chart.events.once('appeared', () => {
+                loading.value = false
+              })
+
+              chart.hidden = false
+              chart.appear()
+            })
+          })
+        },
+        { immediate: true },
+      )
     }
 
     onMounted(initializeChart)
 
     onUnmounted(() => {
-      if (chart) {
-        chart.dispose()
+      if (!chart) {
+        return
       }
+
+      chart.dispose()
     })
 
     return { chartContainer, loading }
