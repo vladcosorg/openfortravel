@@ -15,7 +15,7 @@ export function createAutoI18n(i18nPluginInstance: IVueI18n): ManualTranslator {
     sourceLanguage: 'en',
     automatic: true,
     cache: (useSharedCache() as unknown) as CacheType,
-    translationService: new SSRProxy(),
+    translationService: new CloudFunctionTranslator(),
     blacklistedPaths: [
       'page.country.route',
       'page.destination.route',
@@ -24,10 +24,10 @@ export function createAutoI18n(i18nPluginInstance: IVueI18n): ManualTranslator {
   })
 }
 
-class SSRProxy implements TranslationService {
+class CloudFunctionTranslator implements TranslationService {
   async translate(targetLanguage: Locale): Promise<LocaleMessageObject> {
     const response = await fetch(
-      `${process.env.PROJECT_URL}/translate?` +
+      'https://us-central1-openfortravel.cloudfunctions.net/translate' +
         new URLSearchParams({
           targetLanguage,
         }),
