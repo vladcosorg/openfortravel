@@ -22,8 +22,6 @@ module.exports.extendApp = async function ({ app, ssr }) {
   })
 
   await require('./env')()
-  // require('./fix-dark-mode-flash')(app)
-  require('./handlers/translate')(app, sharedCache)
   require('./handlers/subscribe')(app)
   require('./handlers/send-message')(app)
 }

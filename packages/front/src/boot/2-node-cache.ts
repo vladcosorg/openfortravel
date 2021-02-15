@@ -4,7 +4,7 @@ import VueI18n from 'vue-i18n'
 
 import { serverCache } from '@/front/src/misc/server-cache'
 import { pregenerateLocalizableRouter } from '@/front/src/router/route-preloader'
-import messages from '@/shared/src/i18n/index.js'
+import messages from '@/shared/src/i18n/index'
 import { loadContinentMap } from '@/shared/src/modules/continent-map/ssr-loader'
 import {
   generateCountryCodeToSlugList,

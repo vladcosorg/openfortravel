@@ -5,10 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "front": "yarn workspace front",
-    "admin": "yarn workspace admin",
-    "shared": "yarn workspace shared",
-    "reinstall": "rm -rf ./node_modules && rm -rf ./packages/*/node_modules && yarn install"
+    "reinstall": "rm -rf ./node_modules && rm -rf ./packages/*/node_modules && pnpm install"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.4",

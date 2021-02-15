@@ -11,7 +11,7 @@ import { LocaleMessages } from 'vue-i18n'
 import VueRouter, { Location } from 'vue-router'
 
 import { createGenericRouter } from '@/front/src/router/routes'
-import messages from '@/shared/src/i18n/index.js'
+import messages from '@/shared/src/i18n/index'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 import { transformKeys } from '@/shared/src/misc/misc'
 import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
