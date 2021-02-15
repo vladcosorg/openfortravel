@@ -2,6 +2,7 @@ name: Deploy cloud functions
 on:
   push:
     paths:
+      - .github/workflows/front-translate.yml
       - packages/functions/**
       - packages/shared/src/i18n/**
     branches:
