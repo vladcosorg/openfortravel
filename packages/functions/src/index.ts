@@ -3,7 +3,7 @@ import * as functions from 'firebase-functions'
 
 import { runScraper } from '@/functions/src/cdc-scraper'
 
-import { translate } from './translator'
+import { translate } from './translator/translator'
 
 const safetyLevelCalculatorJob = functions.pubsub
   .schedule('every 48 hours')
