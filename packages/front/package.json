@@ -61,7 +61,6 @@
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2",
     "lodash": "^4.17.20",
-    "lodash-es": "^4.17.20",
     "node-fetch": "^2.6.1",
     "portal-vue": "^2.1.7",
     "quasar": "^1.0.0",

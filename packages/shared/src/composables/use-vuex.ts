@@ -1,5 +1,5 @@
 import { computed, ComputedRef, isRef, Ref, unref } from '@vue/composition-api'
-import { get, mapValues } from 'lodash-es'
+import { get, mapValues } from 'lodash'
 
 import { useStore } from '@/shared/src/composables/use-plugins'
 

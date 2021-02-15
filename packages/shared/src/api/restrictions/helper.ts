@@ -1,4 +1,4 @@
-import { zipObject } from 'lodash-es'
+import { zipObject } from 'lodash'
 import { TranslateResult } from 'vue-i18n'
 
 import {

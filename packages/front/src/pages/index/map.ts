@@ -13,7 +13,7 @@ import {
   MapPolygon,
   MapPolygonSeries,
 } from '@amcharts/amcharts4/maps'
-import { random } from 'lodash-es'
+import { random } from 'lodash'
 import { colors } from 'quasar'
 
 import { statusColorMap } from '@/front/src/pages/index/index-composable'

@@ -27,11 +27,10 @@ export function createAutoI18n(i18nPluginInstance: IVueI18n): ManualTranslator {
 class CloudFunctionTranslator implements TranslationService {
   async translate(targetLanguage: Locale): Promise<LocaleMessageObject> {
     const response = await fetch(
-      'https://us-central1-openfortravel.cloudfunctions.net/translate' +
+      'https://us-central1-openfortravel.cloudfunctions.net/translate?' +
         new URLSearchParams({
           targetLanguage,
         }),
-      { method: 'POST' },
     )
     return await response.json()
   }

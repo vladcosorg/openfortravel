@@ -14,8 +14,7 @@
     "firebase": "^8.2.0",
     "countries-list": "^2.6.1",
     "ky": "^0.25.1",
-    "ky-universal": "^0.8.2",
-    "lodash-es": "^4.17.20"
+    "ky-universal": "^0.8.2"
   },
   "devDependencies": {
     "@types/webpack-env": "^1.16.0",

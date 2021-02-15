@@ -1,4 +1,4 @@
-import { isEmpty, kebabCase, mapValues } from 'lodash-es'
+import { isEmpty, kebabCase, mapValues } from 'lodash'
 import { Module } from 'vuex'
 
 import { useVueI18n } from '@/shared/src/composables/use-plugins'

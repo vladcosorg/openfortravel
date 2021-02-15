@@ -1,4 +1,4 @@
-import { kebabCase } from 'lodash-es'
+import { kebabCase } from 'lodash'
 
 import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 import {

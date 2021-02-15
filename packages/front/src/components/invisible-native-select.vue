@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import { isFunction } from 'lodash-es'
+import { isFunction } from 'lodash'
 
 export default defineComponent({
   props: {

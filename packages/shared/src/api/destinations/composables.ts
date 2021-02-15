@@ -1,5 +1,5 @@
 import { Ref } from '@vue/composition-api'
-import { keyBy } from 'lodash-es'
+import { keyBy } from 'lodash'
 
 import {
   createDummyDestination,

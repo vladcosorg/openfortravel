@@ -34,7 +34,7 @@ import {
   ref,
   watch,
 } from '@vue/composition-api'
-import { defer } from 'lodash-es'
+import { defer } from 'lodash'
 
 import { Restriction } from '@/shared/src/api/restrictions/models'
 
