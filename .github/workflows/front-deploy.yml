@@ -1,8 +1,9 @@
 name: Front deploy
 on:
   push:
-    paths-ignore:
-      - '!packages/admin/**'
+    paths:
+      - packages/front/**
+      - packages/shared/**
     branches:
       - master
 
