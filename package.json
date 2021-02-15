@@ -5,7 +5,7 @@
     "packages/*"
   ],
   "scripts": {
-    "reinstall": "rm -rf ./node_modules && rm -rf ./packages/*/node_modules && pnpm install"
+    "reinstall": "rm -rf ./node_modules && rm -rf ./packages/*/node_modules "
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.4",
