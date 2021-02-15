@@ -33,6 +33,6 @@ jobs:
         uses: google-github-actions/deploy-cloud-functions@main
         with:
           source_dir: ./packages/functions/dist
-          name: translator
+          name: translate
           runtime: nodejs14
           credentials: ${{ secrets.GCP_SA_KEY }}
