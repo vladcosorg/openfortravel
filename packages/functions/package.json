@@ -2,27 +2,31 @@
   "name": "functions",
   "version": "0.3.1",
   "scripts": {
-    "prebuild": "rm -rf ./dist",
-    "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
-    "postbuild": "cp package.json dist/package.json",
+    "prebuild": "rm -rf ./dist && mkdir ./dist &&  cp package.json dist/package.json",
+    "build": "microbundle build src/index.ts --output dist/index.js --target node --format cjs --no-sourcemap",
+    "build-watch": "microbundle -w build src/index.ts --output dist/index.js --target node --format cjs --no-sourcemap",
     "copy": "cp package.json dist/ && cp README.md dist/ && cp .npmrc dist/",
-    "serve": "npm run build && firebase emulators:start",
+    "serve": "run-p build-watch start-emulators",
+    "start-emulators": "firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "14.x.x"
+    "node": "14"
   },
   "main": "index.js",
   "dependencies": {
-    "firebase-admin": "^9.2.0",
-    "firebase-functions": "^3.11.0",
+    "@google-cloud/storage": "^5.7.4",
+    "firebase-admin": "^9.5.0",
+    "firebase-functions": "^3.13.1",
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2",
     "lodash": "^4.17.20",
-    "scrape-it": "5.3.1"
+    "scrape-it": "5.3.1",
+    "vue-auto-i18n": "1.1.0-beta.13",
+    "microbundle": "^0.13.0"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.2.0",

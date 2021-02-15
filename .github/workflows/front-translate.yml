@@ -1,0 +1,37 @@
+name: Deploy cloud functions
+on:
+  push:
+    paths:
+      - packages/functions/**
+      - packages/shared/src/i18n/**
+    branches:
+      - master
+
+jobs:
+  cloudfunctions:
+    name: Building cloud functions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Restore yarn workspaces
+        id: yarn-cache
+        uses: actions/cache@master
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn install --ignore-platform --frozen-lockfile
+      - run: yarn build
+        working-directory: ./packages/functions
+      - id: deploy
+        uses: google-github-actions/deploy-cloud-functions@main
+        with:
+          name: translator
+          runtime: nodejs14
+          credentials: ${{ secrets.GCP_SA_KEY }}
