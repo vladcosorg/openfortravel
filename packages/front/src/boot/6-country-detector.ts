@@ -5,7 +5,10 @@ import {
   setCurrentCountry,
 } from '@/front/src/misc/country-decider'
 
-export default boot(async ({ router }) => {
+export default boot(async ({ router, ssrContext }) => {
+  if (ssrContext) {
+    console.log(ssrContext.req.headers)
+  }
   if (process.env.SERVER) {
     setCurrentCountry(await decideOnCountry(router.currentRoute, true), false)
   } else {

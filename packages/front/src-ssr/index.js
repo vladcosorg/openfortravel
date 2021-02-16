@@ -31,6 +31,7 @@ ssr.mergeRendererOptions({
 })
 const extension = require('./extension')
 const app = express()
+app.set('trust proxy', true)
 const port = process.env.PORT || 3000
 const microCache = new LRU()
 
