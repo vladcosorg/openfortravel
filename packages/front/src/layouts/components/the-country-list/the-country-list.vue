@@ -89,12 +89,12 @@ import { computed, defineComponent } from '@vue/composition-api'
 
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import Swapper from '@/front/src/layouts/components/the-country-list/swapper.vue'
-import { getCurrentCountryCode } from '@/front/src/misc/country-decider'
+import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 import { useRouter, useI18n } from '@/shared/src/composables/use-plugins'
 import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
 import {
-  transformCodeToDestinationSlug,
-  transformCodeToOriginSlug,
+  transformCountryCodeToDestinationSlug,
+  transformCountryCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
@@ -121,8 +121,10 @@ export default defineComponent({
           await useRouter().push({
             name: 'destination',
             params: {
-              originSlug: transformCodeToOriginSlug(originCode),
-              destinationSlug: transformCodeToDestinationSlug(destinationCode),
+              originSlug: transformCountryCodeToOriginSlug(originCode),
+              destinationSlug: transformCountryCodeToDestinationSlug(
+                destinationCode,
+              ),
               locale: useI18n().locale,
             },
           })
@@ -132,7 +134,7 @@ export default defineComponent({
         await useRouter().push({
           name: 'origin',
           params: {
-            originSlug: transformCodeToOriginSlug(originCode),
+            originSlug: transformCountryCodeToOriginSlug(originCode),
             locale: useI18n().locale,
           },
         })
@@ -141,7 +143,7 @@ export default defineComponent({
 
     const originValueRef = computed({
       get() {
-        return props.originCode ?? getCurrentCountryCode()
+        return props.originCode ?? getPersistedOriginOrDefault()
       },
       set(newOriginCode) {
         navigateToPage(newOriginCode, destinationValueRef.value)

@@ -2,7 +2,7 @@ import { generateCanonicalBlock } from '@/front/src/misc/meta'
 import { useI18n } from '@/shared/src/composables/use-plugins'
 import {
   getLabelForCountryCode,
-  transformCodeToOriginSlug,
+  transformCountryCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export function meta({
@@ -21,7 +21,7 @@ export function meta({
         canonical: generateCanonicalBlock({
           name: 'origin',
           params: {
-            originSlug: transformCodeToOriginSlug(originCode),
+            originSlug: transformCountryCodeToOriginSlug(originCode),
           },
         }),
       }),

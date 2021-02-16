@@ -3,6 +3,7 @@ import { LocaleMessageObject } from 'vue-i18n'
 import Vuex, { Module } from 'vuex'
 
 import countryPage from '@/front/src/pages/country/country-store'
+import { useCookies } from '@/shared/src/composables/use-plugins'
 import type { CountryListState } from '@/shared/src/modules/country-list/country-list-store'
 import countryList from '@/shared/src/modules/country-list/country-list-store'
 import nationalities, {
@@ -10,14 +11,10 @@ import nationalities, {
 } from '@/shared/src/modules/nationality/nationality-store'
 
 import destinationPage from '../pages/destination/destination-store'
-/*
- * If not building with SSR mode, you can
- * directly export the Store instantiation
- */
 
 export interface StateInterface {
   countrySelectorLoading: boolean
-  detectedCountry: string
+  detectedCountry: string | undefined
   localizedRoutes: Record<string, string>
   locales: LocaleMessageObject
   serverLocale: string
@@ -65,6 +62,7 @@ export default store(({ Vue }) => {
       },
       setDetectedCountry(state: StateInterface, country: string) {
         state.detectedCountry = country
+        useCookies().set('country', country, { path: '/' })
       },
       setLocales(state: StateInterface, locales: LocaleMessageObject) {
         state.locales = locales
@@ -85,7 +83,10 @@ export default store(({ Vue }) => {
     },
 
     actions: {},
-    getters: {},
+    getters: {
+      detectedCountryWithFallback: (state): string =>
+        state.detectedCountry ?? 'us',
+    },
     strict: !!process.env.DEV,
   })
 })

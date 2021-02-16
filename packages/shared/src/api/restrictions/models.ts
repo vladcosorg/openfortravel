@@ -7,8 +7,8 @@ import {
   getDestinationLabelForCountryCode,
   getLabelForCountryCode,
   getOriginLabelForCountryCode,
-  transformCodeToDestinationSlug,
-  transformCodeToOriginSlug,
+  transformCountryCodeToDestinationSlug,
+  transformCountryCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export enum RestrictionStatus {
@@ -61,7 +61,7 @@ export class Restriction implements PlainRestriction {
   }
 
   get originSlug(): string {
-    return transformCodeToOriginSlug(this.origin)
+    return transformCountryCodeToOriginSlug(this.origin)
   }
 
   get originContinent(): string | undefined {
@@ -81,7 +81,7 @@ export class Restriction implements PlainRestriction {
   }
 
   get destinationSlug(): string {
-    return transformCodeToDestinationSlug(this.destination)
+    return transformCountryCodeToDestinationSlug(this.destination)
   }
 
   get shortDescription(): string {

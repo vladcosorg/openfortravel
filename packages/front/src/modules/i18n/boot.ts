@@ -100,7 +100,6 @@ export async function autoTranslateIfNecessary(
       /* webpackChunkName: "auto-i18n" */ '@/front/src/misc/vue-auto-i18n.lazy'
     )
     translator = createAutoI18n(i18n)
-    console.log(translator)
   }
 
   await translator(i18n.locale)

@@ -20,8 +20,8 @@ import { statusColorMap } from '@/front/src/pages/index/index-composable'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
 import {
-  transformCodeToDestinationSlug,
-  transformCodeToOriginSlug,
+  transformCountryCodeToDestinationSlug,
+  transformCountryCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 type SeriesItem = {
@@ -122,8 +122,8 @@ export function addHitHandler(
     useRouter().push({
       name: 'destination',
       params: {
-        originSlug: transformCodeToOriginSlug(originCode),
-        destinationSlug: transformCodeToDestinationSlug(destinationCode),
+        originSlug: transformCountryCodeToOriginSlug(originCode),
+        destinationSlug: transformCountryCodeToDestinationSlug(destinationCode),
       },
     })
   })

@@ -12,7 +12,6 @@ import {
   preloadLocaleMessageCollectionIntoPlugin,
   pushRequiredLocalesToStore,
 } from '@/front/src/modules/i18n/loaders'
-import { reloadRoutes } from '@/front/src/router/helpers'
 import { setI18n } from '@/shared/src/composables/use-plugins'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 

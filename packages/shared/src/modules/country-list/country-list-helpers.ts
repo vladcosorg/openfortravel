@@ -1,4 +1,4 @@
-import { kebabCase } from 'lodash'
+import { findKey } from 'lodash'
 
 import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 import {
@@ -8,18 +8,37 @@ import {
 
 export type CountryList = Record<string, string>
 
-export function transformCodeToOriginSlug(
-  countryCode: string,
-  label?: string,
-): string {
-  return kebabCase(label ?? getOriginLabelForCountryCode(countryCode))
+export function transformCountryCodeToOriginSlug(countryCode: string): string {
+  const originSlugToCodeMap = useVuexRawGetter<CountryList>(
+    'modules/countryList/originSlugMap',
+  )
+  const matchingSlug = findKey(
+    originSlugToCodeMap,
+    (collectionCountryCode) => collectionCountryCode === countryCode,
+  )
+
+  if (!matchingSlug) {
+    throw new Error(`Mathing slug for code '${countryCode}' was not found`)
+  }
+
+  return matchingSlug
 }
 
-export function transformCodeToDestinationSlug(
+export function transformCountryCodeToDestinationSlug(
   countryCode: string,
-  label?: string,
 ): string {
-  return kebabCase(label ?? getDestinationLabelForCountryCode(countryCode))
+  const originSlugToCodeMap = useVuexRawGetter<CountryList>(
+    'modules/countryList/destinationSlugMap',
+  )
+  const matchingSlug = findKey(
+    originSlugToCodeMap,
+    (collectionCountryCode) => collectionCountryCode === countryCode,
+  )
+  if (!matchingSlug) {
+    throw new Error(`Mathing slug for code '${countryCode}' was not found`)
+  }
+
+  return matchingSlug
 }
 
 export function transformOriginSlugToCode(originSlug: OriginSlug): string {
@@ -34,7 +53,7 @@ export function transformDestinationSlugToCode(
   countrySlug: DestinationSlug,
 ): string {
   const destinationSlugToCodeMap = useVuexRawGetter<CountryList>(
-    'modules/countryList/originSlugMap',
+    'modules/countryList/destinationSlugMap',
   )
   return destinationSlugToCodeMap[countrySlug]
 }

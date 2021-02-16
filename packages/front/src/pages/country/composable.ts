@@ -20,7 +20,7 @@ import {
 } from '@/shared/src/composables/use-vuex'
 import {
   getLabelForCountryCode,
-  transformCodeToOriginSlug,
+  transformCountryCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export function useCountries(): {
@@ -177,7 +177,7 @@ export function getBreadcrumbs(
 ): ComputedRef {
   const { t } = useVueI18n()
   return computed(() => ({
-    originSlug: transformCodeToOriginSlug(originCode.value),
+    originSlug: transformCountryCodeToOriginSlug(originCode.value),
     items: [
       {
         label: t('page.country.breadcrumb', {
