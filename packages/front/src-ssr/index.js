@@ -10,7 +10,10 @@
  *   If you are looking to add common DEV & PROD logic to the express app, then use
  *   "src-ssr/extension.js"
  */
-require('@google-cloud/debug-agent').start({serviceContext: {enableCanary: true}});
+require('@google-cloud/debug-agent').start({
+  allowExpressions: true,
+  serviceContext: { enableCanary: true },
+})
 const express = require('express')
 const compression = require('compression')
 const LRU = require('lru-cache')
