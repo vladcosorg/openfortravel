@@ -1,7 +1,6 @@
 import { boot } from 'quasar/wrappers'
 
 import { getCookieCountry } from '@/front/src/misc/country-decider'
-import { fetchCurrentCountryCode } from '@/shared/src/api/ip-api'
 import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default boot(async ({ router, urlPath, store, ssrContext }) => {
@@ -19,28 +18,11 @@ export default boot(async ({ router, urlPath, store, ssrContext }) => {
     if (persistedOrigin) {
       store.commit('setDetectedCountry', persistedOrigin)
     } else {
-      let countryCode: string
-      try {
-        const remoteIP = ssrContext.req.headers['x-forwarded-for'] as
-          | string
-          | undefined
-        if (!remoteIP) {
-          console.error(
-            `Ip not detected in headers ${JSON.stringify(
-              ssrContext.req.headers,
-            )}`,
-          )
-          throw new Error(
-            `Ip not detected in headers ${JSON.stringify(
-              ssrContext.req.headers,
-            )}`,
-          )
-        }
-        countryCode = await fetchCurrentCountryCode(remoteIP)
-      } catch {
-        // give up, set the fallback country code
-        countryCode = 'us'
-      }
+      let countryCode = (ssrContext.req.headers['cf-ipcountry'] ??
+        ssrContext.req.headers['x-appengine-country'] ??
+        'us') as string
+      countryCode = countryCode.toLowerCase()
+
       store.commit('setDetectedCountry', countryCode, true)
     }
   } else {
