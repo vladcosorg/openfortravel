@@ -40,8 +40,6 @@ module.exports = configure((context) => ({
     { path: '3-ssr-data-preload', client: false },
     '6-country-detector',
     { path: '7-gtag', server: false },
-
-    '3-homepage-locale-redirect',
   ],
 
   vendor: {

@@ -1,14 +1,31 @@
 import { IVueI18n } from 'vue-i18n'
 import VueRouter, { RouteConfig, RouterOptions } from 'vue-router'
 
+import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
+import { useRouter } from '@/shared/src/composables/use-plugins'
 import {
+  transformCountryCodeToOriginSlug,
   transformDestinationSlugToCode,
   transformOriginSlugToCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export function getRoutes(i18n: IVueI18n): RouteConfig[] {
   return [
-    { name: 'index-nolocale-nocountry', path: '/' },
+    {
+      name: 'index-nolocale-nocountry',
+      path: '/',
+      redirect(_to) {
+        return useRouter().resolve({
+          name: 'index-targeted',
+          params: {
+            locale: i18n.locale,
+            originSlug: transformCountryCodeToOriginSlug(
+              getPersistedOriginOrDefault(),
+            ),
+          },
+        }).href
+      },
+    },
     {
       path: '/:locale/',
       component: () =>
@@ -39,6 +56,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
         {
           name: 'index-redirect',
           path: '',
+          redirect: '/',
         },
         {
           name: 'privacy',

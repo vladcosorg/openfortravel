@@ -9,7 +9,7 @@ import { serverCache } from '@/front/src/misc/server-cache'
 import { LanguageLocale } from '@/front/src/modules/i18n/types'
 import { reloadRoutes } from '@/front/src/router/helpers'
 import { StateInterface } from '@/front/src/store'
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { useCookies, useI18n } from '@/shared/src/composables/use-plugins'
 
 export function setLocale(locale: string): void {
   useI18n().locale = locale
@@ -23,7 +23,10 @@ export function extractCurrentLocale(
   let currentLocale = store.state.serverLocale
 
   if (ssrContext) {
-    currentLocale = extractLanguageFromURL(ssrContext?.url) ?? currentLocale
+    currentLocale =
+      extractLanguageFromURL(ssrContext?.url) ??
+      useCookies().get('locale') ??
+      currentLocale
   }
   return currentLocale
 }
@@ -43,9 +46,9 @@ export function localeChangeHandler(
   router: VueRouter,
   ssrContext: QSsrContext,
 ): void | string {
-  const routeConfig = { ...router.resolve(ssrContext?.url) }
-  if (routeConfig.location.query?.tolocale) {
-    const newLocale = routeConfig.location.query.tolocale as string
+  if (ssrContext.req.query.tolocale) {
+    const routeConfig = { ...router.resolve(ssrContext?.url) }
+    const newLocale = routeConfig.location.query?.tolocale as string
     setLocale(newLocale)
 
     return router.resolve({

@@ -8,7 +8,6 @@ export default boot(({ store }) => {
   store.commit('setAvailableLocales', serverCache.availableLocales)
   store.commit('setCountryToContinentMap', serverCache.continentMap)
   store.commit('setLabeledLocales', serverCache.labeledLocales)
-
   if (useI18n().locale === 'ru') {
     store.commit(
       'modules/countryList/setCountryListOrigin',

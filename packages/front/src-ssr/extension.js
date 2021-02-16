@@ -10,11 +10,12 @@
  * Note: Changes to this file (but not any file it imports!) are picked up by the
  * development server, but such updates are costly since the dev-server needs a reboot.
  */
+const express = require('express')
+
 const { InMemoryCache } = require('vue-auto-i18n')
 const sharedCache = new InMemoryCache()
-module.exports.extendApp = async function ({ app, ssr }) {
-  const express = require('express')
 
+module.exports.extendApp = async function ({ app, ssr }) {
   app.use(express.urlencoded({ extended: true }))
   app.use(function (req, res, next) {
     req.sharedCache = sharedCache

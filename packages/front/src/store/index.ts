@@ -80,6 +80,7 @@ export default store(({ Vue }) => {
       },
       setServerLocale(state: StateInterface, serverLocale: string) {
         state.serverLocale = serverLocale
+        useCookies().set('locale', serverLocale, { path: '/' })
       },
     },
 
