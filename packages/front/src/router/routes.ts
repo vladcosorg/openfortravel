@@ -14,7 +14,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
     {
       name: 'index-nolocale-nocountry',
       path: '/',
-      redirect(_to) {
+      redirect() {
         return useRouter().resolve({
           name: 'index-targeted',
           params: {
