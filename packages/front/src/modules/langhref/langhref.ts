@@ -1,5 +1,3 @@
-import { mapValues } from 'lodash'
-
 import { serverCache } from '@/front/src/misc/server-cache'
 import {
   resolveRoute,
@@ -7,65 +5,6 @@ import {
 } from '@/front/src/router/route-preloader'
 import { useRouter } from '@/shared/src/composables/use-plugins'
 import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
-import {
-  CountryCode,
-  CountrySlug,
-  CountrySlugType,
-  DestinationSlug,
-  OriginSlug,
-} from '@/shared/src/modules/country-list/country-list-types'
-import { Locale } from '@/shared/src/modules/language/locales'
-
-type LocalizedSlugList = Record<Locale, CountrySlug>
-
-async function getAllI18nSlugs(
-  countryCode: CountryCode,
-  type: CountrySlugType,
-): Promise<LocalizedSlugList> {
-  return mapValues(
-    serverCache.countryCodeToSlugMap,
-    (item) => item[type][countryCode],
-  )
-}
-
-const originSlugCache: Record<string, LocalizedSlugList> = {}
-async function getLocalizedOriginSlug(
-  originSlug: OriginSlug,
-  sourceLocale: string,
-  targetLocale: string,
-) {
-  if (!originSlugCache[originSlug]) {
-    const originCode =
-      serverCache.countrySlugToCodeMap[sourceLocale][CountrySlugType.ORIGIN][
-        originSlug
-      ]
-    originSlugCache[originSlug] = await getAllI18nSlugs(
-      originCode,
-      CountrySlugType.ORIGIN,
-    )
-  }
-  return originSlugCache[originSlug][targetLocale]
-}
-
-const destinationSlugCache: Record<string, LocalizedSlugList> = {}
-
-async function getLocalizedDestinationSlug(
-  destinationSlug: DestinationSlug,
-  sourceLocale: string,
-  targetLocale: string,
-) {
-  if (!destinationSlugCache[destinationSlug]) {
-    const destinationCode =
-      serverCache.countrySlugToCodeMap[sourceLocale][CountrySlugType.ORIGIN][
-        destinationSlug
-      ]
-    destinationSlugCache[destinationSlug] = await getAllI18nSlugs(
-      destinationCode,
-      CountrySlugType.DESTINATION,
-    )
-  }
-  return destinationSlugCache[destinationSlug][targetLocale]
-}
 
 type HreflangList = Record<
   string,
@@ -93,7 +32,7 @@ export async function generateHreflangTags(): Promise<HreflangList> {
     for (const [paramName, paramValue] of Object.entries(localizedParams)) {
       switch (paramName) {
         case 'originSlug':
-          localizedParams[paramName] = await getLocalizedOriginSlug(
+          localizedParams[paramName] = serverCache.translateOriginSlug(
             paramValue,
             currentRoute.params.locale,
             locale,
@@ -101,7 +40,7 @@ export async function generateHreflangTags(): Promise<HreflangList> {
           break
 
         case 'destinationSlug':
-          localizedParams[paramName] = await getLocalizedDestinationSlug(
+          localizedParams[paramName] = serverCache.translateDestinationSlug(
             paramValue,
             currentRoute.params.locale,
             locale,

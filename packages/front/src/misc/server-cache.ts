@@ -16,6 +16,20 @@ class ServerCache {
   public nationalities!: PreloadedNationalityList
   public quasarLocales!: Record<string, string>
 
+  public getCountryCodeToLabelMap(locale: string): CountryListTypes {
+    return (
+      this.countryCodeToLabelMap[locale] ?? this.countryCodeToLabelMap['en']
+    )
+  }
+
+  public getCountrySlugToCodeMap(locale: string): CountryListTypes {
+    return this.countrySlugToCodeMap[locale] ?? this.countrySlugToCodeMap['en']
+  }
+
+  public getCountryCodeToSlugMap(locale: string): CountryListTypes {
+    return this.countryCodeToSlugMap[locale] ?? this.countryCodeToSlugMap['en']
+  }
+
   public translateOriginSlug(
     currentSlug: string,
     currentLocale: string,
@@ -44,28 +58,28 @@ class ServerCache {
     originSlug: string,
     locale: string,
   ): string {
-    return this.countrySlugToCodeMap[locale]['origin'][originSlug]
+    return this.getCountrySlugToCodeMap(locale)['origin'][originSlug]
   }
 
   protected getCountryCodeByDestinationSlug(
     originSlug: string,
     locale: string,
   ): string {
-    return this.countrySlugToCodeMap[locale]['destination'][originSlug]
+    return this.getCountrySlugToCodeMap(locale)['destination'][originSlug]
   }
 
   protected getOriginSlugByCountryCode(
     countryCode: string,
     locale: string,
   ): string {
-    return this.countryCodeToSlugMap[locale]['origin'][countryCode]
+    return this.getCountryCodeToSlugMap(locale)['origin'][countryCode]
   }
 
   protected getDestinationSlugByCountryCode(
     countryCode: string,
     locale: string,
   ): string {
-    return this.countryCodeToSlugMap[locale]['destination'][countryCode]
+    return this.getCountryCodeToSlugMap(locale)['destination'][countryCode]
   }
 }
 

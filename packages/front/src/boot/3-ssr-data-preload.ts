@@ -11,29 +11,29 @@ export default boot(({ store }) => {
   if (useI18n().locale === 'ru') {
     store.commit(
       'modules/countryList/setCountryListOrigin',
-      serverCache.countryCodeToLabelMap[useI18n().locale].origin,
+      serverCache.getCountryCodeToLabelMap(useI18n().locale).origin,
     )
     store.commit(
       'modules/countryList/setCountryListDestination',
-      serverCache.countryCodeToLabelMap[useI18n().locale].destination,
+      serverCache.getCountryCodeToLabelMap(useI18n().locale).destination,
     )
 
     store.commit(
       'modules/countryList/setOriginSlugMap',
-      serverCache.countrySlugToCodeMap[useI18n().locale].origin,
+      serverCache.getCountrySlugToCodeMap(useI18n().locale).origin,
     )
     store.commit(
       'modules/countryList/setDestinationSlugMap',
-      serverCache.countrySlugToCodeMap[useI18n().locale].destination,
+      serverCache.getCountrySlugToCodeMap(useI18n().locale).destination,
     )
   } else {
     store.commit(
       'modules/countryList/setCountryList',
-      serverCache.countryCodeToLabelMap[useI18n().locale].origin,
+      serverCache.getCountryCodeToLabelMap(useI18n().locale).origin,
     )
     store.commit(
       'modules/countryList/setSlugMap',
-      serverCache.countrySlugToCodeMap[useI18n().locale].origin,
+      serverCache.getCountrySlugToCodeMap(useI18n().locale).origin,
     )
   }
 
