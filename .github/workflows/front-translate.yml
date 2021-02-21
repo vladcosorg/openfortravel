@@ -30,29 +30,25 @@ jobs:
         run: yarn install --ignore-platform --frozen-lockfile
       - run: yarn build
         working-directory: ./packages/functions
-      - id: deploy 1
-        uses: google-github-actions/deploy-cloud-functions@main
+      - uses: google-github-actions/deploy-cloud-functions@main
         with:
           source_dir: ./packages/functions/dist
           name: translate
           runtime: nodejs14
           credentials: ${{ secrets.GCP_SA_KEY }}
-      - id: deploy 2
-        uses: google-github-actions/deploy-cloud-functions@main
+      - uses: google-github-actions/deploy-cloud-functions@main
         with:
           source_dir: ./packages/functions/dist
           name: lastUpdatedListener
           runtime: nodejs14
           credentials: ${{ secrets.GCP_SA_KEY }}
-      - id: deploy 3
-        uses: google-github-actions/deploy-cloud-functions@main
+      - uses: google-github-actions/deploy-cloud-functions@main
         with:
           source_dir: ./packages/functions/dist
           name: safetyLevelCalculatorJob
           runtime: nodejs14
           credentials: ${{ secrets.GCP_SA_KEY }}
-      - id: deploy 4
-        uses: google-github-actions/deploy-cloud-functions@main
+      - uses: google-github-actions/deploy-cloud-functions@main
         with:
           source_dir: ./packages/functions/dist
           name: countryListener
