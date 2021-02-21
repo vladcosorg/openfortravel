@@ -67,6 +67,7 @@ export function useDestinations(): {
 async function generateOriginList(): Promise<Destination[]> {
   const origins = keyBy(await findOrigins(), (origin) => origin.countryCode)
   const allCountryCodes = getCountryCodes()
+
   const allOrigins = allCountryCodes.map(
     (countryCode) =>
       origins[countryCode] ??

@@ -26,6 +26,45 @@ const lastUpdatedListener = functions.firestore
         merge: true,
       },
     )
+
+    await db.doc(`viewByDestination/${data.destination}`).set(
+      {
+        [`origins.${data.origin}`]: data,
+      },
+      {
+        merge: true,
+      },
+    )
+
+    await db.doc(`viewByOrigin/${data.origin}`).set(
+      {
+        [`destinations.${data.destination}`]: data,
+      },
+      {
+        merge: true,
+      },
+    )
   })
 
-export { translate, lastUpdatedListener, safetyLevelCalculatorJob }
+const countryListener = functions.firestore
+  .document('countries/{countryID}')
+  .onUpdate(async (change, context) => {
+    const db = admin.firestore()
+    const data = change.after.data()
+    const countryID = context.params.countryID
+
+    await db.doc(`viewByDestination/${countryID}`).set(data, {
+      merge: true,
+    })
+
+    await db.doc(`viewByOrigin/${countryID}`).set(data, {
+      merge: true,
+    })
+  })
+
+export {
+  translate,
+  lastUpdatedListener,
+  safetyLevelCalculatorJob,
+  countryListener,
+}

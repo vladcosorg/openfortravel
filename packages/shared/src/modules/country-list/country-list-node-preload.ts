@@ -9,6 +9,10 @@ import {
   CountryListTypes,
 } from '@/shared/src/modules/country-list/country-list-store'
 
+export type RawLocalizedCountryList = {
+  locale: string
+  countries: CountryList
+}
 type CountryListCollection = Record<string, CountryListTypes>
 export function preloadCountryList(): CountryListCollection {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,12 +21,7 @@ export function preloadCountryList(): CountryListCollection {
     true,
     /\.json$/,
   )
-  const content = importAll<
-    Array<{
-      locale: string
-      countries: CountryList
-    }>
-  >(context)
+  const content = importAll<Array<RawLocalizedCountryList>>(context)
   const output: CountryListCollection = {}
 
   for (const list of content) {
@@ -32,16 +31,22 @@ export function preloadCountryList(): CountryListCollection {
         destination: require('@/shared/src/i18n/declensions-ru/destination.json'),
       }
     } else {
-      const processedList = convertCountryListResponseToCountryLabelMap(
-        list.countries,
-      )
-      output[list.locale] = {
-        origin: processedList,
-        destination: processedList,
-      }
+      output[list.locale] = createCountryListEntry(list)
     }
   }
   return output
+}
+
+export function createCountryListEntry(
+  list: RawLocalizedCountryList,
+): CountryListTypes {
+  const processedList = convertCountryListResponseToCountryLabelMap(
+    list.countries,
+  )
+  return {
+    origin: processedList,
+    destination: processedList,
+  }
 }
 
 export function generateCountryCodeToSlugList(
@@ -67,19 +72,23 @@ export function generateCountrySlugToCodeList(
 ): CountryListCollection {
   const output: Record<Locale, CountryListTypes> = {}
   for (const [locale, countryList] of Object.entries(collection)) {
-    output[locale] = {
-      origin: invert(
-        mapValues(countryList.origin, (value) =>
-          convertCountryNameToSlug(value),
-        ),
-      ),
-
-      destination: invert(
-        mapValues(countryList.destination, (value) =>
-          convertCountryNameToSlug(value),
-        ),
-      ),
-    }
+    output[locale] = createSlugListEntry(countryList)
   }
   return output
+}
+
+export function createSlugListEntry(
+  countryList: CountryListTypes,
+): CountryListTypes {
+  return {
+    origin: invert(
+      mapValues(countryList.origin, (value) => convertCountryNameToSlug(value)),
+    ),
+
+    destination: invert(
+      mapValues(countryList.destination, (value) =>
+        convertCountryNameToSlug(value),
+      ),
+    ),
+  }
 }

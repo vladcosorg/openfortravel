@@ -21,6 +21,7 @@ export interface DestinationDocument {
   testOnArrival?: false
   testValidityInHours?: number
   proofOfRecoveryInDays?: number
+  visitedRestrictedCountriesDaysAgo?: number
 }
 
 export interface PlainDestination extends DestinationDocument {
@@ -36,11 +37,16 @@ export class DestinationDefaults implements PlainDestination {
   public readonly riskLevel = RiskLevel.NO_DATA
   public readonly testValidityInHours = 48
   public readonly selfIsolationInDays = 14
+  public readonly visitedRestrictedCountriesDaysAgo = 0
   public readonly testOnArrival = false
   public readonly proofOfRecoveryInDays = 0
 
   get name(): string {
     return getLabelForCountryCode(this.countryCode)
+  }
+
+  get linkList(): string[] {
+    return this.infoLink.replace(/\r/g, '').split(/\n/)
   }
 
   public toPlainObject(): PlainDestination {

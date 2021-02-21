@@ -41,8 +41,8 @@ export default {
         ? state.slugMap
         : state.destinationSlugMap
     },
-    countryCodes(state): string[] {
-      return Object.keys(state.countryList)
+    countryCodes(_state, getters): string[] {
+      return Object.keys(getters['countryListOrigin'])
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     originByContinent(_state, getters, rootState: any) {

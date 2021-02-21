@@ -1,7 +1,6 @@
 <template>
-  <q-field v-bind="$attrs" borderless dense :loading="loading">
+  <q-field :label="label" outlined stack-label :loading="loading">
     <template #control>
-      <span v-if="label" class="col-12 q-mb-sm">{{ label }}</span>
       <q-option-group
         v-model="internalValue"
         :options="options"

@@ -11,6 +11,10 @@
         <q-toolbar-title>
           Destination: <b> {{ getLabelForCountryCode(originCode) }}</b>
         </q-toolbar-title>
+        <q-tabs v-model="tab" shrink>
+          <q-tab name="restrictions" label="Restrictions" />
+          <q-tab name="info" label="Info" />
+        </q-tabs>
         <q-space />
         <q-btn
           color="blue-grey-8"
@@ -23,12 +27,14 @@
 
     <div class="column full-height">
       <restriction-table
+        v-if="tab === 'restrictions'"
         class="col"
         :restrictions="restrictions.list"
         :loading="restrictions.loading"
         :selected.sync="selected"
       />
       <table-header
+        v-if="tab === 'info'"
         v-model="selected"
         class="col-auto items-start"
         :restrictions="restrictions.list"
@@ -63,7 +69,7 @@ export default defineComponent({
   },
   setup(props, { root }) {
     const originCode = props.originCode
-    const tab = ref('table')
+    const tab = ref('restrictions')
     const selected = ref<Restriction[]>([])
 
     const restrictions = useRestrictionListFilteredByDestination(originCode)

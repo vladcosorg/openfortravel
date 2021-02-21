@@ -39,7 +39,7 @@
             <inline-subscribe-form no-autofocus :restriction="restriction" />
           </section>
           <section
-            v-if="destination.infoLink"
+            v-if="destination.linkList.length > 0"
             class="bg-elevation-1 rounded-borders q-pa-lg"
           >
             <div class="text-h6">
@@ -48,8 +48,14 @@
             <div class="text-body2 text-grey-5 q-mb-md">
               {{ $t('page.destination.widgets.info.subtitle') }}
             </div>
-            <a target="_blank" :href="destination.infoLink">
-              {{ destination.infoLink }}
+            <a
+              v-for="(link, index) in destination.linkList"
+              :key="index"
+              target="_blank"
+              class="block"
+              :href="link"
+            >
+              {{ link }}
             </a>
           </section>
         </div>
@@ -75,6 +81,7 @@ import ReturnWay from '@/front/src/pages/destination/components/return-way.vue'
 import {
   getDestination,
   getRestriction,
+  useRelatedRestrictionsByDestination,
 } from '@/front/src/pages/destination/destination-composable'
 import { meta } from '@/front/src/pages/destination/destination-meta'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
@@ -120,6 +127,11 @@ export default defineComponent({
       loadingRef: destinationLoadingRef,
     } = getDestination(destinationCode)
 
+    const {
+      restrictions: relatedRestrictionList,
+      isLoading: isRelatedRestrictionListLoading,
+    } = useRelatedRestrictionsByDestination(destinationCode)
+
     const breadcrumbs = computed(() => [
       {
         label: t('page.country.breadcrumb', {
@@ -143,9 +155,11 @@ export default defineComponent({
     return {
       restriction: restrictionRef,
       destination: destinationRef,
+      relatedRestrictionList,
       loading: useAggregatedLoader(
         restrictionLoadingRef,
         destinationLoadingRef,
+        isRelatedRestrictionListLoading,
       ),
       breadcrumbs,
     }

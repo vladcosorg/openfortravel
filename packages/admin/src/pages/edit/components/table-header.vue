@@ -1,118 +1,110 @@
 <template>
-  <div class="row">
-    <div class="row col-12 q-ma-md">
-      <div class="col row q-col-gutter-md">
-        <in-place-field
-          class="col-6"
-          label="Info URL"
-          :value="destination.infoLink"
-          :loading="loading"
-          @input="updateField('infoLink', $event)"
-        >
-          <template #view="{ value }">
-            <a :href="value" target="_blank" class="text-white">
-              {{ value }}
-            </a>
-          </template>
-        </in-place-field>
+  <div class="row q-col-gutter-lg q-ma-md">
+    <in-place-field
+      label="Best by date"
+      :value="destination.bestByDate"
+      :loading="loading"
+      class="col-12"
+      @input="updateField('bestByDate', $event)"
+    >
+      <template #edit="{ label, loading, value, updateValue }">
+        <input-date
+          v-bind="{ label, loading, value }"
+          @input="updateValue($event)"
+        />
+      </template>
+    </in-place-field>
+    <test-required
+      class="col-6"
+      label="Is health declaration required?"
+      :value="destination.isHealthDeclarationRequired"
+      @input="updateField('isHealthDeclarationRequired', $event)"
+    />
 
-        <in-place-field
-          label="Best by date"
-          :value="destination.bestByDate"
-          :loading="loading"
-          class="col-6"
-          @input="updateField('bestByDate', $event)"
-        >
-          <template #edit="{ label, loading, value, updateValue }">
-            <input-date
-              v-bind="{ label, loading, value }"
-              @input="updateValue($event)"
-            />
-          </template>
-        </in-place-field>
-        <test-required
-          class="col-3"
-          label="Is health declaration required?"
-          :value="destination.isHealthDeclarationRequired"
-          @input="updateField('isHealthDeclarationRequired', $event)"
-        />
-        <in-place-field
-          v-if="destination.isHealthDeclarationRequired"
-          class="col-3"
-          label="Health Declaration Document"
-          :value="destination.healthDeclarationDocURL"
-          :loading="loading"
-          @input="updateField('healthDeclarationDocURL', $event)"
-        >
-          <template #view="{ value }">
-            <a :href="value" target="_blank" class="text-white ellipsis">
-              {{ value }}
-            </a>
-          </template>
-        </in-place-field>
-        <q-input
-          class="col-3"
-          label="Test validity in hours"
-          :value="destination.testValidityInHours"
-          type="number"
-          min="0"
-          outlined
-          :debounce="1000"
-          :loading="loading"
-          @input="updateField('testValidityInHours', $event)"
-        />
-        <q-input
-          class="col-3"
-          label="Self isolation in days"
-          :value="destination.selfIsolationInDays"
-          type="number"
-          min="0"
-          outlined
-          :debounce="1000"
-          :loading="loading"
-          @input="updateField('selfIsolationInDays', $event)"
-        />
-        <q-input
-          class="col-3"
-          label="Proof of recovery accepted instead of PCR test"
-          :value="destination.proofOfRecoveryInDays"
-          type="number"
-          min="0"
-          outlined
-          :debounce="1000"
-          :loading="loading"
-          @input="updateField('proofOfRecoveryInDays', $event)"
-        />
-        <q-checkbox
-          class="col-3"
-          label="Test on arrival available"
-          :value="destination.testOnArrival"
-          :loading="loading"
-          @input="updateField('testOnArrival', $event)"
-        />
-      </div>
-      <div class="col row">
-        <in-place-field
-          class="col-12"
-          label="Internal info"
-          :value="destination.internalInfo"
-          :loading="loading"
-          @input="updateField('internalInfo', $event)"
-        >
-          <template #edit="{ label, loading, value, updateVmodel }">
-            <q-input
-              type="textarea"
-              filled
-              v-bind="{ label, loading, value }"
-              @input="updateVmodel($event)"
-            />
-          </template>
-          <template #view="{ value }">
-            <pre> {{ value }}</pre>
-          </template>
-        </in-place-field>
-      </div>
-    </div>
+    <q-input
+      v-if="destination.isHealthDeclarationRequired"
+      filled
+      class="col-6"
+      label="Health Declaration Document"
+      :value="destination.healthDeclarationDocURL"
+      :loading="loading"
+      debounce="2000"
+      @input="updateField('healthDeclarationDocURL', $event)"
+    />
+
+    <q-input
+      class="col-3"
+      label="Test validity in hours"
+      :value="destination.testValidityInHours"
+      type="number"
+      min="0"
+      outlined
+      :debounce="1000"
+      :loading="loading"
+      @input="updateField('testValidityInHours', $event)"
+    />
+    <q-input
+      class="col-3"
+      label="Self isolation in days"
+      :value="destination.selfIsolationInDays"
+      type="number"
+      min="0"
+      outlined
+      :debounce="1000"
+      :loading="loading"
+      @input="updateField('selfIsolationInDays', $event)"
+    />
+    <q-input
+      class="col-3"
+      label="Visited restricted countries days ago"
+      :value="destination.visitedRestrictedCountriesDaysAgo"
+      type="number"
+      min="0"
+      outlined
+      :debounce="1000"
+      :loading="loading"
+      @input="updateField('visitedRestrictedCountriesDaysAgo', $event)"
+    />
+    <q-input
+      class="col-3"
+      label="Proof of recovery accepted instead of PCR test"
+      :value="destination.proofOfRecoveryInDays"
+      type="number"
+      min="0"
+      outlined
+      debounce="2000"
+      :loading="loading"
+      @input="updateField('proofOfRecoveryInDays', $event)"
+    />
+
+    <test-required
+      class="col-3"
+      label="Test on arrival available"
+      :value="destination.testOnArrival"
+      @input="updateField('testOnArrival', $event)"
+    />
+
+    <q-input
+      :value="destination.infoLink"
+      type="textarea"
+      class="col-12"
+      label="Info URL"
+      :loading="loading"
+      outlined
+      debounce="2000"
+      @input="updateField('infoLink', $event)"
+    />
+
+    <q-input
+      :value="destination.internalInfo"
+      type="textarea"
+      class="col-12"
+      label="Internal info"
+      :loading="loading"
+      debounce="2000"
+      outlined
+      @input="updateField('internalInfo', $event)"
+    />
   </div>
 </template>
 

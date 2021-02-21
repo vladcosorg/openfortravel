@@ -12,19 +12,27 @@ import {
 import { findOrigin } from '@/shared/src/api/destinations/repository'
 import {
   createDummyPlainRestriction,
+  wrapCollectionWithRichObject,
   wrapWithRichRestrictionObject,
 } from '@/shared/src/api/restrictions/helper'
 import {
   PlainRestriction,
   Restriction,
 } from '@/shared/src/api/restrictions/models'
-import { findRestrictionByOriginAndDestination } from '@/shared/src/api/restrictions/repository'
+import {
+  findRestrictionByOriginAndDestination,
+  findRestrictionsByDestination,
+} from '@/shared/src/api/restrictions/repository'
 
 class State {
   public restriction = createDummyPlainRestriction()
   public returnRestriction = createDummyPlainRestriction()
   public destination = createDummyPlainDestination()
   public returnDestination = createDummyPlainDestination()
+  public relatedRestrictions: {
+    destinationCode?: string
+    restrictions: Restriction[]
+  } = { restrictions: [] }
 }
 
 export default {
@@ -33,6 +41,8 @@ export default {
     return new State()
   },
   getters: {
+    relatedRestrictionList: (state): Restriction[] =>
+      wrapCollectionWithRichObject(state.relatedRestrictions.restrictions),
     getRestriction: (state): Restriction =>
       wrapWithRichRestrictionObject(state.restriction),
     getReturnRestriction: (state): Restriction =>
@@ -54,6 +64,12 @@ export default {
     },
     setReturnDestination(state: State, destination: PlainDestination): void {
       state.returnDestination = destination
+    },
+    setRelatedRestrictions(
+      state: State,
+      result: { destinationCode: string; restrictions: Restriction[] },
+    ): void {
+      state.relatedRestrictions = result
     },
   },
   actions: {
@@ -101,17 +117,35 @@ export default {
         ),
       )
     },
-    async fetchDestination({ commit, state }, destinationCode: string) {
+    async fetchDestination(
+      { commit, state, dispatch },
+      destinationCode: string,
+    ) {
       if (state.destination.countryCode === destinationCode) {
         return
       }
-      commit('setDestination', await findOrigin(destinationCode))
+
+      const destination = await findOrigin(destinationCode)
+      commit('setDestination', destination)
+
+      if (destination.visitedRestrictedCountriesDaysAgo) {
+        await dispatch('fetchRelatedRestrictions', destinationCode)
+      }
     },
     async fetchReturnDestination({ commit, state }, destinationCode: string) {
       if (state.returnDestination.countryCode === destinationCode) {
         return
       }
       commit('setReturnDestination', await findOrigin(destinationCode))
+    },
+    async fetchRelatedRestrictions({ commit, state }, destinationCode: string) {
+      if (state.relatedRestrictions.destinationCode === destinationCode) {
+        return
+      }
+      commit('setRelatedRestrictions', {
+        destinationCode,
+        restrictions: await findRestrictionsByDestination(destinationCode),
+      })
     },
   },
 } as Module<State, StateInterface>

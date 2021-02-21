@@ -10,6 +10,7 @@ import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import {
+  useProperVuexActionDispatcher,
   useVuexActionDispatcherWithReactivePayload,
   useVuexReactiveGetter,
 } from '@/shared/src/composables/use-vuex'
@@ -40,6 +41,31 @@ export function getRestriction(
   watch([originCodeRef, destinationCodeRef], fetcher)
 
   return { restrictionRef, loadingRef }
+}
+
+export function useRelatedRestrictionsByDestination(
+  destinationCode: Ref<string>,
+): {
+  restrictions: ComputedRef<Restriction[]>
+  isLoading: Ref<boolean>
+} {
+  const { loading } = useLoading(false)
+  const fetcher = useProperVuexActionDispatcher(
+    'destinationPage/fetchRelatedRestrictions',
+    loading,
+  )
+  const restrictions = useVuexReactiveGetter<Restriction[]>(
+    'destinationPage/relatedRestrictionList',
+  )
+
+  onServerPrefetch(() => fetcher(destinationCode.value))
+  onMounted(() => fetcher(destinationCode.value))
+  watch(destinationCode, fetcher)
+
+  return {
+    isLoading: loading,
+    restrictions,
+  }
 }
 
 export function getDestination(
