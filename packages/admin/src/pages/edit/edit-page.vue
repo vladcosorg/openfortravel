@@ -16,30 +16,44 @@
           <q-tab name="info" label="Info" />
         </q-tabs>
         <q-space />
+
         <q-btn
           color="blue-grey-8"
           unelevated
           label="Parse list"
           @click="openParseDialog"
         />
+        <q-btn
+          :disable="!isPending"
+          class="q-mx-md"
+          :color="isPending ? 'red' : 'gray'"
+          unelevated
+          label="Save"
+          :loading="isSaving"
+          @click="runPendings"
+        />
       </q-toolbar>
     </portal>
 
     <div class="column full-height">
-      <restriction-table
-        v-if="tab === 'restrictions'"
-        class="col"
-        :restrictions="restrictions.list"
-        :loading="restrictions.loading"
-        :selected.sync="selected"
-      />
-      <table-header
-        v-if="tab === 'info'"
-        v-model="selected"
-        class="col-auto items-start"
-        :restrictions="restrictions.list"
-        :destination-code="originCode"
-      />
+      <keep-alive>
+        <restriction-table
+          v-if="tab === 'restrictions'"
+          class="col"
+          :restrictions="restrictions.list"
+          :add-save-handler="addSaveHandlerProp"
+          :loading="restrictions.loading"
+          :selected.sync="selected"
+        />
+        <table-header
+          v-else-if="tab === 'info'"
+          v-model="selected"
+          :add-save-handler="addSaveHandlerProp"
+          class="col-auto items-start"
+          :restrictions="restrictions.list"
+          :destination-code="originCode"
+        />
+      </keep-alive>
     </div>
   </q-page>
 </template>
@@ -51,7 +65,8 @@ import { Portal } from 'portal-vue'
 import SelectorInput from '@/admin/src/pages/edit/components/selector-input.vue'
 import TableHeader from '@/admin/src/pages/edit/components/table-header.vue'
 import RestrictionTable from '@/admin/src/pages/edit/components/table.vue'
-import { useRestrictionListFilteredByDestination } from '@/shared/src/api/restrictions/composables'
+import { useSaveHandler } from '@/admin/src/pages/edit/composables/use-persister'
+import { useRestrictionListFilteredByDestination } from '@/admin/src/pages/edit/composables/use-record-loader'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
@@ -85,6 +100,7 @@ export default defineComponent({
     }
 
     return {
+      ...useSaveHandler(),
       openParseDialog,
       getLabelForCountryCode,
       tab,

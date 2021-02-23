@@ -1,11 +1,19 @@
 import firebase from 'firebase-admin'
+import * as functions from 'firebase-functions'
 import ky from 'ky-universal'
 import { deburr, find } from 'lodash'
 import scrapeIt from 'scrape-it'
 
 firebase.initializeApp()
 
-export async function runScraper(): Promise<void> {
+export const safetyLevelCalculatorJob = functions.pubsub
+  .schedule('every 48 hours')
+  .onRun(async () => {
+    await runScraper()
+    return
+  })
+
+async function runScraper(): Promise<void> {
   const finder = await loadCountryPopulations()
   const data = await scrapeIt<{
     countries: {
@@ -62,13 +70,13 @@ export async function runScraper(): Promise<void> {
   const recordsSet: Record<string, string> = {}
 
   data.data.countries.forEach(({ level, countries }) => {
-    countries.forEach((countryCode) => {
+    for (const countryCode of countries) {
       if (!countryCode) {
-        return
+        continue
       }
 
       recordsSet[countryCode] = level
-    })
+    }
   })
 
   await persistToFirestore(recordsSet)

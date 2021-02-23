@@ -1,53 +1,40 @@
-import { generateID } from '@/shared/src/api/restrictions/common'
+import {
+  generateID,
+  getViewCollection,
+  RestrictionDirection,
+} from '@/shared/src/api/restrictions/common'
 import {
   PlainRestriction,
   restrictionDefaults,
 } from '@/shared/src/api/restrictions/models'
 import { importFirebase } from '@/shared/src/misc/misc'
 
+async function findRestrictionsByDirection(
+  originCode: string,
+  direction: RestrictionDirection,
+): Promise<PlainRestriction[]> {
+  const collection = await getViewCollection(direction)
+  const results = await collection.doc(originCode).get()
+  const data = results.data()
+
+  if (!data) {
+    throw new Error('Not found')
+  }
+
+  return Object.values(data)
+}
+
 export async function findRestrictionsByOrigin(
   originCode: string,
 ): Promise<PlainRestriction[]> {
-  const { restrictionCollection } = await importFirebase()
-
-  const results = await restrictionCollection
-    .where('origin', '==', originCode)
-    // .limit(1)
-    .get()
-
-  return results.docs.map((snapshot) => snapshot.data())
+  return findRestrictionsByDirection(originCode, 'origin')
 }
 
 export async function findRestrictionsByDestination(
   destinationCode: string,
 ): Promise<PlainRestriction[]> {
-  const { restrictionCollection } = await importFirebase()
-  const results = await restrictionCollection
-    .where('destination', '==', destinationCode)
-    .get()
-
-  return results.docs.map((snapshot) => snapshot.data())
+  return findRestrictionsByDirection(destinationCode, 'destination')
 }
-
-// export async function findRestrictionsByDestination(
-//   destinationCode: string,
-// ): Promise<PlainRestriction[]> {
-//   const key = `restrictions/destination/${destinationCode}`
-//   let data: PlainRestriction[] | null = LocalStorage.getItem(key)
-//
-//   if (!data) {
-//     const { restrictionCollection } = await importFirebase()
-//     const results = await restrictionCollection
-//       .where('destination', '==', destinationCode)
-//       .get()
-//     data = results.docs.map((snapshot) => snapshot.data())
-//     if (data.length > 0) {
-//       LocalStorage.set(`restrictions/destination/${destinationCode}`, data)
-//     }
-//   }
-//
-//   return data
-// }
 
 export async function findRestrictionByOriginAndDestination(
   originCode: string,

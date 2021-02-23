@@ -33,24 +33,22 @@
         <q-td colspan="4"> Mass actions </q-td>
         <q-td>
           <test-required
-            @input="updateAllRestrictions('testRequired', $event)"
+            @input="persistSelectedOrAll('testRequired', $event)"
           />
         </q-td>
         <q-td>
           <test-required
-            @input="updateAllRestrictions('insuranceRequired', $event)"
+            @input="persistSelectedOrAll('insuranceRequired', $event)"
           />
         </q-td>
         <q-td>
           <test-required
             confirm
-            @input="updateAllRestrictions('selfIsolation', $event)"
+            @input="persistSelectedOrAll('selfIsolation', $event)"
           />
         </q-td>
         <q-td>
-          <test-required
-            @input="updateAllRestrictions('isForbidden', $event)"
-          />
+          <test-required @input="persistSelectedOrAll('isForbidden', $event)" />
         </q-td>
       </q-tr>
     </template>
@@ -79,7 +77,7 @@
       >
         <test-required
           :value="props.value"
-          @input="updateOneRestriction('testRequired', $event, props.row)"
+          @input="persistOne('testRequired', $event, props.row)"
         />
       </q-td>
     </template>
@@ -92,7 +90,7 @@
       >
         <test-required
           :value="props.value"
-          @input="updateOneRestriction('insuranceRequired', $event, props.row)"
+          @input="persistOne('insuranceRequired', $event, props.row)"
         />
       </q-td>
     </template>
@@ -105,7 +103,7 @@
       >
         <test-required
           :value="props.value"
-          @input="updateOneRestriction('selfIsolation', $event, props.row)"
+          @input="persistOne('selfIsolation', $event, props.row)"
         />
       </q-td>
     </template>
@@ -118,7 +116,7 @@
       >
         <test-required
           :value="props.value"
-          @input="updateOneRestriction('isForbidden', $event, props.row)"
+          @input="persistOne('isForbidden', $event, props.row)"
         />
       </q-td>
     </template>
@@ -170,10 +168,8 @@ import {
 
 import Stats from '@/admin/src/pages/edit/components/stats.vue'
 import TestRequired from '@/admin/src/pages/edit/components/test-required.vue'
-import {
-  useRestrictionCollectionPersister,
-  useRestrictionPersister,
-} from '@/shared/src/api/restrictions/composables'
+import { useRestrictionPersister } from '@/admin/src/pages/edit/composables/use-persister'
+import { AddSaveHandler } from '@/admin/src/pages/edit/edit-page.vue'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 import {
   getContinentLabel,
@@ -199,6 +195,10 @@ export default defineComponent({
     loading: {
       type: Boolean,
     },
+    addSaveHandler: {
+      type: Function as PropType<AddSaveHandler>,
+      required: true,
+    },
   },
   setup(props) {
     const continents = loadContinentMap()
@@ -212,25 +212,24 @@ export default defineComponent({
 
       return [...props.restrictions].sort(
         (a, b) =>
-          // a.destinationLabel.localeCompare(b.destinationLabel),
-          continentIDs.indexOf(continentMap[a.origin]) -
-          continentIDs.indexOf(continentMap[b.origin]),
+          continentIDs.indexOf(continentMap[b.origin]) -
+          continentIDs.indexOf(continentMap[a.origin]),
       )
     })
 
-    const updateOneRestriction = useRestrictionPersister()
-    const updateAllRestrictions = useRestrictionCollectionPersister(
+    const persister = useRestrictionPersister(
       restrictions,
+      props.addSaveHandler,
       selected,
     )
 
     return {
+      persister,
       sortedData,
       getLabelForCountryCode,
       tab,
       filter,
-      updateOneRestriction,
-      updateAllRestrictions,
+
       columns: [
         {
           name: 'continent',
@@ -284,6 +283,7 @@ export default defineComponent({
           sortable: true,
         },
       ],
+      ...persister,
     }
   },
 })

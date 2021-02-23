@@ -26,14 +26,17 @@ export async function findOriginAsRichObject(
 }
 
 export async function findOrigins(): Promise<PlainDestination[]> {
-  const { countryCollection } = await importFirebase()
-  // const results = await countryCollection.limit(1).get()
-  const results = await countryCollection.get()
+  const { firestore } = await importFirebase()
+  const result = (await firestore.doc('countries/_all').get()).data()
 
-  return results.docs.map((snapshot) => snapshot.data())
+  if (!result) {
+    throw new Error('Aggegated country result is missing')
+  }
+
+  return Object.values(result)
 }
 
-async function updateOriginDocument(
+export async function updateOriginDocument(
   reference: string,
   object: Partial<PlainDestination>,
 ): Promise<void> {

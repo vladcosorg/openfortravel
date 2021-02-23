@@ -1,6 +1,8 @@
 import admin from 'firebase-admin'
 import { groupBy } from 'lodash'
 
+import { DestinationDocument } from '@/shared/src/api/destinations/models'
+
 const db = admin
   .initializeApp({
     credential: admin.credential.applicationDefault(),
@@ -9,48 +11,42 @@ const db = admin
   .firestore()
 
 async function run() {
+  const countries = (await db.collection('countries').get()).docs.reduce<
+    Record<string, DestinationDocument>
+  >((acc, country) => {
+    acc[country.id] = country.data() as DestinationDocument
+    return acc
+  }, {})
   const col = db.collection('restrictions')
   const query = await col.get()
   const data = query.docs.map((item) => item.data())
   const groupedByOrigin = groupBy(data, (item) => item.origin)
   const groupedByDestination = groupBy(data, (item) => item.destination)
 
-  const countries = await db.collection('countries').get()
-
   const viewByOriginCollection = db.collection('viewByOrigin')
   const viewByDestinationCollection = db.collection('viewByDestination')
-  for (const countrySnapshot of countries.docs) {
-    const country = countrySnapshot.data()
-
-    if (groupedByDestination[countrySnapshot.id]) {
+  for (const [countryID, _countryData] of Object.entries(countries)) {
+    if (groupedByDestination[countryID]) {
       try {
-        await viewByDestinationCollection.doc(countrySnapshot.id).set({
-          ...country,
-          origins: groupedByDestination[countrySnapshot.id].reduce(
-            (acc, item) => {
-              acc[item.origin] = item
-              return acc
-            },
-            {},
-          ),
-        })
+        await viewByDestinationCollection.doc(countryID).set(
+          groupedByDestination[countryID].reduce((acc, restriction) => {
+            acc[restriction.origin] = restriction
+            return acc
+          }, {}),
+        )
       } catch (error) {
         console.log(error)
       }
     }
 
-    if (groupedByOrigin[countrySnapshot.id]) {
+    if (groupedByOrigin[countryID]) {
       try {
-        await viewByOriginCollection.doc(countrySnapshot.id).set({
-          ...country,
-          destinations: groupedByOrigin[countrySnapshot.id].reduce(
-            (acc, item) => {
-              acc[item.destination] = item
-              return acc
-            },
-            {},
-          ),
-        })
+        await viewByOriginCollection.doc(countryID).set(
+          groupedByOrigin[countryID].reduce((acc, restriction) => {
+            acc[restriction.destination] = restriction
+            return acc
+          }, {}),
+        )
       } catch (error) {
         console.log(error)
       }

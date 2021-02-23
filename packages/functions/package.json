@@ -7,7 +7,7 @@
     "build-watch": "microbundle -w build src/index.ts --output dist/index.js --target node --format cjs --no-sourcemap",
     "copy": "cp package.json dist/ && cp README.md dist/ && cp .npmrc dist/",
     "serve": "run-p build-watch start-emulators",
-    "start-emulators": "firebase emulators:start --only functions",
+    "start-emulators": "firebase emulators:start ",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",

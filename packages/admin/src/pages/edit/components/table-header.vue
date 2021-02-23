@@ -109,26 +109,54 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, PropType } from '@vue/composition-api'
+import pick from 'lodash/pick'
 
 import InPlaceField from '@/admin/src/pages/edit/components/in-place-field.vue'
 import InputDate from '@/admin/src/pages/edit/components/input-date.vue'
 import TestRequired from '@/admin/src/pages/edit/components/test-required.vue'
+import { AddSaveHandler } from '@/admin/src/pages/edit/edit-page.vue'
 import { useDestination } from '@/shared/src/api/destinations/composables'
+import { updateOriginDocument } from '@/shared/src/api/destinations/repository'
 
 export default defineComponent({
   components: { InPlaceField, InputDate, TestRequired },
   inheritAttrs: false,
   props: {
+    addSaveHandler: {
+      type: Function as PropType<AddSaveHandler>,
+      required: true,
+    },
     destinationCode: {
       type: String,
       required: true,
     },
   },
   setup(props) {
-    const { destinationRef, loadingRef, updateField } = useDestination(
-      props.destinationCode,
-    )
+    const { destinationRef, loadingRef } = useDestination(props.destinationCode)
+    let isPendingUpdate = false
+    const modifiedFields: string[] = []
+
+    const saveHandler = async (): Promise<void> => {
+      await updateOriginDocument(
+        props.destinationCode,
+        pick(destinationRef.value, modifiedFields),
+      )
+      isPendingUpdate = false
+      modifiedFields.length = 0
+    }
+
+    const updateField = (fieldName: string, fieldValue: unknown) => {
+      destinationRef.value = destinationRef.value.cloneWithFields({
+        [fieldName]: fieldValue,
+      })
+      modifiedFields.push(fieldName)
+
+      if (!isPendingUpdate) {
+        isPendingUpdate = true
+        props.addSaveHandler(saveHandler)
+      }
+    }
 
     return {
       destination: destinationRef,
