@@ -1,4 +1,5 @@
 import {
+  computed,
   ComputedRef,
   onMounted,
   onServerPrefetch,
@@ -66,6 +67,17 @@ export function useRelatedRestrictionsByDestination(
     isLoading: loading,
     restrictions,
   }
+}
+
+export function useRelatedRestrictionList(): ComputedRef<string[]> {
+  const restrictions = useVuexReactiveGetter<Restriction[]>(
+    'destinationPage/relatedRestrictionList',
+  )
+  return computed(() =>
+    restrictions.value
+      .filter((restriction) => !restriction.isAllowed())
+      .map((restriction) => restriction.originLabel),
+  )
 }
 
 export function getDestination(

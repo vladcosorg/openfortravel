@@ -1,9 +1,13 @@
-import { zipObject } from 'lodash'
+import zipObject from 'lodash/zipObject'
 import { TranslateResult } from 'vue-i18n'
 
 import {
+  MappedPlainRestrictionCollection,
+  MappedRestrictionCollection,
   PlainRestriction,
+  PlainRestrictionCollection,
   Restriction,
+  RestrictionCollection,
   restrictionDefaults,
   RestrictionStatus,
 } from '@/shared/src/api/restrictions/models'
@@ -12,6 +16,10 @@ import {
   findRestrictionsByOrigin,
 } from '@/shared/src/api/restrictions/repository'
 import { useI18n } from '@/shared/src/composables/use-plugins'
+import {
+  transformArrayCollectionToMappedCollection,
+  wrapCollection,
+} from '@/shared/src/misc/misc'
 import { getOrderedListOfContinentIDs } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import { getCountryCodes as getAllCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
@@ -26,6 +34,36 @@ export async function generateRestrictionListByDestination(
     'origin',
   )
   return [...realRestrictions, ...fallbackRestrictions]
+}
+
+export function fillMissingRestrictionsWithFallbacks<
+  T extends MappedPlainRestrictionCollection | PlainRestrictionCollection
+>(
+  existingRestrictions: T,
+  countryCode: string,
+  type: 'origin' | 'destination',
+): T {
+  const fallbacks = generateFallbackRestrictions(
+    Array.isArray(existingRestrictions)
+      ? existingRestrictions
+      : Object.values(existingRestrictions),
+    countryCode,
+    type === 'origin' ? 'origin' : 'destination',
+    type === 'origin' ? 'destination' : 'origin',
+  )
+
+  if (!Array.isArray(existingRestrictions)) {
+    return Object.assign(
+      {},
+      existingRestrictions,
+      transformArrayCollectionToMappedCollection(
+        fallbacks,
+        type === 'origin' ? 'destination' : 'origin',
+      ),
+    ) as T
+  }
+
+  return [...existingRestrictions] as T
 }
 
 export async function generateRestrictionListByOrigin(
@@ -91,10 +129,19 @@ export function wrapWithRichRestrictionObject(
 }
 
 export function wrapCollectionWithRichObject(
-  plainRestrictions: PlainRestriction[],
-): Restriction[] {
-  return plainRestrictions.map((element) =>
-    wrapWithRichRestrictionObject(element),
+  plainRestrictions: MappedPlainRestrictionCollection,
+): MappedRestrictionCollection
+export function wrapCollectionWithRichObject(
+  plainRestrictions: PlainRestrictionCollection,
+): RestrictionCollection
+export function wrapCollectionWithRichObject(
+  plainRestrictions:
+    | PlainRestrictionCollection
+    | MappedPlainRestrictionCollection,
+): RestrictionCollection | MappedRestrictionCollection {
+  return wrapCollection(
+    plainRestrictions as PlainRestrictionCollection,
+    (restriction) => wrapWithRichRestrictionObject(restriction),
   )
 }
 

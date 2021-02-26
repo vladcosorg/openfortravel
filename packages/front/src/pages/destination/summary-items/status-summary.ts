@@ -13,8 +13,25 @@ export class StatusSummary extends SummaryItem {
     [RestrictionStatus.ALLOWED_SOON]: 'text-info',
   }
   label = t('restriction.travel.label')
+
   value = t(`restriction.travel.value.${this.restriction.status}`)
-  caption = t(`restriction.travel.caption.${this.restriction.status}`)
+
+  get caption(): string {
+    const caption = [
+      t(`restriction.travel.caption.intro.${this.restriction.status}`),
+    ]
+
+    if (this.destination.visitedRestrictedCountriesDaysAgo > 0) {
+      caption.push(
+        t('restriction.travel.caption.relatedRestrictions', {
+          days: this.destination.visitedRestrictedCountriesDaysAgo,
+        }),
+      )
+    }
+
+    return caption.join(' ')
+  }
+
   icon = borderIcon
 
   public get valueClasses(): string {

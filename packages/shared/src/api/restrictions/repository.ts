@@ -4,24 +4,40 @@ import {
   RestrictionDirection,
 } from '@/shared/src/api/restrictions/common'
 import {
+  MappedPlainRestrictionCollection,
   PlainRestriction,
   restrictionDefaults,
 } from '@/shared/src/api/restrictions/models'
 import { importFirebase } from '@/shared/src/misc/misc'
 
-async function findRestrictionsByDirection(
+async function findMappedRestrictionsByDirection(
   originCode: string,
   direction: RestrictionDirection,
-): Promise<PlainRestriction[]> {
+): Promise<MappedPlainRestrictionCollection> {
   const collection = await getViewCollection(direction)
   const results = await collection.doc(originCode).get()
   const data = results.data()
 
   if (!data) {
-    throw new Error('Not found')
+    return {}
   }
 
-  return Object.values(data)
+  return data
+}
+
+async function findRestrictionsByDirection(
+  originCode: string,
+  direction: RestrictionDirection,
+): Promise<PlainRestriction[]> {
+  return Object.values(
+    await findMappedRestrictionsByDirection(originCode, direction),
+  )
+}
+
+export async function findMappedRestrictionsByOrigin(
+  originCode: string,
+): Promise<MappedPlainRestrictionCollection> {
+  return findMappedRestrictionsByDirection(originCode, 'origin')
 }
 
 export async function findRestrictionsByOrigin(

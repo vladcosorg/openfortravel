@@ -1,12 +1,10 @@
 import { Path, TranslateResult, Values } from 'vue-i18n'
 
-import { Restriction } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
-import { getNationalityOrFallback } from '@/shared/src/modules/nationality/nationality-helpers'
 
 const { t } = useVueI18n()
 
-function translateBlock(
+export function translateBlock(
   translatePath: Path,
   values: Values,
   branches: Record<string, string | boolean> = {},
@@ -30,32 +28,8 @@ function translateBlock(
 
   return result
 }
-type QAItem = {
+export type QAItem = {
+  id?: string
   question: string | TranslateResult
   answer: string | TranslateResult
-}
-export function canITravelToCountry(restriction: Restriction): QAItem {
-  return {
-    question: t('faq.canITravelToCountry.question', {
-      origin: restriction.originLabel,
-      destination: restriction.destinationLabel,
-    }),
-    answer: translateBlock(
-      `faq.canITravelToCountry.answer.${restriction.status}`,
-      {
-        origin: restriction.originLabel,
-        destination: restriction.destinationLabel,
-        nationality: getNationalityOrFallback(restriction.destination),
-        quarantine: restriction.selfIsolation,
-      },
-      {
-        testRequired:
-          restriction.testRequired && !restriction.needsSelfIsolation(),
-        quarantine:
-          restriction.needsSelfIsolation() && !restriction.testRequired,
-        testOrQuarantine:
-          restriction.testRequired && restriction.needsSelfIsolation(),
-      },
-    ),
-  }
 }

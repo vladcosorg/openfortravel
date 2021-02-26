@@ -28,8 +28,11 @@ export interface PlainDestination extends DestinationDocument {
   countryCode: string
 }
 
+export type MappedPlainDestinationCollection = Record<string, PlainDestination>
+export type MappedDestinationCollection = Record<string, Destination>
+
 export class DestinationDefaults implements PlainDestination {
-  public readonly countryCode = 'us'
+  public readonly countryCode = ''
   public readonly infoLink = ''
   public readonly bestByDate = ''
   public readonly isHealthDeclarationRequired = false
@@ -46,7 +49,7 @@ export class DestinationDefaults implements PlainDestination {
   }
 
   get linkList(): string[] {
-    return this.infoLink.replace(/\r/g, '').split(/\n/)
+    return this.infoLink.replace(/\r/g, '').split(/\n/).filter(Boolean)
   }
 
   public toPlainObject(): PlainDestination {

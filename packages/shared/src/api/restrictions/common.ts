@@ -4,9 +4,9 @@ import mapValues from 'lodash/mapValues'
 
 import {
   PlainRestriction,
-  PlainRestrictionCollection,
+  MappedPlainRestrictionCollection,
   Restriction,
-  RestrictionCollectionDocument,
+  MappedRestrictionDocumentCollection,
   restrictionDefaults,
   RestrictionDocument,
 } from '@/shared/src/api/restrictions/models'
@@ -45,18 +45,20 @@ export const dataConverter: firebase.firestore.FirestoreDataConverter<PlainRestr
 
 export async function getViewCollection(
   type: RestrictionDirection,
-): Promise<firebase.firestore.CollectionReference<PlainRestrictionCollection>> {
+): Promise<
+  firebase.firestore.CollectionReference<MappedPlainRestrictionCollection>
+> {
   const { firestore } = await importFirebase()
   return firestore
     .collection(type === 'origin' ? 'viewByOrigin' : 'viewByDestination')
-    .withConverter<PlainRestrictionCollection>({
+    .withConverter<MappedPlainRestrictionCollection>({
       toFirestore() {
         throw new Error('Persistance is not supported')
       },
       fromFirestore(
-        snapshot: firebase.firestore.QueryDocumentSnapshot<RestrictionCollectionDocument>,
+        snapshot: firebase.firestore.QueryDocumentSnapshot<MappedRestrictionDocumentCollection>,
         options: firebase.firestore.SnapshotOptions,
-      ): PlainRestrictionCollection {
+      ): MappedPlainRestrictionCollection {
         const expectedKeys = Object.keys(restrictionDefaults)
         return mapValues(snapshot.data(options), (item) =>
           Object.assign({}, restrictionDefaults, pick(item, expectedKeys)),

@@ -1,8 +1,21 @@
+import mapValues from 'lodash/mapValues'
 import { store } from 'quasar/wrappers'
 import { LocaleMessageObject } from 'vue-i18n'
 import Vuex, { Module } from 'vuex'
 
 import countryPage from '@/front/src/pages/country/country-store'
+import { wrapWithRichDestinationObject } from '@/shared/src/api/destinations/helper'
+import {
+  MappedDestinationCollection,
+  MappedPlainDestinationCollection,
+} from '@/shared/src/api/destinations/models'
+import { findMappedOrigins } from '@/shared/src/api/destinations/repository'
+import { wrapWithRichRestrictionObject } from '@/shared/src/api/restrictions/helper'
+import {
+  MappedPlainRestrictionCollection,
+  MappedRestrictionCollection,
+} from '@/shared/src/api/restrictions/models'
+import { findMappedRestrictionsByOrigin } from '@/shared/src/api/restrictions/repository'
 import { useCookies } from '@/shared/src/composables/use-plugins'
 import type { CountryListState } from '@/shared/src/modules/country-list/country-list-store'
 import countryList from '@/shared/src/modules/country-list/country-list-store'
@@ -21,6 +34,23 @@ export interface StateInterface {
   availableLocales: string[]
   labeledLocales: Record<string, string>[]
   countryToContinentMap: Record<string, string>
+  hostRules: MappedPlainDestinationCollection
+}
+
+export class RootState implements StateInterface {
+  countrySelectorLoading = false
+  detectedCountry = 'us'
+  localizedRoutes = {}
+  locales = {}
+  serverLocale = 'en'
+  availableLocales = []
+  labeledLocales = []
+  countryToContinentMap = {}
+  hostRules: MappedPlainDestinationCollection = {}
+  currentRestrictions: {
+    originCode?: string
+    restrictions: MappedPlainRestrictionCollection
+  } = { restrictions: {} }
 }
 
 // eslint-disable-next-line import/no-unused-modules
@@ -28,7 +58,7 @@ export default store(({ Vue }) => {
   Vue.use(Vuex)
 
   // eslint-disable-next-line import/no-named-as-default-member
-  return new Vuex.Store<StateInterface>({
+  return new Vuex.Store<RootState>({
     modules: {
       destinationPage,
       countryPage,
@@ -43,15 +73,8 @@ export default store(({ Vue }) => {
         },
       },
     },
-    state: {
-      countrySelectorLoading: false,
-      detectedCountry: 'us',
-      localizedRoutes: {},
-      locales: {},
-      serverLocale: 'en',
-      availableLocales: [],
-      labeledLocales: [],
-      countryToContinentMap: {},
+    state() {
+      return new RootState()
     },
     mutations: {
       setCountryToContinentMap(state, map: Record<string, string>) {
@@ -80,10 +103,53 @@ export default store(({ Vue }) => {
         state.serverLocale = serverLocale
         useCookies().set('locale', serverLocale, { path: '/' })
       },
+      setHostRules(
+        state: StateInterface,
+        hostRules: MappedPlainDestinationCollection,
+      ) {
+        state.hostRules = hostRules
+      },
+      setCurrentRestrictions(
+        state: RootState,
+        {
+          originCode,
+          restrictions,
+        }: {
+          originCode: string
+          restrictions: MappedPlainRestrictionCollection
+        },
+      ) {
+        state.currentRestrictions = {
+          originCode,
+          restrictions,
+        }
+      },
     },
 
-    actions: {},
+    actions: {
+      async fetchHostRules({ commit }) {
+        commit('setHostRules', await findMappedOrigins())
+      },
+      async fetchRestrictions({ commit, state }, originCode: string) {
+        if (state.currentRestrictions.originCode === originCode) {
+          return
+        }
+
+        commit('setCurrentRestrictions', {
+          originCode,
+          restrictions: await findMappedRestrictionsByOrigin(originCode),
+        })
+      },
+    },
     getters: {
+      wrappedHostRules: (state): MappedDestinationCollection =>
+        mapValues(state.hostRules, (hostRuleset) =>
+          wrapWithRichDestinationObject(hostRuleset),
+        ),
+      currentWrappedRestrictions: (state): MappedRestrictionCollection =>
+        mapValues(state.currentRestrictions.restrictions, (restriction) =>
+          wrapWithRichRestrictionObject(restriction),
+        ),
       detectedCountryWithFallback: (state): string =>
         state.detectedCountry ?? 'us',
     },

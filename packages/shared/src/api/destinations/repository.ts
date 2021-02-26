@@ -4,6 +4,7 @@ import {
 } from '@/shared/src/api/destinations/helper'
 import {
   Destination,
+  MappedPlainDestinationCollection,
   PlainDestination,
 } from '@/shared/src/api/destinations/models'
 import { importFirebase } from '@/shared/src/misc/misc'
@@ -11,6 +12,7 @@ import { importFirebase } from '@/shared/src/misc/misc'
 export async function findOrigin(code: string): Promise<PlainDestination> {
   const { countryCollection } = await importFirebase()
   const doc = await countryCollection.doc(code).get()
+
   const data = doc.data()
   if (!data) {
     return createDummyPlainDestination({ countryCode: code })
@@ -25,7 +27,7 @@ export async function findOriginAsRichObject(
   return wrapWithRichDestinationObject(await findOrigin(code))
 }
 
-export async function findOrigins(): Promise<PlainDestination[]> {
+export async function findMappedOrigins(): Promise<MappedPlainDestinationCollection> {
   const { firestore } = await importFirebase()
   const result = (await firestore.doc('countries/_all').get()).data()
 
@@ -33,7 +35,11 @@ export async function findOrigins(): Promise<PlainDestination[]> {
     throw new Error('Aggegated country result is missing')
   }
 
-  return Object.values(result)
+  return result.collection
+}
+
+export async function findOrigins(): Promise<PlainDestination[]> {
+  return Object.values(await findMappedOrigins())
 }
 
 export async function updateOriginDocument(

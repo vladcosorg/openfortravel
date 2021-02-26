@@ -12,12 +12,15 @@ import {
 import { findOrigin } from '@/shared/src/api/destinations/repository'
 import {
   createDummyPlainRestriction,
+  fillMissingRestrictionsWithFallbacks,
   wrapCollectionWithRichObject,
   wrapWithRichRestrictionObject,
 } from '@/shared/src/api/restrictions/helper'
 import {
   PlainRestriction,
+  PlainRestrictionCollection,
   Restriction,
+  RestrictionCollection,
 } from '@/shared/src/api/restrictions/models'
 import {
   findRestrictionByOriginAndDestination,
@@ -31,7 +34,7 @@ class State {
   public returnDestination = createDummyPlainDestination()
   public relatedRestrictions: {
     destinationCode?: string
-    restrictions: Restriction[]
+    restrictions: PlainRestrictionCollection
   } = { restrictions: [] }
 }
 
@@ -41,8 +44,20 @@ export default {
     return new State()
   },
   getters: {
-    relatedRestrictionList: (state): Restriction[] =>
-      wrapCollectionWithRichObject(state.relatedRestrictions.restrictions),
+    relatedRestrictionList: (state): RestrictionCollection => {
+      console.log('called')
+      if (!state.relatedRestrictions.destinationCode) {
+        return []
+      }
+
+      return wrapCollectionWithRichObject(
+        fillMissingRestrictionsWithFallbacks(
+          state.relatedRestrictions.restrictions,
+          state.relatedRestrictions.destinationCode,
+          'origin',
+        ),
+      )
+    },
     getRestriction: (state): Restriction =>
       wrapWithRichRestrictionObject(state.restriction),
     getReturnRestriction: (state): Restriction =>
@@ -67,7 +82,10 @@ export default {
     },
     setRelatedRestrictions(
       state: State,
-      result: { destinationCode: string; restrictions: Restriction[] },
+      result: {
+        destinationCode: string
+        restrictions: PlainRestrictionCollection
+      },
     ): void {
       state.relatedRestrictions = result
     },
@@ -118,19 +136,17 @@ export default {
       )
     },
     async fetchDestination(
-      { commit, state, dispatch },
+      { commit, state, dispatch, rootGetters },
       destinationCode: string,
     ) {
       if (state.destination.countryCode === destinationCode) {
         return
       }
 
-      const destination = await findOrigin(destinationCode)
+      const destination = rootGetters['wrappedHostRules'][destinationCode]
       commit('setDestination', destination)
 
-      if (destination.visitedRestrictedCountriesDaysAgo) {
-        await dispatch('fetchRelatedRestrictions', destinationCode)
-      }
+      await dispatch('fetchRelatedRestrictions', destinationCode)
     },
     async fetchReturnDestination({ commit, state }, destinationCode: string) {
       if (state.returnDestination.countryCode === destinationCode) {

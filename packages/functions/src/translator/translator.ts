@@ -33,6 +33,7 @@ export const translate = functions.https.onRequest(async (req, res) => {
   const existingTranslations = (sourceTranslations as Record<string, any>)[
     targetLanguage
   ]
+
   if (existingTranslations) {
     merge(response, existingTranslations)
   }

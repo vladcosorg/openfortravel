@@ -4,7 +4,7 @@ import '@/shared/src/modules/country-list/country-list-node-preload'
 import { serverCache } from '@/front/src/misc/server-cache'
 import { useI18n } from '@/shared/src/composables/use-plugins'
 
-export default boot(({ store }) => {
+export default boot(async ({ store }) => {
   store.commit('setAvailableLocales', serverCache.availableLocales)
   store.commit('setCountryToContinentMap', serverCache.continentMap)
   store.commit('setLabeledLocales', serverCache.labeledLocales)
@@ -44,4 +44,6 @@ export default boot(({ store }) => {
       serverCache.nationalities[useI18n().locale],
     )
   }
+
+  await store.dispatch('fetchHostRules')
 })

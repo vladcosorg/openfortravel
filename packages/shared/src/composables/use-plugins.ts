@@ -55,6 +55,15 @@ export function useVueI18n<T extends TranslateResult>(): {
   return { i18n, t: (unbound.bind(i18n) as unknown) as Translator<T> }
 }
 
+export function useI18nWithPrefix<T extends TranslateResult>(
+  prefixPath: VueI18n.Path,
+): { t: Translator<T> } {
+  const { t } = useVueI18n()
+  return {
+    t: (suffixPath, values?) => t(`${prefixPath}.${suffixPath}`, values) as T,
+  }
+}
+
 let cookiesInstance: Cookies
 
 export function initCookies(ssrContext?: QSsrContext | null): void {

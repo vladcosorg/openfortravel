@@ -45,12 +45,16 @@ export default {
         conditional: 'Partially open',
       },
       caption: {
-        forbidden: 'Some exceptions apply',
-        allowed:
-          'You might have to follow some procedures in order to cross the border. Please read below to inform yourself.',
-        allowedSoon: '',
-        conditional:
-          'Please read carefully the information below in order to understant if you meet the requirements.',
+        intro: {
+          forbidden: 'Some exceptions apply',
+          allowed:
+            'You might have to follow some procedures in order to cross the border. Please read below to inform yourself.',
+          allowedSoon: '',
+          conditional:
+            'Please read carefully the information below in order to understant if you meet the requirements.',
+        },
+        relatedRestrictions:
+          'You may be denied entry if you have been to one of the <a href="#related-countries">following</a> countries in the last {days} days.',
       },
       badgeValue: {
         allowed: 'Entry Allowed',
@@ -231,6 +235,7 @@ export default {
         info: {
           title: 'Local resources',
           subtitle: 'Please carefully read all the information below ',
+          none: 'No resources at the moment',
         },
       },
     },
@@ -304,6 +309,7 @@ export default {
     },
   },
   misc: {
+    or: 'or',
     countryCitizen: '{country} citizens',
     continents: {
       na: 'North America',
@@ -316,26 +322,41 @@ export default {
     },
   },
   faq: {
+    title: 'Questions & Answers',
+    recentlyVisited: {
+      question:
+        "Can I be quarantined or denied entry to {destination} if I've been to other countries recently?",
+      answer: {
+        yes:
+          "Yes, if you've visited {countries} in the last {days} days, you may be quarantined or denied entry to {destination}.",
+        no:
+          'No, the {destination} authorities are not imposing any restrictions for the passengers, that have visited other countries recently.',
+      },
+    },
     canITravelToCountry: {
       question: 'Can I travel from {origin} to {destination}?',
       answer: {
-        allowed: `Yes, leisure travel from <strong>{origin}</strong> to <strong>{destination}</strong> is permitted .
+        status: {
+          allowed: `Yes, leisure travel from <strong>{origin}</strong> to <strong>{destination}</strong> is permitted .
           No PCR test or COVID-19 vaccine passport is needed upon arrival.
           <br><br>However please note that you may be required to abide some other regulations unrelated
           to coronavirus pandemic.<br>
           `,
-        allowedSoon: 'Reopening soon',
-        forbidden:
-          'No, entering the country by travellers from {origin} is not allowed.  The only exceptions are <strong>{nationality}</strong> or permanent residents.',
-        conditional: {
-          intro:
-            'Yes, you can travel for leisure from <strong>{origin}</strong> to <strong>{destination}</strong>',
-          testRequired: ' but you need to present a negative PCR test.',
-          quarantine:
-            ' but you are required to self-isolate for {quarantine} days.',
-          testOrQuarantine:
-            ' but you need to provide a negative PCR test or self-isolate for {quarantine} days.',
+          allowedSoon: 'Reopening soon',
+          forbidden:
+            'No, entering the country by travellers from {origin} is not allowed.  The only exceptions are <strong>{nationality}</strong> or permanent residents.',
+          conditional: {
+            intro:
+              'Yes, you can travel for leisure from <strong>{origin}</strong> to <strong>{destination}</strong>',
+            testRequired: ' but you need to present a negative PCR test.',
+            quarantine:
+              ' but you are required to self-isolate for {quarantine} days.',
+            testOrQuarantine:
+              ' but you need to provide a negative PCR test or self-isolate for {quarantine} days.',
+          },
         },
+        relatedRestrictions:
+          'You may be denied entry if you have been to one of the <a href="#related-countries">following</a> countries in the last {days} days',
       },
     },
   },

@@ -38,18 +38,19 @@
           <section class="q-pb-xl">
             <inline-subscribe-form no-autofocus :restriction="restriction" />
           </section>
-          <section
-            v-if="destination.linkList.length > 0"
-            class="bg-elevation-1 rounded-borders q-pa-lg"
-          >
+          <section class="bg-elevation-1 rounded-borders q-pa-lg">
             <div class="text-h6">
               {{ $t('page.destination.widgets.info.title') }}
             </div>
             <div class="text-body2 text-grey-5 q-mb-md">
               {{ $t('page.destination.widgets.info.subtitle') }}
             </div>
+            <div v-if="destination.linkList.length === 0">
+              {{ $t('page.destination.widgets.info.none') }}
+            </div>
             <a
               v-for="(link, index) in destination.linkList"
+              v-else
               :key="index"
               target="_blank"
               class="block"
@@ -60,7 +61,12 @@
           </section>
         </div>
       </div>
-      <questions class="q-mt-xl" :restriction="restriction" />
+      <questions
+        class="q-mt-xl"
+        :is-loading="loading"
+        :destination="destination"
+        :restriction="restriction"
+      />
     </div>
   </inner-page>
 </template>
@@ -81,7 +87,6 @@ import ReturnWay from '@/front/src/pages/destination/components/return-way.vue'
 import {
   getDestination,
   getRestriction,
-  useRelatedRestrictionsByDestination,
 } from '@/front/src/pages/destination/destination-composable'
 import { meta } from '@/front/src/pages/destination/destination-meta'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
@@ -127,11 +132,6 @@ export default defineComponent({
       loadingRef: destinationLoadingRef,
     } = getDestination(destinationCode)
 
-    const {
-      restrictions: relatedRestrictionList,
-      isLoading: isRelatedRestrictionListLoading,
-    } = useRelatedRestrictionsByDestination(destinationCode)
-
     const breadcrumbs = computed(() => [
       {
         label: t('page.country.breadcrumb', {
@@ -155,11 +155,9 @@ export default defineComponent({
     return {
       restriction: restrictionRef,
       destination: destinationRef,
-      relatedRestrictionList,
       loading: useAggregatedLoader(
         restrictionLoadingRef,
         destinationLoadingRef,
-        isRelatedRestrictionListLoading,
       ),
       breadcrumbs,
     }

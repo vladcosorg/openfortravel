@@ -29,9 +29,16 @@ export interface RestrictionDocument {
 }
 
 export type PlainRestriction = Required<RestrictionDocument>
+export type MappedRestrictionDocumentCollection = Record<
+  string,
+  RestrictionDocument
+>
 
-export type RestrictionCollectionDocument = Record<string, RestrictionDocument>
-export type PlainRestrictionCollection = Record<string, PlainRestriction>
+export type PlainRestrictionCollection = PlainRestriction[]
+export type MappedPlainRestrictionCollection = Record<string, PlainRestriction>
+
+export type RestrictionCollection = Restriction[]
+export type MappedRestrictionCollection = Record<string, Restriction>
 
 export const restrictionDefaults: PlainRestriction = {
   isForbidden: false,

@@ -1,39 +1,55 @@
 <template>
   <section>
-    <h3 class="q-pb-lg">Questions & Answers</h3>
+    <h3 class="q-pb-lg">{{ $t('faq.title') }}</h3>
     <div class="q-gutter-lg">
-      <div v-for="(item, index) in questions" :key="index">
-        <h6>{{ item.question }}</h6>
-        <div>
-          <p class="text-subtitle1" v-html="item.answer" />
-        </div>
-        <q-separator />
-      </div>
+      <question-item
+        v-for="(item, index) in questions"
+        :key="index"
+        :item="item"
+        :is-last="lastIndex === index"
+      />
     </div>
   </section>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@vue/composition-api'
 
-import { canITravelToCountry } from '@/front/src/models/faq'
+import QuestionItem from '@/front/src/pages/destination/components/question-item.vue'
+import { getQuestions } from '@/front/src/pages/destination/destination-questions'
+import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
-  components: {},
+  components: { QuestionItem },
   props: {
+    isLoading: {
+      type: Boolean,
+      default: true,
+    },
+    destination: {
+      type: Object as PropType<Destination>,
+      required: true,
+    },
     restriction: {
       type: Object as PropType<Restriction>,
       required: true,
     },
   },
   setup(props) {
-    const questions = computed(() => [canITravelToCountry(props.restriction)])
+    const questions = computed(() => {
+      if (props.isLoading) {
+        return Array.from({ length: 3 })
+      }
+
+      return getQuestions(props.restriction, props.destination)
+    })
+
+    const lastIndex = computed(() => questions.value.length - 1)
 
     return {
       questions,
+      lastIndex,
     }
   },
 })
