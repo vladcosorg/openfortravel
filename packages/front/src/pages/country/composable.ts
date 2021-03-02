@@ -18,10 +18,7 @@ import {
   useProperVuexActionDispatcher,
   useVuexReactiveGetter,
 } from '@/shared/src/composables/use-vuex'
-import {
-  getLabelForCountryCode,
-  transformCountryCodeToOriginSlug,
-} from '@/shared/src/modules/country-list/country-list-helpers'
+import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export function useCountries(): {
   countries: ComputedRef<CountryMap>
@@ -177,7 +174,6 @@ export function getBreadcrumbs(
 ): ComputedRef {
   const { t } = useVueI18n()
   return computed(() => ({
-    originSlug: transformCountryCodeToOriginSlug(originCode.value),
     items: [
       {
         label: t('page.country.breadcrumb', {

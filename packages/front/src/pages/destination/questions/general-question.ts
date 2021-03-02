@@ -5,6 +5,9 @@ import { getNationalityOrFallback } from '@/shared/src/modules/nationality/natio
 
 const { t } = useI18nWithPrefix<string>('faq.canITravelToCountry')
 export class GeneralQuestion extends Question {
+  get id(): string {
+    return `can-travel-from-${this.restriction.originSlug}-to-${this.restriction.destinationSlug}`
+  }
   get question(): string {
     return t('question', {
       origin: this.restriction.originLabel,

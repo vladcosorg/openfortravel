@@ -36,7 +36,7 @@ export async function generateRestrictionListByDestination(
   return [...realRestrictions, ...fallbackRestrictions]
 }
 
-export function fillMissingRestrictionsWithFallbacks<
+export function fillMissingPlainRestrictionsWithFallbacks<
   T extends MappedPlainRestrictionCollection | PlainRestrictionCollection
 >(
   existingRestrictions: T,
@@ -64,6 +64,48 @@ export function fillMissingRestrictionsWithFallbacks<
   }
 
   return [...existingRestrictions] as T
+}
+
+export function getFullRestrictionsListForDestination<
+  T extends MappedPlainRestrictionCollection | PlainRestrictionCollection
+>(
+  partialRestrictionList: T,
+  destinationCode: string,
+): T extends MappedPlainRestrictionCollection
+  ? MappedRestrictionCollection
+  : RestrictionCollection {
+  const fullPlainRestrictionList = fillMissingPlainRestrictionsWithFallbacks(
+    partialRestrictionList,
+    destinationCode,
+    'destination',
+  )
+
+  return wrapCollectionWithRichObject(
+    fullPlainRestrictionList as never,
+  ) as T extends MappedPlainRestrictionCollection
+    ? MappedRestrictionCollection
+    : RestrictionCollection
+}
+
+export function getFullRestrictionsListForOrigin<
+  T extends MappedPlainRestrictionCollection | PlainRestrictionCollection
+>(
+  partialRestrictionList: T,
+  originCode: string,
+): T extends MappedPlainRestrictionCollection
+  ? MappedRestrictionCollection
+  : RestrictionCollection {
+  const fullPlainRestrictionList = fillMissingPlainRestrictionsWithFallbacks(
+    partialRestrictionList,
+    originCode,
+    'origin',
+  )
+
+  return wrapCollectionWithRichObject(
+    fullPlainRestrictionList as never,
+  ) as T extends MappedPlainRestrictionCollection
+    ? MappedRestrictionCollection
+    : RestrictionCollection
 }
 
 export async function generateRestrictionListByOrigin(

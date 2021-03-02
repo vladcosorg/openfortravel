@@ -1,16 +1,16 @@
-import mapValues from 'lodash/mapValues'
 import { store } from 'quasar/wrappers'
 import { LocaleMessageObject } from 'vue-i18n'
 import Vuex, { Module } from 'vuex'
 
 import countryPage from '@/front/src/pages/country/country-store'
-import { wrapWithRichDestinationObject } from '@/shared/src/api/destinations/helper'
+import { getFullDestinationList } from '@/shared/src/api/destinations/helper'
 import {
+  Destination,
   MappedDestinationCollection,
   MappedPlainDestinationCollection,
 } from '@/shared/src/api/destinations/models'
 import { findMappedOrigins } from '@/shared/src/api/destinations/repository'
-import { wrapWithRichRestrictionObject } from '@/shared/src/api/restrictions/helper'
+import { getFullRestrictionsListForOrigin } from '@/shared/src/api/restrictions/helper'
 import {
   MappedPlainRestrictionCollection,
   MappedRestrictionCollection,
@@ -47,7 +47,7 @@ export class RootState implements StateInterface {
   labeledLocales = []
   countryToContinentMap = {}
   hostRules: MappedPlainDestinationCollection = {}
-  currentRestrictions: {
+  sharedRestrictions: {
     originCode?: string
     restrictions: MappedPlainRestrictionCollection
   } = { restrictions: {} }
@@ -109,7 +109,7 @@ export default store(({ Vue }) => {
       ) {
         state.hostRules = hostRules
       },
-      setCurrentRestrictions(
+      setSharedRestrictions(
         state: RootState,
         {
           originCode,
@@ -119,7 +119,7 @@ export default store(({ Vue }) => {
           restrictions: MappedPlainRestrictionCollection
         },
       ) {
-        state.currentRestrictions = {
+        state.sharedRestrictions = {
           originCode,
           restrictions,
         }
@@ -130,12 +130,12 @@ export default store(({ Vue }) => {
       async fetchHostRules({ commit }) {
         commit('setHostRules', await findMappedOrigins())
       },
-      async fetchRestrictions({ commit, state }, originCode: string) {
-        if (state.currentRestrictions.originCode === originCode) {
+      async fetchSharedRestrictions({ commit, state }, originCode: string) {
+        if (state.sharedRestrictions.originCode === originCode) {
           return
         }
 
-        commit('setCurrentRestrictions', {
+        commit('setSharedRestrictions', {
           originCode,
           restrictions: await findMappedRestrictionsByOrigin(originCode),
         })
@@ -143,13 +143,22 @@ export default store(({ Vue }) => {
     },
     getters: {
       wrappedHostRules: (state): MappedDestinationCollection =>
-        mapValues(state.hostRules, (hostRuleset) =>
-          wrapWithRichDestinationObject(hostRuleset),
-        ),
-      currentWrappedRestrictions: (state): MappedRestrictionCollection =>
-        mapValues(state.currentRestrictions.restrictions, (restriction) =>
-          wrapWithRichRestrictionObject(restriction),
-        ),
+        getFullDestinationList(state.hostRules),
+      sharedRestrictions: (state): MappedRestrictionCollection => {
+        if (!state.sharedRestrictions.originCode) {
+          return {}
+        }
+
+        return getFullRestrictionsListForOrigin(
+          state.sharedRestrictions.restrictions,
+          state.sharedRestrictions.originCode,
+        )
+      },
+      currentOrigin: (state, getters): Destination => {
+        const destinations: MappedDestinationCollection =
+          getters['wrappedHostRules']
+        return destinations[state.detectedCountry]
+      },
       detectedCountryWithFallback: (state): string =>
         state.detectedCountry ?? 'us',
     },

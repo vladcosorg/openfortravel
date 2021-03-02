@@ -9,9 +9,7 @@ export abstract class Question {
     protected readonly destinationObject: DestinationObject,
   ) {}
 
-  public get id(): string | undefined {
-    return
-  }
+  public abstract get id(): string
   public abstract get question(): string
   public abstract get answer(): string
 }

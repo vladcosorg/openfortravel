@@ -1,7 +1,17 @@
-import { computed, ComputedRef, isRef, Ref, unref } from '@vue/composition-api'
+import {
+  computed,
+  ComputedRef,
+  isRef,
+  onMounted,
+  onServerPrefetch,
+  Ref,
+  unref,
+  watch,
+} from '@vue/composition-api'
 import { get, mapValues } from 'lodash'
 
 import { useStore } from '@/shared/src/composables/use-plugins'
+import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 // eslint-disable-next-line import/no-unused-modules
 export function useVuexComputedState<T>(path: string): ComputedRef<T> {
@@ -39,32 +49,52 @@ export function useVuexReactiveGetter<T>(getter: string): ComputedRef<T> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
-function useVuexAction<T>(action: string, payload: any): Promise<T> {
+function dispatchAction<T>(action: string, payload: any): Promise<T> {
   return useStore().dispatch(action, payload)
 }
 
-export function useVuexActionDispatcherWithReactivePayload(
+export function createReactiveDispatcher(
   action: string,
   reactivePayload: Record<string, Ref> | Ref,
-  loadingReference?: Ref<boolean>,
-) {
-  return async (): Promise<void> => {
-    const promise = useVuexAction(
+  triggerOn:
+    | {
+        mount?: boolean
+        prefetch?: boolean
+        change?: boolean
+      }
+    | boolean = true,
+): {
+  isLoading: Ref<boolean>
+  dispatcher: () => Promise<void>
+} {
+  const { loading } = useLoading()
+  const dispatcher = async (): Promise<void> => {
+    const promise = dispatchAction(
       action,
       isRef(reactivePayload)
         ? unref(reactivePayload)
         : mapValues(reactivePayload, (ref) => unref(ref)),
     )
-
-    if (loadingReference) {
-      loadingReference.value = true
-      promise.then(() => {
-        loadingReference.value = false
-      })
-    }
+    loading.value = true
+    promise.then(() => {
+      loading.value = false
+    })
 
     await promise
   }
+
+  if (triggerOn) {
+    onMounted(dispatcher)
+    onServerPrefetch(dispatcher)
+    watch(
+      isRef(reactivePayload)
+        ? [reactivePayload]
+        : Object.values(reactivePayload),
+      dispatcher,
+    )
+  }
+
+  return { isLoading: loading, dispatcher }
 }
 
 export function useProperVuexActionDispatcher(

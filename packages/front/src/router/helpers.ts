@@ -10,3 +10,11 @@ export function reloadRoutes(): void {
   //eslint-disable-next-line @typescript-eslint/no-explicit-any
   ;(useRouter() as any).matcher = freshRouter.matcher
 }
+
+export function getFullURL(relativeURL: string, hash?: string): string {
+  return `http://localhost:8080${relativeURL}${hash ? '#' + hash : ''}`
+}
+
+export function getCurrentURL(hash?: string): string {
+  return getFullURL(useRouter().currentRoute.fullPath, hash)
+}

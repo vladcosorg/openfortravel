@@ -5,6 +5,16 @@ import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/cou
 
 export default boot(async ({ router, urlPath, store, ssrContext }) => {
   if (!ssrContext) {
+    router.afterEach((to) => {
+      if (!to.params.originSlug) {
+        return
+      }
+      store.commit(
+        'setDetectedCountry',
+        transformOriginSlugToCode(to.params.originSlug),
+        true,
+      )
+    })
     return
   }
 
@@ -40,4 +50,6 @@ export default boot(async ({ router, urlPath, store, ssrContext }) => {
       }
     }
   }
+
+  await store.dispatch('fetchSharedRestrictions', store.state.detectedCountry)
 })

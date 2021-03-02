@@ -6,17 +6,8 @@
           <template #separator>
             <q-icon size="1.5em" :name="matChevronRight" color="primary" />
           </template>
-          <template v-if="!loading" #default>
-            <q-breadcrumbs-el
-              :icon="matHome"
-              :to="{
-                name: 'index-targeted',
-                params: {
-                  originSlug: originSlug,
-                },
-              }"
-              label="Home"
-            />
+          <template v-if="items" #default>
+            <q-breadcrumbs-el :icon="matHome" :to="homepageURL" label="Home" />
             <q-breadcrumbs-el
               v-for="(item, index) in items"
               :key="index"
@@ -51,24 +42,18 @@
 import { matHome, matChevronRight } from '@quasar/extras/material-icons'
 import { defineComponent } from '@vue/composition-api'
 
+import { getMenuItemURL } from '@/front/src/misc/menu'
+
 export default defineComponent({
   components: {},
   props: {
-    originSlug: {
-      type: String,
-      required: true,
-    },
     items: {
       type: Array,
-      required: true,
-    },
-    loading: {
-      type: Boolean,
-      required: true,
+      required: false,
     },
   },
   setup() {
-    return { matHome, matChevronRight }
+    return { matHome, matChevronRight, homepageURL: getMenuItemURL('index') }
   },
 })
 </script>

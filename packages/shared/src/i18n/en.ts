@@ -11,14 +11,14 @@ export default {
   },
   description: {
     intro: {
-      travel: 'Travel from {origin} to {destination} ',
+      travel: 'Travel from {origin} to {destination}',
       return: 'Returning from <b>{origin}</b> to <b>{destination}</b>',
     },
     status: {
       allowed:
-        'is <b translate="no">@.lower:restriction.travel.value.allowed</b> without any restrictions. ',
+        'is <b>@.lower:restriction.travel.value.allowed</b> without any restrictions. ',
       forbidden:
-        'is <b translate="no">@.lower:restriction.travel.value.forbidden</b> with some exceptions. Please consult the country page for more info. ',
+        'is <b>@.lower:restriction.travel.value.forbidden</b> with some exceptions. Please consult the country page for more info. ',
       conditional:
         'is allowed with some conditions. Please consult the country page for more info.',
     },
@@ -225,6 +225,8 @@ export default {
         title:
           '{destination} travel restrictions from {origin}: flight restrictions, quarantine measures,  COVID-19 vaccine passport  and other entry requirements',
       },
+      heading:
+        'Travel restrictions from <b>{origin}</b> to <b>{destination}</b>',
       breadcrumb: 'To {country}',
       title: 'Latest information on travelling from {origin} to {destination}',
       seeReturnPage: 'See return travel',
@@ -233,18 +235,32 @@ export default {
       fillDeclaration: 'Fill online',
       widgets: {
         info: {
-          title: 'Local resources',
+          title: 'Additional resources',
           subtitle: 'Please carefully read all the information below ',
           none: 'No resources at the moment',
+        },
+        summary: {
+          title: 'Summary',
+          subtitle:
+            'Make sure to read all the additional information listed on the page before making a decision',
+        },
+        faqIndex: { title: 'Quick Navigation' },
+        faq: {
+          title: 'Questions & Answers',
+          subtitle: 'Got more questions? Contact us!',
         },
       },
     },
     notFound: {
-      title: 404,
+      title: '404',
       subtitle: 'Oops. Nothing here...',
     },
   },
   components: {
+    sharing: {
+      title: 'Tell your friends about us',
+      prefix: 'Share with',
+    },
     drawer: {
       darkMode: 'Dark mode',
     },
@@ -357,6 +373,16 @@ export default {
         },
         relatedRestrictions:
           'You may be denied entry if you have been to one of the <a href="#related-countries">following</a> countries in the last {days} days',
+      },
+    },
+    return: {
+      question:
+        'Will I be able to return from <strong>{destination}</strong> to <strong>{origin}</strong> without any restrictions or quarantine?',
+      answer: {
+        yes:
+          'Yes, provided that you will be returning back to the <strong>{origin}</strong> with a direct flight from <strong>{destination}</strong>, you will not be denied entry or quarantined. ',
+        no:
+          'No, you may have to quarantine yourself or pass a test upon returning if you are a resident or a national.',
       },
     },
   },

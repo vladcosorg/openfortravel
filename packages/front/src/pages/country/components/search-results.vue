@@ -4,7 +4,6 @@
       <the-breadcrumbs
         :items="breadcrumbs.items"
         :loading="breadcrumbs.loading"
-        :origin-slug="breadcrumbs.originSlug"
       />
     </portal>
     <div class="justify-center q-gutter-lg">

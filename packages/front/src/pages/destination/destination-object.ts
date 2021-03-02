@@ -12,9 +12,12 @@ export class DestinationObject {
     const restrictions = useVuexRawGetter<Restriction[]>(
       'destinationPage/relatedRestrictionList',
     )
-    console.log('ran')
     return restrictions
       .filter((restriction) => !restriction.isAllowed())
       .map((restriction) => restriction.originLabel)
+  }
+
+  public getReturnRestriction(): Restriction {
+    return useVuexRawGetter<Restriction>('destinationPage/returnRestriction')
   }
 }

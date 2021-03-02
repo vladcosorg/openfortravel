@@ -33,8 +33,8 @@
     font-size: 50px;
   }
   @media (min-width: $breakpoint-xs-max) {
-    // Do not removed, prevents CLS
-    position: static;
+    // Do not remove, prevents CLS
+    position: relative;
   }
 }
 </style>

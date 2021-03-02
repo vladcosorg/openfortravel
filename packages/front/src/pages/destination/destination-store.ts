@@ -7,16 +7,16 @@ import {
 } from '@/shared/src/api/destinations/helper'
 import {
   Destination,
+  MappedDestinationCollection,
   PlainDestination,
 } from '@/shared/src/api/destinations/models'
-import { findOrigin } from '@/shared/src/api/destinations/repository'
 import {
   createDummyPlainRestriction,
-  fillMissingRestrictionsWithFallbacks,
-  wrapCollectionWithRichObject,
+  getFullRestrictionsListForDestination,
   wrapWithRichRestrictionObject,
 } from '@/shared/src/api/restrictions/helper'
 import {
+  MappedRestrictionCollection,
   PlainRestriction,
   PlainRestrictionCollection,
   Restriction,
@@ -27,7 +27,13 @@ import {
   findRestrictionsByDestination,
 } from '@/shared/src/api/restrictions/repository'
 
+export type CurrentCountryPair = {
+  currentOriginCode: string
+  currentDestinationCode: string
+}
 class State {
+  public currentOriginCode?: string = ''
+  public currentDestinationCode?: string = ''
   public restriction = createDummyPlainRestriction()
   public returnRestriction = createDummyPlainRestriction()
   public destination = createDummyPlainDestination()
@@ -45,17 +51,13 @@ export default {
   },
   getters: {
     relatedRestrictionList: (state): RestrictionCollection => {
-      console.log('called')
       if (!state.relatedRestrictions.destinationCode) {
         return []
       }
 
-      return wrapCollectionWithRichObject(
-        fillMissingRestrictionsWithFallbacks(
-          state.relatedRestrictions.restrictions,
-          state.relatedRestrictions.destinationCode,
-          'origin',
-        ),
+      return getFullRestrictionsListForDestination(
+        state.relatedRestrictions.restrictions,
+        state.relatedRestrictions.destinationCode,
       )
     },
     getRestriction: (state): Restriction =>
@@ -66,8 +68,70 @@ export default {
       wrapWithRichDestinationObject(state.destination),
     getReturnDestination: (state): Destination =>
       wrapWithRichDestinationObject(state.returnDestination),
+    currentRestriction: (
+      state,
+      _getters,
+      _rootState,
+      rootGetters,
+    ): Restriction | undefined => {
+      if (!state.currentDestinationCode) {
+        return
+      }
+
+      const restrictions: MappedRestrictionCollection =
+        rootGetters['sharedRestrictions']
+
+      return restrictions[state.currentDestinationCode]
+    },
+    returnRestriction: (state): Restriction | undefined => {
+      if (!state.returnRestriction) {
+        return
+      }
+      return wrapWithRichRestrictionObject(state.returnRestriction)
+    },
+    currentDestination: (
+      state,
+      _getters,
+      _rootState,
+      rootGetters,
+    ): Destination | undefined => {
+      if (!state.currentDestinationCode) {
+        return
+      }
+
+      const destinations: MappedDestinationCollection =
+        rootGetters['wrappedHostRules']
+
+      return destinations[state.currentDestinationCode]
+    },
+    currentReturnDestination: (
+      state,
+      _getters,
+      _rootState,
+      rootGetters,
+    ): Destination | undefined => {
+      if (!state.currentOriginCode) {
+        return
+      }
+
+      const destinations: MappedDestinationCollection =
+        rootGetters['wrappedHostRules']
+
+      return destinations[state.currentOriginCode]
+    },
   },
   mutations: {
+    setCurrentCountryPair(
+      state: State,
+      countryPair: {
+        currentOriginCode: string
+        currentDestinationCode: string
+      },
+    ): void {
+      // Object.assign(state, countryPair)
+      state.currentOriginCode = countryPair.currentOriginCode
+      state.currentDestinationCode = countryPair.currentDestinationCode
+    },
     setRestriction(state: State, restriction: PlainRestriction): void {
       state.restriction = restriction
     },
@@ -91,28 +155,6 @@ export default {
     },
   },
   actions: {
-    async fetchRestriction(
-      { commit, state },
-      {
-        originCode,
-        destinationCode,
-      }: { originCode: string; destinationCode: string },
-    ) {
-      if (
-        state.restriction &&
-        state.restriction.origin === originCode &&
-        state.restriction.destination === destinationCode
-      ) {
-        return
-      }
-      commit(
-        'setRestriction',
-        await findRestrictionByOriginAndDestination(
-          originCode,
-          destinationCode,
-        ),
-      )
-    },
     async fetchReturnRestriction(
       { commit, state },
       {
@@ -135,25 +177,7 @@ export default {
         ),
       )
     },
-    async fetchDestination(
-      { commit, state, dispatch, rootGetters },
-      destinationCode: string,
-    ) {
-      if (state.destination.countryCode === destinationCode) {
-        return
-      }
 
-      const destination = rootGetters['wrappedHostRules'][destinationCode]
-      commit('setDestination', destination)
-
-      await dispatch('fetchRelatedRestrictions', destinationCode)
-    },
-    async fetchReturnDestination({ commit, state }, destinationCode: string) {
-      if (state.returnDestination.countryCode === destinationCode) {
-        return
-      }
-      commit('setReturnDestination', await findOrigin(destinationCode))
-    },
     async fetchRelatedRestrictions({ commit, state }, destinationCode: string) {
       if (state.relatedRestrictions.destinationCode === destinationCode) {
         return
@@ -161,6 +185,21 @@ export default {
       commit('setRelatedRestrictions', {
         destinationCode,
         restrictions: await findRestrictionsByDestination(destinationCode),
+      })
+    },
+
+    async fetch({ commit, dispatch }, countryPair: CurrentCountryPair) {
+      commit('setCurrentCountryPair', countryPair)
+      await dispatch('fetchSharedRestrictions', countryPair.currentOriginCode, {
+        root: true,
+      })
+      await dispatch(
+        'fetchRelatedRestrictions',
+        countryPair.currentDestinationCode,
+      )
+      await dispatch('fetchReturnRestriction', {
+        originCode: countryPair.currentDestinationCode,
+        destinationCode: countryPair.currentOriginCode,
       })
     },
   },
