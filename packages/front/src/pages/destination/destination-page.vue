@@ -55,6 +55,7 @@ import { defineComponent, toRefs } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
+import { useModule } from '@/front/src/composables/module'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import TheSearchHeader from '@/front/src/layouts/components/the-search-header.vue'
 import Heading from '@/front/src/pages/destination/components/heading.vue'
@@ -67,6 +68,7 @@ import Sharing from '@/front/src/pages/destination/components/sharing.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import { useBreadcrumbs } from '@/front/src/pages/destination/destination-composable'
 import { meta } from '@/front/src/pages/destination/destination-meta'
+import store from '@/front/src/pages/destination/destination-store'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 import {
   createReactiveDispatcher,
@@ -105,6 +107,8 @@ export default defineComponent({
   },
   setup(props) {
     const { originCode, destinationCode } = toRefs(props)
+    useModule('destinationPage', store)
+
     const { isLoading } = createReactiveDispatcher(
       'destinationPage/fetch',
       {
@@ -114,18 +118,18 @@ export default defineComponent({
       true,
     )
 
-    const restrictionRef = useVuexReactiveGetter<Restriction>(
+    const restriction = useVuexReactiveGetter<Restriction>(
       'destinationPage/currentRestriction',
     )
-    const destinationRef = useVuexReactiveGetter<Restriction>(
+    const destination = useVuexReactiveGetter<Restriction>(
       'destinationPage/currentDestination',
     )
 
     return {
-      restriction: restrictionRef,
-      destination: destinationRef,
+      restriction,
+      destination,
       isLoading,
-      breadcrumbs: useBreadcrumbs(restrictionRef),
+      breadcrumbs: useBreadcrumbs(restriction),
     }
   },
 })

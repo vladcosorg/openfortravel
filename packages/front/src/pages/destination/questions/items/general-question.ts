@@ -1,4 +1,5 @@
 import { Question } from '@/front/src/pages/destination/questions/question'
+import { getCurrentURL } from '@/front/src/router/helpers'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
 import { getNationalityOrFallback } from '@/shared/src/modules/nationality/nationality-helpers'
@@ -34,6 +35,7 @@ export class GeneralQuestion extends Question {
       answer.push(
         t('answer.relatedRestrictions', {
           days: this.destination.visitedRestrictedCountriesDaysAgo,
+          url: getCurrentURL(),
         }),
       )
     }

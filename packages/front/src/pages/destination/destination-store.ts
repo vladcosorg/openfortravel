@@ -1,17 +1,15 @@
 import { Module } from 'vuex'
 
+import { GeneralQuestion } from '@/front/src/pages/destination/questions/items/general-question'
+import { Question } from '@/front/src/pages/destination/questions/question'
+import { ReturnQuestion } from '@/front/src/pages/destination/questions/items/return-question'
+import { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
 import { StateInterface } from '@/front/src/store'
-import {
-  createDummyPlainDestination,
-  wrapWithRichDestinationObject,
-} from '@/shared/src/api/destinations/helper'
 import {
   Destination,
   MappedDestinationCollection,
-  PlainDestination,
 } from '@/shared/src/api/destinations/models'
 import {
-  createDummyPlainRestriction,
   getFullRestrictionsListForDestination,
   wrapWithRichRestrictionObject,
 } from '@/shared/src/api/restrictions/helper'
@@ -31,13 +29,11 @@ export type CurrentCountryPair = {
   currentOriginCode: string
   currentDestinationCode: string
 }
+
 class State {
-  public currentOriginCode?: string = ''
-  public currentDestinationCode?: string = ''
-  public restriction = createDummyPlainRestriction()
-  public returnRestriction = createDummyPlainRestriction()
-  public destination = createDummyPlainDestination()
-  public returnDestination = createDummyPlainDestination()
+  public currentOriginCode?: string = undefined
+  public currentDestinationCode?: string = undefined
+  public returnRestriction?: PlainRestriction = undefined
   public relatedRestrictions: {
     destinationCode?: string
     restrictions: PlainRestrictionCollection
@@ -49,6 +45,7 @@ export default {
   state: function () {
     return new State()
   },
+
   getters: {
     relatedRestrictionList: (state): RestrictionCollection => {
       if (!state.relatedRestrictions.destinationCode) {
@@ -60,14 +57,13 @@ export default {
         state.relatedRestrictions.destinationCode,
       )
     },
-    getRestriction: (state): Restriction =>
-      wrapWithRichRestrictionObject(state.restriction),
-    getReturnRestriction: (state): Restriction =>
-      wrapWithRichRestrictionObject(state.returnRestriction),
-    getDestination: (state): Destination =>
-      wrapWithRichDestinationObject(state.destination),
-    getReturnDestination: (state): Destination =>
-      wrapWithRichDestinationObject(state.returnDestination),
+
+    relatedRestrictionForbiddenStringList: (_state, getters): string[] => {
+      const list: RestrictionCollection = getters['relatedRestrictionList']
+      return list
+        .filter((restriction) => !restriction.isAllowed())
+        .map((restriction) => restriction.originLabel)
+    },
     currentRestriction: (
       state,
       _getters,
@@ -104,6 +100,7 @@ export default {
 
       return destinations[state.currentDestinationCode]
     },
+
     currentReturnDestination: (
       state,
       _getters,
@@ -119,6 +116,18 @@ export default {
 
       return destinations[state.currentOriginCode]
     },
+    questions: (_state, getters): Question[] => {
+      const restriction: Restriction | undefined = getters['currentRestriction']
+      const destination: Destination | undefined = getters['currentDestination']
+
+      if (!restriction || !destination) {
+        return []
+      }
+
+      return [GeneralQuestion, VisitedCountryQuestion, ReturnQuestion]
+        .map((item) => new item(restriction, destination))
+        .filter((question) => !question.skip)
+    },
   },
   mutations: {
     setCurrentCountryPair(
@@ -128,21 +137,11 @@ export default {
         currentDestinationCode: string
       },
     ): void {
-      // Object.assign(state, countryPair)
       state.currentOriginCode = countryPair.currentOriginCode
       state.currentDestinationCode = countryPair.currentDestinationCode
     },
-    setRestriction(state: State, restriction: PlainRestriction): void {
-      state.restriction = restriction
-    },
     setReturnRestriction(state: State, restriction: PlainRestriction): void {
       state.returnRestriction = restriction
-    },
-    setDestination(state: State, destination: PlainDestination): void {
-      state.destination = destination
-    },
-    setReturnDestination(state: State, destination: PlainDestination): void {
-      state.returnDestination = destination
     },
     setRelatedRestrictions(
       state: State,

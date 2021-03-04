@@ -5,7 +5,11 @@
     "packages/*"
   ],
   "scripts": {
-    "reinstall": "rm -rf ./node_modules && rm -rf ./packages/*/node_modules "
+    "reinstall": "rm -rf ./node_modules && rm -rf ./packages/*/node_modules ",
+    "fix": "run-p -c fix:* ",
+    "fix:front": "yarn workspace front run fix",
+    "fix:shared": "yarn workspace shared run fix",
+    "fix:admin": "yarn workspace admin run fix"
   },
   "devDependencies": {
     "eslint-import-resolver-alias": "^1.1.2",

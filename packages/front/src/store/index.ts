@@ -23,8 +23,6 @@ import nationalities, {
   NationalityState,
 } from '@/shared/src/modules/nationality/nationality-store'
 
-import destinationPage from '../pages/destination/destination-store'
-
 export interface StateInterface {
   countrySelectorLoading: boolean
   detectedCountry: string | undefined
@@ -60,7 +58,6 @@ export default store(({ Vue }) => {
   // eslint-disable-next-line import/no-named-as-default-member
   return new Vuex.Store<RootState>({
     modules: {
-      destinationPage,
       countryPage,
       modules: {
         namespaced: true,

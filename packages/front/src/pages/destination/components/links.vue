@@ -4,7 +4,7 @@
       :title="$t('page.destination.widgets.info.title')"
       :subtitle="$t('page.destination.widgets.info.subtitle')"
     />
-    <div class="bg-elevation-1 rounded-borders q-pa-lg">
+    <ul class="rounded-borders q-pa-lg">
       <div v-if="!destination || isLoading">
         <q-skeleton type="text" width="30%" />
         <q-skeleton type="text" width="80%" />
@@ -13,17 +13,12 @@
       <div v-else-if="destination.linkList.length === 0">
         {{ $t('page.destination.widgets.info.none') }}
       </div>
-      <a
-        v-for="(link, index) in destination.linkList"
-        v-else
-        :key="index"
-        target="_blank"
-        class="block"
-        :href="link"
-      >
-        {{ link }}
-      </a>
-    </div>
+      <li v-for="(link, index) in destination.linkList" v-else :key="index">
+        <a target="_blank" :href="link">
+          {{ link }}
+        </a>
+      </li>
+    </ul>
   </section>
 </template>
 

@@ -14,10 +14,11 @@
 import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import { getQuestions } from '@/front/src/pages/destination/destination-questions'
+import { Question } from '@/front/src/pages/destination/questions/question'
 import { getCurrentURL } from '@/front/src/router/helpers'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
+import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 
 export default defineComponent({
   components: { WidgetHeader },
@@ -39,7 +40,7 @@ export default defineComponent({
         return Array.from({ length: 3 })
       }
 
-      return getQuestions(props.restriction, props.destination).map(
+      return useVuexRawGetter<Question[]>('destinationPage/questions').map(
         (question) => ({
           title: question.question,
           url: getCurrentURL(question.id),

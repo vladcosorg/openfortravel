@@ -7,7 +7,7 @@
     <q-item
       v-for="(item, index) in properties"
       :key="index"
-      class="rounded-borders"
+      :class="['rounded-borders', { disabled: item && item.disabled }]"
       style="border: 1px solid var(--q-color-primary-elevated)"
     >
       <q-item-section avatar>
@@ -25,13 +25,13 @@
         <q-item-label v-if="item" style="line-height: 1.4em !important">
           <span :class="[$style.label]">{{ item.label }}</span>
           <span :class="[item.valueClasses, $style.value]">
-            {{ item.value }}
+            {{ item.valueOrEmpty }}
           </span>
         </q-item-label>
         <q-skeleton v-else :width="randWidth()" type="rect" />
 
         <q-item-label
-          v-if="item"
+          v-if="item && !item.disabled"
           caption
           class="text-primary-subtle q-pt-xs"
           v-html="item.caption"
@@ -86,6 +86,7 @@ import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import { getSummaryItems } from '@/front/src/pages/destination/destination-summary'
+import { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 import { createGeneratorForRandomIntegerInRange } from '@/shared/src/misc/misc'
@@ -105,7 +106,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const properties = computed(() => {
+    const properties = computed<SummaryItem[]>(() => {
       if (props.isLoading || !props.destination || !props.restriction) {
         return Array.from({ length: 5 })
       }

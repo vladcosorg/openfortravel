@@ -9,7 +9,12 @@ export abstract class SummaryItem {
   ) {}
 
   public abstract get label(): string
+
+  public get valueOrEmpty(): string {
+    return this.disabled ? '-' : this.value
+  }
   public abstract get value(): string
+
   public abstract get caption(): string
   public abstract get icon(): string
   public get valueClasses(): string {
@@ -17,5 +22,9 @@ export abstract class SummaryItem {
   }
   public get badges(): Badge[] {
     return []
+  }
+
+  public get disabled(): boolean {
+    return this.restriction.isForbidden
   }
 }

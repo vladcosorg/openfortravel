@@ -63,3 +63,29 @@ export function createGeneratorForRandomIntegerInRange(
     return result
   }
 }
+
+export function sortByKeywordIndex<T = string>(
+  keyword: string,
+  entries: T[],
+  entryGetter?: (entry: T) => string,
+): T[] {
+  keyword = keyword.toLowerCase()
+
+  return entries.sort((entryA, entryB): number => {
+    if (typeof entryA === 'string' && typeof entryB === 'string') {
+      return (
+        entryA.toLowerCase().indexOf(keyword) -
+        entryB.toLowerCase().indexOf(keyword)
+      )
+    }
+
+    if (!entryGetter) {
+      throw new Error('For not-string entries a getter has to be set')
+    }
+
+    return (
+      entryGetter(entryA).toLowerCase().indexOf(keyword) -
+      entryGetter(entryB).toLowerCase().indexOf(keyword)
+    )
+  })
+}

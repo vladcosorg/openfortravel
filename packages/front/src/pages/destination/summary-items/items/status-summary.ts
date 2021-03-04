@@ -37,4 +37,8 @@ export class StatusSummary extends SummaryItem {
   public get valueClasses(): string {
     return this.statusMap[this.restriction.status]
   }
+
+  get disabled(): boolean {
+    return false
+  }
 }

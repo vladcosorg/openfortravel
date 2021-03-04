@@ -44,6 +44,7 @@ export function useVuexRawStateProperty<T>(path: string): T {
 export function useVuexRawGetter<T>(getter: string): T {
   return useStore().getters[getter]
 }
+
 export function useVuexReactiveGetter<T>(getter: string): ComputedRef<T> {
   return computed<T>(() => useStore().getters[getter])
 }

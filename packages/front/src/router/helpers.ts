@@ -12,7 +12,7 @@ export function reloadRoutes(): void {
 }
 
 export function getFullURL(relativeURL: string, hash?: string): string {
-  return `http://localhost:8080${relativeURL}${hash ? '#' + hash : ''}`
+  return `https://openfortravel.org${relativeURL}${hash ? '#' + hash : ''}`
 }
 
 export function getCurrentURL(hash?: string): string {

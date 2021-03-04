@@ -382,7 +382,7 @@ export default {
         yes:
           'Yes, provided that you will be returning back to the <strong>{origin}</strong> with a direct flight from <strong>{destination}</strong>, you will not be denied entry or quarantined. ',
         no:
-          'No, you may have to quarantine yourself or pass a test upon returning if you are a resident or a national.',
+          'No, you may have to quarantine yourself or pass a test upon returning regardless if you are a foreigner or a national.',
       },
     },
   },

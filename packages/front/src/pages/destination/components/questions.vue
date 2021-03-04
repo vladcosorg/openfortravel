@@ -21,9 +21,10 @@ import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import QuestionItem from '@/front/src/pages/destination/components/question-item.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import { getQuestions } from '@/front/src/pages/destination/destination-questions'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
+import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
+import { Question } from '@/front/src/pages/destination/questions/question'
 
 export default defineComponent({
   components: { WidgetHeader, QuestionItem },
@@ -45,7 +46,7 @@ export default defineComponent({
         return Array.from({ length: 3 })
       }
 
-      return getQuestions(props.restriction, props.destination)
+      return useVuexRawGetter<Question[]>('destinationPage/questions')
     })
 
     const lastIndex = computed(() => questions.value.length - 1)

@@ -80,6 +80,7 @@ import {
   getOriginLabelForCountryCode,
   getOriginLabels,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import { sortByKeywordIndex } from '@/shared/src/misc/misc'
 
 export interface ListItem {
   value: string
@@ -180,9 +181,21 @@ export default defineComponent({
       currentValue: string,
       update: { (callback: { (): void }): void },
     ) => {
+      if (currentValue.length === 0) {
+        update(() => {
+          countryList.value = fullList.value
+        })
+        return
+      }
+
+      currentValue = currentValue.toLowerCase()
       update(() => {
-        countryList.value = fullList.value.filter((listItem: ListItem) =>
-          listItem.label.toLowerCase().includes(currentValue),
+        countryList.value = sortByKeywordIndex(
+          currentValue,
+          fullList.value.filter((listItem: ListItem) =>
+            listItem.label.toLowerCase().includes(currentValue),
+          ),
+          (entry) => entry.label,
         )
       })
     }

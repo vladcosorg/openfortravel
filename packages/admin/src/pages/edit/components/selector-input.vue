@@ -46,9 +46,10 @@ export default defineComponent({
     const aliases: Record<string, Array<string | RegExp>> = {
       kr: [/(korea\w*?)/i],
       va: [/(vatican\w*?)/i],
-      uk: [/(uk|u.k.)/i],
-      md: ['Moldova'],
-      cz: ['Czechia'],
+      gb: [/(uk|u.k.)/i, 'UK'],
+      md: [/moldova/i],
+      cz: [/czechia/i],
+      ir: ['Iran'],
       tz: ['Tanzania'],
       cd: ['Democratic Republic of the Congo'],
       ae: ['UAE'],
