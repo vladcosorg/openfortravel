@@ -1,9 +1,9 @@
 import { Module } from 'vuex'
 
 import { GeneralQuestion } from '@/front/src/pages/destination/questions/items/general-question'
-import { Question } from '@/front/src/pages/destination/questions/question'
 import { ReturnQuestion } from '@/front/src/pages/destination/questions/items/return-question'
 import { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
+import { Question } from '@/front/src/pages/destination/questions/question'
 import { StateInterface } from '@/front/src/store'
 import {
   Destination,
