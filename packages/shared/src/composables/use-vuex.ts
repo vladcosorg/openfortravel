@@ -10,6 +10,7 @@ import {
 } from '@vue/composition-api'
 import { get, mapValues } from 'lodash'
 
+import { Getters } from '@/front/src/pages/destination/store/getters'
 import { useStore } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
@@ -45,10 +46,10 @@ export function useVuexRawGetter<T>(getter: string): T {
   return useStore().getters[getter]
 }
 
-export function createScopedGetter(scope: string): typeof useVuexRawGetter {
-  return function (getter: string) {
-    return useVuexRawGetter([scope, getter].join('/'))
-  }
+export function useGetter<K extends keyof T, T extends Getters = Getters>(
+  getter: K,
+): T[K] {
+  return useStore().getters[getter]
 }
 
 export function useVuexReactiveGetter<T>(getter: string): ComputedRef<T> {

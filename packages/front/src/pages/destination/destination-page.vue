@@ -51,11 +51,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs } from '@vue/composition-api'
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  onServerPrefetch,
+  watch,
+} from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
-import { useModule } from '@/front/src/composables/module'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import TheSearchHeader from '@/front/src/layouts/components/the-search-header.vue'
 import Heading from '@/front/src/pages/destination/components/heading.vue'
@@ -68,12 +73,8 @@ import Sharing from '@/front/src/pages/destination/components/sharing.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import { useBreadcrumbs } from '@/front/src/pages/destination/destination-composable'
 import { meta } from '@/front/src/pages/destination/destination-meta'
-import store from '@/front/src/pages/destination/destination-store'
-import { Restriction } from '@/shared/src/api/restrictions/models'
-import {
-  createReactiveDispatcher,
-  useVuexReactiveGetter,
-} from '@/shared/src/composables/use-vuex'
+import { moduleStore } from '@/front/src/pages/destination/destination-store'
+import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
   meta,
@@ -106,30 +107,30 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const { originCode, destinationCode } = toRefs(props)
-    useModule('destinationPage', store)
+    moduleStore.register()
+    const { loading } = useLoading()
 
-    const { isLoading } = createReactiveDispatcher(
-      'destinationPage/fetch',
-      {
-        currentOriginCode: originCode,
-        currentDestinationCode: destinationCode,
-      },
-      true,
-    )
+    const init = async () => {
+      loading.value = true
 
-    const restriction = useVuexReactiveGetter<Restriction>(
-      'destinationPage/currentRestriction',
-    )
-    const destination = useVuexReactiveGetter<Restriction>(
-      'destinationPage/currentDestination',
-    )
+      await moduleStore.actions.fetch({
+        originCode: props.originCode,
+        destinationCode: props.destinationCode,
+      })
+      loading.value = false
+    }
+
+    onMounted(init)
+    onServerPrefetch(init)
+    watch(props, init)
 
     return {
-      restriction,
-      destination,
-      isLoading,
-      breadcrumbs: useBreadcrumbs(restriction),
+      restriction: computed(() => moduleStore.getters.currentRestriction),
+      destination: computed(() => moduleStore.getters.currentDestination),
+      isLoading: loading,
+      breadcrumbs: useBreadcrumbs(
+        computed(() => moduleStore.getters.currentRestriction),
+      ),
     }
   },
 })
