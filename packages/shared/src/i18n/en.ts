@@ -280,7 +280,7 @@ export default {
       from: 'From',
       to: 'To',
       btn: 'Search',
-      placeholder: 'Please select a country',
+      placeholder: 'Please select a country from the list',
     },
     subscribe: {
       action: 'Subscribe',
