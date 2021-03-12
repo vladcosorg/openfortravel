@@ -4879,6 +4879,11 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
+direct-vuex@^0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/direct-vuex/-/direct-vuex-0.12.1.tgz#19afc96b58faa3414837ae06154897a381a9a8af"
+  integrity sha512-U1eVqJuUasjZvpTUBvogfTEWkvPPntqimK5pzZKehuPeGMvMbb/iimP/ahsG+G4vsZDOY4IsRtq8x2xsAl+fmQ==
+
 dns-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/dns-equal/-/dns-equal-1.0.0.tgz#b39e7f1da6eb0a75ba9c17324b34753c47e0654d"
@@ -13073,10 +13078,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-auto-i18n@1.1.0-beta.13:
-  version "1.1.0-beta.13"
-  resolved "https://registry.yarnpkg.com/vue-auto-i18n/-/vue-auto-i18n-1.1.0-beta.13.tgz#75fffec72a2ed550ba8436d46eb16d7087fb5db7"
-  integrity sha512-F9FxHPzlH7s4/XevQ0uZEZkU+ckz29FJ5pzdcKArEfpsYdb5cDjpBkyafLl0CTXH7bu8Ptnx2kO/2S6PFbysKg==
+vue-auto-i18n@1.1.0-beta.15:
+  version "1.1.0-beta.15"
+  resolved "https://registry.yarnpkg.com/vue-auto-i18n/-/vue-auto-i18n-1.1.0-beta.15.tgz#3785c85e80b9aa0f5fbd6a839ada375d4d624b86"
+  integrity sha512-voRO6eZXhbAjeXprWfW7KGQ8IYoEzh6NfF8Xigw7asbzse1YugBVt/EmxrLTycaPqb7/o0Ol9aLX4pii75ronQ==
   dependencies:
     "@vitalets/google-translate-api" "^5.0.0"
     flat "^5.0.2"
