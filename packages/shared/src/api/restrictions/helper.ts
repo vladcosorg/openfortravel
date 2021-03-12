@@ -20,7 +20,6 @@ import {
   transformArrayCollectionToMappedCollection,
   wrapCollection,
 } from '@/shared/src/misc/misc'
-import { getOrderedListOfContinentIDs } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import { getCountryCodes as getAllCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export async function generateRestrictionListByDestination(
@@ -152,16 +151,6 @@ function generateFallbackRestrictions(
 
 export function sortByOrigin(collection: Restriction[]): Restriction[] {
   return collection.sort((a, b) => a.originLabel.localeCompare(b.originLabel))
-}
-
-export function sortByDestination(collection: Restriction[]): Restriction[] {
-  const continentIDs = getOrderedListOfContinentIDs()
-  return collection.sort(
-    (a, b) =>
-      // a.destinationLabel.localeCompare(b.destinationLabel),
-      continentIDs.indexOf(a.originContinent!) -
-      continentIDs.indexOf(b.originContinent!),
-  )
 }
 
 export function wrapWithRichRestrictionObject(

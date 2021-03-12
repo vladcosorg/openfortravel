@@ -11,14 +11,19 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import {
+  computed,
+  defineComponent,
+  inject,
+  PropType,
+} from '@vue/composition-api'
 
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import { Question } from '@/front/src/pages/destination/questions/question'
-import { getCurrentURL } from '@/front/src/router/helpers'
+import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { getCurrentRelativeURL } from '@/front/src/router/helpers'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
-import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 
 export default defineComponent({
   components: { WidgetHeader },
@@ -35,17 +40,16 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const store = inject(StoreKey) as StoreModule
     const questions = computed(() => {
       if (props.isLoading || !props.restriction || !props.destination) {
         return Array.from({ length: 3 })
       }
 
-      return useVuexRawGetter<Question[]>('destinationPage/questions').map(
-        (question) => ({
-          title: question.question,
-          url: getCurrentURL(question.id),
-        }),
-      )
+      return store.getters.questions.map((question) => ({
+        title: question.question,
+        url: getCurrentRelativeURL(question.id),
+      }))
     })
 
     const lastIndex = computed(() => questions.value.length - 1)

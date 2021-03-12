@@ -5,6 +5,12 @@ import { ReturnQuestion } from '@/front/src/pages/destination/questions/items/re
 import { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
 import { Question } from '@/front/src/pages/destination/questions/question'
 import { StateClass } from '@/front/src/pages/destination/store/state'
+import { DeclarationSummary } from '@/front/src/pages/destination/summary-items/items/declaration-summary'
+import { InsuranceSummary } from '@/front/src/pages/destination/summary-items/items/insurance-summary'
+import { IsolationSummary } from '@/front/src/pages/destination/summary-items/items/isolation-summary'
+import { StatusSummary } from '@/front/src/pages/destination/summary-items/items/status-summary'
+import { TestingSummary } from '@/front/src/pages/destination/summary-items/items/testing-summary'
+import { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
 import { StateInterface } from '@/front/src/store'
 import {
   Destination,
@@ -34,11 +40,19 @@ type Params = Parameters<
 export interface Getters {
   relatedRestrictionList(...args: Params): RestrictionCollection
   relatedRestrictionForbiddenStringList(...args: Params): string[]
+
   currentReturnDestination(...args: Params): Destination | undefined
   currentDestination(...args: Params): Destination | undefined
+
   returnRestriction(...args: Params): Restriction | undefined
   currentRestriction(...args: Params): Restriction | undefined
+
   questions(...args: Params): Question[]
+  getQuestionByType(
+    ...args: Params
+  ): (questionClass: typeof Question) => Question
+
+  summaryItems(...args: Params): SummaryItem[]
 }
 
 export const getters: GetterTree<StateClass, StateInterface> & Getters = {
@@ -95,6 +109,7 @@ export const getters: GetterTree<StateClass, StateInterface> & Getters = {
 
     return destinations[state.currentOriginCode]
   },
+
   questions: (_state, getters): Question[] => {
     const restriction = getters.currentRestriction
     const destination = getters.currentDestination
@@ -103,8 +118,48 @@ export const getters: GetterTree<StateClass, StateInterface> & Getters = {
       return []
     }
 
-    return [GeneralQuestion, VisitedCountryQuestion, ReturnQuestion]
-      .map((item) => new item(restriction, destination))
-      .filter((question) => !question.skip)
+    const visitedCountryQuestion = new VisitedCountryQuestion(
+      restriction,
+      destination,
+    )
+
+    return [
+      new GeneralQuestion(restriction, destination, visitedCountryQuestion),
+      visitedCountryQuestion,
+      new ReturnQuestion(restriction, destination),
+    ].filter((question) => !question.skip)
+  },
+
+  getQuestionByType: (_state, getters) => (questionClass) => {
+    const question = getters.questions
+      .filter((question) => question.constructor === questionClass)
+      .pop()
+
+    if (!question) {
+      throw new Error(`Question of type ${questionClass.name}`)
+    }
+
+    return question
+  },
+
+  summaryItems: (_state, getters): SummaryItem[] => {
+    const restriction = getters.currentRestriction
+    const destination = getters.currentDestination
+
+    if (!restriction || !destination) {
+      return []
+    }
+
+    return [
+      new StatusSummary(
+        restriction,
+        destination,
+        getters.getQuestionByType(VisitedCountryQuestion),
+      ),
+      new TestingSummary(restriction, destination),
+      new IsolationSummary(restriction, destination),
+      new InsuranceSummary(restriction, destination),
+      new DeclarationSummary(restriction, destination),
+    ].filter((item) => !item.disabled)
   },
 }

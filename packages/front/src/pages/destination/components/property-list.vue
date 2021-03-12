@@ -82,10 +82,16 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import {
+  computed,
+  defineComponent,
+  inject,
+  PropType,
+} from '@vue/composition-api'
 
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import { getSummaryItems } from '@/front/src/pages/destination/destination-summary'
+import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
@@ -106,12 +112,13 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const store = inject(StoreKey) as StoreModule
     const properties = computed<SummaryItem[]>(() => {
       if (props.isLoading || !props.destination || !props.restriction) {
         return Array.from({ length: 5 })
       }
 
-      return getSummaryItems(props.restriction, props.destination)
+      return store.getters.summaryItems
     })
 
     return {

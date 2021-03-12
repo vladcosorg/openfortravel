@@ -6,7 +6,7 @@ import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 const { t } = useI18nWithPrefix<string>('faq.recentlyVisited')
 export class VisitedCountryQuestion extends Question {
   get id(): string {
-    return 'related-countries'
+    return `can-i-be-quarantined-in-${this.restriction.originSlug}-if-i-have-been-in`
   }
 
   get question(): string {

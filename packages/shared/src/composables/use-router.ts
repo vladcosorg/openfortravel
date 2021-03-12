@@ -5,6 +5,7 @@ import { ComponentOptions } from 'vue/types/umd'
 
 export function onHook(
   name: keyof ComponentOptions<Vue>,
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
   callback: (...args: any) => void,
 ): void {
   const vm = getCurrentInstance()

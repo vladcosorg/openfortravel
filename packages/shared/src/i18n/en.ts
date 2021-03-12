@@ -54,7 +54,7 @@ export default {
             'Please read carefully the information below in order to understant if you meet the requirements.',
         },
         relatedRestrictions:
-          'You may be denied entry if you have been to one of the <a href="#related-countries">following</a> countries in the last {days} days.',
+          'You may be denied entry if you have been to one of the <a href="{url}">following</a> countries in the last {days} days.',
       },
       badgeValue: {
         allowed: 'Entry Allowed',
@@ -372,7 +372,7 @@ export default {
           },
         },
         relatedRestrictions:
-          'You may be denied entry if you have been to one of the <a href="#related-countries">following</a> countries in the last {days} days',
+          'You may be denied entry if you have been to one of the <a href="{url}">following</a> countries in the last {days} days',
       },
     },
     return: {

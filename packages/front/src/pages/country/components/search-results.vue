@@ -27,8 +27,6 @@
   </div>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import { defineComponent, toRef, watch } from '@vue/composition-api'
 import { Portal } from 'portal-vue'

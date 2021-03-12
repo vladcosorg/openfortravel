@@ -11,7 +11,10 @@
     />
     <p
       v-if="item"
-      class="bg-elevation-1 rounded-borders q-pa-lg"
+      :class="[
+        'bg-elevation-1 rounded-borders q-pa-lg',
+        { 'text-info': isActive },
+      ]"
       v-html="item.answer"
     />
     <p v-else class="bg-elevation-1 rounded-borders q-pa-lg">
@@ -39,6 +42,10 @@ export default defineComponent({
       default: undefined,
     },
     isLast: {
+      type: Boolean,
+      default: false,
+    },
+    isActive: {
       type: Boolean,
       default: false,
     },

@@ -73,6 +73,7 @@ import InvisibleNativeSelect from '@/front/src/components/invisible-native-selec
 import { useStore } from '@/shared/src/composables/use-plugins'
 import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
 import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
+import { sortByKeywordIndex } from '@/shared/src/misc/misc'
 import {
   CountryList,
   getDestinationLabelForCountryCode,
@@ -80,7 +81,6 @@ import {
   getOriginLabelForCountryCode,
   getOriginLabels,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { sortByKeywordIndex } from '@/shared/src/misc/misc'
 
 export interface ListItem {
   value: string

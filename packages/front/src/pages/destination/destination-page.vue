@@ -56,6 +56,7 @@ import {
   defineComponent,
   onMounted,
   onServerPrefetch,
+  provide,
   watch,
 } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
@@ -73,7 +74,9 @@ import Sharing from '@/front/src/pages/destination/components/sharing.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import { useBreadcrumbs } from '@/front/src/pages/destination/destination-composable'
 import { meta } from '@/front/src/pages/destination/destination-meta'
-import { moduleStore } from '@/front/src/pages/destination/destination-store'
+import { registerStoreModule } from '@/front/src/pages/destination/destination-store'
+import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { useStore } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
@@ -107,13 +110,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    moduleStore.register()
+    const store = registerStoreModule(useStore())
+    provide(StoreKey, store)
     const { loading } = useLoading()
 
     const init = async () => {
       loading.value = true
 
-      await moduleStore.actions.fetch({
+      await store.actions.fetch({
         originCode: props.originCode,
         destinationCode: props.destinationCode,
       })
@@ -125,11 +129,11 @@ export default defineComponent({
     watch(props, init)
 
     return {
-      restriction: computed(() => moduleStore.getters.currentRestriction),
-      destination: computed(() => moduleStore.getters.currentDestination),
+      restriction: computed(() => store.getters.currentRestriction),
+      destination: computed(() => store.getters.currentDestination),
       isLoading: loading,
       breadcrumbs: useBreadcrumbs(
-        computed(() => moduleStore.getters.currentRestriction),
+        computed(() => store.getters.currentRestriction),
       ),
     }
   },

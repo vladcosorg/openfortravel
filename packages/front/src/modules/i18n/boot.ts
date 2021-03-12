@@ -19,7 +19,7 @@ export function setLocale(locale: string): void {
 export function extractCurrentLocale(
   store: Store<StateInterface>,
   ssrContext: QSsrContext | null | undefined,
-) {
+): string {
   let currentLocale = store.state.serverLocale
 
   if (ssrContext) {
