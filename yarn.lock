@@ -13078,10 +13078,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-auto-i18n@1.1.0-beta.15:
-  version "1.1.0-beta.15"
-  resolved "https://registry.yarnpkg.com/vue-auto-i18n/-/vue-auto-i18n-1.1.0-beta.15.tgz#3785c85e80b9aa0f5fbd6a839ada375d4d624b86"
-  integrity sha512-voRO6eZXhbAjeXprWfW7KGQ8IYoEzh6NfF8Xigw7asbzse1YugBVt/EmxrLTycaPqb7/o0Ol9aLX4pii75ronQ==
+vue-auto-i18n@1.1.0-beta.16:
+  version "1.1.0-beta.16"
+  resolved "https://registry.yarnpkg.com/vue-auto-i18n/-/vue-auto-i18n-1.1.0-beta.16.tgz#729c8ff8df4b7b62b58b4cfd4f342e17b9cae3dc"
+  integrity sha512-BgMvs3zKZOuwMlDqhmFMeZoGNHpsPu4BDITBeEw9GuQ5BJ9rAO7JInV/sQ3gI16YlV42vJfytUL9nSx1qdsVnQ==
   dependencies:
     "@vitalets/google-translate-api" "^5.0.0"
     flat "^5.0.2"
