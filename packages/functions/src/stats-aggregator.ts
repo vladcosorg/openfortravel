@@ -20,7 +20,6 @@ type Country = {
 }
 
 let countryLibrary: Country[]
-firebase.initializeApp()
 
 export const statsAggregatorJob = functions.pubsub
   .schedule('every 168 hours')
