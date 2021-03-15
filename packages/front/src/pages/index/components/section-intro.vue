@@ -1,20 +1,14 @@
 <template>
   <section class="relative-position">
     <div class="container q-pa-md-xll q-px-mdd q-py-xl q-my-md-xl">
-      <div
-        class="row justify-center justify-sm-between items-center q-col-gutter-y-xl"
-      >
+      <div class="row justify-center justify-sm-between items-center q-col-gutter-y-xl">
         <div
           class="column col-md-6 col-sm-6 col-12 text-sm-left text-center items-sm-start items-center"
         >
           <h1 :class="['text-h2', $style.intro]">
             <div v-html="$t('page.index.sections.hero.title')" />
 
-            <router-link
-              class="text-secondary"
-              :to="{ hash: 'country-list' }"
-              append
-            >
+            <router-link class="text-secondary" :to="{ hash: 'country-list' }" append>
               <span>{{ countryLabel }}</span>
             </router-link>
           </h1>
@@ -73,9 +67,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const countryLabel = computed(() =>
-      getLabelForCountryCode(props.originCode),
-    )
+    const countryLabel = computed(() => getLabelForCountryCode(props.originCode))
     return {
       countryLabel,
       getMenuItemURL,

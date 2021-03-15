@@ -30,10 +30,7 @@
     </template>
 
     <template v-if="isMobile" #append>
-      <invisible-native-select
-        v-model="currentCountryValueRef"
-        :options="nativeList"
-      />
+      <invisible-native-select v-model="currentCountryValueRef" :options="nativeList" />
     </template>
 
     <template #after>
@@ -122,9 +119,7 @@ export default defineComponent({
       useVuexRawGetter<CountryList>('modules/countryList/originByContinent')
 
     const fullList = computed<List>(() => {
-      const list = props.isDestination
-        ? getOriginLabels()
-        : getDestinationLabels()
+      const list = props.isDestination ? getOriginLabels() : getDestinationLabels()
 
       return Object.keys(list).map((key) => ({
         value: key,

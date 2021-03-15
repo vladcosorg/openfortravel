@@ -1,20 +1,7 @@
 <template>
-  <q-input
-    v-model.number="modelRef"
-    type="number"
-    min="0"
-    outlined
-    dense
-    :debounce="1000"
-  >
+  <q-input v-model.number="modelRef" type="number" min="0" outlined dense :debounce="1000">
     <template v-if="confirm" #append>
-      <q-btn
-        icon="done"
-        :color="isBuffering ? 'green' : 'gray'"
-        flat
-        dense
-        @click="emit"
-      />
+      <q-btn icon="done" :color="isBuffering ? 'green' : 'gray'" flat dense @click="emit" />
     </template>
   </q-input>
 </template>
@@ -43,9 +30,7 @@ export default defineComponent({
   setup(props) {
     const { value } = toRefs(props)
     return {
-      ...(props.confirm
-        ? useBufferedModel(value, 0)
-        : usePassthroughModel(value)),
+      ...(props.confirm ? useBufferedModel(value, 0) : usePassthroughModel(value)),
     }
   },
 })

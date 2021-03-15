@@ -6,10 +6,7 @@ import {
   createDummyPlainDestination,
   wrapCollectionWithRichObject,
 } from '@/shared/src/api/destinations/helper'
-import {
-  Destination,
-  PlainDestination,
-} from '@/shared/src/api/destinations/models'
+import { Destination, PlainDestination } from '@/shared/src/api/destinations/models'
 import {
   findOriginAsRichObject,
   findOrigins,
@@ -18,10 +15,7 @@ import {
 import { useAsyncState } from '@/shared/src/composables/use-async'
 import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
-type UpdateFunc = <
-  K extends keyof PlainDestination,
-  V extends PlainDestination[K]
->(
+type UpdateFunc = <K extends keyof PlainDestination, V extends PlainDestination[K]>(
   field: K,
   value: V,
 ) => Promise<void>
@@ -70,8 +64,7 @@ async function generateOriginList(): Promise<Destination[]> {
 
   const allOrigins = allCountryCodes.map(
     (countryCode) =>
-      origins[countryCode] ??
-      createDummyPlainDestination({ countryCode: countryCode }),
+      origins[countryCode] ?? createDummyPlainDestination({ countryCode: countryCode }),
   )
 
   return wrapCollectionWithRichObject(allOrigins)

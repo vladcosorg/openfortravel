@@ -1,7 +1,4 @@
-import {
-  getFullDescription,
-  getShortDescription,
-} from '@/front/src/models/content'
+import { getFullDescription, getShortDescription } from '@/front/src/models/content'
 import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import {
   getDestinationLabelForCountryCode,
@@ -29,10 +26,7 @@ export interface RestrictionDocument {
 }
 
 export type PlainRestriction = Required<RestrictionDocument>
-export type MappedRestrictionDocumentCollection = Record<
-  string,
-  RestrictionDocument
->
+export type MappedRestrictionDocumentCollection = Record<string, RestrictionDocument>
 
 export type PlainRestrictionCollection = PlainRestriction[]
 export type MappedPlainRestrictionCollection = Record<string, PlainRestriction>

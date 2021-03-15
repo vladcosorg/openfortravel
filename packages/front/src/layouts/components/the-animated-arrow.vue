@@ -1,9 +1,5 @@
 <template>
-  <svg
-    :class="$style.svg"
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 411.94 305.6"
-  >
+  <svg :class="$style.svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 411.94 305.6">
     <path
       :class="$style.line"
       stroke-linecap="round"

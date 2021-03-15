@@ -27,11 +27,7 @@ export function getFullDestinationList(
 export function createDummyPlainDestination(
   mergeFields: Partial<PlainDestination> = {},
 ): PlainDestination {
-  return Object.assign(
-    {},
-    new DestinationDefaults().toPlainObject(),
-    mergeFields,
-  )
+  return Object.assign({}, new DestinationDefaults().toPlainObject(), mergeFields)
 }
 
 export function createDummyDestination(
@@ -49,7 +45,5 @@ export function wrapWithRichDestinationObject(
 export function wrapCollectionWithRichObject(
   plainRestrictions: PlainDestination[],
 ): Destination[] {
-  return plainRestrictions.map((element) =>
-    wrapWithRichDestinationObject(element),
-  )
+  return plainRestrictions.map((element) => wrapWithRichDestinationObject(element))
 }

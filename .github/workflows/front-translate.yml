@@ -12,6 +12,10 @@ jobs:
   cloudfunctions:
     name: Building cloud functions
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        function: [translate, safetyLevelCalculatorJob, statsAggregatorJob ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -33,24 +37,6 @@ jobs:
       - uses: google-github-actions/deploy-cloud-functions@main
         with:
           source_dir: ./packages/functions/dist
-          name: translate
-          runtime: nodejs14
-          credentials: ${{ secrets.GCP_SA_KEY }}
-      - uses: google-github-actions/deploy-cloud-functions@main
-        with:
-          source_dir: ./packages/functions/dist
-          name: lastUpdatedListener
-          runtime: nodejs14
-          credentials: ${{ secrets.GCP_SA_KEY }}
-#      - uses: google-github-actions/deploy-cloud-functions@main
-#        with:
-#          source_dir: ./packages/functions/dist
-#          name: safetyLevelCalculatorJob
-#          runtime: nodejs14
-#          credentials: ${{ secrets.GCP_SA_KEY }}
-      - uses: google-github-actions/deploy-cloud-functions@main
-        with:
-          source_dir: ./packages/functions/dist
-          name: countryListener
+          name: ${{ matrix.function }}
           runtime: nodejs14
           credentials: ${{ secrets.GCP_SA_KEY }}

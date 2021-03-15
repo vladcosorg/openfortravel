@@ -16,11 +16,7 @@
       {{ destination.name }}
       {{ $t('components.destinationItem.riskLevel.title') }}:
       <span :class="riskLevelColor(destination.riskLevel)">
-        {{
-          $t('components.destinationItem.riskLevel.values')[
-            destination.riskLevel
-          ]
-        }}
+        {{ $t('components.destinationItem.riskLevel.values')[destination.riskLevel] }}
       </span>
     </div>
   </div>

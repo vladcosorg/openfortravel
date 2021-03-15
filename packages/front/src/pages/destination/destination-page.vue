@@ -3,10 +3,7 @@
     <portal to="under-header">
       <the-breadcrumbs :items="breadcrumbs" />
     </portal>
-    <the-search-header
-      :origin-code="originCode"
-      :destination-code="destinationCode"
-    />
+    <the-search-header :origin-code="originCode" :destination-code="destinationCode" />
     <div class="container">
       <heading :restriction="restriction" :destination="destination" />
       <div class="row q-col-gutter-xl">
@@ -25,11 +22,7 @@
             :destination="destination"
             :restriction="restriction"
           />
-          <links
-            class="q-mb-xl"
-            :destination="destination"
-            :is-loading="isLoading"
-          />
+          <links class="q-mb-xl" :destination="destination" :is-loading="isLoading" />
           <section class="q-pb-xl">
             <inline-subscribe-form no-autofocus :restriction="restriction" />
           </section>
@@ -76,7 +69,7 @@ import { useBreadcrumbs } from '@/front/src/pages/destination/destination-compos
 import { meta } from '@/front/src/pages/destination/destination-meta'
 import { registerStoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { useStore } from '@/shared/src/composables/use-plugins'
+import { useAugmentedStore, useStore } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
@@ -111,7 +104,8 @@ export default defineComponent({
   },
   setup(props) {
     const store = registerStoreModule(useStore())
-    provide(StoreKey, store)
+    const rootStore = useAugmentedStore()
+    console.log(rootStore.state.detectedCountry)
     const { loading } = useLoading()
 
     const init = async () => {
@@ -124,6 +118,7 @@ export default defineComponent({
       loading.value = false
     }
 
+    provide(StoreKey, store)
     onMounted(init)
     onServerPrefetch(init)
     watch(props, init)
@@ -132,9 +127,7 @@ export default defineComponent({
       restriction: computed(() => store.getters.currentRestriction),
       destination: computed(() => store.getters.currentDestination),
       isLoading: loading,
-      breadcrumbs: useBreadcrumbs(
-        computed(() => store.getters.currentRestriction),
-      ),
+      breadcrumbs: useBreadcrumbs(computed(() => store.getters.currentRestriction)),
     }
   },
 })

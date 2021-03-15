@@ -27,12 +27,8 @@ export function useLoadingSwitch(
   }
 }
 
-export function useAggregatedLoader(
-  ...loaders: Ref<boolean>[]
-): ComputedRef<boolean> {
-  return computed<boolean>(
-    () => !loaders.every((loadingReference) => !loadingReference.value),
-  )
+export function useAggregatedLoader(...loaders: Ref<boolean>[]): ComputedRef<boolean> {
+  return computed<boolean>(() => !loaders.every((loadingReference) => !loadingReference.value))
 }
 
 export function useClosureCollectionLoading(

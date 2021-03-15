@@ -31,10 +31,7 @@ export default {
         /* webpackChunkName: "nationality-[request]" */ `i18n-nationality/langs/${locale}.json`
       )) as { default: { nationalities: Nationalities } }
 
-      commit(
-        'setNationalities',
-        normalizeFormat(response.default.nationalities),
-      )
+      commit('setNationalities', normalizeFormat(response.default.nationalities))
     },
   },
 } as Module<NationalityState, never>

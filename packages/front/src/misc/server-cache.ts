@@ -17,9 +17,7 @@ class ServerCache {
   public quasarLocales!: Record<string, string>
 
   public getCountryCodeToLabelMap(locale: string): CountryListTypes {
-    return (
-      this.countryCodeToLabelMap[locale] ?? this.countryCodeToLabelMap['en']
-    )
+    return this.countryCodeToLabelMap[locale] ?? this.countryCodeToLabelMap['en']
   }
 
   public getCountrySlugToCodeMap(locale: string): CountryListTypes {
@@ -35,10 +33,7 @@ class ServerCache {
     currentLocale: string,
     targetLocale: string,
   ) {
-    const countryCode = this.getCountryCodeByOriginSlug(
-      currentSlug,
-      currentLocale,
-    )
+    const countryCode = this.getCountryCodeByOriginSlug(currentSlug, currentLocale)
     return this.getOriginSlugByCountryCode(countryCode, targetLocale)
   }
 
@@ -47,38 +42,23 @@ class ServerCache {
     currentLocale: string,
     targetLocale: string,
   ) {
-    const countryCode = this.getCountryCodeByDestinationSlug(
-      currentSlug,
-      currentLocale,
-    )
+    const countryCode = this.getCountryCodeByDestinationSlug(currentSlug, currentLocale)
     return this.getDestinationSlugByCountryCode(countryCode, targetLocale)
   }
 
-  protected getCountryCodeByOriginSlug(
-    originSlug: string,
-    locale: string,
-  ): string {
+  protected getCountryCodeByOriginSlug(originSlug: string, locale: string): string {
     return this.getCountrySlugToCodeMap(locale)['origin'][originSlug]
   }
 
-  protected getCountryCodeByDestinationSlug(
-    originSlug: string,
-    locale: string,
-  ): string {
+  protected getCountryCodeByDestinationSlug(originSlug: string, locale: string): string {
     return this.getCountrySlugToCodeMap(locale)['destination'][originSlug]
   }
 
-  protected getOriginSlugByCountryCode(
-    countryCode: string,
-    locale: string,
-  ): string {
+  protected getOriginSlugByCountryCode(countryCode: string, locale: string): string {
     return this.getCountryCodeToSlugMap(locale)['origin'][countryCode]
   }
 
-  protected getDestinationSlugByCountryCode(
-    countryCode: string,
-    locale: string,
-  ): string {
+  protected getDestinationSlugByCountryCode(countryCode: string, locale: string): string {
     return this.getCountryCodeToSlugMap(locale)['destination'][countryCode]
   }
 }

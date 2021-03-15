@@ -42,10 +42,7 @@ export function useRestrictionPersister(
     value: Restriction[K],
     oldRestriction: Restriction,
   ) => void
-  persistSelectedOrAll: <K extends keyof Restriction>(
-    field: K,
-    value: Restriction[K],
-  ) => void
+  persistSelectedOrAll: <K extends keyof Restriction>(field: K, value: Restriction[K]) => void
   flush: () => Promise<void>
 } {
   const flushQueue: Set<Restriction> = new Set()

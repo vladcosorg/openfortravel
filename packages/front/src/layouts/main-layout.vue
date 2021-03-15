@@ -2,10 +2,7 @@
   <q-layout view="hhr lpr ffr">
     <the-header />
     <q-page-container
-      :class="[
-        fullHeight && !$q.platform.is.ios ? 'wwindow-height' : '',
-        $style.container,
-      ]"
+      :class="[fullHeight && !$q.platform.is.ios ? 'wwindow-height' : '', $style.container]"
     >
       <portal-target name="top" slim />
       <transition
@@ -45,9 +42,7 @@ export default defineComponent({
     PortalTarget,
   },
   meta({ meta }: { meta: Record<string, string> }) {
-    const title = useI18n().t(
-      `page.${useRouter().currentRoute.name}.meta.title`,
-    )
+    const title = useI18n().t(`page.${useRouter().currentRoute.name}.meta.title`)
     const titleSuffix = useI18n().t('meta.titleSuffix')
     return merge(
       {

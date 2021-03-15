@@ -3,12 +3,7 @@
     <template #append>
       <q-icon name="event" class="cursor-pointer">
         <q-popup-proxy ref="popup" :value="true">
-          <q-date
-            mask="YYYY-MM-DD"
-            :value="value"
-            minimal
-            @input="currentValue = $event"
-          />
+          <q-date mask="YYYY-MM-DD" :value="value" minimal @input="currentValue = $event" />
         </q-popup-proxy>
       </q-icon>
     </template>

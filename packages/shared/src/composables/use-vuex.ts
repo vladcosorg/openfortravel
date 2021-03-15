@@ -10,7 +10,6 @@ import {
 } from '@vue/composition-api'
 import { get, mapValues } from 'lodash'
 
-import { Getters } from '@/front/src/pages/destination/store/getters'
 import { useStore } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
@@ -19,10 +18,7 @@ export function useVuexComputedState<T>(path: string): ComputedRef<T> {
   return computed(() => get(useStore().state, path))
 }
 
-export function useStateProperty<T>(
-  property: keyof T,
-  module?: string,
-): T[keyof T] {
+export function useStateProperty<T>(property: keyof T, module?: string): T[keyof T] {
   let path: Array<keyof T | string> = [property]
   if (module) {
     path = [module, property]
@@ -43,12 +39,6 @@ export function useVuexRawStateProperty<T>(path: string): T {
 }
 
 export function useVuexRawGetter<T>(getter: string): T {
-  return useStore().getters[getter]
-}
-
-export function useGetter<K extends keyof T, T extends Getters = Getters>(
-  getter: K,
-): T[K] {
   return useStore().getters[getter]
 }
 
@@ -95,9 +85,7 @@ export function createReactiveDispatcher(
     onMounted(dispatcher)
     onServerPrefetch(dispatcher)
     watch(
-      isRef(reactivePayload)
-        ? [reactivePayload]
-        : Object.values(reactivePayload),
+      isRef(reactivePayload) ? [reactivePayload] : Object.values(reactivePayload),
       dispatcher,
     )
   }

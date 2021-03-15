@@ -9,11 +9,7 @@
           Countries include sovereign states, overseas terriotories
         </h5>
       </div>
-      <lazy-hydrate
-        v-if="$q.platform.is.desktop"
-        never
-        :trigger-hydration="loadMap"
-      >
+      <lazy-hydrate v-if="$q.platform.is.desktop" never :trigger-hydration="loadMap">
         <section-map
           class="q-mb-xl"
           :origin-code="originCode"
@@ -49,11 +45,7 @@
               }"
             >
               <span class="text-h1 block lh-1" style="font-weight: bold">
-                <count-up
-                  :end-val="category.value"
-                  :delay="1"
-                  :options="{ duration: 1 }"
-                />
+                <count-up :end-val="category.value" :delay="1" :options="{ duration: 1 }" />
               </span>
               <span class="lh-base" v-html="category.valueSuffix" />
             </div>
@@ -102,10 +94,9 @@ export default defineComponent({
   },
   setup(props) {
     const loadMap = ref(false)
-    const {
-      destinationsRef: restrictions,
-      isLoadingRef: isLoading,
-    } = useGroupedDestinations(toRef(props, 'originCode'))
+    const { destinationsRef: restrictions, isLoadingRef: isLoading } = useGroupedDestinations(
+      toRef(props, 'originCode'),
+    )
 
     onMounted(() => {
       const scrollHandler = function () {

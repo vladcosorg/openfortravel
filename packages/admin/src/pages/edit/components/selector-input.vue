@@ -22,13 +22,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  ComputedRef,
-  defineComponent,
-  PropType,
-  ref,
-} from '@vue/composition-api'
+import { computed, ComputedRef, defineComponent, PropType, ref } from '@vue/composition-api'
 import { unionBy } from 'lodash'
 
 import { Restriction } from '@/shared/src/api/restrictions/models'
@@ -103,8 +97,7 @@ export default defineComponent({
           value = value.replace(label, (match) => {
             if (
               foundItems.value.some(
-                (foundRestriction) =>
-                  foundRestriction.origin === restriction.origin,
+                (foundRestriction) => foundRestriction.origin === restriction.origin,
               )
             ) {
               return match

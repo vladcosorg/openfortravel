@@ -11,11 +11,7 @@
     >
       {{ $t('components.subscribe.action') }}
     </q-btn>
-    <dialog-subscribe-form
-      v-if="promptVisible"
-      v-model="promptVisible"
-      :origin="originCode"
-    />
+    <dialog-subscribe-form v-if="promptVisible" v-model="promptVisible" :origin="originCode" />
   </div>
 </template>
 

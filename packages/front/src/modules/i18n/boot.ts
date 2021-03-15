@@ -8,7 +8,7 @@ import { i18n } from '@/front/src/boot/5-i18n'
 import { serverCache } from '@/front/src/misc/server-cache'
 import { LanguageLocale } from '@/front/src/modules/i18n/types'
 import { reloadRoutes } from '@/front/src/router/helpers'
-import { StateInterface } from '@/front/src/store'
+import { StateInterface } from '@/front/src/store/state'
 import { useCookies, useI18n } from '@/shared/src/composables/use-plugins'
 
 export function setLocale(locale: string): void {
@@ -24,16 +24,12 @@ export function extractCurrentLocale(
 
   if (ssrContext) {
     currentLocale =
-      extractLanguageFromURL(ssrContext?.url) ??
-      useCookies().get('locale') ??
-      currentLocale
+      extractLanguageFromURL(ssrContext?.url) ?? useCookies().get('locale') ?? currentLocale
   }
   return currentLocale
 }
 
-export function extractLanguageFromURL(
-  url?: string,
-): LanguageLocale | undefined {
+export function extractLanguageFromURL(url?: string): LanguageLocale | undefined {
   if (!url) {
     return
   }
@@ -66,18 +62,10 @@ function translateParams(
   return mapValues(route.params, (paramValue, paramKey) => {
     switch (paramKey) {
       case 'originSlug':
-        return serverCache.translateOriginSlug(
-          paramValue,
-          currentLocale,
-          newLocale,
-        )
+        return serverCache.translateOriginSlug(paramValue, currentLocale, newLocale)
 
       case 'destinationSlug':
-        return serverCache.translateDestinationSlug(
-          paramValue,
-          currentLocale,
-          newLocale,
-        )
+        return serverCache.translateDestinationSlug(paramValue, currentLocale, newLocale)
 
       case 'locale':
         return newLocale
@@ -88,9 +76,7 @@ function translateParams(
 }
 
 let translator: ManualTranslator
-export async function autoTranslateIfNecessary(
-  currentLocale: string,
-): Promise<void> {
+export async function autoTranslateIfNecessary(currentLocale: string): Promise<void> {
   if (currentLocale === 'en') {
     return
   }

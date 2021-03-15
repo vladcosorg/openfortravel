@@ -9,11 +9,7 @@ export default boot(async ({ router, urlPath, store, ssrContext }) => {
       if (!to.params.originSlug) {
         return
       }
-      store.commit(
-        'setDetectedCountry',
-        transformOriginSlugToCode(to.params.originSlug),
-        true,
-      )
+      store.commit('setDetectedCountry', transformOriginSlugToCode(to.params.originSlug), true)
     })
     return
   }
@@ -39,11 +35,7 @@ export default boot(async ({ router, urlPath, store, ssrContext }) => {
     const route = router.resolve(urlPath).route
     const originSlug = route.params.originSlug
     if (route.params.originSlug) {
-      store.commit(
-        'setDetectedCountry',
-        transformOriginSlugToCode(originSlug),
-        true,
-      )
+      store.commit('setDetectedCountry', transformOriginSlugToCode(originSlug), true)
     } else {
       if (!persistedOrigin) {
         store.commit('setDetectedCountry', 'us', true)

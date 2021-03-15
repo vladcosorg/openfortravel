@@ -67,11 +67,7 @@ export default defineComponent({
       email,
       onSubmit() {
         if (restriction.value) {
-          sendRequest(
-            email.value,
-            restriction.value.origin,
-            restriction.value.destination,
-          )
+          sendRequest(email.value, restriction.value.origin, restriction.value.destination)
         }
       },
     }

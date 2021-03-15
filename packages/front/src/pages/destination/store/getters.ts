@@ -5,57 +5,22 @@ import { ReturnQuestion } from '@/front/src/pages/destination/questions/items/re
 import { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
 import { Question } from '@/front/src/pages/destination/questions/question'
 import { StateClass } from '@/front/src/pages/destination/store/state'
+import { GetterSignatures } from '@/front/src/pages/destination/store/types/getters'
 import { DeclarationSummary } from '@/front/src/pages/destination/summary-items/items/declaration-summary'
 import { InsuranceSummary } from '@/front/src/pages/destination/summary-items/items/insurance-summary'
 import { IsolationSummary } from '@/front/src/pages/destination/summary-items/items/isolation-summary'
 import { StatusSummary } from '@/front/src/pages/destination/summary-items/items/status-summary'
 import { TestingSummary } from '@/front/src/pages/destination/summary-items/items/testing-summary'
 import { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
-import { StateInterface } from '@/front/src/store'
-import {
-  Destination,
-  MappedDestinationCollection,
-} from '@/shared/src/api/destinations/models'
+import { RootStateType } from '@/front/src/store/state'
+import { MappedDestinationCollection } from '@/shared/src/api/destinations/models'
 import {
   getFullRestrictionsListForDestination,
   wrapWithRichRestrictionObject,
 } from '@/shared/src/api/restrictions/helper'
-import {
-  MappedRestrictionCollection,
-  Restriction,
-  RestrictionCollection,
-} from '@/shared/src/api/restrictions/models'
+import { MappedRestrictionCollection } from '@/shared/src/api/restrictions/models'
 
-export type ContextGetters = { [P in keyof Getters]: ReturnType<Getters[P]> }
-
-type Params = Parameters<
-  (
-    state: StateClass,
-    getters: ContextGetters,
-    rootState: StateInterface,
-    rootGetters: any,
-  ) => void
->
-
-export interface Getters {
-  relatedRestrictionList(...args: Params): RestrictionCollection
-  relatedRestrictionForbiddenStringList(...args: Params): string[]
-
-  currentReturnDestination(...args: Params): Destination | undefined
-  currentDestination(...args: Params): Destination | undefined
-
-  returnRestriction(...args: Params): Restriction | undefined
-  currentRestriction(...args: Params): Restriction | undefined
-
-  questions(...args: Params): Question[]
-  getQuestionByType(
-    ...args: Params
-  ): (questionClass: typeof Question) => Question
-
-  summaryItems(...args: Params): SummaryItem[]
-}
-
-export const getters: GetterTree<StateClass, StateInterface> & Getters = {
+export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures = {
   relatedRestrictionList: (state) => {
     if (!state.relatedRestrictions.destinationCode) {
       return []
@@ -77,8 +42,7 @@ export const getters: GetterTree<StateClass, StateInterface> & Getters = {
       return
     }
 
-    const restrictions: MappedRestrictionCollection =
-      rootGetters['sharedRestrictions']
+    const restrictions: MappedRestrictionCollection = rootGetters['sharedRestrictions']
 
     return restrictions[state.currentDestinationCode]
   },
@@ -93,8 +57,7 @@ export const getters: GetterTree<StateClass, StateInterface> & Getters = {
       return
     }
 
-    const destinations: MappedDestinationCollection =
-      rootGetters['wrappedHostRules']
+    const destinations: MappedDestinationCollection = rootGetters['wrappedHostRules']
 
     return destinations[state.currentDestinationCode]
   },
@@ -104,8 +67,7 @@ export const getters: GetterTree<StateClass, StateInterface> & Getters = {
       return
     }
 
-    const destinations: MappedDestinationCollection =
-      rootGetters['wrappedHostRules']
+    const destinations: MappedDestinationCollection = rootGetters['wrappedHostRules']
 
     return destinations[state.currentOriginCode]
   },
@@ -118,10 +80,7 @@ export const getters: GetterTree<StateClass, StateInterface> & Getters = {
       return []
     }
 
-    const visitedCountryQuestion = new VisitedCountryQuestion(
-      restriction,
-      destination,
-    )
+    const visitedCountryQuestion = new VisitedCountryQuestion(restriction, destination)
 
     return [
       new GeneralQuestion(restriction, destination, visitedCountryQuestion),

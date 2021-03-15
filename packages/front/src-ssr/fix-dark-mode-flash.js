@@ -8,9 +8,7 @@ function modifyResponseBody(req, res, next) {
   res.send = function () {
     let state = { settings: { isDark: false } }
     try {
-      state = JSON.parse(
-        JSON.parse(require('cookie').parse(req.headers.cookie || '').qs),
-      )
+      state = JSON.parse(JSON.parse(require('cookie').parse(req.headers.cookie || '').qs))
     } catch (e) {}
 
     if (state && state.settings && state.settings.isDark) {

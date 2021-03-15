@@ -32,11 +32,7 @@
               }"
             >
               <span class="text-h1 block lh-1" style="font-weight: bold">
-                <count-up
-                  :end-val="category.value"
-                  :delay="1"
-                  :options="{ duration: 1 }"
-                />
+                <count-up :end-val="category.value" :delay="1" :options="{ duration: 1 }" />
               </span>
               <span class="lh-base" v-html="category.valueSuffix" />
             </div>
@@ -80,10 +76,9 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const {
-      destinationsRef: destinations,
-      isLoadingRef: isLoading,
-    } = useGroupedDestinations(toRef(props, 'originCode'))
+    const { destinationsRef: destinations, isLoadingRef: isLoading } = useGroupedDestinations(
+      toRef(props, 'originCode'),
+    )
 
     const stats = useStats(destinations)
     return { stats, isLoading }

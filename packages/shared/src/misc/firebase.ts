@@ -28,10 +28,4 @@ const restrictionCollection = firestore
   .withConverter(restrictionDataConverter)
 
 // eslint-disable-next-line import/no-unused-modules
-export {
-  firestore,
-  firebaseApp,
-  countryCollection,
-  firebase,
-  restrictionCollection,
-}
+export { firestore, firebaseApp, countryCollection, firebase, restrictionCollection }

@@ -32,20 +32,13 @@
       <q-tr class="top-row">
         <q-td colspan="4"> Mass actions </q-td>
         <q-td>
-          <test-required
-            @input="persistSelectedOrAll('testRequired', $event)"
-          />
+          <test-required @input="persistSelectedOrAll('testRequired', $event)" />
         </q-td>
         <q-td>
-          <test-required
-            @input="persistSelectedOrAll('insuranceRequired', $event)"
-          />
+          <test-required @input="persistSelectedOrAll('insuranceRequired', $event)" />
         </q-td>
         <q-td>
-          <test-required
-            confirm
-            @input="persistSelectedOrAll('selfIsolation', $event)"
-          />
+          <test-required confirm @input="persistSelectedOrAll('selfIsolation', $event)" />
         </q-td>
         <q-td>
           <test-required @input="persistSelectedOrAll('isForbidden', $event)" />
@@ -70,11 +63,7 @@
       </q-th>
     </template>
     <template #body-cell-testRequired="props">
-      <q-td
-        key="testRequired"
-        :props="props"
-        :class="{ 'bg-red-9': props.value }"
-      >
+      <q-td key="testRequired" :props="props" :class="{ 'bg-red-9': props.value }">
         <test-required
           :value="props.value"
           @input="persistOne('testRequired', $event, props.row)"
@@ -83,11 +72,7 @@
     </template>
 
     <template #body-cell-insuranceRequired="props">
-      <q-td
-        key="insuranceRequired"
-        :props="props"
-        :class="{ 'bg-red-9': props.value }"
-      >
+      <q-td key="insuranceRequired" :props="props" :class="{ 'bg-red-9': props.value }">
         <test-required
           :value="props.value"
           @input="persistOne('insuranceRequired', $event, props.row)"
@@ -96,11 +81,7 @@
     </template>
 
     <template #body-cell-selfIsolation="props">
-      <q-td
-        key="selfIsolation"
-        :props="props"
-        :class="{ 'bg-red-9': props.value > 0 }"
-      >
+      <q-td key="selfIsolation" :props="props" :class="{ 'bg-red-9': props.value > 0 }">
         <test-required
           :value="props.value"
           @input="persistOne('selfIsolation', $event, props.row)"
@@ -109,11 +90,7 @@
     </template>
 
     <template #body-cell-isForbidden="props">
-      <q-td
-        key="isForbidden"
-        :props="props"
-        :class="{ 'bg-red-9': props.value }"
-      >
+      <q-td key="isForbidden" :props="props" :class="{ 'bg-red-9': props.value }">
         <test-required
           :value="props.value"
           @input="persistOne('isForbidden', $event, props.row)"
@@ -158,13 +135,7 @@
 </style>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  ref,
-  toRefs,
-} from '@vue/composition-api'
+import { computed, defineComponent, PropType, ref, toRefs } from '@vue/composition-api'
 
 import Stats from '@/admin/src/pages/edit/components/stats.vue'
 import TestRequired from '@/admin/src/pages/edit/components/test-required.vue'
@@ -217,11 +188,7 @@ export default defineComponent({
       )
     })
 
-    const persister = useRestrictionPersister(
-      restrictions,
-      props.addSaveHandler,
-      selected,
-    )
+    const persister = useRestrictionPersister(restrictions, props.addSaveHandler, selected)
 
     return {
       persister,

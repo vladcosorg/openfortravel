@@ -20,9 +20,7 @@
           :loading="loading"
           :destination="destinations[index]"
           :country="
-            destinations[index]
-              ? countries.get(destinations[index].destination)
-              : undefined
+            destinations[index] ? countries.get(destinations[index].destination) : undefined
           "
         />
       </div>
@@ -72,13 +70,7 @@
 </style>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  PropType,
-  ref,
-  watch,
-} from '@vue/composition-api'
+import { computed, defineComponent, PropType, ref, watch } from '@vue/composition-api'
 
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
 import { CountryMap } from '@/front/src/pages/country/country-store'

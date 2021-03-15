@@ -44,11 +44,7 @@ module.exports = configure((context) => ({
 
   vendor: {
     disable: true,
-    remove: [
-      'i18n-iso-countries',
-      'svg-country-flags',
-      'quasar/src/components/table',
-    ],
+    remove: ['i18n-iso-countries', 'svg-country-flags', 'quasar/src/components/table'],
   },
 
   // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -70,9 +66,7 @@ module.exports = configure((context) => ({
   // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
   build: {
     env: {
-      PROJECT_URL: context.prod
-        ? 'https://openfortravel.org'
-        : 'http://localhost:8080',
+      PROJECT_URL: context.prod ? 'https://openfortravel.org' : 'http://localhost:8080',
     },
     vueRouterMode: 'history', // available values: 'hash', 'history'
     transpile: context.prod && !context.debug,
@@ -117,8 +111,7 @@ module.exports = configure((context) => ({
         })
 
         if (config.optimization.minimizer) {
-          const terserOptions =
-            config.optimization.minimizer[0].options.terserOptions
+          const terserOptions = config.optimization.minimizer[0].options.terserOptions
           terserOptions.compress['drop_console'] = true
           terserOptions.output = { comments: false }
         }
@@ -216,14 +209,7 @@ module.exports = configure((context) => ({
   // animations: 'all', // --- includes all animations
   // https://quasar.dev/options/animations
   // animations: [],
-  animations: [
-    'fadeIn',
-    'fadeOut',
-    'fadeInRight',
-    'fadeOutRight',
-    'bounceInUp',
-    'bounce',
-  ],
+  animations: ['fadeIn', 'fadeOut', 'fadeInRight', 'fadeOutRight', 'bounceInUp', 'bounce'],
 
   // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
   ssr: {

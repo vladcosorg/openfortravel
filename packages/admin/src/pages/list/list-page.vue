@@ -18,13 +18,7 @@
     >
       <template #header-cell-country="props">
         <q-th :props="props">
-          <q-input
-            v-model="filter"
-            placeholder="Filter by name"
-            dense
-            filled
-            autofocus
-          />
+          <q-input v-model="filter" placeholder="Filter by name" dense filled autofocus />
         </q-th>
       </template>
       <template #body-cell-bestByDate="props">

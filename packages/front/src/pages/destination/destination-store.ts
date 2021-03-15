@@ -1,84 +1,33 @@
-import { mapValues } from 'lodash'
-import { CommitOptions, DispatchOptions, Module, Store } from 'vuex'
+import { Store } from 'vuex'
 
 import { useModule } from '@/front/src/composables/module'
-import {
-  ActionProperties,
-  Actions,
-  ActionTypes,
-} from '@/front/src/pages/destination/store/action-types'
 import { actions } from '@/front/src/pages/destination/store/actions'
-import {
-  ContextGetters,
-  getters,
-} from '@/front/src/pages/destination/store/getters'
-import {
-  Mutations,
-  mutations,
-} from '@/front/src/pages/destination/store/mutations'
-import { state } from '@/front/src/pages/destination/store/state'
-import { StateInterface } from '@/front/src/store'
-import { useStore } from '@/shared/src/composables/use-plugins'
+import { getters } from '@/front/src/pages/destination/store/getters'
+import { mutations } from '@/front/src/pages/destination/store/mutations'
+import { state, StateType } from '@/front/src/pages/destination/store/state'
+import { ActionSignatures } from '@/front/src/pages/destination/store/types/actions'
+import { GetterSignatures } from '@/front/src/pages/destination/store/types/getters'
+import { MutationSignatures } from '@/front/src/pages/destination/store/types/mutations'
+import { StateInterface } from '@/front/src/store/state'
+import { AugmentedStore } from '@/shared/src/misc/augmented-store'
 
 export const MODULE_ID = 'destinationPage'
 export type StoreModule = ReturnType<typeof registerStoreModule>
-export const registerStoreModule = (
-  store: Store<StateInterface & { [MODULE_ID]: typeof state }>,
-) => {
+type DestinationState = StateInterface & { [MODULE_ID]: StateType }
+export const registerStoreModule = (store: Store<DestinationState>) => {
   useModule(MODULE_ID, {
     namespaced: true,
     state,
     actions,
     getters,
     mutations,
-  } as Module<ReturnType<typeof state>, StateInterface>)
+  })
 
-  return {
-    state: store.state[MODULE_ID],
-    get getters(): ContextGetters {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (this as any).getters
-      const store = useStore()
-      const map = {}
-      for (const getter of Object.keys(getters)) {
-        Object.defineProperty(map, getter, {
-          get() {
-            return store.getters[`${MODULE_ID}/${getter}`]
-          },
-        })
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return ((this as any).getters = map as ContextGetters)
-    },
-    get actions(): ActionProperties {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      delete (this as any).actions
-      const store = useStore()
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return ((this as any).actions = mapValues(
-        ActionTypes,
-        (actionID) => (payload: any): Promise<void> =>
-          store.dispatch(`${MODULE_ID}/${actionID}`, payload),
-      ) as ActionProperties)
-    },
-    commit<K extends keyof Mutations, P extends Parameters<Mutations[K]>[1]>(
-      key: K,
-      payload: P,
-      options?: CommitOptions,
-    ): void {
-      useStore().commit(`${MODULE_ID}/${key}`, payload, options)
-    },
-    dispatch<K extends keyof Actions>(
-      key: K,
-      payload: Parameters<Actions[K]>[1],
-      options?: DispatchOptions,
-    ): ReturnType<Actions[K]> {
-      return useStore().dispatch(
-        `${MODULE_ID}/${key}`,
-        payload,
-        options,
-      ) as ReturnType<Actions[K]>
-    },
-  }
+  return new AugmentedStore<
+    DestinationState,
+    GetterSignatures,
+    ActionSignatures,
+    MutationSignatures,
+    typeof MODULE_ID
+  >(store, MODULE_ID)
 }

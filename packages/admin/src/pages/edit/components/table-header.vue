@@ -8,10 +8,7 @@
       @input="updateField('bestByDate', $event)"
     >
       <template #edit="{ label, loading, value, updateValue }">
-        <input-date
-          v-bind="{ label, loading, value }"
-          @input="updateValue($event)"
-        />
+        <input-date v-bind="{ label, loading, value }" @input="updateValue($event)" />
       </template>
     </in-place-field>
     <test-required

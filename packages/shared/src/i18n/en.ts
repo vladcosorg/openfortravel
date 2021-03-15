@@ -15,8 +15,7 @@ export default {
       return: 'Returning from <b>{origin}</b> to <b>{destination}</b>',
     },
     status: {
-      allowed:
-        'is <b>@.lower:restriction.travel.value.allowed</b> without any restrictions. ',
+      allowed: 'is <b>@.lower:restriction.travel.value.allowed</b> without any restrictions. ',
       forbidden:
         'is <b>@.lower:restriction.travel.value.forbidden</b> with some exceptions. Please consult the country page for more info. ',
       conditional:
@@ -152,22 +151,19 @@ export default {
             },
             allowed_soon: {
               title: '@:restriction.travel.value.allowedSoon',
-              valueSuffix:
-                'countries are opening soon <br> for <b>{nationality}</b>',
+              valueSuffix: 'countries are opening soon <br> for <b>{nationality}</b>',
               description:
                 'The country has announced a specific date for reopening, but certain entry requirements may still apply.',
             },
             forbidden: {
               title: '@:restriction.travel.value.forbidden',
-              valueSuffix:
-                'countries are completely closed <br> for <b>{nationality}</b>',
+              valueSuffix: 'countries are completely closed <br> for <b>{nationality}</b>',
               description:
                 'Only citizens, residents returning home, or people in other special circumstances may enter the country.',
             },
             conditional: {
               title: '@:restriction.travel.value.conditional',
-              valueSuffix:
-                'countries are partially open <br> for <b>{nationality}</b>',
+              valueSuffix: 'countries are partially open <br> for <b>{nationality}</b>',
               description:
                 'Entrance into the country may depend on the traveler’s citizenship, point of origin, or other specific regulations.',
             },
@@ -179,8 +175,7 @@ export default {
         },
       },
       meta: {
-        title:
-          'COVID-19 flight & travel bans to foreign countries for {nationality}',
+        title: 'COVID-19 flight & travel bans to foreign countries for {nationality}',
       },
     },
     privacy: {
@@ -209,8 +204,7 @@ export default {
       link: 'Destinations',
       route: 'travel/from',
       meta: {
-        title:
-          '{origin} COVID-19 Travel Restrictions and Bans Listed By Destination',
+        title: '{origin} COVID-19 Travel Restrictions and Bans Listed By Destination',
       },
       breadcrumb: 'From {country}',
       quickSearch: 'Quick country search',
@@ -225,8 +219,7 @@ export default {
         title:
           '{destination} travel restrictions from {origin}: flight restrictions, quarantine measures,  COVID-19 vaccine passport  and other entry requirements',
       },
-      heading:
-        'Travel restrictions from <b>{origin}</b> to <b>{destination}</b>',
+      heading: 'Travel restrictions from <b>{origin}</b> to <b>{destination}</b>',
       breadcrumb: 'To {country}',
       title: 'Latest information on travelling from {origin} to {destination}',
       seeReturnPage: 'See return travel',
@@ -365,8 +358,7 @@ export default {
             intro:
               'Yes, you can travel for leisure from <strong>{origin}</strong> to <strong>{destination}</strong>',
             testRequired: ' but you need to present a negative PCR test.',
-            quarantine:
-              ' but you are required to self-isolate for {quarantine} days.',
+            quarantine: ' but you are required to self-isolate for {quarantine} days.',
             testOrQuarantine:
               ' but you need to provide a negative PCR test or self-isolate for {quarantine} days.',
           },

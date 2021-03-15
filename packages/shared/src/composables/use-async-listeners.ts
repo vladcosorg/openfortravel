@@ -16,9 +16,7 @@ export function useAsyncListeners(): {
   }
 
   const rawListeners = instance.$listeners as CallbackCollection
-  const { loading, closures: listeners } = useClosureCollectionLoading(
-    rawListeners,
-  )
+  const { loading, closures: listeners } = useClosureCollectionLoading(rawListeners)
 
   return { loading, listeners }
 }

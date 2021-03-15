@@ -76,11 +76,7 @@ export default defineComponent({
           }
 
           defer(() => {
-            chart = createChart(
-              chartContainer.value,
-              props.originCode,
-              props.restrictions,
-            )
+            chart = createChart(chartContainer.value, props.originCode, props.restrictions)
             chart.events.once('ready', () => {
               chart.events.once('appeared', () => {
                 loading.value = false

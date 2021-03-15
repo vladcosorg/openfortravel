@@ -8,9 +8,7 @@ export function getOrderedListOfContinentIDs(): string[] {
   return ['na', 'eu', 'as', 'sa', 'oc', 'af']
 }
 
-export function getContinentList(
-  prioritizeContinent?: string,
-): Record<string, string> {
+export function getContinentList(prioritizeContinent?: string): Record<string, string> {
   const list: Record<string, string> = {}
 
   let orderedList = getOrderedListOfContinentIDs()

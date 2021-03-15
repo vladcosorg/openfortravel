@@ -1,9 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 
 export async function importFirebase() {
-  return await import(
-    /* webpackChunkName: "firebase" */ '@/shared/src/misc/firebase'
-  )
+  return await import(/* webpackChunkName: "firebase" */ '@/shared/src/misc/firebase')
 }
 
 export function transformKeys<T extends Record<string, unknown>>(
@@ -11,10 +9,7 @@ export function transformKeys<T extends Record<string, unknown>>(
   transformCallback: (key: string) => string,
 ): T {
   return Object.fromEntries(
-    Object.entries(inputObject).map(([key, value]) => [
-      transformCallback(key),
-      value,
-    ]),
+    Object.entries(inputObject).map(([key, value]) => [transformCallback(key), value]),
   ) as T
 }
 
@@ -41,10 +36,7 @@ export function wrapCollection<T, R>(
   if (Array.isArray(input)) {
     return input.map((element) => mapper(element))
   } else {
-    const objectEntries = Object.entries(input).map(([key, element]) => [
-      key,
-      mapper(element),
-    ])
+    const objectEntries = Object.entries(input).map(([key, element]) => [key, mapper(element)])
     return Object.fromEntries(objectEntries)
   }
 }
@@ -73,10 +65,7 @@ export function sortByKeywordIndex<T = string>(
 
   return entries.sort((entryA, entryB): number => {
     if (typeof entryA === 'string' && typeof entryB === 'string') {
-      return (
-        entryA.toLowerCase().indexOf(keyword) -
-        entryB.toLowerCase().indexOf(keyword)
-      )
+      return entryA.toLowerCase().indexOf(keyword) - entryB.toLowerCase().indexOf(keyword)
     }
 
     if (!entryGetter) {

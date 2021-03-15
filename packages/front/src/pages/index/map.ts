@@ -1,11 +1,6 @@
 import map from '@amcharts/amcharts4-geodata/worldLow'
 import { Miller } from '@amcharts/amcharts4/.internal/charts/map/projections'
-import {
-  Color,
-  color,
-  create,
-  DropShadowFilter,
-} from '@amcharts/amcharts4/core'
+import { Color, color, create, DropShadowFilter } from '@amcharts/amcharts4/core'
 import {
   MapArc,
   MapArcSeries,
@@ -107,10 +102,7 @@ export function createAndConfiguredPolygonSeries(
   return polygonSeries
 }
 
-export function addHitHandler(
-  polygonTemplate: MapPolygon,
-  originCode: string,
-): void {
+export function addHitHandler(polygonTemplate: MapPolygon, originCode: string): void {
   polygonTemplate.events.on('hit', (event) => {
     const dataContext = event.target.dataItem.dataContext as SeriesItem
     const destinationCode = dataContext.id.toLowerCase()
@@ -230,8 +222,6 @@ function transformData(restrictions: Restriction[]): SeriesItem[] {
   return restrictions.map((restriction) => ({
     id: restriction.destination.toUpperCase(),
     fill: color(colors.getBrand(statusColorMap[restriction.status]) as string),
-    status: t(
-      `page.index.sections.stats.types.${restriction.status}.title`,
-    ) as string,
+    status: t(`page.index.sections.stats.types.${restriction.status}.title`) as string,
   }))
 }

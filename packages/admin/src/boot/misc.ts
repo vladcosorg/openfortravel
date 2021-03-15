@@ -24,8 +24,5 @@ export default boot(async ({ Vue, store }) => {
 
   store.commit('modules/countryList/setCountryList', countryList.origin)
 
-  store.commit(
-    'modules/countryList/setSlugMap',
-    createSlugListEntry(countryList).origin,
-  )
+  store.commit('modules/countryList/setSlugMap', createSlugListEntry(countryList).origin)
 })

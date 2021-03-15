@@ -2,11 +2,7 @@
 import path from 'path'
 
 import { merge, mapValues } from 'lodash'
-import {
-  EnumChangefreq,
-  simpleSitemapAndIndex,
-  SitemapItemLoose,
-} from 'sitemap'
+import { EnumChangefreq, simpleSitemapAndIndex, SitemapItemLoose } from 'sitemap'
 import { LocaleMessages } from 'vue-i18n'
 import VueRouter, { Location } from 'vue-router'
 
@@ -27,15 +23,11 @@ const countryCodes = Object.keys(
 )
 
 async function main() {
-  const paths: SitemapItemLoose[] = [
-    { url: '/', changefreq: EnumChangefreq.DAILY, links: [] },
-  ]
+  const paths: SitemapItemLoose[] = [{ url: '/', changefreq: EnumChangefreq.DAILY, links: [] }]
 
   const groupedLocalizedSlugs = getGroupedLocalizedSlugs()
 
-  for (const [originCode, originSlugs] of Object.entries(
-    groupedLocalizedSlugs,
-  )) {
+  for (const [originCode, originSlugs] of Object.entries(groupedLocalizedSlugs)) {
     const originKeys = transformKeys(
       mapValues(originSlugs, (item, locale) => ({
         params: { originSlug: item.origin, locale },
@@ -51,9 +43,7 @@ async function main() {
       }),
     )
 
-    for (const [destinationCode, destinationSlugs] of Object.entries(
-      groupedLocalizedSlugs,
-    )) {
+    for (const [destinationCode, destinationSlugs] of Object.entries(groupedLocalizedSlugs)) {
       if (originCode === destinationCode) {
         continue
       }

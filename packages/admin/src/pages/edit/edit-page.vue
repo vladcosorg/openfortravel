@@ -2,12 +2,7 @@
   <q-page>
     <portal to="header">
       <q-toolbar>
-        <q-btn
-          color="blue-grey-5"
-          unelevated
-          label="Back"
-          :to="{ name: 'admin-index' }"
-        />
+        <q-btn color="blue-grey-5" unelevated label="Back" :to="{ name: 'admin-index' }" />
         <q-toolbar-title>
           Destination: <b> {{ getLabelForCountryCode(originCode) }}</b>
         </q-toolbar-title>
@@ -17,12 +12,7 @@
         </q-tabs>
         <q-space />
 
-        <q-btn
-          color="blue-grey-8"
-          unelevated
-          label="Parse list"
-          @click="openParseDialog"
-        />
+        <q-btn color="blue-grey-8" unelevated label="Parse list" @click="openParseDialog" />
         <q-btn
           :disable="!isPending"
           class="q-mx-md"

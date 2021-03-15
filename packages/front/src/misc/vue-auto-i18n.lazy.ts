@@ -16,11 +16,7 @@ export function createAutoI18n(i18nPluginInstance: IVueI18n): ManualTranslator {
     automatic: true,
     cache: (useSharedCache() as unknown) as CacheType,
     translationService: new CloudFunctionTranslator(),
-    blacklistedPaths: [
-      'page.country.route',
-      'page.destination.route',
-      'page.index.route',
-    ],
+    blacklistedPaths: ['page.country.route', 'page.destination.route', 'page.index.route'],
   })
 }
 

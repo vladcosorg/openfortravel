@@ -1,23 +1,17 @@
 import { Module } from 'vuex'
 
-import { StateInterface } from '@/front/src/store'
+import { StateInterface } from '@/front/src/store/state'
 import {
   createDummyDestination,
   wrapWithRichDestinationObject,
 } from '@/shared/src/api/destinations/helper'
-import {
-  Destination,
-  PlainDestination,
-} from '@/shared/src/api/destinations/models'
+import { Destination, PlainDestination } from '@/shared/src/api/destinations/models'
 import { findOrigins } from '@/shared/src/api/destinations/repository'
 import {
   generateRestrictionListByOrigin,
   wrapCollectionWithRichObject,
 } from '@/shared/src/api/restrictions/helper'
-import {
-  PlainRestriction,
-  Restriction,
-} from '@/shared/src/api/restrictions/models'
+import { PlainRestriction, Restriction } from '@/shared/src/api/restrictions/models'
 import { sortByStatusAndAlphabetically } from '@/shared/src/api/restrictions/sorters'
 import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
@@ -42,10 +36,7 @@ export default {
     countryList: (state): CountryMap => {
       const countryObjects = state.countries.reduce(
         (map, plainCountry) =>
-          map.set(
-            plainCountry.countryCode,
-            wrapWithRichDestinationObject(plainCountry),
-          ),
+          map.set(plainCountry.countryCode, wrapWithRichDestinationObject(plainCountry)),
         new Map(),
       )
 
@@ -103,10 +94,7 @@ export default {
       // The data will be fetched on client thanks to the forceRefetch flag
       const isServer = (process.env.SERVER as unknown) as boolean
       commit('setRestrictions', {
-        countryDestinations: await generateRestrictionListByOrigin(
-          originCode,
-          isServer,
-        ),
+        countryDestinations: await generateRestrictionListByOrigin(originCode, isServer),
         originCode,
         forceRefetch: isServer,
       })

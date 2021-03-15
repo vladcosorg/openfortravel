@@ -17,10 +17,7 @@ export function generateIDFromEntity(restriction: PlainRestriction): string {
   return generateID(restriction.origin, restriction.destination)
 }
 
-export function generateID(
-  originCode: string,
-  destinationCode: string,
-): string {
+export function generateID(originCode: string, destinationCode: string): string {
   return `${originCode}${destinationCode}`
 }
 
@@ -45,9 +42,7 @@ export const dataConverter: firebase.firestore.FirestoreDataConverter<PlainRestr
 
 export async function getViewCollection(
   type: RestrictionDirection,
-): Promise<
-  firebase.firestore.CollectionReference<MappedPlainRestrictionCollection>
-> {
+): Promise<firebase.firestore.CollectionReference<MappedPlainRestrictionCollection>> {
   const { firestore } = await importFirebase()
   return firestore
     .collection(type === 'origin' ? 'viewByOrigin' : 'viewByDestination')

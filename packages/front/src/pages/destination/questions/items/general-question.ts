@@ -2,10 +2,7 @@ import { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/
 import { Question } from '@/front/src/pages/destination/questions/question'
 import { getCurrentRelativeURL } from '@/front/src/router/helpers'
 import { Destination } from '@/shared/src/api/destinations/models'
-import {
-  Restriction,
-  RestrictionStatus,
-} from '@/shared/src/api/restrictions/models'
+import { Restriction, RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
 import { getNationalityOrFallback } from '@/shared/src/modules/nationality/nationality-helpers'
 
@@ -59,27 +56,12 @@ export class GeneralQuestion extends Question {
     const answer: string[] = []
     answer.push(t(`answer.status.${this.restriction.status}.intro`, vars))
 
-    if (
-      this.restriction.testRequired &&
-      !this.restriction.needsSelfIsolation()
-    ) {
-      answer.push(
-        t(`answer.status.${this.restriction.status}.testRequired`, vars),
-      )
-    } else if (
-      this.restriction.needsSelfIsolation() &&
-      !this.restriction.testRequired
-    ) {
-      answer.push(
-        t(`answer.status.${this.restriction.status}.quarantine`, vars),
-      )
-    } else if (
-      this.restriction.testRequired &&
-      this.restriction.needsSelfIsolation()
-    ) {
-      answer.push(
-        t(`answer.status.${this.restriction.status}.testOrQuarantine`, vars),
-      )
+    if (this.restriction.testRequired && !this.restriction.needsSelfIsolation()) {
+      answer.push(t(`answer.status.${this.restriction.status}.testRequired`, vars))
+    } else if (this.restriction.needsSelfIsolation() && !this.restriction.testRequired) {
+      answer.push(t(`answer.status.${this.restriction.status}.quarantine`, vars))
+    } else if (this.restriction.testRequired && this.restriction.needsSelfIsolation()) {
+      answer.push(t(`answer.status.${this.restriction.status}.testOrQuarantine`, vars))
     }
     return answer
   }

@@ -24,9 +24,7 @@ export function transformCountryCodeToOriginSlug(countryCode: string): string {
   return matchingSlug
 }
 
-export function transformCountryCodeToDestinationSlug(
-  countryCode: string,
-): string {
+export function transformCountryCodeToDestinationSlug(countryCode: string): string {
   const originSlugToCodeMap = useVuexRawGetter<CountryList>(
     'modules/countryList/destinationSlugMap',
   )
@@ -49,9 +47,7 @@ export function transformOriginSlugToCode(originSlug: OriginSlug): string {
   return originSlugToCodeMap[originSlug]
 }
 
-export function transformDestinationSlugToCode(
-  countrySlug: DestinationSlug,
-): string {
+export function transformDestinationSlugToCode(countrySlug: DestinationSlug): string {
   const destinationSlugToCodeMap = useVuexRawGetter<CountryList>(
     'modules/countryList/destinationSlugMap',
   )
@@ -71,9 +67,7 @@ export function getOriginLabels(): CountryList {
 }
 
 export function getDestinationLabels(): CountryList {
-  return useVuexRawGetter<CountryList>(
-    'modules/countryList/countryListDestination',
-  )
+  return useVuexRawGetter<CountryList>('modules/countryList/countryListDestination')
 }
 export function getOriginLabelForCountryCode(countryCode: string): string {
   return getOriginLabels()[countryCode]

@@ -37,11 +37,7 @@ export async function generateRestrictionListByDestination(
 
 export function fillMissingPlainRestrictionsWithFallbacks<
   T extends MappedPlainRestrictionCollection | PlainRestrictionCollection
->(
-  existingRestrictions: T,
-  countryCode: string,
-  type: 'origin' | 'destination',
-): T {
+>(existingRestrictions: T, countryCode: string, type: 'origin' | 'destination'): T {
   const fallbacks = generateFallbackRestrictions(
     Array.isArray(existingRestrictions)
       ? existingRestrictions
@@ -166,13 +162,10 @@ export function wrapCollectionWithRichObject(
   plainRestrictions: PlainRestrictionCollection,
 ): RestrictionCollection
 export function wrapCollectionWithRichObject(
-  plainRestrictions:
-    | PlainRestrictionCollection
-    | MappedPlainRestrictionCollection,
+  plainRestrictions: PlainRestrictionCollection | MappedPlainRestrictionCollection,
 ): RestrictionCollection | MappedRestrictionCollection {
-  return wrapCollection(
-    plainRestrictions as PlainRestrictionCollection,
-    (restriction) => wrapWithRichRestrictionObject(restriction),
+  return wrapCollection(plainRestrictions as PlainRestrictionCollection, (restriction) =>
+    wrapWithRichRestrictionObject(restriction),
   )
 }
 

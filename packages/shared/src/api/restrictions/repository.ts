@@ -29,9 +29,7 @@ async function findRestrictionsByDirection(
   originCode: string,
   direction: RestrictionDirection,
 ): Promise<PlainRestriction[]> {
-  return Object.values(
-    await findMappedRestrictionsByDirection(originCode, direction),
-  )
+  return Object.values(await findMappedRestrictionsByDirection(originCode, direction))
 }
 
 export async function findMappedRestrictionsByOrigin(
@@ -57,9 +55,7 @@ export async function findRestrictionByOriginAndDestination(
   destinationCode: string,
 ): Promise<PlainRestriction> {
   const { restrictionCollection } = await importFirebase()
-  const doc = await restrictionCollection
-    .doc(generateID(originCode, destinationCode))
-    .get()
+  const doc = await restrictionCollection.doc(generateID(originCode, destinationCode)).get()
 
   const data = doc.data()
 

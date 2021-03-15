@@ -1,10 +1,7 @@
 <template>
   <div class="container">
     <portal to="under-header">
-      <the-breadcrumbs
-        :items="breadcrumbs.items"
-        :loading="breadcrumbs.loading"
-      />
+      <the-breadcrumbs :items="breadcrumbs.items" :loading="breadcrumbs.loading" />
     </portal>
     <div class="justify-center q-gutter-lg">
       <div class="text-h6 text-center text-uppercase">
@@ -61,29 +58,23 @@ export default defineComponent({
   setup(props) {
     const originCode = toRef(props, 'originCode')
     const { countries, isLoading: isCountryListLoading } = useCountries()
-    const {
-      destinationsRef,
-      isLoadingRef: isDestinationListLoading,
-    } = useGroupedDestinations(originCode)
+    const { destinationsRef, isLoadingRef: isDestinationListLoading } = useGroupedDestinations(
+      originCode,
+    )
 
     watch(isDestinationListLoading, (newValue) => {
       useStore().commit('setCountrySelectorLoading', newValue)
     })
 
-    const {
-      countryMatchFilterValue,
-      tabFilterValue,
-      destinations,
-    } = useRestrictionFilterer(destinationsRef)
+    const { countryMatchFilterValue, tabFilterValue, destinations } = useRestrictionFilterer(
+      destinationsRef,
+    )
 
     return {
       countries,
       tabFilterValue,
       countryMatchFilterValue,
-      isListLoading: useAggregatedLoader(
-        isCountryListLoading,
-        isDestinationListLoading,
-      ),
+      isListLoading: useAggregatedLoader(isCountryListLoading, isDestinationListLoading),
       destinations,
       breadcrumbs: getBreadcrumbs(originCode, isDestinationListLoading),
     }

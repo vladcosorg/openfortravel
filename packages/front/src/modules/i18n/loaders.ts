@@ -2,7 +2,7 @@ import { IVueI18n, LocaleMessageObject, LocaleMessages } from 'vue-i18n'
 import { Store } from 'vuex'
 
 import { LanguageLocale } from '@/front/src/modules/i18n/types'
-import { StateInterface } from '@/front/src/store'
+import { StateInterface } from '@/front/src/store/state'
 
 export function pushRequiredLocalesToStore(
   i18n: IVueI18n,

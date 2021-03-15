@@ -20,10 +20,7 @@ export default defineComponent({
   setup() {
     return {
       isValidEmail(val: string) {
-        return (
-          /^.+@.+\..+$/.test(val) ||
-          useI18n().t('components.form.email.invalidEmail')
-        )
+        return /^.+@.+\..+$/.test(val) || useI18n().t('components.form.email.invalidEmail')
       },
     }
   },

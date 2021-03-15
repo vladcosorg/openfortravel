@@ -3,10 +3,7 @@ import { Ref, ref } from '@vue/composition-api'
 import { ResponsePromise } from 'ky'
 import { Notify } from 'quasar'
 
-type Dispatcher = (
-  request: ResponsePromise,
-  successMessage: string,
-) => ResponsePromise
+type Dispatcher = (request: ResponsePromise, successMessage: string) => ResponsePromise
 export function useRequestDispatcher(): {
   isLoading: Ref<boolean>
   isSuccessful: Ref<boolean | undefined>

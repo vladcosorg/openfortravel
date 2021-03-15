@@ -19,11 +19,7 @@ export const dataConverter: firebase.firestore.FirestoreDataConverter<PlainDesti
     snapshot: firebase.firestore.QueryDocumentSnapshot<DestinationDocument>,
     options: firebase.firestore.SnapshotOptions,
   ): PlainDestination {
-    return Object.assign(
-      {},
-      { countryCode: snapshot.id },
-      snapshot.data(options),
-    )
+    return Object.assign({}, { countryCode: snapshot.id }, snapshot.data(options))
   },
 }
 

@@ -25,10 +25,7 @@ export function useCountries(): {
   isLoading: Ref<boolean>
 } {
   const { loading: isLoading } = useLoading(false)
-  const fetcher = useProperVuexActionDispatcher(
-    'countryPage/fetchCountries',
-    isLoading,
-  )
+  const fetcher = useProperVuexActionDispatcher('countryPage/fetchCountries', isLoading)
   onMounted(fetcher)
 
   return {
@@ -44,13 +41,8 @@ export function useGroupedDestinations(
   isLoadingRef: Ref<boolean>
 } {
   const { loading } = useLoading(false)
-  const fetcher = useProperVuexActionDispatcher(
-    'countryPage/fetchRestrictions',
-    loading,
-  )
-  const destinationsRef = useVuexReactiveGetter<Restriction[]>(
-    'countryPage/restrictionList',
-  )
+  const fetcher = useProperVuexActionDispatcher('countryPage/fetchRestrictions', loading)
+  const destinationsRef = useVuexReactiveGetter<Restriction[]>('countryPage/restrictionList')
 
   onServerPrefetch(() => fetcher(originCodeRef.value))
   onMounted(() => fetcher(originCodeRef.value))
@@ -133,15 +125,9 @@ export function useRestrictionFilterer(
     filterValue: countryMatchFilterValue,
     filterFunction: countryMatchFilterFunction,
   } = useCountryMatchFilter()
-  const {
-    filterValue: tabFilterValue,
-    filterFunction: tabFilterFunction,
-  } = useTabFilter()
+  const { filterValue: tabFilterValue, filterFunction: tabFilterFunction } = useTabFilter()
 
-  const destinations = useFilterer(input, [
-    countryMatchFilterFunction,
-    tabFilterFunction,
-  ])
+  const destinations = useFilterer(input, [countryMatchFilterFunction, tabFilterFunction])
 
   return {
     countryMatchFilterValue,
@@ -168,10 +154,7 @@ export function riskLevelColor(riskLevel: RiskLevel): string {
   }
 }
 
-export function getBreadcrumbs(
-  originCode: Ref<string>,
-  isLoading: Ref<boolean>,
-): ComputedRef {
+export function getBreadcrumbs(originCode: Ref<string>, isLoading: Ref<boolean>): ComputedRef {
   const { t } = useVueI18n()
   return computed(() => ({
     items: [

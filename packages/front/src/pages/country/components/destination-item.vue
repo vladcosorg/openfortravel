@@ -21,9 +21,7 @@
         </h5>
         <div :class="[riskLevelColor(country.riskLevel)]">
           {{ $t('components.destinationItem.riskLevel.title') }}:
-          {{
-            $t('components.destinationItem.riskLevel.values')[country.riskLevel]
-          }}
+          {{ $t('components.destinationItem.riskLevel.values')[country.riskLevel] }}
         </div>
       </q-card-section>
 
@@ -35,11 +33,7 @@
 
       <q-card-section>
         <div class="q-gutter-x-xs">
-          <q-badge
-            v-if="destination.status === 'allowed'"
-            color="positive"
-            text-color="dark"
-          >
+          <q-badge v-if="destination.status === 'allowed'" color="positive" text-color="dark">
             {{ $t('restriction.travel.badgeValue')[destination.status] }}
           </q-badge>
           <q-badge
@@ -69,11 +63,7 @@
         </div>
       </q-card-section>
     </router-link>
-    <q-item
-      v-else
-      :class="[$style.item, 'rounded-borders q-pa-md']"
-      style="min-height: 212px"
-    >
+    <q-item v-else :class="[$style.item, 'rounded-borders q-pa-md']" style="min-height: 212px">
       <q-item-section>
         <q-item-label :class="[' q-mb-sm']">
           <q-skeleton type="text" height="3rem" width="65%" />

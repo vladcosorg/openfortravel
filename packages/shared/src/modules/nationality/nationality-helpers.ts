@@ -5,9 +5,7 @@ import { getLabelForCountryCode } from '@/shared/src/modules/country-list/countr
 import { Nationalities } from '@/shared/src/modules/nationality/nationality-store'
 
 export function getNationalityOrFallback(countryCode: string): string {
-  const list = useVuexRawStateProperty<Nationalities>(
-    'modules.nationalities.list',
-  )
+  const list = useVuexRawStateProperty<Nationalities>('modules.nationalities.list')
 
   return useI18n().t('misc.countryCitizen', {
     country: list[countryCode] ?? getLabelForCountryCode(countryCode),

@@ -61,12 +61,8 @@ export function getMenuItemURL(menuID: keyof typeof links): string {
   return getMenuItemPair(menuID).url
 }
 
-export function getMenuItems(
-  ...menuIDs: Array<keyof typeof links>
-): MenuItemMapCollection {
-  return Object.fromEntries(
-    menuIDs.map((menuID) => Object.values(getMenuItemPair(menuID))),
-  )
+export function getMenuItems(...menuIDs: Array<keyof typeof links>): MenuItemMapCollection {
+  return Object.fromEntries(menuIDs.map((menuID) => Object.values(getMenuItemPair(menuID))))
 }
 
 export function getShortHeaderMenuItems(): MenuItemMapCollection {
