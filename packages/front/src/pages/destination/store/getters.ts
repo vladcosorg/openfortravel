@@ -86,7 +86,8 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
       new GeneralQuestion(restriction, destination, visitedCountryQuestion),
       visitedCountryQuestion,
       new ReturnQuestion(restriction, destination),
-    ].filter((question) => !question.skip)
+    ]
+    // .filter((question) => !question.skip)
   },
 
   getQuestionByType: (_state, getters) => (questionClass) => {

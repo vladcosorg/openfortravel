@@ -22,6 +22,7 @@
             :destination="destination"
             :restriction="restriction"
           />
+          <stats class="q-mb-xl" :is-loading="isLoading" />
           <links class="q-mb-xl" :destination="destination" :is-loading="isLoading" />
           <section class="q-pb-xl">
             <inline-subscribe-form no-autofocus :restriction="restriction" />
@@ -64,17 +65,19 @@ import PropertyList from '@/front/src/pages/destination/components/property-list
 import QuestionIndex from '@/front/src/pages/destination/components/question-index.vue'
 import Questions from '@/front/src/pages/destination/components/questions.vue'
 import Sharing from '@/front/src/pages/destination/components/sharing.vue'
+import Stats from '@/front/src/pages/destination/components/stats.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import { useBreadcrumbs } from '@/front/src/pages/destination/destination-composable'
 import { meta } from '@/front/src/pages/destination/destination-meta'
 import { registerStoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { useAugmentedStore, useStore } from '@/shared/src/composables/use-plugins'
+import { useStore } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
   meta,
   components: {
+    Stats,
     QuestionIndex,
     Heading,
     WidgetHeader,
@@ -104,8 +107,6 @@ export default defineComponent({
   },
   setup(props) {
     const store = registerStoreModule(useStore())
-    const rootStore = useAugmentedStore()
-    console.log(rootStore.state.detectedCountry)
     const { loading } = useLoading()
 
     const init = async () => {

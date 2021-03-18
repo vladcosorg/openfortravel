@@ -19,7 +19,6 @@ const firebaseApp =
       })
 
 const firestore = firebaseApp.firestore()
-
 const countryCollection = firestore
   .collection('countries')
   .withConverter(destinationDataConverter)

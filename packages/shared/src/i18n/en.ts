@@ -237,10 +237,30 @@ export default {
           subtitle:
             'Make sure to read all the additional information listed on the page before making a decision',
         },
-        faqIndex: { title: 'Quick Navigation' },
+        faqIndex: { title: 'F.A.Q.' },
         faq: {
           title: 'Questions & Answers',
           subtitle: 'Got more questions? Contact us!',
+        },
+        stats: {
+          title: 'COVID-19 confirmed cases',
+          subtitle: 'in {country}',
+          casesThisWeek: {
+            title: 'new cases this week',
+            subtitle: 'per 100.000 people',
+          },
+          trend: {
+            title: {
+              up: 'Up',
+              down: 'Down',
+              noChange: 'No change',
+            },
+            subtitle: 'from {count} per 100.000 people since last week',
+          },
+          riskLevel: {
+            title: 'Infection risk',
+            subtitle: 'according to Risk Assessment Level data from',
+          },
         },
       },
     },
@@ -348,16 +368,16 @@ export default {
         status: {
           allowed: `Yes, leisure travel from <strong>{origin}</strong> to <strong>{destination}</strong> is permitted .
           No PCR test or COVID-19 vaccine passport is needed upon arrival.
-          <br><br>However please note that you may be required to abide some other regulations unrelated
-          to coronavirus pandemic.<br>
           `,
-          allowedSoon: 'Reopening soon',
           forbidden:
             'No, entering the country by travellers from {origin} is not allowed.  The only exceptions are <strong>{nationality}</strong> or permanent residents.',
           conditional: {
             intro:
-              'Yes, you can travel for leisure from <strong>{origin}</strong> to <strong>{destination}</strong>',
-            testRequired: ' but you need to present a negative PCR test.',
+              'Yes, leisure travel from <strong>{origin}</strong> to <strong>{destination}</strong> is permitted ',
+            testRequired: {
+              true: ' but you need to present a negative PCR test.',
+              false: ' and no PCR test or COVID-19 vaccine passport is needed upon arrival.',
+            },
             quarantine: ' but you are required to self-isolate for {quarantine} days.',
             testOrQuarantine:
               ' but you need to provide a negative PCR test or self-isolate for {quarantine} days.',

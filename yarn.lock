@@ -6220,6 +6220,11 @@ firebase@^8.2.0:
     "@firebase/storage" "0.4.2"
     "@firebase/util" "0.3.4"
 
+firestore-size@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/firestore-size/-/firestore-size-2.0.6.tgz#9e830985a64aa419916813245f3bbf8280caf548"
+  integrity sha512-DNZbkLrmV2OZCntgLb06gzKIWUV4VELO0V0wpXDDilP7r3+OiIqmNBvIe5Gl0PqENsZ3QRRMN1ubI8uzQ4R0Ww==
+
 flat-cache@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-3.0.4.tgz#61b0338302b2fe9f957dcc32fc2a87f1c3048b11"

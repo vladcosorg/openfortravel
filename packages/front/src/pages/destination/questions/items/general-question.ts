@@ -31,11 +31,11 @@ export class GeneralQuestion extends Question {
       origin: this.restriction.originLabel,
       destination: this.restriction.destinationLabel,
       nationality: getNationalityOrFallback(this.restriction.destination),
-      quarantine: this.restriction.selfIsolation,
+      quarantine: this.destination.selfIsolationInDays,
     }
 
-    if (this.restriction.status != RestrictionStatus.CONDITIONAL) {
-      answer.push(t(`answer.status.${this.restriction.status}`, vars))
+    if (this.restriction.status === RestrictionStatus.FORBIDDEN) {
+      answer.push(t('answer.status.forbidden', vars))
     } else {
       answer.push(...this.getConditionalDescription(vars))
     }
@@ -54,14 +54,16 @@ export class GeneralQuestion extends Question {
 
   protected getConditionalDescription(vars: Record<string, unknown>): string[] {
     const answer: string[] = []
-    answer.push(t(`answer.status.${this.restriction.status}.intro`, vars))
+    answer.push(t('answer.status.conditional.intro', vars))
 
     if (this.restriction.testRequired && !this.restriction.needsSelfIsolation()) {
-      answer.push(t(`answer.status.${this.restriction.status}.testRequired`, vars))
+      answer.push(t('answer.status.conditional.testRequired.true', vars))
     } else if (this.restriction.needsSelfIsolation() && !this.restriction.testRequired) {
-      answer.push(t(`answer.status.${this.restriction.status}.quarantine`, vars))
+      answer.push(t('answer.status.conditional.quarantine', vars))
     } else if (this.restriction.testRequired && this.restriction.needsSelfIsolation()) {
-      answer.push(t(`answer.status.${this.restriction.status}.testOrQuarantine`, vars))
+      answer.push(t('answer.status.conditional.testOrQuarantine', vars))
+    } else {
+      answer.push(t('answer.status.conditional.testRequired.false', vars))
     }
     return answer
   }

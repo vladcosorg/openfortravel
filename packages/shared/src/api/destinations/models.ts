@@ -22,6 +22,8 @@ export interface DestinationDocument {
   testValidityInHours?: number
   proofOfRecoveryInDays?: number
   visitedRestrictedCountriesDaysAgo?: number
+  thisWeekCasesPer100K?: number
+  lastWeekCasesPer100K?: number
 }
 
 export interface PlainDestination extends DestinationDocument {
@@ -43,6 +45,8 @@ export class DestinationDefaults implements PlainDestination {
   public readonly visitedRestrictedCountriesDaysAgo = 0
   public readonly testOnArrival = false
   public readonly proofOfRecoveryInDays = 0
+  public readonly thisWeekCasesPer100K = 0
+  public readonly lastWeekCasesPer100K = 0
 
   get name(): string {
     return getLabelForCountryCode(this.countryCode)
@@ -58,6 +62,26 @@ export class DestinationDefaults implements PlainDestination {
 
   public cloneWithFields(fields: Partial<PlainDestination>): Destination {
     return new Destination(Object.assign(this.toPlainObject(), fields))
+  }
+
+  get percentage(): number {
+    if (this.thisWeekCasesPer100K !== undefined && this.lastWeekCasesPer100K !== undefined) {
+      return (this.thisWeekCasesPer100K * 100) / this.lastWeekCasesPer100K - 100
+    }
+
+    return 0
+  }
+
+  get fixedPercentage(): string {
+    return ` ${Math.sign(this.percentage) === 1 ? '+' : ''}${this.percentage.toFixed()}`
+  }
+
+  get thisWeekCasesFixed(): string {
+    return this.thisWeekCasesPer100K.toFixed(1)
+  }
+
+  get lastWeekCasesFixed(): string {
+    return this.lastWeekCasesPer100K.toFixed(1)
   }
 }
 

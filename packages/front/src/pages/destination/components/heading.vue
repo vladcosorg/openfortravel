@@ -13,11 +13,7 @@
       <q-skeleton class="inline-block" type="text" width="80%" />
     </h5>
     <div v-if="destination">
-      {{ destination.name }}
-      {{ $t('components.destinationItem.riskLevel.title') }}:
-      <span :class="riskLevelColor(destination.riskLevel)">
-        {{ $t('components.destinationItem.riskLevel.values')[destination.riskLevel] }}
-      </span>
+      <!--      <stats :is-loading="isLoading" />-->
     </div>
   </div>
 </template>
@@ -26,11 +22,12 @@
 import { defineComponent, PropType } from '@vue/composition-api'
 
 import { riskLevelColor } from '@/front/src/pages/country/composable'
+import Stats from '@/front/src/pages/destination/components/stats.vue'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
-  components: {},
+  components: { Stats },
   props: {
     isLoading: {
       type: Boolean,

@@ -40,7 +40,7 @@ export default defineComponent({
     const aliases: Record<string, Array<string | RegExp>> = {
       kr: [/(korea\w*?)/i],
       va: [/(vatican\w*?)/i],
-      gb: [/(uk|u.k.)/i, 'UK'],
+      gb: [/(uk|u\.k\.)/i, 'UK', 'United Kingdom of Great Britain and Northern Ireland'],
       md: [/moldova/i],
       cz: [/czechia/i],
       ir: ['Iran'],
@@ -48,6 +48,21 @@ export default defineComponent({
       cd: ['Democratic Republic of the Congo'],
       ae: ['UAE'],
       ru: [/(russia\w*?)/i],
+      ch: [/(swiss\w*?)/i],
+      it: [/(italia\w*?)/i],
+      ie: [/(ireland\w*?)/i],
+      fr: [/(french\w*?)/i],
+      tr: [/(turk\w*?)/i],
+      us: [/(usa\w*?)/i],
+      sk: [/(slovak\w*?)/i],
+      pt: [/(portug\w*?)/i],
+      mx: [/(mexica\w*?)/i],
+      mk: [/(macedoni\w*?)/i],
+      ci: [/(ivory\w*?)/i, /(ivoire\w*?)/i],
+      lb: [/(leban\w*?)/i],
+      ar: [/(argent\w*?)/i],
+      tl: [/(timor\w*?)/i],
+      gr: [/(hellenic\w*?)/i],
     }
     const labels = computed(() => {
       const map = props.restrictions.reduce<Map<string | RegExp, Restriction>>(
@@ -58,6 +73,8 @@ export default defineComponent({
             for (const alias of aliases[restriction.origin]) {
               acc.set(alias, restriction)
             }
+          } else {
+            acc.set(new RegExp(restriction.originLabel, 'i'), restriction)
           }
           return acc
         },
