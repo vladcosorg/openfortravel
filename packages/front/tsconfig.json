@@ -2,7 +2,11 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "target": "es2019"
+    "target": "es2019",
+    "types": [
+      "jest",
+      "quasar"
+    ]
   },
   "exclude": ["dist", ".quasar", "node_modules"],
   "ts-node": {

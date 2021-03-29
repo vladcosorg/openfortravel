@@ -23,11 +23,15 @@
     "build-sitemap": "rm -rf var/sitemap && node -- node_modules/.bin/ts-node -P tsconfig.json -r tsconfig-paths/register src/bin/build-sitemap.ts",
     "build-stats": "node -- node_modules/.bin/ts-node -P tsconfig.json -r tsconfig-paths/register ../functions/src/stats-aggregator.ts",
     "upload-assets": "cd dist/ssr && CLOUDSDK_PYTHON=/usr/bin/python2.7 gsutil -m cp -r -z css,html,js,map,svg ./www/** gs://oftassets",
-    "delete-translation-cache": "gsutil -m rm -f gs://translation-cache/** "
+    "delete-translation-cache": "gsutil -m rm -f gs://translation-cache/** ",
+    "test:unit": "jest --updateSnapshot",
+    "test:unit:ci": "jest --ci",
+    "test:unit:coverage": "jest --coverage",
+    "test:unit:watch": "jest --watch",
+    "test:unit:watchAll": "jest --watchAll"
   },
   "workspaces": {
     "nohoist": [
-      "*",
       "firebase",
       "firebase/**",
       "google/**",
@@ -83,6 +87,7 @@
   "devDependencies": {
     "@quasar/app": "^2.0.0",
     "@quasar/quasar-app-extension-testing": "^1.0.3",
+    "@quasar/quasar-app-extension-testing-unit-jest": "^2.2.1",
     "@types/lodash": "^4.14.161",
     "@types/node": "^14.14.14",
     "@types/sharp": "^0.27.1",
@@ -99,6 +104,7 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-unicorn": "^27.0.0",
     "eslint-plugin-unused-imports": "^1.0.0",
+    "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-vue": "^7.2.0",
     "filesize": "^6.1.0",
     "md5-file": "^5.0.0",
@@ -124,6 +130,6 @@
   "engines": {
     "node": "14.x.x",
     "npm": ">= 6.13.4",
-    "yarn": ">= 1.21.1"
+    "yarn": ">= 1.18.0"
   }
 }
