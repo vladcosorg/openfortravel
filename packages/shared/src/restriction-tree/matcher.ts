@@ -1,41 +1,67 @@
+import { typeConstructors } from '@/shared/src/restriction-tree/converter'
 import {
-  Combinations,
-  Criteria,
+  RestrictionGroups,
   CriteriaMap,
-  CriteriaType,
-  CriteriaValue,
   RestrictionGroup,
-} from '@/shared/src/decision/DecisionTree'
+  RestrictionNodeType,
+  LogicNodeType,
+} from '@/shared/src/restriction-tree/types'
+
+type RestrictionConstructors<T extends RestrictionNodeType> = Exclude<
+  typeof typeConstructors[T],
+  LogicNodeType
+>
+type Method<T extends RestrictionNodeType> = InstanceType<
+  RestrictionConstructors<T>
+>['matches']
+type Value<T extends RestrictionNodeType> = Parameters<Method<T>>[0]
 
 export class Matcher implements IterableIterator<RestrictionGroup> {
   private pointer = 0
 
-  constructor(protected data: Combinations) {}
+  constructor(protected data: RestrictionGroups) {}
 
-  withOptionalCriterion(criteriaType: Criteria, criteriaValue: CriteriaValue): Matcher {
+  withOptional<T extends RestrictionNodeType>(
+    criteriaType: T,
+    criteriaValue: Value<T>,
+  ): Matcher {
     return this.withOptionalCriteria(new Map([[criteriaType, criteriaValue]]))
   }
 
-  withRequiredCriterion(criteriaType: Criteria, criteriaValue: CriteriaValue): Matcher {
+  withRequired<T extends RestrictionNodeType>(
+    criteriaType: T,
+    criteriaValue: Value<T>,
+  ): Matcher {
     return this.withRequiredCriteria(new Map([[criteriaType, criteriaValue]]))
   }
 
-  withOptionalCriteria(filter: CriteriaMap): Matcher {
+  withPresenceOf(restrictionNode: RestrictionNodeType): Matcher {
+    return this.withRequiredCriteria(new Map([[restrictionNode, true]]))
+  }
+
+  withAbsenceOf(restrictionNode: RestrictionNodeType): Matcher {
+    return this.withRequiredCriteria(new Map([[restrictionNode, false]]))
+  }
+
+  hasGroups(): boolean {
+    return this.data.length > 0
+  }
+
+  protected withOptionalCriteria(filter: CriteriaMap): Matcher {
     return this.withCriteria(filter, true)
   }
-  withRequiredCriteria(filter: CriteriaMap): Matcher {
+
+  protected withRequiredCriteria(filter: CriteriaMap): Matcher {
     return this.withCriteria(filter, false)
   }
 
-  excludeCriterionByType(criterionType: CriteriaType): Matcher {
+  excludeCriterionByType(criterionType: RestrictionNodeType): Matcher {
     return new Matcher(
       this.data.map((restrictionGroup) =>
-        restrictionGroup.filter((criterion) => criterion.constructor !== criterionType),
+        restrictionGroup.filter((criterion) => criterion.id() !== criterionType),
       ),
     )
   }
-
-  verbalize() {}
 
   protected withCriteria(filter: CriteriaMap, isOptional: boolean): Matcher {
     return new Matcher(
@@ -46,7 +72,7 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
   }
 
   protected matchAgainstGroup(
-    restrictionSet: Combinations extends readonly (infer T)[] ? T : never,
+    restrictionSet: RestrictionGroups extends readonly (infer T)[] ? T : never,
     filter: CriteriaMap,
     unmatchedValue: boolean,
   ): boolean {
@@ -54,7 +80,7 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
       if (typeof criteriaValue === 'boolean') {
         let found = false
         for (const restriction of restrictionSet) {
-          if (restriction.constructor === key) {
+          if (restriction.id() === key) {
             found = true
             break
           }
@@ -64,7 +90,7 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
       }
 
       for (const restriction of restrictionSet) {
-        if (restriction.constructor === key) {
+        if (restriction.id() === key) {
           return restriction.matches(criteriaValue)
         }
       }

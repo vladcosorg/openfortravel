@@ -35,7 +35,6 @@
         :destination="destination"
         :restriction="restriction"
       />
-
       <section>
         <widget-header :title="$t('components.sharing.title')" />
         <sharing :restriction="restriction" />
@@ -127,6 +126,7 @@ export default defineComponent({
     return {
       restriction: computed(() => store.getters.currentRestriction),
       destination: computed(() => store.getters.currentDestination),
+      restrictionTree: computed(() => store.getters.restrictionTree),
       isLoading: loading,
       breadcrumbs: useBreadcrumbs(computed(() => store.getters.currentRestriction)),
     }

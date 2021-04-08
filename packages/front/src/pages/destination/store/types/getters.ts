@@ -4,6 +4,7 @@ import { SummaryItem } from '@/front/src/pages/destination/summary-items/summary
 import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction, RestrictionCollection } from '@/shared/src/api/restrictions/models'
 import { GetterContext } from '@/shared/src/misc/augmented-store'
+import { Responder } from '@/shared/src/restriction-tree/responder'
 
 type LocalGetterContext<
   State = StateClass,
@@ -24,4 +25,6 @@ export type GetterSignatures = {
   getQuestionByType(...args: LocalGetterContext): (questionClass: typeof Question) => Question
 
   summaryItems(...args: LocalGetterContext): SummaryItem[]
+
+  restrictionTree(...args: LocalGetterContext): Responder
 }
