@@ -1,6 +1,7 @@
 import { GetterTree } from 'vuex'
 
 import { GeneralQuestion } from '@/front/src/pages/destination/questions/items/general-question'
+import { QuarantineQuestion } from '@/front/src/pages/destination/questions/items/quarantine-question'
 import { ReturnQuestion } from '@/front/src/pages/destination/questions/items/return-question'
 import { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
 import { Question } from '@/front/src/pages/destination/questions/question'
@@ -19,18 +20,11 @@ import {
   wrapWithRichRestrictionObject,
 } from '@/shared/src/api/restrictions/helper'
 import { MappedRestrictionCollection } from '@/shared/src/api/restrictions/models'
-import { And } from '@/shared/src/restriction-tree/logic-node/and'
-import { Or } from '@/shared/src/restriction-tree/logic-node/or'
+import { convertFromStorageFormat } from '@/shared/src/restriction-tree/converter'
+import { EntryWays } from '@/shared/src/restriction-tree/entry-ways'
 import { Matcher } from '@/shared/src/restriction-tree/matcher'
-import { Responder } from '@/shared/src/restriction-tree/responder'
-import { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
-import { OnlineApplication } from '@/shared/src/restriction-tree/restriction-node/online-application'
-import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
-import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
-import { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
-import { QuarantineWithTesting } from '@/shared/src/restriction-tree/restriction-node/quarantine-with-testing'
-import { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { LogicNodeType, RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
 
 export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures = {
   relatedRestrictionList: (state) => {
@@ -98,6 +92,7 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
       new GeneralQuestion(restriction, destination, visitedCountryQuestion),
       visitedCountryQuestion,
       new ReturnQuestion(restriction, destination),
+      new QuarantineQuestion(restriction, destination, getters.restrictionGroups),
     ]
     // .filter((question) => !question.skip)
   },
@@ -135,27 +130,20 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
     ].filter((item) => !item.disabled)
   },
 
-  restrictionGroups: (state, getters) => {
-    const matcher = new Matcher(
-      new Or([
-        new And([
-          new Origin({ allowedOrigins: ['us', 'md', 'ru'] }),
-          new Or([
-            new PcrTest({ hours: 48 }),
-            new QuarantineWithTesting({ days: 14 }),
-            new Quarantine({ days: 14 }),
-          ]),
-          new OnlineApplication({ url: 'dawdaw' }),
-          new DidNotVisitCountries({ countryCodes: ['cn'], days: 14 }),
-        ]),
-        new Or([new Vaccinated({ daysAgo: 11 })]),
-      ]).resolveTreeNodes(),
-    )
-      .withOptional(RestrictionNodeType.ORIGIN, state.currentOriginCode!)
-      .withOptional(RestrictionNodeType.CITIZENSHIP, state.currentOriginCode!)
-      .withOptional(RestrictionNodeType.DID_NOT_VISIT_COUNTRIES, ['cdn'])
-      .withAbsenceOf(RestrictionNodeType.VACCINATED)
-
-    return new Responder(matcher)
+  restrictionGroups: (_state, getters) => {
+    const nodes = convertFromStorageFormat({
+      type: LogicNodeType.OR,
+      children: getters.currentDestination?.restrictionTree ?? [],
+    })
+    return new Matcher(nodes.resolveTreeNodes())
+  },
+  entryWays(_state, getters) {
+    return new EntryWays(getters.restrictionGroups, getters.visitorContext)
+  },
+  visitorContext(state) {
+    return new VisitorContext({
+      [RestrictionNodeType.ORIGIN]: state.currentOriginCode!,
+      [RestrictionNodeType.CITIZENSHIP]: state.currentOriginCode!,
+    })
   },
 }

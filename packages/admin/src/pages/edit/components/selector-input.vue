@@ -23,18 +23,17 @@
 
 <script lang="ts">
 import { computed, ComputedRef, defineComponent, PropType, ref } from '@vue/composition-api'
-import { unionBy } from 'lodash'
+import { union } from 'lodash'
 
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import {
+  getOriginLabelForCountryCode,
+  getOriginLabels,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
   components: {},
   props: {
-    value: { type: Array as PropType<Restriction[]>, required: true },
-    restrictions: {
-      type: Array as PropType<Restriction[]>,
-      required: true,
-    },
+    value: { type: Array as PropType<string[]>, required: true },
   },
   setup(props, { emit }) {
     const aliases: Record<string, Array<string | RegExp>> = {
@@ -65,16 +64,16 @@ export default defineComponent({
       gr: [/(hellenic\w*?)/i],
     }
     const labels = computed(() => {
-      const map = props.restrictions.reduce<Map<string | RegExp, Restriction>>(
-        (acc, restriction: Restriction) => {
-          acc.set(restriction.originLabel, restriction)
+      const map = Object.entries(getOriginLabels()).reduce<Map<string | RegExp, string>>(
+        (acc, [code, label]) => {
+          acc.set(label, code)
 
-          if (aliases[restriction.origin]) {
-            for (const alias of aliases[restriction.origin]) {
-              acc.set(alias, restriction)
+          if (aliases[code]) {
+            for (const alias of aliases[code]) {
+              acc.set(alias, code)
             }
           } else {
-            acc.set(new RegExp(restriction.originLabel, 'i'), restriction)
+            acc.set(new RegExp(label, 'i'), code)
           }
           return acc
         },
@@ -100,7 +99,7 @@ export default defineComponent({
     })
 
     const parseString = ref('')
-    const foundItems: ComputedRef<Restriction[]> = ref([])
+    const foundItems: ComputedRef<string[]> = ref([])
     const parseValue = computed({
       get() {
         return parseString.value
@@ -110,17 +109,13 @@ export default defineComponent({
         // eslint-disable-next-line unicorn/better-regex
         value = value.replace(/(]|\[)/g, '')
 
-        for (const [label, restriction] of labels.value) {
+        for (const [label, code] of labels.value) {
           value = value.replace(label, (match) => {
-            if (
-              foundItems.value.some(
-                (foundRestriction) => foundRestriction.origin === restriction.origin,
-              )
-            ) {
+            if (foundItems.value.some((foundCode) => foundCode === code)) {
               return match
             }
-            foundItems.value.push(restriction)
-            return `[${restriction.origin}]`
+            foundItems.value.push(code)
+            return `[${code}]`
           })
         }
 
@@ -130,11 +125,11 @@ export default defineComponent({
 
     const dialog = ref()
     const currentSelectionLabels = computed(() =>
-      props.value.map((rest) => rest.originLabel).join(', '),
+      props.value.map((code) => getOriginLabelForCountryCode(code)).join(', '),
     )
 
     const foundItemsLabels = computed(() =>
-      foundItems.value.map((rest) => rest.originLabel).join(', '),
+      foundItems.value.map((code) => getOriginLabelForCountryCode(code)).join(', '),
     )
 
     return {
@@ -143,7 +138,7 @@ export default defineComponent({
       parseValue,
       dialog,
       onOKClick: () => {
-        emit('ok', { items: unionBy(props.value, foundItems.value, 'origin') })
+        emit('ok', { items: union(props.value, foundItems.value) })
         dialog.value.hide()
       },
       onDialogHide: () => emit('hide'),

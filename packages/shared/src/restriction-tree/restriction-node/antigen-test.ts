@@ -14,6 +14,10 @@ export class AntigenTest extends RestrictionNode {
     return value >= this.options.hours
   }
 
+  penaltyScore(): number {
+    return 2
+  }
+
   id(): RestrictionNodeType {
     return RestrictionNodeType.ANTIGEN_TEST
   }

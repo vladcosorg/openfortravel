@@ -4,7 +4,9 @@ import { SummaryItem } from '@/front/src/pages/destination/summary-items/summary
 import { Destination } from '@/shared/src/api/destinations/models'
 import { Restriction, RestrictionCollection } from '@/shared/src/api/restrictions/models'
 import { GetterContext } from '@/shared/src/misc/augmented-store'
-import { Responder } from '@/shared/src/restriction-tree/responder'
+import { EntryWays } from '@/shared/src/restriction-tree/entry-ways'
+import { Matcher } from '@/shared/src/restriction-tree/matcher'
+import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
 
 type LocalGetterContext<
   State = StateClass,
@@ -26,5 +28,7 @@ export type GetterSignatures = {
 
   summaryItems(...args: LocalGetterContext): SummaryItem[]
 
-  restrictionTree(...args: LocalGetterContext): Responder
+  restrictionGroups(...args: LocalGetterContext): Matcher
+  entryWays(...args: LocalGetterContext): EntryWays
+  visitorContext(...args: LocalGetterContext): VisitorContext
 }

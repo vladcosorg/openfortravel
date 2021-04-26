@@ -1,6 +1,7 @@
 import type firebase from 'firebase/app'
 
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
+import { EncodedNode } from '@/shared/src/restriction-tree/converter'
 
 export enum RiskLevel {
   NO_DATA = 'no-data',
@@ -24,6 +25,7 @@ export interface DestinationDocument {
   visitedRestrictedCountriesDaysAgo?: number
   thisWeekCasesPer100K?: number
   lastWeekCasesPer100K?: number
+  restrictionTree?: EncodedNode[]
 }
 
 export interface PlainDestination extends DestinationDocument {
@@ -47,6 +49,7 @@ export class DestinationDefaults implements PlainDestination {
   public readonly proofOfRecoveryInDays = 0
   public readonly thisWeekCasesPer100K = 0
   public readonly lastWeekCasesPer100K = 0
+  public readonly restrictionTree: EncodedNode[] = []
 
   get name(): string {
     return getLabelForCountryCode(this.countryCode)

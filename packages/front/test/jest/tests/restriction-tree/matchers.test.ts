@@ -35,10 +35,29 @@ describe('Matcher', () => {
     expect(results[1]).toEqual([originCriteria, antigenCriteria])
   })
 
-  test('Filter by required restriction presence', () => {
+  test('Filter by single restriction presence', () => {
     const results = [...matcher.withPresenceOf(RestrictionNodeType.PCR_TEST)]
     expect(results).toHaveLength(1)
     expect(results[0]).toEqual([originCriteria, pcrCriteria])
+  })
+
+  test('Filter by OR restrictions presence', () => {
+    const results = [
+      ...matcher.withPresenceOf(
+        RestrictionNodeType.PCR_TEST,
+        RestrictionNodeType.ANTIGEN_TEST,
+      ),
+    ]
+    expect(results).toHaveLength(2)
+    expect(results[0]).toEqual([originCriteria, pcrCriteria])
+    expect(results[1]).toEqual([originCriteria, antigenCriteria])
+  })
+
+  test('Filter by OR restrictions presence with no matches', () => {
+    const results = [
+      ...matcher.withPresenceOf(RestrictionNodeType.VACCINATED, RestrictionNodeType.RECOVERY),
+    ]
+    expect(results).toHaveLength(0)
   })
 
   test('Filter by required restriction absence', () => {
@@ -51,8 +70,51 @@ describe('Matcher', () => {
     expect(results[0]).toEqual([originCriteria, antigenCriteria])
   })
 
+  test('Filter by required restriction absence with partial match', () => {
+    const results = [
+      ...matcher
+        .withAbsenceOf(RestrictionNodeType.PCR_TEST, RestrictionNodeType.VACCINATED)
+        .withRequired(RestrictionNodeType.ORIGIN, 'ru'),
+    ]
+    expect(results).toHaveLength(1)
+    expect(results[0]).toEqual([originCriteria, antigenCriteria])
+  })
+
+  test('Filter by required multiple restriction absence', () => {
+    const results = [
+      ...matcher
+        .withAbsenceOf(RestrictionNodeType.PCR_TEST, RestrictionNodeType.ANTIGEN_TEST)
+        .withRequired(RestrictionNodeType.ORIGIN, 'ru'),
+    ]
+    expect(results).toHaveLength(0)
+  })
+
   test('Exclude by type', () => {
     const results = [...matcher.excludeCriterionByType(RestrictionNodeType.ORIGIN)]
     expect(results).toHaveLength(3)
+  })
+
+  test('Exclude two by type', () => {
+    const results = [
+      ...matcher.excludeCriterionByType(
+        RestrictionNodeType.ORIGIN,
+        RestrictionNodeType.PCR_TEST,
+      ),
+    ]
+    expect(results).toHaveLength(2)
+  })
+
+  test('Include one by type', () => {
+    const results = [...matcher.includeCriterionByType(RestrictionNodeType.ORIGIN)]
+    expect(results).toHaveLength(2)
+  })
+  test('Include two by type but one is non-existent', () => {
+    const results = [
+      ...matcher.includeCriterionByType(
+        RestrictionNodeType.QUARANTINE,
+        RestrictionNodeType.VACCINATED,
+      ),
+    ]
+    expect(results).toHaveLength(1)
   })
 })

@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="bg-blue-grey-9">
     <portal to="header">
       <q-toolbar>
         <q-btn color="blue-grey-5" unelevated label="Back" :to="{ name: 'admin-index' }" />
@@ -7,12 +7,11 @@
           Destination: <b> {{ getLabelForCountryCode(originCode) }}</b>
         </q-toolbar-title>
         <q-tabs v-model="tab" shrink>
-          <q-tab name="restrictions" label="Restrictions" />
+          <q-tab name="tree" label="Tree" />
           <q-tab name="info" label="Info" />
         </q-tabs>
         <q-space />
 
-        <q-btn color="blue-grey-8" unelevated label="Parse list" @click="openParseDialog" />
         <q-btn
           :disable="!isPending"
           class="q-mx-md"
@@ -25,45 +24,32 @@
       </q-toolbar>
     </portal>
 
-    <div class="column full-height">
+    <div class="row justify-center">
       <keep-alive>
-        <restriction-table
-          v-if="tab === 'restrictions'"
-          class="col"
-          :restrictions="restrictions.list"
-          :add-save-handler="addSaveHandlerProp"
-          :loading="restrictions.loading"
-          :selected.sync="selected"
-        />
-        <table-header
-          v-else-if="tab === 'info'"
-          v-model="selected"
-          :add-save-handler="addSaveHandlerProp"
-          class="col-auto items-start"
-          :restrictions="restrictions.list"
-          :destination-code="originCode"
-        />
+        <restriction-tree v-if="tab === 'tree'" v-model="destination" :loading="loadingRef" />
+        <table-header v-else-if="tab === 'info'" v-model="destination" :loading="loadingRef" />
       </keep-alive>
     </div>
   </q-page>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
+import pick from 'lodash/pick'
 import { Portal } from 'portal-vue'
 
-import SelectorInput from '@/admin/src/pages/edit/components/selector-input.vue'
+import RestrictionTree from '@/admin/src/pages/edit/components/restriction-tree.vue'
 import TableHeader from '@/admin/src/pages/edit/components/table-header.vue'
-import RestrictionTable from '@/admin/src/pages/edit/components/table.vue'
 import { useSaveHandler } from '@/admin/src/pages/edit/composables/use-persister'
-import { useRestrictionListFilteredByDestination } from '@/admin/src/pages/edit/composables/use-record-loader'
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import { useDestination } from '@/shared/src/api/destinations/composables'
+import { PlainDestination } from '@/shared/src/api/destinations/models'
+import { updateOriginDocument } from '@/shared/src/api/destinations/repository'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
   components: {
+    RestrictionTree,
     TableHeader,
-    RestrictionTable,
     Portal,
   },
   props: {
@@ -72,30 +58,44 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props, { root }) {
-    const originCode = props.originCode
-    const tab = ref('restrictions')
-    const selected = ref<Restriction[]>([])
+  setup(props) {
+    const tab = ref('tree')
+    const { destinationRef, loadingRef } = useDestination(props.originCode)
+    const modifiedFields: string[] = []
+    let isPendingUpdate = false
+    const { addSaveHandlerProp, isSaving, isPending, runPendings } = useSaveHandler()
+    const destination = computed({
+      get() {
+        return destinationRef.value
+      },
+      set(value: Partial<PlainDestination>) {
+        destinationRef.value = destinationRef.value.cloneWithFields(value)
+        modifiedFields.push(...Object.keys(value))
 
-    const restrictions = useRestrictionListFilteredByDestination(originCode)
+        if (!isPendingUpdate) {
+          isPendingUpdate = true
+          addSaveHandlerProp(saveHandler)
+        }
+      },
+    })
 
-    const openParseDialog = () => {
-      root.$q
-        .dialog({
-          component: SelectorInput,
-          value: selected.value,
-          restrictions: restrictions.list.value,
-        })
-        .onOk(({ items }: { items: Restriction[] }) => (selected.value = items))
+    const saveHandler = async (): Promise<void> => {
+      await updateOriginDocument(
+        destinationRef.value.countryCode,
+        pick(destinationRef.value, modifiedFields),
+      )
+      isPendingUpdate = false
+      modifiedFields.length = 0
     }
 
     return {
-      ...useSaveHandler(),
-      openParseDialog,
       getLabelForCountryCode,
       tab,
-      selected,
-      restrictions,
+      loadingRef,
+      destination,
+      isSaving,
+      isPending,
+      runPendings,
     }
   },
 })

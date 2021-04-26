@@ -1,7 +1,7 @@
 <template>
   <div class="q-mb-lg">
     <h6 :class="$style.sectionHeader">{{ title }}</h6>
-    <div v-if="subtitle" class="text-body2 text-grey-5">{{ subtitle }}</div>
+    <div v-if="subtitle" class="text-body2 text-grey-5" v-html="subtitle" />
   </div>
 </template>
 

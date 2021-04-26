@@ -35,12 +35,24 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
     return this.withRequiredCriteria(new Map([[criteriaType, criteriaValue]]))
   }
 
-  withPresenceOf(restrictionNode: RestrictionNodeType): Matcher {
-    return this.withRequiredCriteria(new Map([[restrictionNode, true]]))
+  withPresenceOf(...requiredRestrictions: RestrictionNodeType[]): Matcher {
+    return new Matcher(
+      this.data.filter((restrictionGroup) =>
+        restrictionGroup.some((restriction) =>
+          requiredRestrictions.includes(restriction.id()),
+        ),
+      ),
+    )
   }
 
-  withAbsenceOf(restrictionNode: RestrictionNodeType): Matcher {
-    return this.withRequiredCriteria(new Map([[restrictionNode, false]]))
+  withAbsenceOf(...requiredRestrictions: RestrictionNodeType[]): Matcher {
+    return new Matcher(
+      this.data.filter((restrictionGroup) =>
+        restrictionGroup.every(
+          (restriction) => !requiredRestrictions.includes(restriction.id()),
+        ),
+      ),
+    )
   }
 
   hasGroups(): boolean {
@@ -55,11 +67,27 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
     return this.withCriteria(filter, false)
   }
 
-  excludeCriterionByType(criterionType: RestrictionNodeType): Matcher {
+  mergeWithMatcher(matcher: Matcher): Matcher {
+    return new Matcher([...this, ...matcher])
+  }
+
+  includeCriterionByType(...criterionType: RestrictionNodeType[]): Matcher {
     return new Matcher(
-      this.data.map((restrictionGroup) =>
-        restrictionGroup.filter((criterion) => criterion.id() !== criterionType),
-      ),
+      this.data
+        .map((restrictionGroup) =>
+          restrictionGroup.filter((criterion) => criterionType.includes(criterion.id())),
+        )
+        .filter((group) => group.length),
+    )
+  }
+
+  excludeCriterionByType(...criterionType: RestrictionNodeType[]): Matcher {
+    return new Matcher(
+      this.data
+        .map((restrictionGroup) =>
+          restrictionGroup.filter((criterion) => !criterionType.includes(criterion.id())),
+        )
+        .filter((group) => group.length),
     )
   }
 
@@ -97,6 +125,10 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
 
       return unmatchedValue
     })
+  }
+
+  getGroups(): RestrictionGroups {
+    return [...this.data]
   }
 
   public next(): IteratorResult<RestrictionGroup> {
