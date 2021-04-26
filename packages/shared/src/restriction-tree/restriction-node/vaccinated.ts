@@ -7,9 +7,26 @@ import {
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
 
-const { t } = useI18nWithPrefix('rt.vaccinated')
+export enum VaccineBrand {
+  MODERNA = 'moderna',
+  PFIZER = 'pfizer',
+  SPUTNIK = 'sputnik',
+  ASTRA_ZENEKA = 'astrazeneca',
+  SINOPHARM = 'sinopharm',
+  SINOVAC = 'sinovac',
+  NOVAVAX = 'novavax',
+  JOHNSON_AND_JOHNSON = 'jj',
+  COVAXIN = 'covaxin',
+  CONVIDECIA = 'convidecia',
+}
+
 export class Vaccinated extends RestrictionNode {
-  constructor(protected readonly options: { daysAgo: number }) {
+  constructor(
+    protected readonly options: {
+      daysAgo: number
+      authorizedBrands: VaccineBrand[]
+    },
+  ) {
     super()
   }
 
@@ -22,6 +39,7 @@ export class Vaccinated extends RestrictionNode {
   }
 
   instruction(context: VisitorContext): RestrictionInstruction {
+    const { t } = useI18nWithPrefix('rt.vaccinated')
     return {
       title: t('instruction.heading', {
         origin: getLabelForCountryCode(context.origin),

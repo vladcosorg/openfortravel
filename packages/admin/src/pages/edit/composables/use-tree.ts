@@ -175,7 +175,6 @@ export function createIndexedTree(
   destination: Destination,
   getNextUID: () => number,
 ): QuasarTreeNode[] {
-  console.log(destination.restrictionTree)
   return indexTheTree(
     [
       {

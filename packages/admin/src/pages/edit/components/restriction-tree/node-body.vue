@@ -11,6 +11,7 @@ import camelCase from 'lodash/camelCase'
 import { QuasarRestrictionTreeNode } from '@/admin/src/pages/edit/components/restriction-tree.vue'
 import Age from '@/admin/src/pages/edit/components/restriction-tree/fields/age.vue'
 import Citizenship from '@/admin/src/pages/edit/components/restriction-tree/fields/citizenship.vue'
+import DidNotVisitCountries from '@/admin/src/pages/edit/components/restriction-tree/fields/did-not-visit-countries.vue'
 import OnlineApplication from '@/admin/src/pages/edit/components/restriction-tree/fields/online-application.vue'
 import Origin from '@/admin/src/pages/edit/components/restriction-tree/fields/origin.vue'
 import PcrTest from '@/admin/src/pages/edit/components/restriction-tree/fields/pcr-test.vue'
@@ -29,6 +30,7 @@ const components = {
   Citizenship,
   Recovery,
   Age,
+  DidNotVisitCountries,
 }
 
 export default defineComponent({

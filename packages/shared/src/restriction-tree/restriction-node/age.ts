@@ -7,7 +7,9 @@ import {
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export class Age extends RestrictionNode {
-  constructor(protected options: { age: number } & CommonOptions) {
+  constructor(
+    protected options: { age: number; orMore: boolean } & CommonOptions,
+  ) {
     super()
   }
 
@@ -27,13 +29,16 @@ export class Age extends RestrictionNode {
   }
 
   matches(value: number): boolean {
-    return this.options.age >= value
+    return !this.options.orMore
+      ? this.options.age >= value
+      : this.options.age <= value
   }
 
   instruction(): RestrictionInstruction {
-    console.log(this)
     return {
-      title: `Required age is ${this.options.age} or less`,
+      title: `Required age is ${this.options.age} or ${
+        !this.options.orMore ? 'less' : 'more'
+      }`,
       subtitle: '',
     }
   }
