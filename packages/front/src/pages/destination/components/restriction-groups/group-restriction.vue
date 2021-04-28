@@ -13,15 +13,7 @@
       </div>
     </q-item-section>
 
-    <q-item-section>
-      <q-item-label class="text-primary text-pr" v-html="restriction.title" />
-      <q-separator dark class="full-width" spaced="" />
-      <q-item-label
-        class="text-primary-subtle q-pt-xs text-body2"
-        style="white-space: pre-line"
-        v-html="restriction.subtitle"
-      />
-    </q-item-section>
+    <restriction :restriction="restriction" />
   </q-item>
 </template>
 
@@ -31,17 +23,18 @@
 import { matDone as prerequisiteIcon } from '@quasar/extras/material-icons'
 import { defineComponent, PropType } from '@vue/composition-api'
 
+import Restriction from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction.vue'
 import {
   RestrictionCategory,
-  RestrictionInstruction,
+  RestrictionNode,
 } from '@/shared/src/restriction-tree/restriction-node'
 
 export default defineComponent({
   name: 'GroupRestriction',
-  components: {},
+  components: { Restriction },
   props: {
     restriction: {
-      type: Object as PropType<RestrictionInstruction>,
+      type: Object as PropType<RestrictionNode>,
       required: true,
     },
     index: {

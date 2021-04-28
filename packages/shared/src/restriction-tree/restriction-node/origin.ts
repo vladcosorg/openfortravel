@@ -30,7 +30,7 @@ export class Origin extends RestrictionNode {
     return RestrictionNodeType.ORIGIN
   }
 
-  protected getAllowedCountries(): string[] {
+  public getAllowedCountries(): string[] {
     return this.options.not
       ? difference(getCountryCodes(), this.options.allowedOrigins)
       : this.options.allowedOrigins

@@ -24,7 +24,9 @@ export function transformCountryCodeToOriginSlug(countryCode: string): string {
   return matchingSlug
 }
 
-export function transformCountryCodeToDestinationSlug(countryCode: string): string {
+export function transformCountryCodeToDestinationSlug(
+  countryCode: string,
+): string {
   const originSlugToCodeMap = useVuexRawGetter<CountryList>(
     'modules/countryList/destinationSlugMap',
   )
@@ -47,7 +49,9 @@ export function transformOriginSlugToCode(originSlug: OriginSlug): string {
   return originSlugToCodeMap[originSlug]
 }
 
-export function transformDestinationSlugToCode(countrySlug: DestinationSlug): string {
+export function transformDestinationSlugToCode(
+  countrySlug: DestinationSlug,
+): string {
   const destinationSlugToCodeMap = useVuexRawGetter<CountryList>(
     'modules/countryList/destinationSlugMap',
   )
@@ -62,12 +66,19 @@ export function getLabelForCountryCode(countryCode: string): string {
   return getOriginLabelForCountryCode(countryCode)
 }
 
+export function getLabelsForCountryCodes(countryCodes: string[]): string[] {
+  const labels = getOriginLabels()
+  return countryCodes.map((countryCode) => labels[countryCode])
+}
+
 export function getOriginLabels(): CountryList {
   return useVuexRawGetter<CountryList>('modules/countryList/countryListOrigin')
 }
 
 export function getDestinationLabels(): CountryList {
-  return useVuexRawGetter<CountryList>('modules/countryList/countryListDestination')
+  return useVuexRawGetter<CountryList>(
+    'modules/countryList/countryListDestination',
+  )
 }
 export function getOriginLabelForCountryCode(countryCode: string): string {
   return getOriginLabels()[countryCode]
@@ -75,4 +86,50 @@ export function getOriginLabelForCountryCode(countryCode: string): string {
 
 export function getDestinationLabelForCountryCode(countryCode: string): string {
   return getDestinationLabels()[countryCode]
+}
+
+export function getSortedLabelsForCountryCodes<T extends string[]>(
+  countryCodes: T,
+  priorityList?: Partial<T>,
+  excludeList?: Partial<T>,
+): string[] {
+  let list = getLabelsForCountryCodes(countryCodes)
+
+  list = sortList(
+    list,
+    priorityList ? getLabelsForCountryCodes(priorityList as T) : undefined,
+  )
+
+  if (excludeList) {
+    list = list.filter((item) => !excludeList.includes(item))
+  }
+
+  return list
+}
+
+export function sortList<T extends string[]>(
+  inputList: T,
+  priorityList?: Partial<T>,
+): T {
+  const list = [...inputList] as T
+  list.sort((a, b) => a.localeCompare(b))
+
+  if (priorityList) {
+    list.sort((a, b) => {
+      const isAInPriority = priorityList.includes(a)
+      const isBInPriority = priorityList.includes(b)
+
+      if (isAInPriority && isBInPriority) {
+        return 0
+      } else if (isAInPriority && !isBInPriority) {
+        return -1
+      } else if (!isAInPriority && !isBInPriority) {
+        return 1
+      } else {
+        return a.localeCompare(b)
+      }
+    })
+  }
+
+  return list
 }

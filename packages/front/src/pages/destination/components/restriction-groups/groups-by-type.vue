@@ -16,25 +16,39 @@
             <group-score-words :score="group.score" />
             <group-score :score="group.score" />
           </q-item-section>
-          <q-item-section side :class="`text-${available ? 'positive' : 'negative'}`">
+          <q-item-section
+            side
+            :class="`text-${available ? 'positive' : 'negative'}`"
+          >
             <q-item-label>{{ typeLabel }}</q-item-label>
           </q-item-section>
         </template>
 
         <groups-by-category
-          label="Provided that"
+          label="Requirements"
           :restrictions="group.group.prerequisite"
           type="prerequisite"
         />
-        <groups-by-category label="Do" :restrictions="group.group.action" type="action" />
+        <groups-by-category
+          label="Do"
+          :restrictions="group.group.action"
+          type="action"
+        />
 
         <q-item v-if="available">
-          <q-item-section class="text-subtitle1 q-pa-lg text-center items-center">
+          <q-item-section
+            class="text-subtitle1 q-pa-lg text-center items-center"
+          >
             <q-item-label>
-              That's it! Provided that you've met all requirements above, you should be able to
-              enter the country.</q-item-label
+              That's it! Provided that you've met all requirements above, you
+              should be able to enter the country.</q-item-label
             >
-            <q-icon :name="successIcon" color="positive" size="xl" class="q-mt-lg" />
+            <q-icon
+              :name="successIcon"
+              color="positive"
+              size="xl"
+              class="q-mt-lg"
+            />
           </q-item-section>
         </q-item>
       </q-expansion-item>

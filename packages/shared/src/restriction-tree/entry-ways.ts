@@ -1,13 +1,11 @@
 import difference from 'lodash/difference'
 import groupBy from 'lodash/groupBy'
 import intersection from 'lodash/intersection'
-import mapValues from 'lodash/mapValues'
 import xor from 'lodash/xor'
 
 import { Matcher } from '@/shared/src/restriction-tree/matcher'
 import {
   RestrictionCategory,
-  RestrictionInstruction,
   RestrictionNode,
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionGroups } from '@/shared/src/restriction-tree/types'
@@ -17,7 +15,7 @@ type MergedRestrictionGroup = Array<RestrictionNode | RestrictionNode[]>
 type MergedRestrictionNodesGroups = RestrictionGroups<MergedRestrictionGroup>
 export type RestrictionsGroupesWithScore = {
   score: number
-  group: Array<RestrictionInstruction | RestrictionInstruction[]>
+  group: Record<RestrictionCategory, RestrictionNode[]>
 }[]
 
 export class EntryWays {
@@ -55,11 +53,20 @@ export class EntryWays {
   ): MergedRestrictionNodesGroups {
     for (const group of groups) {
       group.sort((nodeOrSubgroupA, nodeOrSubgroupB) => {
-        if (!Array.isArray(nodeOrSubgroupA) && !Array.isArray(nodeOrSubgroupB)) {
+        if (
+          !Array.isArray(nodeOrSubgroupA) &&
+          !Array.isArray(nodeOrSubgroupB)
+        ) {
           return nodeOrSubgroupA.displayOrder() - nodeOrSubgroupB.displayOrder()
-        } else if (Array.isArray(nodeOrSubgroupA) && !Array.isArray(nodeOrSubgroupB)) {
+        } else if (
+          Array.isArray(nodeOrSubgroupA) &&
+          !Array.isArray(nodeOrSubgroupB)
+        ) {
           return 1
-        } else if (!Array.isArray(nodeOrSubgroupA) && Array.isArray(nodeOrSubgroupB)) {
+        } else if (
+          !Array.isArray(nodeOrSubgroupA) &&
+          Array.isArray(nodeOrSubgroupB)
+        ) {
           return -1
         }
 
@@ -73,7 +80,9 @@ export class EntryWays {
     const penaltySum = group.reduce((prevScore, restriction) => {
       if (Array.isArray(restriction)) {
         return (
-          Math.max(...restriction.map((restriction) => restriction.penaltyScore())) + prevScore
+          Math.max(
+            ...restriction.map((restriction) => restriction.penaltyScore()),
+          ) + prevScore
         )
       }
 
@@ -102,15 +111,16 @@ export class EntryWays {
   protected calculatePenaltiesAndSortByScore(
     groups: RestrictionGroups<Record<RestrictionCategory, RestrictionNode[]>>,
   ): RestrictionsGroupesWithScore {
-    const scoredGroups = groups.reduce<RestrictionsGroupesWithScore>((acc, group) => {
-      acc.push({
-        score: this.convertPenaltiesToRating([...Object.values(group)]),
-        group: mapValues(group, (restrictionGroup) =>
-          restrictionGroup.map((restriction) => restriction.instruction(this.context)),
-        ),
-      })
-      return acc
-    }, [])
+    const scoredGroups = groups.reduce<RestrictionsGroupesWithScore>(
+      (acc, group) => {
+        acc.push({
+          score: this.convertPenaltiesToRating([...Object.values(group)]),
+          group,
+        })
+        return acc
+      },
+      [],
+    )
 
     scoredGroups.sort((groupA, groupB) => groupB.score - groupA.score)
     return scoredGroups
@@ -119,13 +129,19 @@ export class EntryWays {
   protected groupByRestrictionCategory(
     groups: RestrictionGroups,
   ): RestrictionGroups<Record<RestrictionCategory, RestrictionNode[]>> {
-    return groups.map((group) => groupBy(group, (node) => node.category())) as any
+    return groups.map((group) =>
+      groupBy(group, (node) => node.category()),
+    ) as any
   }
 
-  protected formatGroups(groups: RestrictionGroups): RestrictionsGroupesWithScore {
+  protected formatGroups(
+    groups: RestrictionGroups,
+  ): RestrictionsGroupesWithScore {
     // const mergedGroups = this.mergeSimilarGroups(groups)
     this.sortGroupsByIndex(groups)
-    return this.calculatePenaltiesAndSortByScore(this.groupByRestrictionCategory(groups))
+    return this.calculatePenaltiesAndSortByScore(
+      this.groupByRestrictionCategory(groups),
+    )
   }
 
   getGroups(): {
@@ -134,7 +150,9 @@ export class EntryWays {
   } {
     const allGroups = this.matcher.getGroups()
 
-    const availableGroups = this.context.applyToMatcher(this.matcher).getGroups()
+    const availableGroups = this.context
+      .applyToMatcher(this.matcher)
+      .getGroups()
 
     const unvailableGroups = difference(allGroups, availableGroups)
     return {

@@ -9,10 +9,10 @@ type VisitorContextType = {
 }
 
 export class VisitorContext {
-  [RestrictionNodeType.ORIGIN]: string;
-  [RestrictionNodeType.CITIZENSHIP]: string;
-  [RestrictionNodeType.VACCINATED] = false;
-  [RestrictionNodeType.AGE] = 21
+  public [RestrictionNodeType.ORIGIN]: string
+  public [RestrictionNodeType.CITIZENSHIP]: string
+  public [RestrictionNodeType.VACCINATED] = false
+  public [RestrictionNodeType.AGE] = 21
 
   constructor(protected readonly context: VisitorContextType) {
     this[RestrictionNodeType.ORIGIN] = context[RestrictionNodeType.ORIGIN]
@@ -24,18 +24,27 @@ export class VisitorContext {
     if (!context[RestrictionNodeType.CITIZENSHIP]) {
       this[RestrictionNodeType.CITIZENSHIP] = this[RestrictionNodeType.ORIGIN]
     } else {
-      this[RestrictionNodeType.CITIZENSHIP] = context[RestrictionNodeType.CITIZENSHIP]
+      this[RestrictionNodeType.CITIZENSHIP] =
+        context[RestrictionNodeType.CITIZENSHIP]
     }
 
     if (context[RestrictionNodeType.VACCINATED]) {
-      this[RestrictionNodeType.VACCINATED] = context[RestrictionNodeType.VACCINATED] as boolean
+      this[RestrictionNodeType.VACCINATED] = context[
+        RestrictionNodeType.VACCINATED
+      ] as boolean
     }
   }
 
   applyToMatcher(matcher: Matcher): Matcher {
     matcher = matcher
-      .withOptional(RestrictionNodeType.ORIGIN, this[RestrictionNodeType.ORIGIN])
-      .withOptional(RestrictionNodeType.CITIZENSHIP, this[RestrictionNodeType.CITIZENSHIP])
+      .withOptional(
+        RestrictionNodeType.ORIGIN,
+        this[RestrictionNodeType.ORIGIN],
+      )
+      .withOptional(
+        RestrictionNodeType.CITIZENSHIP,
+        this[RestrictionNodeType.CITIZENSHIP],
+      )
       .withOptional(RestrictionNodeType.AGE, this[RestrictionNodeType.AGE])
       .withOptional(RestrictionNodeType.DID_NOT_VISIT_COUNTRIES, [])
 

@@ -6,7 +6,11 @@ import {
   getLabelForCountryCode,
   getOriginLabels,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { generateCountryAndAreaSequence } from '@/shared/src/restriction-tree/misc'
+import {
+  formatAsHighlightedSequence,
+  generateCountryAndAreaSequence,
+  getAbbrebiationOrCountry,
+} from '@/shared/src/restriction-tree/misc'
 import {
   RestrictionInstruction,
   RestrictionNode,
@@ -17,7 +21,9 @@ import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
 const { t } = useI18nWithPrefix('rt.citizenship')
 
 export class Citizenship extends RestrictionNode {
-  constructor(protected options: { allowedCitizenship: string[]; not?: boolean }) {
+  constructor(
+    protected options: { allowedCitizenship: string[]; not?: boolean },
+  ) {
     super()
   }
 
@@ -29,13 +35,27 @@ export class Citizenship extends RestrictionNode {
     return RestrictionNodeType.CITIZENSHIP
   }
 
-  protected getAllowedCountries(): string[] {
+  public getAllowedCountries(): string[] {
     return this.options.not
       ? difference(getCountryCodes(), this.options.allowedCitizenship)
       : this.options.allowedCitizenship
   }
 
   instruction(context: VisitorContext): RestrictionInstruction {
+    const countryLabelOrArea = getAbbrebiationOrCountry(
+      this.options.allowedCitizenship,
+      context[RestrictionNodeType.CITIZENSHIP],
+    )
+
+    const fullList = formatAsHighlightedSequence(
+      this.getAllowedCountries(),
+      context[RestrictionNodeType.CITIZENSHIP],
+    )
+
+    return {
+      title: `If you are a citizen or a permanent resident of ${countryLabelOrArea}`,
+      subtitle: `Nationals of ${fullList} meet this criteria`,
+    }
     return {
       title: t('instruction.heading', {
         country: getLabelForCountryCode(context.origin),
@@ -44,7 +64,7 @@ export class Citizenship extends RestrictionNode {
         sequence: generateCountryAndAreaSequence(
           this.getAllowedCountries(),
           getOriginLabels(),
-          { compact: false },
+          { compact: true },
         ),
       }) as string,
     }

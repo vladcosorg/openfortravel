@@ -1,7 +1,13 @@
 import difference from 'lodash/difference'
 import intersection from 'lodash/intersection'
+import isEqual from 'lodash/isEqual'
 
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
+import {
+  getLabelForCountryCode,
+  getOriginLabels,
+  sortList,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 
 export const EU = [
   'at',
@@ -62,15 +68,89 @@ export const SCHENGEN = [
   'ch',
 ]
 
+export function isSchengen(countryCodes: string[]): boolean | string[] {
+  if (isEqual(SCHENGEN, countryCodes)) {
+    return true
+  }
+
+  const diff = intersection(SCHENGEN, countryCodes)
+
+  // const diff = difference(countryCodes, SCHENGEN)
+}
+
+export function getAbbrebiationOrCountry(
+  countryCodes: string[],
+  focusCountry: string,
+): string {
+  if (difference(SCHENGEN, countryCodes).length === 0) {
+    return `<b class="text-accent">Schengen Area</b> (including <b class="text-accent">${getLabelForCountryCode(
+      focusCountry,
+    )}</b>)`
+  }
+
+  return 'aa'
+}
+
+function joinSequence(sequence: string[]): string {
+  const sequenceLength = sequence.length
+  if (sequenceLength === 0) {
+    return ''
+  }
+
+  if (sequenceLength === 1) {
+    return sequence.pop() as string
+  }
+
+  const suffix = sequence.pop()
+
+  return (
+    sequence
+      .map((fragment, index) => {
+        if (index == 3) {
+          return `<span class="collapser"><span class="placeholder">and 164 other countries (click to show full list)</span><span class="full-list">${fragment},`
+        } else if (index === sequenceLength) {
+          return `${fragment}</span></span>`
+        } else {
+          return `${fragment},`
+        }
+      })
+      .join(' ') + ` and ${suffix}`
+  )
+}
+
+export function formatAsHighlightedSequence(
+  countryAndAreaCodes: string[],
+  highlightedCountryCode: string,
+): string {
+  const countryLabels = getOriginLabels()
+  const highlightedLabel = countryLabels[highlightedCountryCode]
+
+  if (!highlightedLabel) {
+    throw new Error(
+      `The highlight code '${highlightedCountryCode}' is not valid`,
+    )
+  }
+
+  const labelledList = mapCodesToLabels(countryAndAreaCodes, countryLabels)
+  const sortedList = sortList(labelledList, [highlightedLabel])
+  const highlightedList = sortedList.map((label) =>
+    maybeHighlight(label, label === highlightedLabel ? 'text-accent' : true),
+  )
+
+  return joinSequence(highlightedList)
+}
+
 export function generateCountryAndAreaSequence(
   countryAndAreaCodes: string[],
   codeLabels: Record<string, string>,
   {
     truncate = true,
     compact = true,
+    highlightCountries = true,
   }: {
     truncate?: boolean | number
     compact?: boolean
+    highlightCountries?: boolean | string[] | string
   } = {},
 ): string {
   const { t } = useVueI18n()
@@ -107,6 +187,14 @@ export function generateCountryAndAreaSequence(
   return `${labelledList.map((item) => `<b>${item}</b>`).join(', ')} ${t(
     'misc.and',
   )} ${suffix}`
+}
+
+function maybeHighlight(fragment: string, highlight: boolean | string): string {
+  return highlight === false
+    ? fragment
+    : typeof highlight === 'string'
+    ? `<b class="${highlight}">${fragment}</b>`
+    : `<b>${fragment}</b>`
 }
 
 function compactList(countryCodes: string[]): string[] {
@@ -151,9 +239,18 @@ function truncateCountryAndAreaSequence(
   }
 }
 
-function mapCodesToLabels(
+export function mapCodesToLabels(
   countryAndAreaCodes: string[],
   codeLabels: Record<string, string>,
+  highlightCodes: string[] = [],
 ): string[] {
-  return countryAndAreaCodes.map((code) => codeLabels[code] ?? code)
+  return countryAndAreaCodes.map((code) => {
+    let label = codeLabels[code] ?? code
+
+    if (highlightCodes.includes(code)) {
+      label = `<b>${label}</b>`
+    }
+
+    return label
+  })
 }

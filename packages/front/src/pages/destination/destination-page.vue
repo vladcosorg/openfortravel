@@ -3,7 +3,10 @@
     <portal to="under-header">
       <the-breadcrumbs :items="breadcrumbs" />
     </portal>
-    <the-search-header :origin-code="originCode" :destination-code="destinationCode" />
+    <the-search-header
+      :origin-code="originCode"
+      :destination-code="destinationCode"
+    />
     <div class="container">
       <heading :restriction="restriction" :destination="destination" />
       <div class="row q-col-gutter-xl">
@@ -17,25 +20,29 @@
           <!--          />-->
         </div>
         <div class="col-md-5 col-12">
-          <question-index
-            class="q-mb-xl"
-            :is-loading="isLoading"
-            :destination="destination"
-            :restriction="restriction"
-          />
+          <!--          <question-index-->
+          <!--            class="q-mb-xl"-->
+          <!--            :is-loading="isLoading"-->
+          <!--            :destination="destination"-->
+          <!--            :restriction="restriction"-->
+          <!--          />-->
           <stats class="q-mb-xl" :is-loading="isLoading" />
-          <links class="q-mb-xl" :destination="destination" :is-loading="isLoading" />
+          <links
+            class="q-mb-xl"
+            :destination="destination"
+            :is-loading="isLoading"
+          />
           <section class="q-pb-xl">
             <inline-subscribe-form no-autofocus :restriction="restriction" />
           </section>
         </div>
       </div>
-      <questions
-        class="q-my-xl"
-        :is-loading="isLoading"
-        :destination="destination"
-        :restriction="restriction"
-      />
+      <!--      <questions-->
+      <!--        class="q-my-xl"-->
+      <!--        :is-loading="isLoading"-->
+      <!--        :destination="destination"-->
+      <!--        :restriction="restriction"-->
+      <!--      />-->
       <section>
         <widget-header :title="$t('components.sharing.title')" />
         <sharing :restriction="restriction" />
@@ -131,7 +138,9 @@ export default defineComponent({
       destination: computed(() => store.getters.currentDestination),
       restrictionTree: computed(() => store.getters.restrictionTree),
       isLoading: loading,
-      breadcrumbs: useBreadcrumbs(computed(() => store.getters.currentRestriction)),
+      breadcrumbs: useBreadcrumbs(
+        computed(() => store.getters.currentRestriction),
+      ),
     }
   },
 })
