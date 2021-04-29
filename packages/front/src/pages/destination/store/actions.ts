@@ -8,13 +8,13 @@ import {
 } from '@/front/src/pages/destination/store/types/actions'
 import { MutationTypes } from '@/front/src/pages/destination/store/types/mutations'
 import { StateInterface } from '@/front/src/store/state'
-import { RootActionTypes } from '@/front/src/store/types/actions'
 import {
   findRestrictionByOriginAndDestination,
   findRestrictionsByDestination,
 } from '@/shared/src/api/restrictions/repository'
 
-export const actions: ActionTree<StateClass, StateInterface> & ActionSignatures = {
+export const actions: ActionTree<StateClass, StateInterface> &
+  ActionSignatures = {
   async [ActionTypes.fetchReturnRestriction](
     { commit, state },
     { originCode, destinationCode },
@@ -32,7 +32,10 @@ export const actions: ActionTree<StateClass, StateInterface> & ActionSignatures 
     )
   },
 
-  async [ActionTypes.fetchRelatedRestrictions]({ commit, state }, destinationCode: string) {
+  async [ActionTypes.fetchRelatedRestrictions](
+    { commit, state },
+    destinationCode: string,
+  ) {
     if (state.relatedRestrictions.destinationCode === destinationCode) {
       return
     }
@@ -42,15 +45,18 @@ export const actions: ActionTree<StateClass, StateInterface> & ActionSignatures 
     })
   },
 
-  async [ActionTypes.fetch]({ commit, dispatch }, countryPair: CurrentCountryPair) {
+  async [ActionTypes.fetch](
+    { commit, dispatch },
+    countryPair: CurrentCountryPair,
+  ) {
     commit(MutationTypes.setCurrentCountryPair, countryPair)
-    await dispatch(RootActionTypes.fetchSharedRestrictions, countryPair.originCode, {
-      root: true,
-    })
-    await dispatch(ActionTypes.fetchRelatedRestrictions, countryPair.destinationCode)
-    await dispatch(ActionTypes.fetchReturnRestriction, {
-      originCode: countryPair.destinationCode,
-      destinationCode: countryPair.originCode,
-    })
+    // await dispatch(RootActionTypes.fetchSharedRestrictions, countryPair.originCode, {
+    //   root: true,
+    // })
+    // await dispatch(ActionTypes.fetchRelatedRestrictions, countryPair.destinationCode)
+    // await dispatch(ActionTypes.fetchReturnRestriction, {
+    //   originCode: countryPair.destinationCode,
+    //   destinationCode: countryPair.originCode,
+    // })
   },
 }

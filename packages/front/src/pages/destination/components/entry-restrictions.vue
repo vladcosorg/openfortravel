@@ -19,13 +19,13 @@
       <h4>According to available information</h4>
       <h5 class="text-negative">currently you cannot enter this country</h5>
       <div class="text-subtitle2">
-        Please subcribe to alerts in the form below to be notified when you can access this
-        country
+        Please subcribe to alerts in the form below to be notified when you can
+        access this country
       </div>
     </div>
     <groups-by-type
       :restrictions-groups="groups.unavailable"
-      type-label="Unavailable"
+      type-label="Not available"
       :available="false"
     />
   </q-list>

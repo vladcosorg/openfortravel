@@ -1,29 +1,21 @@
 <template>
   <component :is="wrapper">
     <template #title>
-      <span>
-        You must arrive from
-        <title-country
-          :allowed="restriction.getAllowedCountries()"
-          :focus="context"
-        />
-      </span>
+      <span>Get a negative COVID-19 PCR test certificate</span>
     </template>
     <template #subtitle>
       <p>
-        You must arrive to your destination from
-        <collapsed-country-sequence
-          :allowed="restriction.getAllowedCountries()"
-          :focus="context"
-        />.
-      </p>
-      <p>
-        Arriving to <country focused :code="destination.countryCode" /> from any
-        other country except the ones listed above, may subject you to
-        additional restrictions, such as quarantine or even denial of entry.
+        The test has to be issued within {{ restriction.options.hours }} hours
+        prior to arrival
+        <template v-if="restriction.options.languages.length"
+          >in
+          <template v-for="language in restriction.options.languages">
+            {{ language }}
+          </template>
+        </template>
+        .
       </p>
     </template>
-    <template #did-not-match>YOu did not</template>
   </component>
 </template>
 
@@ -36,7 +28,6 @@ a[href^='#'] {
 </style>
 
 <script lang="ts">
-import { matWarning as notMatchedIcon } from '@quasar/extras/material-icons'
 import {
   computed,
   defineComponent,
@@ -50,21 +41,21 @@ import TitleCountry from '@/front/src/pages/destination/components/restriction-g
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
 import { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
+import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
 
 export default defineComponent({
   components: { Country, CollapsedCountrySequence, TitleCountry },
   mixins: [sharedProps],
   props: {
     restriction: {
-      type: Object as PropType<Origin>,
+      type: Object as PropType<PcrTest>,
       required: true,
     },
   },
   setup() {
     const store = inject(StoreKey) as StoreModule
     const destination = computed(() => store.getters.currentDestination)
-    return { destination, notMatchedIcon }
+    return { destination }
   },
 })
 </script>

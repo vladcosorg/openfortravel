@@ -15,6 +15,10 @@ export function meta({
   destinationCode: string
   isFallback: boolean
 }): unknown {
+  if (process.env.DEV) {
+    return {}
+  }
+
   return {
     title: useI18n().t('page.destination.meta.title', {
       origin: getLabelForCountryCode(originCode),

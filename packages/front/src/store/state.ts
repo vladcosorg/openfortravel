@@ -7,6 +7,7 @@ export interface StateInterface {
   countrySelectorLoading: boolean
   detectedCountry: string | undefined
   localizedRoutes: Record<string, string>
+  localizedLanguages: Record<string, string>
   locales: LocaleMessageObject
   serverLocale: string
   availableLocales: string[]
@@ -20,6 +21,7 @@ export class RootState implements StateInterface {
   detectedCountry = 'us'
   localizedRoutes = {}
   locales = {}
+  localizedLanguages = {}
   serverLocale = 'en'
   availableLocales = []
   labeledLocales = []

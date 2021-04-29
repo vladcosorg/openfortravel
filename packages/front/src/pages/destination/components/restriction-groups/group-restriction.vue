@@ -4,7 +4,7 @@
       <q-icon
         v-if="type === 'prerequisite'"
         :name="prerequisiteIcon"
-        color="positive"
+        color="info"
         size="lg"
       />
       <div v-else class="text-center">
@@ -20,7 +20,7 @@
 <style lang="scss" module></style>
 
 <script lang="ts">
-import { matDone as prerequisiteIcon } from '@quasar/extras/material-icons'
+import { matChevronRight as prerequisiteIcon } from '@quasar/extras/material-icons'
 import { defineComponent, PropType } from '@vue/composition-api'
 
 import Restriction from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction.vue'

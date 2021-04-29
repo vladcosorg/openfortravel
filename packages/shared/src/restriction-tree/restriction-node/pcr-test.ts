@@ -8,7 +8,7 @@ import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 const { t } = useI18nWithPrefix<string>('rt.pcrTest')
 export class PcrTest extends RestrictionNode {
-  constructor(protected options: { hours: number; languages: string[] }) {
+  constructor(public readonly options: { hours: number; languages: string[] }) {
     super()
   }
 

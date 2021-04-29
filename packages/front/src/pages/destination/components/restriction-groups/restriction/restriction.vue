@@ -2,7 +2,7 @@
   <component
     :is="restriction.id()"
     v-if="isStandalone"
-    :template="template"
+    :wrapper="template"
     :restriction="restriction"
     :context="contextValue"
   />
@@ -26,6 +26,7 @@ import {
 
 import Citizenship from '@/front/src/pages/destination/components/restriction-groups/restriction/citizenship.vue'
 import Origin from '@/front/src/pages/destination/components/restriction-groups/restriction/origin.vue'
+import PcrTest from '@/front/src/pages/destination/components/restriction-groups/restriction/pcr-test.vue'
 import RestrictionItem from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item.vue'
 import { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
@@ -35,6 +36,7 @@ import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 const standaloneTypes = {
   [RestrictionNodeType.CITIZENSHIP]: Citizenship,
   [RestrictionNodeType.ORIGIN]: Origin,
+  [RestrictionNodeType.PCR_TEST]: PcrTest,
 }
 export default defineComponent({
   components: {

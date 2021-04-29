@@ -12,6 +12,7 @@ import {
   preloadCountryList,
 } from '@/shared/src/modules/country-list/country-list-node-preload'
 import { getTranslatedOrTranslatableLocales } from '@/shared/src/modules/language/locales'
+import { loadLanguages } from '@/shared/src/modules/language/ssr-loaders'
 import { preloadNationalities } from '@/shared/src/modules/nationality/nationality-preload'
 
 import LocaleMessages = VueI18n.LocaleMessages
@@ -27,6 +28,7 @@ serverCache.labeledLocales = langs.filter((langPair) =>
   serverCache.availableLocales.includes(langPair.value),
 )
 serverCache.continentMap = loadContinentMap()
+serverCache.languages = loadLanguages()
 serverCache.i18nMessages = (messages as unknown) as LocaleMessages
 serverCache.localizedRoutes = pregenerateLocalizableRouter()
 serverCache.nationalities = preloadNationalities()

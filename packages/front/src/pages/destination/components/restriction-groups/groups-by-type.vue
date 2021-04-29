@@ -16,11 +16,18 @@
             <group-score-words :score="group.score" />
             <group-score :score="group.score" />
           </q-item-section>
-          <q-item-section
-            side
-            :class="`text-${available ? 'positive' : 'negative'}`"
-          >
-            <q-item-label>{{ typeLabel }}</q-item-label>
+          <q-item-section side>
+            <q-chip v-if="available && key === 0" square text-color="positive">
+              <q-avatar :icon="availableIcon" color="teal" text-color="white" />
+              Best option
+            </q-chip>
+            <q-chip v-else-if="available" square text-color="positive">
+              <q-avatar :icon="availableIcon" text-color="positive" />
+              {{ typeLabel }}
+            </q-chip>
+            <q-chip v-else square text-color="negative">
+              {{ typeLabel }}</q-chip
+            >
           </q-item-section>
         </template>
 
@@ -61,7 +68,8 @@
 <script lang="ts">
 import {
   matKeyboardArrowDown as expansionIcon,
-  matThumbUp as successIcon,
+  matStar as successIcon,
+  matCheck as availableIcon,
 } from '@quasar/extras/material-icons'
 import { defineComponent, PropType } from '@vue/composition-api'
 
@@ -87,7 +95,7 @@ export default defineComponent({
     },
   },
   setup() {
-    return { expansionIcon, successIcon }
+    return { expansionIcon, successIcon, availableIcon }
   },
 })
 </script>

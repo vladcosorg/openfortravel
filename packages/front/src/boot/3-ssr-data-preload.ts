@@ -5,43 +5,49 @@ import { serverCache } from '@/front/src/misc/server-cache'
 import { useI18n } from '@/shared/src/composables/use-plugins'
 
 export default boot(async ({ store }) => {
+  const locale = useI18n().locale
+
   store.commit('setAvailableLocales', serverCache.availableLocales)
   store.commit('setCountryToContinentMap', serverCache.continentMap)
   store.commit('setLabeledLocales', serverCache.labeledLocales)
-  if (useI18n().locale === 'ru') {
+  store.commit(
+    'setLocalizedLanguages',
+    serverCache.languages[locale] ?? serverCache.languages['en'],
+  )
+  if (locale === 'ru') {
     store.commit(
       'modules/countryList/setCountryListOrigin',
-      serverCache.getCountryCodeToLabelMap(useI18n().locale).origin,
+      serverCache.getCountryCodeToLabelMap(locale).origin,
     )
     store.commit(
       'modules/countryList/setCountryListDestination',
-      serverCache.getCountryCodeToLabelMap(useI18n().locale).destination,
+      serverCache.getCountryCodeToLabelMap(locale).destination,
     )
 
     store.commit(
       'modules/countryList/setOriginSlugMap',
-      serverCache.getCountrySlugToCodeMap(useI18n().locale).origin,
+      serverCache.getCountrySlugToCodeMap(locale).origin,
     )
     store.commit(
       'modules/countryList/setDestinationSlugMap',
-      serverCache.getCountrySlugToCodeMap(useI18n().locale).destination,
+      serverCache.getCountrySlugToCodeMap(locale).destination,
     )
   } else {
     store.commit(
       'modules/countryList/setCountryList',
-      serverCache.getCountryCodeToLabelMap(useI18n().locale).origin,
+      serverCache.getCountryCodeToLabelMap(locale).origin,
     )
     store.commit(
       'modules/countryList/setSlugMap',
-      serverCache.getCountrySlugToCodeMap(useI18n().locale).origin,
+      serverCache.getCountrySlugToCodeMap(locale).origin,
     )
   }
 
-  const nationalities = serverCache.nationalities[useI18n().locale]
+  const nationalities = serverCache.nationalities[locale]
   if (nationalities) {
     store.commit(
       'modules/nationalities/setNationalities',
-      serverCache.nationalities[useI18n().locale],
+      serverCache.nationalities[locale],
     )
   }
 

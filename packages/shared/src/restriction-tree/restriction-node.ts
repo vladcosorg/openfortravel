@@ -18,7 +18,7 @@ export type CommonOptions = {
   customInstructionSubtitle?: string
 }
 export abstract class RestrictionNode implements TreeNode {
-  protected options?: Record<string, unknown>
+  public readonly options?: Record<string, unknown>
 
   abstract id(): RestrictionNodeType
 
