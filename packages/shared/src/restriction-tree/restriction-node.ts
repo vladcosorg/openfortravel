@@ -17,8 +17,11 @@ export type CommonOptions = {
   customInstructionTitle?: string
   customInstructionSubtitle?: string
 }
-export abstract class RestrictionNode implements TreeNode {
-  public readonly options?: Record<string, unknown>
+export abstract class RestrictionNode<T extends Record<string, unknown>>
+  implements TreeNode {
+  constructor(public readonly options: T) {
+    this.options = Object.assign(this.getDefaults(), options)
+  }
 
   abstract id(): RestrictionNodeType
 
@@ -28,6 +31,10 @@ export abstract class RestrictionNode implements TreeNode {
 
   penaltyScore(): number {
     return 0
+  }
+
+  protected getDefaults(): T {
+    return {} as T
   }
 
   category(): RestrictionCategory {

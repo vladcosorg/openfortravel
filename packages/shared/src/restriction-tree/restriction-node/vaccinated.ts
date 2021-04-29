@@ -20,18 +20,35 @@ export enum VaccineBrand {
   CONVIDECIA = 'convidecia',
 }
 
-export class Vaccinated extends RestrictionNode {
-  constructor(
-    protected readonly options: {
-      daysAgo: number
-      authorizedBrands: VaccineBrand[]
-    },
-  ) {
-    super()
+export const vaccineLabels = {
+  [VaccineBrand.MODERNA]: 'Moderna',
+  [VaccineBrand.NOVAVAX]: 'Novavax',
+  [VaccineBrand.ASTRA_ZENEKA]: 'Oxford–AstraZeneca',
+  [VaccineBrand.SINOPHARM]: 'Sinopharm (BBIBP-CorV)',
+  [VaccineBrand.COVAXIN]: 'Covaxin (BBV152)',
+  [VaccineBrand.PFIZER]: 'Pfizer-BioNTech',
+  [VaccineBrand.SPUTNIK]: 'Sputnik V',
+  [VaccineBrand.JOHNSON_AND_JOHNSON]: 'Johnson & Johnson’s Janssen',
+  [VaccineBrand.CONVIDECIA]: 'Convidecia (AD5-nCOV)',
+  [VaccineBrand.SINOVAC]: 'CoronaVac (Sinovac)',
+}
+
+type Options = {
+  daysAgo: number
+  authorizedBrands: VaccineBrand[]
+  languages: string[]
+}
+export class Vaccinated extends RestrictionNode<Options> {
+  protected getDefaults(): Options {
+    return {
+      daysAgo: 0,
+      authorizedBrands: [],
+      languages: [],
+    }
   }
 
   matches(userValue: number): boolean {
-    return userValue >= this.options.daysAgo
+    return !this.options.daysAgo || userValue >= this.options.daysAgo
   }
 
   id(): RestrictionNodeType {

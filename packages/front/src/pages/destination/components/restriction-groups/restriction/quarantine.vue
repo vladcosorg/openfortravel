@@ -1,16 +1,34 @@
 <template>
   <component :is="wrapper">
-    <template #title>
-      <span>Get a negative COVID-19 <b>PCR test</b> certificate</span>
+    <template v-if="!restriction.options.earlyReleaseDays" #title>
+      Self-isolate for <b>{{ restriction.options.days }} days</b> upon arrival
+    </template>
+
+    <template v-else #title>
+      Self-isolate for
+      <b>at least {{ restriction.options.earlyReleaseDays }} days</b> upon
+      arrival
     </template>
     <template #subtitle>
       <p>
-        The test has to be issued within
-        <b>{{ restriction.options.hours }} hours</b>
-        prior to arrival
-        <template v-if="restriction.options.languages.length"
-          >in <languages :codes="restriction.options.languages" /> </template
-        >.
+        Travelers are subject to <b>{{ restriction.options.days }} days</b> of
+        mandatory self-isolation at home, declared location or location
+        designated by authorities.
+      </p>
+      <p v-if="restriction.options.earlyReleaseDays">
+        The quarantine period may be shortened by taking another test during the
+        self-isolation. If the result of this test is negative,
+        <b
+          >the period of quarantine can end on day
+          {{ restriction.options.earlyReleaseDays }}.</b
+        >
+      </p>
+      <p v-else>
+        You have to self-isolate for the full duration ({{
+          restriction.options.days
+        }}
+        days) and it is not possible to end the quarantine early by taking a
+        repeated test.
       </p>
     </template>
   </component>
@@ -33,7 +51,7 @@ import Language from '@/front/src/pages/destination/components/restriction-group
 import Languages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/languages.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
+import { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
 
 export default defineComponent({
   components: {
@@ -46,7 +64,7 @@ export default defineComponent({
   mixins: [sharedProps],
   props: {
     restriction: {
-      type: Object as PropType<PcrTest>,
+      type: Object as PropType<Quarantine>,
       required: true,
     },
   },

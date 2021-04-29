@@ -25,9 +25,12 @@ import {
 } from '@vue/composition-api'
 
 import Citizenship from '@/front/src/pages/destination/components/restriction-groups/restriction/citizenship.vue'
+import DidNotVisitCountries from '@/front/src/pages/destination/components/restriction-groups/restriction/did-not-visit-countries.vue'
 import Origin from '@/front/src/pages/destination/components/restriction-groups/restriction/origin.vue'
 import PcrTest from '@/front/src/pages/destination/components/restriction-groups/restriction/pcr-test.vue'
+import Quarantine from '@/front/src/pages/destination/components/restriction-groups/restriction/quarantine.vue'
 import RestrictionItem from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item.vue'
+import Vaccinated from '@/front/src/pages/destination/components/restriction-groups/restriction/vaccinated.vue'
 import { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
@@ -37,6 +40,9 @@ const standaloneTypes = {
   [RestrictionNodeType.CITIZENSHIP]: Citizenship,
   [RestrictionNodeType.ORIGIN]: Origin,
   [RestrictionNodeType.PCR_TEST]: PcrTest,
+  [RestrictionNodeType.QUARANTINE]: Quarantine,
+  [RestrictionNodeType.VACCINATED]: Vaccinated,
+  [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: DidNotVisitCountries,
 }
 export default defineComponent({
   components: {

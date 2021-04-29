@@ -10,9 +10,14 @@ import {
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 const { t } = useI18nWithPrefix<string>('rt.didNotVisitCountries')
-export class DidNotVisitCountries extends RestrictionNode {
-  constructor(protected readonly options: { countryCodes: string[]; days: number }) {
-    super()
+type Options = { countryCodes: string[]; days: number }
+
+export class DidNotVisitCountries extends RestrictionNode<Options> {
+  protected getDefaults(): Options {
+    return {
+      countryCodes: [],
+      days: 0,
+    }
   }
 
   matches(userVisitedCountries: string[]): boolean {
@@ -20,7 +25,9 @@ export class DidNotVisitCountries extends RestrictionNode {
       return true
     }
 
-    return intersection(this.options.countryCodes, userVisitedCountries).length === 0
+    return (
+      intersection(this.options.countryCodes, userVisitedCountries).length === 0
+    )
   }
 
   displayOrder(): number {
@@ -40,7 +47,10 @@ export class DidNotVisitCountries extends RestrictionNode {
       title: t('instruction.heading', { days: this.options.days }),
       subtitle: t('instruction.subtitle', {
         days: this.options.days,
-        sequence: generateCountryAndAreaSequence(this.options.countryCodes, getOriginLabels()),
+        sequence: generateCountryAndAreaSequence(
+          this.options.countryCodes,
+          getOriginLabels(),
+        ),
       }),
     }
   }

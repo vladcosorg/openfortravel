@@ -6,7 +6,9 @@ import {
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export class Quarantine extends RestrictionNode {
-  constructor(protected readonly options: { days: number; earlyReleaseDays: number }) {
+  constructor(
+    public readonly options: { days: number; earlyReleaseDays: number },
+  ) {
     super()
   }
 
