@@ -9,10 +9,9 @@ import {
 } from '@/admin/src/pages/edit/composables/field-config/fields'
 import type {
   ExtractOptions,
-  FieldConfig} from '@/admin/src/pages/edit/composables/field-config/helpers';
-import {
-  getSetters,
+  FieldConfig,
 } from '@/admin/src/pages/edit/composables/field-config/helpers'
+import { getSetters } from '@/admin/src/pages/edit/composables/field-config/helpers'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export function createConfig(
@@ -126,7 +125,8 @@ export function createConfig(
       ]
     }
 
-    default:
-      throw new Error(`Undefined handler for ${type}`)
+    case RestrictionNodeType.INSURANCE: {
+      return []
+    }
   }
 }

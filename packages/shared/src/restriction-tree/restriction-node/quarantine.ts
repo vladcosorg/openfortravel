@@ -4,9 +4,9 @@ import {
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-type Options = typeof Quarantine.defaultOptions
-
-export class Quarantine extends RestrictionNode<Options> {
+export class Quarantine extends RestrictionNode<
+  typeof Quarantine.defaultOptions
+> {
   public static defaultOptions = {
     days: 14,
     earlyReleaseDays: 0,
@@ -15,10 +15,6 @@ export class Quarantine extends RestrictionNode<Options> {
 
   id(): RestrictionNodeType {
     return RestrictionNodeType.QUARANTINE
-  }
-
-  protected getDefaults(): Options {
-    return Quarantine.defaultOptions
   }
 
   category(): RestrictionCategory {

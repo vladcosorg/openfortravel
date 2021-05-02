@@ -11,11 +11,10 @@ import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test
 import { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
 import { RecoveryCertificate } from '@/shared/src/restriction-tree/restriction-node/recovery-certificate'
 import { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
-import type {
-  TreeNode} from '@/shared/src/restriction-tree/types';
+import type { TreeNode } from '@/shared/src/restriction-tree/types'
 import {
   LogicNodeType,
-  RestrictionNodeType
+  RestrictionNodeType,
 } from '@/shared/src/restriction-tree/types'
 
 export type EncodedNode = EncodedLogicNode | EncodedRestrictionNode
@@ -69,8 +68,9 @@ export function convertFromStorageFormat(nodeTree: EncodedNode): TreeNode {
     )
   }
 
+  const defaultOptions = (constructor as typeof Origin).defaultOptions
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return new constructor(nodeTree.options as any)
+  return new constructor(Object.assign({}, defaultOptions, nodeTree.options))
 }
 
 function isLogicNode(node: EncodedNode): node is EncodedLogicNode {

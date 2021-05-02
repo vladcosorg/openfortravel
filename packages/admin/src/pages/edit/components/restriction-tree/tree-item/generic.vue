@@ -14,15 +14,11 @@
 <style lang="scss" module></style>
 
 <script lang="ts">
-import type {
-  PropType} from '@vue/composition-api';
-import {
-  computed,
-  defineComponent,
-  toRef,
-} from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { computed, defineComponent, toRef } from '@vue/composition-api'
 
 import { createConfig } from '@/admin/src/pages/edit/composables/field-config/use-field-config'
+import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import type { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
@@ -35,7 +31,7 @@ export default defineComponent({
       required: true,
     },
     options: {
-      type: Object,
+      type: Object as PropType<typeof RestrictionNode.defaultOptions>,
       required: true,
     },
   },

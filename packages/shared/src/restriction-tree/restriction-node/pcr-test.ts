@@ -4,15 +4,11 @@ import {
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-type Options = typeof PcrTest.defaultOptions
-export class PcrTest extends RestrictionNode<Options> {
+export class PcrTest extends RestrictionNode<typeof PcrTest.defaultOptions> {
   public static defaultOptions = {
     hours: 72,
     languages: ['en'] as string[],
     ...RestrictionNode.defaultOptions,
-  }
-  protected getDefaults(): Options {
-    return PcrTest.defaultOptions
   }
 
   id(): RestrictionNodeType {

@@ -8,24 +8,16 @@ import {
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-type Options = typeof DidNotVisitCountries.defaultOptions
-export class DidNotVisitCountries extends RestrictionNode<Options> {
-  protected getDefaults(): Options {
-    return DidNotVisitCountries.defaultOptions
-  }
-
-  protected getCountries(): string[] {
-    return this.options.inverseSelection
-      ? difference(getCountryCodes(), this.options.countryCodes)
-      : this.options.countryCodes
-  }
-
+export class DidNotVisitCountries extends RestrictionNode<
+  typeof DidNotVisitCountries.defaultOptions
+> {
   public static defaultOptions = {
     countryCodes: [] as string[],
     inverseSelection: false,
     days: 0,
     ...RestrictionNode.defaultOptions,
   }
+
   matches(userVisitedCountries: string[]): boolean {
     if (userVisitedCountries.length === 0) {
       return true
@@ -48,5 +40,11 @@ export class DidNotVisitCountries extends RestrictionNode<Options> {
 
   id(): RestrictionNodeType {
     return RestrictionNodeType.DID_NOT_VISIT_COUNTRIES
+  }
+
+  protected getCountries(): string[] {
+    return this.options.inverseSelection
+      ? difference(getCountryCodes(), this.options.countryCodes)
+      : this.options.countryCodes
   }
 }

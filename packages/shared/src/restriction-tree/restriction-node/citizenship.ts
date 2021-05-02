@@ -7,8 +7,9 @@ import {
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-type Options = typeof Citizenship.defaultOptions
-export class Citizenship extends RestrictionNode<Options> {
+export class Citizenship extends RestrictionNode<
+  typeof Citizenship.defaultOptions
+> {
   public static defaultOptions = {
     allowedCitizenship: [] as string[],
     not: false,

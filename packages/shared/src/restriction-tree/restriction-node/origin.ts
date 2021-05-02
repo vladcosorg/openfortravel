@@ -4,17 +4,11 @@ import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-
 import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-type Options = typeof Origin.defaultOptions
-
-export class Origin extends RestrictionNode<Options> {
+export class Origin extends RestrictionNode<typeof Origin.defaultOptions> {
   public static defaultOptions = {
     allowedOrigins: [] as string[],
     not: false,
     ...RestrictionNode.defaultOptions,
-  }
-
-  protected getDefaults(): Options {
-    return Origin.defaultOptions
   }
 
   matches(value: string): boolean {

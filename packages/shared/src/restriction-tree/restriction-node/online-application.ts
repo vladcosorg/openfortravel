@@ -4,15 +4,12 @@ import {
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-type Options = typeof OnlineApplication.defaultOptions
-export class OnlineApplication extends RestrictionNode<Options> {
+export class OnlineApplication extends RestrictionNode<
+  typeof OnlineApplication.defaultOptions
+> {
   static defaultOptions = {
     url: '',
     ...RestrictionNode.defaultOptions,
-  }
-
-  protected getDefaults(): Options {
-    return OnlineApplication.defaultOptions
   }
 
   displayOrder(): number {

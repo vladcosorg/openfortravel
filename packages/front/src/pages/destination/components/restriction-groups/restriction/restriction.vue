@@ -10,16 +10,14 @@
 <style lang="scss" module></style>
 
 <script lang="ts">
-import type {
-  PropType} from '@vue/composition-api';
-import {
-  computed,
-  defineComponent,
-  inject
-} from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { computed, defineComponent, inject } from '@vue/composition-api'
 
+import Age from '@/front/src/pages/destination/components/restriction-groups/restriction/age.vue'
 import Citizenship from '@/front/src/pages/destination/components/restriction-groups/restriction/citizenship.vue'
 import DidNotVisitCountries from '@/front/src/pages/destination/components/restriction-groups/restriction/did-not-visit-countries.vue'
+import Insurance from '@/front/src/pages/destination/components/restriction-groups/restriction/insurance.vue'
+import OnlineApplication from '@/front/src/pages/destination/components/restriction-groups/restriction/online-application.vue'
 import Origin from '@/front/src/pages/destination/components/restriction-groups/restriction/origin.vue'
 import PcrTest from '@/front/src/pages/destination/components/restriction-groups/restriction/pcr-test.vue'
 import Quarantine from '@/front/src/pages/destination/components/restriction-groups/restriction/quarantine.vue'
@@ -41,6 +39,9 @@ export default defineComponent({
     [RestrictionNodeType.VACCINATED]: Vaccinated,
     [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: DidNotVisitCountries,
     [RestrictionNodeType.RECOVERY]: Recovery,
+    [RestrictionNodeType.AGE]: Age,
+    [RestrictionNodeType.ONLINE_APPLICATION]: OnlineApplication,
+    [RestrictionNodeType.INSURANCE]: Insurance,
   },
   props: {
     restriction: {

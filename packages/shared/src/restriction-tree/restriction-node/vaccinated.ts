@@ -27,17 +27,14 @@ export const vaccineLabels = {
   [VaccineBrand.SINOVAC]: 'CoronaVac (Sinovac)',
 }
 
-type Options = typeof Vaccinated.defaultOptions
-export class Vaccinated extends RestrictionNode<Options> {
+export class Vaccinated extends RestrictionNode<
+  typeof Vaccinated.defaultOptions
+> {
   static defaultOptions = {
     daysAgo: 14,
     authorizedBrands: [] as VaccineBrand[],
     languages: ['en'] as string[],
     ...RestrictionNode.defaultOptions,
-  }
-
-  protected getDefaults(): Options {
-    return Vaccinated.defaultOptions
   }
 
   matches(userValue: number): boolean {

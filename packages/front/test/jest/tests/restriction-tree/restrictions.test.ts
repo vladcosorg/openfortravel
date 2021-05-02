@@ -24,10 +24,7 @@ describe('Origin', () => {
     expect(origin.matches('uk')).toBe(false)
   })
 
-  test.only('dMissing origin should return false', () => {
-    const context = new VisitorContext({ origin: 'us' }, countryList)
-    const origin = new Origin({ allowedOrigins: ['us'] })
-    expect(origin.instruction(context)).toBe([])
+
   })
 })
 
