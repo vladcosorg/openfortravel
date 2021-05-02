@@ -135,13 +135,14 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref, toRefs } from '@vue/composition-api'
+import type { PropType} from '@vue/composition-api';
+import { computed, defineComponent, ref, toRefs } from '@vue/composition-api'
 
 import Stats from '@/admin/src/pages/edit/components/stats.vue'
 import TestRequired from '@/admin/src/pages/edit/components/test-required.vue'
 import { useRestrictionPersister } from '@/admin/src/pages/edit/composables/use-persister'
-import { AddSaveHandler } from '@/admin/src/pages/edit/edit-page.vue'
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { AddSaveHandler } from '@/admin/src/pages/edit/edit-page.vue'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 import {
   getContinentLabel,
   getOrderedListOfContinentIDs,

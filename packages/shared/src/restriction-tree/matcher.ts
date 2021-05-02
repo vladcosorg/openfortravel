@@ -1,5 +1,5 @@
-import { typeConstructors } from '@/shared/src/restriction-tree/converter'
-import {
+import type { typeConstructors } from '@/shared/src/restriction-tree/converter'
+import type {
   RestrictionGroups,
   CriteriaMap,
   RestrictionGroup,
@@ -100,7 +100,7 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
   }
 
   protected matchAgainstGroup(
-    restrictionSet: RestrictionGroups extends readonly (infer T)[] ? T : never,
+    restrictionSet: RestrictionGroups extends ReadonlyArray<infer T> ? T : never,
     filter: CriteriaMap,
     unmatchedValue: boolean,
   ): boolean {

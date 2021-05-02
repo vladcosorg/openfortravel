@@ -1,11 +1,12 @@
-import { QSsrContext } from '@quasar/app'
+import type { QSsrContext } from '@quasar/app'
 import ky from 'ky-universal'
 import type LRUCache from 'lru-cache'
-import { Cookies, LooseDictionary, Notify } from 'quasar'
+import type { LooseDictionary } from 'quasar'
+import { Cookies, Notify } from 'quasar'
 import Vue from 'vue'
 import VueI18n, { IVueI18n, TranslateResult } from 'vue-i18n'
-import VueRouter from 'vue-router'
-import { Store } from 'vuex'
+import type VueRouter from 'vue-router'
+import type { Store } from 'vuex'
 
 import { augmentedStore } from '@/front/src/store'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,7 +49,10 @@ export function useI18n(): typeof i18nInstance {
   return i18nInstance
 }
 
-type Translator<T extends TranslateResult> = (key: VueI18n.Path, values?: VueI18n.Values) => T
+type Translator<T extends TranslateResult> = (
+  key: VueI18n.Path,
+  values?: VueI18n.Values,
+) => T
 export function useVueI18n<T extends TranslateResult>(): {
   t: Translator<T>
   i18n: typeof i18nInstance

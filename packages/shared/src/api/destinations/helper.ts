@@ -1,9 +1,10 @@
-import {
-  Destination,
-  DestinationDefaults,
+import type {
   MappedDestinationCollection,
   MappedPlainDestinationCollection,
-  PlainDestination,
+  PlainDestination} from '@/shared/src/api/destinations/models';
+import {
+  Destination,
+  DestinationDefaults
 } from '@/shared/src/api/destinations/models'
 import { getCountryCodes as getAllCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 

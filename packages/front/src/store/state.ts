@@ -1,7 +1,7 @@
-import { LocaleMessageObject } from 'vue-i18n'
+import type { LocaleMessageObject } from 'vue-i18n'
 
-import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
-import { MappedPlainRestrictionCollection } from '@/shared/src/api/restrictions/models'
+import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
+import type { MappedPlainRestrictionCollection } from '@/shared/src/api/restrictions/models'
 
 export interface StateInterface {
   countrySelectorLoading: boolean
@@ -11,7 +11,7 @@ export interface StateInterface {
   locales: LocaleMessageObject
   serverLocale: string
   availableLocales: string[]
-  labeledLocales: Record<string, string>[]
+  labeledLocales: Array<Record<string, string>>
   countryToContinentMap: Record<string, string>
   hostRules: MappedPlainDestinationCollection
 }

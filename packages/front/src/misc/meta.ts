@@ -1,4 +1,4 @@
-import { RawLocation } from 'vue-router'
+import type { RawLocation } from 'vue-router'
 
 import { pathToURL } from '@/front/src/router'
 import { useRouter } from '@/shared/src/composables/use-plugins'

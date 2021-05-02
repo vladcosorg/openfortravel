@@ -53,7 +53,8 @@
 
 <script lang="ts">
 import { matReplay as inverseIcon } from '@quasar/extras/material-icons'
-import { computed, defineComponent, PropType, ref } from '@vue/composition-api'
+import type { PropType} from '@vue/composition-api';
+import { computed, defineComponent, ref } from '@vue/composition-api'
 import difference from 'lodash/difference'
 
 import SelectorInput from '@/admin/src/pages/edit/components/selector-input.vue'
@@ -95,7 +96,7 @@ export default defineComponent({
 
     const originLabels = getOriginLabels()
     const options = Object.entries(getOriginLabels()).reduce<
-      { label: string; value: string }[]
+      Array<{ label: string; value: string }>
     >((acc, [value, label]) => {
       acc.push({ value, label })
       return acc

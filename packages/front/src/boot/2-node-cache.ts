@@ -21,7 +21,7 @@ if (!process.env.SERVER) {
   throw new Error('The node-cache should not run on client!')
 }
 
-const promises: Promise<unknown>[] = []
+const promises: Array<Promise<unknown>> = []
 
 serverCache.availableLocales = getTranslatedOrTranslatableLocales()
 serverCache.labeledLocales = langs.filter((langPair) =>

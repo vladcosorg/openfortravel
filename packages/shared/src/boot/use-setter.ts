@@ -1,13 +1,14 @@
 import type { Request } from 'express'
 import { boot } from 'quasar/wrappers'
 
+import type {
+  useSharedCache} from '@/shared/src/composables/use-plugins';
 import {
   initCookies,
   setRouter,
   setSharedCache,
   setSSRContext,
-  setStore,
-  useSharedCache,
+  setStore
 } from '@/shared/src/composables/use-plugins'
 
 export default boot(({ store, router, ssrContext }) => {

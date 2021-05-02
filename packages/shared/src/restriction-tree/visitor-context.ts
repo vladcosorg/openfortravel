@@ -1,4 +1,4 @@
-import { Matcher } from '@/shared/src/restriction-tree/matcher'
+import type { Matcher } from '@/shared/src/restriction-tree/matcher'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 type VisitorContextType = {

@@ -1,6 +1,6 @@
 import { set } from 'lodash'
-import { IVueI18n } from 'vue-i18n'
-import VueRouter from 'vue-router'
+import type { IVueI18n } from 'vue-i18n'
+import type VueRouter from 'vue-router'
 
 import { serverCache } from '@/front/src/misc/server-cache'
 import { createGenericRouter } from '@/front/src/router/routes'

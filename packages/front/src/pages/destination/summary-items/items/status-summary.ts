@@ -1,10 +1,11 @@
 import { outlinedLocalPolice as borderIcon } from '@quasar/extras/material-icons-outlined'
 
-import { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
+import type { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
 import { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
 import { getCurrentRelativeURL } from '@/front/src/router/helpers'
-import { Destination } from '@/shared/src/api/destinations/models'
-import { Restriction, RestrictionStatus } from '@/shared/src/api/restrictions/models'
+import type { Destination } from '@/shared/src/api/destinations/models'
+import type { Restriction} from '@/shared/src/api/restrictions/models';
+import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 const { t } = useVueI18n<string>()

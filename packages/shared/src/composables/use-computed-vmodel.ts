@@ -1,11 +1,12 @@
+import type {
+  ComputedRef,
+  Ref,
+  UnwrapRef,
+  WritableComputedRef} from '@vue/composition-api';
 import {
   computed,
-  ComputedRef,
   getCurrentInstance,
-  Ref,
-  ref,
-  UnwrapRef,
-  WritableComputedRef,
+  ref
 } from '@vue/composition-api'
 
 // eslint-disable-next-line import/no-unused-modules

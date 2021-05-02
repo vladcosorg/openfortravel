@@ -1,11 +1,13 @@
+import type {
+  RestrictionDirection} from '@/shared/src/api/restrictions/common';
 import {
   generateID,
-  getViewCollection,
-  RestrictionDirection,
+  getViewCollection
 } from '@/shared/src/api/restrictions/common'
-import {
+import type {
   MappedPlainRestrictionCollection,
-  PlainRestriction,
+  PlainRestriction} from '@/shared/src/api/restrictions/models';
+import {
   restrictionDefaults,
 } from '@/shared/src/api/restrictions/models'
 import {

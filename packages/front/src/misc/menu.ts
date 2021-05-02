@@ -1,5 +1,5 @@
-import { IVueI18n, TranslateResult } from 'vue-i18n'
-import { Location } from 'vue-router'
+import type { IVueI18n, TranslateResult } from 'vue-i18n'
+import type { Location } from 'vue-router'
 
 import { getCurrentOriginSlug } from '@/front/src/misc/country-decider'
 import { useI18n, useRouter } from '@/shared/src/composables/use-plugins'

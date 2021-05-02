@@ -1,4 +1,4 @@
-import {
+import type {
   PlainRestriction,
   PlainRestrictionCollection,
 } from '@/shared/src/api/restrictions/models'

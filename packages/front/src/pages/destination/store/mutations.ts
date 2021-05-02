@@ -1,11 +1,12 @@
-import { MutationTree } from 'vuex'
+import type { MutationTree } from 'vuex'
 
-import { StateType } from '@/front/src/pages/destination/store/state'
+import type { StateType } from '@/front/src/pages/destination/store/state'
+import type {
+  MutationSignatures} from '@/front/src/pages/destination/store/types/mutations';
 import {
-  MutationSignatures,
   MutationTypes,
 } from '@/front/src/pages/destination/store/types/mutations'
-import { PlainRestriction } from '@/shared/src/api/restrictions/models'
+import type { PlainRestriction } from '@/shared/src/api/restrictions/models'
 
 export const mutations: MutationTree<StateType> & MutationSignatures = {
   [MutationTypes.setCurrentCountryPair](state, countryPair): void {

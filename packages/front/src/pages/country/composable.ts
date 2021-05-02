@@ -1,17 +1,18 @@
 import { matFlightTakeoff } from '@quasar/extras/material-icons'
+import type {
+  ComputedRef,
+  Ref} from '@vue/composition-api';
 import {
   computed,
-  ComputedRef,
   onMounted,
   onServerPrefetch,
   ref,
-  Ref,
   watch,
 } from '@vue/composition-api'
 
-import { CountryMap } from '@/front/src/pages/country/country-store'
+import type { CountryMap } from '@/front/src/pages/country/country-store'
 import { RiskLevel } from '@/shared/src/api/destinations/models'
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import {

@@ -1,10 +1,10 @@
 import { route } from 'quasar/wrappers'
 import VueRouter from 'vue-router'
-import { Store } from 'vuex'
+import type { Store } from 'vuex'
 
 import routes from './routes'
 
-import { StateInterface } from '../store'
+import type { StateInterface } from '../store'
 
 /*
  * If not building with SSR mode, you can

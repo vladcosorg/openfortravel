@@ -1,4 +1,4 @@
-import { Module } from 'vuex'
+import type { Module } from 'vuex'
 
 import { normalizeFormat } from '@/shared/src/modules/nationality/nationality-helpers'
 

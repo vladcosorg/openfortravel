@@ -1,6 +1,6 @@
-import VueI18n from 'vue-i18n'
+import type VueI18n from 'vue-i18n'
 
-import { RestrictionGroups, RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import type { RestrictionGroups, RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export class Verbaliser {
   constructor(

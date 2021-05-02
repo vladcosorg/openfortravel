@@ -18,8 +18,8 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
-import { ExtractRestrictionOptions } from '@/admin/src/pages/edit/composables/use-tree'
-import { Insurance } from '@/shared/src/restriction-tree/restriction-node/insurance'
+import type { ExtractRestrictionOptions } from '@/admin/src/pages/edit/composables/use-tree'
+import type { Insurance } from '@/shared/src/restriction-tree/restriction-node/insurance'
 
 type Options = ExtractRestrictionOptions<typeof Insurance>
 export default defineComponent({

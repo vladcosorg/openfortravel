@@ -70,11 +70,12 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref, watch } from '@vue/composition-api'
+import type { PropType} from '@vue/composition-api';
+import { computed, defineComponent, ref, watch } from '@vue/composition-api'
 
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
-import { CountryMap } from '@/front/src/pages/country/country-store'
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { CountryMap } from '@/front/src/pages/country/country-store'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
   components: { DestinationItem },

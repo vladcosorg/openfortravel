@@ -43,7 +43,8 @@ a[href^='#'] {
 </style>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api';
+import { defineComponent } from '@vue/composition-api'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import Country from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/country.vue'
@@ -51,7 +52,7 @@ import Language from '@/front/src/pages/destination/components/restriction-group
 import Languages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/languages.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
+import type { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
 
 export default defineComponent({
   components: {

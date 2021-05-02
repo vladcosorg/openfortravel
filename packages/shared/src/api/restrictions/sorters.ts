@@ -1,4 +1,5 @@
-import { Restriction, RestrictionStatus } from '@/shared/src/api/restrictions/models'
+import type { Restriction} from '@/shared/src/api/restrictions/models';
+import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 
 export function sortByStatusAndAlphabetically(collection: Restriction[]): Restriction[] {
   const statuses = Object.values(RestrictionStatus)

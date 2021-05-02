@@ -71,12 +71,13 @@ import {
   matStar as successIcon,
   matCheck as availableIcon,
 } from '@quasar/extras/material-icons'
-import { defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api';
+import { defineComponent } from '@vue/composition-api'
 
 import GroupScoreWords from '@/front/src/pages/destination/components/restriction-groups/group-score-words.vue'
 import GroupScore from '@/front/src/pages/destination/components/restriction-groups/group-score.vue'
 import GroupsByCategory from '@/front/src/pages/destination/components/restriction-groups/groups-by-category.vue'
-import { RestrictionsGroupesWithScore } from '@/shared/src/restriction-tree/entry-ways'
+import type { RestrictionsGroupesWithScore } from '@/shared/src/restriction-tree/entry-ways'
 
 export default defineComponent({
   components: { GroupsByCategory, GroupScoreWords, GroupScore },

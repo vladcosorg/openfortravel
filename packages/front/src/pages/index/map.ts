@@ -1,18 +1,20 @@
 import map from '@amcharts/amcharts4-geodata/worldLow'
 import { Miller } from '@amcharts/amcharts4/.internal/charts/map/projections'
-import { Color, color, create, DropShadowFilter } from '@amcharts/amcharts4/core'
-import {
+import type { Color} from '@amcharts/amcharts4/core';
+import { color, create, DropShadowFilter } from '@amcharts/amcharts4/core'
+import type {
   MapArc,
+  MapPolygon} from '@amcharts/amcharts4/maps';
+import {
   MapArcSeries,
   MapChart,
-  MapPolygon,
   MapPolygonSeries,
 } from '@amcharts/amcharts4/maps'
 import { random } from 'lodash'
 import { colors } from 'quasar'
 
 import { statusColorMap } from '@/front/src/pages/index/index-composable'
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
 import {
   transformCountryCodeToDestinationSlug,

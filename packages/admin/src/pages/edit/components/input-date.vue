@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import { QPopupProxy } from 'quasar'
+import type { QPopupProxy } from 'quasar'
 
 export default defineComponent({
   props: {

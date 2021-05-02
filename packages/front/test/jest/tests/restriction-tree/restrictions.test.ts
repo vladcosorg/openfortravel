@@ -1,8 +1,9 @@
 import countries from 'i18n-iso-countries/langs/en.json'
 
+import type {
+  RawLocalizedCountryList} from '@/shared/src/modules/country-list/country-list-node-preload';
 import {
-  createCountryListEntry,
-  RawLocalizedCountryList,
+  createCountryListEntry
 } from '@/shared/src/modules/country-list/country-list-node-preload'
 import { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
 import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'

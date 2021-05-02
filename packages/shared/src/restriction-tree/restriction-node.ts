@@ -1,26 +1,26 @@
-import VueI18n from 'vue-i18n'
-
-import { EncodedRestrictionNode } from '@/shared/src/restriction-tree/converter'
-import {
+import type { EncodedRestrictionNode } from '@/shared/src/restriction-tree/converter'
+import type {
   RestrictionGroups,
   TreeNode,
   RestrictionNodeType,
 } from '@/shared/src/restriction-tree/types'
-import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
+import type { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
 
 export type RestrictionInstruction = { title: string; subtitle?: string }
 export enum RestrictionCategory {
   PREREQUISITE = 'prerequisite',
   ACTION = 'action',
 }
-export type CommonOptions = {
-  customInstructionTitle?: string
-  customInstructionSubtitle?: string
-}
-export abstract class RestrictionNode<T extends Record<string, unknown>>
+
+export abstract class RestrictionNode<T extends Record<string, unknown> = {}>
   implements TreeNode {
   constructor(public readonly options: T) {
     this.options = Object.assign(this.getDefaults(), options)
+  }
+
+  public static defaultOptions = {
+    customInstructionTitle: '',
+    customInstructionSubtitle: '',
   }
 
   abstract id(): RestrictionNodeType
@@ -51,10 +51,6 @@ export abstract class RestrictionNode<T extends Record<string, unknown>>
 
   toI18nConfig(): [string, Record<string, unknown>?] {
     return [this.id(), this.options]
-  }
-
-  verbalize(i18n: VueI18n): string {
-    return i18n.t(`rt.${this.id()}`, this.options) as string
   }
 
   instruction(_context: VisitorContext): RestrictionInstruction {

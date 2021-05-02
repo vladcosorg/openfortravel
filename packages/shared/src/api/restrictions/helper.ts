@@ -1,13 +1,14 @@
 import zipObject from 'lodash/zipObject'
-import { TranslateResult } from 'vue-i18n'
+import type { TranslateResult } from 'vue-i18n'
 
-import {
+import type {
   MappedPlainRestrictionCollection,
   MappedRestrictionCollection,
   PlainRestriction,
   PlainRestrictionCollection,
+  RestrictionCollection} from '@/shared/src/api/restrictions/models';
+import {
   Restriction,
-  RestrictionCollection,
   restrictionDefaults,
   RestrictionStatus,
 } from '@/shared/src/api/restrictions/models'
@@ -169,7 +170,7 @@ export function wrapCollectionWithRichObject(
   )
 }
 
-function getStatusList(): Array<RestrictionStatus> {
+function getStatusList(): RestrictionStatus[] {
   return Object.values(RestrictionStatus)
 }
 
@@ -191,10 +192,10 @@ export function getStatusListMap(): Record<RestrictionStatus, TranslateResult> {
   ) as Record<RestrictionStatus, TranslateResult>
 }
 
-export function getStatusListPairs(): {
+export function getStatusListPairs(): Array<{
   label: TranslateResult
   value: RestrictionStatus
-}[] {
+}> {
   return Object.values(RestrictionStatus).map((value) => ({
     label: useI18n().t(`status.${value}`),
     value,

@@ -21,12 +21,7 @@
         received at least <b>{{ restriction.options.daysAgo }} days</b> prior to
         your arrival.
       </p>
-      <p v-if="restriction.options.languages.length">
-        A valid vaccination certificate must be presented in
-        <seq v-slot="{ item }" :items="restriction.options.languages">
-          <language :code="item" /> </seq
-        >.
-      </p>
+      <required-languages :languages="restriction.options.languages" />
     </template>
 
     <template #reason>
@@ -51,27 +46,30 @@ a[href^='#'] {
 </style>
 
 <script lang="ts">
+import type {
+  PropType} from '@vue/composition-api';
 import {
   computed,
   defineComponent,
-  inject,
-  PropType,
+  inject
 } from '@vue/composition-api'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import Country from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/country.vue'
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
 import Languages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/languages.vue'
+import RequiredLanguages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/required-languages.vue'
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import Vaccine from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/vaccine/vaccine.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
+import type { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 
 export default defineComponent({
   components: {
+    RequiredLanguages,
     Vaccine,
     Seq,
     Languages,

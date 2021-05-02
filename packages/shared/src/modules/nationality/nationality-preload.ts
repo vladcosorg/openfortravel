@@ -1,8 +1,8 @@
-import { Locale } from 'vue-i18n'
+import type { Locale } from 'vue-i18n'
 
 import { importAll } from '@/front/src/misc/misc'
 import { normalizeFormat } from '@/shared/src/modules/nationality/nationality-helpers'
-import { Nationalities } from '@/shared/src/modules/nationality/nationality-store'
+import type { Nationalities } from '@/shared/src/modules/nationality/nationality-store'
 
 export type PreloadedNationalityList = Record<Locale, Nationalities>
 export function preloadNationalities(): PreloadedNationalityList {

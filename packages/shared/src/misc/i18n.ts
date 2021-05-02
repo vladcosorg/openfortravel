@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import VueI18n, { IVueI18n, LocaleMessages } from 'vue-i18n'
+import type { IVueI18n, LocaleMessages } from 'vue-i18n';
+import VueI18n from 'vue-i18n'
 
 export function createVueI18n(messages?: LocaleMessages): IVueI18n {
   Vue.use(VueI18n)

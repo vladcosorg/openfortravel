@@ -1,6 +1,7 @@
-import { computed, ref, Ref } from '@vue/composition-api'
+import type { Ref } from '@vue/composition-api';
+import { computed, ref } from '@vue/composition-api'
 
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { persistRestrictionCollection } from '@/shared/src/api/restrictions/persisters'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
@@ -13,7 +14,7 @@ export function useSaveHandler(): {
   addSaveHandlerProp: AddSaveHandler
   runPendings: () => Promise<void>
 } {
-  const pendingOperations = ref<Array<SaveHandler>>([])
+  const pendingOperations = ref<SaveHandler[]>([])
   const { loading: isSaving } = useLoading()
   const isPending = computed(() => pendingOperations.value.length > 0)
 

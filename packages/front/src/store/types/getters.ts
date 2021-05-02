@@ -1,7 +1,7 @@
-import { RootStateType } from '@/front/src/store/state'
-import { Destination, MappedDestinationCollection } from '@/shared/src/api/destinations/models'
-import { MappedRestrictionCollection } from '@/shared/src/api/restrictions/models'
-import { GetterContext } from '@/shared/src/misc/augmented-store'
+import type { RootStateType } from '@/front/src/store/state'
+import type { Destination, MappedDestinationCollection } from '@/shared/src/api/destinations/models'
+import type { MappedRestrictionCollection } from '@/shared/src/api/restrictions/models'
+import type { GetterContext } from '@/shared/src/misc/augmented-store'
 
 type LocalGetterContext<
   State = RootStateType,

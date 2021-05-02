@@ -1,4 +1,4 @@
-import { Ref } from '@vue/composition-api'
+import type { Ref } from '@vue/composition-api'
 import { keyBy } from 'lodash'
 
 import {
@@ -6,7 +6,7 @@ import {
   createDummyPlainDestination,
   wrapCollectionWithRichObject,
 } from '@/shared/src/api/destinations/helper'
-import { Destination, PlainDestination } from '@/shared/src/api/destinations/models'
+import type { Destination, PlainDestination } from '@/shared/src/api/destinations/models'
 import {
   findOriginAsRichObject,
   findOrigins,

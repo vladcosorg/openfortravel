@@ -36,7 +36,7 @@ module.exports = {
     // ESLint typescript rules
     'plugin:@typescript-eslint/recommended',
     // consider disabling this class of rules if linting takes too long
-    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     // Uncomment any of the lines below to choose desired strictness,
     // but leave only one uncommented!
     // See https://eslint.vuejs.org/rules/#available-rules
@@ -89,6 +89,11 @@ module.exports = {
     // '@typescript-eslint/no-unsafe-member-access': 'off',
     // '@typescript-eslint/no-floating-promises': 'off',
     //
+    '@typescript-eslint/member-ordering': 'warn',
+    '@typescript-eslint/type-annotation-spacing': 'warn',
+    '@typescript-eslint/array-type': ['warn', { default: 'array-simple' }],
+    '@typescript-eslint/consistent-indexed-object-style': 'warn',
+
     // // TypeScript
     quotes: ['warn', 'single', { avoidEscape: true }],
     // '@typescript-eslint/explicit-function-return-type': 'off',

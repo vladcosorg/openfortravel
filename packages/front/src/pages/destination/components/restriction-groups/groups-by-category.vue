@@ -14,11 +14,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api';
+import { defineComponent } from '@vue/composition-api'
 
 import GroupRestriction from '@/front/src/pages/destination/components/restriction-groups/group-restriction.vue'
-import { RestrictionCategory } from '@/shared/src/restriction-tree/restriction-node'
-import { RestrictionGroup } from '@/shared/src/restriction-tree/types'
+import type { RestrictionCategory } from '@/shared/src/restriction-tree/restriction-node'
+import type { RestrictionGroup } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: { GroupRestriction },

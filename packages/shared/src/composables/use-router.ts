@@ -1,7 +1,7 @@
 import { getCurrentInstance } from '@vue/composition-api'
 import Vue from 'vue'
-import { NavigationGuard } from 'vue-router'
-import { ComponentOptions } from 'vue/types/umd'
+import type { NavigationGuard } from 'vue-router'
+import type { ComponentOptions } from 'vue/types/umd'
 
 export function onHook(
   name: keyof ComponentOptions<Vue>,

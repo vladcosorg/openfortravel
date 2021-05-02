@@ -2,13 +2,14 @@ import type firebase from 'firebase/app'
 import { pick } from 'lodash'
 import mapValues from 'lodash/mapValues'
 
-import {
+import type {
   PlainRestriction,
   MappedPlainRestrictionCollection,
-  Restriction,
   MappedRestrictionDocumentCollection,
-  restrictionDefaults,
-  RestrictionDocument,
+  RestrictionDocument} from '@/shared/src/api/restrictions/models';
+import {
+  Restriction,
+  restrictionDefaults
 } from '@/shared/src/api/restrictions/models'
 import { importFirebase } from '@/shared/src/misc/misc'
 

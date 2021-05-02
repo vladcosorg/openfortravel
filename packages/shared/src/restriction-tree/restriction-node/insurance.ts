@@ -1,18 +1,19 @@
+import type {
+  RestrictionInstruction} from '@/shared/src/restriction-tree/restriction-node';
 import {
   RestrictionCategory,
-  RestrictionInstruction,
   RestrictionNode,
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export class Insurance extends RestrictionNode {
-  constructor(
-    protected options: {
-      customInstructionTitle?: string
-      customInstructionSubtitle?: string
-    },
-  ) {
-    super()
+type Options = typeof Insurance.defaultOptions
+export class Insurance extends RestrictionNode<Options> {
+  public static defaultOptions = {
+    ...RestrictionNode.defaultOptions,
+  }
+
+  protected getDefaults(): Options {
+    return Insurance.defaultOptions
   }
 
   id(): RestrictionNodeType {

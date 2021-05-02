@@ -1,0 +1,49 @@
+<template>
+  <div class="row q-col-gutter-sm">
+    <component
+      :is="field.type"
+      v-bind="field.bind"
+      v-for="(field, key) in config"
+      :key="key"
+      v-model="field.model.value"
+      v-on="field.on"
+    />
+  </div>
+</template>
+
+<style lang="scss" module></style>
+
+<script lang="ts">
+import type {
+  PropType} from '@vue/composition-api';
+import {
+  computed,
+  defineComponent,
+  toRef,
+} from '@vue/composition-api'
+
+import { createConfig } from '@/admin/src/pages/edit/composables/field-config/use-field-config'
+import type { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+
+export default defineComponent({
+  model: {
+    prop: 'options',
+  },
+  props: {
+    type: {
+      type: String as PropType<RestrictionNodeType>,
+      required: true,
+    },
+    options: {
+      type: Object,
+      required: true,
+    },
+  },
+  setup(props, { emit }) {
+    const options = toRef(props, 'options')
+    const config = computed(() => createConfig(props.type, options, emit))
+
+    return { config }
+  },
+})
+</script>

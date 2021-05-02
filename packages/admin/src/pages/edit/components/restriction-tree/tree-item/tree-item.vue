@@ -65,21 +65,23 @@ import {
   matRemove as deleteIcon,
   matToggleOn as showIcon,
 } from '@quasar/extras/material-icons'
+import type {
+  PropType} from '@vue/composition-api';
 import {
   computed,
   defineComponent,
-  PropType,
   toRef,
 } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
-import {
+import NodeBody from '@/admin/src/pages/edit/components/restriction-tree/tree-item/option-wrapper.vue'
+import type {
   QuasarLogicTreeNode,
   QuasarTreeNode,
-  ScopedNodeData,
-} from '@/admin/src/pages/edit/components/restriction-tree.vue'
-import NodeBody from '@/admin/src/pages/edit/components/restriction-tree/node-body.vue'
-import { indexTheTree } from '@/admin/src/pages/edit/composables/use-tree'
+  ScopedNodeData} from '@/admin/src/pages/edit/composables/use-tree';
+import {
+  indexTheTree
+} from '@/admin/src/pages/edit/composables/use-tree'
 import {
   LogicNodeType,
   RestrictionNodeType,

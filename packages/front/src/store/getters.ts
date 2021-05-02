@@ -1,7 +1,7 @@
-import { GetterTree } from 'vuex'
+import type { GetterTree } from 'vuex'
 
-import { RootStateType } from '@/front/src/store/state'
-import { GetterSignatures } from '@/front/src/store/types/getters'
+import type { RootStateType } from '@/front/src/store/state'
+import type { GetterSignatures } from '@/front/src/store/types/getters'
 import { getFullDestinationList } from '@/shared/src/api/destinations/helper'
 import { getFullRestrictionsListForOrigin } from '@/shared/src/api/restrictions/helper'
 

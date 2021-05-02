@@ -1,5 +1,6 @@
-import { IVueI18n } from 'vue-i18n'
-import VueRouter, { RouteConfig, RouterOptions } from 'vue-router'
+import type { IVueI18n } from 'vue-i18n'
+import type { RouteConfig, RouterOptions } from 'vue-router';
+import VueRouter from 'vue-router'
 
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 import { useRouter } from '@/shared/src/composables/use-plugins'

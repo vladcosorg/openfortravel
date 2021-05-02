@@ -5,13 +5,12 @@
       visit the countries from the red list
     </template>
     <template #subtitle>
-      {{ restriction.options.countryCodes }}
       If you have been in or through any of the countries listed below in the
-      previous {days} days, you don't meet the entry requirements from this
-      section. <br /><br />
+      previous <b>{{ restriction.options.days }} days</b>, you don't meet the
+      entry requirements from this section. <br /><br />
       Banned countries:
-      <seq v-slot="{ code }" :items="restriction.options.countryCodes"
-        ><country :code="code" />
+      <seq v-slot="{ item }" :items="restriction.options.countryCodes"
+        ><country :code="item" />
       </seq>
     </template>
   </component>
@@ -19,11 +18,12 @@
 
 <script lang="ts">
 import { matWarning as notMatchedIcon } from '@quasar/extras/material-icons'
+import type {
+  PropType} from '@vue/composition-api';
 import {
   computed,
   defineComponent,
-  inject,
-  PropType,
+  inject
 } from '@vue/composition-api'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
@@ -31,9 +31,9 @@ import Country from '@/front/src/pages/destination/components/restriction-groups
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
+import type { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
 
 export default defineComponent({
   components: { Seq, Country, CollapsedCountrySequence, TitleCountry },

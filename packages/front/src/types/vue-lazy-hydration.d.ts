@@ -1,5 +1,5 @@
 declare module 'vue-lazy-hydration' {
-  import { Component, AsyncComponent } from 'vue'
+  import type { Component, AsyncComponent } from 'vue'
 
   const LazyHydrate: Component<
     { hydrated: boolean },

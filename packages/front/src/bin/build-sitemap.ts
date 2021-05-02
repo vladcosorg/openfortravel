@@ -2,15 +2,17 @@
 import path from 'path'
 
 import { merge, mapValues } from 'lodash'
-import { EnumChangefreq, simpleSitemapAndIndex, SitemapItemLoose } from 'sitemap'
-import { LocaleMessages } from 'vue-i18n'
-import VueRouter, { Location } from 'vue-router'
+import type { SitemapItemLoose } from 'sitemap';
+import { EnumChangefreq, simpleSitemapAndIndex } from 'sitemap'
+import type { LocaleMessages } from 'vue-i18n'
+import VueRouter, type { Location } from 'vue-router';
+
 
 import { createGenericRouter } from '@/front/src/router/routes'
 import messages from '@/shared/src/i18n/index'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 import { transformKeys } from '@/shared/src/misc/misc'
-import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
+import type { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import { convertCountryListResponseToCountrySlugMap } from '@/shared/src/modules/country-list/country-list-store'
 import { getTranslatedOrTranslatableLocales } from '@/shared/src/modules/language/locales'
 
@@ -177,7 +179,7 @@ main().then((paths) =>
     hostname: 'https://openfortravel.org',
     sitemapHostname: 'https://cdn.openfortravel.org/sitemap/',
     destinationDir: path.resolve('./var/sitemap'),
-    sourceData: paths as SitemapItemLoose[],
+    sourceData: paths ,
     gzip: false,
   }),
 )

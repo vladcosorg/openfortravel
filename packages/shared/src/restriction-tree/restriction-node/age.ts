@@ -1,18 +1,22 @@
+import type {
+  RestrictionInstruction} from '@/shared/src/restriction-tree/restriction-node';
 import {
-  CommonOptions,
   RestrictionCategory,
-  RestrictionInstruction,
   RestrictionNode,
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export class Age extends RestrictionNode {
-  constructor(
-    protected options: { age: number; orMore: boolean } & CommonOptions,
-  ) {
-    super()
+type Options = typeof Age.defaultOptions
+export class Age extends RestrictionNode<Options> {
+  public static defaultOptions = {
+    age: 6,
+    orMore: false,
+    ...RestrictionNode.defaultOptions,
   }
 
+  protected getDefaults(): Options {
+    return Age.defaultOptions
+  }
   id(): RestrictionNodeType {
     return RestrictionNodeType.AGE
   }

@@ -5,10 +5,12 @@
 <style lang="scss" module></style>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api';
+import { computed, defineComponent } from '@vue/composition-api'
 
+import type {
+  VaccineBrand} from '@/shared/src/restriction-tree/restriction-node/vaccinated';
 import {
-  VaccineBrand,
   vaccineLabels,
 } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 

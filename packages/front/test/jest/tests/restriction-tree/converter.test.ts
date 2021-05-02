@@ -1,11 +1,13 @@
-import { convertFromStorageFormat, EncodedNode } from '@/shared/src/restriction-tree/converter'
+import { QuarantineWithTesting } from '@/shared/src/restriction-tree/restriction-node/quarantine-with-testing'
+
+import type { EncodedNode } from '@/shared/src/restriction-tree/converter';
+import { convertFromStorageFormat } from '@/shared/src/restriction-tree/converter'
 import { And } from '@/shared/src/restriction-tree/logic-node/and'
 import { Or } from '@/shared/src/restriction-tree/logic-node/or'
 import { OnlineApplication } from '@/shared/src/restriction-tree/restriction-node/online-application'
 import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
 import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
 import { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
-import { QuarantineWithTesting } from '@/shared/src/restriction-tree/restriction-node/quarantine-with-testing'
 import { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import { LogicNodeType, RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 

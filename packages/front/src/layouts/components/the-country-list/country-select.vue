@@ -71,8 +71,9 @@ import { useStore } from '@/shared/src/composables/use-plugins'
 import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
 import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 import { sortByKeywordIndex } from '@/shared/src/misc/misc'
+import type {
+  CountryList} from '@/shared/src/modules/country-list/country-list-helpers';
 import {
-  CountryList,
   getDestinationLabelForCountryCode,
   getDestinationLabels,
   getOriginLabelForCountryCode,

@@ -1,8 +1,9 @@
-import {
+import type {
   CacheType,
-  integrateWithVueI18n,
   ManualTranslator,
-  TranslationService,
+  TranslationService} from 'vue-auto-i18n';
+import {
+  integrateWithVueI18n
 } from 'vue-auto-i18n'
 import type { IVueI18n, Locale, LocaleMessageObject } from 'vue-i18n'
 

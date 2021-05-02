@@ -1,9 +1,10 @@
 import { getCurrentInstance } from '@vue/composition-api'
 
-import {
+import type {
   Loading,
-  useClosureCollectionLoading,
-  CallbackCollection,
+  CallbackCollection} from '@/shared/src/composables/use-promise-loading';
+import {
+  useClosureCollectionLoading
 } from '@/shared/src/composables/use-promise-loading'
 
 export function useAsyncListeners(): {

@@ -1,5 +1,5 @@
-import { EncodedLogicNode } from '@/shared/src/restriction-tree/converter'
-import {
+import type { EncodedLogicNode } from '@/shared/src/restriction-tree/converter'
+import type {
   LogicNodeType,
   RestrictionGroups,
   TreeNode,

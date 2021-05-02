@@ -1,17 +1,17 @@
-import { Module } from 'vuex'
+import type { Module } from 'vuex'
 
-import { StateInterface } from '@/front/src/store/state'
+import type { StateInterface } from '@/front/src/store/state'
 import {
   createDummyDestination,
   wrapWithRichDestinationObject,
 } from '@/shared/src/api/destinations/helper'
-import { Destination, PlainDestination } from '@/shared/src/api/destinations/models'
+import type { Destination, PlainDestination } from '@/shared/src/api/destinations/models'
 import { findOrigins } from '@/shared/src/api/destinations/repository'
 import {
   generateRestrictionListByOrigin,
   wrapCollectionWithRichObject,
 } from '@/shared/src/api/restrictions/helper'
-import { PlainRestriction, Restriction } from '@/shared/src/api/restrictions/models'
+import type { PlainRestriction, Restriction } from '@/shared/src/api/restrictions/models'
 import { sortByStatusAndAlphabetically } from '@/shared/src/api/restrictions/sorters'
 import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 

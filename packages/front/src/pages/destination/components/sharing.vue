@@ -46,9 +46,10 @@ import {
   laViber as viberIcon,
   laWhatsapp as whatsappIcon,
 } from '@quasar/extras/line-awesome'
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api';
+import { computed, defineComponent } from '@vue/composition-api'
 
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({

@@ -1,6 +1,6 @@
-import { StateType } from '@/front/src/pages/destination/store/state'
-import { CurrentCountryPair } from '@/front/src/pages/destination/store/types/actions'
-import {
+import type { StateType } from '@/front/src/pages/destination/store/state'
+import type { CurrentCountryPair } from '@/front/src/pages/destination/store/types/actions'
+import type {
   PlainRestriction,
   PlainRestrictionCollection,
 } from '@/shared/src/api/restrictions/models'

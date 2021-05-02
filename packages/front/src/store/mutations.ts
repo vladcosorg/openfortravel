@@ -1,13 +1,14 @@
-import { LocaleMessageObject } from 'vue-i18n'
-import { MutationTree } from 'vuex'
+import type { LocaleMessageObject } from 'vue-i18n'
+import type { MutationTree } from 'vuex'
 
-import { RootState, StateInterface } from '@/front/src/store/state'
+import type { RootState, StateInterface } from '@/front/src/store/state'
+import type {
+  MutationSignatures} from '@/front/src/store/types/mutations';
 import {
-  MutationSignatures,
   MutationTypes,
 } from '@/front/src/store/types/mutations'
-import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
-import { MappedPlainRestrictionCollection } from '@/shared/src/api/restrictions/models'
+import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
+import type { MappedPlainRestrictionCollection } from '@/shared/src/api/restrictions/models'
 import { useCookies } from '@/shared/src/composables/use-plugins'
 
 export const mutations: MutationTree<RootState> & MutationSignatures = {

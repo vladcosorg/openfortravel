@@ -26,17 +26,18 @@
 
 <script lang="ts">
 import type { MapChart } from '@amcharts/amcharts4/maps'
+import type {
+  PropType} from '@vue/composition-api';
 import {
   defineComponent,
   onMounted,
   onUnmounted,
-  PropType,
   ref,
   watch,
 } from '@vue/composition-api'
 import { defer } from 'lodash'
 
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
   components: {},

@@ -1,6 +1,7 @@
 import { outlinedCoronavirus as testIcon } from '@quasar/extras/material-icons-outlined'
 
-import { SummaryItem, Badge } from '@/front/src/pages/destination/summary-items/summary-item'
+import type { Badge } from '@/front/src/pages/destination/summary-items/summary-item';
+import { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 const { t } = useVueI18n<string>()

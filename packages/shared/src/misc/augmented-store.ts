@@ -1,8 +1,8 @@
 import { mapValues } from 'lodash'
-import { Store, ActionContext, DispatchOptions } from 'vuex'
+import type { Store, ActionContext, DispatchOptions } from 'vuex'
 
-import { RootStateType, StateInterface } from '@/front/src/store/state'
-import { RootGetterAccessors } from '@/front/src/store/types/getters'
+import type { RootStateType, StateInterface } from '@/front/src/store/state'
+import type { RootGetterAccessors } from '@/front/src/store/types/getters'
 
 export type GetterAccessors<Getters> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

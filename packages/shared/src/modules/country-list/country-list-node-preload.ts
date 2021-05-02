@@ -1,12 +1,13 @@
 import { invert, mapValues } from 'lodash'
-import { Locale } from 'vue-i18n'
+import type { Locale } from 'vue-i18n'
 
 import { importAll } from '@/front/src/misc/misc'
-import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
+import type { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
+import type {
+  CountryListTypes} from '@/shared/src/modules/country-list/country-list-store';
 import {
   convertCountryListResponseToCountryLabelMap,
-  convertCountryNameToSlug,
-  CountryListTypes,
+  convertCountryNameToSlug
 } from '@/shared/src/modules/country-list/country-list-store'
 
 export type RawLocalizedCountryList = {
@@ -17,7 +18,7 @@ type CountryListCollection = Record<string, CountryListTypes>
 export function preloadCountryList(): CountryListCollection {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const context = (require as any).context('i18n-iso-countries/langs/', true, /\.json$/)
-  const content = importAll<Array<RawLocalizedCountryList>>(context)
+  const content = importAll<RawLocalizedCountryList[]>(context)
   const output: CountryListCollection = {}
 
   for (const list of content) {

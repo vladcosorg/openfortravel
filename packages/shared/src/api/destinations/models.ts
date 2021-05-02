@@ -1,7 +1,7 @@
 import type firebase from 'firebase/app'
 
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
-import { EncodedNode } from '@/shared/src/restriction-tree/converter'
+import type { EncodedNode } from '@/shared/src/restriction-tree/converter'
 
 export enum RiskLevel {
   NO_DATA = 'no-data',

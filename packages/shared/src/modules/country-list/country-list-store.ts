@@ -1,10 +1,10 @@
 import { isEmpty, kebabCase, mapValues } from 'lodash'
-import { Module } from 'vuex'
+import type { Module } from 'vuex'
 
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { transformKeys } from '@/shared/src/misc/misc'
-import { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
-import { CountrySlugType } from '@/shared/src/modules/country-list/country-list-types'
+import type { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
+import type { CountrySlugType } from '@/shared/src/modules/country-list/country-list-types'
 
 export class CountryListState {
   countryList: CountryList = {}
@@ -109,11 +109,11 @@ function convertCountryLabelToSlug(countryName: string): string {
 function groupCountriesByContinents(
   continentList: string,
   countryList: Record<string, string>,
-): Record<string, { value: string; label: string }[]> {
+): Record<string, Array<{ value: string; label: string }>> {
   const { t } = useVueI18n()
 
   let output = Object.entries<string>(continentList).reduce<
-    Record<string, { value: string; label: string }[]>
+    Record<string, Array<{ value: string; label: string }>>
   >(
     (formattedList, [countryISO, continent]) => {
       const countryLabel = countryList[countryISO]

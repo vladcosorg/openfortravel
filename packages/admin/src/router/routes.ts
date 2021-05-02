@@ -1,4 +1,4 @@
-import { RouteConfig } from 'vue-router'
+import type { RouteConfig } from 'vue-router'
 
 import Layout from '@/admin/src/layouts/layout.vue'
 import EditPage from '@/admin/src/pages/edit/edit-page.vue'

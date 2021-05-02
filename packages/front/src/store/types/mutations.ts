@@ -1,8 +1,8 @@
-import { LocaleMessageObject } from 'vue-i18n'
+import type { LocaleMessageObject } from 'vue-i18n'
 
-import { RootStateType, StateInterface } from '@/front/src/store/state'
-import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
-import { MappedPlainRestrictionCollection } from '@/shared/src/api/restrictions/models'
+import type { RootStateType, StateInterface } from '@/front/src/store/state'
+import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
+import type { MappedPlainRestrictionCollection } from '@/shared/src/api/restrictions/models'
 
 export enum MutationTypes {
   setCountryToContinentMap = 'setCountryToContinentMap',

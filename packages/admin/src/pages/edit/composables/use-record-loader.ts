@@ -1,11 +1,12 @@
-import { ref, Ref } from '@vue/composition-api'
+import type { Ref } from '@vue/composition-api';
+import { ref } from '@vue/composition-api'
 
 import {
   generateRestrictionListByDestination,
   sortByOrigin,
   wrapCollectionWithRichObject,
 } from '@/shared/src/api/restrictions/helper'
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { useAsyncState } from '@/shared/src/composables/use-async'
 
 export function useRestrictionListFilteredByDestination(

@@ -1,5 +1,5 @@
 import { Question } from '@/front/src/pages/destination/questions/question'
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
 import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 

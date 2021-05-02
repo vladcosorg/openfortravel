@@ -1,7 +1,8 @@
 import { matFlightLand, matFlightTakeoff } from '@quasar/extras/material-icons'
-import { computed, ComputedRef } from '@vue/composition-api'
+import type { ComputedRef } from '@vue/composition-api';
+import { computed } from '@vue/composition-api'
 
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export function useBreadcrumbs(

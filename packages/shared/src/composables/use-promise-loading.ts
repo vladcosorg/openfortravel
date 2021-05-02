@@ -1,4 +1,5 @@
-import { computed, ComputedRef, Ref, ref } from '@vue/composition-api'
+import type { ComputedRef, Ref} from '@vue/composition-api';
+import { computed, ref } from '@vue/composition-api'
 import { mapValues } from 'lodash'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types,@typescript-eslint/no-explicit-any
@@ -27,7 +28,7 @@ export function useLoadingSwitch(
   }
 }
 
-export function useAggregatedLoader(...loaders: Ref<boolean>[]): ComputedRef<boolean> {
+export function useAggregatedLoader(...loaders: Array<Ref<boolean>>): ComputedRef<boolean> {
   return computed<boolean>(() => !loaders.every((loadingReference) => !loadingReference.value))
 }
 

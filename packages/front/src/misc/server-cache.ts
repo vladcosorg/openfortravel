@@ -1,15 +1,15 @@
-import { LocaleMessages } from 'vue-i18n'
+import type { LocaleMessages } from 'vue-i18n'
 
-import { CountryListTypes } from '@/shared/src/modules/country-list/country-list-store'
-import { LocaleList } from '@/shared/src/modules/language/locales'
-import { PrefetchedLocalizedLanguages } from '@/shared/src/modules/language/ssr-loaders'
-import { PreloadedNationalityList } from '@/shared/src/modules/nationality/nationality-preload'
+import type { CountryListTypes } from '@/shared/src/modules/country-list/country-list-store'
+import type { LocaleList } from '@/shared/src/modules/language/locales'
+import type { PrefetchedLocalizedLanguages } from '@/shared/src/modules/language/ssr-loaders'
+import type { PreloadedNationalityList } from '@/shared/src/modules/nationality/nationality-preload'
 
 class ServerCache {
   public i18nMessages!: LocaleMessages
   public localizedRoutes!: Record<string, Record<string, string>>
   public availableLocales!: LocaleList
-  public labeledLocales!: Record<string, string>[]
+  public labeledLocales!: Array<Record<string, string>>
   public countryCodeToLabelMap!: Record<string, CountryListTypes>
   public countrySlugToCodeMap!: Record<string, CountryListTypes>
   public countryCodeToSlugMap!: Record<string, CountryListTypes>

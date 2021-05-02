@@ -1,10 +1,11 @@
+import type {
+  ComputedRef,
+  Ref} from '@vue/composition-api';
 import {
   computed,
-  ComputedRef,
   isRef,
   onMounted,
   onServerPrefetch,
-  Ref,
   unref,
   watch,
 } from '@vue/composition-api'

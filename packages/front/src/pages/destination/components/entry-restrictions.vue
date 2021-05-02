@@ -37,7 +37,7 @@ import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import GroupsByType from '@/front/src/pages/destination/components/restriction-groups/groups-by-type.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 
 export default defineComponent({

@@ -37,20 +37,21 @@ a[href^='#'] {
 
 <script lang="ts">
 import { matWarning as notMatchedIcon } from '@quasar/extras/material-icons'
+import type {
+  PropType} from '@vue/composition-api';
 import {
   computed,
   defineComponent,
-  inject,
-  PropType,
+  inject
 } from '@vue/composition-api'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import Country from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/country.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
+import type { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
 
 export default defineComponent({
   components: { Country, CollapsedCountrySequence, TitleCountry },

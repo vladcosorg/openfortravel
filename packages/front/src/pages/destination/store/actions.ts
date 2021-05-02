@@ -1,13 +1,14 @@
-import { ActionTree } from 'vuex'
+import type { ActionTree } from 'vuex'
 
-import { StateClass } from '@/front/src/pages/destination/store/state'
-import {
+import type { StateClass } from '@/front/src/pages/destination/store/state'
+import type {
   ActionSignatures,
-  ActionTypes,
-  CurrentCountryPair,
+  CurrentCountryPair} from '@/front/src/pages/destination/store/types/actions';
+import {
+  ActionTypes
 } from '@/front/src/pages/destination/store/types/actions'
 import { MutationTypes } from '@/front/src/pages/destination/store/types/mutations'
-import { StateInterface } from '@/front/src/store/state'
+import type { StateInterface } from '@/front/src/store/state'
 import {
   findRestrictionByOriginAndDestination,
   findRestrictionsByDestination,

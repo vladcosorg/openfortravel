@@ -1,5 +1,5 @@
-import { Destination } from '@/shared/src/api/destinations/models'
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Destination } from '@/shared/src/api/destinations/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 
 export abstract class Question {
   constructor(

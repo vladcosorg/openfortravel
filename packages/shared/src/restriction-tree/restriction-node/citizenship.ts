@@ -1,34 +1,25 @@
 import difference from 'lodash/difference'
 
-import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
+import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 import {
-  getCountryCodes,
-  getLabelForCountryCode,
-  getOriginLabels,
-} from '@/shared/src/modules/country-list/country-list-helpers'
-import {
-  formatAsHighlightedSequence,
-  generateCountryAndAreaSequence,
-  getAbbrebiationOrCountry,
-} from '@/shared/src/restriction-tree/misc'
-import {
-  RestrictionInstruction,
+  RestrictionCategory,
   RestrictionNode,
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
 
-const { t } = useI18nWithPrefix('rt.citizenship')
-
-export class Citizenship extends RestrictionNode {
-  constructor(
-    protected options: { allowedCitizenship: string[]; not?: boolean },
-  ) {
-    super()
+type Options = typeof Citizenship.defaultOptions
+export class Citizenship extends RestrictionNode<Options> {
+  public static defaultOptions = {
+    allowedCitizenship: [] as string[],
+    not: false,
+    ...RestrictionNode.defaultOptions,
   }
-
   matches(value: string): boolean {
     return this.getAllowedCountries().includes(value)
+  }
+
+  category(): RestrictionCategory {
+    return RestrictionCategory.PREREQUISITE
   }
 
   id(): RestrictionNodeType {
@@ -39,34 +30,5 @@ export class Citizenship extends RestrictionNode {
     return this.options.not
       ? difference(getCountryCodes(), this.options.allowedCitizenship)
       : this.options.allowedCitizenship
-  }
-
-  instruction(context: VisitorContext): RestrictionInstruction {
-    const countryLabelOrArea = getAbbrebiationOrCountry(
-      this.options.allowedCitizenship,
-      context[RestrictionNodeType.CITIZENSHIP],
-    )
-
-    const fullList = formatAsHighlightedSequence(
-      this.getAllowedCountries(),
-      context[RestrictionNodeType.CITIZENSHIP],
-    )
-
-    return {
-      title: `If you are a citizen or a permanent resident of ${countryLabelOrArea}`,
-      subtitle: `Nationals of ${fullList} meet this criteria`,
-    }
-    return {
-      title: t('instruction.heading', {
-        country: getLabelForCountryCode(context.origin),
-      }) as string,
-      subtitle: t('instruction.subtitle', {
-        sequence: generateCountryAndAreaSequence(
-          this.getAllowedCountries(),
-          getOriginLabels(),
-          { compact: true },
-        ),
-      }) as string,
-    }
   }
 }

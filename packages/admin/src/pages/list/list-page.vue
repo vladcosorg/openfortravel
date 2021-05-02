@@ -56,7 +56,7 @@ import { formatDistanceToNow, isPast, parseISO } from 'date-fns'
 import type firebase from 'firebase/app'
 
 import { useDestinations } from '@/shared/src/api/destinations/composables'
-import { Destination } from '@/shared/src/api/destinations/models'
+import type { Destination } from '@/shared/src/api/destinations/models'
 import { useRouter } from '@/shared/src/composables/use-plugins'
 import { getContinentLabel } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import { loadContinentMap } from '@/shared/src/modules/continent-map/ssr-loader'

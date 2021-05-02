@@ -1,27 +1,21 @@
 <template>
   <component
     :is="restriction.id()"
-    v-if="isStandalone"
     :wrapper="template"
     :restriction="restriction"
     :context="contextValue"
   />
-  <restriction-item v-else>
-    <template #title>
-      <div v-html="instruction.title" />
-    </template>
-    <template #subtitle><div v-html="instruction.subtitle" /></template>
-  </restriction-item>
 </template>
 
 <style lang="scss" module></style>
 
 <script lang="ts">
+import type {
+  PropType} from '@vue/composition-api';
 import {
   computed,
   defineComponent,
-  inject,
-  PropType,
+  inject
 } from '@vue/composition-api'
 
 import Citizenship from '@/front/src/pages/destination/components/restriction-groups/restriction/citizenship.vue'
@@ -29,25 +23,24 @@ import DidNotVisitCountries from '@/front/src/pages/destination/components/restr
 import Origin from '@/front/src/pages/destination/components/restriction-groups/restriction/origin.vue'
 import PcrTest from '@/front/src/pages/destination/components/restriction-groups/restriction/pcr-test.vue'
 import Quarantine from '@/front/src/pages/destination/components/restriction-groups/restriction/quarantine.vue'
+import Recovery from '@/front/src/pages/destination/components/restriction-groups/restriction/recovery.vue'
 import RestrictionItem from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item.vue'
 import Vaccinated from '@/front/src/pages/destination/components/restriction-groups/restriction/vaccinated.vue'
-import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
+import type { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-const standaloneTypes = {
-  [RestrictionNodeType.CITIZENSHIP]: Citizenship,
-  [RestrictionNodeType.ORIGIN]: Origin,
-  [RestrictionNodeType.PCR_TEST]: PcrTest,
-  [RestrictionNodeType.QUARANTINE]: Quarantine,
-  [RestrictionNodeType.VACCINATED]: Vaccinated,
-  [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: DidNotVisitCountries,
-}
 export default defineComponent({
   components: {
     RestrictionItem,
-    ...standaloneTypes,
+    [RestrictionNodeType.CITIZENSHIP]: Citizenship,
+    [RestrictionNodeType.ORIGIN]: Origin,
+    [RestrictionNodeType.PCR_TEST]: PcrTest,
+    [RestrictionNodeType.QUARANTINE]: Quarantine,
+    [RestrictionNodeType.VACCINATED]: Vaccinated,
+    [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: DidNotVisitCountries,
+    [RestrictionNodeType.RECOVERY]: Recovery,
   },
   props: {
     restriction: {
@@ -63,16 +56,8 @@ export default defineComponent({
       return store.getters.visitorContext[restrictionType]
     })
 
-    const instruction = computed(() =>
-      props.restriction.instruction(store.getters.visitorContext),
-    )
-    const isStandalone = computed(
-      () => props.restriction.id() in standaloneTypes,
-    )
     return {
       contextValue,
-      isStandalone,
-      instruction,
       template: RestrictionItem,
     }
   },

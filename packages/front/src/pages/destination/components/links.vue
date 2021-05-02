@@ -23,10 +23,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api';
+import { defineComponent } from '@vue/composition-api'
 
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import { Destination } from '@/shared/src/api/destinations/models'
+import type { Destination } from '@/shared/src/api/destinations/models'
 
 export default defineComponent({
   components: { WidgetHeader },

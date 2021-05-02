@@ -106,12 +106,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api';
+import { defineComponent } from '@vue/composition-api'
 
 import InPlaceField from '@/admin/src/pages/edit/components/in-place-field.vue'
 import InputDate from '@/admin/src/pages/edit/components/input-date.vue'
 import TestRequired from '@/admin/src/pages/edit/components/test-required.vue'
-import { Destination } from '@/shared/src/api/destinations/models'
+import type { Destination } from '@/shared/src/api/destinations/models'
 
 export default defineComponent({
   components: { InPlaceField, InputDate, TestRequired },

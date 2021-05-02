@@ -2,7 +2,7 @@ import {
   createDummyPlainDestination,
   wrapWithRichDestinationObject,
 } from '@/shared/src/api/destinations/helper'
-import {
+import type {
   Destination,
   MappedPlainDestinationCollection,
   PlainDestination,

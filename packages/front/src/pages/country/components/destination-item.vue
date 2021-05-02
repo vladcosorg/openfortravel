@@ -149,11 +149,12 @@ import {
   ionBaseballOutline as icon,
   ionAlertCircleOutline as warningIcon,
 } from '@quasar/extras/ionicons-v5'
-import { defineComponent, PropType, ref } from '@vue/composition-api'
+import type { PropType} from '@vue/composition-api';
+import { defineComponent, ref } from '@vue/composition-api'
 
 import { riskLevelColor } from '@/front/src/pages/country/composable'
-import { Destination } from '@/shared/src/api/destinations/models'
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Destination } from '@/shared/src/api/destinations/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
   props: {

@@ -3,20 +3,20 @@ import groupBy from 'lodash/groupBy'
 import intersection from 'lodash/intersection'
 import xor from 'lodash/xor'
 
-import { Matcher } from '@/shared/src/restriction-tree/matcher'
-import {
+import type { Matcher } from '@/shared/src/restriction-tree/matcher'
+import type {
   RestrictionCategory,
   RestrictionNode,
 } from '@/shared/src/restriction-tree/restriction-node'
-import { RestrictionGroups } from '@/shared/src/restriction-tree/types'
-import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
+import type { RestrictionGroups } from '@/shared/src/restriction-tree/types'
+import type { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
 
 type MergedRestrictionGroup = Array<RestrictionNode | RestrictionNode[]>
 type MergedRestrictionNodesGroups = RestrictionGroups<MergedRestrictionGroup>
-export type RestrictionsGroupesWithScore = {
+export type RestrictionsGroupesWithScore = Array<{
   score: number
   group: Record<RestrictionCategory, RestrictionNode[]>
-}[]
+}>
 
 export class EntryWays {
   constructor(

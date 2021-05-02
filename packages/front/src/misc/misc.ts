@@ -1,5 +1,6 @@
-import { QSsrContext } from '@quasar/app'
-import { Cookies, LooseDictionary } from 'quasar'
+import type { QSsrContext } from '@quasar/app'
+import type { LooseDictionary } from 'quasar';
+import { Cookies } from 'quasar'
 
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 

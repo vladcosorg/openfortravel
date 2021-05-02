@@ -1,7 +1,7 @@
-import { StateType } from '@/front/src/pages/destination/store/state'
-import { MutationSignatures } from '@/front/src/pages/destination/store/types/mutations'
-import { ActionSignatures as RootActionSignatures } from '@/front/src/store/types/actions'
-import { AugmentedActionContext } from '@/shared/src/misc/augmented-store'
+import type { StateType } from '@/front/src/pages/destination/store/state'
+import type { MutationSignatures } from '@/front/src/pages/destination/store/types/mutations'
+import type { ActionSignatures as RootActionSignatures } from '@/front/src/store/types/actions'
+import type { AugmentedActionContext } from '@/shared/src/misc/augmented-store'
 
 export type CurrentCountryPair = {
   originCode: string
