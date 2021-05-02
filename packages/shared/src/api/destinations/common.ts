@@ -1,14 +1,17 @@
-import type firebase from 'firebase/app'
+import type {
+  FirestoreDataConverter,
+  QueryDocumentSnapshot,
+  SnapshotOptions,
+} from '@firebase/firestore'
 import { omit } from 'lodash'
 
 import type {
   DestinationDocument,
-  PlainDestination} from '@/shared/src/api/destinations/models';
-import {
-  Destination
+  PlainDestination,
 } from '@/shared/src/api/destinations/models'
+import { Destination } from '@/shared/src/api/destinations/models'
 
-export const dataConverter: firebase.firestore.FirestoreDataConverter<PlainDestination> = {
+export const dataConverter: FirestoreDataConverter<PlainDestination> = {
   toFirestore(destination: PlainDestination): DestinationDocument {
     if (destination instanceof Destination) {
       destination = destination.toPlainObject()
@@ -17,10 +20,14 @@ export const dataConverter: firebase.firestore.FirestoreDataConverter<PlainDesti
     return toDocument(destination)
   },
   fromFirestore(
-    snapshot: firebase.firestore.QueryDocumentSnapshot<DestinationDocument>,
-    options: firebase.firestore.SnapshotOptions,
+    snapshot: QueryDocumentSnapshot<DestinationDocument>,
+    options: SnapshotOptions,
   ): PlainDestination {
-    return Object.assign({}, { countryCode: snapshot.id }, snapshot.data(options))
+    return Object.assign(
+      {},
+      { countryCode: snapshot.id },
+      snapshot.data(options),
+    )
   },
 }
 

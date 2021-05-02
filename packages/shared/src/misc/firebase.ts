@@ -1,13 +1,13 @@
-import firebase from 'firebase/app'
-import 'firebase/firestore'
+import { initializeApp, getApps, getApp } from 'firebase/app'
+import { getFirestore, collection } from 'firebase/firestore'
 
 import { dataConverter as destinationDataConverter } from '@/shared/src/api/destinations/common'
 import { dataConverter as restrictionDataConverter } from '@/shared/src/api/restrictions/common'
 
 const firebaseApp =
-  firebase.apps.length > 0
-    ? firebase.app()
-    : firebase.initializeApp({
+  getApps().length > 0
+    ? getApp()
+    : initializeApp({
         apiKey: 'AIzaSyBOAqJZv0jnuNfM0w118AmD76MDqCSJj1Q',
         authDomain: 'openfortravel.firebaseapp.com',
         databaseURL: 'https://openfortravel.firebaseio.com',
@@ -18,13 +18,14 @@ const firebaseApp =
         measurementId: 'G-NHT0P83PH5',
       })
 
-const firestore = firebaseApp.firestore()
-const countryCollection = firestore
-  .collection('countries')
-  .withConverter(destinationDataConverter)
-const restrictionCollection = firestore
-  .collection('restrictions')
-  .withConverter(restrictionDataConverter)
+const firestore = getFirestore(firebaseApp)
+const countryCollection = collection(firestore, 'countries').withConverter(
+  destinationDataConverter,
+)
+const restrictionCollection = collection(
+  firestore,
+  'restrictions',
+).withConverter(restrictionDataConverter)
 
 // eslint-disable-next-line import/no-unused-modules
-export { firestore, firebaseApp, countryCollection, firebase, restrictionCollection }
+export { firestore, firebaseApp, countryCollection, restrictionCollection }

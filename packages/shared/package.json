@@ -13,7 +13,7 @@
   "dependencies": {
     "@types/winston": "^2.4.4",
     "countries-list": "^2.6.1",
-    "firebase": "^8.2.0",
+    "firebase": "firebase@9.0.0-beta.1",
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2",
     "winston": "^3.3.3"

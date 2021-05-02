@@ -1,15 +1,16 @@
-import type {
-  RestrictionDirection} from '@/shared/src/api/restrictions/common';
+import { doc, getDoc, query, where, getDocs } from 'firebase/firestore'
+
+import type { RestrictionDirection } from '@/shared/src/api/restrictions/common'
 import {
   generateID,
-  getViewCollection
+  getViewCollection,
 } from '@/shared/src/api/restrictions/common'
 import type {
   MappedPlainRestrictionCollection,
-  PlainRestriction} from '@/shared/src/api/restrictions/models';
-import {
-  restrictionDefaults,
+  PlainRestriction,
 } from '@/shared/src/api/restrictions/models'
+import { restrictionDefaults } from '@/shared/src/api/restrictions/models'
+import { restrictionCollection } from '@/shared/src/misc/firebase'
 import {
   importFirebase,
   transformArrayCollectionToMappedCollection,
@@ -19,8 +20,8 @@ async function findMappedRestrictionsByDirection(
   originCode: string,
   direction: RestrictionDirection,
 ): Promise<MappedPlainRestrictionCollection> {
-  const collection = await getViewCollection(direction)
-  const results = await collection.doc(originCode).get()
+  const collection = getViewCollection(direction)
+  const results = await getDoc(doc(collection, originCode))
   const data = results.data()
 
   if (!data) {
@@ -42,8 +43,8 @@ export async function findMappedRestrictionsByOrigin(
 export async function findRestrictionsByOrigin(
   originCode: string,
 ): Promise<PlainRestriction[]> {
-  const { restrictionCollection } = await importFirebase()
-  const results = await restrictionCollection.where('origin', '==', originCode).get()
+  const q = query(restrictionCollection, where('origin', '==', originCode))
+  const results = await getDocs(q)
   return results.docs.map((snapshot) => snapshot.data())
 }
 
@@ -51,7 +52,9 @@ export async function findRestrictionsByDestination(
   destinationCode: string,
 ): Promise<PlainRestriction[]> {
   const { restrictionCollection } = await importFirebase()
-  const results = await restrictionCollection.where('destination', '==', destinationCode).get()
+  const results = await restrictionCollection
+    .where('destination', '==', destinationCode)
+    .get()
 
   return results.docs.map((snapshot) => snapshot.data())
 }
@@ -61,7 +64,9 @@ export async function findRestrictionByOriginAndDestination(
   destinationCode: string,
 ): Promise<PlainRestriction> {
   const { restrictionCollection } = await importFirebase()
-  const doc = await restrictionCollection.doc(generateID(originCode, destinationCode)).get()
+  const doc = await restrictionCollection
+    .doc(generateID(originCode, destinationCode))
+    .get()
 
   const data = doc.data()
 
