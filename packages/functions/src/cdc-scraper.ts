@@ -14,54 +14,57 @@ export const safetyLevelCalculatorJob = functions.pubsub
 async function runScraper(): Promise<void> {
   const finder = await loadCountryPopulations()
   const data = await scrapeIt<{
-    countries: {
+    countries: Array<{
       level: string
       countries: string[]
-    }[]
-  }>('https://www.cdc.gov/coronavirus/2019-ncov/travelers/map-and-travel-notices.html', {
-    countries: {
-      listItem: ".syndicate .row div[class^='ral'] .card",
-      data: {
-        level: {
-          selector: '.card-header',
-          convert: (header: string) => {
-            const matches = header.match(/Level (\d)/)
-            let level = 0
-            if (matches && matches[1]) {
-              level = Number.parseInt(matches[1], 10)
-            }
+    }>
+  }>(
+    'https://www.cdc.gov/coronavirus/2019-ncov/travelers/map-and-travel-notices.html',
+    {
+      countries: {
+        listItem: ".syndicate .row div[class^='ral'] .card",
+        data: {
+          level: {
+            selector: '.card-header',
+            convert: (header: string) => {
+              const matches = header.match(/Level (\d)/)
+              let level = 0
+              if (matches && matches[1]) {
+                level = Number.parseInt(matches[1], 10)
+              }
 
-            switch (level) {
-              case 4:
-                return 'very-high'
-              case 3:
-                return 'high'
+              switch (level) {
+                case 4:
+                  return 'very-high'
+                case 3:
+                  return 'high'
 
-              case 2:
-                return 'moderate'
+                case 2:
+                  return 'moderate'
 
-              case 1:
-                return 'low'
+                case 1:
+                  return 'low'
 
-              default:
-                return 'no-data'
-            }
+                default:
+                  return 'no-data'
+              }
+            },
           },
-        },
-        countries: {
-          listItem: 'li > a',
-          convert: (country) => {
-            const replacement = finder(country)
-            if (!replacement) {
-              return
-            }
+          countries: {
+            listItem: 'li > a',
+            convert: (country) => {
+              const replacement = finder(country)
+              if (!replacement) {
+                return
+              }
 
-            return replacement
+              return replacement
+            },
           },
         },
       },
     },
-  })
+  )
   const recordsSet: Record<string, string> = {}
 
   data.data.countries.forEach(({ level, countries }) => {
@@ -84,8 +87,12 @@ type Country = {
   population: number
   alpha2Code: string
 }
-async function loadCountryPopulations(): Promise<(countryEnName: string) => string> {
-  const countryLibrary = await ky.get('https://restcountries.eu/rest/v2/').json<Country[]>()
+async function loadCountryPopulations(): Promise<
+  (countryEnName: string) => string
+> {
+  const countryLibrary = await ky
+    .get('https://restcountries.eu/rest/v2/')
+    .json<Country[]>()
 
   const transformationMap: Record<string, string> = {
     'Bahamas, The': 'bs',
@@ -112,6 +119,7 @@ async function loadCountryPopulations(): Promise<(countryEnName: string) => stri
     Russia: 'ru',
     'Saint Martin': 'mf',
     Syria: 'sy',
+    'United Kingdom': 'uk',
     'Virgin Islands, U.S.': 'vi',
     'Hong Kong SAR': 'hk',
     'South Korea': 'kr',
@@ -123,7 +131,7 @@ async function loadCountryPopulations(): Promise<(countryEnName: string) => stri
     'Sint Eustatius': 'bq',
     'Timor-Leste (East Timor)': 'tl',
     Vietnam: 'vn',
-    'Canary Islands': 'ic',
+    'Canary Islands': 'es',
     'Wake Island': 'um',
   }
 
@@ -142,7 +150,9 @@ async function loadCountryPopulations(): Promise<(countryEnName: string) => stri
         return true
       }
 
-      return item.altSpellings.map((spelling) => deburr(spelling)).includes(countryEnName)
+      return item.altSpellings
+        .map((spelling) => deburr(spelling))
+        .includes(countryEnName)
     })
 
     return foundCountry

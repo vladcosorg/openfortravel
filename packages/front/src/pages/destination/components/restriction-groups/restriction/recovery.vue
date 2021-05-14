@@ -1,5 +1,5 @@
 <template>
-  <component :is="wrapper">
+  <component :is="wrapper" :restriction="restriction">
     <template #title>
       Provide a certificate of having recovered from COVID-19
     </template>
@@ -23,13 +23,8 @@
 
 <script lang="ts">
 import { matWarning as notMatchedIcon } from '@quasar/extras/material-icons'
-import type {
-  PropType} from '@vue/composition-api';
-import {
-  computed,
-  defineComponent,
-  inject
-} from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import Country from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/country.vue'

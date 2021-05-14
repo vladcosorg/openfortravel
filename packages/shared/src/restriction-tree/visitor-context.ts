@@ -1,11 +1,11 @@
 import type { Matcher } from '@/shared/src/restriction-tree/matcher'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-type VisitorContextType = {
+export type VisitorContextType = {
   [RestrictionNodeType.ORIGIN]: string
   [RestrictionNodeType.CITIZENSHIP]: string
-  [RestrictionNodeType.VACCINATED]?: boolean
-  [RestrictionNodeType.AGE]?: number
+  [RestrictionNodeType.VACCINATED]: boolean
+  [RestrictionNodeType.AGE]: number
 }
 
 export class VisitorContext {
@@ -18,7 +18,7 @@ export class VisitorContext {
     this[RestrictionNodeType.ORIGIN] = context[RestrictionNodeType.ORIGIN]
 
     if (context[RestrictionNodeType.AGE] !== undefined) {
-      this[RestrictionNodeType.AGE] = context[RestrictionNodeType.AGE] as number
+      this[RestrictionNodeType.AGE] = context[RestrictionNodeType.AGE]
     }
 
     if (!context[RestrictionNodeType.CITIZENSHIP]) {
@@ -29,9 +29,8 @@ export class VisitorContext {
     }
 
     if (context[RestrictionNodeType.VACCINATED]) {
-      this[RestrictionNodeType.VACCINATED] = context[
-        RestrictionNodeType.VACCINATED
-      ] as boolean
+      this[RestrictionNodeType.VACCINATED] =
+        context[RestrictionNodeType.VACCINATED]
     }
   }
 

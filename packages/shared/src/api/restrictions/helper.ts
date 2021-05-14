@@ -6,103 +6,17 @@ import type {
   MappedRestrictionCollection,
   PlainRestriction,
   PlainRestrictionCollection,
-  RestrictionCollection} from '@/shared/src/api/restrictions/models';
+  RestrictionCollection,
+} from '@/shared/src/api/restrictions/models'
 import {
   Restriction,
   restrictionDefaults,
   RestrictionStatus,
 } from '@/shared/src/api/restrictions/models'
-import {
-  findRestrictionsByDestination,
-  findRestrictionsByOrigin,
-} from '@/shared/src/api/restrictions/repository'
+import { findRestrictionsByOrigin } from '@/shared/src/api/restrictions/repository'
 import { useI18n } from '@/shared/src/composables/use-plugins'
-import {
-  transformArrayCollectionToMappedCollection,
-  wrapCollection,
-} from '@/shared/src/misc/misc'
+import { wrapCollection } from '@/shared/src/misc/misc'
 import { getCountryCodes as getAllCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
-
-export async function generateRestrictionListByDestination(
-  destinationCode: string,
-): Promise<PlainRestriction[]> {
-  const realRestrictions = await findRestrictionsByDestination(destinationCode)
-  const fallbackRestrictions = generateFallbackRestrictions(
-    realRestrictions,
-    destinationCode,
-    'destination',
-    'origin',
-  )
-  return [...realRestrictions, ...fallbackRestrictions]
-}
-
-export function fillMissingPlainRestrictionsWithFallbacks<
-  T extends MappedPlainRestrictionCollection | PlainRestrictionCollection
->(existingRestrictions: T, countryCode: string, type: 'origin' | 'destination'): T {
-  const fallbacks = generateFallbackRestrictions(
-    Array.isArray(existingRestrictions)
-      ? existingRestrictions
-      : Object.values(existingRestrictions),
-    countryCode,
-    type === 'origin' ? 'origin' : 'destination',
-    type === 'origin' ? 'destination' : 'origin',
-  )
-
-  if (!Array.isArray(existingRestrictions)) {
-    return Object.assign(
-      {},
-      existingRestrictions,
-      transformArrayCollectionToMappedCollection(
-        fallbacks,
-        type === 'origin' ? 'destination' : 'origin',
-      ),
-    ) as T
-  }
-
-  return [...existingRestrictions] as T
-}
-
-export function getFullRestrictionsListForDestination<
-  T extends MappedPlainRestrictionCollection | PlainRestrictionCollection
->(
-  partialRestrictionList: T,
-  destinationCode: string,
-): T extends MappedPlainRestrictionCollection
-  ? MappedRestrictionCollection
-  : RestrictionCollection {
-  const fullPlainRestrictionList = fillMissingPlainRestrictionsWithFallbacks(
-    partialRestrictionList,
-    destinationCode,
-    'destination',
-  )
-
-  return wrapCollectionWithRichObject(
-    fullPlainRestrictionList as never,
-  ) as T extends MappedPlainRestrictionCollection
-    ? MappedRestrictionCollection
-    : RestrictionCollection
-}
-
-export function getFullRestrictionsListForOrigin<
-  T extends MappedPlainRestrictionCollection | PlainRestrictionCollection
->(
-  partialRestrictionList: T,
-  originCode: string,
-): T extends MappedPlainRestrictionCollection
-  ? MappedRestrictionCollection
-  : RestrictionCollection {
-  const fullPlainRestrictionList = fillMissingPlainRestrictionsWithFallbacks(
-    partialRestrictionList,
-    originCode,
-    'origin',
-  )
-
-  return wrapCollectionWithRichObject(
-    fullPlainRestrictionList as never,
-  ) as T extends MappedPlainRestrictionCollection
-    ? MappedRestrictionCollection
-    : RestrictionCollection
-}
 
 export async function generateRestrictionListByOrigin(
   originCode: string,
@@ -163,14 +77,17 @@ export function wrapCollectionWithRichObject(
   plainRestrictions: PlainRestrictionCollection,
 ): RestrictionCollection
 export function wrapCollectionWithRichObject(
-  plainRestrictions: PlainRestrictionCollection | MappedPlainRestrictionCollection,
+  plainRestrictions:
+    | PlainRestrictionCollection
+    | MappedPlainRestrictionCollection,
 ): RestrictionCollection | MappedRestrictionCollection {
-  return wrapCollection(plainRestrictions as PlainRestrictionCollection, (restriction) =>
-    wrapWithRichRestrictionObject(restriction),
+  return wrapCollection(
+    plainRestrictions as PlainRestrictionCollection,
+    (restriction) => wrapWithRichRestrictionObject(restriction),
   )
 }
 
-function getStatusList(): RestrictionStatus[] {
+export function getStatusList(): RestrictionStatus[] {
   return Object.values(RestrictionStatus)
 }
 

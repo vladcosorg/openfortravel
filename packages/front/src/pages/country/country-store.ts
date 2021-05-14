@@ -1,19 +1,19 @@
 import type { Module } from 'vuex'
 
 import type { StateInterface } from '@/front/src/store/state'
-import {
-  createDummyDestination,
-  wrapWithRichDestinationObject,
-} from '@/shared/src/api/destinations/helper'
-import type { Destination, PlainDestination } from '@/shared/src/api/destinations/models'
-import { findOrigins } from '@/shared/src/api/destinations/repository'
+import type {
+  Destination,
+  PlainDestination,
+} from '@/shared/src/api/destinations/models'
 import {
   generateRestrictionListByOrigin,
   wrapCollectionWithRichObject,
 } from '@/shared/src/api/restrictions/helper'
-import type { PlainRestriction, Restriction } from '@/shared/src/api/restrictions/models'
+import type {
+  PlainRestriction,
+  Restriction,
+} from '@/shared/src/api/restrictions/models'
 import { sortByStatusAndAlphabetically } from '@/shared/src/api/restrictions/sorters'
-import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export type CountryMap = Map<string, Destination>
 
@@ -33,28 +33,8 @@ export default {
       const wrappedList = wrapCollectionWithRichObject(state.restrictions)
       return sortByStatusAndAlphabetically(wrappedList)
     },
-    countryList: (state): CountryMap => {
-      const countryObjects = state.countries.reduce(
-        (map, plainCountry) =>
-          map.set(plainCountry.countryCode, wrapWithRichDestinationObject(plainCountry)),
-        new Map(),
-      )
-
-      for (const countryCode of getCountryCodes()) {
-        if (countryObjects.has(countryCode)) {
-          continue
-        }
-
-        countryObjects.set(
-          countryCode,
-          createDummyDestination({
-            countryCode,
-          }),
-        )
-      }
-
-      return countryObjects
-    },
+    countryList: (state, getters, rootState, rootGetters): CountryMap =>
+      new Map(Object.entries(rootGetters['wrappedHostRules'])),
   },
   mutations: {
     setRestrictions(
@@ -79,12 +59,6 @@ export default {
     },
   },
   actions: {
-    async fetchCountries({ commit, state }) {
-      if (state.countries.length > 0) {
-        return
-      }
-      commit('setCountries', await findOrigins())
-    },
     async fetchRestrictions({ commit, state }, originCode: string) {
       if (state.originCode === originCode) {
         return
@@ -94,7 +68,10 @@ export default {
       // The data will be fetched on client thanks to the forceRefetch flag
       const isServer = (process.env.SERVER as unknown) as boolean
       commit('setRestrictions', {
-        countryDestinations: await generateRestrictionListByOrigin(originCode, isServer),
+        countryDestinations: await generateRestrictionListByOrigin(
+          originCode,
+          isServer,
+        ),
         originCode,
         forceRefetch: isServer,
       })

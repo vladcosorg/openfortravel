@@ -1,4 +1,3 @@
-import { logger } from '@/shared/src/misc/logger'
 import { And } from '@/shared/src/restriction-tree/logic-node/and'
 import { Or } from '@/shared/src/restriction-tree/logic-node/or'
 import { Age } from '@/shared/src/restriction-tree/restriction-node/age'
@@ -58,9 +57,6 @@ export function convertFromStorageFormat(nodeTree: EncodedNode): TreeNode {
   if (isLogicNode(nodeTree)) {
     if (!nodeTree.children || nodeTree.children.length === 0) {
       nodeTree.children = []
-      logger.error(
-        `Malformed tree. The ${nodeTree.type} should always have children`,
-      )
     }
 
     return new (constructor as typeof Or | typeof And)(

@@ -1,21 +1,25 @@
 import difference from 'lodash/difference'
 import groupBy from 'lodash/groupBy'
-import intersection from 'lodash/intersection'
-import xor from 'lodash/xor'
 
 import type { Matcher } from '@/shared/src/restriction-tree/matcher'
+import type { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import type {
-  RestrictionCategory,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
-import type { RestrictionGroups } from '@/shared/src/restriction-tree/types'
+  RestrictionGroup,
+  RestrictionGroups,
+} from '@/shared/src/restriction-tree/types'
 import type { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
 
 type MergedRestrictionGroup = Array<RestrictionNode | RestrictionNode[]>
 type MergedRestrictionNodesGroups = RestrictionGroups<MergedRestrictionGroup>
+
 export type RestrictionsGroupesWithScore = Array<{
   score: number
-  group: Record<RestrictionCategory, RestrictionNode[]>
+  group: RestrictionGroup
+}>
+
+type CategorizedRestrictionsGroupesWithScore = Array<{
+  score: number
+  group: RestrictionGroup
 }>
 
 export class EntryWays {
@@ -23,30 +27,6 @@ export class EntryWays {
     protected readonly matcher: Matcher,
     protected readonly context: VisitorContext,
   ) {}
-
-  mergeSimilarGroups(groups: RestrictionGroups): MergedRestrictionNodesGroups {
-    let out: MergedRestrictionNodesGroups = []
-    const nodesGroupedByLength = groupBy(groups, (group) => group.length)
-
-    for (const [strLength, items] of Object.entries(nodesGroupedByLength)) {
-      const length = Number.parseInt(strLength, 10)
-      if (length < 2) {
-        out = [...out, ...items]
-        continue
-      }
-
-      const commonBase = intersection(...items)
-
-      if (commonBase.length !== length - 1) {
-        out = [...out, ...items]
-        continue
-      }
-
-      out.push([...commonBase, xor(...items)])
-    }
-
-    return out
-  }
 
   protected sortGroupsByIndex(
     groups: MergedRestrictionNodesGroups,
@@ -76,24 +56,18 @@ export class EntryWays {
     return groups
   }
 
-  protected convertPenaltiesToRating(group: MergedRestrictionGroup): number {
-    const penaltySum = group.reduce((prevScore, restriction) => {
-      if (Array.isArray(restriction)) {
-        return (
-          Math.max(
-            ...restriction.map((restriction) => restriction.penaltyScore()),
-          ) + prevScore
-        )
-      }
-
-      return restriction.penaltyScore() + prevScore
-    }, 0)
+  protected convertPenaltiesToRating(group: RestrictionGroup): number {
+    const penaltySum = group.reduce(
+      (prevScore, restriction) => restriction.penaltyScore() + prevScore,
+      0,
+    )
 
     if (penaltySum <= 2) {
       return 5
     }
 
     if (penaltySum <= 4) {
+      1
       return 4
     }
 
@@ -109,12 +83,12 @@ export class EntryWays {
   }
 
   protected calculatePenaltiesAndSortByScore(
-    groups: RestrictionGroups<Record<RestrictionCategory, RestrictionNode[]>>,
+    groups: RestrictionGroups,
   ): RestrictionsGroupesWithScore {
     const scoredGroups = groups.reduce<RestrictionsGroupesWithScore>(
       (acc, group) => {
         acc.push({
-          score: this.convertPenaltiesToRating([...Object.values(group)]),
+          score: this.convertPenaltiesToRating(group),
           group,
         })
         return acc
@@ -127,26 +101,26 @@ export class EntryWays {
   }
 
   protected groupByRestrictionCategory(
-    groups: RestrictionGroups,
-  ): RestrictionGroups<Record<RestrictionCategory, RestrictionNode[]>> {
-    return groups.map((group) =>
-      groupBy(group, (node) => node.category()),
-    ) as any
+    groups: RestrictionsGroupesWithScore,
+  ): CategorizedRestrictionsGroupesWithScore {
+    return (groups.map((group) => ({
+      group: groupBy(group.group, (node) => node.category()),
+      score: group.score,
+    })) as unknown) as CategorizedRestrictionsGroupesWithScore
   }
 
   protected formatGroups(
     groups: RestrictionGroups,
-  ): RestrictionsGroupesWithScore {
-    // const mergedGroups = this.mergeSimilarGroups(groups)
+  ): CategorizedRestrictionsGroupesWithScore {
     this.sortGroupsByIndex(groups)
-    return this.calculatePenaltiesAndSortByScore(
-      this.groupByRestrictionCategory(groups),
+    return this.groupByRestrictionCategory(
+      this.calculatePenaltiesAndSortByScore(groups),
     )
   }
 
   getGroups(): {
-    available: RestrictionsGroupesWithScore
-    unavailable: RestrictionsGroupesWithScore
+    available: CategorizedRestrictionsGroupesWithScore
+    unavailable: CategorizedRestrictionsGroupesWithScore
   } {
     const allGroups = this.matcher.getGroups()
 
@@ -159,5 +133,15 @@ export class EntryWays {
       available: this.formatGroups(availableGroups),
       unavailable: this.formatGroups(unvailableGroups),
     }
+  }
+
+  getOptimalGroup(): RestrictionGroup | undefined {
+    const availableGroups = this.context
+      .applyToMatcher(this.matcher)
+      .getGroups()
+
+    const scoredGroups = this.calculatePenaltiesAndSortByScore(availableGroups)
+
+    return scoredGroups.shift()?.group
   }
 }

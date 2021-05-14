@@ -1,5 +1,5 @@
 <template>
-  <component :is="wrapper">
+  <component :is="wrapper" :restriction="restriction">
     <template #title>
       Fill an online-application prior to entry to your destination
     </template>

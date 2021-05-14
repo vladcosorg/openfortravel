@@ -18,7 +18,13 @@
     >
       <template #header-cell-country="props">
         <q-th :props="props">
-          <q-input v-model="filter" placeholder="Filter by name" dense filled autofocus />
+          <q-input
+            v-model="filter"
+            placeholder="Filter by name"
+            dense
+            filled
+            autofocus
+          />
         </q-th>
       </template>
       <template #body-cell-bestByDate="props">
@@ -53,7 +59,7 @@
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
 import { formatDistanceToNow, isPast, parseISO } from 'date-fns'
-import type firebase from 'firebase/app'
+import { Timestamp } from 'firebase/firestore'
 
 import { useDestinations } from '@/shared/src/api/destinations/composables'
 import type { Destination } from '@/shared/src/api/destinations/models'
@@ -117,7 +123,7 @@ export default defineComponent({
           label: 'Last updated',
           field: 'lastUpdated',
           align: 'left',
-          format: (date?: firebase.firestore.Timestamp) => {
+          format: (date?: Timestamp) => {
             if (date) {
               const dateObject = date.toDate()
               return formatDistanceToNow(dateObject, { addSuffix: true })

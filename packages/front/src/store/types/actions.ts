@@ -4,15 +4,10 @@ import type { AugmentedActionContext } from '@/shared/src/misc/augmented-store'
 
 export enum RootActionTypes {
   fetchHostRules = 'fetchHostRules',
-  fetchSharedRestrictions = 'fetchSharedRestrictions',
 }
 
 export type ActionSignatures = {
   [RootActionTypes.fetchHostRules](context: Context): Promise<void>
-  [RootActionTypes.fetchSharedRestrictions](
-    context: Context,
-    originCode: string,
-  ): Promise<void>
 }
 
 type Context = AugmentedActionContext<

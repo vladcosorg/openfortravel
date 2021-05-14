@@ -2,6 +2,11 @@ import type firebase from 'firebase/app'
 
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 import type { EncodedNode } from '@/shared/src/restriction-tree/converter'
+import { convertFromStorageFormat } from '@/shared/src/restriction-tree/converter'
+import {
+  LogicNodeType,
+  RestrictionGroups,
+} from '@/shared/src/restriction-tree/types'
 
 export enum RiskLevel {
   NO_DATA = 'no-data',
@@ -68,7 +73,10 @@ export class DestinationDefaults implements PlainDestination {
   }
 
   get percentage(): number {
-    if (this.thisWeekCasesPer100K !== undefined && this.lastWeekCasesPer100K !== undefined) {
+    if (
+      this.thisWeekCasesPer100K !== undefined &&
+      this.lastWeekCasesPer100K !== undefined
+    ) {
       return (this.thisWeekCasesPer100K * 100) / this.lastWeekCasesPer100K - 100
     }
 
@@ -76,7 +84,9 @@ export class DestinationDefaults implements PlainDestination {
   }
 
   get fixedPercentage(): string {
-    return ` ${Math.sign(this.percentage) === 1 ? '+' : ''}${this.percentage.toFixed()}`
+    return ` ${
+      Math.sign(this.percentage) === 1 ? '+' : ''
+    }${this.percentage.toFixed()}`
   }
 
   get thisWeekCasesFixed(): string {
@@ -85,6 +95,13 @@ export class DestinationDefaults implements PlainDestination {
 
   get lastWeekCasesFixed(): string {
     return this.lastWeekCasesPer100K.toFixed(1)
+  }
+
+  get restrictions(): RestrictionGroups {
+    return convertFromStorageFormat({
+      type: LogicNodeType.OR,
+      children: this.restrictionTree ?? [],
+    }).resolveTreeNodes()
   }
 }
 

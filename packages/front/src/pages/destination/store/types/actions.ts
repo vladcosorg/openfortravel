@@ -10,7 +10,6 @@ export type CurrentCountryPair = {
 
 export enum ActionTypes {
   fetchReturnRestriction = 'fetchReturnRestriction',
-  fetchRelatedRestrictions = 'fetchRelatedRestrictions',
   fetch = 'fetch',
 }
 type Context = AugmentedActionContext<
@@ -21,13 +20,12 @@ type Context = AugmentedActionContext<
 >
 
 export type ActionSignatures = {
-  [ActionTypes.fetch](context: Context, countryPair: CurrentCountryPair): Promise<void>
+  [ActionTypes.fetch](
+    context: Context,
+    countryPair: CurrentCountryPair,
+  ): Promise<void>
   [ActionTypes.fetchReturnRestriction](
     context: Context,
     countryPair: { originCode: string; destinationCode: string },
-  ): Promise<void>
-  [ActionTypes.fetchRelatedRestrictions](
-    context: Context,
-    destinationCode: string,
   ): Promise<void>
 }

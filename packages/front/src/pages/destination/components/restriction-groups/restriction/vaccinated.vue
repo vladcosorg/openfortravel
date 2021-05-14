@@ -1,5 +1,5 @@
 <template>
-  <component :is="wrapper">
+  <component :is="wrapper" :restriction="restriction">
     <template #title>Bring your certificate of vaccination</template>
     <template #subtitle>
       <p>
@@ -46,13 +46,8 @@ a[href^='#'] {
 </style>
 
 <script lang="ts">
-import type {
-  PropType} from '@vue/composition-api';
-import {
-  computed,
-  defineComponent,
-  inject
-} from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import Country from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/country.vue'

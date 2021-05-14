@@ -1,7 +1,8 @@
 import type { LocaleMessageObject } from 'vue-i18n'
 
 import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
-import type { MappedPlainRestrictionCollection } from '@/shared/src/api/restrictions/models'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { VisitorContextType } from '@/shared/src/restriction-tree/visitor-context'
 
 export interface StateInterface {
   countrySelectorLoading: boolean
@@ -14,6 +15,7 @@ export interface StateInterface {
   labeledLocales: Array<Record<string, string>>
   countryToContinentMap: Record<string, string>
   hostRules: MappedPlainDestinationCollection
+  visitorContext: VisitorContextType
 }
 
 export class RootState implements StateInterface {
@@ -23,14 +25,16 @@ export class RootState implements StateInterface {
   locales = {}
   localizedLanguages = {}
   serverLocale = 'en'
-  availableLocales = []
-  labeledLocales = []
+  availableLocales = [] as string[]
+  labeledLocales = {} as StateInterface['labeledLocales']
   countryToContinentMap = {}
   hostRules: MappedPlainDestinationCollection = {}
-  sharedRestrictions: {
-    originCode?: string
-    restrictions: MappedPlainRestrictionCollection
-  } = { restrictions: {} }
+  visitorContext = {
+    [RestrictionNodeType.ORIGIN]: 'us',
+    [RestrictionNodeType.CITIZENSHIP]: 'us',
+    [RestrictionNodeType.VACCINATED]: false,
+    [RestrictionNodeType.AGE]: 21,
+  }
 }
 
 export function state(): RootState {

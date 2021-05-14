@@ -1,7 +1,5 @@
 import { matFlightTakeoff } from '@quasar/extras/material-icons'
-import type {
-  ComputedRef,
-  Ref} from '@vue/composition-api';
+import type { ComputedRef, Ref } from '@vue/composition-api'
 import {
   computed,
   onMounted,
@@ -9,10 +7,12 @@ import {
   ref,
   watch,
 } from '@vue/composition-api'
+import groupBy from 'lodash/groupBy'
 
+import { createRestrictionFromDestination } from '@/front/src/composables/restrictions'
 import type { CountryMap } from '@/front/src/pages/country/country-store'
 import { RiskLevel } from '@/shared/src/api/destinations/models'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
+import { Restriction } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import {
@@ -23,16 +23,37 @@ import { getLabelForCountryCode } from '@/shared/src/modules/country-list/countr
 
 export function useCountries(): {
   countries: ComputedRef<CountryMap>
-  isLoading: Ref<boolean>
 } {
-  const { loading: isLoading } = useLoading(false)
-  const fetcher = useProperVuexActionDispatcher('countryPage/fetchCountries', isLoading)
-  onMounted(fetcher)
-
   return {
-    isLoading,
     countries: useVuexReactiveGetter<CountryMap>('countryPage/countryList'),
   }
+}
+
+export function useRestrictionList(
+  destinations: Ref<CountryMap>,
+): {
+  flatRestrictionList: ComputedRef<Restriction[]>
+  groupedRestrictionList: ComputedRef<Record<string, Restriction[]>>
+} {
+  const flatRestrictionList = computed(() =>
+    [...destinations.value.values()].map((destination) =>
+      createRestrictionFromDestination(destination),
+    ),
+  )
+
+  const groupedRestrictionList = computed(() => {
+    const grouped = groupBy(
+      flatRestrictionList.value,
+      (restriction) => restriction.status,
+    )
+    for (const group of Object.values(grouped)) {
+      group.sort((a, b) => a.destinationLabel.localeCompare(b.destinationLabel))
+    }
+
+    return grouped
+  })
+
+  return { flatRestrictionList, groupedRestrictionList }
 }
 
 export function useGroupedDestinations(
@@ -42,8 +63,13 @@ export function useGroupedDestinations(
   isLoadingRef: Ref<boolean>
 } {
   const { loading } = useLoading(false)
-  const fetcher = useProperVuexActionDispatcher('countryPage/fetchRestrictions', loading)
-  const destinationsRef = useVuexReactiveGetter<Restriction[]>('countryPage/restrictionList')
+  const fetcher = useProperVuexActionDispatcher(
+    'countryPage/fetchRestrictions',
+    loading,
+  )
+  const destinationsRef = useVuexReactiveGetter<Restriction[]>(
+    'countryPage/restrictionList',
+  )
 
   onServerPrefetch(() => fetcher(originCodeRef.value))
   onMounted(() => fetcher(originCodeRef.value))
@@ -126,9 +152,15 @@ export function useRestrictionFilterer(
     filterValue: countryMatchFilterValue,
     filterFunction: countryMatchFilterFunction,
   } = useCountryMatchFilter()
-  const { filterValue: tabFilterValue, filterFunction: tabFilterFunction } = useTabFilter()
+  const {
+    filterValue: tabFilterValue,
+    filterFunction: tabFilterFunction,
+  } = useTabFilter()
 
-  const destinations = useFilterer(input, [countryMatchFilterFunction, tabFilterFunction])
+  const destinations = useFilterer(input, [
+    countryMatchFilterFunction,
+    tabFilterFunction,
+  ])
 
   return {
     countryMatchFilterValue,
@@ -155,7 +187,10 @@ export function riskLevelColor(riskLevel: RiskLevel): string {
   }
 }
 
-export function getBreadcrumbs(originCode: Ref<string>, isLoading: Ref<boolean>): ComputedRef {
+export function getBreadcrumbs(
+  originCode: Ref<string>,
+  isLoading: Ref<boolean>,
+): ComputedRef {
   const { t } = useVueI18n()
   return computed(() => ({
     items: [

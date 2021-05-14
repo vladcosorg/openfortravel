@@ -1,5 +1,12 @@
 <template>
-  <q-card flat class="bg-elevation-1 full-height relative-position">
+  <q-card
+    flat
+    :class="[
+      $style.card,
+      'bg-elevation-1 full-height relative-position',
+      hideBorder || loading ? '' : `status-${destination.status}`,
+    ]"
+  >
     <router-link
       v-if="!loading"
       v-ripple
@@ -16,12 +23,23 @@
       @click.native="isClicked = true"
     >
       <q-card-section>
-        <h5 :class="`ellipsis-improved full-width ${$style.label}`">
+        <div v-if="returning" class="text-subtitle1">
+          Returning from <b>{{ destination.originNominativeLabel }}</b> to
+        </div>
+        <div class="text-h6 ellipsis-improved full-width">
           {{ destination.destinationNominativeLabel }}
-        </h5>
-        <div :class="[riskLevelColor(country.riskLevel)]">
+        </div>
+
+        <div
+          v-if="!hideRiskLevel"
+          :class="[riskLevelColor(destination.country.riskLevel)]"
+        >
           {{ $t('components.destinationItem.riskLevel.title') }}:
-          {{ $t('components.destinationItem.riskLevel.values')[country.riskLevel] }}
+          {{
+            $t('components.destinationItem.riskLevel.values')[
+              destination.country.riskLevel
+            ]
+          }}
         </div>
       </q-card-section>
 
@@ -29,43 +47,28 @@
 
       <q-card-section class="gt-xs" style="flex-grow: 1">
         <div v-html="destination.shortDescription" />
+        <a href="">Read more → </a>
       </q-card-section>
-
       <q-card-section>
-        <div class="q-gutter-x-xs">
-          <q-badge v-if="destination.status === 'allowed'" color="positive" text-color="dark">
-            {{ $t('restriction.travel.badgeValue')[destination.status] }}
-          </q-badge>
-          <q-badge
-            v-if="destination.status === 'conditional'"
-            color="warning"
-            text-color="dark"
-          >
-            {{ $t('restriction.travel.badgeValue')[destination.status] }}
-          </q-badge>
-          <q-badge
-            v-if="destination.status === 'forbidden'"
-            color="negative"
-            text-color="white"
-          >
-            {{ $t('restriction.travel.badgeValue')[destination.status] }}
-          </q-badge>
-          <q-badge
-            v-if="!destination.needsSelfIsolation()"
-            color="warning"
-            text-color="primary-inverse"
-          >
-            {{ $t('restriction.selfIsolation.label') }}
-          </q-badge>
-          <q-badge v-if="destination.testRequired" color="extra-purple">
-            {{ $t('restriction.testing.label') }}
-          </q-badge>
+        <div class="q-gutter-x-sm">
+          <q-badge color="green" outline> Entry allowed </q-badge>
+          <q-badge color="blue" outline>No quarantine</q-badge>
         </div>
       </q-card-section>
+      <!--      <q-card-section class="text-caption"-->
+      <!--        >Only valid if you are arriving from <b>Ukraine</b> as a citizen-->
+      <!--        <b>Ukraine</b> that is <b>not vaccinated</b> and you have not visited-->
+      <!--        any countries recently.</q-card-section-->
+      <!--      >-->
     </router-link>
-    <q-item v-else :class="[$style.item, 'rounded-borders q-pa-md']" style="min-height: 212px">
+
+    <q-item
+      v-else
+      :class="[$style.item, 'rounded-borders q-pa-md']"
+      style="min-height: 212px"
+    >
       <q-item-section>
-        <q-item-label :class="[' q-mb-sm']">
+        <q-item-label :class="['q-mb-sm']">
           <q-skeleton type="text" height="3rem" width="65%" />
         </q-item-label>
         <q-item-label :class="['text-subtitle2']">
@@ -94,7 +97,18 @@
 </template>
 
 <style lang="scss" module>
-.label {
+.card {
+  &:global(.status-allowed) {
+    border: 2px solid rgba($positive, 0.5);
+  }
+
+  &:global(.status-conditional) {
+    border: 2px solid rgba($warning, 0.5);
+  }
+
+  &:global(.status-forbidden) {
+    border: 2px solid rgba($negative, 0.5);
+  }
 }
 
 .bg {
@@ -118,18 +132,6 @@
   margin-bottom: 10px;
   overflow: hidden;
   border: 2px solid rgba($grey, 0.3);
-
-  //&:global(.allowed) {
-  //  border: 1px solid rgba($positive, 0.3);
-  //}
-  //
-  //&:global(.conditional) {
-  //  border: 2px solid rgba($warning, 0.3);
-  //}
-  //
-  //&:global(.forbidden) {
-  //  border: 2px solid rgba($negative, 0.3);
-  //}
 }
 
 .description {
@@ -146,15 +148,14 @@
 
 <script lang="ts">
 import {
-  ionBaseballOutline as icon,
   ionAlertCircleOutline as warningIcon,
+  ionBaseballOutline as icon,
 } from '@quasar/extras/ionicons-v5'
-import type { PropType} from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { defineComponent, ref } from '@vue/composition-api'
 
 import { riskLevelColor } from '@/front/src/pages/country/composable'
-import type { Destination } from '@/shared/src/api/destinations/models'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
+import { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
   props: {
@@ -169,8 +170,13 @@ export default defineComponent({
     destination: {
       type: Object as PropType<Restriction>,
     },
-    country: {
-      type: Object as PropType<Destination>,
+    hideRiskLevel: {
+      type: Boolean,
+      default: false,
+    },
+    hideBorder: {
+      type: Boolean,
+      default: false,
     },
   },
 

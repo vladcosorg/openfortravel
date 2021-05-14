@@ -1,6 +1,8 @@
 import type { RootStateType } from '@/front/src/store/state'
-import type { Destination, MappedDestinationCollection } from '@/shared/src/api/destinations/models'
-import type { MappedRestrictionCollection } from '@/shared/src/api/restrictions/models'
+import type {
+  Destination,
+  MappedDestinationCollection,
+} from '@/shared/src/api/destinations/models'
 import type { GetterContext } from '@/shared/src/misc/augmented-store'
 
 type LocalGetterContext<
@@ -10,7 +12,6 @@ type LocalGetterContext<
 
 export interface GetterSignatures {
   wrappedHostRules(...args: LocalGetterContext): MappedDestinationCollection
-  sharedRestrictions(...args: LocalGetterContext): MappedRestrictionCollection
 
   currentOrigin(...args: LocalGetterContext): Destination
   detectedCountryWithFallback(...args: LocalGetterContext): string

@@ -1,5 +1,5 @@
 <template>
-  <component :is="wrapper">
+  <component :is="wrapper" :restriction="restriction">
     <template v-if="!restriction.options.earlyReleaseDays" #title>
       Self-isolate for <b>{{ restriction.options.days }} days</b> upon arrival
     </template>
@@ -43,7 +43,7 @@ a[href^='#'] {
 </style>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { defineComponent } from '@vue/composition-api'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'

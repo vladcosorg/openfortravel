@@ -1,8 +1,6 @@
 import type { GetterTree } from 'vuex'
 
-import { GeneralQuestion } from '@/front/src/pages/destination/questions/items/general-question'
-import { QuarantineQuestion } from '@/front/src/pages/destination/questions/items/quarantine-question'
-import { ReturnQuestion } from '@/front/src/pages/destination/questions/items/return-question'
+import { createRestrictionFromDestination } from '@/front/src/composables/restrictions'
 import { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
 import type { Question } from '@/front/src/pages/destination/questions/question'
 import type { StateClass } from '@/front/src/pages/destination/store/state'
@@ -15,55 +13,21 @@ import { TestingSummary } from '@/front/src/pages/destination/summary-items/item
 import type { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
 import type { RootStateType } from '@/front/src/store/state'
 import type { MappedDestinationCollection } from '@/shared/src/api/destinations/models'
-import {
-  getFullRestrictionsListForDestination,
-  wrapWithRichRestrictionObject,
-} from '@/shared/src/api/restrictions/helper'
-import type { MappedRestrictionCollection } from '@/shared/src/api/restrictions/models'
 import { convertFromStorageFormat } from '@/shared/src/restriction-tree/converter'
 import { EntryWays } from '@/shared/src/restriction-tree/entry-ways'
 import { Matcher } from '@/shared/src/restriction-tree/matcher'
-import { LogicNodeType, RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { LogicNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
 
-export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures = {
-  relatedRestrictionList: (state) => {
-    if (!state.relatedRestrictions.destinationCode) {
-      return []
-    }
-
-    return getFullRestrictionsListForDestination(
-      state.relatedRestrictions.restrictions,
-      state.relatedRestrictions.destinationCode,
-    )
-  },
-
-  relatedRestrictionForbiddenStringList: (_state, getters) =>
-    getters.relatedRestrictionList
-      .filter((restriction) => !restriction.isAllowed())
-      .map((restriction) => restriction.originLabel),
-
-  currentRestriction: (state, _getters, _rootState, rootGetters) => {
-    if (!state.currentDestinationCode) {
-      return
-    }
-
-    const restrictions: MappedRestrictionCollection = rootGetters['sharedRestrictions']
-
-    return restrictions[state.currentDestinationCode]
-  },
-  returnRestriction: (state) => {
-    if (!state.returnRestriction) {
-      return
-    }
-    return wrapWithRichRestrictionObject(state.returnRestriction)
-  },
+export const getters: GetterTree<StateClass, RootStateType> &
+  GetterSignatures = {
   currentDestination: (state, _getters, _rootState, rootGetters) => {
     if (!state.currentDestinationCode) {
       return
     }
 
-    const destinations: MappedDestinationCollection = rootGetters['wrappedHostRules']
+    const destinations: MappedDestinationCollection =
+      rootGetters['wrappedHostRules']
 
     return destinations[state.currentDestinationCode]
   },
@@ -73,10 +37,19 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
       return
     }
 
-    const destinations: MappedDestinationCollection = rootGetters['wrappedHostRules']
+    const destinations: MappedDestinationCollection =
+      rootGetters['wrappedHostRules']
 
     return destinations[state.currentOriginCode]
   },
+
+  returnRestriction: (_state, getters, rootState) =>
+    createRestrictionFromDestination(
+      getters.currentReturnDestination!,
+      Object.assign({}, rootState.visitorContext, {
+        origin: getters.currentDestination!.countryCode,
+      }),
+    ),
 
   questions: (_state, getters): Question[] => {
     const restriction = getters.currentRestriction
@@ -86,15 +59,7 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
       return []
     }
 
-    const visitedCountryQuestion = new VisitedCountryQuestion(restriction, destination)
-
-    return [
-      new GeneralQuestion(restriction, destination, visitedCountryQuestion),
-      visitedCountryQuestion,
-      new ReturnQuestion(restriction, destination),
-      new QuarantineQuestion(restriction, destination, getters.restrictionGroups),
-    ]
-    // .filter((question) => !question.skip)
+    return []
   },
 
   getQuestionByType: (_state, getters) => (questionClass) => {
@@ -129,21 +94,12 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
       new DeclarationSummary(restriction, destination),
     ].filter((item) => !item.disabled)
   },
-
-  restrictionGroups: (_state, getters) => {
+  entryWays(_state, getters, rootState) {
     const nodes = convertFromStorageFormat({
       type: LogicNodeType.OR,
       children: getters.currentDestination?.restrictionTree ?? [],
     })
-    return new Matcher(nodes.resolveTreeNodes())
-  },
-  entryWays(_state, getters) {
-    return new EntryWays(getters.restrictionGroups, getters.visitorContext)
-  },
-  visitorContext(state) {
-    return new VisitorContext({
-      [RestrictionNodeType.ORIGIN]: state.currentOriginCode!,
-      [RestrictionNodeType.CITIZENSHIP]: state.currentOriginCode!,
-    })
+    const matcher = new Matcher(nodes.resolveTreeNodes())
+    return new EntryWays(matcher, new VisitorContext(rootState.visitorContext))
   },
 }

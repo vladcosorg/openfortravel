@@ -1,5 +1,5 @@
 <template>
-  <component :is="wrapper">
+  <component :is="wrapper" :restriction="restriction">
     <template #title>
       <span>
         Required age is {{ restriction.options.age }} or
@@ -40,6 +40,10 @@ export default defineComponent({
     restriction: {
       type: Object as PropType<Age>,
       required: true,
+    },
+    context: {
+      type: Number,
+      required: false,
     },
   },
   setup() {

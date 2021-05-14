@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 import Age from '@/front/src/pages/destination/components/restriction-groups/restriction/age.vue'
 import Citizenship from '@/front/src/pages/destination/components/restriction-groups/restriction/citizenship.vue'
@@ -24,8 +24,7 @@ import Quarantine from '@/front/src/pages/destination/components/restriction-gro
 import Recovery from '@/front/src/pages/destination/components/restriction-groups/restriction/recovery.vue'
 import RestrictionItem from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item.vue'
 import Vaccinated from '@/front/src/pages/destination/components/restriction-groups/restriction/vaccinated.vue'
-import type { StoreModule } from '@/front/src/pages/destination/destination-store'
-import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { useAugmentedStore } from '@/shared/src/composables/use-plugins'
 import type { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
@@ -50,11 +49,11 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const store = inject(StoreKey) as StoreModule
+    const store = useAugmentedStore()
 
     const contextValue = computed(() => {
       const restrictionType = props.restriction.id()
-      return store.getters.visitorContext[restrictionType]
+      return store.state.visitorContext[restrictionType]
     })
 
     return {
