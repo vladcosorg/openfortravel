@@ -20,7 +20,7 @@ export function useStore(): typeof storeInstance {
   return storeInstance
 }
 
-export function useAugmentedStore() {
+export function useRootStore(): ReturnType<typeof augmentedStore> {
   return augmentedStore(useStore())
 }
 

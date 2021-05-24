@@ -23,20 +23,17 @@ import { roundFlag as finish } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent } from '@vue/composition-api'
 
 import mixin from '@/front/src/pages/guide/steps/mixin.vue'
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { useI18n, useRootStore } from '@/shared/src/composables/use-plugins'
 import { transformCountryCodeToOriginSlug } from '@/shared/src/modules/country-list/country-list-helpers'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorContextType } from '@/shared/src/restriction-tree/visitor-context'
 
 export default defineComponent({
   mixins: [mixin],
-  setup(props) {
+  setup() {
     const currentStep = 7
-
+    const store = useRootStore()
     const url = computed(() => {
-      const origin = (props.value as VisitorContextType)[
-        RestrictionNodeType.ORIGIN
-      ]
+      const origin = store.state.visitorContext[RestrictionNodeType.ORIGIN]
 
       if (!origin) {
         return

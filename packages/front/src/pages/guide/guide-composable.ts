@@ -1,38 +1,37 @@
 import {
   computed,
   ComputedRef,
-  getCurrentInstance,
-  Ref,
   WritableComputedRef,
 } from '@vue/composition-api'
 
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorContextType } from '@/shared/src/restriction-tree/visitor-context'
 
-export function createComputedSetter<T extends keyof VisitorContextType>(
-  contextRef: Ref<VisitorContextType>,
-  key: T,
+export function createComputedSetter<T extends RestrictionNodeType>(
+  field: T,
 ): WritableComputedRef<VisitorContextType[T]> {
-  const instance = getCurrentInstance()
-  return computed({
+  const store = useRootStore()
+  return computed<VisitorContextType[T]>({
     get() {
-      return contextRef.value[key]
+      return store.state.visitorContext[field]
     },
-    set(newValue) {
-      instance?.$emit(
-        'input',
-        Object.assign({}, contextRef.value, {
-          [key]: newValue,
-        }),
-      )
+
+    set(value) {
+      store.mutations.setVisitorContextField({
+        field,
+        value,
+      })
     },
   })
 }
 
 export function useCaption(
-  input: Ref<string | string[] | undefined>,
+  type: RestrictionNodeType,
   truthyFormatter: (item: string) => string,
   falsyOptionalFormatter?: () => string,
 ): ComputedRef<string> {
+  const store = useRootStore()
   const falsyFormatter =
     falsyOptionalFormatter ??
     function () {
@@ -40,7 +39,7 @@ export function useCaption(
     }
 
   return computed(() => {
-    const value = input.value
+    const value = store.state.visitorContext[type]
     if ((Array.isArray(value) && value.length === 0) || !value) {
       return 'Answer: ' + falsyFormatter()
     }

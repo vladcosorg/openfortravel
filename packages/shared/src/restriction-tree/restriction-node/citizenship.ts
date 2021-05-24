@@ -15,8 +15,10 @@ export class Citizenship extends RestrictionNode<
     not: false,
     ...RestrictionNode.defaultOptions,
   }
-  matches(value: string): boolean {
-    return this.getAllowedCountries().includes(value)
+  matches(citizenships: string[]): boolean {
+    return this.getAllowedCountries().some((allowedCitizenship) =>
+      citizenships.includes(allowedCitizenship),
+    )
   }
 
   category(): RestrictionCategory {

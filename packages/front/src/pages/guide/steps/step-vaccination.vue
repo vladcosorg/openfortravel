@@ -10,27 +10,25 @@
     </div>
 
     <div class="row">
-      <vaccine-dropdown v-model="internalValue" />
+      <citizenship-field />
     </div>
 
     <step-navigation
       :step="step"
-      :next-step="internalValue === false ? 5 : 6"
+      :next-step="!isVaccinated ? 5 : 6"
       v-on="$listeners"
     />
   </q-step>
 </template>
 
 <script lang="ts">
-import { defineComponent, toRef } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
+import CitizenshipField from '@/front/src/components/context-field/vaccination-context.vue'
 import StepNavigation from '@/front/src/pages/guide/components/step-navigation.vue'
-import VaccineDropdown from '@/front/src/pages/guide/components/vaccine-dropdown.vue'
-import {
-  createComputedSetter,
-  useCaption,
-} from '@/front/src/pages/guide/guide-composable'
+import { useCaption } from '@/front/src/pages/guide/guide-composable'
 import mixin from '@/front/src/pages/guide/steps/mixin.vue'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import {
   VaccineBrand,
   vaccineLabels,
@@ -38,23 +36,24 @@ import {
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
-  components: { StepNavigation, VaccineDropdown },
+  components: { CitizenshipField, StepNavigation },
   mixins: [mixin],
-  setup(props) {
+  setup() {
     const currentStep = 4
-    const internalValue = createComputedSetter(
-      toRef(props, 'value'),
-      RestrictionNodeType.VACCINATED,
-    )
 
+    const isVaccinated = computed(
+      () =>
+        useRootStore().state.visitorContext[RestrictionNodeType.VACCINATED] !==
+        false,
+    )
     const label = useCaption(
-      internalValue,
+      RestrictionNodeType.VACCINATED,
       (value: VaccineBrand) => `Yes, ${vaccineLabels[value]}`,
       () => 'Not vaccinated',
     )
     return {
+      isVaccinated,
       label,
-      internalValue,
       currentStep,
     }
   },

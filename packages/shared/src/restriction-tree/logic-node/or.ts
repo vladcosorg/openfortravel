@@ -1,5 +1,5 @@
 import { LogicNode } from '@/shared/src/restriction-tree/logic-node'
-import type { RestrictionGroups } from '@/shared/src/restriction-tree/types';
+import type { PlainRestrictionGroups } from '@/shared/src/restriction-tree/types'
 import { LogicNodeType } from '@/shared/src/restriction-tree/types'
 
 export class Or extends LogicNode {
@@ -7,7 +7,7 @@ export class Or extends LogicNode {
     return LogicNodeType.OR
   }
 
-  resolveTreeNodes(): RestrictionGroups {
+  resolveTreeNodes(): PlainRestrictionGroups {
     return this.children
       .map((child) => child.resolveTreeNodes())
       .flat()

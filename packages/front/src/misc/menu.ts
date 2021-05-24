@@ -19,6 +19,12 @@ const links: Record<string, MenuItemRawPair> = {
     }),
     title: (i18n) => i18n.t('page.index.link'),
   },
+  wizard: {
+    url: (locale) => ({
+      name: 'guide',
+    }),
+    title: (i18n) => 'Travel wizard',
+  },
   origin: {
     url: (locale) => ({
       name: 'origin',
@@ -61,12 +67,23 @@ export function getMenuItemURL(menuID: keyof typeof links): string {
   return getMenuItemPair(menuID).url
 }
 
-export function getMenuItems(...menuIDs: Array<keyof typeof links>): MenuItemMapCollection {
-  return Object.fromEntries(menuIDs.map((menuID) => Object.values(getMenuItemPair(menuID))))
+export function getMenuItems(
+  ...menuIDs: Array<keyof typeof links>
+): MenuItemMapCollection {
+  return Object.fromEntries(
+    menuIDs.map((menuID) => Object.values(getMenuItemPair(menuID))),
+  )
 }
 
 export function getShortHeaderMenuItems(): MenuItemMapCollection {
-  return getMenuItems('index', 'origin', 'terms', 'privacy', 'contact')
+  return getMenuItems(
+    'index',
+    'wizard',
+    'origin',
+    'terms',
+    'privacy',
+    'contact',
+  )
 }
 
 export function getDrawerMenuItems(): MenuItemMapCollection {

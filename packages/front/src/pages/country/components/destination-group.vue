@@ -1,21 +1,17 @@
 <template>
   <div>
-    <h5 v-if="groupName">
-      {{ $t('restriction.travel.badgeValue')[groupName] }}
-    </h5>
-    <div v-if="groupName" class="text-subtitle2">
-      The country has no formal restrictions on entry by air, but is still
-      monitoring the situation and may have other travel policies in place like
-      mandatory testing or quarantines upon arrival.
-    </div>
     <q-no-ssr :class="['rounded-borders', $style.grid]">
       <template #default>
         <div
-          v-for="(destination, key) in destinations"
+          v-for="(destination, key) in results"
           :key="key"
           :class="[$style.gridItem, 'col']"
         >
-          <destination-item :loading="loading" :destination="destination" />
+          <destination-item
+            hide-border
+            :loading="loading"
+            :journey="destination"
+          />
         </div>
       </template>
       <template v-if="!$isDev" #placeholder>
@@ -48,6 +44,10 @@
         </div>
       </template>
     </q-no-ssr>
+
+    <div class="text-center q-mt-lg">
+      <q-btn v-if="collapseAfter" color="elevation-1"> Show all </q-btn>
+    </div>
   </div>
 </template>
 <style lang="scss" module>
@@ -65,10 +65,10 @@
 
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
+import { RoundTrip } from '@/front/src/models/RoundTrip'
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
   components: { DestinationItem },
@@ -79,67 +79,25 @@ export default defineComponent({
       default: false,
     },
     destinations: {
-      type: Array as PropType<Restriction[]>,
+      type: Array as PropType<RoundTrip[]>,
       default: () => [],
     },
     groupName: {
       type: String,
       required: false,
     },
+    collapseAfter: {
+      type: Number,
+      required: false,
+    },
   },
-  setup(props, { root }) {
-    const renderIndex = ref(3)
-    const inView = ref<boolean[]>(
-      Array.from<boolean>({ length: 250 }).fill(false),
+  setup(props) {
+    const results = computed(() =>
+      props.collapseAfter
+        ? props.destinations.slice(0, props.collapseAfter)
+        : props.destinations,
     )
-
-    const items = computed(() => {
-      if (!props.loading) {
-        return props.destinations
-      }
-
-      return Array.from({ length: 2 })
-    })
-
-    watch(
-      () => props.loading,
-      (newValue) => {
-        if (!newValue) {
-          const itemCount = items.value.length
-          const timeout = setInterval(() => {
-            let newRenderIndex = renderIndex.value + 15
-
-            if (newRenderIndex >= itemCount) {
-              newRenderIndex = itemCount
-              clearInterval(timeout)
-            }
-
-            renderIndex.value = newRenderIndex
-          }, 100)
-        }
-      },
-    )
-
-    const onIntersection = (entry: IntersectionObserverEntry) => {
-      const target = (entry.target as unknown) as HTMLElement
-      const id = target.dataset.id
-
-      if (!id) {
-        return
-      }
-
-      const index = Number.parseInt(id, 10)
-      setTimeout(() => {
-        inView.value.splice(index, 1, entry.isIntersecting)
-      }, 50)
-    }
-
-    return {
-      renderIndex,
-      inView,
-      onIntersection,
-      items,
-    }
+    return { results }
   },
 })
 </script>

@@ -2,7 +2,7 @@
   <span v-if="allowed.includes(focus)">
     <span class="text-accent">{{ focusCountryLabel }}</span>
     <span v-if="allowedCountriesCount > 0">
-      or of any other
+      or one following
       {{ allowedCountriesCount }} countries
     </span>
   </span>
@@ -17,10 +17,10 @@
 <style lang="scss" module></style>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent } from '@vue/composition-api'
 
-import Country from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/country.vue'
+import Country from '@/front/src/components/country.vue'
 import {
   getLabelForCountryCode,
   getSortedLabelsForCountryCodes,

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <q-item-label v-if="restrictions" header class="text-h6 text-center text-primary">
+    <q-item-label
+      v-if="restrictions"
+      header
+      class="text-h6 text-center text-primary"
+    >
       {{ label }}
     </q-item-label>
     <group-restriction
@@ -14,12 +18,12 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { defineComponent } from '@vue/composition-api'
 
 import GroupRestriction from '@/front/src/pages/destination/components/restriction-groups/group-restriction.vue'
 import type { RestrictionCategory } from '@/shared/src/restriction-tree/restriction-node'
-import type { RestrictionGroup } from '@/shared/src/restriction-tree/types'
+import type { PlainRestrictionGroup } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: { GroupRestriction },
@@ -33,7 +37,7 @@ export default defineComponent({
       required: true,
     },
     restrictions: {
-      type: Array as PropType<RestrictionGroup>,
+      type: Array as PropType<PlainRestrictionGroup>,
     },
   },
 })

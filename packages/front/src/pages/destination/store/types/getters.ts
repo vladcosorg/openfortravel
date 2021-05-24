@@ -1,10 +1,11 @@
-import type { Question } from '@/front/src/pages/destination/questions/question'
+import { RoundTrip } from '@/front/src/models/RoundTrip'
 import type { StateClass } from '@/front/src/pages/destination/store/state'
-import type { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
 import type { Destination } from '@/shared/src/api/destinations/models'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
 import type { GetterContext } from '@/shared/src/misc/augmented-store'
-import type { EntryWays } from '@/shared/src/restriction-tree/entry-ways'
+import {
+  RestrictionGroup,
+  RestrictionGroupCollection,
+} from '@/shared/src/restriction-tree/restriction-group'
 
 type LocalGetterContext<
   State = StateClass,
@@ -12,18 +13,12 @@ type LocalGetterContext<
 > = GetterContext<State, Accessors>
 
 export type GetterSignatures = {
-  currentReturnDestination(...args: LocalGetterContext): Destination | undefined
-  currentDestination(...args: LocalGetterContext): Destination | undefined
+  currentReturnDestination(...args: LocalGetterContext): Destination
+  currentDestination(...args: LocalGetterContext): Destination
 
-  returnRestriction(...args: LocalGetterContext): Restriction | undefined
-  currentRestriction(...args: LocalGetterContext): Restriction | undefined
+  allGroups(...args: LocalGetterContext): RestrictionGroupCollection
+  availableGroups(...args: LocalGetterContext): RestrictionGroup[]
+  unavailableGroups(...args: LocalGetterContext): RestrictionGroup[]
 
-  questions(...args: LocalGetterContext): Question[]
-  getQuestionByType(
-    ...args: LocalGetterContext
-  ): (questionClass: typeof Question) => Question
-
-  summaryItems(...args: LocalGetterContext): SummaryItem[]
-
-  entryWays(...args: LocalGetterContext): EntryWays
+  roundTrip(...args: LocalGetterContext): RoundTrip
 }

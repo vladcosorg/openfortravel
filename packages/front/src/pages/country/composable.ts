@@ -1,24 +1,14 @@
 import { matFlightTakeoff } from '@quasar/extras/material-icons'
 import type { ComputedRef, Ref } from '@vue/composition-api'
-import {
-  computed,
-  onMounted,
-  onServerPrefetch,
-  ref,
-  watch,
-} from '@vue/composition-api'
-import groupBy from 'lodash/groupBy'
+import { computed, ref } from '@vue/composition-api'
 
-import { createRestrictionFromDestination } from '@/front/src/composables/restrictions'
+import { buildTripsFromProfileOrigin } from '@/front/src/composables/restriction-query'
+import { RoundTrip } from '@/front/src/models/RoundTrip'
 import type { CountryMap } from '@/front/src/pages/country/country-store'
 import { RiskLevel } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
-import { useLoading } from '@/shared/src/composables/use-promise-loading'
-import {
-  useProperVuexActionDispatcher,
-  useVuexReactiveGetter,
-} from '@/shared/src/composables/use-vuex'
+import { useVuexReactiveGetter } from '@/shared/src/composables/use-vuex'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export function useCountries(): {
@@ -29,63 +19,29 @@ export function useCountries(): {
   }
 }
 
-export function useRestrictionList(
-  destinations: Ref<CountryMap>,
-): {
-  flatRestrictionList: ComputedRef<Restriction[]>
-  groupedRestrictionList: ComputedRef<Record<string, Restriction[]>>
+export function useRestrictionList(): {
+  allDestinations: ComputedRef<RoundTrip[]>
+  allowedDestinations: ComputedRef<RoundTrip[]>
+  forbiddenDestinations: ComputedRef<RoundTrip[]>
 } {
-  const flatRestrictionList = computed(() =>
-    [...destinations.value.values()].map((destination) =>
-      createRestrictionFromDestination(destination),
-    ),
+  const allDestinations = buildTripsFromProfileOrigin(true)
+  const allowedDestinations = computed(() =>
+    allDestinations.value.filter((destination) => !destination.isForbidden),
   )
 
-  const groupedRestrictionList = computed(() => {
-    const grouped = groupBy(
-      flatRestrictionList.value,
-      (restriction) => restriction.status,
-    )
-    for (const group of Object.values(grouped)) {
-      group.sort((a, b) => a.destinationLabel.localeCompare(b.destinationLabel))
-    }
+  const forbiddenDestinations = computed(() =>
+    allDestinations.value.filter((destination) => destination.isForbidden),
+  )
 
-    return grouped
-  })
-
-  return { flatRestrictionList, groupedRestrictionList }
+  return { allDestinations, allowedDestinations, forbiddenDestinations }
 }
 
-export function useGroupedDestinations(
-  originCodeRef: Ref<string>,
-): {
-  destinationsRef: ComputedRef<Restriction[]>
-  isLoadingRef: Ref<boolean>
-} {
-  const { loading } = useLoading(false)
-  const fetcher = useProperVuexActionDispatcher(
-    'countryPage/fetchRestrictions',
-    loading,
-  )
-  const destinationsRef = useVuexReactiveGetter<Restriction[]>(
-    'countryPage/restrictionList',
-  )
+type InputFilter = (input: RoundTrip[]) => RoundTrip[]
 
-  onServerPrefetch(() => fetcher(originCodeRef.value))
-  onMounted(() => fetcher(originCodeRef.value))
-  watch(originCodeRef, fetcher)
-
-  return {
-    isLoadingRef: loading,
-    destinationsRef,
-  }
-}
-
-type InputFilter = (input: Restriction[]) => Restriction[]
 export function useFilterer(
-  input: ComputedRef<Restriction[]>,
+  input: ComputedRef<RoundTrip[]>,
   filters: InputFilter[],
-): ComputedRef<Restriction[]> {
+): ComputedRef<RoundTrip[]> {
   return computed(() =>
     filters.reduce((restrictions, filter) => filter(restrictions), input.value),
   )
@@ -97,19 +53,17 @@ export function useCountryMatchFilter(): {
 } {
   const filterValue = ref('')
 
-  const filterFunction: InputFilter = (input: Restriction[]) => {
+  const filterFunction: InputFilter = (input: RoundTrip[]) => {
     if (!filterValue.value) {
       return input
     }
 
     return input
-      .filter((restriction) =>
-        restriction.destinationLabel.toLowerCase().includes(filterValue.value),
-      )
+      .filter((restriction) => restriction.includesSubtring(filterValue.value))
       .sort(
         (destinationA, destinationB) =>
-          destinationA.destinationLabel.indexOf(filterValue.value) -
-          destinationB.destinationLabel.indexOf(filterValue.value),
+          destinationA.substringIndex(filterValue.value) -
+          destinationB.substringIndex(filterValue.value),
       )
   }
 
@@ -142,29 +96,20 @@ export function useTabFilter(): {
 }
 
 export function useRestrictionFilterer(
-  input: Ref<Restriction[]>,
+  input: Ref<RoundTrip[]>,
 ): {
   countryMatchFilterValue: Ref<string>
-  tabFilterValue: Ref<string>
-  destinations: Ref<Restriction[]>
+  destinations: Ref<RoundTrip[]>
 } {
   const {
     filterValue: countryMatchFilterValue,
     filterFunction: countryMatchFilterFunction,
   } = useCountryMatchFilter()
-  const {
-    filterValue: tabFilterValue,
-    filterFunction: tabFilterFunction,
-  } = useTabFilter()
 
-  const destinations = useFilterer(input, [
-    countryMatchFilterFunction,
-    tabFilterFunction,
-  ])
+  const destinations = useFilterer(input, [countryMatchFilterFunction])
 
   return {
     countryMatchFilterValue,
-    tabFilterValue,
     destinations,
   }
 }
@@ -181,9 +126,6 @@ export function riskLevelColor(riskLevel: RiskLevel): string {
       return 'text-negative'
     case RiskLevel.VERY_HIGH:
       return 'text-negative text-bold'
-
-    default:
-      throw new Error(`Unmapped risk level "${riskLevel}"`)
   }
 }
 

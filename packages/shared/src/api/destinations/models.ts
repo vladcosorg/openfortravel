@@ -1,11 +1,18 @@
 import type firebase from 'firebase/app'
 
-import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
+import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'
+import {
+  getDestinationLabelForCountryCode,
+  getLabelForCountryCode,
+  getOriginLabelForCountryCode,
+  transformCountryCodeToDestinationSlug,
+  transformCountryCodeToOriginSlug,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 import type { EncodedNode } from '@/shared/src/restriction-tree/converter'
 import { convertFromStorageFormat } from '@/shared/src/restriction-tree/converter'
 import {
   LogicNodeType,
-  RestrictionGroups,
+  PlainRestrictionGroups,
 } from '@/shared/src/restriction-tree/types'
 
 export enum RiskLevel {
@@ -83,6 +90,34 @@ export class DestinationDefaults implements PlainDestination {
     return 0
   }
 
+  get originLabel(): string {
+    return getOriginLabelForCountryCode(this.countryCode)
+  }
+
+  get originNominativeLabel(): string {
+    return getLabelForCountryCode(this.countryCode)
+  }
+
+  get originSlug(): string {
+    return transformCountryCodeToOriginSlug(this.countryCode)
+  }
+
+  get continent(): string | undefined {
+    return getMappedContinentID(this.countryCode)
+  }
+
+  get destinationLabel(): string {
+    return getDestinationLabelForCountryCode(this.countryCode)
+  }
+
+  get destinationNominativeLabel(): string {
+    return getLabelForCountryCode(this.countryCode)
+  }
+
+  get destinationSlug(): string {
+    return transformCountryCodeToDestinationSlug(this.countryCode)
+  }
+
   get fixedPercentage(): string {
     return ` ${
       Math.sign(this.percentage) === 1 ? '+' : ''
@@ -97,7 +132,7 @@ export class DestinationDefaults implements PlainDestination {
     return this.lastWeekCasesPer100K.toFixed(1)
   }
 
-  get restrictions(): RestrictionGroups {
+  get restrictions(): PlainRestrictionGroups {
     return convertFromStorageFormat({
       type: LogicNodeType.OR,
       children: this.restrictionTree ?? [],

@@ -1,105 +1,44 @@
 import type { GetterTree } from 'vuex'
 
-import { createRestrictionFromDestination } from '@/front/src/composables/restrictions'
-import { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
-import type { Question } from '@/front/src/pages/destination/questions/question'
+import { RoundTrip } from '@/front/src/models/RoundTrip'
 import type { StateClass } from '@/front/src/pages/destination/store/state'
 import type { GetterSignatures } from '@/front/src/pages/destination/store/types/getters'
-import { DeclarationSummary } from '@/front/src/pages/destination/summary-items/items/declaration-summary'
-import { InsuranceSummary } from '@/front/src/pages/destination/summary-items/items/insurance-summary'
-import { IsolationSummary } from '@/front/src/pages/destination/summary-items/items/isolation-summary'
-import { StatusSummary } from '@/front/src/pages/destination/summary-items/items/status-summary'
-import { TestingSummary } from '@/front/src/pages/destination/summary-items/items/testing-summary'
-import type { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
 import type { RootStateType } from '@/front/src/store/state'
-import type { MappedDestinationCollection } from '@/shared/src/api/destinations/models'
-import { convertFromStorageFormat } from '@/shared/src/restriction-tree/converter'
-import { EntryWays } from '@/shared/src/restriction-tree/entry-ways'
-import { Matcher } from '@/shared/src/restriction-tree/matcher'
-import { LogicNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
+import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
 
 export const getters: GetterTree<StateClass, RootStateType> &
   GetterSignatures = {
-  currentDestination: (state, _getters, _rootState, rootGetters) => {
-    if (!state.currentDestinationCode) {
-      return
-    }
+  currentDestination: (state, _getters, _rootState, rootGetters) =>
+    rootGetters.wrappedHostRules[state.currentDestinationCode],
 
-    const destinations: MappedDestinationCollection =
-      rootGetters['wrappedHostRules']
+  currentReturnDestination: (state, _getters, _rootState, rootGetters) =>
+    rootGetters.wrappedHostRules[state.currentOriginCode],
 
-    return destinations[state.currentDestinationCode]
+  allGroups(_state, getters, rootState): RestrictionGroupCollection {
+    return new RestrictionGroupCollection(
+      getters.currentDestination.restrictions,
+      rootState.visitorContext,
+    )
   },
 
-  currentReturnDestination: (state, _getters, _rootState, rootGetters) => {
-    if (!state.currentOriginCode) {
-      return
-    }
-
-    const destinations: MappedDestinationCollection =
-      rootGetters['wrappedHostRules']
-
-    return destinations[state.currentOriginCode]
+  availableGroups(_state, getters) {
+    return getters.allGroups.availableGroups()
   },
 
-  returnRestriction: (_state, getters, rootState) =>
-    createRestrictionFromDestination(
-      getters.currentReturnDestination!,
-      Object.assign({}, rootState.visitorContext, {
-        origin: getters.currentDestination!.countryCode,
-      }),
-    ),
-
-  questions: (_state, getters): Question[] => {
-    const restriction = getters.currentRestriction
-    const destination = getters.currentDestination
-
-    if (!restriction || !destination) {
-      return []
-    }
-
-    return []
+  unavailableGroups(_state, getters) {
+    return getters.allGroups.getUnavailableGroups()
   },
 
-  getQuestionByType: (_state, getters) => (questionClass) => {
-    const question = getters.questions
-      .filter((question) => question.constructor === questionClass)
-      .pop()
+  roundTrip(_state, getters, rootState): RoundTrip {
+    const collection = new RestrictionGroupCollection(
+      getters.currentDestination.restrictions,
+      rootState.visitorContext,
+    )
 
-    if (!question) {
-      throw new Error(`Question of type ${questionClass.name}`)
-    }
-
-    return question
-  },
-
-  summaryItems: (_state, getters): SummaryItem[] => {
-    const restriction = getters.currentRestriction
-    const destination = getters.currentDestination
-
-    if (!restriction || !destination) {
-      return []
-    }
-
-    return [
-      new StatusSummary(
-        restriction,
-        destination,
-        getters.getQuestionByType(VisitedCountryQuestion),
-      ),
-      new TestingSummary(restriction, destination),
-      new IsolationSummary(restriction, destination),
-      new InsuranceSummary(restriction, destination),
-      new DeclarationSummary(restriction, destination),
-    ].filter((item) => !item.disabled)
-  },
-  entryWays(_state, getters, rootState) {
-    const nodes = convertFromStorageFormat({
-      type: LogicNodeType.OR,
-      children: getters.currentDestination?.restrictionTree ?? [],
-    })
-    const matcher = new Matcher(nodes.resolveTreeNodes())
-    return new EntryWays(matcher, new VisitorContext(rootState.visitorContext))
+    return new RoundTrip(
+      getters.currentDestination,
+      getters.currentReturnDestination,
+      collection.getBestGroup(),
+    )
   },
 }

@@ -10,7 +10,7 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
-import { useAugmentedStore } from '@/shared/src/composables/use-plugins'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: {},
@@ -22,8 +22,7 @@ export default defineComponent({
   },
   setup(props) {
     const label = computed(
-      () =>
-        useAugmentedStore().state.localizedLanguages[props.code] ?? props.code,
+      () => useRootStore().state.localizedLanguages[props.code] ?? props.code,
     )
     return { label }
   },

@@ -1,5 +1,6 @@
 <template>
   <generic-select
+    label="Vaccination"
     :value="value === undefined ? false : value"
     :options="list"
     v-bind="$attrs"

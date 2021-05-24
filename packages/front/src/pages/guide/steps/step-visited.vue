@@ -10,8 +10,10 @@
     </div>
 
     <div class="row">
-      <country-dropdown v-model="internalValue" multiple />
+      <country-dropdown v-model="internalValue" multiple clearable />
     </div>
+
+    <step-navigation :step="step" v-on="$listeners" />
   </q-step>
 </template>
 
@@ -19,7 +21,7 @@
 
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import { defineComponent, toRef } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 import CountryDropdown from '@/front/src/pages/guide/components/country-dropdown.vue'
 import StepNavigation from '@/front/src/pages/guide/components/step-navigation.vue'
@@ -34,10 +36,9 @@ import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 export default defineComponent({
   components: { StepNavigation, CountryDropdown },
   mixins: [mixin],
-  setup(props) {
+  setup() {
     const currentStep = 6
     const internalValue = createComputedSetter(
-      toRef(props, 'value'),
       RestrictionNodeType.DID_NOT_VISIT_COUNTRIES,
     )
     const label = useCaption(internalValue, getOriginLabelForCountryCode)

@@ -31,9 +31,10 @@ export class RootState implements StateInterface {
   hostRules: MappedPlainDestinationCollection = {}
   visitorContext = {
     [RestrictionNodeType.ORIGIN]: 'us',
-    [RestrictionNodeType.CITIZENSHIP]: 'us',
-    [RestrictionNodeType.VACCINATED]: false,
-    [RestrictionNodeType.AGE]: 21,
+    [RestrictionNodeType.RECOVERY]: undefined,
+    [RestrictionNodeType.VACCINATED]: undefined,
+    [RestrictionNodeType.CITIZENSHIP]: [],
+    [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [],
   }
 }
 

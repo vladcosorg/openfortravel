@@ -1,10 +1,8 @@
 import map from '@amcharts/amcharts4-geodata/worldLow'
 import { Miller } from '@amcharts/amcharts4/.internal/charts/map/projections'
-import type { Color} from '@amcharts/amcharts4/core';
+import type { Color } from '@amcharts/amcharts4/core'
 import { color, create, DropShadowFilter } from '@amcharts/amcharts4/core'
-import type {
-  MapArc,
-  MapPolygon} from '@amcharts/amcharts4/maps';
+import type { MapArc, MapPolygon } from '@amcharts/amcharts4/maps'
 import {
   MapArcSeries,
   MapChart,
@@ -13,8 +11,8 @@ import {
 import { random } from 'lodash'
 import { colors } from 'quasar'
 
+import { RoundTrip } from '@/front/src/models/RoundTrip'
 import { statusColorMap } from '@/front/src/pages/index/index-composable'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
 import {
   transformCountryCodeToDestinationSlug,
@@ -31,9 +29,8 @@ type SeriesItem = {
 export function createChart(
   domElement: HTMLElement,
   originCode: string,
-  restrictions: Restriction[],
+  restrictions: RoundTrip[],
 ): MapChart {
-  // useTheme(animated)
   const chart = createAndConfigureChart(domElement)
 
   const polygonSeries = createAndConfiguredPolygonSeries(
@@ -104,7 +101,10 @@ export function createAndConfiguredPolygonSeries(
   return polygonSeries
 }
 
-export function addHitHandler(polygonTemplate: MapPolygon, originCode: string): void {
+export function addHitHandler(
+  polygonTemplate: MapPolygon,
+  originCode: string,
+): void {
   polygonTemplate.events.on('hit', (event) => {
     const dataContext = event.target.dataItem.dataContext as SeriesItem
     const destinationCode = dataContext.id.toLowerCase()
@@ -113,7 +113,7 @@ export function addHitHandler(polygonTemplate: MapPolygon, originCode: string): 
       return
     }
 
-    useRouter().push({
+    void useRouter().push({
       name: 'destination',
       params: {
         originSlug: transformCountryCodeToOriginSlug(originCode),
@@ -219,11 +219,13 @@ export function configurePolygonTemplate(template: MapPolygon): void {
   template.hidden = true
 }
 
-function transformData(restrictions: Restriction[]): SeriesItem[] {
+function transformData(restrictions: RoundTrip[]): SeriesItem[] {
   const { t } = useVueI18n()
   return restrictions.map((restriction) => ({
-    id: restriction.destination.toUpperCase(),
+    id: restriction.destinationISO.toUpperCase(),
     fill: color(colors.getBrand(statusColorMap[restriction.status]) as string),
-    status: t(`page.index.sections.stats.types.${restriction.status}.title`) as string,
+    status: t(
+      `page.index.sections.stats.types.${restriction.status}.title`,
+    ) as string,
   }))
 }

@@ -6,7 +6,7 @@
     />
     <destination-item
       :returning="true"
-      :destination="destination"
+      :journey="destination"
       hide-risk-level
       hide-border
     />
@@ -28,7 +28,7 @@ export default defineComponent({
   setup() {
     const store = inject(StoreKey) as StoreModule
 
-    const destination = computed(() => store.getters.returnRestriction)
+    const destination = computed(() => store.getters.roundTrip)
 
     return { destination }
   },

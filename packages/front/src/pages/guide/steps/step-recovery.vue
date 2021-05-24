@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import { computed, defineComponent, toRef } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 import StepNavigation from '@/front/src/pages/guide/components/step-navigation.vue'
 import {
@@ -56,10 +56,7 @@ export default defineComponent({
   setup(props) {
     const currentStep = 5
 
-    const internalValue = createComputedSetter(
-      toRef(props, 'value'),
-      RestrictionNodeType.RECOVERY,
-    )
+    const internalValue = createComputedSetter(RestrictionNodeType.RECOVERY)
     const daysValue = computed({
       get() {
         return Number.isInteger(internalValue.value) ? internalValue.value : 30
@@ -81,7 +78,7 @@ export default defineComponent({
     })
 
     const label = useCaption(
-      internalValue,
+      RestrictionNodeType.RECOVERY,
       (days) => `Yes, approximatively ${days} days ago`,
       () => "No, I didn't",
     )

@@ -20,7 +20,7 @@
           <!--          />-->
         </div>
         <div class="col-md-5 col-12">
-          <return class="q-mb-xl" />
+          <!--          <return class="q-mb-xl" />-->
           <!--          <question-index-->
           <!--            class="q-mb-xl"-->
           <!--            :is-loading="isLoading"-->
@@ -113,7 +113,10 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const store = registerStoreModule(useStore())
+    const store = registerStoreModule(useStore(), {
+      currentOriginCode: props.originCode,
+      currentDestinationCode: props.destinationCode,
+    })
     const { originCode, destinationCode } = toRefs(props)
     const { loading } = useLoading(false)
 

@@ -14,6 +14,7 @@ export enum MutationTypes {
   setLocalizedLanguages = 'setLocalizedLanguages',
   setServerLocale = 'setServerLocale',
   setHostRules = 'setHostRules',
+  setVisitorContext = 'setVisitorContext',
   setVisitorContextField = 'setVisitorContextField',
 }
 
@@ -47,6 +48,13 @@ export type MutationSignatures<S = RootStateType> = {
     payload: {
       field: K
       value: V
+    },
+  ): void
+  [MutationTypes.setVisitorContext](
+    state: S,
+    payload: {
+      context: VisitorContextType
+      persist: boolean
     },
   ): void
 }

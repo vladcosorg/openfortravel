@@ -19,7 +19,7 @@
 <style lang="scss" module></style>
 
 <script lang="ts">
-import { defineComponent, toRef } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 import CountryDropdown from '@/front/src/pages/guide/components/country-dropdown.vue'
 import StepNavigation from '@/front/src/pages/guide/components/step-navigation.vue'
@@ -34,13 +34,13 @@ import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 export default defineComponent({
   components: { StepNavigation, CountryDropdown },
   mixins: [mixin],
-  setup(props) {
+  setup() {
     const currentStep = 2
-    const internalValue = createComputedSetter(
-      toRef(props, 'value'),
+    const internalValue = createComputedSetter(RestrictionNodeType.ORIGIN)
+    const label = useCaption(
       RestrictionNodeType.ORIGIN,
+      getOriginLabelForCountryCode,
     )
-    const label = useCaption(internalValue, getOriginLabelForCountryCode)
 
     return {
       internalValue,

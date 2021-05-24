@@ -26,8 +26,7 @@
 
 <script lang="ts">
 import type { MapChart } from '@amcharts/amcharts4/maps'
-import type {
-  PropType} from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import {
   defineComponent,
   onMounted,
@@ -37,7 +36,7 @@ import {
 } from '@vue/composition-api'
 import { defer } from 'lodash'
 
-import type { Restriction } from '@/shared/src/api/restrictions/models'
+import { RoundTrip } from '@/front/src/models/RoundTrip'
 
 export default defineComponent({
   components: {},
@@ -47,7 +46,7 @@ export default defineComponent({
       required: true,
     },
     restrictions: {
-      type: Array as PropType<Restriction[]>,
+      type: Array as PropType<RoundTrip[]>,
       required: true,
     },
     isLoading: {
@@ -77,7 +76,11 @@ export default defineComponent({
           }
 
           defer(() => {
-            chart = createChart(chartContainer.value, props.originCode, props.restrictions)
+            chart = createChart(
+              chartContainer.value,
+              props.originCode,
+              props.restrictions,
+            )
             chart.events.once('ready', () => {
               chart.events.once('appeared', () => {
                 loading.value = false

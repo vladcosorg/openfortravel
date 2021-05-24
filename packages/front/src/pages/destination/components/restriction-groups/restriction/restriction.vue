@@ -24,7 +24,7 @@ import Quarantine from '@/front/src/pages/destination/components/restriction-gro
 import Recovery from '@/front/src/pages/destination/components/restriction-groups/restriction/recovery.vue'
 import RestrictionItem from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item.vue'
 import Vaccinated from '@/front/src/pages/destination/components/restriction-groups/restriction/vaccinated.vue'
-import { useAugmentedStore } from '@/shared/src/composables/use-plugins'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import type { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
@@ -49,7 +49,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const store = useAugmentedStore()
+    const store = useRootStore()
 
     const contextValue = computed(() => {
       const restrictionType = props.restriction.id()

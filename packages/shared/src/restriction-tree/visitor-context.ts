@@ -1,11 +1,37 @@
-import type { Matcher } from '@/shared/src/restriction-tree/matcher'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { typeConstructors } from '@/shared/src/restriction-tree/converter'
+import { Matcher } from '@/shared/src/restriction-tree/matcher'
+import {
+  PlainRestrictionGroups,
+  RestrictionNodeType,
+} from '@/shared/src/restriction-tree/types'
 
 export type VisitorContextType = {
-  [RestrictionNodeType.ORIGIN]: string
-  [RestrictionNodeType.CITIZENSHIP]: string
-  [RestrictionNodeType.VACCINATED]: boolean
-  [RestrictionNodeType.AGE]: number
+  [key in RestrictionNodeType]?: Parameters<
+    InstanceType<typeof typeConstructors[key]>['matches']
+  >[0]
+}
+
+export function applyContextToRestrictionGroups(
+  context: VisitorContextType,
+  groups: PlainRestrictionGroups,
+): Matcher {
+  let matcher = new Matcher(groups)
+    .withOptional(
+      RestrictionNodeType.ORIGIN,
+      context[RestrictionNodeType.ORIGIN],
+    )
+    .withOptional(
+      RestrictionNodeType.CITIZENSHIP,
+      context[RestrictionNodeType.CITIZENSHIP],
+    )
+    .withOptional(RestrictionNodeType.AGE, context[RestrictionNodeType.AGE])
+    .withOptional(RestrictionNodeType.DID_NOT_VISIT_COUNTRIES, [])
+
+  if (!context[RestrictionNodeType.VACCINATED]) {
+    matcher = matcher.withAbsenceOf(RestrictionNodeType.VACCINATED)
+  }
+
+  return matcher
 }
 
 export class VisitorContext {

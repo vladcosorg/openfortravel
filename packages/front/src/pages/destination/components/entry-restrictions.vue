@@ -5,8 +5,8 @@
       :subtitle="$t('page.destination.widgets.entryRequirements.subtitle')"
     />
     <groups-by-type
-      v-if="groups.available.length"
-      :restrictions-groups="groups.available"
+      v-if="availableGroups.length"
+      :restrictions-groups="availableGroups"
       type-label="Available"
       :available="true"
     />
@@ -24,7 +24,7 @@
       </div>
     </div>
     <groups-by-type
-      :restrictions-groups="groups.unavailable"
+      :restrictions-groups="unavailableGroups"
       type-label="Not available"
       :available="false"
     />
@@ -42,12 +42,13 @@ import { StoreKey } from '@/front/src/pages/destination/destination-types'
 
 export default defineComponent({
   components: { GroupsByType, WidgetHeader },
-  props: {},
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const groups = computed(() => store.getters.entryWays.getGroups())
+    const availableGroups = computed(() => store.getters.availableGroups)
+    const unavailableGroups = computed(() => store.getters.unavailableGroups)
     return {
-      groups,
+      availableGroups,
+      unavailableGroups,
       stopIcon,
     }
   },

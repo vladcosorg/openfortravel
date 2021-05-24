@@ -23,11 +23,11 @@ export enum RestrictionNodeType {
 
 export type CriterionType = RestrictionNodeType
 export type CriterionValue = string | number | boolean | string[]
-export type RestrictionGroup<T = RestrictionNode> = T[]
-export type RestrictionGroups<T = RestrictionGroup> = T[]
+export type PlainRestrictionGroup<T = RestrictionNode> = T[]
+export type PlainRestrictionGroups<T = PlainRestrictionGroup> = T[]
 
 export interface TreeNode {
   id(): RestrictionNodeType | LogicNodeType
-  resolveTreeNodes(): RestrictionGroups
+  resolveTreeNodes(): PlainRestrictionGroups
   toStorageFormat(): EncodedNode
 }

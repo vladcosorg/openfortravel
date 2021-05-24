@@ -2,8 +2,7 @@
   <simple-select
     v-model="internalValue"
     :options="options"
-    dense
-    label="Are you vaccinated?"
+    label="Vaccination status"
     class="text-h6"
     standout
     :dropdown-icon="icon"
@@ -20,7 +19,7 @@ import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent } from '@vue/composition-api'
 
 import SimpleSelect from '@/front/src/components/simple-select.vue'
-import { useAugmentedStore } from '@/shared/src/composables/use-plugins'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
 import { vaccineLabels } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
@@ -29,14 +28,14 @@ export default defineComponent({
   components: { SimpleSelect },
   props: {},
   setup() {
-    const store = useAugmentedStore()
+    const store = useRootStore()
     const options = computed(() => [
       { label: 'No', value: false },
       ...transformFlatMapToArrayOfPairs(vaccineLabels),
     ])
     const internalValue = computed<string | boolean>({
       get() {
-        return useAugmentedStore().state.visitorContext[
+        return useRootStore().state.visitorContext[
           RestrictionNodeType.VACCINATED
         ]
       },

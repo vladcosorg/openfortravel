@@ -1,6 +1,6 @@
 import type { EncodedRestrictionNode } from '@/shared/src/restriction-tree/converter'
 import type {
-  RestrictionGroups,
+  PlainRestrictionGroups,
   TreeNode,
   RestrictionNodeType,
 } from '@/shared/src/restriction-tree/types'
@@ -33,7 +33,7 @@ export abstract class RestrictionNode<
     return RestrictionCategory.PREREQUISITE
   }
 
-  resolveTreeNodes(): RestrictionGroups {
+  resolveTreeNodes(): PlainRestrictionGroups {
     return [[this]]
   }
 

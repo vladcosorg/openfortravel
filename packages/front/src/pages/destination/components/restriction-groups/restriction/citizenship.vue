@@ -50,8 +50,8 @@ a[href^='#'] {
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent } from '@vue/composition-api'
 
+import Country from '@/front/src/components/country.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
-import Country from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/country.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
 import type { Citizenship } from '@/shared/src/restriction-tree/restriction-node/citizenship'

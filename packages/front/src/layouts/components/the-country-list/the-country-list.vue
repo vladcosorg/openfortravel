@@ -60,8 +60,8 @@
       </div>
     </div>
     <div class="col-12 row q-col-gutter-md">
-      <visitor-citizenship />
-      <visitor-vaccination />
+      <citizenship-context />
+      <vaccination-context />
     </div>
 
     <slot />
@@ -91,10 +91,10 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
+import CitizenshipContext from '@/front/src/components/context-field/citizenship-context.vue'
+import VaccinationContext from '@/front/src/components/context-field/vaccination-context.vue'
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import Swapper from '@/front/src/layouts/components/the-country-list/swapper.vue'
-import VisitorCitizenship from '@/front/src/layouts/components/the-country-list/visitor-citizenship.vue'
-import VisitorVaccination from '@/front/src/layouts/components/the-country-list/visitor-vaccination.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 import { useRouter, useI18n } from '@/shared/src/composables/use-plugins'
 import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
@@ -105,8 +105,8 @@ import {
 
 export default defineComponent({
   components: {
-    VisitorVaccination,
-    VisitorCitizenship,
+    VaccinationContext,
+    CitizenshipContext,
     Swapper,
     CountrySelect,
   },

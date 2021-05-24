@@ -13,8 +13,8 @@
       >
         <template #header>
           <q-item-section>
-            <group-score-words :score="group.score" />
-            <group-score :score="group.score" />
+            <group-score-words :score="group.rating" />
+            <group-score :score="group.rating" />
           </q-item-section>
           <q-item-section side>
             <q-chip v-if="available && key === 0" square text-color="positive">
@@ -33,12 +33,12 @@
 
         <groups-by-category
           label="Requirements"
-          :restrictions="group.group.prerequisite"
+          :restrictions="group.prerequisites"
           type="prerequisite"
         />
         <groups-by-category
           label="Do"
-          :restrictions="group.group.action"
+          :restrictions="group.actions"
           type="action"
         />
 
@@ -71,19 +71,19 @@ import {
   matStar as successIcon,
   matCheck as availableIcon,
 } from '@quasar/extras/material-icons'
-import type { PropType } from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { defineComponent } from '@vue/composition-api'
 
 import GroupScoreWords from '@/front/src/pages/destination/components/restriction-groups/group-score-words.vue'
 import GroupScore from '@/front/src/pages/destination/components/restriction-groups/group-score.vue'
 import GroupsByCategory from '@/front/src/pages/destination/components/restriction-groups/groups-by-category.vue'
-import type { RestrictionsGroupesWithScore } from '@/shared/src/restriction-tree/entry-ways'
+import { RestrictionGroup } from '@/shared/src/restriction-tree/restriction-group'
 
 export default defineComponent({
   components: { GroupsByCategory, GroupScoreWords, GroupScore },
   props: {
     restrictionsGroups: {
-      type: Array as PropType<RestrictionsGroupesWithScore>,
+      type: Array as PropType<RestrictionGroup[]>,
       required: true,
     },
     typeLabel: {

@@ -2,10 +2,11 @@
   <q-select
     standout=""
     emit-value
-    class="col-12 col-sm-6"
     map-options
+    :clear-icon="clearIcon"
     :dropdown-icon="icon"
     v-bind="$attrs"
+    style="min-width: 250px; max-width: 500px"
     v-on="$listeners"
   >
     <template v-for="(_, slot) of $scopedSlots" #[slot]="scope"
@@ -15,12 +16,13 @@
 </template>
 
 <script lang="ts">
+import { matCancel as clearIcon } from '@quasar/extras/material-icons'
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
   setup() {
-    return { icon }
+    return { icon, clearIcon }
   },
 })
 </script>
