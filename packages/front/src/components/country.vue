@@ -1,10 +1,8 @@
 <template>
-  <span :class="{ 'text-bold': !regular, 'text-accent': focused }">{{
-    country
-  }}</span>
+  <span :class="{ 'text-bold': !regular, 'text-accent': focused }"
+    >{{ prefix }}{{ labels ? labels : country }}</span
+  >
 </template>
-
-<style lang="scss" module></style>
 
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@vue/composition-api'
@@ -19,8 +17,10 @@ export default defineComponent({
   components: {},
   props: {
     code: {
-      type: String,
-      required: true,
+      type: [String, Array] as PropType<string | string[]>,
+    },
+    label: {
+      type: [String, Array] as PropType<string | string[]>,
     },
     regular: {
       type: Boolean,
@@ -34,21 +34,51 @@ export default defineComponent({
       type: String as PropType<'origin' | 'destination' | 'nominative'>,
       default: 'origin',
     },
+    prefix: {
+      type: String,
+    },
   },
   setup(props) {
-    const country = computed(() => {
-      if (props.declination === 'origin') {
-        return getOriginLabelForCountryCode(props.code)
-      } else if (props.declination === 'destination') {
-        return getDestinationLabelForCountryCode(props.code)
-      } else if (props.declination === 'nominative') {
-        return getLabelForCountryCode(props.code)
+    const countryISOArray = computed(() =>
+      Array.isArray(props.code) ? props.code : [props.code],
+    )
+
+    const labels = computed(() => {
+      if (!props.label) {
+        return
+      }
+
+      if (!Array.isArray(props.label)) {
+        return props.label
+      }
+
+      return props.label.join(', ')
+    })
+
+    const country = computed(() =>
+      countryISOArray.value
+        .map((countryISO) => getLabel(countryISO))
+        .join(', '),
+    )
+
+    const getLabel = (countryISO: string) => {
+      switch (props.declination) {
+        case 'origin': {
+          return getOriginLabelForCountryCode(countryISO)
+        }
+        case 'destination': {
+          return getDestinationLabelForCountryCode(countryISO)
+        }
+        case 'nominative': {
+          return getLabelForCountryCode(countryISO)
+        }
+        // No default
       }
 
       throw new Error('Undefined type')
-    })
+    }
 
-    return { country }
+    return { country, labels }
   },
 })
 </script>

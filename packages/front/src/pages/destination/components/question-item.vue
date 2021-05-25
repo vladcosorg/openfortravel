@@ -3,20 +3,33 @@
     <h6 v-if="!item">
       <q-skeleton type="rect" :width="randWidth()" />
     </h6>
-    <h6 v-else :id="item.id" class="text-weight-regular" v-html="item.question" />
+    <h6
+      v-else
+      :id="item.id"
+      class="text-weight-regular"
+      v-html="item.question"
+    />
     <p
       v-if="item"
-      :class="['bg-elevation-1 rounded-borders q-pa-lg', { 'text-info': isActive }]"
+      :class="[
+        'bg-elevation-1 rounded-borders q-pa-lg',
+        { 'text-info': isActive },
+      ]"
       v-html="item.answer"
     />
     <p v-else class="bg-elevation-1 rounded-borders q-pa-lg">
-      <q-skeleton v-for="num in randRows()" :key="num" :width="randWidth()" type="text" />
+      <q-skeleton
+        v-for="num in randRows()"
+        :key="num"
+        :width="randWidth()"
+        type="text"
+      />
     </p>
   </div>
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { defineComponent } from '@vue/composition-api'
 
 import type { Question } from '@/front/src/pages/destination/questions/question'

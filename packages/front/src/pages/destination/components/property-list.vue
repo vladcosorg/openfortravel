@@ -82,7 +82,7 @@
 </style>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'

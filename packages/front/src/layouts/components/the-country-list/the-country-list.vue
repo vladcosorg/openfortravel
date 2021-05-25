@@ -133,9 +133,8 @@ export default defineComponent({
             name: 'destination',
             params: {
               originSlug: transformCountryCodeToOriginSlug(originCode),
-              destinationSlug: transformCountryCodeToDestinationSlug(
-                destinationCode,
-              ),
+              destinationSlug:
+                transformCountryCodeToDestinationSlug(destinationCode),
               locale: useI18n().locale,
             },
           })

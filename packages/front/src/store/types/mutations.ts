@@ -42,7 +42,7 @@ export type MutationSignatures<S = RootStateType> = {
   ): void
   [MutationTypes.setVisitorContextField]<
     K extends keyof VisitorProfile,
-    V extends VisitorProfile[K]
+    V extends VisitorProfile[K],
   >(
     state: S,
     payload: {

@@ -75,8 +75,6 @@
   </section>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import {
   matTrendingDown as trendingDown,

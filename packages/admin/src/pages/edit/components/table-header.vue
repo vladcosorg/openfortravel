@@ -8,7 +8,10 @@
       @input="updateField('bestByDate', $event)"
     >
       <template #edit="{ label, loading, value, updateValue }">
-        <input-date v-bind="{ label, loading, value }" @input="updateValue($event)" />
+        <input-date
+          v-bind="{ label, loading, value }"
+          @input="updateValue($event)"
+        />
       </template>
     </in-place-field>
     <test-required
@@ -106,7 +109,7 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { defineComponent } from '@vue/composition-api'
 
 import InPlaceField from '@/admin/src/pages/edit/components/in-place-field.vue'

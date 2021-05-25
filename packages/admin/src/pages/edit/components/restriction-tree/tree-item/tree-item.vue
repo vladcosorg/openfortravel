@@ -53,8 +53,6 @@
   </div>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import {
   matAdd as addIcon,
@@ -65,23 +63,17 @@ import {
   matRemove as deleteIcon,
   matToggleOn as showIcon,
 } from '@quasar/extras/material-icons'
-import type {
-  PropType} from '@vue/composition-api';
-import {
-  computed,
-  defineComponent,
-  toRef,
-} from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { computed, defineComponent, toRef } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
 import NodeBody from '@/admin/src/pages/edit/components/restriction-tree/tree-item/option-wrapper.vue'
 import type {
   QuasarLogicTreeNode,
   QuasarTreeNode,
-  ScopedNodeData} from '@/admin/src/pages/edit/composables/use-tree';
-import {
-  indexTheTree
+  ScopedNodeData,
 } from '@/admin/src/pages/edit/composables/use-tree'
+import { indexTheTree } from '@/admin/src/pages/edit/composables/use-tree'
 import {
   LogicNodeType,
   RestrictionNodeType,

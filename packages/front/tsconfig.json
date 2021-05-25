@@ -3,12 +3,9 @@
   "compilerOptions": {
     "baseUrl": "./",
     "target": "es2019",
-    "types": [
-      "jest",
-      "quasar"
-    ]
+    "types": ["jest", "quasar"]
   },
-  "exclude": ["dist", ".quasar", "node_modules"],
+  "exclude": ["dist", ".quasar", "node_modules", "test"],
   "ts-node": {
     "transpileOnly": true,
     // these options are overrides used only by ts-node

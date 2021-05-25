@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import type { PropType} from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { defineComponent, ref, toRef } from '@vue/composition-api'
 
 import RichEmailInput from '@/front/src/components/form/rich-email-input.vue'
@@ -68,7 +68,11 @@ export default defineComponent({
       email,
       onSubmit() {
         if (restriction.value) {
-          sendRequest(email.value, restriction.value.origin, restriction.value.destination)
+          sendRequest(
+            email.value,
+            restriction.value.origin,
+            restriction.value.destination,
+          )
         }
       },
     }

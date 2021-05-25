@@ -1,9 +1,19 @@
 <template>
   <div
-    v-if="scope.node.type !== 'or' && scope.node.type !== 'and' && scope.node.showCustom"
+    v-if="
+      scope.node.type !== 'or' &&
+      scope.node.type !== 'and' &&
+      scope.node.showCustom
+    "
     class="row col-12 q-gutter-sm"
   >
-    <q-input v-model="customInstructionTitle" class="col-12" dense outlined label="Title" />
+    <q-input
+      v-model="customInstructionTitle"
+      class="col-12"
+      dense
+      outlined
+      label="Title"
+    />
     <q-input
       v-model="customInstructionSubtitle"
       class="col-12"

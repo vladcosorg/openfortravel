@@ -12,8 +12,9 @@ export enum RestrictionCategory {
 
 export abstract class RestrictionNode<
   T extends Record<string, unknown> &
-    typeof RestrictionNode.defaultOptions = typeof RestrictionNode.defaultOptions
-> implements TreeNode {
+    typeof RestrictionNode.defaultOptions = typeof RestrictionNode.defaultOptions,
+> implements TreeNode
+{
   static defaultOptions = {
     customInstructionTitle: '',
     customInstructionSubtitle: '',

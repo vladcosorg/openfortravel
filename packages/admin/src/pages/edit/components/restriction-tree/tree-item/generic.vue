@@ -11,8 +11,6 @@
   </div>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, toRef } from '@vue/composition-api'

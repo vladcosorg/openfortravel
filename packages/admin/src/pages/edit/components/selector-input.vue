@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import type { ComputedRef, PropType} from '@vue/composition-api';
+import type { ComputedRef, PropType } from '@vue/composition-api'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import { union } from 'lodash'
 
@@ -40,7 +40,11 @@ export default defineComponent({
     const aliases: Record<string, Array<string | RegExp>> = {
       kr: [/(korea\w*?)/i],
       va: [/(vatican\w*?)/i],
-      gb: [/(uk|u\.k\.)/i, 'UK', 'United Kingdom of Great Britain and Northern Ireland'],
+      gb: [
+        /(uk|u\.k\.)/i,
+        'UK',
+        'United Kingdom of Great Britain and Northern Ireland',
+      ],
       md: [/moldova/i],
       cz: [/czechia/i],
       ir: ['Iran'],
@@ -65,21 +69,20 @@ export default defineComponent({
       gr: [/(hellenic\w*?)/i],
     }
     const labels = computed(() => {
-      const map = Object.entries(getOriginLabels()).reduce<Map<string | RegExp, string>>(
-        (acc, [code, label]) => {
-          acc.set(label, code)
+      const map = Object.entries(getOriginLabels()).reduce<
+        Map<string | RegExp, string>
+      >((acc, [code, label]) => {
+        acc.set(label, code)
 
-          if (aliases[code]) {
-            for (const alias of aliases[code]) {
-              acc.set(alias, code)
-            }
-          } else {
-            acc.set(new RegExp(label, 'i'), code)
+        if (aliases[code]) {
+          for (const alias of aliases[code]) {
+            acc.set(alias, code)
           }
-          return acc
-        },
-        new Map(),
-      )
+        } else {
+          acc.set(new RegExp(label, 'i'), code)
+        }
+        return acc
+      }, new Map())
 
       const sorted = [...map.entries()].sort(([firstLabel], [secondLabel]) => {
         if (typeof firstLabel === 'string' && typeof secondLabel === 'string') {
@@ -112,7 +115,7 @@ export default defineComponent({
 
         for (const [label, code] of labels.value) {
           value = value.replace(label, (match) => {
-            if (foundItems.value.some((foundCode) => foundCode === code)) {
+            if (foundItems.value.includes(code)) {
               return match
             }
             foundItems.value.push(code)
@@ -130,7 +133,9 @@ export default defineComponent({
     )
 
     const foundItemsLabels = computed(() =>
-      foundItems.value.map((code) => getOriginLabelForCountryCode(code)).join(', '),
+      foundItems.value
+        .map((code) => getOriginLabelForCountryCode(code))
+        .join(', '),
     )
 
     return {

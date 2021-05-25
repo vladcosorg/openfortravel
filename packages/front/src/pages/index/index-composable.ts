@@ -13,9 +13,7 @@ export const statusColorMap = {
   [RestrictionStatus.FORBIDDEN]: 'negative',
 }
 
-export function useStats(
-  destinations: ComputedRef<Restriction[]>,
-): ComputedRef<
+export function useStats(destinations: ComputedRef<Restriction[]>): ComputedRef<
   Record<
     RestrictionStatus,
     {

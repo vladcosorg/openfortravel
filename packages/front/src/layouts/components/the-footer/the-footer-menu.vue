@@ -1,8 +1,12 @@
 <template>
   <div :class="['q-gutter-x-md text-caption', $style.links]">
-    <router-link v-for="(title, url, index) in menuItems" :key="index" :to="url" exact>{{
-      title
-    }}</router-link>
+    <router-link
+      v-for="(title, url, index) in menuItems"
+      :key="index"
+      :to="url"
+      exact
+      >{{ title }}</router-link
+    >
   </div>
 </template>
 

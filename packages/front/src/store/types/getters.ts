@@ -7,7 +7,7 @@ import type { GetterContext } from '@/shared/src/misc/augmented-store'
 
 type LocalGetterContext<
   State = RootStateType,
-  Accessors = RootGetterAccessors
+  Accessors = RootGetterAccessors,
 > = GetterContext<State, Accessors>
 
 export interface GetterSignatures {

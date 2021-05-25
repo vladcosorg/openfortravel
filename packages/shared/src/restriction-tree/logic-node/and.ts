@@ -9,15 +9,14 @@ export class And extends LogicNode {
 
   resolveTreeNodes(): PlainRestrictionGroups {
     const result = this.children.map((child) => child.resolveTreeNodes())
-    return (cartesianProduct(result) as unknown) as PlainRestrictionGroups
+    return cartesianProduct(result) as unknown as PlainRestrictionGroups
   }
 }
 
 function cartesianProduct<T>(arr: T[][]): T[][] {
   return arr.reduce(
     // eslint-disable-next-line unicorn/prefer-spread
-    (a, b) =>
-      a.map((x) => b.map((y) => x.concat(y))).reduce((c, d) => c.concat(d), []),
+    (a, b) => a.flatMap((x) => b.map((y) => x.concat(y))),
     [[]] as T[][],
   )
 }

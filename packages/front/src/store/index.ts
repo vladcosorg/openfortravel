@@ -1,12 +1,12 @@
 import { store } from 'quasar/wrappers'
-import type { Store } from 'vuex';
+import type { Store } from 'vuex'
 import Vuex from 'vuex'
 
 import { actions } from '@/front/src/store/actions'
 import { getters } from '@/front/src/store/getters'
 import { modules } from '@/front/src/store/modules'
 import { mutations } from '@/front/src/store/mutations'
-import type { RootState, RootStateType} from '@/front/src/store/state';
+import type { RootState, RootStateType } from '@/front/src/store/state'
 import { state } from '@/front/src/store/state'
 import type { ActionSignatures } from '@/front/src/store/types/actions'
 import type { GetterSignatures } from '@/front/src/store/types/getters'

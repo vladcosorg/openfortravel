@@ -20,6 +20,6 @@ export function preloadLocaleMessageCollectionIntoPlugin(
   localeMessageCollection: LocaleMessages,
 ): void {
   Object.entries(localeMessageCollection).map(([locale, messageObject]) =>
-    i18n.setLocaleMessage(locale, messageObject ),
+    i18n.setLocaleMessage(locale, messageObject),
   )
 }

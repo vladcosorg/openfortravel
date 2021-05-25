@@ -1,4 +1,4 @@
-import type { QAItem} from '@/front/src/models/faq';
+import type { QAItem } from '@/front/src/models/faq'
 import { translateBlock } from '@/front/src/models/faq'
 import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
@@ -20,9 +20,12 @@ export function canITravelToCountry(restriction: Restriction): QAItem {
         quarantine: restriction.selfIsolation,
       },
       {
-        testRequired: restriction.testRequired && !restriction.needsSelfIsolation(),
-        quarantine: restriction.needsSelfIsolation() && !restriction.testRequired,
-        testOrQuarantine: restriction.testRequired && restriction.needsSelfIsolation(),
+        testRequired:
+          restriction.testRequired && !restriction.needsSelfIsolation(),
+        quarantine:
+          restriction.needsSelfIsolation() && !restriction.testRequired,
+        testOrQuarantine:
+          restriction.testRequired && restriction.needsSelfIsolation(),
       },
     ),
   }

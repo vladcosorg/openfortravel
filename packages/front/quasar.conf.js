@@ -95,11 +95,7 @@ module.exports = configure((context) => ({
     extendWebpack(config) {
       config.resolve.alias['@'] = path.resolve(__dirname, '../..')
       config.resolve.plugins = [new TsconfigPathsPlugin()]
-      if (!config.externals) {
-        config.externals = []
-      } else {
-        config.externals = [config.externals]
-      }
+      config.externals = !config.externals ? [] : [config.externals]
       config.externals.push((context, request, callback) => {
         if (/xlsx|canvg|pdfmake/.test(request)) {
           // eslint-disable-next-line unicorn/no-null
@@ -146,7 +142,8 @@ module.exports = configure((context) => ({
 
       config.plugins.push(
         new FilterWarningsPlugin({
-          exclude: /Critical dependency|dependency is an expression|require function is used|keyv|got/,
+          exclude:
+            /Critical dependency|dependency is an expression|require function is used|keyv|got/,
         }),
       )
       if (!config.stats) {

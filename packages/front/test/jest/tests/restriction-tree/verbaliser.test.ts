@@ -37,7 +37,10 @@ const matcher = new Matcher(
     ]),
     new And([
       new Origin({ allowedOrigins: ['md'] }),
-      new Or([new QuarantineWithTesting({ days: 14 }), new Quarantine({ days: 14 })]),
+      new Or([
+        new QuarantineWithTesting({ days: 14 }),
+        new Quarantine({ days: 14 }),
+      ]),
       new OnlineApplication({ url: 'dawdaw' }),
       new DidNotVisitCountries({ countryCodes: ['cn'], days: 14 }),
     ]),

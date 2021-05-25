@@ -11,14 +11,16 @@
         :key="index"
         :item="item"
         :is-last="lastIndex === index"
-        :is-active="activeQuestionHash && item && activeQuestionHash === item.id"
+        :is-active="
+          activeQuestionHash && item && activeQuestionHash === item.id
+        "
       />
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import QuestionItem from '@/front/src/pages/destination/components/question-item.vue'

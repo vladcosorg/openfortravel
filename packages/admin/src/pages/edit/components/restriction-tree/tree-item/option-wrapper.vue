@@ -2,10 +2,8 @@
   <generic v-model="internalOptions" :type="node.type" />
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
-import type { PropType } from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent } from '@vue/composition-api'
 
 import Generic from '@/admin/src/pages/edit/components/restriction-tree/tree-item/generic.vue'

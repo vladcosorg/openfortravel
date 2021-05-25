@@ -1,10 +1,13 @@
 import { matDone } from '@quasar/extras/material-icons'
-import type { Ref} from '@vue/composition-api';
+import type { Ref } from '@vue/composition-api'
 import { ref } from '@vue/composition-api'
 import type { ResponsePromise } from 'ky'
 import { Notify } from 'quasar'
 
-type Dispatcher = (request: ResponsePromise, successMessage: string) => ResponsePromise
+type Dispatcher = (
+  request: ResponsePromise,
+  successMessage: string,
+) => ResponsePromise
 export function useRequestDispatcher(): {
   isLoading: Ref<boolean>
   isSuccessful: Ref<boolean | undefined>

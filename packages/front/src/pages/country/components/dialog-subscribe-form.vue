@@ -69,7 +69,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const { isLoading, isSuccessful, sendRequest, reset } = useRequestDispatcher()
+    const { isLoading, isSuccessful, sendRequest, reset } =
+      useRequestDispatcher()
     const email = ref('')
     const closingCountdown = ref(0)
     return {

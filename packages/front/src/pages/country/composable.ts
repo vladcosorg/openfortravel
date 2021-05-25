@@ -95,9 +95,7 @@ export function useTabFilter(): {
   }
 }
 
-export function useRestrictionFilterer(
-  input: Ref<TripCard[]>,
-): {
+export function useRestrictionFilterer(input: Ref<TripCard[]>): {
   countryMatchFilterValue: Ref<string>
   destinations: Ref<TripCard[]>
 } {

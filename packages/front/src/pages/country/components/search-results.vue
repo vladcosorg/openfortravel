@@ -99,15 +99,10 @@ export default defineComponent({
     const originCode = toRef(props, 'originCode')
     const hideForbidden = ref(true)
     const { loading: isLoading } = useLoading(false)
-    const {
-      allowedDestinations,
-      forbiddenDestinations,
-      allDestinations,
-    } = useRestrictionList()
-    const {
-      countryMatchFilterValue,
-      destinations: filteredDestinations,
-    } = useRestrictionFilterer(allDestinations)
+    const { allowedDestinations, forbiddenDestinations, allDestinations } =
+      useRestrictionList()
+    const { countryMatchFilterValue, destinations: filteredDestinations } =
+      useRestrictionFilterer(allDestinations)
 
     const isFiltering = computed(() => countryMatchFilterValue.value.length > 0)
 

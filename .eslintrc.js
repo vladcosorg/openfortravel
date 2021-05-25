@@ -53,9 +53,6 @@ module.exports = {
     'plugin:import/typescript',
 
     'prettier',
-    'prettier/vue',
-    'prettier/unicorn',
-    'prettier/@typescript-eslint',
   ],
 
   plugins: [
@@ -180,7 +177,7 @@ module.exports = {
         ignores: [],
       },
     ],
-    'vue/no-bare-strings-in-template': 'warn',
+    'vue/no-bare-strings-in-template': 'off',
     'vue/no-empty-component-block': 'warn',
     'vue/no-useless-v-bind': 'warn',
     'vue/component-tags-order': 'off',

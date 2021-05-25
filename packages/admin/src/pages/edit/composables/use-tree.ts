@@ -18,9 +18,8 @@ export type QuasarRestrictionTreeNode = {
   UID: number
   showCustom: boolean
 } & EncodedRestrictionNode
-export type ExtractRestrictionOptions<
-  T extends { new (...args: any): any }
-> = ConstructorParameters<T>[0]
+export type ExtractRestrictionOptions<T extends { new (...args: any): any }> =
+  ConstructorParameters<T>[0]
 
 export function indexTheTree(
   nodes: EncodedNode[],

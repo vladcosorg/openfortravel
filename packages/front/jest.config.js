@@ -72,7 +72,8 @@ module.exports = {
     //  (sync) .babelrc, .babelrc.js, babel.config.js, package.json
     // https://github.com/tleunen/find-babel-config/issues/33
     '.*\\.vue$': 'vue-jest',
-    '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$': 'jest-transform-stub',
+    '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$':
+      'jest-transform-stub',
   },
   name: 'front',
   rootDir: './../../',

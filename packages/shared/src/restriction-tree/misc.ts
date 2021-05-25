@@ -165,7 +165,7 @@ export function generateCountryAndAreaSequence(
   }
 
   if (labelledList.length === 1) {
-    return `<b>${labelledList.pop()}</b>` 
+    return `<b>${labelledList.pop()}</b>`
   }
 
   let suffix

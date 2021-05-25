@@ -1,4 +1,4 @@
-import type { ComputedRef, Ref} from '@vue/composition-api';
+import type { ComputedRef, Ref } from '@vue/composition-api'
 import { computed, ref } from '@vue/composition-api'
 import { useDebounce } from '@vueuse/core'
 

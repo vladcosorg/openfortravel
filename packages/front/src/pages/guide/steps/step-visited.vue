@@ -17,8 +17,6 @@
   </q-step>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { defineComponent } from '@vue/composition-api'

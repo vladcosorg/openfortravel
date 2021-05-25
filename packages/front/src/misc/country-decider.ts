@@ -24,7 +24,10 @@ export function getCookieCountry(): string | undefined {
   return useCookies().get('country')
 }
 
-export function setCurrentCountry(countryCode: string, saveToCookie: boolean): void {
+export function setCurrentCountry(
+  countryCode: string,
+  saveToCookie: boolean,
+): void {
   if (getPersistedOriginOrDefault() === countryCode) {
     return
   }

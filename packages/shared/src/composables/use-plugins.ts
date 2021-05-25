@@ -59,7 +59,7 @@ export function useVueI18n<T extends TranslateResult>(): {
 } {
   const i18n = useI18n()
   const unbound = i18n.t
-  return { i18n, t: (unbound.bind(i18n) as unknown) as Translator<T> }
+  return { i18n, t: unbound.bind(i18n) as unknown as Translator<T> }
 }
 
 export function useI18nWithPrefix<T extends TranslateResult>(

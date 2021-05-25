@@ -4,7 +4,7 @@ import type { VisitedCountryQuestion } from '@/front/src/pages/destination/quest
 import { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
 import { getCurrentRelativeURL } from '@/front/src/router/helpers'
 import type { Destination } from '@/shared/src/api/destinations/models'
-import type { Restriction} from '@/shared/src/api/restrictions/models';
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
@@ -28,7 +28,9 @@ export class StatusSummary extends SummaryItem {
   value = t(`restriction.travel.value.${this.restriction.status}`)
 
   get caption(): string {
-    const caption = [t(`restriction.travel.caption.intro.${this.restriction.status}`)]
+    const caption = [
+      t(`restriction.travel.caption.intro.${this.restriction.status}`),
+    ]
 
     if (this.destination.visitedRestrictedCountriesDaysAgo > 0) {
       caption.push(

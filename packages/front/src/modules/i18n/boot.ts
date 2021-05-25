@@ -37,7 +37,7 @@ export function extractLanguageFromURL(
   if (!url) {
     return
   }
-  const matches = url.match(/\/([a-z]+)\/?.*/)
+  const matches = /\/([a-z]+)\/?.*/.exec(url)
   return matches !== null ? matches[1] : undefined
 }
 

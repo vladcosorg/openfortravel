@@ -1,7 +1,11 @@
 [
   {
     "origin": ["*"],
-    "responseHeader": ["Access-Control-Allow-Origin", "Content-Type", "Content-Encoding"],
+    "responseHeader": [
+      "Access-Control-Allow-Origin",
+      "Content-Type",
+      "Content-Encoding"
+    ],
     "method": ["GET", "HEAD", "DELETE", "OPTIONS"],
     "maxAgeSeconds": 86000
   }

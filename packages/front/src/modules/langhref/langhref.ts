@@ -1,14 +1,23 @@
 import { serverCache } from '@/front/src/misc/server-cache'
-import { resolveRoute, routesThatNeedLocalization } from '@/front/src/router/route-preloader'
+import {
+  resolveRoute,
+  routesThatNeedLocalization,
+} from '@/front/src/router/route-preloader'
 import { useRouter } from '@/shared/src/composables/use-plugins'
 import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
-type HreflangList = Record<string, { href: string; rel: string; hreflang: string }>
+type HreflangList = Record<
+  string,
+  { href: string; rel: string; hreflang: string }
+>
 export async function generateHreflangTags(): Promise<HreflangList> {
   const currentRoute = useRouter().currentRoute
   const list: HreflangList = {}
 
-  if (!currentRoute.name || !routesThatNeedLocalization.includes(currentRoute.name)) {
+  if (
+    !currentRoute.name ||
+    !routesThatNeedLocalization.includes(currentRoute.name)
+  ) {
     return list
   }
 
@@ -47,7 +56,9 @@ export async function generateHreflangTags(): Promise<HreflangList> {
     item.href += resolveRoute(currentRoute.name, locale, localizedParams)
 
     if (currentRoute.params.originSlug) {
-      item.hreflang += `-${transformOriginSlugToCode(currentRoute.params.originSlug)}`
+      item.hreflang += `-${transformOriginSlugToCode(
+        currentRoute.params.originSlug,
+      )}`
     }
 
     list[locale] = item

@@ -1,8 +1,12 @@
 <template>
-  <q-rating :value="score" color="grey" :color-selected="color" :icon="icon" readonly />
+  <q-rating
+    :value="score"
+    color="grey"
+    :color-selected="color"
+    :icon="icon"
+    readonly
+  />
 </template>
-
-<style lang="scss" module></style>
 
 <script lang="ts">
 import { matGrade as icon } from '@quasar/extras/material-icons'
@@ -18,7 +22,10 @@ export default defineComponent({
   },
   setup(props) {
     const color = computed(
-      () => ['red-8', 'red-5', 'light-green-6', 'light-green-8', 'green-8'][props.score - 1],
+      () =>
+        ['red-8', 'red-5', 'light-green-6', 'light-green-8', 'green-8'][
+          props.score - 1
+        ],
     )
     return {
       color,

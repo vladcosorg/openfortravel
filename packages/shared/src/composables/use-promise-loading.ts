@@ -1,4 +1,4 @@
-import type { ComputedRef, Ref} from '@vue/composition-api';
+import type { ComputedRef, Ref } from '@vue/composition-api'
 import { computed, ref } from '@vue/composition-api'
 import { mapValues } from 'lodash'
 
@@ -16,9 +16,10 @@ export function useLoading(defaultValue = false): Loading {
   return { loading }
 }
 
-export function useLoadingSwitch(
-  defaultValue = false,
-): { state: Ref<boolean>; toggle: () => void } {
+export function useLoadingSwitch(defaultValue = false): {
+  state: Ref<boolean>
+  toggle: () => void
+} {
   const state = ref(defaultValue)
   return {
     state,
@@ -28,8 +29,12 @@ export function useLoadingSwitch(
   }
 }
 
-export function useAggregatedLoader(...loaders: Array<Ref<boolean>>): ComputedRef<boolean> {
-  return computed<boolean>(() => !loaders.every((loadingReference) => !loadingReference.value))
+export function useAggregatedLoader(
+  ...loaders: Array<Ref<boolean>>
+): ComputedRef<boolean> {
+  return computed<boolean>(
+    () => !loaders.every((loadingReference) => !loadingReference.value),
+  )
 }
 
 export function useClosureCollectionLoading(
@@ -37,7 +42,7 @@ export function useClosureCollectionLoading(
 ): { closures: CallbackCollection } & Loading {
   const { loading } = useLoading()
 
-  closures = (mapValues(
+  closures = mapValues(
     closures,
     (callback: Callback): Callback =>
       async function (...args: unknown[]) {
@@ -46,7 +51,7 @@ export function useClosureCollectionLoading(
         loading.value = false
         return result
       },
-  ) as unknown) as CallbackCollection
+  ) as unknown as CallbackCollection
 
   return {
     closures,
@@ -54,9 +59,7 @@ export function useClosureCollectionLoading(
   }
 }
 
-export function useClosureLoading(
-  callback: FlexCallback,
-): {
+export function useClosureLoading(callback: FlexCallback): {
   callback: FlexCallback
 } & Loading {
   const { loading } = useLoading()

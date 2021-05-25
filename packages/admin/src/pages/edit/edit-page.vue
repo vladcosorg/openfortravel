@@ -2,7 +2,12 @@
   <q-page class="bg-blue-grey-9">
     <portal to="header">
       <q-toolbar>
-        <q-btn color="blue-grey-5" unelevated label="Back" :to="{ name: 'admin-index' }" />
+        <q-btn
+          color="blue-grey-5"
+          unelevated
+          label="Back"
+          :to="{ name: 'admin-index' }"
+        />
         <q-toolbar-title>
           Destination: <b> {{ getLabelForCountryCode(originCode) }}</b>
         </q-toolbar-title>
@@ -26,8 +31,16 @@
 
     <div class="row justify-center">
       <keep-alive>
-        <restriction-tree v-if="tab === 'tree'" v-model="destination" :loading="loadingRef" />
-        <table-header v-else-if="tab === 'info'" v-model="destination" :loading="loadingRef" />
+        <restriction-tree
+          v-if="tab === 'tree'"
+          v-model="destination"
+          :loading="loadingRef"
+        />
+        <table-header
+          v-else-if="tab === 'info'"
+          v-model="destination"
+          :loading="loadingRef"
+        />
       </keep-alive>
     </div>
   </q-page>
@@ -63,7 +76,8 @@ export default defineComponent({
     const { destinationRef, loadingRef } = useDestination(props.originCode)
     const modifiedFields: string[] = []
     let isPendingUpdate = false
-    const { addSaveHandlerProp, isSaving, isPending, runPendings } = useSaveHandler()
+    const { addSaveHandlerProp, isSaving, isPending, runPendings } =
+      useSaveHandler()
     const destination = computed({
       get() {
         return destinationRef.value

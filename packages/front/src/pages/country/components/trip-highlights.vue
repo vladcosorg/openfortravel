@@ -8,8 +8,6 @@
   </div>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import {
   ionRemoveOutline as negativeIcon,

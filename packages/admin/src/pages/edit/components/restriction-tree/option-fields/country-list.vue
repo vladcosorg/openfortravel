@@ -49,11 +49,9 @@
   </div>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import { matReplay as inverseIcon } from '@quasar/extras/material-icons'
-import type { PropType} from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import difference from 'lodash/difference'
 

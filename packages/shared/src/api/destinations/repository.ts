@@ -53,7 +53,7 @@ export async function updateOriginDocument(
 
 export async function updateOriginField<
   K extends keyof PlainDestination,
-  V extends PlainDestination[K]
+  V extends PlainDestination[K],
 >(reference: string, field: K, value: V): Promise<void> {
   await updateOriginDocument(reference, { [field]: value })
 }

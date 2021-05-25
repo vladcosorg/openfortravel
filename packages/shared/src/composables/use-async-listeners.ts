@@ -2,10 +2,9 @@ import { getCurrentInstance } from '@vue/composition-api'
 
 import type {
   Loading,
-  CallbackCollection} from '@/shared/src/composables/use-promise-loading';
-import {
-  useClosureCollectionLoading
+  CallbackCollection,
 } from '@/shared/src/composables/use-promise-loading'
+import { useClosureCollectionLoading } from '@/shared/src/composables/use-promise-loading'
 
 export function useAsyncListeners(): {
   listeners: CallbackCollection
@@ -17,7 +16,8 @@ export function useAsyncListeners(): {
   }
 
   const rawListeners = instance.$listeners as CallbackCollection
-  const { loading, closures: listeners } = useClosureCollectionLoading(rawListeners)
+  const { loading, closures: listeners } =
+    useClosureCollectionLoading(rawListeners)
 
   return { loading, listeners }
 }

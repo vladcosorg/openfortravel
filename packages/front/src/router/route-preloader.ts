@@ -6,7 +6,11 @@ import { serverCache } from '@/front/src/misc/server-cache'
 import { createGenericRouter } from '@/front/src/router/routes'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 
-export const routesThatNeedLocalization = ['origin', 'destination', 'index-targeted']
+export const routesThatNeedLocalization = [
+  'origin',
+  'destination',
+  'index-targeted',
+]
 let clonedI18n: IVueI18n
 function getLocalizedRouter(locale: string): VueRouter {
   if (!clonedI18n) {
@@ -17,7 +21,10 @@ function getLocalizedRouter(locale: string): VueRouter {
   return createGenericRouter(clonedI18n)
 }
 
-export function pregenerateLocalizableRouter(): Record<string, Record<string, string>> {
+export function pregenerateLocalizableRouter(): Record<
+  string,
+  Record<string, string>
+> {
   const routes: Record<string, Record<string, string>> = {}
 
   for (const locale of serverCache.availableLocales) {
@@ -56,5 +63,8 @@ export function resolveRoute(
   locale: string,
   placeholders: Record<string, string>,
 ): string {
-  return replacePlaceholders(serverCache.localizedRoutes[routeName][locale], placeholders)
+  return replacePlaceholders(
+    serverCache.localizedRoutes[routeName][locale],
+    placeholders,
+  )
 }

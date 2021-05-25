@@ -12,8 +12,14 @@ export enum MutationTypes {
 }
 
 export type MutationSignatures<S = StateType> = {
-  [MutationTypes.setCurrentCountryPair](state: S, payload: CurrentCountryPair): void
-  [MutationTypes.setReturnRestriction](state: S, restriction: PlainRestriction): void
+  [MutationTypes.setCurrentCountryPair](
+    state: S,
+    payload: CurrentCountryPair,
+  ): void
+  [MutationTypes.setReturnRestriction](
+    state: S,
+    restriction: PlainRestriction,
+  ): void
   [MutationTypes.setRelatedRestrictions](
     state: S,
     result: {

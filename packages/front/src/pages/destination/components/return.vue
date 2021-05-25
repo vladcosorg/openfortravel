@@ -13,8 +13,6 @@
   </section>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import { computed, defineComponent, inject } from '@vue/composition-api'
 

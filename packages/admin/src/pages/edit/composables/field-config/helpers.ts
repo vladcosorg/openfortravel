@@ -1,17 +1,15 @@
 import type {
   Ref,
   SetupContext,
-  WritableComputedRef} from '@vue/composition-api';
-import {
-  computed
+  WritableComputedRef,
 } from '@vue/composition-api'
+import { computed } from '@vue/composition-api'
 
 import { typeConstructors } from '@/shared/src/restriction-tree/converter'
 import type { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export type ExtractOptions<
-  T extends RestrictionNodeType
-> = typeof typeConstructors[T]['defaultOptions']
+export type ExtractOptions<T extends RestrictionNodeType> =
+  typeof typeConstructors[T]['defaultOptions']
 export type FieldConfig = {
   type: unknown
   bind: Record<string, unknown>
@@ -22,7 +20,7 @@ export type FieldConfig = {
 export function getSetters<
   T extends RestrictionNodeType,
   A extends ExtractOptions<T>,
-  K extends keyof A
+  K extends keyof A,
 >(
   type: T,
   currentOptions: Ref<Record<string, unknown>>,

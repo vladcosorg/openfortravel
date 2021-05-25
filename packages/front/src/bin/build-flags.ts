@@ -1,21 +1,25 @@
 // eslint-disable-next-line import/no-unused-modules
-import { promises as fs, rmdirSync } from 'fs'
-import path from 'path'
-
 import globby from 'globby'
+import { promises as fs, rmdirSync } from 'node:fs'
+import path from 'node:path'
 import sharp from 'sharp'
 
 const rootDirPath = path.resolve('./')
-const sourceDirPath = path.dirname(require.resolve('svg-country-flags/package.json'))
+const sourceDirPath = path.dirname(
+  require.resolve('svg-country-flags/package.json'),
+)
 const destinationDirPath = path.join(rootDirPath, 'public/flags')
 function getSmallestBufferExt(
   bufferCollection: Record<'svg' | 'webp', Buffer>,
 ): 'svg' | 'webp' {
-  return (Object.keys(bufferCollection) as Array<
-    keyof typeof bufferCollection
-    // eslint-disable-next-line unicorn/no-reduce
-  >).reduce((savedKey, currentKey) =>
-    bufferCollection[savedKey].byteLength > bufferCollection[currentKey].byteLength
+  return (
+    Object.keys(bufferCollection) as Array<
+      keyof typeof bufferCollection
+      // eslint-disable-next-line unicorn/no-reduce
+    >
+  ).reduce((savedKey, currentKey) =>
+    bufferCollection[savedKey].byteLength >
+    bufferCollection[currentKey].byteLength
       ? currentKey
       : savedKey,
   )
@@ -41,12 +45,17 @@ async function build() {
   await fs.mkdir(destinationDirBlurryPath, { recursive: true })
 
   for (const sourceFilePath of sourceFilePaths) {
-    const fileBasename = path.basename(sourceFilePath, path.extname(sourceFilePath))
+    const fileBasename = path.basename(
+      sourceFilePath,
+      path.extname(sourceFilePath),
+    )
 
     const svgBuffer = await fs.readFile(sourceFilePath)
     const bufferCollection1x = {
       svg: svgBuffer,
-      webp: await sharp(path.join(sourceDirPath, 'png100px', `${fileBasename}.png`))
+      webp: await sharp(
+        path.join(sourceDirPath, 'png100px', `${fileBasename}.png`),
+      )
         .resize(undefined, 40)
         .webp({ reductionEffort: 6 })
         .toBuffer(),
@@ -54,7 +63,9 @@ async function build() {
 
     const bufferCollection2x = {
       svg: svgBuffer,
-      webp: await sharp(path.join(sourceDirPath, 'png100px', `${fileBasename}.png`))
+      webp: await sharp(
+        path.join(sourceDirPath, 'png100px', `${fileBasename}.png`),
+      )
         .resize(undefined, 80)
         .webp({ reductionEffort: 6 })
         .toBuffer(),
@@ -84,7 +95,10 @@ async function build() {
         .toBuffer(),
     )
 
-    await fs.writeFile(path.join(destinationDirSvgPath, `${fileBasename}.svg`), svgBuffer)
+    await fs.writeFile(
+      path.join(destinationDirSvgPath, `${fileBasename}.svg`),
+      svgBuffer,
+    )
 
     // eslint-disable-next-line no-console
     console.log(`Wrote file ${sourceFilePath}`)

@@ -6,4 +6,5 @@
 /node_modules
 /src-ssr
 /public
+/test
 .eslint.js

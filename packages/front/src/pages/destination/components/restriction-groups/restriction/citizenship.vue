@@ -20,8 +20,7 @@
       </p>
       <p>
         Additionally, you meet this criteria if you are a child or a spouse of a
-        citizen of <country focused :code="context" /> of any of the countries
-        above.
+        citizen of one of the countries above.
       </p>
     </template>
     <template #reason>

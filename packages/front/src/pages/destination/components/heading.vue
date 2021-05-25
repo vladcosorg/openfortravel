@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { defineComponent } from '@vue/composition-api'
 
 import { riskLevelColor } from '@/front/src/pages/country/composable'

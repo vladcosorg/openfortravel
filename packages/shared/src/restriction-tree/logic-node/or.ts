@@ -9,8 +9,8 @@ export class Or extends LogicNode {
 
   resolveTreeNodes(): PlainRestrictionGroups {
     return this.children
-      .map((child) => child.resolveTreeNodes())
-      .flat()
+      .flatMap((child) => child.resolveTreeNodes())
+
       .map((restrictionGroup) => [...restrictionGroup])
   }
 }

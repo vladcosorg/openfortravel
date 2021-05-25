@@ -24,20 +24,17 @@
   </div>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
-import type { PropType} from '@vue/composition-api';
+import type { PropType } from '@vue/composition-api'
 import { defineComponent, ref, watch } from '@vue/composition-api'
 import debounce from 'lodash/debounce'
 
 import CustomInstruction from '@/admin/src/pages/edit/components/restriction-tree/tree-item/custom-instruction.vue'
 import TreeItem from '@/admin/src/pages/edit/components/restriction-tree/tree-item/tree-item.vue'
-import type {
-  QuasarTreeNode} from '@/admin/src/pages/edit/composables/use-tree';
+import type { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
 import {
   createIndexedTree,
-  prepareForStorage
+  prepareForStorage,
 } from '@/admin/src/pages/edit/composables/use-tree'
 import type { Destination } from '@/shared/src/api/destinations/models'
 

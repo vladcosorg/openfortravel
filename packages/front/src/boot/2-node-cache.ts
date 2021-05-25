@@ -29,7 +29,7 @@ serverCache.labeledLocales = langs.filter((langPair) =>
 )
 serverCache.continentMap = loadContinentMap()
 serverCache.languages = loadLanguages()
-serverCache.i18nMessages = (messages as unknown) as LocaleMessages
+serverCache.i18nMessages = messages as unknown as LocaleMessages
 serverCache.localizedRoutes = pregenerateLocalizableRouter()
 serverCache.nationalities = preloadNationalities()
 serverCache.countryCodeToLabelMap = preloadCountryList()

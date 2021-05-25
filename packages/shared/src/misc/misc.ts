@@ -23,7 +23,7 @@ export function transformArrayCollectionToMappedCollection<T>(
   indexKey: keyof T,
 ): Record<string, T> {
   return arrayCollection.reduce((acc, item) => {
-    const indexValue = (item[indexKey] as unknown) as string
+    const indexValue = item[indexKey] as unknown as string
     acc[indexValue] = item
     return acc
   }, {} as Record<string, T>)
@@ -91,7 +91,7 @@ export function sortByKeywordIndex<T = string>(
 }
 
 export function transformFlatMapToArrayOfPairs<
-  T extends Record<string, string>
+  T extends Record<string, string>,
 >(
   input: T,
 ): Array<{

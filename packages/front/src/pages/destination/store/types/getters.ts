@@ -6,7 +6,9 @@ import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restri
 
 type LocalGetterContext<
   State = StateClass,
-  Accessors = { [P in keyof GetterSignatures]: ReturnType<GetterSignatures[P]> }
+  Accessors = {
+    [P in keyof GetterSignatures]: ReturnType<GetterSignatures[P]>
+  },
 > = GetterContext<State, Accessors>
 
 export type GetterSignatures = {

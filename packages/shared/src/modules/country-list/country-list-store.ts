@@ -24,7 +24,9 @@ export default {
   },
   getters: {
     countryListOrigin(state): CountryListState['countryListOrigin'] {
-      return isEmpty(state.countryListOrigin) ? state.countryList : state.countryListOrigin
+      return isEmpty(state.countryListOrigin)
+        ? state.countryList
+        : state.countryListOrigin
     },
     countryListDestination(state): CountryListState['countryListDestination'] {
       return isEmpty(state.countryListDestination)
@@ -35,7 +37,9 @@ export default {
       return isEmpty(state.originSlugMap) ? state.slugMap : state.originSlugMap
     },
     destinationSlugMap(state): CountryListState['destinationSlugMap'] {
-      return isEmpty(state.destinationSlugMap) ? state.slugMap : state.destinationSlugMap
+      return isEmpty(state.destinationSlugMap)
+        ? state.slugMap
+        : state.destinationSlugMap
     },
     countryCodes(_state, getters): string[] {
       return Object.keys(getters['countryListOrigin'])
@@ -96,8 +100,9 @@ export function convertCountryListResponseToCountryLabelMap(
 export function convertCountryListResponseToCountrySlugMap(
   countries: CountryList,
 ): Record<string, string> {
-  return mapValues(convertCountryListResponseToCountryLabelMap(countries), (countryLabel) =>
-    convertCountryLabelToSlug(countryLabel),
+  return mapValues(
+    convertCountryListResponseToCountryLabelMap(countries),
+    (countryLabel) => convertCountryLabelToSlug(countryLabel),
   )
 }
 

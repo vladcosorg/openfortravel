@@ -1,10 +1,9 @@
 import type {
   CacheType,
   ManualTranslator,
-  TranslationService} from 'vue-auto-i18n';
-import {
-  integrateWithVueI18n
+  TranslationService,
 } from 'vue-auto-i18n'
+import { integrateWithVueI18n } from 'vue-auto-i18n'
 import type { IVueI18n, Locale, LocaleMessageObject } from 'vue-i18n'
 
 import { useSharedCache } from '@/shared/src/composables/use-plugins'
@@ -15,9 +14,13 @@ export function createAutoI18n(i18nPluginInstance: IVueI18n): ManualTranslator {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     sourceLanguage: 'en',
     automatic: true,
-    cache: (useSharedCache() as unknown) as CacheType,
+    cache: useSharedCache() as unknown as CacheType,
     translationService: new CloudFunctionTranslator(),
-    blacklistedPaths: ['page.country.route', 'page.destination.route', 'page.index.route'],
+    blacklistedPaths: [
+      'page.country.route',
+      'page.destination.route',
+      'page.index.route',
+    ],
   })
 }
 

@@ -5,8 +5,6 @@
   </span>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 

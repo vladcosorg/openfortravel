@@ -1,10 +1,11 @@
 import type {
   MappedDestinationCollection,
   MappedPlainDestinationCollection,
-  PlainDestination} from '@/shared/src/api/destinations/models';
+  PlainDestination,
+} from '@/shared/src/api/destinations/models'
 import {
   Destination,
-  DestinationDefaults
+  DestinationDefaults,
 } from '@/shared/src/api/destinations/models'
 import { getCountryCodes as getAllCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
@@ -28,7 +29,11 @@ export function getFullDestinationList(
 export function createDummyPlainDestination(
   mergeFields: Partial<PlainDestination> = {},
 ): PlainDestination {
-  return Object.assign({}, new DestinationDefaults().toPlainObject(), mergeFields)
+  return Object.assign(
+    {},
+    new DestinationDefaults().toPlainObject(),
+    mergeFields,
+  )
 }
 
 export function createDummyDestination(
@@ -46,5 +51,7 @@ export function wrapWithRichDestinationObject(
 export function wrapCollectionWithRichObject(
   plainRestrictions: PlainDestination[],
 ): Destination[] {
-  return plainRestrictions.map((element) => wrapWithRichDestinationObject(element))
+  return plainRestrictions.map((element) =>
+    wrapWithRichDestinationObject(element),
+  )
 }

@@ -1,6 +1,4 @@
-import type {
-  ComputedRef,
-  Ref} from '@vue/composition-api';
+import type { ComputedRef, Ref } from '@vue/composition-api'
 import {
   computed,
   isRef,
@@ -19,7 +17,10 @@ export function useVuexComputedState<T>(path: string): ComputedRef<T> {
   return computed(() => get(useStore().state, path))
 }
 
-export function useStateProperty<T>(property: keyof T, module?: string): T[keyof T] {
+export function useStateProperty<T>(
+  property: keyof T,
+  module?: string,
+): T[keyof T] {
   let path: Array<keyof T | string> = [property]
   if (module) {
     path = [module, property]
@@ -86,7 +87,9 @@ export function createReactiveDispatcher(
     onMounted(dispatcher)
     onServerPrefetch(dispatcher)
     watch(
-      isRef(reactivePayload) ? [reactivePayload] : Object.values(reactivePayload),
+      isRef(reactivePayload)
+        ? [reactivePayload]
+        : Object.values(reactivePayload),
       dispatcher,
     )
   }
