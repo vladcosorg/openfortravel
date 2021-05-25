@@ -8,7 +8,7 @@ import {
 import { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
 import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
 import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
-import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
+import { VisitorContext } from '@/shared/src/restriction-tree/visitor-profile'
 
 const countryList = createCountryListEntry((countries as unknown) as RawLocalizedCountryList)
   .origin

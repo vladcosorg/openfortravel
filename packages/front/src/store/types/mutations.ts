@@ -2,7 +2,7 @@ import type { LocaleMessageObject } from 'vue-i18n'
 
 import type { RootStateType, StateInterface } from '@/front/src/store/state'
 import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
-import { VisitorContextType } from '@/shared/src/restriction-tree/visitor-context'
+import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export enum MutationTypes {
   setCountryToContinentMap = 'setCountryToContinentMap',
@@ -41,8 +41,8 @@ export type MutationSignatures<S = RootStateType> = {
     hostRules: MappedPlainDestinationCollection,
   ): void
   [MutationTypes.setVisitorContextField]<
-    K extends keyof VisitorContextType,
-    V extends VisitorContextType[K]
+    K extends keyof VisitorProfile,
+    V extends VisitorProfile[K]
   >(
     state: S,
     payload: {
@@ -53,7 +53,7 @@ export type MutationSignatures<S = RootStateType> = {
   [MutationTypes.setVisitorContext](
     state: S,
     payload: {
-      context: VisitorContextType
+      context: VisitorProfile
       persist: boolean
     },
   ): void

@@ -4,7 +4,7 @@ import { Destination } from '@/shared/src/api/destinations/models'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { RestrictionGroup } from '@/shared/src/restriction-tree/restriction-group'
 
-export class RoundTrip {
+export class TripCard {
   constructor(
     protected readonly origin: Destination,
     protected readonly destination: Destination,

@@ -99,7 +99,7 @@ export default defineComponent({
     const { t } = useVueI18n()
     const store = inject(StoreKey) as StoreModule
 
-    const destination = computed(() => store.getters.currentDestination)
+    const destination = computed(() => store.getters.destination)
     const percentageSign = computed(() => {
       if (!destination.value) {
         return

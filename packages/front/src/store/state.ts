@@ -2,7 +2,7 @@ import type { LocaleMessageObject } from 'vue-i18n'
 
 import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorContextType } from '@/shared/src/restriction-tree/visitor-context'
+import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export interface StateInterface {
   countrySelectorLoading: boolean
@@ -15,7 +15,7 @@ export interface StateInterface {
   labeledLocales: Array<Record<string, string>>
   countryToContinentMap: Record<string, string>
   hostRules: MappedPlainDestinationCollection
-  visitorContext: VisitorContextType
+  visitorContext: VisitorProfile
 }
 
 export class RootState implements StateInterface {

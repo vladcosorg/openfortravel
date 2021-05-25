@@ -32,13 +32,13 @@
 import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import Country from '@/front/src/components/country.vue'
-import { RoundTrip } from '@/front/src/models/RoundTrip'
+import { TripCard } from '@/front/src/models/TripCard'
 
 export default defineComponent({
   components: { Country },
   props: {
     journey: {
-      type: Object as PropType<RoundTrip>,
+      type: Object as PropType<TripCard>,
       required: true,
     },
   },

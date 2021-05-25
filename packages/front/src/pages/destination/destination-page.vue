@@ -20,7 +20,7 @@
           <!--          />-->
         </div>
         <div class="col-md-5 col-12">
-          <!--          <return class="q-mb-xl" />-->
+          <return class="q-mb-xl" />
           <!--          <question-index-->
           <!--            class="q-mb-xl"-->
           <!--            :is-loading="isLoading"-->
@@ -133,7 +133,7 @@ export default defineComponent({
     watch(props, init)
 
     return {
-      destination: computed(() => store.getters.currentDestination),
+      destination: computed(() => store.getters.destination),
       isLoading: loading,
       breadcrumbs: useBreadcrumbs(originCode, destinationCode),
     }

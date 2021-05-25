@@ -36,7 +36,7 @@ import {
 } from '@vue/composition-api'
 import { defer } from 'lodash'
 
-import { RoundTrip } from '@/front/src/models/RoundTrip'
+import { TripCard } from '@/front/src/models/TripCard'
 
 export default defineComponent({
   components: {},
@@ -46,7 +46,7 @@ export default defineComponent({
       required: true,
     },
     restrictions: {
-      type: Array as PropType<RoundTrip[]>,
+      type: Array as PropType<TripCard[]>,
       required: true,
     },
     isLoading: {

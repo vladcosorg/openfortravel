@@ -67,7 +67,7 @@
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent } from '@vue/composition-api'
 
-import { RoundTrip } from '@/front/src/models/RoundTrip'
+import { TripCard } from '@/front/src/models/TripCard'
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
 
 export default defineComponent({
@@ -79,7 +79,7 @@ export default defineComponent({
       default: false,
     },
     destinations: {
-      type: Array as PropType<RoundTrip[]>,
+      type: Array as PropType<TripCard[]>,
       default: () => [],
     },
     groupName: {

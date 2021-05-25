@@ -28,7 +28,7 @@ export default defineComponent({
   setup() {
     const store = inject(StoreKey) as StoreModule
 
-    const destination = computed(() => store.getters.roundTrip)
+    const destination = computed(() => store.getters.returnTripCard)
 
     return { destination }
   },

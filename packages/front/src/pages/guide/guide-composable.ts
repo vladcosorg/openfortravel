@@ -6,13 +6,13 @@ import {
 
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorContextType } from '@/shared/src/restriction-tree/visitor-context'
+import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export function createComputedSetter<T extends RestrictionNodeType>(
   field: T,
-): WritableComputedRef<VisitorContextType[T]> {
+): WritableComputedRef<VisitorProfile[T]> {
   const store = useRootStore()
-  return computed<VisitorContextType[T]>({
+  return computed<VisitorProfile[T]>({
     get() {
       return store.state.visitorContext[field]
     },

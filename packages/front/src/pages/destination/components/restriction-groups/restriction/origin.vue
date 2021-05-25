@@ -59,7 +59,7 @@ export default defineComponent({
   },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const destination = computed(() => store.getters.currentDestination)
+    const destination = computed(() => store.getters.destination)
     return { destination, notMatchedIcon }
   },
 })

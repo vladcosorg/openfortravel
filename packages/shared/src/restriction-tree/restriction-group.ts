@@ -12,18 +12,18 @@ import {
 } from '@/shared/src/restriction-tree/types'
 import {
   applyContextToRestrictionGroups,
-  VisitorContextType,
-} from '@/shared/src/restriction-tree/visitor-context'
+  VisitorProfile,
+} from '@/shared/src/restriction-tree/visitor-profile'
 
 export type RawRestrictionGroupCollection = RestrictionGroup[]
 
 export class RestrictionGroupCollection {
   constructor(
     protected readonly restrictionGroups: PlainRestrictionGroups,
-    protected readonly context: VisitorContextType,
+    protected readonly context: VisitorProfile,
   ) {}
 
-  public availableGroups(): RestrictionGroup[] {
+  public getAvailableGroups(): RestrictionGroup[] {
     return this.sortGroups(
       this.wrapGroups([
         ...applyContextToRestrictionGroups(
@@ -35,7 +35,7 @@ export class RestrictionGroupCollection {
   }
 
   public getBestGroup(): RestrictionGroup {
-    return this.availableGroups()[0]
+    return this.getAvailableGroups()[0]
   }
 
   public getUnavailableGroups(): RestrictionGroup[] {

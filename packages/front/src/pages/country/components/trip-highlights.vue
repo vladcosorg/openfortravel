@@ -17,13 +17,13 @@ import {
 } from '@quasar/extras/ionicons-v5'
 import { computed, defineComponent, PropType } from '@vue/composition-api'
 
-import { RoundTrip } from '@/front/src/models/RoundTrip'
+import { TripCard } from '@/front/src/models/TripCard'
 
 export default defineComponent({
   components: {},
   props: {
     journey: {
-      type: Object as PropType<RoundTrip>,
+      type: Object as PropType<TripCard>,
     },
   },
   setup(props) {

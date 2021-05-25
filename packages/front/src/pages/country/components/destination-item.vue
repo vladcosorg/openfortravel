@@ -155,7 +155,7 @@ import type { PropType } from '@vue/composition-api'
 import { defineComponent, ref } from '@vue/composition-api'
 
 import Country from '@/front/src/components/country.vue'
-import { RoundTrip } from '@/front/src/models/RoundTrip'
+import { TripCard } from '@/front/src/models/TripCard'
 import TripHighlights from '@/front/src/pages/country/components/trip-highlights.vue'
 import TripSummary from '@/front/src/pages/country/components/trip-summary.vue'
 import { riskLevelColor } from '@/front/src/pages/country/composable'
@@ -172,7 +172,7 @@ export default defineComponent({
       default: false,
     },
     journey: {
-      type: Object as PropType<RoundTrip>,
+      type: Object as PropType<TripCard>,
     },
     hideRiskLevel: {
       type: Boolean,

@@ -44,8 +44,12 @@ export default defineComponent({
   components: { GroupsByType, WidgetHeader },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const availableGroups = computed(() => store.getters.availableGroups)
-    const unavailableGroups = computed(() => store.getters.unavailableGroups)
+    const availableGroups = computed(() =>
+      store.getters.allGroups.getAvailableGroups(),
+    )
+    const unavailableGroups = computed(() =>
+      store.getters.allGroups.getUnavailableGroups(),
+    )
     return {
       availableGroups,
       unavailableGroups,

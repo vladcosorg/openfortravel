@@ -1,11 +1,8 @@
-import { RoundTrip } from '@/front/src/models/RoundTrip'
+import { TripCard } from '@/front/src/models/TripCard'
 import type { StateClass } from '@/front/src/pages/destination/store/state'
 import type { Destination } from '@/shared/src/api/destinations/models'
 import type { GetterContext } from '@/shared/src/misc/augmented-store'
-import {
-  RestrictionGroup,
-  RestrictionGroupCollection,
-} from '@/shared/src/restriction-tree/restriction-group'
+import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
 
 type LocalGetterContext<
   State = StateClass,
@@ -13,12 +10,10 @@ type LocalGetterContext<
 > = GetterContext<State, Accessors>
 
 export type GetterSignatures = {
-  currentReturnDestination(...args: LocalGetterContext): Destination
-  currentDestination(...args: LocalGetterContext): Destination
+  origin(...args: LocalGetterContext): Destination
+  destination(...args: LocalGetterContext): Destination
 
   allGroups(...args: LocalGetterContext): RestrictionGroupCollection
-  availableGroups(...args: LocalGetterContext): RestrictionGroup[]
-  unavailableGroups(...args: LocalGetterContext): RestrictionGroup[]
 
-  roundTrip(...args: LocalGetterContext): RoundTrip
+  returnTripCard(...args: LocalGetterContext): TripCard
 }

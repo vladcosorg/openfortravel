@@ -1,13 +1,13 @@
 import { useCookies } from '@/shared/src/composables/use-plugins'
-import { VisitorContextType } from '@/shared/src/restriction-tree/visitor-context'
+import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 const ID = 'context'
-export function saveContextToCookie(context: VisitorContextType): void {
+export function saveContextToCookie(context: VisitorProfile): void {
   useCookies().set(ID, JSON.stringify(context), {
     path: '/',
   })
 }
 
-export function loadContextFromCookie(): VisitorContextType | undefined {
+export function loadContextFromCookie(): VisitorProfile | undefined {
   return useCookies().get(ID) ?? undefined
 }

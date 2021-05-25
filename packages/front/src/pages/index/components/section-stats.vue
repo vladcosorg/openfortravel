@@ -81,7 +81,7 @@
 import { defineComponent, onMounted, ref } from '@vue/composition-api'
 import { hydrateWhenVisible } from 'vue-lazy-hydration'
 
-import { buildTripsFromProfileOrigin } from '@/front/src/composables/restriction-query'
+import { createTripsCards } from '@/front/src/composables/trip-cards'
 import { useStats } from '@/front/src/pages/index/index-composable'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 
@@ -97,7 +97,7 @@ export default defineComponent({
   },
   setup() {
     const loadMap = ref(false)
-    const restrictions = buildTripsFromProfileOrigin()
+    const restrictions = createTripsCards()
     const originISO = useRootStore().getters.profileOriginISO
 
     onMounted(() => {
