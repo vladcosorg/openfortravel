@@ -4,8 +4,12 @@ body
   color: var(--q-color-primary) !important
   background: var(--q-color-primary-inverse) !important
 
-a
+a, .text-hyperlink
   color: var(--q-color-secondary)
+  &:hover
+    text-decoration: none
+
+
 
 
 .q-layout__section--marginal
@@ -58,3 +62,10 @@ a
   text-decoration-style: dashed
   text-decoration-color: var(--q-color-accent)
   text-decoration-thickness: 1px
+
+.text-hyperlink
+  color: var(--q-color-secondary)
+  text-decoration: underline
+  text-underline-position: under
+  text-decoration-thickness: 1
+

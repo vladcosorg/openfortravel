@@ -25,7 +25,7 @@ export class TripCard {
       return 0
     }
 
-    return 43
+    return this.restrictionGroup.rating
   }
 
   get status(): RestrictionStatus {

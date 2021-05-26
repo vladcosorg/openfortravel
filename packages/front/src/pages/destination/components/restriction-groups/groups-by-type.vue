@@ -32,11 +32,13 @@
         </template>
 
         <groups-by-category
+          v-if="group.prerequisites.length"
           label="Requirements"
           :restrictions="group.prerequisites"
           type="prerequisite"
         />
         <groups-by-category
+          v-if="group.actions.length"
           label="Do"
           :restrictions="group.actions"
           type="action"

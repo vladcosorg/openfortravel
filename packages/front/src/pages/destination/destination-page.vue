@@ -8,7 +8,7 @@
       :destination-code="destinationCode"
     />
     <div class="container">
-      <!--      <heading :restriction="restriction" :destination="destination" />-->
+      <the-heading />
       <div class="row q-col-gutter-xl">
         <div class="col-md-7 col-12">
           <entry-restrictions class="q-mx-xs-sm q-mx-none q-mb-xl" />
@@ -68,12 +68,12 @@ import InnerPage from '@/front/src/components/inner-page.vue'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import TheSearchHeader from '@/front/src/layouts/components/the-search-header.vue'
 import EntryRestrictions from '@/front/src/pages/destination/components/entry-restrictions.vue'
-import Heading from '@/front/src/pages/destination/components/heading.vue'
 import InlineSubscribeForm from '@/front/src/pages/destination/components/inline-subscribe-form.vue'
 import Links from '@/front/src/pages/destination/components/links.vue'
 import Return from '@/front/src/pages/destination/components/return.vue'
 import Sharing from '@/front/src/pages/destination/components/sharing.vue'
 import Stats from '@/front/src/pages/destination/components/stats.vue'
+import TheHeading from '@/front/src/pages/destination/components/the-heading.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import { useBreadcrumbs } from '@/front/src/pages/destination/destination-composable'
 import { meta } from '@/front/src/pages/destination/destination-meta'
@@ -85,10 +85,10 @@ import { useLoading } from '@/shared/src/composables/use-promise-loading'
 export default defineComponent({
   meta,
   components: {
+    TheHeading,
     Return,
     EntryRestrictions,
     Stats,
-    Heading,
     WidgetHeader,
     Sharing,
     Links,

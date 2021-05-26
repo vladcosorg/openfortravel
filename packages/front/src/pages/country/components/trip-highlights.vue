@@ -22,11 +22,12 @@ export default defineComponent({
   props: {
     journey: {
       type: Object as PropType<TripCard>,
+      required: true,
     },
   },
   setup(props) {
-    const highlights = computed(() =>
-      props.journey.highlights.map((item) => {
+    const highlights = computed(() => {
+      const values = props.journey.highlights.map((item) => {
         switch (item) {
           case 'quarantine':
             return {
@@ -37,6 +38,12 @@ export default defineComponent({
           case 'no-quarantine':
             return {
               label: 'No quarantine',
+              positive: true,
+            }
+
+          case 'no-return-quarantine':
+            return {
+              label: 'No quarantine upon return',
               positive: true,
             }
 
@@ -52,6 +59,12 @@ export default defineComponent({
               positive: true,
             }
 
+          case 'return-pcr-test':
+            return {
+              label: 'PCR-test upon return required',
+              positive: false,
+            }
+
           case 'insurance':
             return {
               label: 'Additional insurance required',
@@ -64,8 +77,10 @@ export default defineComponent({
               positive: true,
             }
         }
-      }),
-    )
+      })
+
+      return values.sort((a, b) => +b.positive - +a.positive)
+    })
 
     return { highlights, positiveIcon, negativeIcon }
   },

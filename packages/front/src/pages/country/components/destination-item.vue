@@ -47,16 +47,15 @@
         <trip-highlights :journey="journey" />
       </q-card-section>
       <q-card-actions class="bg-elevation-1" align="between">
-        <div class="text-primary-subtle text-caption">
-          Trip Score: <b>{{ journey.score }}</b
-          >/100
+        <div class="text-primary-subtle">
           <q-icon size="xs" :name="infoIcon" />
+          Trip Score <group-score :score="journey.score" />
           <q-tooltip
             >The higher the core the less restrictions and requirements you are
             required to abide</q-tooltip
           >
         </div>
-        <a class="text-uppercase" href="">Read more </a>
+        <span class="text-uppercase text-hyperlink">Read more</span>
       </q-card-actions>
     </router-link>
 
@@ -159,9 +158,10 @@ import { TripCard } from '@/front/src/models/TripCard'
 import TripHighlights from '@/front/src/pages/country/components/trip-highlights.vue'
 import TripSummary from '@/front/src/pages/country/components/trip-summary.vue'
 import { riskLevelColor } from '@/front/src/pages/country/composable'
+import GroupScore from '@/front/src/pages/destination/components/restriction-groups/group-score.vue'
 
 export default defineComponent({
-  components: { CountryLabel, TripHighlights, TripSummary },
+  components: { GroupScore, CountryLabel, TripHighlights, TripSummary },
   props: {
     loading: {
       type: Boolean,
