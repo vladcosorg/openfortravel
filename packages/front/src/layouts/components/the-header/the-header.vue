@@ -21,6 +21,7 @@
   cursor: pointer;
 }
 </style>
+
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
 import { PortalTarget } from 'portal-vue'

@@ -11,6 +11,7 @@
   z-index: 2;
 }
 </style>
+
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { hydrateWhenIdle, hydrateWhenVisible } from 'vue-lazy-hydration'

@@ -20,7 +20,7 @@
           type="url"
           debounce="300"
           label-color="white"
-          @keyup.enter="toggleEditing()"
+          @keyup.enter="toggleEditing"
         />
       </slot>
       <q-field
@@ -51,7 +51,7 @@
       color="secondary"
       :icon="isEditing ? 'done' : 'edit'"
       flat
-      @click="toggleEditing()"
+      @click="toggleEditing"
     />
   </div>
 </template>

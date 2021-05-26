@@ -19,6 +19,7 @@
     v-on="$listeners"
   />
 </template>
+
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import type { PropType } from '@vue/composition-api'

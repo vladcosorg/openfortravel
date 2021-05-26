@@ -69,6 +69,7 @@
   width: 50%;
 }
 </style>
+
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 

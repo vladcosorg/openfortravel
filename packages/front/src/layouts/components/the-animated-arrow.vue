@@ -56,6 +56,7 @@
   animation-fill-mode: forwards;
 }
 </style>
+
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 

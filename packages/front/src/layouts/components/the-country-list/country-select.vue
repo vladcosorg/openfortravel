@@ -65,6 +65,7 @@
   overflow: hidden;
 }
 </style>
+
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent, ref, toRef } from '@vue/composition-api'

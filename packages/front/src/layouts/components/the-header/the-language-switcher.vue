@@ -12,6 +12,7 @@
     @input="handleClick"
   />
 </template>
+
 <style lang="scss" module>
 .select {
   :global {
@@ -40,6 +41,7 @@
   }
 }
 </style>
+
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { defineComponent, ref } from '@vue/composition-api'

@@ -50,6 +50,7 @@
     </div>
   </div>
 </template>
+
 <style lang="scss" module>
 .grid {
   display: grid;

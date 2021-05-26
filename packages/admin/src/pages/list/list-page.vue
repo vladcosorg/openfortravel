@@ -44,6 +44,7 @@
     </q-table>
   </q-page>
 </template>
+
 <style lang="sass" module>
 .table
   height: 100%
@@ -56,6 +57,7 @@
   thead tr:first-child th
     top: 0
 </style>
+
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
 import { formatDistanceToNow, isPast, parseISO } from 'date-fns'

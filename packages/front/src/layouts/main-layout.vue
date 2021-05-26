@@ -20,11 +20,13 @@
     <the-footer />
   </q-layout>
 </template>
+
 <style lang="scss" module>
 .container {
   overflow-x: hidden;
 }
 </style>
+
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { merge } from 'lodash'
