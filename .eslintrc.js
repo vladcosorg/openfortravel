@@ -40,11 +40,7 @@ module.exports = {
     // Uncomment any of the lines below to choose desired strictness,
     // but leave only one uncommented!
     // See https://eslint.vuejs.org/rules/#available-rules
-    // 'plugin:vue/essential', // Priority A: Essential (Error Prevention)
-    // 'plugin:vue/strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
     'plugin:vue/recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
-    // https://github.com/prettier/eslint-config-prettier#installation
-    // usage with Prettier, provided by 'eslint-config-prettier'.
 
     'plugin:unicorn/recommended',
 
@@ -182,6 +178,36 @@ module.exports = {
     'vue/no-useless-v-bind': 'warn',
     'vue/component-tags-order': 'off',
     'vue/require-default-prop': 'off',
+    'vue/no-unused-properties': [
+      'warn',
+      {
+        groups: ['props', 'setup'],
+        deepData: false,
+        ignorePublicMembers: false,
+      },
+    ],
+    'vue/block-tag-newline': 'warn',
+    'vue/html-button-has-type': 'warn',
+    'vue/next-tick-style': 'warn',
+    'vue/no-boolean-default': 'warn',
+    'vue/no-duplicate-attr-inheritance': 'warn',
+    'vue/no-invalid-model-keys': 'warn',
+    'vue/no-multiple-objects-in-class': 'warn',
+    'vue/no-template-target-blank': 'warn',
+    'vue/no-reserved-component-names': [
+      'error',
+      {
+        disallowVueBuiltInComponents: true,
+        disallowVue3BuiltInComponents: true,
+      },
+    ],
+    'vue/no-unused-refs': 'warn',
+    'vue/no-useless-mustaches': 'warn',
+    'vue/v-on-function-call': 'warn',
+    'vue/valid-next-tick': 'warn',
+    'vue/padding-line-between-blocks': 'warn',
+    'vue/array-bracket-spacing': 'warn',
+    'vue/comma-spacing': 'warn',
   },
   settings: {
     'import/parsers': {

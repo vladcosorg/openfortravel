@@ -46,7 +46,6 @@ a[href^='#'] {
 import type { PropType } from '@vue/composition-api'
 import { defineComponent } from '@vue/composition-api'
 
-import Country from '@/front/src/components/country.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
 import Languages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/languages.vue'
@@ -58,7 +57,6 @@ export default defineComponent({
   components: {
     Languages,
     Language,
-    Country,
     CollapsedCountrySequence,
     TitleCountry,
   },

@@ -26,7 +26,6 @@ import { matWarning as notMatchedIcon } from '@quasar/extras/material-icons'
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
-import Country from '@/front/src/components/country.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import RequiredLanguages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/required-languages.vue'
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
@@ -40,7 +39,6 @@ export default defineComponent({
   components: {
     RequiredLanguages,
     Seq,
-    Country,
     CollapsedCountrySequence,
     TitleCountry,
   },

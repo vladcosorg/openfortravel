@@ -1,11 +1,13 @@
 <template>
   <span :class="{ [$style.collapsed]: collapsed }">
-    <country
+    <country-label
       v-for="(label, key) in allowedCountryLabels"
       :key="key"
+      :value="label"
       :prefix="showSeparator(key) ? ', ' : ''"
       :focused="focusCountryLabel.includes(label)"
       :label="label"
+      skip-mapping
       :class="{
         hide: key > collapseCountTrigger,
       }"
@@ -37,14 +39,15 @@
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
-import Country from '@/front/src/components/country.vue'
+import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 import {
   getLabelsForCountryCodes,
   getSortedLabelsForCountryCodes,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
-  components: { Country },
+  components: { CountryLabel, CountryLabelList },
   props: {
     allowed: {
       type: Array as PropType<string[]>,

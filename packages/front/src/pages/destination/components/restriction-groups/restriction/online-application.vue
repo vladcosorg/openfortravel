@@ -24,7 +24,6 @@ a[href^='#'] {
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
-import Country from '@/front/src/components/country.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
@@ -33,7 +32,7 @@ import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import { OnlineApplication } from '@/shared/src/restriction-tree/restriction-node/online-application'
 
 export default defineComponent({
-  components: { Country, CollapsedCountrySequence, TitleCountry },
+  components: { CollapsedCountrySequence, TitleCountry },
   mixins: [sharedProps],
   props: {
     restriction: {

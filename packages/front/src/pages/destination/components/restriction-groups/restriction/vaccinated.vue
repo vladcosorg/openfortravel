@@ -9,8 +9,8 @@
         dose are in the process of vaccination and are not yet fully vaccinated.
       </p>
       <p v-if="restriction.options.authorizedBrands.length">
-        Currently <country :code="destination.countryCode" /> only accepts
-        visitors vaccinated with the vaccine of the following brands:
+        Currently <country-label :value="destination.countryCode" /> only
+        accepts visitors vaccinated with the vaccine of the following brands:
         <seq v-slot="{ item }" :items="restriction.options.authorizedBrands">
           <vaccine :id="item" /> </seq
         >.
@@ -49,7 +49,7 @@ a[href^='#'] {
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
-import Country from '@/front/src/components/country.vue'
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
 import Languages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/languages.vue'
@@ -64,12 +64,12 @@ import type { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/
 
 export default defineComponent({
   components: {
+    CountryLabel,
     RequiredLanguages,
     Vaccine,
     Seq,
     Languages,
     Language,
-    Country,
     CollapsedCountrySequence,
     TitleCountry,
   },

@@ -10,7 +10,7 @@
       entry requirements from this section. <br /><br />
       Banned countries:
       <seq v-slot="{ item }" :items="restriction.options.countryCodes"
-        ><country :code="item" />
+        ><country-label :value="item" />
       </seq>
     </template>
   </component>
@@ -21,7 +21,7 @@ import { matWarning as notMatchedIcon } from '@quasar/extras/material-icons'
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
-import Country from '@/front/src/components/country.vue'
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
@@ -31,7 +31,12 @@ import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import type { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
 
 export default defineComponent({
-  components: { Seq, Country, CollapsedCountrySequence, TitleCountry },
+  components: {
+    CountryLabel,
+    Seq,
+    CollapsedCountrySequence,
+    TitleCountry,
+  },
   mixins: [sharedProps],
   props: {
     restriction: {

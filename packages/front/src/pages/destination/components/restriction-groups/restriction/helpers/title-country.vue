@@ -1,15 +1,14 @@
 <template>
   <span v-if="hasIntersection">
-    <country focused :code="focusedIntersection" />
+    <country-label-list :values="focusedIntersection" focused />
     <span v-if="allowedCountriesCount > 0">
       or one following
       {{ allowedCountriesCount }} countries
     </span>
   </span>
   <span v-else>
-    one of the {{ allowedCountriesCount }} allowed countries (<country
-      :code="focus"
-    />
+    one of the {{ allowedCountriesCount }} allowed countries
+    (<country-label-list :values="focus" />
     is not one of them)
   </span>
 </template>
@@ -19,10 +18,10 @@ import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent } from '@vue/composition-api'
 import intersection from 'lodash/intersection'
 
-import Country from '@/front/src/components/country.vue'
+import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
 
 export default defineComponent({
-  components: { Country },
+  components: { CountryLabelList },
   props: {
     allowed: {
       type: Array as PropType<string[]>,

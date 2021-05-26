@@ -1,6 +1,6 @@
 <template>
   <a href="" class="text-dotted-underline">
-    <country :code="value" regular />
+    <country-label :value="value" regular />
   </a>
 </template>
 
@@ -9,12 +9,12 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
-import Country from '@/front/src/components/country.vue'
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
-  components: { Country },
+  components: { CountryLabel },
   props: {},
   setup() {
     const store = useRootStore()

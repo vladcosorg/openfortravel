@@ -18,10 +18,10 @@
     >
       <q-card-section>
         <div v-if="returning" class="text-subtitle">
-          Returning from <country :code="journey.originISO" /> to
+          Returning from <country-label :value="journey.originISO" /> to
         </div>
         <div class="text-h6 ellipsis-improved full-width">
-          <country :code="journey.destinationISO" regular />
+          <country-label :value="journey.destinationISO" regular />
         </div>
 
         <div v-if="!hideRiskLevel" class="text-caption text-primary-subtle">
@@ -154,14 +154,14 @@ import {
 import type { PropType } from '@vue/composition-api'
 import { defineComponent, ref } from '@vue/composition-api'
 
-import Country from '@/front/src/components/country.vue'
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 import { TripCard } from '@/front/src/models/TripCard'
 import TripHighlights from '@/front/src/pages/country/components/trip-highlights.vue'
 import TripSummary from '@/front/src/pages/country/components/trip-summary.vue'
 import { riskLevelColor } from '@/front/src/pages/country/composable'
 
 export default defineComponent({
-  components: { Country, TripHighlights, TripSummary },
+  components: { CountryLabel, TripHighlights, TripSummary },
   props: {
     loading: {
       type: Boolean,

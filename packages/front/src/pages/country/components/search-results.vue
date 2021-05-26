@@ -25,7 +25,7 @@
         <div class="text-h5" style="font-weight: normal">
           Countries currently <span class="text-positive">open</span> for travel
           from
-          <country :code="originCode" regular focused />
+          <country-label :value="originCode" regular focused />
           <div class="text-subtitle1">
             as a citizen of <span class="text-accent">Ukraine</span> that is
             <span class="text-accent">not vaccinated</span>
@@ -65,7 +65,7 @@ import { Portal } from 'portal-vue'
 import CitizenshipStatus from '@/front/src/components/context-value/citizenship-status.vue'
 import OriginStatus from '@/front/src/components/context-value/origin-status.vue'
 import VaccinationStatus from '@/front/src/components/context-value/vaccination-status.vue'
-import Country from '@/front/src/components/country.vue'
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import DestinationGroup from '@/front/src/pages/country/components/destination-group.vue'
 import InputFilter from '@/front/src/pages/country/components/input-filter.vue'
@@ -79,11 +79,11 @@ import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
   components: {
+    CountryLabel,
     OriginStatus,
     CitizenshipStatus,
     VaccinationStatus,
     GenericSelect,
-    Country,
     InputFilter,
     TheBreadcrumbs,
     DestinationGroup,
@@ -99,10 +99,15 @@ export default defineComponent({
     const originCode = toRef(props, 'originCode')
     const hideForbidden = ref(true)
     const { loading: isLoading } = useLoading(false)
-    const { allowedDestinations, forbiddenDestinations, allDestinations } =
-      useRestrictionList()
-    const { countryMatchFilterValue, destinations: filteredDestinations } =
-      useRestrictionFilterer(allDestinations)
+    const {
+      allowedDestinations,
+      forbiddenDestinations,
+      allDestinations,
+    } = useRestrictionList()
+    const {
+      countryMatchFilterValue,
+      destinations: filteredDestinations,
+    } = useRestrictionFilterer(allDestinations)
 
     const isFiltering = computed(() => countryMatchFilterValue.value.length > 0)
 
