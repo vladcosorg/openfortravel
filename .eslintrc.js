@@ -76,12 +76,12 @@ module.exports = {
     'prefer-arrow-callback': 'warn',
     curly: 'warn',
 
-    // '@typescript-eslint/no-unsafe-call': 'off',
-    // '@typescript-eslint/no-unsafe-assignment': 'off',
-    // '@typescript-eslint/no-unsafe-return': 'off',
-    // '@typescript-eslint/no-unsafe-member-access': 'off',
-    // '@typescript-eslint/no-floating-promises': 'off',
-    //
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+
     '@typescript-eslint/member-ordering': 'warn',
     '@typescript-eslint/type-annotation-spacing': 'warn',
     '@typescript-eslint/array-type': ['warn', { default: 'array-simple' }],

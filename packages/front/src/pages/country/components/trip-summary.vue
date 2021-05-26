@@ -1,9 +1,13 @@
 <template>
   <div>
     Travel from
-    <country regular :code="journey.originISO" declination="origin" />
+    <country-label regular :value="journey.originISO" declination="origin" />
     to
-    <country regular :code="journey.destinationISO" declination="destination" />
+    <country-label
+      regular
+      :value="journey.destinationISO"
+      declination="destination"
+    />
     is
     <strong>
       {{ status }}
@@ -29,11 +33,11 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from '@vue/composition-api'
 
-import Country from '@/front/src/components/country.vue'
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 import { TripCard } from '@/front/src/models/TripCard'
 
 export default defineComponent({
-  components: { Country },
+  components: { CountryLabel },
   props: {
     journey: {
       type: Object as PropType<TripCard>,
