@@ -1,15 +1,11 @@
-import { useCookies, useStore } from '@/shared/src/composables/use-plugins'
+import { useCookies, useRootStore } from '@/shared/src/composables/use-plugins'
 import {
   getLabelForCountryCode,
   transformCountryCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export function getPersistedOriginOrDefault(): string {
-  return useStore().getters['detectedCountryWithFallback']
-}
-
-export function getPersistedOriginOrUndefined(): string | undefined {
-  return useStore().state['detectedCountry']
+  return useRootStore().getters.detectedCountryWithFallback
 }
 
 export function getCurrentCountryLabel(): string {
@@ -32,7 +28,7 @@ export function setCurrentCountry(
     return
   }
 
-  useStore().commit('setDetectedCountry', countryCode)
+  useRootStore().mutations.setVisitorOrigin(countryCode)
   if (saveToCookie) {
     useCookies().set('country', countryCode, {
       path: '/',

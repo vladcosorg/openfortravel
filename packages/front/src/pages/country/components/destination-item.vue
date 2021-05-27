@@ -48,12 +48,11 @@
       </q-card-section>
       <q-card-actions class="bg-elevation-1" align="between">
         <div class="text-primary-subtle">
-          <q-icon size="xs" :name="infoIcon" />
-          Trip Score <group-score :score="journey.score" />
-          <q-tooltip
-            >The higher the core the less restrictions and requirements you are
-            required to abide</q-tooltip
-          >
+          <group-score :score="journey.score" />
+          <q-tooltip>
+            The higher the score the less restrictions and requirements you are
+            required to abide
+          </q-tooltip>
         </div>
         <span class="text-uppercase text-hyperlink">Read more</span>
       </q-card-actions>
@@ -146,7 +145,6 @@
 
 <script lang="ts">
 import {
-  ionBaseballOutline as icon,
   ionRemoveCircleOutline as accessDeniedIcon,
   ionInformationCircleOutline as infoIcon,
 } from '@quasar/extras/ionicons-v5'
@@ -165,31 +163,26 @@ export default defineComponent({
   props: {
     loading: {
       type: Boolean,
-      default: false,
     },
     returning: {
       type: Boolean,
-      default: false,
     },
     journey: {
       type: Object as PropType<TripCard>,
     },
     hideRiskLevel: {
       type: Boolean,
-      default: false,
     },
     hideBorder: {
       type: Boolean,
-      default: false,
     },
   },
 
-  setup(props) {
+  setup() {
     return {
       riskLevelColor,
       accessDeniedIcon,
       isClicked: ref(false),
-      icon,
       infoIcon,
     }
   },

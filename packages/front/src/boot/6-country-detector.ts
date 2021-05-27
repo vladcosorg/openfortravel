@@ -1,18 +1,19 @@
 import { boot } from 'quasar/wrappers'
 
 import { getCookieCountry } from '@/front/src/misc/country-decider'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
-export default boot(async ({ router, urlPath, store, ssrContext }) => {
+export default boot(({ router, urlPath, ssrContext }) => {
+  const rootStore = useRootStore()
   if (!ssrContext) {
     router.afterEach((to) => {
       if (!to.params.originSlug) {
         return
       }
-      store.commit(
-        'setDetectedCountry',
+
+      rootStore.mutations.setVisitorOrigin(
         transformOriginSlugToCode(to.params.originSlug),
-        true,
       )
     })
     return
@@ -20,33 +21,29 @@ export default boot(async ({ router, urlPath, store, ssrContext }) => {
 
   const persistedOrigin = getCookieCountry()
   if (persistedOrigin) {
-    store.commit('setDetectedCountry', persistedOrigin)
+    rootStore.mutations.setVisitorOrigin(persistedOrigin)
   }
 
-  store.commit('setDetectedCountry', persistedOrigin)
   if (urlPath === '/') {
     if (persistedOrigin) {
-      store.commit('setDetectedCountry', persistedOrigin)
+      rootStore.mutations.setVisitorOrigin(persistedOrigin)
     } else {
       let countryCode = (ssrContext.req.headers['cf-ipcountry'] ??
         ssrContext.req.headers['x-appengine-country'] ??
         'us') as string
       countryCode = countryCode.toLowerCase()
-
-      store.commit('setDetectedCountry', countryCode, true)
+      rootStore.mutations.setVisitorOrigin(countryCode)
     }
   } else {
     const route = router.resolve(urlPath).route
     const originSlug = route.params.originSlug
     if (route.params.originSlug) {
-      store.commit(
-        'setDetectedCountry',
+      rootStore.mutations.setVisitorOrigin(
         transformOriginSlugToCode(originSlug),
-        true,
       )
     } else {
       if (!persistedOrigin) {
-        store.commit('setDetectedCountry', 'us', true)
+        rootStore.mutations.setVisitorOrigin('us')
       }
     }
   }

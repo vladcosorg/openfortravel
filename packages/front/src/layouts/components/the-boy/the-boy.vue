@@ -108,7 +108,7 @@
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import InlineSvg from 'vue-inline-svg'
 
-import { useStore } from '@/shared/src/composables/use-plugins'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { InlineSvg },
@@ -147,8 +147,8 @@ export default defineComponent({
     }
 
     const svg = computed(() => {
-      const country = useStore().state['detectedCountry']
-      // eslint-disable-next-line no-undef
+      const country = useRootStore().getters.visitorOrigin
+      // eslint-disable-next-line no-undef,unicorn/prefer-module
       return require(country === 'md'
         ? '@/front/src/assets/boy/boy-md.svg'
         : '@/front/src/assets/boy/boy.svg')

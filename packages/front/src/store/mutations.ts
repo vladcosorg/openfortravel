@@ -19,12 +19,7 @@ export const mutations: MutationTree<RootState> & MutationSignatures = {
   [MutationTypes.setCountrySelectorLoading](state, value) {
     state.countrySelectorLoading = value
   },
-  [MutationTypes.setDetectedCountry](state, country) {
-    state.detectedCountry = country
-    Vue.set(state.visitorContext, 'origin', country)
-    // Vue.set(state.visitorContext, 'citizenship', [country])
-    useCookies().set('country', country, { path: '/' })
-  },
+
   [MutationTypes.setLocales](state, locales) {
     state.locales = locales
   },
@@ -59,5 +54,10 @@ export const mutations: MutationTree<RootState> & MutationSignatures = {
     if (persist) {
       saveContextToCookie(context)
     }
+  },
+  [MutationTypes.setVisitorOrigin](state, country) {
+    Vue.set(state.visitorContext, RestrictionNodeType.ORIGIN, country)
+
+    useCookies().set('country', country, { path: '/' })
   },
 }

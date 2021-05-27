@@ -98,7 +98,7 @@ export default defineComponent({
   setup() {
     const loadMap = ref(false)
     const restrictions = createTripsCards()
-    const originISO = useRootStore().getters.profileOriginISO
+    const originISO = useRootStore().getters.visitorOrigin
 
     onMounted(() => {
       const scrollHandler = function () {

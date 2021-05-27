@@ -16,7 +16,7 @@ export interface GetterSignatures {
   currentOrigin(...args: LocalGetterContext): Destination
   detectedCountryWithFallback(...args: LocalGetterContext): string
 
-  profileOriginISO(...args: LocalGetterContext): string
+  visitorOrigin(...args: LocalGetterContext): string
 }
 
 export type RootGetterAccessors = {

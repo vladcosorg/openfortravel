@@ -1,8 +1,8 @@
 import type { ComputedRef } from '@vue/composition-api'
 import { computed } from '@vue/composition-api'
 
+import { TripCard } from '@/front/src/models/TripCard'
 import { getStatusMapper } from '@/shared/src/api/restrictions/helper'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { getCurrentNationality } from '@/shared/src/modules/nationality/nationality-helpers'
@@ -13,7 +13,7 @@ export const statusColorMap = {
   [RestrictionStatus.FORBIDDEN]: 'negative',
 }
 
-export function useStats(destinations: ComputedRef<Restriction[]>): ComputedRef<
+export function useStats(destinations: ComputedRef<TripCard[]>): ComputedRef<
   Record<
     RestrictionStatus,
     {

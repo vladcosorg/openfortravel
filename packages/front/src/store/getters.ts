@@ -9,8 +9,9 @@ export const getters: GetterTree<RootStateType, RootStateType> &
   GetterSignatures = {
   wrappedHostRules: (state) => getFullDestinationList(state.hostRules),
 
-  currentOrigin: (state, getters) =>
-    getters.wrappedHostRules[state.detectedCountry],
-  detectedCountryWithFallback: (state): string => state.detectedCountry ?? 'us',
-  profileOriginISO: (state) => state.visitorContext[RestrictionNodeType.ORIGIN],
+  currentOrigin: (_state, getters) =>
+    getters.wrappedHostRules[getters.visitorOrigin],
+  detectedCountryWithFallback: (_state, getters): string =>
+    getters.visitorOrigin ?? 'us',
+  visitorOrigin: (state) => state.visitorContext[RestrictionNodeType.ORIGIN],
 }
