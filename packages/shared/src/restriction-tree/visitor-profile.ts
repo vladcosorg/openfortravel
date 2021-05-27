@@ -18,6 +18,12 @@ export type VisitorProfile = OptionalExceptFor<
   RestrictionNodeType.ORIGIN | RestrictionNodeType.CITIZENSHIP
 >
 
+const a: VisitorProfile = {
+  origin: 'af',
+  citizenship: ['da'],
+  recovery: 32,
+}
+
 export function applyContextToRestrictionGroups(
   profile: VisitorProfile,
   groups: PlainRestrictionGroups,

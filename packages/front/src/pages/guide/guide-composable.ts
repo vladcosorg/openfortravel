@@ -4,13 +4,13 @@ import {
   WritableComputedRef,
 } from '@vue/composition-api'
 
+import { RootStateType } from '@/front/src/store/state'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
-export function createComputedSetter<T extends RestrictionNodeType>(
-  field: T,
-): WritableComputedRef<VisitorProfile[T]> {
+export function createComputedSetter<
+  T extends keyof RootStateType['visitorContext'],
+>(field: T): WritableComputedRef<VisitorProfile[T]> {
   const store = useRootStore()
   return computed<VisitorProfile[T]>({
     get() {
@@ -27,7 +27,7 @@ export function createComputedSetter<T extends RestrictionNodeType>(
 }
 
 export function useCaption(
-  type: RestrictionNodeType,
+  type: keyof RootStateType['visitorContext'],
   truthyFormatter: (item: string) => string,
   falsyOptionalFormatter?: () => string,
 ): ComputedRef<string> {

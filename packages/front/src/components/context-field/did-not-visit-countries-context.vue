@@ -2,14 +2,15 @@
   <country-dropdown
     v-model="value"
     multiple
-    label="Citizenship"
+    label="Recently visited countries"
     clearable
     v-bind="$attrs"
     bottom-slots
   >
     <template #hint>
       <hint>
-        Most of the countries apply restrictions based on a citizenship.
+        Some countries may improse additional restrictions upon you in case
+        you've been to a high-risk country recently. Forewarned is forearmed!
       </hint>
     </template>
   </country-dropdown>
@@ -28,7 +29,9 @@ export default defineComponent({
   inheritAttrs: false,
   props: {},
   setup() {
-    const value = createComputedSetter(RestrictionNodeType.CITIZENSHIP)
+    const value = createComputedSetter(
+      RestrictionNodeType.DID_NOT_VISIT_COUNTRIES,
+    )
     return { value }
   },
 })

@@ -5,17 +5,19 @@
         {{ $t('components.theCountryList.title') }}
       </div>
 
-      <div class="row q-col-gutter-md q-mt-sm">
+      <div class="row q-col-gutter-md q-mt-sm wrap">
         <country-select
           :key="currentOrigin"
           v-model="currentOrigin"
-          class="col-sm col-12"
+          class="col-sm-4 col-12"
           :loading="loading"
           :label="$t('components.theCountryList.from')"
           :show-prefix-text="!!originCode"
         />
-        <citizenship-context class="col-sm col-12" />
-        <vaccination-context class="col-sm col-12" />
+        <citizenship-context class="col-sm-4 col-12" />
+        <did-not-visit-countries-context class="col-sm-4 col-12" />
+        <vaccination-context class="col-sm-4 col-12" />
+        <recovery-context class="col-sm-4 col-12" />
       </div>
     </div>
   </div>
@@ -46,6 +48,8 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship-context.vue'
+import DidNotVisitCountriesContext from '@/front/src/components/context-field/did-not-visit-countries-context.vue'
+import RecoveryContext from '@/front/src/components/context-field/recovery-context.vue'
 import VaccinationContext from '@/front/src/components/context-field/vaccination-context.vue'
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
@@ -55,6 +59,8 @@ import { transformCountryCodeToOriginSlug } from '@/shared/src/modules/country-l
 
 export default defineComponent({
   components: {
+    RecoveryContext,
+    DidNotVisitCountriesContext,
     VaccinationContext,
     CitizenshipContext,
     CountrySelect,

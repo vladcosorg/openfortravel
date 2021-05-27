@@ -4,7 +4,11 @@
     :options="list"
     v-bind="$attrs"
     v-on="$listeners"
-  />
+  >
+    <template v-for="(_, slot) of $scopedSlots" #[slot]="scope"
+      ><slot :name="slot" v-bind="scope"
+    /></template>
+  </generic-select>
 </template>
 
 <script lang="ts">
@@ -16,6 +20,7 @@ import { getOriginLabels } from '@/shared/src/modules/country-list/country-list-
 
 export default defineComponent({
   components: { GenericSelect },
+  inheritAttrs: false,
   props: {
     value: {
       type: [String, Array],

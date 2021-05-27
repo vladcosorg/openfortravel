@@ -16,13 +16,15 @@
 </template>
 
 <script lang="ts">
+import { ionHelpCircleOutline as infoIcon } from '@quasar/extras/ionicons-v5'
 import { matCancel as clearIcon } from '@quasar/extras/material-icons'
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
+  inheritAttrs: false,
   setup() {
-    return { icon, clearIcon }
+    return { icon, clearIcon, infoIcon }
   },
 })
 </script>

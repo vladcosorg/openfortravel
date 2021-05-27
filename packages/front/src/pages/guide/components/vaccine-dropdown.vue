@@ -1,12 +1,15 @@
 <template>
   <generic-select
-    label="Vaccination"
+    label="Vaccination status"
     :value="value === undefined ? false : value"
     :options="list"
     v-bind="$attrs"
     @input="$emit('input', $event === false ? undefined : $event)"
-    v-on="$listeners"
-  />
+  >
+    <template v-for="(_, slot) of $scopedSlots" #[slot]="scope"
+      ><slot :name="slot" v-bind="scope"
+    /></template>
+  </generic-select>
 </template>
 
 <script lang="ts">
@@ -18,6 +21,7 @@ import { vaccineLabels } from '@/shared/src/restriction-tree/restriction-node/va
 
 export default defineComponent({
   components: { GenericSelect },
+  inheritAttrs: false,
   props: {
     value: {
       type: [String, Array, Boolean],
