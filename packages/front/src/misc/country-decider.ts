@@ -19,19 +19,3 @@ export function getCurrentOriginSlug(): string {
 export function getCookieCountry(): string | undefined {
   return useCookies().get('country')
 }
-
-export function setCurrentCountry(
-  countryCode: string,
-  saveToCookie: boolean,
-): void {
-  if (getPersistedOriginOrDefault() === countryCode) {
-    return
-  }
-
-  useRootStore().mutations.setVisitorOrigin(countryCode)
-  if (saveToCookie) {
-    useCookies().set('country', countryCode, {
-      path: '/',
-    })
-  }
-}

@@ -19,8 +19,8 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-import CountryDropdown from '@/front/src/pages/guide/components/country-dropdown.vue'
-import StepNavigation from '@/front/src/pages/guide/components/step-navigation.vue'
+import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
+import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'
 import {
   createComputedSetter,
   useCaption,

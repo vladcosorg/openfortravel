@@ -16,7 +16,7 @@
 import { defineComponent } from '@vue/composition-api'
 
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
-import VaccineDropdown from '@/front/src/pages/guide/components/vaccine-dropdown.vue'
+import VaccineDropdown from '@/front/src/components/context-field/helpers/vaccine-dropdown.vue'
 import { createComputedSetter } from '@/front/src/pages/guide/guide-composable'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 

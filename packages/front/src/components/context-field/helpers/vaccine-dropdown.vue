@@ -15,7 +15,7 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
-import GenericSelect from '@/front/src/pages/guide/components/generic-select.vue'
+import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
 import { vaccineLabels } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 

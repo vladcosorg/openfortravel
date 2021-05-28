@@ -62,6 +62,7 @@
 import { computed, defineComponent, ref, toRef } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
+import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import CitizenshipStatus from '@/front/src/components/context-value/citizenship-status.vue'
 import OriginStatus from '@/front/src/components/context-value/origin-status.vue'
 import VaccinationStatus from '@/front/src/components/context-value/vaccination-status.vue'
@@ -74,7 +75,6 @@ import {
   useRestrictionFilterer,
   useRestrictionList,
 } from '@/front/src/pages/country/composable'
-import GenericSelect from '@/front/src/pages/guide/components/generic-select.vue'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({

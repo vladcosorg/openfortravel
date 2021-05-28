@@ -11,7 +11,7 @@
     </div>
 
     <div class="row">
-      <citizenship-context hide-hint />
+      <citizenship-context />
     </div>
 
     <step-navigation :step="step" v-on="$listeners" />
@@ -22,7 +22,7 @@
 import { defineComponent } from '@vue/composition-api'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship-context.vue'
-import StepNavigation from '@/front/src/pages/guide/components/step-navigation.vue'
+import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'
 import { useCaption } from '@/front/src/pages/guide/guide-composable'
 import mixin from '@/front/src/pages/guide/steps/mixin.vue'
 import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'

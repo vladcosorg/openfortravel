@@ -18,8 +18,8 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
+import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
-import CountryDropdown from '@/front/src/pages/guide/components/country-dropdown.vue'
 import { createComputedSetter } from '@/front/src/pages/guide/guide-composable'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 

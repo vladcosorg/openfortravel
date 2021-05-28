@@ -5,12 +5,8 @@
     :done="step > currentStep"
     :caption="label"
   >
-    <div class="text-subtitle1 q-mb-md">
-      Please specify the country from which your journey will start?
-    </div>
-
     <div class="row">
-      <country-dropdown v-model="internalValue" multiple clearable />
+      <did-not-visit-countries-context />
     </div>
 
     <step-navigation :step="step" v-on="$listeners" />
@@ -21,8 +17,9 @@
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { defineComponent } from '@vue/composition-api'
 
-import CountryDropdown from '@/front/src/pages/guide/components/country-dropdown.vue'
-import StepNavigation from '@/front/src/pages/guide/components/step-navigation.vue'
+import DidNotVisitCountriesContext from '@/front/src/components/context-field/did-not-visit-countries-context.vue'
+import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
+import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'
 import {
   createComputedSetter,
   useCaption,
@@ -32,7 +29,7 @@ import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
-  components: { StepNavigation, CountryDropdown },
+  components: { DidNotVisitCountriesContext, StepNavigation, CountryDropdown },
   mixins: [mixin],
   setup() {
     const currentStep = 6

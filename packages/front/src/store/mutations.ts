@@ -57,7 +57,6 @@ export const mutations: MutationTree<RootState> & MutationSignatures = {
   },
   [MutationTypes.setVisitorOrigin](state, country) {
     Vue.set(state.visitorContext, RestrictionNodeType.ORIGIN, country)
-
     useCookies().set('country', country, { path: '/' })
   },
 }

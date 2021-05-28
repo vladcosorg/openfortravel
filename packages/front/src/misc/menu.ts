@@ -20,10 +20,10 @@ const links: Record<string, MenuItemRawPair> = {
     title: (i18n) => i18n.t('page.index.link'),
   },
   wizard: {
-    url: (locale) => ({
+    url: () => ({
       name: 'guide',
     }),
-    title: (i18n) => 'Travel wizard',
+    title: () => 'Travel wizard',
   },
   origin: {
     url: (locale) => ({
