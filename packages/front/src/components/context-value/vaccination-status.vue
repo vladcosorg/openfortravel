@@ -21,7 +21,7 @@ export default defineComponent({
     const store = useRootStore()
     const value = computed(() => {
       const status = store.state.visitorContext[RestrictionNodeType.VACCINATED]
-      return status
+      return status !== undefined
         ? `vaccinated with ${vaccineLabels[status]}`
         : 'not vaccinated'
     })

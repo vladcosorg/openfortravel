@@ -13,7 +13,7 @@
       {{ $t('components.theCountryList')[isIntro ? 'titleIntro' : 'title'] }}
     </div>
 
-    <div class="col">
+    <div class="col-12">
       <div class="relative-position row">
         <country-select
           :key="currentOrigin"
@@ -59,9 +59,11 @@
         />
       </div>
     </div>
-    <div class="col-12 row q-col-gutter-md">
-      <citizenship-context />
-      <vaccination-context />
+    <div class="col-12 row q-col-gutter-x-md">
+      <citizenship-context class="col-sm-3 col-12" />
+      <did-not-visit-countries-context class="col-sm-3 col-12" />
+      <vaccination-context class="col-sm-3 col-12" />
+      <recovery-context class="col-sm-3 col-12" />
     </div>
 
     <slot />
@@ -93,6 +95,8 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship-context.vue'
+import DidNotVisitCountriesContext from '@/front/src/components/context-field/did-not-visit-countries-context.vue'
+import RecoveryContext from '@/front/src/components/context-field/recovery-context.vue'
 import VaccinationContext from '@/front/src/components/context-field/vaccination-context.vue'
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import Swapper from '@/front/src/layouts/components/the-country-list/swapper.vue'
@@ -106,6 +110,8 @@ import {
 
 export default defineComponent({
   components: {
+    RecoveryContext,
+    DidNotVisitCountriesContext,
     VaccinationContext,
     CitizenshipContext,
     Swapper,

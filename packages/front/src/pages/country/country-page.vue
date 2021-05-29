@@ -27,7 +27,6 @@ export default defineComponent({
     },
     isFallback: {
       type: Boolean,
-      default: false,
     },
   },
 })
