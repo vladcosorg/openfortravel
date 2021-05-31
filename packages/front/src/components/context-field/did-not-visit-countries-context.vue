@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
@@ -29,9 +29,17 @@ export default defineComponent({
   inheritAttrs: false,
   props: {},
   setup() {
-    const value = createComputedSetter(
+    const setter = createComputedSetter(
       RestrictionNodeType.DID_NOT_VISIT_COUNTRIES,
     )
+    const value = computed({
+      get() {
+        return setter.value
+      },
+      set(value: string[] | null) {
+        setter.value = value ?? []
+      },
+    })
     return { value }
   },
 })

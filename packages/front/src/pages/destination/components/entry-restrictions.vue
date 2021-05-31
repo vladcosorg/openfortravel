@@ -25,7 +25,7 @@
     </div>
     <groups-by-type
       :restrictions-groups="unavailableGroups"
-      type-label="Not available"
+      type-label="You didn't match these requirements"
       :available="false"
     />
   </q-list>

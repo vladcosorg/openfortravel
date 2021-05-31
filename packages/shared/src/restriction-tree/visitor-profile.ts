@@ -15,7 +15,9 @@ type MatcherTypes = {
 }
 export type VisitorProfile = OptionalExceptFor<
   MatcherTypes,
-  RestrictionNodeType.ORIGIN | RestrictionNodeType.CITIZENSHIP
+  | RestrictionNodeType.ORIGIN
+  | RestrictionNodeType.CITIZENSHIP
+  | RestrictionNodeType.DID_NOT_VISIT_COUNTRIES
 >
 
 export function applyContextToRestrictionGroups(
@@ -31,8 +33,12 @@ export function applyContextToRestrictionGroups(
       RestrictionNodeType.CITIZENSHIP,
       profile[RestrictionNodeType.CITIZENSHIP],
     )
+    .withOptional(RestrictionNodeType.AGE, 18)
     // .withOptional(RestrictionNodeType.AGE, profile[RestrictionNodeType.AGE])
-    .withOptional(RestrictionNodeType.DID_NOT_VISIT_COUNTRIES, [])
+    .withOptional(
+      RestrictionNodeType.DID_NOT_VISIT_COUNTRIES,
+      profile[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES],
+    )
 
   if (!profile[RestrictionNodeType.VACCINATED]) {
     matcher = matcher.withAbsenceOf(RestrictionNodeType.VACCINATED)

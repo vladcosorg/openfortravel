@@ -40,11 +40,11 @@ export function createConfig(
 
       return [
         createTextInput(setters.hoursBeforeArrival, {
-          label: 'Days before arrival',
+          label: 'Hours before arrival',
           type: 'number',
         }),
         createOptionalNumberInput(setters.hoursAfterArrival, {
-          label: 'Days after arrival',
+          label: 'Hours after arrival',
         }),
         createTestList(setters.types),
         createLanguageList(setters.languages),
@@ -80,6 +80,12 @@ export function createConfig(
         createCountryList({
           countries: setters.countryCodes,
           not: setters.inverseSelection,
+        }),
+        createButtonToggle(setters.exclude, {
+          options: [
+            { label: 'Include', value: false },
+            { label: 'Exclude', value: true },
+          ],
         }),
         createTextInput(setters.days, { label: 'Days', type: 'number' }),
       ]
