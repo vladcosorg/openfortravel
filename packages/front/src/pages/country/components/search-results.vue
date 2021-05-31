@@ -59,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, toRef } from '@vue/composition-api'
+import { computed, defineComponent, toRef } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
@@ -97,7 +97,6 @@ export default defineComponent({
   },
   setup(props) {
     const originCode = toRef(props, 'originCode')
-    const hideForbidden = ref(true)
     const { loading: isLoading } = useLoading(false)
     const { allowedDestinations, forbiddenDestinations, allDestinations } =
       useRestrictionList()
@@ -114,7 +113,6 @@ export default defineComponent({
       breadcrumbs: getBreadcrumbs(originCode, isLoading),
       allowedDestinations,
       forbiddenDestinations,
-      hideForbidden,
     }
   },
 })

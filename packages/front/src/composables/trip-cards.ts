@@ -20,22 +20,24 @@ export function createTripsCards(
     const context = store.state.visitorContext
 
     const originCountry = countries[context[RestrictionNodeType.ORIGIN]]
-    return Object.values(countries).map((destinationCountry) => {
-      const optimalGroup = createCollection(
-        destinationCountry,
-        context,
-      ).getBestGroup()
+    return Object.values(countries)
+      .filter((destinationCountry) => !destinationCountry.equals(originCountry))
+      .map((destinationCountry) => {
+        const optimalGroup = createCollection(
+          destinationCountry,
+          context,
+        ).getBestGroup()
 
-      return new TripCard(
-        originCountry,
-        destinationCountry,
-        optimalGroup ?? new RestrictionGroup(),
-        includeReturnData
-          ? createCollection(originCountry, context, true).getBestGroup() ??
-            new RestrictionGroup()
-          : undefined,
-      )
-    })
+        return new TripCard(
+          originCountry,
+          destinationCountry,
+          optimalGroup ?? new RestrictionGroup(),
+          includeReturnData
+            ? createCollection(originCountry, context, true).getBestGroup() ??
+              new RestrictionGroup()
+            : undefined,
+        )
+      })
   })
 }
 

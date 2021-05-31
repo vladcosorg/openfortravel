@@ -141,6 +141,10 @@ export class DestinationDefaults implements PlainDestination {
       children: this.restrictionTree ?? [],
     }).resolveTreeNodes()
   }
+
+  public equals(instance: Destination): boolean {
+    return this.countryCode === instance.countryCode
+  }
 }
 
 export class Destination extends DestinationDefaults {
