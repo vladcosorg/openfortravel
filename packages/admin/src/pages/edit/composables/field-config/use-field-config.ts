@@ -4,6 +4,8 @@ import {
   createButtonToggle,
   createCountryList,
   createLanguageList,
+  createOptionalNumberInput,
+  createTestList,
   createTextInput,
   createVaccineList,
 } from '@/admin/src/pages/edit/composables/field-config/fields'
@@ -37,7 +39,14 @@ export function createConfig(
       const setters = getSetters(type, options, emit)
 
       return [
-        createTextInput(setters.hours, { label: 'Limit', type: 'number' }),
+        createTextInput(setters.hoursBeforeArrival, {
+          label: 'Days before arrival',
+          type: 'number',
+        }),
+        createOptionalNumberInput(setters.hoursAfterArrival, {
+          label: 'Days after arrival',
+        }),
+        createTestList(setters.types),
         createLanguageList(setters.languages),
       ]
     }
@@ -93,7 +102,17 @@ export function createConfig(
 
       return [
         createTextInput(setters.daysAgo, { label: 'Days ago', type: 'number' }),
+        createTextInput(setters.monthsAtMost, {
+          label: 'Months at most',
+          type: 'number',
+        }),
         createVaccineList(setters.authorizedBrands),
+        createButtonToggle(setters.partial, {
+          options: [
+            { label: 'Full', value: false },
+            { label: 'Partial', value: true },
+          ],
+        }),
         createLanguageList(setters.languages),
       ]
     }

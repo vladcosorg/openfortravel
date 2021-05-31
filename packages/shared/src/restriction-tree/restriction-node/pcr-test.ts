@@ -4,10 +4,26 @@ import {
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
+export enum TestType {
+  ANTIGEN = 'antigen',
+  LAMP = 'lamp',
+  PCR = 'pcr',
+  TMA = 'tma',
+}
+
+export const testLabels = {
+  [TestType.PCR]: 'PCR',
+  [TestType.ANTIGEN]: 'Antigen',
+  [TestType.LAMP]: 'LAMP',
+  [TestType.TMA]: 'TMA',
+}
+
 export class PcrTest extends RestrictionNode<typeof PcrTest.defaultOptions> {
   public static defaultOptions = {
-    hours: 72,
+    hoursBeforeArrival: 72,
+    hoursAfterArrival: 0 as number | undefined,
     languages: ['en'] as string[],
+    types: [] as TestType[],
     ...RestrictionNode.defaultOptions,
   }
 

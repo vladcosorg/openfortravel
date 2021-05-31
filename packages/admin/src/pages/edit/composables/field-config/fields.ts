@@ -1,8 +1,10 @@
 import type { WritableComputedRef } from '@vue/composition-api'
+import { computed } from '@vue/composition-api'
 import { QBtnToggle, QInput } from 'quasar'
 
 import CountryList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/country-list.vue'
 import LanguageList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/language-list.vue'
+import TestList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/test-list.vue'
 import VaccineBrandList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/vaccine-brand-list.vue'
 import type { FieldConfig } from '@/admin/src/pages/edit/composables/field-config/helpers'
 
@@ -19,6 +21,34 @@ export function createTextInput(
       ...props,
     },
     model,
+  }
+}
+
+export function createOptionalNumberInput(
+  model: WritableComputedRef<unknown>,
+  props: FieldConfig['bind'],
+): FieldConfig {
+  return {
+    type: QInput,
+    bind: {
+      standout: '',
+      dense: true,
+      unelevated: true,
+      type: 'number',
+      ...props,
+    },
+    model: computed({
+      get() {
+        return model.value ?? 0
+      },
+      set(value) {
+        if (value === 0) {
+          model.value = undefined
+        }
+
+        model.value = value
+      },
+    }),
   }
 }
 
@@ -65,7 +95,18 @@ export function createVaccineList(
     model,
   }
 }
-
+export function createTestList(
+  model: WritableComputedRef<unknown>,
+  props?: FieldConfig['bind'],
+): FieldConfig {
+  return {
+    type: TestList,
+    bind: {
+      ...props,
+    },
+    model,
+  }
+}
 export function createCountryList(
   {
     countries,

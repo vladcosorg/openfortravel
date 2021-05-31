@@ -28,6 +28,7 @@ export default defineComponent({
       type: String as PropType<RestrictionNodeType>,
       required: true,
     },
+    // eslint-disable-next-line vue/no-unused-properties
     options: {
       type: Object as PropType<typeof RestrictionNode.defaultOptions>,
       required: true,

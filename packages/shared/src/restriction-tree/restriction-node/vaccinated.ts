@@ -27,17 +27,23 @@ export const vaccineLabels = {
   [VaccineBrand.SINOVAC]: 'CoronaVac (Sinovac)',
 }
 
+export const singleShotVaccines = [VaccineBrand.JOHNSON_AND_JOHNSON]
+
 export class Vaccinated extends RestrictionNode<
   typeof Vaccinated.defaultOptions
 > {
   static defaultOptions = {
     daysAgo: 14,
+    monthsAtMost: 9,
     authorizedBrands: [] as VaccineBrand[],
     languages: ['en'] as string[],
+    partial: false,
     ...RestrictionNode.defaultOptions,
   }
 
   matches(userValue: number): boolean {
+    console.log(userValue)
+    console.log(this.options)
     return !this.options.daysAgo || userValue >= this.options.daysAgo
   }
 

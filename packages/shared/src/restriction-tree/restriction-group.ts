@@ -53,7 +53,7 @@ export class RestrictionGroupCollection {
   }
 
   protected sortGroups<T extends RawRestrictionGroupCollection>(groups: T): T {
-    return groups.sort((a, b) => b.penaltyScore - a.penaltyScore)
+    return groups.sort((a, b) => a.penaltyScore - b.penaltyScore)
   }
 }
 

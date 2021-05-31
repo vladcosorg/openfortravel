@@ -1,4 +1,4 @@
-import type firebase from 'firebase/app'
+import { Timestamp } from 'firebase/firestore'
 
 import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import {
@@ -26,7 +26,7 @@ export enum RiskLevel {
 export interface DestinationDocument {
   infoLink?: string
   bestByDate?: string
-  lastUpdated?: firebase.firestore.Timestamp
+  lastUpdated?: Timestamp
   isHealthDeclarationRequired?: boolean
   healthDeclarationDocURL?: string
   riskLevel: RiskLevel
@@ -38,6 +38,9 @@ export interface DestinationDocument {
   thisWeekCasesPer100K?: number
   lastWeekCasesPer100K?: number
   restrictionTree?: EncodedNode[]
+  maskRestrictions?: 'public' | 'public-enclosed'
+  restaurantRestrictions?: 'closed' | 'open-with-restrictions'
+  barRestrictions?: 'closed' | 'open-with-restrictions'
 }
 
 export interface PlainDestination extends DestinationDocument {

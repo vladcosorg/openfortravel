@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-col-gutter-lg q-ma-md">
+  <div class="row q-col-gutter-lg q-ma-md wrap">
     <in-place-field
       label="Best by date"
       :value="destination.bestByDate"
@@ -14,75 +14,6 @@
         />
       </template>
     </in-place-field>
-    <test-required
-      class="col-6"
-      label="Is health declaration required?"
-      :value="destination.isHealthDeclarationRequired"
-      @input="updateField('isHealthDeclarationRequired', $event)"
-    />
-
-    <q-input
-      v-if="destination.isHealthDeclarationRequired"
-      filled
-      class="col-6"
-      label="Health Declaration Document"
-      :value="destination.healthDeclarationDocURL"
-      :loading="loading"
-      debounce="2000"
-      @input="updateField('healthDeclarationDocURL', $event)"
-    />
-
-    <q-input
-      class="col-3"
-      label="Test validity in hours"
-      :value="destination.testValidityInHours"
-      type="number"
-      min="0"
-      outlined
-      :debounce="1000"
-      :loading="loading"
-      @input="updateField('testValidityInHours', $event)"
-    />
-    <q-input
-      class="col-3"
-      label="Self isolation in days"
-      :value="destination.selfIsolationInDays"
-      type="number"
-      min="0"
-      outlined
-      :debounce="1000"
-      :loading="loading"
-      @input="updateField('selfIsolationInDays', $event)"
-    />
-    <q-input
-      class="col-3"
-      label="Visited restricted countries days ago"
-      :value="destination.visitedRestrictedCountriesDaysAgo"
-      type="number"
-      min="0"
-      outlined
-      :debounce="1000"
-      :loading="loading"
-      @input="updateField('visitedRestrictedCountriesDaysAgo', $event)"
-    />
-    <q-input
-      class="col-3"
-      label="Proof of recovery accepted instead of PCR test"
-      :value="destination.proofOfRecoveryInDays"
-      type="number"
-      min="0"
-      outlined
-      debounce="2000"
-      :loading="loading"
-      @input="updateField('proofOfRecoveryInDays', $event)"
-    />
-
-    <test-required
-      class="col-3"
-      label="Test on arrival available"
-      :value="destination.testOnArrival"
-      @input="updateField('testOnArrival', $event)"
-    />
 
     <q-input
       :value="destination.infoLink"
@@ -104,6 +35,40 @@
       debounce="2000"
       outlined
       @input="updateField('internalInfo', $event)"
+    />
+
+    <test-required
+      class="col-3"
+      label="Mask restrictions"
+      :value="destination.maskRestrictions"
+      :options="[
+        { label: 'In public places', value: 'public' },
+        { label: 'Enclosed', value: 'public-enclosed' },
+        { label: 'Not required', value: undefined },
+      ]"
+      @input="updateField('maskRestrictions', $event)"
+    />
+    <test-required
+      class="col-3"
+      label="Restauran restrictions"
+      :value="destination.restaurantRestrictions"
+      :options="[
+        { label: 'Closed', value: 'closed' },
+        { label: 'Open with restrictions', value: 'open-with-restrictions' },
+        { label: 'None', value: undefined },
+      ]"
+      @input="updateField('restaurantRestrictions', $event)"
+    />
+    <test-required
+      class="col-3"
+      label="Restauran restrictions"
+      :value="destination.barRestrictions"
+      :options="[
+        { label: 'Closed', value: 'closed' },
+        { label: 'Open with restrictions', value: 'open-with-restrictions' },
+        { label: 'None', value: undefined },
+      ]"
+      @input="updateField('barRestrictions', $event)"
     />
   </div>
 </template>
