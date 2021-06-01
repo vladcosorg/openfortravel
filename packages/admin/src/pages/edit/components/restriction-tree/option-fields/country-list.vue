@@ -13,6 +13,12 @@
             <q-btn outline label="Select All" @click="selectAll" />
             <q-btn outline label="EU" @click="selectEU" />
             <q-btn outline label="EEA" @click="selectEEA" />
+            <q-btn outline label="EEA + Sw" @click="selectEEAS" />
+            <q-btn
+              outline
+              label="EEA without Schengen"
+              @click="selectEEAWithoutSchengen"
+            />
             <q-btn outline label="SH" @click="selectSchengen" />
             <q-btn outline label="Parse" @click="openParseDialog" />
           </q-btn-group>
@@ -46,10 +52,10 @@
 </template>
 
 <script lang="ts">
-import { matReplay as inverseIcon } from '@quasar/extras/material-icons'
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 import difference from 'lodash/difference'
+import union from 'lodash/union'
 
 import SelectorInput from '@/admin/src/pages/edit/components/selector-input.vue'
 import { getOriginLabels } from '@/shared/src/modules/country-list/country-list-helpers'
@@ -113,15 +119,21 @@ export default defineComponent({
     }
 
     const selectEU = () => {
-      ticked.value.push(...EU)
+      ticked.value = union(ticked.value, EU)
     }
 
     const selectEEA = () => {
-      ticked.value.push(...EEA)
+      ticked.value = union(ticked.value, EEA)
+    }
+    const selectEEAS = () => {
+      ticked.value = union(ticked.value, EEA, ['ch'])
+    }
+    const selectEEAWithoutSchengen = () => {
+      ticked.value = union(ticked.value, difference(EEA, SCHENGEN))
     }
 
     const selectSchengen = () => {
-      ticked.value.push(...SCHENGEN)
+      ticked.value = union(ticked.value, SCHENGEN)
     }
 
     const openParseDialog = () => {
@@ -144,11 +156,12 @@ export default defineComponent({
       toggleNegation,
       selectEU,
       selectEEA,
+      selectEEAS,
+      selectEEAWithoutSchengen,
       selectSchengen,
       filter,
       filterMethod,
       openParseDialog,
-      inverseIcon,
     }
   },
 })

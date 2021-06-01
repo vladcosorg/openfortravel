@@ -76,6 +76,11 @@
       unelevated
       @click="showCustomInstructions(scope)"
     />
+    <comments
+      :scope="scope"
+      class="col"
+      @input="updateOptions(scope, $event)"
+    />
     <node-body
       v-if="scope.node.type !== 'or' && scope.node.type !== 'and'"
       class="col-12"
@@ -99,6 +104,7 @@ import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, toRef } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 
+import Comments from '@/admin/src/pages/edit/components/restriction-tree/tree-item/comments.vue'
 import NodeBody from '@/admin/src/pages/edit/components/restriction-tree/tree-item/option-wrapper.vue'
 import type {
   QuasarLogicTreeNode,
@@ -112,7 +118,7 @@ import {
 } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
-  components: { NodeBody },
+  components: { Comments, NodeBody },
   model: {
     prop: 'scope',
   },

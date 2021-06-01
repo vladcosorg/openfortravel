@@ -10,6 +10,7 @@
     >
       <template #default-header="scope">
         <tree-item
+          class="col-12"
           :scope="scope"
           :tree="tree"
           :buffered-node="nodeToCopy"

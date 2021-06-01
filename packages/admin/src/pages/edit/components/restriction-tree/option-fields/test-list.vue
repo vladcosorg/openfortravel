@@ -11,6 +11,8 @@
     clearable
     :class="$style.select"
     style="width: 200px; white-space: nowrap"
+    emit-value
+    map-options
     v-on="$listeners"
   >
     <template #selected
@@ -39,6 +41,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
+import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
 import { testLabels } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
 
 export default defineComponent({
@@ -49,7 +52,7 @@ export default defineComponent({
     },
   },
   setup() {
-    return { options: Object.values(testLabels) }
+    return { options: transformFlatMapToArrayOfPairs(testLabels) }
   },
 })
 </script>
