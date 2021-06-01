@@ -44,6 +44,10 @@ export class Vaccinated extends RestrictionNode<DefaultOptions> {
       return false
     }
 
+    if (this.options.authorizedBrands.length === 0) {
+      return true
+    }
+
     return this.options.authorizedBrands.includes(visitorContext.brand)
   }
 

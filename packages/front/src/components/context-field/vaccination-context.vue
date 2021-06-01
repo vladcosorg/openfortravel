@@ -18,6 +18,7 @@ import { computed, defineComponent } from '@vue/composition-api'
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
 import VaccineDropdown from '@/front/src/components/context-field/helpers/vaccine-dropdown.vue'
 import { createComputedSetter } from '@/front/src/pages/guide/guide-composable'
+import { VaccineBrand } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
@@ -29,17 +30,15 @@ export default defineComponent({
     return {
       value: computed({
         get() {
-          return setter.value === undefined
-            ? undefined
-            : setter.value.authorizedBrands
+          return setter.value === undefined ? undefined : setter.value.brand
         },
-        set(value) {
+        set(value: undefined | VaccineBrand) {
           setter.value =
             value === undefined
               ? undefined
               : {
                   partial: false,
-                  authorizedBrands: value,
+                  brand: value,
                 }
         },
       }),

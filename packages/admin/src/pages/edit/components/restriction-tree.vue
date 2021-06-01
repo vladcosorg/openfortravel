@@ -62,7 +62,8 @@ export default defineComponent({
 
     const treeElement = ref()
     let isInitialLoad = true
-    const nodeToCopy = ref<QuasarTreeNode | undefined>()
+    const nodeToCopy =
+      ref<{ action: 'cut' | 'copy'; node: QuasarTreeNode } | undefined>()
     const tree = ref<QuasarTreeNode[]>(
       props.loading ? [] : createIndexedTree(props.destination, getNextUID),
     )

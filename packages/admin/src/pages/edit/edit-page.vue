@@ -29,7 +29,7 @@
       </q-toolbar>
     </portal>
 
-    <div class="row justify-center">
+    <div class="row">
       <keep-alive>
         <restriction-tree
           v-if="tab === 'tree'"

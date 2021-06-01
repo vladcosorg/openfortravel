@@ -1,66 +1,98 @@
 <template>
-  <div class="row" @click.stop @keypress.stop>
-    <div class="row q-col-gutter-sm">
-      <q-select
-        :value="scope.node.type"
-        class="text-capitalize"
-        standout
-        dense
-        map-options
-        emit-value
-        :disable="scope.node.UID === 1"
-        :options="options"
-        @input="updateNodeType($event, scope)"
-      >
-        <q-badge v-if="hasCustomInstructions" color="orange" floating
-          >C</q-badge
-        >
-      </q-select>
-      <node-body
-        v-if="scope.node.type !== 'or' && scope.node.type !== 'and'"
-        :node="scope.node"
-        @input="updateOptions(scope, $event)"
-      />
-    </div>
-    <div class="row">
+  <div class="row q-gutter-sm" @click.stop @keypress.stop>
+    <q-select
+      :value="scope.node.type"
+      class="text-capitalize"
+      standout
+      dense
+      map-options
+      emit-value
+      :disable="scope.node.UID === 1"
+      :options="options"
+      @input="updateNodeType($event, scope)"
+    >
+      <q-badge v-if="hasCustomInstructions" color="orange" floating>C</q-badge>
+    </q-select>
+
+    <q-btn-group unelevated style="background-color: #556066">
       <q-btn
         v-if="scope.node.type === 'or' || scope.node.type === 'and'"
-        flat
         :icon="addIcon"
+        unelevated
         @click="addNode(scope)"
       />
-      <div v-if="scope.node.UID > 1">
-        <q-btn flat :icon="deleteIcon" @click="removeNode(scope)" />
-        <q-btn flat :icon="duplicateIcon" @click="duplicateNode(scope)" />
-        <q-btn flat :icon="copyIcon" @click="copyNode(scope)" />
-      </div>
+      <q-btn
+        v-if="scope.node.type === 'or' || scope.node.type === 'and'"
+        unelevated
+        label="Or"
+        @click="addNode(scope, 'or')"
+      />
+      <q-btn
+        v-if="scope.node.type === 'or' || scope.node.type === 'and'"
+        unelevated
+        label="And"
+        @click="addNode(scope, 'and')"
+      />
+      <q-btn
+        v-if="scope.node.UID > 1"
+        :icon="deleteIcon"
+        unelevated
+        @click="removeNode(scope)"
+      />
+    </q-btn-group>
+    <q-btn-group unelevated style="background-color: #556066">
+      <q-btn
+        v-if="scope.node.UID > 1"
+        :icon="duplicateIcon"
+        unelevated
+        @click="duplicateNode(scope)"
+      />
+      <q-btn
+        v-if="scope.node.UID > 1"
+        :icon="copyIcon"
+        unelevated
+        @click="copyNode(scope)"
+      />
+      <q-btn
+        v-if="scope.node.UID > 1"
+        :icon="cutIcon"
+        unelevated
+        @click="cutNode(scope)"
+      />
       <q-btn
         v-if="
           (scope.node.type === 'or' || scope.node.type === 'and') &&
           bufferedNode
         "
-        flat
         :icon="pasteIcon"
+        unelevated
         @click="pasteNode(scope)"
       />
-      <q-btn
-        v-else
-        flat
-        :icon="showIcon"
-        @click="showCustomInstructions(scope)"
-      />
-    </div>
+    </q-btn-group>
+    <q-btn
+      v-if="scope.node.type !== 'or' && scope.node.type !== 'and'"
+      style="background-color: #556066"
+      :icon="showIcon"
+      unelevated
+      @click="showCustomInstructions(scope)"
+    />
+    <node-body
+      v-if="scope.node.type !== 'or' && scope.node.type !== 'and'"
+      class="col-12"
+      :node="scope.node"
+      @input="updateOptions(scope, $event)"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import {
   matAdd as addIcon,
-  matContentCopy as duplicateIcon,
   matContentCut as cutIcon,
   matContentPaste as pasteIcon,
   matFileCopy as copyIcon,
   matRemove as deleteIcon,
+  matScanner as duplicateIcon,
   matToggleOn as showIcon,
 } from '@quasar/extras/material-icons'
 import type { PropType } from '@vue/composition-api'
@@ -86,7 +118,10 @@ export default defineComponent({
   },
   props: {
     bufferedNode: {
-      type: Object as PropType<QuasarTreeNode>,
+      type: Object as PropType<{
+        action: 'cut' | 'copy'
+        node: QuasarTreeNode
+      }>,
       required: false,
     },
     scope: {
@@ -123,13 +158,24 @@ export default defineComponent({
         props.scope.node?.options?.customInstructionSubtitle,
     )
 
-    const addNode = (node: ScopedNodeData) => {
+    const addNode = (
+      node: ScopedNodeData,
+      type: RestrictionNodeType = RestrictionNodeType.ORIGIN,
+    ) => {
       const parent = findNode(tree.value, node.key) as QuasarLogicTreeNode
-      parent.children.push({
-        type: 'origin',
-        UID: props.nextUid(),
-        options: {},
-      })
+      parent.children.push(
+        type === LogicNodeType.AND || type === LogicNodeType.OR
+          ? {
+              type,
+              UID: props.nextUid(),
+              children: [],
+            }
+          : {
+              type,
+              UID: props.nextUid(),
+              options: {},
+            },
+      )
     }
 
     const removeNode = (node: ScopedNodeData) => {
@@ -145,14 +191,34 @@ export default defineComponent({
     }
 
     const copyNode = (node: ScopedNodeData) => {
-      emit('copy', findNode(tree.value, node.key))
+      emit('copy', { action: 'copy', node: findNode(tree.value, node.key) })
+    }
+
+    const cutNode = (node: ScopedNodeData) => {
+      emit('copy', { action: 'cut', node: findNode(tree.value, node.key) })
     }
 
     const pasteNode = (node: ScopedNodeData) => {
       const parent = findNode(tree.value, node.key) as QuasarLogicTreeNode
-      parent.children.push(
-        cloneDeep(indexTheTree([props.bufferedNode], props.nextUid).pop()),
-      )
+
+      if (props.bufferedNode.action === 'copy') {
+        parent.children.push(
+          cloneDeep(
+            indexTheTree([props.bufferedNode.node], props.nextUid).pop(),
+          ),
+        )
+      } else {
+        const oldParent = findNodeParent(
+          tree.value,
+          props.bufferedNode.node.UID,
+        )
+        oldParent.children = oldParent.children.filter(
+          (item) => item.UID !== props.bufferedNode.node.UID,
+        )
+        parent.children.push(props.bufferedNode.node)
+      }
+
+      emit('copy')
     }
 
     const updateNodeType = (
@@ -212,6 +278,7 @@ export default defineComponent({
       cutIcon,
       pasteIcon,
       showIcon,
+      cutNode,
       addNode,
       removeNode,
       duplicateNode,

@@ -41,11 +41,7 @@
       style="cursor: pointer"
       :value="label"
       @click="show = true"
-    >
-      <template v-if="not" #append>
-        <q-icon :name="inverseIcon" color="negative" />
-      </template>
-    </q-input>
+    />
   </div>
 </template>
 
@@ -99,7 +95,9 @@ export default defineComponent({
       acc.push({ value, label })
       return acc
     }, [])
-    const label = computed(() => `${ticked.value.length} selected`)
+    const label = computed(
+      () => `${props.not ? 'Except' : 'Only'} ${ticked.value.length} selected`,
+    )
 
     const filterMethod = (node: Node, filter: string): boolean =>
       node.label && node.label.toLowerCase().includes(filter.toLowerCase())
