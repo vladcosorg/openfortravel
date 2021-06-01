@@ -28,10 +28,8 @@ export const vaccineLabels = {
 }
 
 export const singleShotVaccines = [VaccineBrand.JOHNSON_AND_JOHNSON]
-
-export class Vaccinated extends RestrictionNode<
-  typeof Vaccinated.defaultOptions
-> {
+type DefaultOptions = typeof Vaccinated.defaultOptions
+export class Vaccinated extends RestrictionNode<DefaultOptions> {
   static defaultOptions = {
     daysAgo: 14,
     monthsAtMost: 9,
@@ -41,10 +39,12 @@ export class Vaccinated extends RestrictionNode<
     ...RestrictionNode.defaultOptions,
   }
 
-  matches(userValue: number): boolean {
-    console.log(userValue)
-    console.log(this.options)
-    return !this.options.daysAgo || userValue >= this.options.daysAgo
+  matches(visitorContext?: { brand: VaccineBrand; partial: boolean }): boolean {
+    if (!visitorContext || this.options.partial !== visitorContext.partial) {
+      return false
+    }
+
+    return this.options.authorizedBrands.includes(visitorContext.brand)
   }
 
   id(): RestrictionNodeType {

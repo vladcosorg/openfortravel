@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
 import VaccineDropdown from '@/front/src/components/context-field/helpers/vaccine-dropdown.vue'
@@ -25,8 +25,25 @@ export default defineComponent({
   inheritAttrs: false,
   props: {},
   setup() {
-    const value = createComputedSetter(RestrictionNodeType.VACCINATED)
-    return { value }
+    const setter = createComputedSetter(RestrictionNodeType.VACCINATED)
+    return {
+      value: computed({
+        get() {
+          return setter.value === undefined
+            ? undefined
+            : setter.value.authorizedBrands
+        },
+        set(value) {
+          setter.value =
+            value === undefined
+              ? undefined
+              : {
+                  partial: false,
+                  authorizedBrands: value,
+                }
+        },
+      }),
+    }
   },
 })
 </script>

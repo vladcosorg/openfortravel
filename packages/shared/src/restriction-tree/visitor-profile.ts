@@ -39,10 +39,13 @@ export function applyContextToRestrictionGroups(
       RestrictionNodeType.DID_NOT_VISIT_COUNTRIES,
       profile[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES],
     )
+    .withOptional(
+      RestrictionNodeType.RECOVERY,
+      profile[RestrictionNodeType.RECOVERY],
+    )
 
   if (!profile[RestrictionNodeType.VACCINATED]) {
     matcher = matcher.withAbsenceOf(RestrictionNodeType.VACCINATED)
   }
-
   return matcher
 }
