@@ -1,4 +1,4 @@
-import { getDoc, doc, collection, setDoc } from 'firebase/firestore'
+import { getDoc, doc, collection, setDoc, Timestamp } from 'firebase/firestore'
 
 import {
   createDummyPlainDestination,
@@ -48,7 +48,14 @@ export async function updateOriginDocument(
   reference: string,
   object: Partial<PlainDestination>,
 ): Promise<void> {
-  await setDoc(doc(countryCollection, reference), object, { merge: true })
+  await setDoc(
+    doc(countryCollection, reference),
+    {
+      ...object,
+      lastUpdated: Timestamp.fromDate(new Date()),
+    },
+    { merge: true },
+  )
 }
 
 export async function updateOriginField<
