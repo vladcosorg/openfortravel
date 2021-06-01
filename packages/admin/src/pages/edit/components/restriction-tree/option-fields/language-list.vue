@@ -42,8 +42,14 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
-import languageList from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
+import rawLanguageList from 'iso-639-1/src/data'
 
+const languageList = Object.entries(rawLanguageList).map(
+  ([countryCode, value]) => ({
+    label: value.name,
+    value: countryCode,
+  }),
+)
 export default defineComponent({
   components: {},
   props: {
