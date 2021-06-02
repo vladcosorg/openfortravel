@@ -13,6 +13,7 @@ import { computed, defineComponent } from '@vue/composition-api'
 
 import Age from '@/front/src/pages/destination/components/restriction-groups/restriction/age.vue'
 import Citizenship from '@/front/src/pages/destination/components/restriction-groups/restriction/citizenship.vue'
+import CustomRequirement from '@/front/src/pages/destination/components/restriction-groups/restriction/custom-requirement.vue'
 import DidNotVisitCountries from '@/front/src/pages/destination/components/restriction-groups/restriction/did-not-visit-countries.vue'
 import Insurance from '@/front/src/pages/destination/components/restriction-groups/restriction/insurance.vue'
 import OnlineApplication from '@/front/src/pages/destination/components/restriction-groups/restriction/online-application.vue'
@@ -39,6 +40,7 @@ export default defineComponent({
     [RestrictionNodeType.AGE]: Age,
     [RestrictionNodeType.ONLINE_APPLICATION]: OnlineApplication,
     [RestrictionNodeType.INSURANCE]: Insurance,
+    [RestrictionNodeType.CUSTOM_REQUIREMENT]: CustomRequirement,
   },
   props: {
     restriction: {

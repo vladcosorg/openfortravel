@@ -19,6 +19,7 @@ export enum RestrictionNodeType {
   CITIZENSHIP = 'citizenship',
   DID_NOT_VISIT_COUNTRIES = 'did-not-visit-countries',
   INSURANCE = 'insurance',
+  CUSTOM_REQUIREMENT = 'custom-requirement',
 }
 
 export type CriterionType = RestrictionNodeType

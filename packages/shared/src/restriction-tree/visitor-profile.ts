@@ -47,6 +47,10 @@ export function applyContextToRestrictionGroups(
       RestrictionNodeType.VACCINATED,
       profile[RestrictionNodeType.VACCINATED],
     )
+    .withOptional(
+      RestrictionNodeType.VACCINATED,
+      profile[RestrictionNodeType.VACCINATED],
+    )
 
   return matcher
 }

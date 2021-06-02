@@ -2,6 +2,7 @@ import { And } from '@/shared/src/restriction-tree/logic-node/and'
 import { Or } from '@/shared/src/restriction-tree/logic-node/or'
 import { Age } from '@/shared/src/restriction-tree/restriction-node/age'
 import { Citizenship } from '@/shared/src/restriction-tree/restriction-node/citizenship'
+import { CustomRequirement } from '@/shared/src/restriction-tree/restriction-node/custom-requirement'
 import { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
 import { Insurance } from '@/shared/src/restriction-tree/restriction-node/insurance'
 import { OnlineApplication } from '@/shared/src/restriction-tree/restriction-node/online-application'
@@ -39,6 +40,7 @@ export const typeConstructors = {
   [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: DidNotVisitCountries,
   [RestrictionNodeType.INSURANCE]: Insurance,
   [RestrictionNodeType.AGE]: Age,
+  [RestrictionNodeType.CUSTOM_REQUIREMENT]: CustomRequirement,
 }
 
 export function convertFromStorageFormat(nodeTree: EncodedNode): TreeNode {

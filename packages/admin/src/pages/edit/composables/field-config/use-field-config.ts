@@ -62,6 +62,10 @@ export function createConfig(
       ]
     }
 
+    case RestrictionNodeType.CUSTOM_REQUIREMENT: {
+      return []
+    }
+
     case RestrictionNodeType.CITIZENSHIP: {
       const setters = getSetters(type, options, emit)
 
