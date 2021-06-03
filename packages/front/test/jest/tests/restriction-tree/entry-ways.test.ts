@@ -1,4 +1,6 @@
 import { EntryWays } from '@/shared/src/restriction-tree/entry-ways'
+import { QuarantineWithTesting } from '@/shared/src/restriction-tree/restriction-node/quarantine-with-testing'
+
 import { And } from '@/shared/src/restriction-tree/logic-node/and'
 import { Or } from '@/shared/src/restriction-tree/logic-node/or'
 import { Matcher } from '@/shared/src/restriction-tree/matcher'
@@ -7,23 +9,28 @@ import { OnlineApplication } from '@/shared/src/restriction-tree/restriction-nod
 import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
 import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
 import { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
-import { QuarantineWithTesting } from '@/shared/src/restriction-tree/restriction-node/quarantine-with-testing'
 import { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
+import { VisitorContext } from '@/shared/src/restriction-tree/visitor-profile'
 
 const matcher = new Matcher(
   new Or([
     new And([
       new Origin({ allowedOrigins: ['us', 'ru'] }),
-      new Or([new PcrTest({ hours: 48 }), new QuarantineWithTesting({ days: 14 })]),
+      new Or([
+        new PcrTest({ hours: 48 }),
+        new QuarantineWithTesting({ days: 14 }),
+      ]),
       new OnlineApplication({ url: 'dawdaw' }),
       new DidNotVisitCountries({ countryCodes: ['cn'], days: 14 }),
     ]),
     new Vaccinated({ daysAgo: 11 }),
     new And([
       new Origin({ allowedOrigins: ['md'] }),
-      new Or([new QuarantineWithTesting({ days: 14 }), new Quarantine({ days: 14 })]),
+      new Or([
+        new QuarantineWithTesting({ days: 14 }),
+        new Quarantine({ days: 14 }),
+      ]),
       new OnlineApplication({ url: 'dawdaw' }),
       new DidNotVisitCountries({ countryCodes: ['cn'], days: 14 }),
     ]),

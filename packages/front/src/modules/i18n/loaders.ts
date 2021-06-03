@@ -1,8 +1,8 @@
-import { IVueI18n, LocaleMessageObject, LocaleMessages } from 'vue-i18n'
-import { Store } from 'vuex'
+import type { IVueI18n, LocaleMessageObject, LocaleMessages } from 'vue-i18n'
+import type { Store } from 'vuex'
 
-import { LanguageLocale } from '@/front/src/modules/i18n/types'
-import { StateInterface } from '@/front/src/store/state'
+import type { LanguageLocale } from '@/front/src/modules/i18n/types'
+import type { StateInterface } from '@/front/src/store/state'
 
 export function pushRequiredLocalesToStore(
   i18n: IVueI18n,
@@ -20,6 +20,6 @@ export function preloadLocaleMessageCollectionIntoPlugin(
   localeMessageCollection: LocaleMessages,
 ): void {
   Object.entries(localeMessageCollection).map(([locale, messageObject]) =>
-    i18n.setLocaleMessage(locale, messageObject as LocaleMessageObject),
+    i18n.setLocaleMessage(locale, messageObject),
   )
 }

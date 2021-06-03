@@ -1,4 +1,4 @@
-import { Flavor } from '@/shared/src/misc/type-helpers'
+import type { Flavor } from '@/shared/src/misc/type-helpers'
 
 export type CountryCode = string
 export type CountryLabel = string

@@ -1,16 +1,14 @@
 import {
-  CommonOptions,
   RestrictionCategory,
-  RestrictionInstruction,
   RestrictionNode,
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export class Age extends RestrictionNode {
-  constructor(
-    protected options: { age: number; orMore: boolean } & CommonOptions,
-  ) {
-    super()
+export class Age extends RestrictionNode<typeof Age.defaultOptions> {
+  public static defaultOptions = {
+    age: 6,
+    orMore: false,
+    ...RestrictionNode.defaultOptions,
   }
 
   id(): RestrictionNodeType {
@@ -32,14 +30,5 @@ export class Age extends RestrictionNode {
     return !this.options.orMore
       ? this.options.age >= value
       : this.options.age <= value
-  }
-
-  instruction(): RestrictionInstruction {
-    return {
-      title: `Required age is ${this.options.age} or ${
-        !this.options.orMore ? 'less' : 'more'
-      }`,
-      subtitle: '',
-    }
   }
 }

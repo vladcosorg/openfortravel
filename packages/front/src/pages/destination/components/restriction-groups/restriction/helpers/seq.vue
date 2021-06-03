@@ -10,23 +10,28 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 export default defineComponent({
   props: {
+    conjunction: {
+      type: String,
+      default: 'and',
+    },
     items: {
       type: Array as PropType<string[]>,
       required: true,
     },
   },
   setup(props) {
-    const insertSeparator = (index): string => {
+    const insertSeparator = (index: number): string => {
       if (index === 0) {
         return ''
       }
 
       if (index === props.items.length - 1) {
-        return ' and'
+        return ' ' + props.conjunction
       }
 
       return ','

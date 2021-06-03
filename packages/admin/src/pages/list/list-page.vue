@@ -18,7 +18,13 @@
     >
       <template #header-cell-country="props">
         <q-th :props="props">
-          <q-input v-model="filter" placeholder="Filter by name" dense filled autofocus />
+          <q-input
+            v-model="filter"
+            placeholder="Filter by name"
+            dense
+            filled
+            autofocus
+          />
         </q-th>
       </template>
       <template #body-cell-bestByDate="props">
@@ -38,6 +44,7 @@
     </q-table>
   </q-page>
 </template>
+
 <style lang="sass" module>
 .table
   height: 100%
@@ -50,13 +57,14 @@
   thead tr:first-child th
     top: 0
 </style>
+
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
 import { formatDistanceToNow, isPast, parseISO } from 'date-fns'
-import type firebase from 'firebase/app'
+import { Timestamp } from 'firebase/firestore'
 
 import { useDestinations } from '@/shared/src/api/destinations/composables'
-import { Destination } from '@/shared/src/api/destinations/models'
+import type { Destination } from '@/shared/src/api/destinations/models'
 import { useRouter } from '@/shared/src/composables/use-plugins'
 import { getContinentLabel } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import { loadContinentMap } from '@/shared/src/modules/continent-map/ssr-loader'
@@ -117,7 +125,7 @@ export default defineComponent({
           label: 'Last updated',
           field: 'lastUpdated',
           align: 'left',
-          format: (date?: firebase.firestore.Timestamp) => {
+          format: (date?: Timestamp) => {
             if (date) {
               const dateObject = date.toDate()
               return formatDistanceToNow(dateObject, { addSuffix: true })

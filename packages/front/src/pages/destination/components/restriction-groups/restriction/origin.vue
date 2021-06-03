@@ -1,11 +1,12 @@
 <template>
-  <component :is="wrapper">
+  <component :is="wrapper" :restriction="restriction">
     <template #title>
       <span>
-        You must arrive from
+        If you are arriving from
         <title-country
           :allowed="restriction.getAllowedCountries()"
           :focus="context"
+          regular
         />
       </span>
     </template>
@@ -18,12 +19,12 @@
         />.
       </p>
       <p>
-        Arriving to <country focused :code="destination.countryCode" /> from any
-        other country except the ones listed above, may subject you to
-        additional restrictions, such as quarantine or even denial of entry.
+        Arriving to
+        <country-label focused regular :value="destination.countryCode" /> from
+        any other country except the one above, may subject you to additional
+        restrictions, such as quarantine or even denial of entry.
       </p>
     </template>
-    <template #did-not-match>YOu did not</template>
   </component>
 </template>
 
@@ -36,24 +37,19 @@ a[href^='#'] {
 </style>
 
 <script lang="ts">
-import { matWarning as notMatchedIcon } from '@quasar/extras/material-icons'
-import {
-  computed,
-  defineComponent,
-  inject,
-  PropType,
-} from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { computed, defineComponent, inject } from '@vue/composition-api'
 
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
-import Country from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/country.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
+import type { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
 
 export default defineComponent({
-  components: { Country, CollapsedCountrySequence, TitleCountry },
+  components: { CountryLabel, CollapsedCountrySequence, TitleCountry },
   mixins: [sharedProps],
   props: {
     restriction: {
@@ -63,8 +59,8 @@ export default defineComponent({
   },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const destination = computed(() => store.getters.currentDestination)
-    return { destination, notMatchedIcon }
+    const destination = computed(() => store.getters.destination)
+    return { destination }
   },
 })
 </script>

@@ -60,11 +60,16 @@
 
 .secondCountry {
   right: 0;
-  mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0.1) 100%);
+  mask-image: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 1) 90%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
   z-index: 1;
   width: 50%;
 }
 </style>
+
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 

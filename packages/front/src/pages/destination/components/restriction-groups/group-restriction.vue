@@ -17,14 +17,13 @@
   </q-item>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import { matChevronRight as prerequisiteIcon } from '@quasar/extras/material-icons'
-import { defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 import Restriction from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction.vue'
-import {
+import type {
   RestrictionCategory,
   RestrictionNode,
 } from '@/shared/src/restriction-tree/restriction-node'

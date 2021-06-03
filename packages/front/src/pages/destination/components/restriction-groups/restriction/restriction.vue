@@ -1,53 +1,46 @@
 <template>
   <component
     :is="restriction.id()"
-    v-if="isStandalone"
     :wrapper="template"
     :restriction="restriction"
     :context="contextValue"
   />
-  <restriction-item v-else>
-    <template #title>
-      <div v-html="instruction.title" />
-    </template>
-    <template #subtitle><div v-html="instruction.subtitle" /></template>
-  </restriction-item>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  PropType,
-} from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
+import Age from '@/front/src/pages/destination/components/restriction-groups/restriction/age.vue'
 import Citizenship from '@/front/src/pages/destination/components/restriction-groups/restriction/citizenship.vue'
+import CustomRequirement from '@/front/src/pages/destination/components/restriction-groups/restriction/custom-requirement.vue'
 import DidNotVisitCountries from '@/front/src/pages/destination/components/restriction-groups/restriction/did-not-visit-countries.vue'
+import Insurance from '@/front/src/pages/destination/components/restriction-groups/restriction/insurance.vue'
+import OnlineApplication from '@/front/src/pages/destination/components/restriction-groups/restriction/online-application.vue'
 import Origin from '@/front/src/pages/destination/components/restriction-groups/restriction/origin.vue'
 import PcrTest from '@/front/src/pages/destination/components/restriction-groups/restriction/pcr-test.vue'
 import Quarantine from '@/front/src/pages/destination/components/restriction-groups/restriction/quarantine.vue'
+import Recovery from '@/front/src/pages/destination/components/restriction-groups/restriction/recovery.vue'
 import RestrictionItem from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item.vue'
 import Vaccinated from '@/front/src/pages/destination/components/restriction-groups/restriction/vaccinated.vue'
-import { StoreModule } from '@/front/src/pages/destination/destination-store'
-import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import type { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-const standaloneTypes = {
-  [RestrictionNodeType.CITIZENSHIP]: Citizenship,
-  [RestrictionNodeType.ORIGIN]: Origin,
-  [RestrictionNodeType.PCR_TEST]: PcrTest,
-  [RestrictionNodeType.QUARANTINE]: Quarantine,
-  [RestrictionNodeType.VACCINATED]: Vaccinated,
-  [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: DidNotVisitCountries,
-}
 export default defineComponent({
   components: {
     RestrictionItem,
-    ...standaloneTypes,
+    [RestrictionNodeType.CITIZENSHIP]: Citizenship,
+    [RestrictionNodeType.ORIGIN]: Origin,
+    [RestrictionNodeType.PCR_TEST]: PcrTest,
+    [RestrictionNodeType.QUARANTINE]: Quarantine,
+    [RestrictionNodeType.VACCINATED]: Vaccinated,
+    [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: DidNotVisitCountries,
+    [RestrictionNodeType.RECOVERY]: Recovery,
+    [RestrictionNodeType.AGE]: Age,
+    [RestrictionNodeType.ONLINE_APPLICATION]: OnlineApplication,
+    [RestrictionNodeType.INSURANCE]: Insurance,
+    [RestrictionNodeType.CUSTOM_REQUIREMENT]: CustomRequirement,
   },
   props: {
     restriction: {
@@ -56,23 +49,15 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const store = inject(StoreKey) as StoreModule
+    const store = useRootStore()
 
     const contextValue = computed(() => {
       const restrictionType = props.restriction.id()
-      return store.getters.visitorContext[restrictionType]
+      return store.state.visitorContext[restrictionType]
     })
 
-    const instruction = computed(() =>
-      props.restriction.instruction(store.getters.visitorContext),
-    )
-    const isStandalone = computed(
-      () => props.restriction.id() in standaloneTypes,
-    )
     return {
       contextValue,
-      isStandalone,
-      instruction,
       template: RestrictionItem,
     }
   },

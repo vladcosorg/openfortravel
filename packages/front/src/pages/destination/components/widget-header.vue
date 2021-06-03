@@ -17,8 +17,11 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
+import isLoadingMixin from '@/front/src/mixins/is-loading.vue'
+
 export default defineComponent({
   components: {},
+  mixins: [isLoadingMixin],
   props: {
     title: {
       type: String,

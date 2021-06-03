@@ -1,16 +1,20 @@
 <template>
   <span :class="{ [$style.collapsed]: collapsed }">
-    <b
+    <country-label
       v-for="(label, key) in allowedCountryLabels"
       :key="key"
+      :value="label"
+      :prefix="showSeparator(key) ? ', ' : ''"
+      :focused="focusCountryLabel.includes(label)"
+      :label="label"
+      :regular="regular"
+      skip-mapping
       :class="{
-        'text-accent': focusCountryLabel === label,
-        hide: key > 5,
+        hide: key > collapseCountTrigger,
       }"
-      >{{ showSeparator(key) ? ', ' : '' }}{{ label }}</b
-    >
+    />
     <a
-      v-if="collapsed"
+      v-if="collapsed && needsCollapsing"
       :class="$style.uncollapse"
       href="javascript:void(0)"
       @click="collapsed = false"
@@ -33,34 +37,47 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { computed, defineComponent, ref } from '@vue/composition-api'
 
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 import {
-  getLabelForCountryCode,
+  getLabelsForCountryCodes,
   getSortedLabelsForCountryCodes,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
-  components: {},
+  components: { CountryLabel },
   props: {
     allowed: {
       type: Array as PropType<string[]>,
       required: true,
     },
+    regular: {
+      type: Boolean,
+      default: false,
+    },
     focus: {
-      type: String,
+      type: [String, Array] as PropType<string | string[]>,
       required: true,
     },
   },
   setup(props) {
+    const focusArray = computed(() =>
+      Array.isArray(props.focus) ? props.focus : [props.focus],
+    )
+    const collapseCountTrigger = 5
     const collapsed = ref(true)
+    const needsCollapsing = computed(
+      () => props.allowed.length >= collapseCountTrigger,
+    )
     const focusCountryLabel = computed(() =>
-      getLabelForCountryCode(props.focus),
+      getLabelsForCountryCodes(focusArray.value),
     )
 
     const allowedCountriesCount = computed(() => props.allowed.length - 1)
     const allowedCountryLabels = computed(() =>
-      getSortedLabelsForCountryCodes(props.allowed, [props.focus]),
+      getSortedLabelsForCountryCodes(props.allowed, focusArray.value),
     )
 
     return {
@@ -69,6 +86,8 @@ export default defineComponent({
       allowedCountryLabels,
       showSeparator,
       collapsed,
+      needsCollapsing,
+      collapseCountTrigger,
     }
   },
 })

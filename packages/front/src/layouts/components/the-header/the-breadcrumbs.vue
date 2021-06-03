@@ -8,7 +8,11 @@
           </template>
           <template v-if="items" #default>
             <q-breadcrumbs-el :icon="matHome" :to="homepageURL" label="Home" />
-            <q-breadcrumbs-el v-for="(item, index) in items" :key="index" v-bind="item" />
+            <q-breadcrumbs-el
+              v-for="(item, index) in items"
+              :key="index"
+              v-bind="item"
+            />
           </template>
           <template v-else #default>
             <q-breadcrumbs-el>

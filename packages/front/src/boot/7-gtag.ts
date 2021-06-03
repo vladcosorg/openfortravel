@@ -5,7 +5,7 @@ import { useCookies } from '@/shared/src/composables/use-plugins'
 
 export default boot(({ router }) => {
   if (process.env.PROD) {
-    router.afterEach(async (to) => {
+    router.afterEach((to) => {
       logPage(to.path)
     })
   }

@@ -15,7 +15,8 @@ export default {
       return: 'Returning from <b>{origin}</b> to <b>{destination}</b>',
     },
     status: {
-      allowed: 'is <b>@.lower:restriction.travel.value.allowed</b> without any restrictions. ',
+      allowed:
+        'is <b>@.lower:restriction.travel.value.allowed</b> without any restrictions. ',
       forbidden:
         'is <b>@.lower:restriction.travel.value.forbidden</b> with some exceptions. Please consult the country page for more info. ',
       conditional:
@@ -26,8 +27,7 @@ export default {
       false: 'COVID test is not required.',
     },
     insurance: {
-      true:
-        'Purchasing or owning an insurance that would cover COVID-19 treatment is necessary.',
+      true: 'Purchasing or owning an insurance that would cover COVID-19 treatment is necessary.',
       false: '',
     },
   },
@@ -73,8 +73,7 @@ export default {
       },
       caption: {
         pcr: {
-          true:
-            'COVID-19 PCR, LAMP or antigent test result issued within <b>{hrs} hours</b> prior to arrival.',
+          true: 'COVID-19 PCR, LAMP or antigent test result issued within <b>{hrs} hours</b> prior to arrival.',
           false:
             'At this time you are not required to bring a COVID-19 PCR test certificate with you.',
         },
@@ -112,8 +111,7 @@ export default {
         false: 'Not needed',
       },
       caption: {
-        true:
-          'A completed Passenger Information Form must be presented upon arrival. Usually it is provided by the airlines upon boarding.',
+        true: 'A completed Passenger Information Form must be presented upon arrival. Usually it is provided by the airlines upon boarding.',
         false:
           'At this time the authorities are not requesting that you provide any additional health information upon arrival.',
         online:
@@ -137,7 +135,7 @@ export default {
           subtitle: `Where can I travel during pandemic as a {country} citizen?<br> Do I
             need a COVID-19 vaccine passport at the border control?<br/> You’ve got
             questions - we’ve got answers!`,
-          button: 'Show me destinations',
+          button: 'Explore destinations',
         },
         stats: {
           title: 'Destination statistics',
@@ -151,19 +149,22 @@ export default {
             },
             allowed_soon: {
               title: '@:restriction.travel.value.allowedSoon',
-              valueSuffix: 'countries are opening soon <br> for <b>{nationality}</b>',
+              valueSuffix:
+                'countries are opening soon <br> for <b>{nationality}</b>',
               description:
                 'The country has announced a specific date for reopening, but certain entry requirements may still apply.',
             },
             forbidden: {
               title: '@:restriction.travel.value.forbidden',
-              valueSuffix: 'countries are completely closed <br> for <b>{nationality}</b>',
+              valueSuffix:
+                'countries are completely closed <br> for <b>{nationality}</b>',
               description:
                 'Only citizens, residents returning home, or people in other special circumstances may enter the country.',
             },
             conditional: {
               title: '@:restriction.travel.value.conditional',
-              valueSuffix: 'countries are partially open <br> for <b>{nationality}</b>',
+              valueSuffix:
+                'countries are partially open <br> for <b>{nationality}</b>',
               description:
                 'Entrance into the country may depend on the traveler’s citizenship, point of origin, or other specific regulations.',
             },
@@ -175,7 +176,8 @@ export default {
         },
       },
       meta: {
-        title: 'COVID-19 flight & travel bans to foreign countries for {nationality}',
+        title:
+          'COVID-19 flight & travel bans to foreign countries for {nationality}',
       },
     },
     privacy: {
@@ -204,11 +206,11 @@ export default {
       link: 'Destinations',
       route: 'travel/from',
       meta: {
-        title: '{origin} COVID-19 Travel Restrictions and Bans Listed By Destination',
+        title:
+          '{origin} COVID-19 Travel Restrictions and Bans Listed By Destination',
       },
       breadcrumb: 'From {country}',
       quickSearch: 'Quick country search',
-      destinations: 'To Destinations',
       tab: {
         all: 'All regions',
       },
@@ -219,7 +221,8 @@ export default {
         title:
           '{destination} travel restrictions from {origin}: flight restrictions, quarantine measures,  COVID-19 vaccine passport  and other entry requirements',
       },
-      heading: 'Travel restrictions from <b>{origin}</b> to <b>{destination}</b>',
+      heading:
+        'Travel restrictions from <b>{origin}</b> to <b>{destination}</b>',
       breadcrumb: 'To {country}',
       title: 'Latest information on travelling from {origin} to {destination}',
       seeReturnPage: 'See return travel',
@@ -369,10 +372,8 @@ export default {
       question:
         "Can I be quarantined or denied entry to {destination} if I've been to other countries recently?",
       answer: {
-        yes:
-          "Yes, if you've visited {countries} in the last {days} days, you may be quarantined or denied entry to {destination}.",
-        no:
-          'No, the {destination} authorities are not imposing any restrictions for the passengers, that have visited other countries recently.',
+        yes: "Yes, if you've visited {countries} in the last {days} days, you may be quarantined or denied entry to {destination}.",
+        no: 'No, the {destination} authorities are not imposing any restrictions for the passengers, that have visited other countries recently.',
       },
     },
     canITravelToCountry: {
@@ -389,9 +390,11 @@ export default {
               'Yes, leisure travel from <strong>{origin}</strong> to <strong>{destination}</strong> is permitted ',
             testRequired: {
               true: ' but you need to present a negative PCR test.',
-              false: ' and no PCR test or COVID-19 vaccine passport is needed upon arrival.',
+              false:
+                ' and no PCR test or COVID-19 vaccine passport is needed upon arrival.',
             },
-            quarantine: ' but you are required to self-isolate for {quarantine} days.',
+            quarantine:
+              ' but you are required to self-isolate for {quarantine} days.',
             testOrQuarantine:
               ' but you need to provide a negative PCR test or self-isolate for {quarantine} days.',
           },
@@ -404,10 +407,8 @@ export default {
       question:
         'Will I be able to return from <strong>{destination}</strong> to <strong>{origin}</strong> without any restrictions or quarantine?',
       answer: {
-        yes:
-          'Yes, provided that you will be returning back to the <strong>{origin}</strong> with a direct flight from <strong>{destination}</strong>, you will not be denied entry or quarantined. ',
-        no:
-          'No, you may have to quarantine yourself or pass a test upon returning regardless if you are a foreigner or a national.',
+        yes: 'Yes, provided that you will be returning back to the <strong>{origin}</strong> with a direct flight from <strong>{destination}</strong>, you will not be denied entry or quarantined. ',
+        no: 'No, you may have to quarantine yourself or pass a test upon returning regardless if you are a foreigner or a national.',
       },
     },
   },
@@ -421,7 +422,8 @@ export default {
     pcrTest: {
       instruction: {
         heading: 'Get a negative COVID-19 PCR test certificate',
-        subtitle: 'The test has to be issued within {hours} hours prior to arrival',
+        subtitle:
+          'The test has to be issued within {hours} hours prior to arrival',
       },
     },
     didNotVisitCountries: {
@@ -434,7 +436,8 @@ export default {
     },
     onlineApplication: {
       instruction: {
-        heading: 'Fill an online-application prior to entry to your destination',
+        heading:
+          'Fill an online-application prior to entry to your destination',
         subtitle:
           'Please <a target="_blank" href="{url}">follow this link</a> to complete the registration form and follow further instructions from that page',
       },

@@ -1,20 +1,10 @@
-import {
-  PlainRestriction,
-  PlainRestrictionCollection,
-} from '@/shared/src/api/restrictions/models'
-
 export class StateClass {
-  public currentOriginCode?: string = undefined
-  public currentDestinationCode?: string = undefined
-  public returnRestriction?: PlainRestriction = undefined
-  public relatedRestrictions: {
-    destinationCode?: string
-    restrictions: PlainRestrictionCollection
-  } = { restrictions: [] }
+  public currentOriginCode!: string
+  public currentDestinationCode!: string
+
+  constructor(state: NonNullable<StateClass>) {
+    Object.assign(this, state)
+  }
 }
 
-export function state(): StateClass {
-  return new StateClass()
-}
-
-export type StateType = ReturnType<typeof state>
+export type StateType = StateClass

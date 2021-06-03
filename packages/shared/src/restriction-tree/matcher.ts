@@ -1,8 +1,8 @@
-import { typeConstructors } from '@/shared/src/restriction-tree/converter'
-import {
-  RestrictionGroups,
+import type { typeConstructors } from '@/shared/src/restriction-tree/converter'
+import type {
+  PlainRestrictionGroups,
   CriteriaMap,
-  RestrictionGroup,
+  PlainRestrictionGroup,
   RestrictionNodeType,
   LogicNodeType,
 } from '@/shared/src/restriction-tree/types'
@@ -16,10 +16,10 @@ type Method<T extends RestrictionNodeType> = InstanceType<
 >['matches']
 type Value<T extends RestrictionNodeType> = Parameters<Method<T>>[0]
 
-export class Matcher implements IterableIterator<RestrictionGroup> {
+export class Matcher implements IterableIterator<PlainRestrictionGroup> {
   private pointer = 0
 
-  constructor(protected data: RestrictionGroups) {}
+  constructor(protected data: PlainRestrictionGroups) {}
 
   withOptional<T extends RestrictionNodeType>(
     criteriaType: T,
@@ -75,7 +75,9 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
     return new Matcher(
       this.data
         .map((restrictionGroup) =>
-          restrictionGroup.filter((criterion) => criterionType.includes(criterion.id())),
+          restrictionGroup.filter((criterion) =>
+            criterionType.includes(criterion.id()),
+          ),
         )
         .filter((group) => group.length),
     )
@@ -85,7 +87,9 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
     return new Matcher(
       this.data
         .map((restrictionGroup) =>
-          restrictionGroup.filter((criterion) => !criterionType.includes(criterion.id())),
+          restrictionGroup.filter(
+            (criterion) => !criterionType.includes(criterion.id()),
+          ),
         )
         .filter((group) => group.length),
     )
@@ -100,7 +104,9 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
   }
 
   protected matchAgainstGroup(
-    restrictionSet: RestrictionGroups extends readonly (infer T)[] ? T : never,
+    restrictionSet: PlainRestrictionGroups extends ReadonlyArray<infer T>
+      ? T
+      : never,
     filter: CriteriaMap,
     unmatchedValue: boolean,
   ): boolean {
@@ -127,11 +133,11 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
     })
   }
 
-  getGroups(): RestrictionGroups {
+  getGroups(): PlainRestrictionGroups {
     return [...this.data]
   }
 
-  public next(): IteratorResult<RestrictionGroup> {
+  public next(): IteratorResult<PlainRestrictionGroup> {
     return this.pointer < this.data.length
       ? {
           done: false,
@@ -143,7 +149,7 @@ export class Matcher implements IterableIterator<RestrictionGroup> {
         }
   }
 
-  [Symbol.iterator](): IterableIterator<RestrictionGroup> {
+  [Symbol.iterator](): IterableIterator<PlainRestrictionGroup> {
     return this
   }
 }

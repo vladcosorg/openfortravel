@@ -13,7 +13,7 @@
       {{ $t('components.theCountryList')[isIntro ? 'titleIntro' : 'title'] }}
     </div>
 
-    <div class="col">
+    <div class="col-12">
       <div class="relative-position row">
         <country-select
           :key="currentOrigin"
@@ -59,6 +59,12 @@
         />
       </div>
     </div>
+    <div class="col-12 row q-col-gutter-x-md">
+      <citizenship-context class="col-sm-3 col-12" />
+      <did-not-visit-countries-context class="col-sm-3 col-12" />
+      <vaccination-context class="col-sm-3 col-12" />
+      <recovery-context class="col-sm-3 col-12" />
+    </div>
 
     <slot />
   </div>
@@ -84,9 +90,14 @@
   }
 }
 </style>
+
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
+import CitizenshipContext from '@/front/src/components/context-field/citizenship-context.vue'
+import DidNotVisitCountriesContext from '@/front/src/components/context-field/did-not-visit-countries-context.vue'
+import RecoveryContext from '@/front/src/components/context-field/recovery-context.vue'
+import VaccinationContext from '@/front/src/components/context-field/vaccination-context.vue'
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import Swapper from '@/front/src/layouts/components/the-country-list/swapper.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
@@ -98,7 +109,14 @@ import {
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
-  components: { Swapper, CountrySelect },
+  components: {
+    RecoveryContext,
+    DidNotVisitCountriesContext,
+    VaccinationContext,
+    CitizenshipContext,
+    Swapper,
+    CountrySelect,
+  },
   props: {
     originCode: {
       type: String,
@@ -122,7 +140,8 @@ export default defineComponent({
             name: 'destination',
             params: {
               originSlug: transformCountryCodeToOriginSlug(originCode),
-              destinationSlug: transformCountryCodeToDestinationSlug(destinationCode),
+              destinationSlug:
+                transformCountryCodeToDestinationSlug(destinationCode),
               locale: useI18n().locale,
             },
           })

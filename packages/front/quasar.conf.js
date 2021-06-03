@@ -40,11 +40,16 @@ module.exports = configure((context) => ({
     { path: '3-ssr-data-preload', client: false },
     '6-country-detector',
     { path: '7-gtag', server: false },
+    { path: '8-context', client: false },
   ],
 
   vendor: {
     disable: true,
-    remove: ['i18n-iso-countries', 'svg-country-flags', 'quasar/src/components/table'],
+    remove: [
+      'i18n-iso-countries',
+      'svg-country-flags',
+      'quasar/src/components/table',
+    ],
   },
 
   // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -66,7 +71,9 @@ module.exports = configure((context) => ({
   // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
   build: {
     env: {
-      PROJECT_URL: context.prod ? 'https://openfortravel.org' : 'http://localhost:8080',
+      PROJECT_URL: context.prod
+        ? 'https://openfortravel.org'
+        : 'http://localhost:8080',
     },
     vueRouterMode: 'history', // available values: 'hash', 'history'
     transpile: context.prod && !context.debug,
@@ -86,13 +93,10 @@ module.exports = configure((context) => ({
 
     // https://quasar.dev/quasar-cli/handling-webpack
     extendWebpack(config) {
+      const skipChecks = true
       config.resolve.alias['@'] = path.resolve(__dirname, '../..')
       config.resolve.plugins = [new TsconfigPathsPlugin()]
-      if (!config.externals) {
-        config.externals = []
-      } else {
-        config.externals = [config.externals]
-      }
+      config.externals = !config.externals ? [] : [config.externals]
       config.externals.push((context, request, callback) => {
         if (/xlsx|canvg|pdfmake/.test(request)) {
           // eslint-disable-next-line unicorn/no-null
@@ -103,15 +107,17 @@ module.exports = configure((context) => ({
 
       // linting is slow in TS projects, we execute it only for production builds
       if (context.prod && !context.debug) {
-        config.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /node_modules/,
-        })
-
+        if (!skipChecks) {
+          config.module.rules.push({
+            enforce: 'pre',
+            test: /\.(js|vue)$/,
+            loader: 'eslint-loader',
+            exclude: /node_modules/,
+          })
+        }
         if (config.optimization.minimizer) {
-          const terserOptions = config.optimization.minimizer[0].options.terserOptions
+          const terserOptions =
+            config.optimization.minimizer[0].options.terserOptions
           terserOptions.compress['drop_console'] = true
           terserOptions.output = { comments: false }
         }
@@ -138,13 +144,17 @@ module.exports = configure((context) => ({
 
       config.plugins.push(
         new FilterWarningsPlugin({
-          exclude: /Critical dependency|dependency is an expression|require function is used|keyv|got/,
+          exclude:
+            /Critical dependency|dependency is an expression|require function is used|keyv|got/,
         }),
       )
       if (!config.stats) {
         config.stats = {}
       }
       config.stats.warningsFilter = [/dependency/]
+      if (skipChecks) {
+        config.plugins.shift()
+      }
     },
     chainWebpack(config) {
       if (context.debug) {
@@ -209,7 +219,14 @@ module.exports = configure((context) => ({
   // animations: 'all', // --- includes all animations
   // https://quasar.dev/options/animations
   // animations: [],
-  animations: ['fadeIn', 'fadeOut', 'fadeInRight', 'fadeOutRight', 'bounceInUp', 'bounce'],
+  animations: [
+    'fadeIn',
+    'fadeOut',
+    'fadeInRight',
+    'fadeOutRight',
+    'bounceInUp',
+    'bounce',
+  ],
 
   // https://quasar.dev/quasar-cli/developing-ssr/configuring-ssr
   ssr: {

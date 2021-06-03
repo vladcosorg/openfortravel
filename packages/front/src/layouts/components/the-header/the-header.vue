@@ -21,10 +21,11 @@
   cursor: pointer;
 }
 </style>
+
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
 import { PortalTarget } from 'portal-vue'
-import { hydrateNever, hydrateWhenIdle } from 'vue-lazy-hydration'
+import { hydrateWhenIdle } from 'vue-lazy-hydration'
 
 import TheDrawer from '@/front/src/layouts/components/the-drawer.vue'
 import TheLanguageSwitcher from '@/front/src/layouts/components/the-header/the-language-switcher.vue'
@@ -36,7 +37,7 @@ export default defineComponent({
     TheMenu: hydrateWhenIdle(TheMenu),
     TheDrawer: hydrateWhenIdle(TheDrawer),
     TheLanguageSwitcher: hydrateWhenIdle(TheLanguageSwitcher),
-    Logo: hydrateNever(Logo),
+    Logo: hydrateWhenIdle(Logo),
     PortalTarget,
   },
   props: {

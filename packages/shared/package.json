@@ -8,13 +8,15 @@
   "scripts": {
     "lint": "eslint . --ext .js,.vue,.ts",
     "format": "prettier --write  .",
-    "fix": "yarn lint --fix && yarn format"
+    "fix": "yarn lint --fix; yarn format"
   },
   "dependencies": {
-    "firebase": "^8.2.0",
+    "@types/winston": "^2.4.4",
     "countries-list": "^2.6.1",
+    "firebase": "9.0.0-beta.2",
     "ky": "^0.25.1",
-    "ky-universal": "^0.8.2"
+    "ky-universal": "^0.8.2",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@types/webpack-env": "^1.16.0",

@@ -1,20 +1,23 @@
-import { LocaleMessageObject } from 'vue-i18n'
+import type { LocaleMessageObject } from 'vue-i18n'
 
-import { RootStateType, StateInterface } from '@/front/src/store/state'
-import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
-import { MappedPlainRestrictionCollection } from '@/shared/src/api/restrictions/models'
+import type { RootStateType, StateInterface } from '@/front/src/store/state'
+import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
+import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export enum MutationTypes {
   setCountryToContinentMap = 'setCountryToContinentMap',
   setCountrySelectorLoading = 'setCountrySelectorLoading',
-  setDetectedCountry = 'setDetectedCountry',
+
   setLocales = 'setLocales',
   setAvailableLocales = 'setAvailableLocales',
   setLabeledLocales = 'setLabeledLocales',
   setLocalizedLanguages = 'setLocalizedLanguages',
   setServerLocale = 'setServerLocale',
   setHostRules = 'setHostRules',
-  setSharedRestrictions = 'setSharedRestrictions',
+
+  setVisitorContext = 'setVisitorContext',
+  setVisitorContextField = 'setVisitorContextField',
+  setVisitorOrigin = 'setVisitorOrigin',
 }
 
 export type MutationSignatures<S = RootStateType> = {
@@ -27,7 +30,7 @@ export type MutationSignatures<S = RootStateType> = {
     languages: Record<string, string>,
   ): void
   [MutationTypes.setCountrySelectorLoading](state: S, value: boolean): void
-  [MutationTypes.setDetectedCountry](state: S, country: string): void
+
   [MutationTypes.setLocales](state: S, locales: LocaleMessageObject): void
   [MutationTypes.setAvailableLocales](state: S, locales: string[]): void
   [MutationTypes.setLabeledLocales](
@@ -39,11 +42,23 @@ export type MutationSignatures<S = RootStateType> = {
     state: S,
     hostRules: MappedPlainDestinationCollection,
   ): void
-  [MutationTypes.setSharedRestrictions](
+
+  [MutationTypes.setVisitorContext](
     state: S,
-    restrictions: {
-      originCode: string
-      restrictions: MappedPlainRestrictionCollection
+    payload: {
+      context: VisitorProfile
+      persist: boolean
     },
   ): void
+  [MutationTypes.setVisitorContextField]<
+    K extends keyof VisitorProfile,
+    V extends VisitorProfile[K],
+  >(
+    state: S,
+    payload: {
+      field: K
+      value: V
+    },
+  ): void
+  [MutationTypes.setVisitorOrigin](state: S, country: string): void
 }

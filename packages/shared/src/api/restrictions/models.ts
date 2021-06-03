@@ -1,4 +1,8 @@
-import { getFullDescription, getShortDescription } from '@/front/src/models/content'
+import {
+  getFullDescription,
+  getShortDescription,
+} from '@/front/src/models/content'
+import { Destination } from '@/shared/src/api/destinations/models'
 import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import {
   getDestinationLabelForCountryCode,
@@ -10,7 +14,6 @@ import {
 
 export enum RestrictionStatus {
   ALLOWED = 'allowed',
-  ALLOWED_SOON = 'allowed_soon',
   CONDITIONAL = 'conditional',
   FORBIDDEN = 'forbidden',
 }
@@ -26,7 +29,10 @@ export interface RestrictionDocument {
 }
 
 export type PlainRestriction = Required<RestrictionDocument>
-export type MappedRestrictionDocumentCollection = Record<string, RestrictionDocument>
+export type MappedRestrictionDocumentCollection = Record<
+  string,
+  RestrictionDocument
+>
 
 export type PlainRestrictionCollection = PlainRestriction[]
 export type MappedPlainRestrictionCollection = Record<string, PlainRestriction>
@@ -52,7 +58,10 @@ export class Restriction implements PlainRestriction {
   public readonly insuranceRequired = false
   public readonly selfIsolation = false
   public readonly isForbidden = false
-  constructor(document: PlainRestriction) {
+  constructor(
+    document: PlainRestriction,
+    public readonly country: Destination,
+  ) {
     Object.assign(this, document)
   }
 

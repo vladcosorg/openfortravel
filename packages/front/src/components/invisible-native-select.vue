@@ -5,8 +5,16 @@
     :class="$style.nativeSelect"
     @touchstart="isOptionListInitializedRef = true"
   >
-    <optgroup v-for="(subOptions, label) in lazyOptionListRef" :key="label" :label="label">
-      <option v-for="(option, index) in subOptions" :key="index" :value="option.value">
+    <optgroup
+      v-for="(subOptions, label) in lazyOptionListRef"
+      :key="label"
+      :label="label"
+    >
+      <option
+        v-for="(option, index) in subOptions"
+        :key="index"
+        :value="option.value"
+      >
         {{ option.label }}
       </option>
     </optgroup>
@@ -17,7 +25,11 @@
     :class="$style.nativeSelect"
     @touchstart="isOptionListInitializedRef = true"
   >
-    <option v-for="(option, index) in lazyOptionListRef" :key="index" :value="option.value">
+    <option
+      v-for="(option, index) in lazyOptionListRef"
+      :key="index"
+      :value="option.value"
+    >
       {{ option.label }}
     </option>
   </select>

@@ -1,10 +1,15 @@
 <template>
-  <section>
+  <section v-if="destination">
     <widget-header
       :title="$t('page.destination.widgets.stats.title')"
-      :subtitle="$t('page.destination.widgets.stats.subtitle', { country: destination.name })"
+      :subtitle="
+        destination &&
+        $t('page.destination.widgets.stats.subtitle', {
+          country: destination.name,
+        })
+      "
     />
-    <q-list v-if="!isLoading">
+    <q-list>
       <q-item>
         <q-item-section top avatar>
           <q-avatar size="60px" :icon="coronavirus" />
@@ -48,7 +53,11 @@
           <q-item-label class="text-subtitle1">
             {{ $t('page.destination.widgets.stats.riskLevel.title') }}:
             <span :class="riskLevelColor(destination.riskLevel)">
-              {{ $t('components.destinationItem.riskLevel.values')[destination.riskLevel] }}
+              {{
+                $t('components.destinationItem.riskLevel.values')[
+                  destination.riskLevel
+                ]
+              }}
             </span>
           </q-item-label>
           <q-item-label caption>
@@ -66,8 +75,6 @@
   </section>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
 import {
   matTrendingDown as trendingDown,
@@ -80,23 +87,17 @@ import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import { riskLevelColor } from '@/front/src/pages/country/composable'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { WidgetHeader },
-  props: {
-    isLoading: {
-      type: Boolean,
-      default: true,
-    },
-  },
   setup() {
     const { t } = useVueI18n()
     const store = inject(StoreKey) as StoreModule
 
-    const destination = computed(() => store.getters.currentDestination)
+    const destination = computed(() => store.getters.destination)
     const percentageSign = computed(() => {
       if (!destination.value) {
         return

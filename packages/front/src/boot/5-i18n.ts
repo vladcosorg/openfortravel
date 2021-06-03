@@ -1,5 +1,5 @@
 import { boot } from 'quasar/wrappers'
-import VueI18n from 'vue-i18n'
+import type VueI18n from 'vue-i18n'
 
 import { serverCache } from '@/front/src/misc/server-cache'
 import {

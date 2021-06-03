@@ -1,19 +1,30 @@
-import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
 import {
   RestrictionCategory,
-  RestrictionInstruction,
   RestrictionNode,
 } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-const { t } = useI18nWithPrefix<string>('rt.pcrTest')
-type Options = { hours: number; languages: string[] }
-export class PcrTest extends RestrictionNode<Options> {
-  protected getDefaults(): Options {
-    return {
-      hours: 72,
-      languages: [],
-    }
+export enum TestType {
+  ANTIGEN = 'antigen',
+  LAMP = 'lamp',
+  PCR = 'pcr',
+  TMA = 'tma',
+}
+
+export const testLabels = {
+  [TestType.PCR]: 'PCR',
+  [TestType.ANTIGEN]: 'Antigen',
+  [TestType.LAMP]: 'LAMP',
+  [TestType.TMA]: 'TMA',
+}
+
+export class PcrTest extends RestrictionNode<typeof PcrTest.defaultOptions> {
+  public static defaultOptions = {
+    hoursBeforeArrival: 72,
+    hoursAfterArrival: 0 as number | undefined,
+    languages: ['en'] as string[],
+    types: [] as TestType[],
+    ...RestrictionNode.defaultOptions,
   }
 
   id(): RestrictionNodeType {
@@ -23,18 +34,12 @@ export class PcrTest extends RestrictionNode<Options> {
   category(): RestrictionCategory {
     return RestrictionCategory.ACTION
   }
+
   displayOrder(): number {
     return 3
   }
 
   penaltyScore(): number {
     return 2
-  }
-
-  instruction(): RestrictionInstruction {
-    return {
-      title: t('instruction.heading'),
-      subtitle: t('instruction.subtitle', { hours: this.options.hours }),
-    }
   }
 }

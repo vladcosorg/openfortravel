@@ -1,7 +1,8 @@
-import { LocaleMessageObject } from 'vue-i18n'
+import type { LocaleMessageObject } from 'vue-i18n'
 
-import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
-import { MappedPlainRestrictionCollection } from '@/shared/src/api/restrictions/models'
+import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export interface StateInterface {
   countrySelectorLoading: boolean
@@ -11,9 +12,10 @@ export interface StateInterface {
   locales: LocaleMessageObject
   serverLocale: string
   availableLocales: string[]
-  labeledLocales: Record<string, string>[]
+  labeledLocales: Array<Record<string, string>>
   countryToContinentMap: Record<string, string>
   hostRules: MappedPlainDestinationCollection
+  visitorContext: VisitorProfile
 }
 
 export class RootState implements StateInterface {
@@ -23,14 +25,17 @@ export class RootState implements StateInterface {
   locales = {}
   localizedLanguages = {}
   serverLocale = 'en'
-  availableLocales = []
-  labeledLocales = []
+  availableLocales = [] as string[]
+  labeledLocales = {} as StateInterface['labeledLocales']
   countryToContinentMap = {}
   hostRules: MappedPlainDestinationCollection = {}
-  sharedRestrictions: {
-    originCode?: string
-    restrictions: MappedPlainRestrictionCollection
-  } = { restrictions: {} }
+  visitorContext = {
+    [RestrictionNodeType.ORIGIN]: 'us',
+    [RestrictionNodeType.RECOVERY]: undefined,
+    [RestrictionNodeType.VACCINATED]: undefined,
+    [RestrictionNodeType.CITIZENSHIP]: ['us'],
+    [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [],
+  }
 }
 
 export function state(): RootState {

@@ -1,7 +1,7 @@
 import { findKey } from 'lodash'
 
 import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
-import {
+import type {
   DestinationSlug,
   OriginSlug,
 } from '@/shared/src/modules/country-list/country-list-types'

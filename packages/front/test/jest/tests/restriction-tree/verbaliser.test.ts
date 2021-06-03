@@ -1,3 +1,4 @@
+import { QuarantineWithTesting } from '@/shared/src/restriction-tree/restriction-node/quarantine-with-testing'
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 
@@ -10,7 +11,6 @@ import { OnlineApplication } from '@/shared/src/restriction-tree/restriction-nod
 import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
 import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
 import { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
-import { QuarantineWithTesting } from '@/shared/src/restriction-tree/restriction-node/quarantine-with-testing'
 import { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { Verbaliser } from '@/shared/src/restriction-tree/verbaliser'
@@ -37,7 +37,10 @@ const matcher = new Matcher(
     ]),
     new And([
       new Origin({ allowedOrigins: ['md'] }),
-      new Or([new QuarantineWithTesting({ days: 14 }), new Quarantine({ days: 14 })]),
+      new Or([
+        new QuarantineWithTesting({ days: 14 }),
+        new Quarantine({ days: 14 }),
+      ]),
       new OnlineApplication({ url: 'dawdaw' }),
       new DidNotVisitCountries({ countryCodes: ['cn'], days: 14 }),
     ]),

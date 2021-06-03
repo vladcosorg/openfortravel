@@ -1,19 +1,20 @@
+import { getDoc, doc, collection, setDoc, Timestamp } from 'firebase/firestore'
+
 import {
   createDummyPlainDestination,
   wrapWithRichDestinationObject,
 } from '@/shared/src/api/destinations/helper'
-import {
+import type {
   Destination,
   MappedPlainDestinationCollection,
   PlainDestination,
 } from '@/shared/src/api/destinations/models'
-import { importFirebase } from '@/shared/src/misc/misc'
+import { countryCollection, firestore } from '@/shared/src/misc/firebase'
 
 export async function findOrigin(code: string): Promise<PlainDestination> {
-  const { countryCollection } = await importFirebase()
-  const doc = await countryCollection.doc(code).get()
+  const snapshot = await getDoc(doc(countryCollection, code))
 
-  const data = doc.data()
+  const data = snapshot.data()
   if (!data) {
     return createDummyPlainDestination({ countryCode: code })
   }
@@ -21,19 +22,22 @@ export async function findOrigin(code: string): Promise<PlainDestination> {
   return data
 }
 
-export async function findOriginAsRichObject(code: string): Promise<Destination> {
+export async function findOriginAsRichObject(
+  code: string,
+): Promise<Destination> {
   return wrapWithRichDestinationObject(await findOrigin(code))
 }
 
 export async function findMappedOrigins(): Promise<MappedPlainDestinationCollection> {
-  const { firestore } = await importFirebase()
-  const result = (await firestore.doc('countries/_all').get()).data()
+  const result = (
+    await getDoc(doc(collection(firestore, 'countries'), '_all'))
+  ).data()
 
-  if (!result) {
+  if (result === undefined) {
     throw new Error('Aggegated country result is missing')
   }
 
-  return result.collection
+  return result.collection as MappedPlainDestinationCollection
 }
 
 export async function findOrigins(): Promise<PlainDestination[]> {
@@ -44,13 +48,19 @@ export async function updateOriginDocument(
   reference: string,
   object: Partial<PlainDestination>,
 ): Promise<void> {
-  const { countryCollection } = await importFirebase()
-  await countryCollection.doc(reference).set(object, { merge: true })
+  await setDoc(
+    doc(countryCollection, reference),
+    {
+      ...object,
+      lastUpdated: Timestamp.fromDate(new Date()),
+    },
+    { merge: true },
+  )
 }
 
 export async function updateOriginField<
   K extends keyof PlainDestination,
-  V extends PlainDestination[K]
+  V extends PlainDestination[K],
 >(reference: string, field: K, value: V): Promise<void> {
   await updateOriginDocument(reference, { [field]: value })
 }

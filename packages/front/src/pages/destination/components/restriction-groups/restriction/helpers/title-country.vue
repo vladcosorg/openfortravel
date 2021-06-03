@@ -1,58 +1,57 @@
 <template>
-  <span v-if="allowed.includes(focus)">
-    <span class="text-accent">{{ focusCountryLabel }}</span>
+  <span v-if="hasIntersection">
+    <country-label-list :values="focusedIntersection" focused />
     <span v-if="allowedCountriesCount > 0">
-      or of any other
+      or one of the matching
       {{ allowedCountriesCount }} countries
     </span>
   </span>
   <span v-else>
-    one of the {{ allowedCountriesCount }} allowed countries (<country
-      :code="focus"
-    />
+    one of the {{ allowedCountriesCount }} matching countries
+    (<country-label-list :values="focus" />
     is not one of them)
   </span>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
+import intersection from 'lodash/intersection'
 
-import Country from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/country.vue'
-import {
-  getLabelForCountryCode,
-  getSortedLabelsForCountryCodes,
-} from '@/shared/src/modules/country-list/country-list-helpers'
+import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
 
 export default defineComponent({
-  components: { Country },
+  components: { CountryLabelList },
   props: {
     allowed: {
       type: Array as PropType<string[]>,
       required: true,
     },
     focus: {
-      type: String,
+      type: [String, Array] as PropType<string | string[]>,
       required: true,
     },
   },
   setup(props) {
-    const focusCountryLabel = computed(() =>
-      getLabelForCountryCode(props.focus),
+    const focusedArray = computed(() =>
+      Array.isArray(props.focus) ? props.focus : [props.focus],
+    )
+    const focusedIntersection = computed(() =>
+      intersection(focusedArray.value, props.allowed),
     )
 
-    const allowedCountriesCount = computed(() => props.allowed.length - 1)
-    const allowedCountryLabels = computed(() =>
-      getSortedLabelsForCountryCodes(props.allowed, undefined, [
-        focusCountryLabel.value,
-      ]).join(', '),
+    const hasIntersection = computed(() => focusedIntersection.value.length > 0)
+
+    const allowedCountriesCount = computed(() =>
+      hasIntersection.value
+        ? props.allowed.length - focusedIntersection.value.length
+        : props.allowed.length,
     )
 
     return {
-      focusCountryLabel,
+      hasIntersection,
+      focusedIntersection,
       allowedCountriesCount,
-      allowedCountryLabels,
     }
   },
 })

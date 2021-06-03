@@ -22,15 +22,16 @@
   }
 }
 </style>
+
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 import { getMenuItemURL } from '@/front/src/misc/menu'
 
 export default defineComponent({
   setup() {
     return {
-      homeURL: getMenuItemURL('index'),
+      homeURL: computed(() => getMenuItemURL('index')),
     }
   },
 })

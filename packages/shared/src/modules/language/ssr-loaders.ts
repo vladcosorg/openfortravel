@@ -12,7 +12,7 @@ export function loadLanguages(): PrefetchedLocalizedLanguages {
     true,
     /\.json$/,
   )
-  return importAll<Array<ExternalData>>(
+  return importAll<ExternalData[]>(
     context,
   ).reduce<PrefetchedLocalizedLanguages>((acc, language) => {
     acc[language.locale] = language.languages

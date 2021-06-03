@@ -9,10 +9,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
-import { useAugmentedStore } from '@/shared/src/composables/use-plugins'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { Language },
@@ -24,8 +25,7 @@ export default defineComponent({
   },
   setup(props) {
     const label = computed(
-      () =>
-        useAugmentedStore().state.localizedLanguages[props.code] ?? props.code,
+      () => useRootStore().state.localizedLanguages[props.code] ?? props.code,
     )
     return { label }
   },

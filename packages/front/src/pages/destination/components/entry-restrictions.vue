@@ -5,8 +5,8 @@
       :subtitle="$t('page.destination.widgets.entryRequirements.subtitle')"
     />
     <groups-by-type
-      v-if="groups.available.length"
-      :restrictions-groups="groups.available"
+      v-if="availableGroups.length"
+      :restrictions-groups="availableGroups"
       type-label="Available"
       :available="true"
     />
@@ -24,8 +24,8 @@
       </div>
     </div>
     <groups-by-type
-      :restrictions-groups="groups.unavailable"
-      type-label="Not available"
+      :restrictions-groups="unavailableGroups"
+      type-label="You didn't match these requirements"
       :available="false"
     />
   </q-list>
@@ -37,17 +37,22 @@ import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import GroupsByType from '@/front/src/pages/destination/components/restriction-groups/groups-by-type.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 
 export default defineComponent({
   components: { GroupsByType, WidgetHeader },
-  props: {},
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const groups = computed(() => store.getters.entryWays.getGroups())
+    const availableGroups = computed(() =>
+      store.getters.allGroups.getAvailableGroups(),
+    )
+    const unavailableGroups = computed(() =>
+      store.getters.allGroups.getUnavailableGroups(),
+    )
     return {
-      groups,
+      availableGroups,
+      unavailableGroups,
       stopIcon,
     }
   },

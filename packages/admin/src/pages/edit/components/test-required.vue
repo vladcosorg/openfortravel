@@ -3,7 +3,7 @@
     <template #control>
       <q-option-group
         v-model="internalValue"
-        :options="options"
+        :options="listOptions"
         type="radio"
         color="secondary"
         inline
@@ -15,8 +15,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, PropType, ref } from '@vue/composition-api'
 
+import { ListItem } from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import { useAsyncListeners } from '@/shared/src/composables/use-async-listeners'
 
 export default defineComponent({
@@ -28,7 +29,10 @@ export default defineComponent({
     value: {
       type: Boolean,
       required: false,
-      default: undefined,
+    },
+    options: {
+      type: Object as PropType<ListItem>,
+      required: false,
     },
   },
   setup(props) {
@@ -46,14 +50,19 @@ export default defineComponent({
         fallbackValueStorage.value = value
       },
     })
+
+    const listOptions = computed(
+      () =>
+        props.options ?? [
+          { label: 'Yes', value: true },
+          { label: 'No', value: false },
+        ],
+    )
     return {
       internalValue,
       listeners,
       loading,
-      options: [
-        { label: 'Yes', value: true },
-        { label: 'No', value: false },
-      ],
+      listOptions,
     }
   },
 })

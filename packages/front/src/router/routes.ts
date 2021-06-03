@@ -1,5 +1,6 @@
-import { IVueI18n } from 'vue-i18n'
-import VueRouter, { RouteConfig, RouterOptions } from 'vue-router'
+import type { IVueI18n } from 'vue-i18n'
+import type { RouteConfig, RouterOptions } from 'vue-router'
+import VueRouter from 'vue-router'
 
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 import { useRouter } from '@/shared/src/composables/use-plugins'
@@ -19,7 +20,9 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
           name: 'index-targeted',
           params: {
             locale: i18n.locale,
-            originSlug: transformCountryCodeToOriginSlug(getPersistedOriginOrDefault()),
+            originSlug: transformCountryCodeToOriginSlug(
+              getPersistedOriginOrDefault(),
+            ),
           },
         }).href
       },
@@ -68,7 +71,9 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
           name: 'terms',
           path: 'terms-and-conditions',
           component: () =>
-            import(/* webpackChunkName: "page-terms" */ '@/front/src/pages/terms.vue'),
+            import(
+              /* webpackChunkName: "page-terms" */ '@/front/src/pages/terms.vue'
+            ),
         },
         {
           name: 'contact',
@@ -92,6 +97,16 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
             }
           },
         },
+
+        {
+          name: 'guide',
+          path: 'travel-guide/',
+          component: () =>
+            import(
+              /* webpackChunkName: "page-origin" */
+              '@/front/src/pages/guide/guide-page.vue'
+            ),
+        },
         {
           name: 'destination',
           path: `${i18n.t('page.country.route')}/:originSlug/${i18n.t(
@@ -105,7 +120,9 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
           props(route) {
             return {
               originCode: transformOriginSlugToCode(route.params.originSlug),
-              destinationCode: transformDestinationSlugToCode(route.params.destinationSlug),
+              destinationCode: transformDestinationSlugToCode(
+                route.params.destinationSlug,
+              ),
             }
           },
         },
@@ -130,12 +147,17 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
     {
       path: '*',
       component: () =>
-        import(/* webpackChunkName: "page-error" */ '@/front/src/pages/error-404-page.vue'),
+        import(
+          /* webpackChunkName: "page-error" */ '@/front/src/pages/error-404-page.vue'
+        ),
     },
   ]
 }
 
-export function createGenericRouter(i18n: IVueI18n, options?: RouterOptions): VueRouter {
+export function createGenericRouter(
+  i18n: IVueI18n,
+  options?: RouterOptions,
+): VueRouter {
   return new VueRouter({
     scrollBehavior: function (to) {
       return to.hash ? { selector: to.hash } : { x: 0, y: 0 }

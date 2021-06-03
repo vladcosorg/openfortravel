@@ -1,8 +1,9 @@
-import { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
+import type { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
 import { Question } from '@/front/src/pages/destination/questions/question'
 import { getCurrentRelativeURL } from '@/front/src/router/helpers'
-import { Destination } from '@/shared/src/api/destinations/models'
-import { Restriction, RestrictionStatus } from '@/shared/src/api/restrictions/models'
+import type { Destination } from '@/shared/src/api/destinations/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
+import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
 import { getNationalityOrFallback } from '@/shared/src/modules/nationality/nationality-helpers'
 
@@ -56,11 +57,20 @@ export class GeneralQuestion extends Question {
     const answer: string[] = []
     answer.push(t('answer.status.conditional.intro', vars))
 
-    if (this.restriction.testRequired && !this.restriction.needsSelfIsolation()) {
+    if (
+      this.restriction.testRequired &&
+      !this.restriction.needsSelfIsolation()
+    ) {
       answer.push(t('answer.status.conditional.testRequired.true', vars))
-    } else if (this.restriction.needsSelfIsolation() && !this.restriction.testRequired) {
+    } else if (
+      this.restriction.needsSelfIsolation() &&
+      !this.restriction.testRequired
+    ) {
       answer.push(t('answer.status.conditional.quarantine', vars))
-    } else if (this.restriction.testRequired && this.restriction.needsSelfIsolation()) {
+    } else if (
+      this.restriction.testRequired &&
+      this.restriction.needsSelfIsolation()
+    ) {
       answer.push(t('answer.status.conditional.testOrQuarantine', vars))
     } else {
       answer.push(t('answer.status.conditional.testRequired.false', vars))

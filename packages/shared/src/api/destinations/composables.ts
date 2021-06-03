@@ -1,4 +1,4 @@
-import { Ref } from '@vue/composition-api'
+import type { Ref } from '@vue/composition-api'
 import { keyBy } from 'lodash'
 
 import {
@@ -6,7 +6,10 @@ import {
   createDummyPlainDestination,
   wrapCollectionWithRichObject,
 } from '@/shared/src/api/destinations/helper'
-import { Destination, PlainDestination } from '@/shared/src/api/destinations/models'
+import type {
+  Destination,
+  PlainDestination,
+} from '@/shared/src/api/destinations/models'
 import {
   findOriginAsRichObject,
   findOrigins,
@@ -15,14 +18,15 @@ import {
 import { useAsyncState } from '@/shared/src/composables/use-async'
 import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
-type UpdateFunc = <K extends keyof PlainDestination, V extends PlainDestination[K]>(
+type UpdateFunc = <
+  K extends keyof PlainDestination,
+  V extends PlainDestination[K],
+>(
   field: K,
   value: V,
 ) => Promise<void>
 
-export function useDestination(
-  originCode: string,
-): {
+export function useDestination(originCode: string): {
   destinationRef: Ref<Destination>
   updateField: UpdateFunc
   loadingRef: Ref<boolean>
@@ -64,7 +68,8 @@ async function generateOriginList(): Promise<Destination[]> {
 
   const allOrigins = allCountryCodes.map(
     (countryCode) =>
-      origins[countryCode] ?? createDummyPlainDestination({ countryCode: countryCode }),
+      origins[countryCode] ??
+      createDummyPlainDestination({ countryCode: countryCode }),
   )
 
   return wrapCollectionWithRichObject(allOrigins)

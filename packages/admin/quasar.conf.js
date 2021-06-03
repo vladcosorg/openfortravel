@@ -26,7 +26,11 @@ module.exports = configure((context) => ({
   // app boot file (/src/boot)
   // --> boot files are part of "main.js"
   // https://quasar.dev/quasar-cli/boot-files
-  boot: ['~shared/src/boot/composition-api', '~shared/src/boot/use-setter', 'misc'],
+  boot: [
+    '~shared/src/boot/composition-api',
+    '~shared/src/boot/use-setter',
+    'misc',
+  ],
 
   // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
   // css: ['app.sass'],

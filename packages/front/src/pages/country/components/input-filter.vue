@@ -13,9 +13,9 @@
     <template #prepend>
       <q-icon :name="iconSearch" />
     </template>
-    <template #after>
-      <subscribe-button :origin-code="originCode" />
-    </template>
+    <!--    <template #after>-->
+    <!--      <subscribe-button :origin-code="originCode" />-->
+    <!--    </template>-->
   </q-input>
 </template>
 

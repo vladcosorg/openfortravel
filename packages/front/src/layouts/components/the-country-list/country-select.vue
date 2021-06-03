@@ -30,7 +30,10 @@
     </template>
 
     <template v-if="isMobile" #append>
-      <invisible-native-select v-model="currentCountryValueRef" :options="nativeList" />
+      <invisible-native-select
+        v-model="currentCountryValueRef"
+        :options="nativeList"
+      />
     </template>
 
     <template #after>
@@ -62,6 +65,7 @@
   overflow: hidden;
 }
 </style>
+
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent, ref, toRef } from '@vue/composition-api'
@@ -71,8 +75,8 @@ import { useStore } from '@/shared/src/composables/use-plugins'
 import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
 import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 import { sortByKeywordIndex } from '@/shared/src/misc/misc'
+import type { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import {
-  CountryList,
   getDestinationLabelForCountryCode,
   getDestinationLabels,
   getOriginLabelForCountryCode,
@@ -107,6 +111,10 @@ export default defineComponent({
       required: false,
       default: true,
     },
+    dense: {
+      type: Boolean,
+      default: false,
+    },
     label: {
       type: String,
       required: false,
@@ -119,7 +127,9 @@ export default defineComponent({
       useVuexRawGetter<CountryList>('modules/countryList/originByContinent')
 
     const fullList = computed<List>(() => {
-      const list = props.isDestination ? getOriginLabels() : getDestinationLabels()
+      const list = props.isDestination
+        ? getOriginLabels()
+        : getDestinationLabels()
 
       return Object.keys(list).map((key) => ({
         value: key,
@@ -208,6 +218,7 @@ export default defineComponent({
         useInput: true,
         hideSelected: true,
         fillInput: true,
+        dense: props.dense,
         optionsSelectedClass: 'text-bold text-white',
       }
     })

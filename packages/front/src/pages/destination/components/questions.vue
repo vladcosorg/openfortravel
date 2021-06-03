@@ -11,22 +11,25 @@
         :key="index"
         :item="item"
         :is-last="lastIndex === index"
-        :is-active="activeQuestionHash && item && activeQuestionHash === item.id"
+        :is-active="
+          activeQuestionHash && item && activeQuestionHash === item.id
+        "
       />
     </div>
   </section>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import QuestionItem from '@/front/src/pages/destination/components/question-item.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { Question } from '@/front/src/pages/destination/questions/question'
-import { Destination } from '@/shared/src/api/destinations/models'
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Question } from '@/front/src/pages/destination/questions/question'
+import type { Destination } from '@/shared/src/api/destinations/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
   components: { WidgetHeader, QuestionItem },

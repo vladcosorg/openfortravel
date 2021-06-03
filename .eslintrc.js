@@ -36,15 +36,11 @@ module.exports = {
     // ESLint typescript rules
     'plugin:@typescript-eslint/recommended',
     // consider disabling this class of rules if linting takes too long
-    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     // Uncomment any of the lines below to choose desired strictness,
     // but leave only one uncommented!
     // See https://eslint.vuejs.org/rules/#available-rules
-    // 'plugin:vue/essential', // Priority A: Essential (Error Prevention)
-    // 'plugin:vue/strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
     'plugin:vue/recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
-    // https://github.com/prettier/eslint-config-prettier#installation
-    // usage with Prettier, provided by 'eslint-config-prettier'.
 
     'plugin:unicorn/recommended',
 
@@ -53,9 +49,6 @@ module.exports = {
     'plugin:import/typescript',
 
     'prettier',
-    'prettier/vue',
-    'prettier/unicorn',
-    'prettier/@typescript-eslint',
   ],
 
   plugins: [
@@ -83,12 +76,17 @@ module.exports = {
     'prefer-arrow-callback': 'warn',
     curly: 'warn',
 
-    // '@typescript-eslint/no-unsafe-call': 'off',
-    // '@typescript-eslint/no-unsafe-assignment': 'off',
-    // '@typescript-eslint/no-unsafe-return': 'off',
-    // '@typescript-eslint/no-unsafe-member-access': 'off',
-    // '@typescript-eslint/no-floating-promises': 'off',
-    //
+    '@typescript-eslint/no-unsafe-call': 'off',
+    '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-return': 'off',
+    '@typescript-eslint/no-unsafe-member-access': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+
+    '@typescript-eslint/member-ordering': 'warn',
+    '@typescript-eslint/type-annotation-spacing': 'warn',
+    '@typescript-eslint/array-type': ['warn', { default: 'array-simple' }],
+    '@typescript-eslint/consistent-indexed-object-style': 'warn',
+
     // // TypeScript
     quotes: ['warn', 'single', { avoidEscape: true }],
     // '@typescript-eslint/explicit-function-return-type': 'off',
@@ -175,11 +173,41 @@ module.exports = {
         ignores: [],
       },
     ],
-    'vue/no-bare-strings-in-template': 'warn',
+    'vue/no-bare-strings-in-template': 'off',
     'vue/no-empty-component-block': 'warn',
     'vue/no-useless-v-bind': 'warn',
     'vue/component-tags-order': 'off',
     'vue/require-default-prop': 'off',
+    'vue/no-unused-properties': [
+      'warn',
+      {
+        groups: ['props', 'setup'],
+        deepData: false,
+        ignorePublicMembers: false,
+      },
+    ],
+    'vue/block-tag-newline': 'warn',
+    'vue/html-button-has-type': 'warn',
+    'vue/next-tick-style': 'warn',
+    'vue/no-boolean-default': 'warn',
+    'vue/no-duplicate-attr-inheritance': 'warn',
+    'vue/no-invalid-model-keys': 'warn',
+    'vue/no-multiple-objects-in-class': 'warn',
+    'vue/no-template-target-blank': 'warn',
+    'vue/no-reserved-component-names': [
+      'error',
+      {
+        disallowVueBuiltInComponents: true,
+        disallowVue3BuiltInComponents: true,
+      },
+    ],
+    'vue/no-unused-refs': 'warn',
+    'vue/no-useless-mustaches': 'warn',
+    'vue/v-on-function-call': 'warn',
+    'vue/valid-next-tick': 'warn',
+    'vue/padding-line-between-blocks': 'warn',
+    'vue/array-bracket-spacing': 'warn',
+    'vue/comma-spacing': 'warn',
   },
   settings: {
     'import/parsers': {

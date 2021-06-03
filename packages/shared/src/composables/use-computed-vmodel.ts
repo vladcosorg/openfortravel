@@ -1,17 +1,13 @@
-import {
-  computed,
+import type {
   ComputedRef,
-  getCurrentInstance,
   Ref,
-  ref,
   UnwrapRef,
   WritableComputedRef,
 } from '@vue/composition-api'
+import { computed, getCurrentInstance, ref } from '@vue/composition-api'
 
 // eslint-disable-next-line import/no-unused-modules
-export function useClosedLoopModel<T>(
-  defaultValue: T,
-): {
+export function useClosedLoopModel<T>(defaultValue: T): {
   modelRef: ComputedRef<T>
 } {
   const instance = getCurrentInstance()
@@ -31,9 +27,7 @@ export function useClosedLoopModel<T>(
   }
 }
 
-export function usePassthroughModel<T>(
-  inputRef: Ref<T>,
-): {
+export function usePassthroughModel<T>(inputRef: Ref<T>): {
   modelRef: WritableComputedRef<T>
 } {
   const instance = getCurrentInstance()

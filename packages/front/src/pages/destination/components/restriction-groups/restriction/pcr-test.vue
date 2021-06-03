@@ -1,5 +1,5 @@
 <template>
-  <component :is="wrapper">
+  <component :is="wrapper" :restriction="restriction">
     <template #title>
       <span>Get a negative COVID-19 <b>PCR test</b> certificate</span>
     </template>
@@ -7,11 +7,8 @@
       <p>
         The test has to be issued within
         <b>{{ restriction.options.hours }} hours</b>
-        prior to arrival
-        <template v-if="restriction.options.languages.length"
-          >in <languages :codes="restriction.options.languages" /> </template
-        >.
       </p>
+      <required-languages :languages="restriction.options.languages" />
     </template>
   </component>
 </template>
@@ -25,21 +22,22 @@ a[href^='#'] {
 </style>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
-import Country from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/country.vue'
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
 import Languages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/languages.vue'
+import RequiredLanguages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/required-languages.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
+import type { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
 
 export default defineComponent({
   components: {
+    RequiredLanguages,
     Languages,
     Language,
-    Country,
     CollapsedCountrySequence,
     TitleCountry,
   },

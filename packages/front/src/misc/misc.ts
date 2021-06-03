@@ -1,10 +1,15 @@
-import { QSsrContext } from '@quasar/app'
-import { Cookies, LooseDictionary } from 'quasar'
+import type { QSsrContext } from '@quasar/app'
+import type { LooseDictionary } from 'quasar'
+import { Cookies } from 'quasar'
 
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
-export const getCookiesAPI = function (ssrContext?: QSsrContext | null): Cookies {
-  return process.env.SERVER ? Cookies.parseSSR(ssrContext as LooseDictionary) : Cookies // otherwise we're on client
+export const getCookiesAPI = function (
+  ssrContext?: QSsrContext | null,
+): Cookies {
+  return process.env.SERVER
+    ? Cookies.parseSSR(ssrContext as LooseDictionary)
+    : Cookies // otherwise we're on client
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
@@ -13,7 +18,10 @@ export function importAll<T>(context: any): T {
   return context.keys().map(context)
 }
 
-export function generateStringSequenceFromList(list: string[], wrapperTag?: string): string {
+export function generateStringSequenceFromList(
+  list: string[],
+  wrapperTag?: string,
+): string {
   const { t } = useVueI18n<string>()
   if (wrapperTag) {
     list = list.map((listItem) => `<${wrapperTag}>${listItem}</${wrapperTag}>`)

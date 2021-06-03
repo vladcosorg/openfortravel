@@ -1,22 +1,17 @@
-import { GetterTree } from 'vuex'
+import type { GetterTree } from 'vuex'
 
-import { RootStateType } from '@/front/src/store/state'
-import { GetterSignatures } from '@/front/src/store/types/getters'
+import type { RootStateType } from '@/front/src/store/state'
+import type { GetterSignatures } from '@/front/src/store/types/getters'
 import { getFullDestinationList } from '@/shared/src/api/destinations/helper'
-import { getFullRestrictionsListForOrigin } from '@/shared/src/api/restrictions/helper'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export const getters: GetterTree<RootStateType, RootStateType> & GetterSignatures = {
+export const getters: GetterTree<RootStateType, RootStateType> &
+  GetterSignatures = {
   wrappedHostRules: (state) => getFullDestinationList(state.hostRules),
-  sharedRestrictions: (state) => {
-    if (!state.sharedRestrictions.originCode) {
-      return {}
-    }
 
-    return getFullRestrictionsListForOrigin(
-      state.sharedRestrictions.restrictions,
-      state.sharedRestrictions.originCode,
-    )
-  },
-  currentOrigin: (state, getters) => getters.wrappedHostRules[state.detectedCountry],
-  detectedCountryWithFallback: (state): string => state.detectedCountry ?? 'us',
+  currentOrigin: (_state, getters) =>
+    getters.wrappedHostRules[getters.visitorOrigin],
+  detectedCountryWithFallback: (_state, getters): string =>
+    getters.visitorOrigin ?? 'us',
+  visitorOrigin: (state) => state.visitorContext[RestrictionNodeType.ORIGIN],
 }

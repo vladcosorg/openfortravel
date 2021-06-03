@@ -1,9 +1,9 @@
 import { store } from 'quasar/wrappers'
-import Vuex, { Module, Store } from 'vuex'
+import type { Module } from 'vuex'
+import Vuex, { Store } from 'vuex'
 
-import countryList, {
-  CountryListState,
-} from '@/shared/src/modules/country-list/country-list-store'
+import type { CountryListState } from '@/shared/src/modules/country-list/country-list-store'
+import countryList from '@/shared/src/modules/country-list/country-list-store'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface StateInterface {}

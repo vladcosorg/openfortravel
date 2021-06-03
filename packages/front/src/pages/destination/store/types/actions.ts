@@ -1,7 +1,7 @@
-import { StateType } from '@/front/src/pages/destination/store/state'
-import { MutationSignatures } from '@/front/src/pages/destination/store/types/mutations'
-import { ActionSignatures as RootActionSignatures } from '@/front/src/store/types/actions'
-import { AugmentedActionContext } from '@/shared/src/misc/augmented-store'
+import type { StateType } from '@/front/src/pages/destination/store/state'
+import type { MutationSignatures } from '@/front/src/pages/destination/store/types/mutations'
+import type { ActionSignatures as RootActionSignatures } from '@/front/src/store/types/actions'
+import type { AugmentedActionContext } from '@/shared/src/misc/augmented-store'
 
 export type CurrentCountryPair = {
   originCode: string
@@ -10,7 +10,6 @@ export type CurrentCountryPair = {
 
 export enum ActionTypes {
   fetchReturnRestriction = 'fetchReturnRestriction',
-  fetchRelatedRestrictions = 'fetchRelatedRestrictions',
   fetch = 'fetch',
 }
 type Context = AugmentedActionContext<
@@ -21,13 +20,12 @@ type Context = AugmentedActionContext<
 >
 
 export type ActionSignatures = {
-  [ActionTypes.fetch](context: Context, countryPair: CurrentCountryPair): Promise<void>
+  [ActionTypes.fetch](
+    context: Context,
+    countryPair: CurrentCountryPair,
+  ): Promise<void>
   [ActionTypes.fetchReturnRestriction](
     context: Context,
     countryPair: { originCode: string; destinationCode: string },
-  ): Promise<void>
-  [ActionTypes.fetchRelatedRestrictions](
-    context: Context,
-    destinationCode: string,
   ): Promise<void>
 }

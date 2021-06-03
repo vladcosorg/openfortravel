@@ -1,11 +1,5 @@
-import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
-import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
-import {
-  RestrictionInstruction,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
+import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
 
 export enum VaccineBrand {
   MODERNA = 'moderna',
@@ -33,35 +27,31 @@ export const vaccineLabels = {
   [VaccineBrand.SINOVAC]: 'CoronaVac (Sinovac)',
 }
 
-type Options = {
-  daysAgo: number
-  authorizedBrands: VaccineBrand[]
-  languages: string[]
-}
-export class Vaccinated extends RestrictionNode<Options> {
-  protected getDefaults(): Options {
-    return {
-      daysAgo: 0,
-      authorizedBrands: [],
-      languages: [],
-    }
+export const singleShotVaccines = [VaccineBrand.JOHNSON_AND_JOHNSON]
+type DefaultOptions = typeof Vaccinated.defaultOptions
+export class Vaccinated extends RestrictionNode<DefaultOptions> {
+  static defaultOptions = {
+    daysAgo: 14,
+    monthsAtMost: 9,
+    authorizedBrands: [] as VaccineBrand[],
+    languages: ['en'] as string[],
+    partial: false,
+    ...RestrictionNode.defaultOptions,
   }
 
-  matches(userValue: number): boolean {
-    return !this.options.daysAgo || userValue >= this.options.daysAgo
+  matches(visitorContext?: { brand: VaccineBrand; partial: boolean }): boolean {
+    if (!visitorContext || this.options.partial !== visitorContext.partial) {
+      return false
+    }
+
+    if (this.options.authorizedBrands.length === 0) {
+      return true
+    }
+
+    return this.options.authorizedBrands.includes(visitorContext.brand)
   }
 
   id(): RestrictionNodeType {
     return RestrictionNodeType.VACCINATED
-  }
-
-  instruction(context: VisitorContext): RestrictionInstruction {
-    const { t } = useI18nWithPrefix('rt.vaccinated')
-    return {
-      title: t('instruction.heading', {
-        origin: getLabelForCountryCode(context.origin),
-      }) as string,
-      subtitle: t('instruction.subtitle') as string,
-    }
   }
 }

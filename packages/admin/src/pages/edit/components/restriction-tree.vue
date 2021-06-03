@@ -10,6 +10,7 @@
     >
       <template #default-header="scope">
         <tree-item
+          class="col-12"
           :scope="scope"
           :tree="tree"
           :buffered-node="nodeToCopy"
@@ -24,34 +25,20 @@
   </div>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from '@vue/composition-api'
+import type { PropType } from '@vue/composition-api'
+import { defineComponent, ref, watch } from '@vue/composition-api'
 import debounce from 'lodash/debounce'
 
-import CustomInstruction from '@/admin/src/pages/edit/components/restriction-tree/fields/custom-instruction.vue'
-import TreeItem from '@/admin/src/pages/edit/components/restriction-tree/tree-item.vue'
+import CustomInstruction from '@/admin/src/pages/edit/components/restriction-tree/tree-item/custom-instruction.vue'
+import TreeItem from '@/admin/src/pages/edit/components/restriction-tree/tree-item/tree-item.vue'
+import type { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
 import {
   createIndexedTree,
   prepareForStorage,
 } from '@/admin/src/pages/edit/composables/use-tree'
-import { Destination } from '@/shared/src/api/destinations/models'
-import {
-  EncodedLogicNode,
-  EncodedRestrictionNode,
-} from '@/shared/src/restriction-tree/converter'
+import type { Destination } from '@/shared/src/api/destinations/models'
 
-export type ScopedNodeData = { key: number }
-export type QuasarTreeNode = QuasarLogicTreeNode | QuasarRestrictionTreeNode
-export type QuasarLogicTreeNode = {
-  UID: number
-  children: QuasarTreeNode[]
-} & EncodedLogicNode
-export type QuasarRestrictionTreeNode = {
-  UID: number
-  showCustom: boolean
-} & EncodedRestrictionNode
 export default defineComponent({
   components: { CustomInstruction, TreeItem },
   model: {
@@ -76,7 +63,8 @@ export default defineComponent({
 
     const treeElement = ref()
     let isInitialLoad = true
-    const nodeToCopy = ref<QuasarTreeNode | undefined>()
+    const nodeToCopy =
+      ref<{ action: 'cut' | 'copy'; node: QuasarTreeNode } | undefined>()
     const tree = ref<QuasarTreeNode[]>(
       props.loading ? [] : createIndexedTree(props.destination, getNextUID),
     )

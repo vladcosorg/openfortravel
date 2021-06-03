@@ -1,7 +1,10 @@
-import { Restriction } from '@/shared/src/api/restrictions/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { useI18n } from '@/shared/src/composables/use-plugins'
 
-export function getShortDescription(restriction: Restriction, returning = false): string {
+export function getShortDescription(
+  restriction: Restriction,
+  returning = false,
+): string {
   return [
     useI18n().t(`description.intro.${returning ? 'return' : 'travel'}`, {
       origin: restriction.originLabel,
@@ -11,7 +14,10 @@ export function getShortDescription(restriction: Restriction, returning = false)
   ].join(' ')
 }
 
-export function getFullDescription(restriction: Restriction, returning = false): string {
+export function getFullDescription(
+  restriction: Restriction,
+  returning = false,
+): string {
   return (
     getShortDescription(restriction, returning) +
     [

@@ -1,34 +1,21 @@
-import { Question } from '@/front/src/pages/destination/questions/question'
-import { StateClass } from '@/front/src/pages/destination/store/state'
-import { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
-import { Destination } from '@/shared/src/api/destinations/models'
-import { Restriction, RestrictionCollection } from '@/shared/src/api/restrictions/models'
-import { GetterContext } from '@/shared/src/misc/augmented-store'
-import { EntryWays } from '@/shared/src/restriction-tree/entry-ways'
-import { Matcher } from '@/shared/src/restriction-tree/matcher'
-import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
+import { TripCard } from '@/front/src/models/TripCard'
+import type { StateClass } from '@/front/src/pages/destination/store/state'
+import type { Destination } from '@/shared/src/api/destinations/models'
+import type { GetterContext } from '@/shared/src/misc/augmented-store'
+import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
 
 type LocalGetterContext<
   State = StateClass,
-  Accessors = { [P in keyof GetterSignatures]: ReturnType<GetterSignatures[P]> }
+  Accessors = {
+    [P in keyof GetterSignatures]: ReturnType<GetterSignatures[P]>
+  },
 > = GetterContext<State, Accessors>
 
 export type GetterSignatures = {
-  relatedRestrictionList(...args: LocalGetterContext): RestrictionCollection
-  relatedRestrictionForbiddenStringList(...args: LocalGetterContext): string[]
+  origin(...args: LocalGetterContext): Destination
+  destination(...args: LocalGetterContext): Destination
 
-  currentReturnDestination(...args: LocalGetterContext): Destination | undefined
-  currentDestination(...args: LocalGetterContext): Destination | undefined
+  allGroups(...args: LocalGetterContext): RestrictionGroupCollection
 
-  returnRestriction(...args: LocalGetterContext): Restriction | undefined
-  currentRestriction(...args: LocalGetterContext): Restriction | undefined
-
-  questions(...args: LocalGetterContext): Question[]
-  getQuestionByType(...args: LocalGetterContext): (questionClass: typeof Question) => Question
-
-  summaryItems(...args: LocalGetterContext): SummaryItem[]
-
-  restrictionGroups(...args: LocalGetterContext): Matcher
-  entryWays(...args: LocalGetterContext): EntryWays
-  visitorContext(...args: LocalGetterContext): VisitorContext
+  returnTripCard(...args: LocalGetterContext): TripCard
 }

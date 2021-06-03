@@ -19,6 +19,8 @@ export function getCurrentAbsoluteURL(hash?: string): string {
 }
 
 export function getCurrentRelativeURL(hash?: string): string {
-  const path = hash ? useRouter().currentRoute.path : useRouter().currentRoute.fullPath
+  const path = hash
+    ? useRouter().currentRoute.path
+    : useRouter().currentRoute.fullPath
   return `${path}${hash ? '#' + hash : ''}`
 }

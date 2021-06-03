@@ -1,7 +1,7 @@
-import { EncodedLogicNode } from '@/shared/src/restriction-tree/converter'
-import {
+import type { EncodedLogicNode } from '@/shared/src/restriction-tree/converter'
+import type {
   LogicNodeType,
-  RestrictionGroups,
+  PlainRestrictionGroups,
   TreeNode,
 } from '@/shared/src/restriction-tree/types'
 
@@ -15,7 +15,7 @@ export abstract class LogicNode implements TreeNode {
     }
   }
 
-  abstract resolveTreeNodes(): RestrictionGroups
+  abstract resolveTreeNodes(): PlainRestrictionGroups
 
   abstract id(): LogicNodeType
 }

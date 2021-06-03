@@ -1,9 +1,13 @@
 <template>
   <div class="row items-center q-gutter-x-md">
     <div :class="['q-gutter-x-md gt-sm text-white', $style.links]">
-      <router-link v-for="(title, url, index) in menuItems" :key="index" :to="url" exact>{{
-        title
-      }}</router-link>
+      <router-link
+        v-for="(title, url, index) in menuItems"
+        :key="index"
+        :to="url"
+        exact
+        >{{ title }}</router-link
+      >
     </div>
     <q-btn
       flat
@@ -29,7 +33,10 @@
 </style>
 
 <script lang="ts">
-import { matMenu as menuIcon, matMoreVert as moreIcon } from '@quasar/extras/material-icons'
+import {
+  matMenu as menuIcon,
+  matMoreVert as moreIcon,
+} from '@quasar/extras/material-icons'
 import { computed, defineComponent } from '@vue/composition-api'
 
 import { getShortHeaderMenuItems } from '@/front/src/misc/menu'

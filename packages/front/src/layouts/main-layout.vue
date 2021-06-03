@@ -2,7 +2,10 @@
   <q-layout view="hhr lpr ffr">
     <the-header />
     <q-page-container
-      :class="[fullHeight && !$q.platform.is.ios ? 'wwindow-height' : '', $style.container]"
+      :class="[
+        fullHeight && !$q.platform.is.ios ? 'wwindow-height' : '',
+        $style.container,
+      ]"
     >
       <portal-target name="top" slim />
       <transition
@@ -17,11 +20,13 @@
     <the-footer />
   </q-layout>
 </template>
+
 <style lang="scss" module>
 .container {
   overflow-x: hidden;
 }
 </style>
+
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { merge } from 'lodash'
@@ -42,7 +47,9 @@ export default defineComponent({
     PortalTarget,
   },
   meta({ meta }: { meta: Record<string, string> }) {
-    const title = useI18n().t(`page.${useRouter().currentRoute.name}.meta.title`)
+    const title = useI18n().t(
+      `page.${useRouter().currentRoute.name}.meta.title`,
+    )
     const titleSuffix = useI18n().t('meta.titleSuffix')
     return merge(
       {

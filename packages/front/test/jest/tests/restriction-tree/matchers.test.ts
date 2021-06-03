@@ -1,7 +1,8 @@
+import { AntigenTest } from '@/shared/src/restriction-tree/restriction-node/antigen-test'
+
 import { And } from '@/shared/src/restriction-tree/logic-node/and'
 import { Or } from '@/shared/src/restriction-tree/logic-node/or'
 import { Matcher } from '@/shared/src/restriction-tree/matcher'
-import { AntigenTest } from '@/shared/src/restriction-tree/restriction-node/antigen-test'
 import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
 import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
 import { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
@@ -55,7 +56,10 @@ describe('Matcher', () => {
 
   test('Filter by OR restrictions presence with no matches', () => {
     const results = [
-      ...matcher.withPresenceOf(RestrictionNodeType.VACCINATED, RestrictionNodeType.RECOVERY),
+      ...matcher.withPresenceOf(
+        RestrictionNodeType.VACCINATED,
+        RestrictionNodeType.RECOVERY,
+      ),
     ]
     expect(results).toHaveLength(0)
   })
@@ -73,7 +77,10 @@ describe('Matcher', () => {
   test('Filter by required restriction absence with partial match', () => {
     const results = [
       ...matcher
-        .withAbsenceOf(RestrictionNodeType.PCR_TEST, RestrictionNodeType.VACCINATED)
+        .withAbsenceOf(
+          RestrictionNodeType.PCR_TEST,
+          RestrictionNodeType.VACCINATED,
+        )
         .withRequired(RestrictionNodeType.ORIGIN, 'ru'),
     ]
     expect(results).toHaveLength(1)
@@ -83,14 +90,19 @@ describe('Matcher', () => {
   test('Filter by required multiple restriction absence', () => {
     const results = [
       ...matcher
-        .withAbsenceOf(RestrictionNodeType.PCR_TEST, RestrictionNodeType.ANTIGEN_TEST)
+        .withAbsenceOf(
+          RestrictionNodeType.PCR_TEST,
+          RestrictionNodeType.ANTIGEN_TEST,
+        )
         .withRequired(RestrictionNodeType.ORIGIN, 'ru'),
     ]
     expect(results).toHaveLength(0)
   })
 
   test('Exclude by type', () => {
-    const results = [...matcher.excludeCriterionByType(RestrictionNodeType.ORIGIN)]
+    const results = [
+      ...matcher.excludeCriterionByType(RestrictionNodeType.ORIGIN),
+    ]
     expect(results).toHaveLength(3)
   })
 
@@ -105,7 +117,9 @@ describe('Matcher', () => {
   })
 
   test('Include one by type', () => {
-    const results = [...matcher.includeCriterionByType(RestrictionNodeType.ORIGIN)]
+    const results = [
+      ...matcher.includeCriterionByType(RestrictionNodeType.ORIGIN),
+    ]
     expect(results).toHaveLength(2)
   })
   test('Include two by type but one is non-existent', () => {

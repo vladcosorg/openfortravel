@@ -1,64 +1,47 @@
 import { matFlightTakeoff } from '@quasar/extras/material-icons'
-import {
-  computed,
-  ComputedRef,
-  onMounted,
-  onServerPrefetch,
-  ref,
-  Ref,
-  watch,
-} from '@vue/composition-api'
+import type { ComputedRef, Ref } from '@vue/composition-api'
+import { computed, ref } from '@vue/composition-api'
 
-import { CountryMap } from '@/front/src/pages/country/country-store'
+import { createTripsCards } from '@/front/src/composables/trip-cards'
+import { TripCard } from '@/front/src/models/TripCard'
+import type { CountryMap } from '@/front/src/pages/country/country-store'
 import { RiskLevel } from '@/shared/src/api/destinations/models'
 import { Restriction } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
-import { useLoading } from '@/shared/src/composables/use-promise-loading'
-import {
-  useProperVuexActionDispatcher,
-  useVuexReactiveGetter,
-} from '@/shared/src/composables/use-vuex'
+import { useVuexReactiveGetter } from '@/shared/src/composables/use-vuex'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export function useCountries(): {
   countries: ComputedRef<CountryMap>
-  isLoading: Ref<boolean>
 } {
-  const { loading: isLoading } = useLoading(false)
-  const fetcher = useProperVuexActionDispatcher('countryPage/fetchCountries', isLoading)
-  onMounted(fetcher)
-
   return {
-    isLoading,
     countries: useVuexReactiveGetter<CountryMap>('countryPage/countryList'),
   }
 }
 
-export function useGroupedDestinations(
-  originCodeRef: Ref<string>,
-): {
-  destinationsRef: ComputedRef<Restriction[]>
-  isLoadingRef: Ref<boolean>
+export function useRestrictionList(): {
+  allDestinations: ComputedRef<TripCard[]>
+  allowedDestinations: ComputedRef<TripCard[]>
+  forbiddenDestinations: ComputedRef<TripCard[]>
 } {
-  const { loading } = useLoading(false)
-  const fetcher = useProperVuexActionDispatcher('countryPage/fetchRestrictions', loading)
-  const destinationsRef = useVuexReactiveGetter<Restriction[]>('countryPage/restrictionList')
+  const allDestinations = createTripsCards(true)
+  const allowedDestinations = computed(() =>
+    allDestinations.value.filter((destination) => !destination.isForbidden),
+  )
 
-  onServerPrefetch(() => fetcher(originCodeRef.value))
-  onMounted(() => fetcher(originCodeRef.value))
-  watch(originCodeRef, fetcher)
+  const forbiddenDestinations = computed(() =>
+    allDestinations.value.filter((destination) => destination.isForbidden),
+  )
 
-  return {
-    isLoadingRef: loading,
-    destinationsRef,
-  }
+  return { allDestinations, allowedDestinations, forbiddenDestinations }
 }
 
-type InputFilter = (input: Restriction[]) => Restriction[]
+type InputFilter = (input: TripCard[]) => TripCard[]
+
 export function useFilterer(
-  input: ComputedRef<Restriction[]>,
+  input: ComputedRef<TripCard[]>,
   filters: InputFilter[],
-): ComputedRef<Restriction[]> {
+): ComputedRef<TripCard[]> {
   return computed(() =>
     filters.reduce((restrictions, filter) => filter(restrictions), input.value),
   )
@@ -70,19 +53,17 @@ export function useCountryMatchFilter(): {
 } {
   const filterValue = ref('')
 
-  const filterFunction: InputFilter = (input: Restriction[]) => {
+  const filterFunction: InputFilter = (input: TripCard[]) => {
     if (!filterValue.value) {
       return input
     }
 
     return input
-      .filter((restriction) =>
-        restriction.destinationLabel.toLowerCase().includes(filterValue.value),
-      )
+      .filter((restriction) => restriction.includesSubtring(filterValue.value))
       .sort(
         (destinationA, destinationB) =>
-          destinationA.destinationLabel.indexOf(filterValue.value) -
-          destinationB.destinationLabel.indexOf(filterValue.value),
+          destinationA.substringIndex(filterValue.value) -
+          destinationB.substringIndex(filterValue.value),
       )
   }
 
@@ -114,24 +95,19 @@ export function useTabFilter(): {
   }
 }
 
-export function useRestrictionFilterer(
-  input: Ref<Restriction[]>,
-): {
+export function useRestrictionFilterer(input: Ref<TripCard[]>): {
   countryMatchFilterValue: Ref<string>
-  tabFilterValue: Ref<string>
-  destinations: Ref<Restriction[]>
+  destinations: Ref<TripCard[]>
 } {
   const {
     filterValue: countryMatchFilterValue,
     filterFunction: countryMatchFilterFunction,
   } = useCountryMatchFilter()
-  const { filterValue: tabFilterValue, filterFunction: tabFilterFunction } = useTabFilter()
 
-  const destinations = useFilterer(input, [countryMatchFilterFunction, tabFilterFunction])
+  const destinations = useFilterer(input, [countryMatchFilterFunction])
 
   return {
     countryMatchFilterValue,
-    tabFilterValue,
     destinations,
   }
 }
@@ -148,13 +124,13 @@ export function riskLevelColor(riskLevel: RiskLevel): string {
       return 'text-negative'
     case RiskLevel.VERY_HIGH:
       return 'text-negative text-bold'
-
-    default:
-      throw new Error(`Unmapped risk level "${riskLevel}"`)
   }
 }
 
-export function getBreadcrumbs(originCode: Ref<string>, isLoading: Ref<boolean>): ComputedRef {
+export function getBreadcrumbs(
+  originCode: Ref<string>,
+  isLoading: Ref<boolean>,
+): ComputedRef {
   const { t } = useVueI18n()
   return computed(() => ({
     items: [

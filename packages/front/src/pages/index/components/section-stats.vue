@@ -9,12 +9,16 @@
           Countries include sovereign states, overseas terriotories
         </h5>
       </div>
-      <lazy-hydrate v-if="$q.platform.is.desktop" never :trigger-hydration="loadMap">
+      <lazy-hydrate
+        v-if="$q.platform.is.desktop"
+        never
+        :trigger-hydration="loadMap"
+      >
         <section-map
           class="q-mb-xl"
-          :origin-code="originCode"
+          :origin-code="originISO"
           :restrictions="restrictions"
-          :is-loading="isLoading"
+          :is-loading="false"
         />
       </lazy-hydrate>
 
@@ -45,7 +49,11 @@
               }"
             >
               <span class="text-h1 block lh-1" style="font-weight: bold">
-                <count-up :end-val="category.value" :delay="1" :options="{ duration: 1 }" />
+                <count-up
+                  :end-val="category.value"
+                  :delay="1"
+                  :options="{ duration: 1 }"
+                />
               </span>
               <span class="lh-base" v-html="category.valueSuffix" />
             </div>
@@ -70,11 +78,12 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, toRef } from '@vue/composition-api'
+import { defineComponent, onMounted, ref } from '@vue/composition-api'
 import { hydrateWhenVisible } from 'vue-lazy-hydration'
 
-import { useGroupedDestinations } from '@/front/src/pages/country/composable'
+import { createTripsCards } from '@/front/src/composables/trip-cards'
 import { useStats } from '@/front/src/pages/index/index-composable'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: {
@@ -86,17 +95,10 @@ export default defineComponent({
       () => import(/* webpackChunkName: "countup" */ 'vue-countup-v2'),
     ),
   },
-  props: {
-    originCode: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
+  setup() {
     const loadMap = ref(false)
-    const { destinationsRef: restrictions, isLoadingRef: isLoading } = useGroupedDestinations(
-      toRef(props, 'originCode'),
-    )
+    const restrictions = createTripsCards()
+    const originISO = useRootStore().getters.visitorOrigin
 
     onMounted(() => {
       const scrollHandler = function () {
@@ -107,7 +109,7 @@ export default defineComponent({
     })
 
     const stats = useStats(restrictions)
-    return { stats, isLoading, restrictions, loadMap }
+    return { stats, restrictions, loadMap, originISO }
   },
 })
 </script>

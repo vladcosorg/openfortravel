@@ -1,16 +1,15 @@
 import countries from 'i18n-iso-countries/langs/en.json'
 
-import {
-  createCountryListEntry,
-  RawLocalizedCountryList,
-} from '@/shared/src/modules/country-list/country-list-node-preload'
+import type { RawLocalizedCountryList } from '@/shared/src/modules/country-list/country-list-node-preload'
+import { createCountryListEntry } from '@/shared/src/modules/country-list/country-list-node-preload'
 import { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
 import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
 import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
-import { VisitorContext } from '@/shared/src/restriction-tree/visitor-context'
+import { VisitorContext } from '@/shared/src/restriction-tree/visitor-profile'
 
-const countryList = createCountryListEntry((countries as unknown) as RawLocalizedCountryList)
-  .origin
+const countryList = createCountryListEntry(
+  countries as unknown as RawLocalizedCountryList,
+).origin
 
 describe('Origin', () => {
   test('Existing origin should return true', () => {
@@ -22,16 +21,13 @@ describe('Origin', () => {
     const origin = new Origin({ allowedOrigins: ['us'] })
     expect(origin.matches('uk')).toBe(false)
   })
-
-  test.only('dMissing origin should return false', () => {
-    const context = new VisitorContext({ origin: 'us' }, countryList)
-    const origin = new Origin({ allowedOrigins: ['us'] })
-    expect(origin.instruction(context)).toBe([])
-  })
 })
 
 describe('DidNotVisitCountries', () => {
-  const visited = new DidNotVisitCountries({ countryCodes: ['us', 'uk', 'md'], days: 10 })
+  const visited = new DidNotVisitCountries({
+    countryCodes: ['us', 'uk', 'md'],
+    days: 10,
+  })
   test('Full match', () => {
     expect(visited.matches(['us', 'uk'])).toBe(false)
   })

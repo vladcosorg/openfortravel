@@ -3,7 +3,7 @@
     <q-header class="bg-transparent bg-blue-grey-10 text-white">
       <portal-target slim name="header" />
     </q-header>
-    <q-page-container class="window-height column">
+    <q-page-container class="column">
       <keep-alive include="List">
         <router-view class="q-pb" />
       </keep-alive>
