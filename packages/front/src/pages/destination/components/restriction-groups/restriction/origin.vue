@@ -2,10 +2,11 @@
   <component :is="wrapper" :restriction="restriction">
     <template #title>
       <span>
-        You must arrive from
+        If you are arriving from
         <title-country
           :allowed="restriction.getAllowedCountries()"
           :focus="context"
+          regular
         />
       </span>
     </template>
@@ -19,12 +20,11 @@
       </p>
       <p>
         Arriving to
-        <country-label focused :value="destination.countryCode" /> from any
-        other country except the ones listed above, may subject you to
-        additional restrictions, such as quarantine or even denial of entry.
+        <country-label focused regular :value="destination.countryCode" /> from
+        any other country except the one above, may subject you to additional
+        restrictions, such as quarantine or even denial of entry.
       </p>
     </template>
-    <template #did-not-match>YOu did not</template>
   </component>
 </template>
 
@@ -37,7 +37,6 @@ a[href^='#'] {
 </style>
 
 <script lang="ts">
-import { matWarning as notMatchedIcon } from '@quasar/extras/material-icons'
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
@@ -61,7 +60,7 @@ export default defineComponent({
   setup() {
     const store = inject(StoreKey) as StoreModule
     const destination = computed(() => store.getters.destination)
-    return { destination, notMatchedIcon }
+    return { destination }
   },
 })
 </script>

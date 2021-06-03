@@ -1,10 +1,15 @@
 <template>
   <component :is="wrapper" :restriction="restriction">
-    <template #title>
-      Make sure that in the last {{ restriction.options.days }} days you did not
-      visit the countries from the red list
+    <template v-if="!restriction.options.inverseSelection" #title>
+      You did not <b>visit</b> or <b>transited through</b> one of the countries
+      below, in the last <b>{{ restriction.options.days }} days</b>
     </template>
-    <template #subtitle>
+    <template v-else #title>
+      You did not <b>visit</b> or <b>transited through</b> any of the countries
+      <b>except</b> the ones below, in the last
+      <b>{{ restriction.options.days }} days</b>
+    </template>
+    <template v-if="!restriction.options.inverseSelection" #subtitle>
       If you have been in or through any of the countries listed below in the
       previous <b>{{ restriction.options.days }} days</b>, you don't meet the
       entry requirements from this section. <br /><br />
@@ -12,6 +17,17 @@
       <seq v-slot="{ item }" :items="restriction.options.countryCodes"
         ><country-label :value="item" />
       </seq>
+    </template>
+    <template v-else #subtitle>
+      If you have been in or through any of the countries
+      <b>other than the ones</b> listed below in the previous
+      <b>{{ restriction.options.days }} days</b>, you don't meet the entry
+      requirements from this section. <br /><br />
+      Allowed countries:
+      <collapsed-country-sequence
+        :allowed="restriction.options.countryCodes"
+        :focus="context"
+      />
     </template>
   </component>
 </template>

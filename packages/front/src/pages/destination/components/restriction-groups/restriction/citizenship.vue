@@ -2,7 +2,7 @@
   <component :is="wrapper" :restriction="restriction">
     <template #title>
       <span>
-        You must be a citizen or a permanent resident of
+        If you are a citizen or a permanent resident of
         <title-country
           :allowed="restriction.getAllowedCountries()"
           :focus="context"

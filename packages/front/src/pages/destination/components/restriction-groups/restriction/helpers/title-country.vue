@@ -2,12 +2,12 @@
   <span v-if="hasIntersection">
     <country-label-list :values="focusedIntersection" focused />
     <span v-if="allowedCountriesCount > 0">
-      or one following
+      or one of the matching
       {{ allowedCountriesCount }} countries
     </span>
   </span>
   <span v-else>
-    one of the {{ allowedCountriesCount }} allowed countries
+    one of the {{ allowedCountriesCount }} matching countries
     (<country-label-list :values="focus" />
     is not one of them)
   </span>

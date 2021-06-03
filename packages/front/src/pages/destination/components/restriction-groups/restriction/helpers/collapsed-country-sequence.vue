@@ -7,6 +7,7 @@
       :prefix="showSeparator(key) ? ', ' : ''"
       :focused="focusCountryLabel.includes(label)"
       :label="label"
+      :regular="regular"
       skip-mapping
       :class="{
         hide: key > collapseCountTrigger,
@@ -39,7 +40,6 @@
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, ref } from '@vue/composition-api'
 
-import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import {
   getLabelsForCountryCodes,
@@ -47,11 +47,15 @@ import {
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
-  components: { CountryLabel, CountryLabelList },
+  components: { CountryLabel },
   props: {
     allowed: {
       type: Array as PropType<string[]>,
       required: true,
+    },
+    regular: {
+      type: Boolean,
+      default: false,
     },
     focus: {
       type: [String, Array] as PropType<string | string[]>,
