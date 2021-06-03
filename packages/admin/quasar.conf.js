@@ -61,6 +61,7 @@ module.exports = configure((context) => ({
     },
     // https://quasar.dev/quasar-cli/handling-webpack
     extendWebpack(config) {
+      const skipChecks = true
       config.resolve.plugins = [new TsconfigPathsPlugin()]
       // config.resolve.alias = {
       //   app: config.resolve.alias.app,
@@ -74,6 +75,9 @@ module.exports = configure((context) => ({
         //   loader: 'eslint-loader',
         //   exclude: /node_modules/,
         // })
+      }
+      if (skipChecks) {
+        config.plugins.shift()
       }
     },
   },

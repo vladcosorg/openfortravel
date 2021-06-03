@@ -22,7 +22,7 @@
     }
   },
   "hosting": {
-    "public": "admin/dist/spa",
+    "public": "packages/admin/dist/spa",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
