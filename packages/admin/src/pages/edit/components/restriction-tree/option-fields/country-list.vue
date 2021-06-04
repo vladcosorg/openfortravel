@@ -1,43 +1,95 @@
 <template>
   <div>
-    <q-dialog v-model="show" full-height>
-      <div class="row bg-dark flex-center q-pt-none relative-position">
-        <q-checkbox v-model="toggleNegation" label="Negate" />
-        <div
-          style="position: sticky; top: 0; z-index: 10"
-          class="bg-dark full-width q-pa-lg q-pb-none row flex-center"
-        >
-          <q-btn-group outline>
-            <q-btn outline label="Invert" @click="invertSelection" />
-            <q-btn outline label="Deselect All" @click="deselectAll" />
-            <q-btn outline label="Select All" @click="selectAll" />
-            <q-btn outline label="EU" @click="selectEU" />
-            <q-btn outline label="EEA" @click="selectEEA" />
-            <q-btn outline label="EEA + Sw" @click="selectEEAS" />
+    <q-dialog
+      v-model="show"
+      full-height
+      full-width
+      transition-show=""
+      transition-hide=""
+    >
+      <div class="bg-dark column">
+        <div class="q-pt-lg q-pl-lg q-pb-none q-gutter-md">
+          <q-btn-group>
             <q-btn
-              outline
+              color="grey-8"
+              unelevated
+              label="Invert"
+              @click="invertSelection"
+            />
+            <q-btn
+              color="grey-8"
+              unelevated
+              label="Deselect All"
+              @click="deselectAll"
+            />
+            <q-btn
+              color="grey-8"
+              unelevated
+              label="Select All"
+              @click="selectAll"
+            />
+          </q-btn-group>
+          <q-btn-group>
+            <q-btn color="grey-8" unelevated label="EU" @click="selectEU" />
+            <q-btn color="grey-8" unelevated label="EEA" @click="selectEEA" />
+            <q-btn
+              color="grey-8"
+              unelevated
+              label="EEA + Sw"
+              @click="selectEEAS"
+            />
+            <q-btn
+              color="grey-8"
+              unelevated
               label="EEA without Schengen"
               @click="selectEEAWithoutSchengen"
             />
-            <q-btn outline label="SH" @click="selectSchengen" />
-            <q-btn outline label="Parse" @click="openParseDialog" />
+            <q-btn
+              color="grey-8"
+              unelevated
+              label="SH"
+              @click="selectSchengen"
+            />
           </q-btn-group>
-          <br />
-          Selected {{ ticked.length }}
+          <q-btn-group>
+            <q-btn
+              color="grey-8"
+              unelevated
+              label="Parse"
+              @click="openParseDialog"
+            />
+          </q-btn-group>
+          <div class="row col-6">
+            <q-input
+              v-model="filter"
+              placeholder="Filter"
+              class="col-6"
+              standout=""
+              dense
+            />
+            <q-checkbox v-model="toggleNegation" class="col" label="Negate" />
+          </div>
         </div>
 
-        <q-input v-model="filter" class="col-12 q-px-lg" standout="" dense />
+        <div class="col overflow-auto q-pa-md">
+          <q-tree
+            :class="$style.columnList"
+            tick-strategy="leaf"
+            :ticked.sync="ticked"
+            :nodes="options"
+            node-key="value"
+            default-expand-all
+            :filter="filter"
+            :filter-method="filterMethod"
+          />
+        </div>
 
-        <q-tree
-          class="col-12 q-px-lg q-pt-lg"
-          tick-strategy="leaf"
-          :ticked.sync="ticked"
-          :nodes="options"
-          node-key="value"
-          default-expand-all
-          :filter="filter"
-          :filter-method="filterMethod"
-        />
+        <div class="bg-blue-grey-9 col-1 overflow-auto q-pa-md">
+          Selected
+          <b>{{ ticked.length }}</b
+          >:
+          {{ selectedLabels }}
+        </div>
       </div>
     </q-dialog>
     <q-input
@@ -51,6 +103,25 @@
   </div>
 </template>
 
+<style module>
+.columnList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-auto-rows: 1fr;
+  grid-gap: 5px;
+}
+
+.columnList :global(.q-tree__node-header) {
+  padding: 0 !important;
+}
+
+.columnList > div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
+
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, ref } from '@vue/composition-api'
@@ -58,9 +129,13 @@ import difference from 'lodash/difference'
 import union from 'lodash/union'
 
 import SelectorInput from '@/admin/src/pages/edit/components/selector-input.vue'
-import { getOriginLabels } from '@/shared/src/modules/country-list/country-list-helpers'
+import {
+  getLabelsForCountryCodes,
+  getOriginLabels,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 import { EEA, EU, SCHENGEN } from '@/shared/src/restriction-tree/misc'
 
+let showw = false
 type Node = { label: string; value: string }
 export default defineComponent({
   props: {
@@ -74,7 +149,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit, root }) {
-    const show = ref(false)
+    const show = ref(showw)
+    showw = false
     const filter = ref('')
     const ticked = computed<string[]>({
       get() {
@@ -145,7 +221,14 @@ export default defineComponent({
         .onOk(({ items }: { items: string[] }) => (ticked.value = items))
     }
 
+    const selectedLabels = computed(() =>
+      getLabelsForCountryCodes(ticked.value)
+        .sort((a, b) => a.localeCompare(b))
+        .join(', '),
+    )
+
     return {
+      selectedLabels,
       options,
       show,
       label,

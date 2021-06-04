@@ -7,6 +7,7 @@
       node-key="UID"
       label-key="type"
       default-expand-all
+      :duration="0"
     >
       <template #default-header="scope">
         <tree-item
