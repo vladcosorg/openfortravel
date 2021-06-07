@@ -35,6 +35,6 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           projectId: ${{ secrets.GCP_PROJECT }}
-          firebaseServiceAccount: ${{ secrets.GCP_SA_KEY }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_OPENFORTRAVEL }}
           channelId: live
 
