@@ -14,6 +14,7 @@
           class="col-12"
           :scope="scope"
           :tree="tree"
+          :node-buffer="nodeBuffer"
           :buffered-node="nodeToCopy"
           :next-uid="getNextUID"
           @copy="nodeToCopy = $event"
@@ -28,7 +29,7 @@
 
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
-import { defineComponent, ref, watch } from '@vue/composition-api'
+import { defineComponent, ref, watch, provide } from '@vue/composition-api'
 import debounce from 'lodash/debounce'
 
 import CustomInstruction from '@/admin/src/pages/edit/components/restriction-tree/tree-item/custom-instruction.vue'
@@ -38,6 +39,10 @@ import {
   createIndexedTree,
   prepareForStorage,
 } from '@/admin/src/pages/edit/composables/use-tree'
+import {
+  TreeManager,
+  TreeManagerStoreKey,
+} from '@/admin/src/pages/edit/modules/tree-manager'
 import type { Destination } from '@/shared/src/api/destinations/models'
 
 export default defineComponent({
@@ -63,12 +68,15 @@ export default defineComponent({
     }
 
     const treeElement = ref()
+    const nodeBuffer = ref<QuasarTreeNode | undefined>()
     let isInitialLoad = true
     const nodeToCopy =
       ref<{ action: 'cut' | 'copy'; node: QuasarTreeNode } | undefined>()
     const tree = ref<QuasarTreeNode[]>(
       props.loading ? [] : createIndexedTree(props.destination, getNextUID),
     )
+
+    provide(TreeManagerStoreKey, new TreeManager(tree, nodeBuffer, getNextUID))
 
     watch(
       () => props.loading,
@@ -111,6 +119,7 @@ export default defineComponent({
       treeElement,
       nodeToCopy,
       getNextUID,
+      nodeBuffer,
     }
   },
 })

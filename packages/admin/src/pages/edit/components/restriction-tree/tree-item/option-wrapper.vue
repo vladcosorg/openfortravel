@@ -4,10 +4,11 @@
 
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import Generic from '@/admin/src/pages/edit/components/restriction-tree/tree-item/generic.vue'
 import type { QuasarRestrictionTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
+import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/tree-manager'
 
 export default defineComponent({
   components: {
@@ -23,12 +24,13 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const treeManager = inject(TreeManagerStoreKey)
     const internalOptions = computed({
       get() {
         return props.node.options ?? {}
       },
       set(value) {
-        emit('input', Object.assign({}, props.node, { options: value }))
+        treeManager.updateNodeOptions(props.node, value)
       },
     })
     return { internalOptions }

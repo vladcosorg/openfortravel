@@ -3,32 +3,43 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import {
+  computed,
+  defineComponent,
+  inject,
+  PropType,
+} from '@vue/composition-api'
 import omit from 'lodash/omit'
+
+import { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
+import {
+  TreeManager,
+  TreeManagerStoreKey,
+} from '@/admin/src/pages/edit/modules/tree-manager'
 
 export default defineComponent({
   components: {},
   props: {
-    scope: {
-      type: Object,
+    node: {
+      type: Object as PropType<QuasarTreeNode>,
       required: true,
     },
   },
-  setup(props, { emit }) {
+  setup(props) {
+    const treeManager = inject(TreeManagerStoreKey) as TreeManager
     const setter = computed({
       get() {
-        return props.scope?.node.options?.comment ?? ''
+        return props.node?.comment ?? ''
       },
       set(value: string) {
-        const options = props.scope?.node.options
-        emit('input', {
-          options:
-            value.length === 0
-              ? omit(options, ['comment'])
-              : Object.assign({}, options, {
-                  comment: value,
-                }),
-        })
+        const options = props.node
+        treeManager.updateNodeProperty(
+          value.length === 0
+            ? omit(props.node, ['comment'])
+            : Object.assign({}, props.node, {
+                comment: value,
+              }),
+        )
       },
     })
     return { setter }
