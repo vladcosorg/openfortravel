@@ -2,6 +2,7 @@ name: Admin deploy
 on:
   push:
     paths:
+      - .github/workflows/**
       - packages/admin/**
       - packages/shared/**
     branches:
