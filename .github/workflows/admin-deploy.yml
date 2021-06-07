@@ -1,0 +1,39 @@
+name: Front deploy
+on:
+  push:
+    paths:
+      - packages/admin/**
+      - packages/shared/**
+    branches:
+      - master
+
+jobs:
+  release:
+    name: Compiling a new admin build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Restore yarn workspaces
+        id: yarn-cache
+        uses: actions/cache@master
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn install --ignore-platform --frozen-lockfile
+      - run: yarn build
+        working-directory: ./packages/admin
+      - id: deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          projectId: ${{ secrets.GCP_PROJECT }}
+          firebaseServiceAccount: ${{ secrets.GCP_SA_KEY }}
+          channelId: live
+          working_directory: ./packages/admin
