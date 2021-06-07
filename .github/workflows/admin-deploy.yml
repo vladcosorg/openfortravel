@@ -1,4 +1,4 @@
-name: Front deploy
+name: Admin deploy
 on:
   push:
     paths:
