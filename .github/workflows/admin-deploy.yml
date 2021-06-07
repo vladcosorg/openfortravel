@@ -36,4 +36,4 @@ jobs:
           projectId: ${{ secrets.GCP_PROJECT }}
           firebaseServiceAccount: ${{ secrets.GCP_SA_KEY }}
           channelId: live
-          working_directory: ./packages/admin
+
