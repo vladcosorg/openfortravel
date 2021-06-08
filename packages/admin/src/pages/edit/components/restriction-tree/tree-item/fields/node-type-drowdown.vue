@@ -26,7 +26,12 @@
   </q-select>
 </template>
 
-<style lang="scss" module></style>
+<style lang="scss">
+.q-tree__node-header.q-hoverable .q-focus-helper {
+  background-color: transparent;
+  display: none;
+}
+</style>
 
 <script lang="ts">
 import {
