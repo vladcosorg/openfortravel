@@ -31,7 +31,11 @@ export function createConfig(
             { label: 'From', value: true },
           ],
         }),
-        createTextInput(setters.age, { label: 'Limit', type: 'number' }),
+        createTextInput(setters.age, {
+          label: 'Age limit',
+          type: 'number',
+          suffix: 'years old',
+        }),
       ]
     }
 
@@ -81,17 +85,21 @@ export function createConfig(
       const setters = getSetters(type, options, emit)
 
       return [
+        createButtonToggle(setters.exclude, {
+          options: [
+            { label: 'Only', value: false },
+            { label: 'None or Except', value: true },
+          ],
+        }),
         createCountryList({
           countries: setters.countryCodes,
           not: setters.inverseSelection,
         }),
-        createButtonToggle(setters.exclude, {
-          options: [
-            { label: 'Include', value: false },
-            { label: 'Exclude', value: true },
-          ],
+        createTextInput(setters.days, {
+          label: 'In the last',
+          type: 'number',
+          suffix: 'days',
         }),
-        createTextInput(setters.days, { label: 'Days', type: 'number' }),
       ]
     }
 
@@ -99,10 +107,16 @@ export function createConfig(
       const setters = getSetters(type, options, emit)
 
       return [
-        createTextInput(setters.days, { label: 'Days', type: 'number' }),
-        createTextInput(setters.earlyReleaseDays, {
-          label: 'Early',
+        createTextInput(setters.days, {
+          label: 'Quarantine length',
           type: 'number',
+          suffix: 'days',
+        }),
+        createTextInput(setters.earlyReleaseDays, {
+          label: 'Early release after',
+          type: 'number',
+          suffix: 'days',
+          hint: 'Leave 0 if no early release',
         }),
       ]
     }

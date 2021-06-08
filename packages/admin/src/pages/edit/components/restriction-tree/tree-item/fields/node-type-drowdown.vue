@@ -3,7 +3,7 @@
     :label="label"
     :value="node.type"
     class="text-capitalize"
-    bg-color="teal-6"
+    :bg-color="color"
     style="width: 200px"
     standout
     dense
@@ -69,7 +69,10 @@ export default defineComponent({
 
       ...Object.values(RestrictionNodeType).map((value) => ({
         value,
-        label: capitalize(value.replaceAll('-', ' ')),
+        label:
+          value === RestrictionNodeType.DID_NOT_VISIT_COUNTRIES
+            ? 'Recently visited'
+            : capitalize(value.replaceAll('-', ' ')),
       })),
     ]
 
@@ -78,11 +81,24 @@ export default defineComponent({
       logicTypes.includes(type) ? 'Condition' : 'Restriction'
 
     const label = computed(() => getTypeLabel(props.node.type))
+    const color = computed(() => {
+      switch (props.node.type) {
+        case LogicNodeType.OR:
+          return 'primary'
+
+        case LogicNodeType.AND:
+          return 'indigo'
+
+        default:
+          return 'teal-6'
+      }
+    })
 
     const treeManager = inject(TreeManagerStoreKey) as TreeManager
     const doAction = (newType: LogicNodeType | RestrictionNodeType) =>
       treeManager.updateNodeType(newType, props.node)
     return {
+      color,
       doAction,
       options,
       label,

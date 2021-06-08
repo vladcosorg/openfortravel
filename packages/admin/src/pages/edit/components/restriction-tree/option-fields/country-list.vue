@@ -182,9 +182,7 @@ export default defineComponent({
       acc.push({ value, label })
       return acc
     }, [])
-    const label = computed(
-      () => `${props.not ? 'Except' : 'Only'} ${ticked.value.length} selected`,
-    )
+    const label = computed(() => ` ${ticked.value.length} countries`)
 
     const filterMethod = (node: Node, filter: string): boolean =>
       node.label && node.label.toLowerCase().includes(filter.toLowerCase())

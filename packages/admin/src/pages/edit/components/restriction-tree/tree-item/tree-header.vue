@@ -1,6 +1,9 @@
 <template>
   <div class="row q-gutter-x-sm" @click.stop @keypress.stop>
     <node-type-drowdown :node="node" />
+    <q-btn-group unelevated style="background-color: #556066">
+      <action-remove :node="node" />
+    </q-btn-group>
     <action-add :node="node" unelevated style="background-color: #556066" />
     <action-add
       label="Or"
@@ -16,9 +19,7 @@
       unelevated
       style="background-color: #556066"
     />
-    <q-btn-group unelevated style="background-color: #556066">
-      <action-remove :node="node" />
-    </q-btn-group>
+
     <q-btn-group unelevated style="background-color: #556066">
       <action-duplicate :node="node" />
       <action-cut :node="node" />
