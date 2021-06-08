@@ -9,7 +9,6 @@ import {
   inject,
   PropType,
 } from '@vue/composition-api'
-import omit from 'lodash/omit'
 
 import { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
 import {
@@ -29,17 +28,14 @@ export default defineComponent({
     const treeManager = inject(TreeManagerStoreKey) as TreeManager
     const setter = computed({
       get() {
-        return props.node?.comment ?? ''
+        return props.node.comment ?? ''
       },
       set(value: string) {
-        const options = props.node
-        treeManager.updateNodeProperty(
-          value.length === 0
-            ? omit(props.node, ['comment'])
-            : Object.assign({}, props.node, {
-                comment: value,
-              }),
-        )
+        if (value.length > 0) {
+          treeManager.updateNodeProperty(props.node, 'comment', value)
+        } else {
+          treeManager.removeNodeProperty(props.node, 'comment')
+        }
       },
     })
     return { setter }

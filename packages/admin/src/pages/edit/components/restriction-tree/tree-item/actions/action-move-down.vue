@@ -1,19 +1,15 @@
 <template>
-  <q-btn v-if="show" :icon="icon" unelevated @click="doAction" />
+  <q-btn v-if="node.UID > 1" :icon="icon" unelevated @click="doAction">
+    <q-tooltip>Move down</q-tooltip>
+  </q-btn>
 </template>
 
 <script lang="ts">
-import { matToggleOn as icon } from '@quasar/extras/material-icons'
-import {
-  computed,
-  defineComponent,
-  inject,
-  PropType,
-} from '@vue/composition-api'
+import { matArrowDownward as icon } from '@quasar/extras/material-icons'
+import { defineComponent, inject, PropType } from '@vue/composition-api'
 
 import { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
 import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/tree-manager'
-import { LogicNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: {},
@@ -25,14 +21,10 @@ export default defineComponent({
   },
   setup(props) {
     const treeManager = inject(TreeManagerStoreKey)
-    const doAction = () => treeManager.toggleCustom(props.node)
-    const show = computed(
-      () => !Object.values(LogicNodeType).includes(props.node.type),
-    )
+    const doAction = () => treeManager.moveNodeDown(props.node)
     return {
       icon,
       doAction,
-      show,
     }
   },
 })

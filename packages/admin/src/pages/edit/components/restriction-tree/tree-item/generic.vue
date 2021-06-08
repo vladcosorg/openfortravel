@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <div class="row q-col-gutter-sm">
-      <component
-        :is="field.type"
-        v-bind="field.bind"
-        v-for="(field, key) in config"
-        :key="key"
-        v-model="field.model.value"
-        v-on="field.on"
-      />
-    </div>
+  <div class="row q-gutter-x-sm">
+    <component
+      :is="field.type"
+      v-bind="field.bind"
+      v-for="(field, key) in config"
+      :key="key"
+      v-model="field.model.value"
+      v-on="field.on"
+    />
   </div>
 </template>
 

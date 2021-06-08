@@ -9,17 +9,17 @@ import type {
 import { LogicNodeType } from '@/shared/src/restriction-tree/types'
 
 export type ScopedNodeData = { key: number }
-export type QuasarTreeNode = QuasarLogicTreeNode | QuasarRestrictionTreeNode
+export type QuasarTreeNode = (
+  | QuasarLogicTreeNode
+  | QuasarRestrictionTreeNode
+) & { comment?: string }
 export type QuasarLogicTreeNode = {
   UID: number
   children: QuasarTreeNode[]
 } & EncodedLogicNode
 export type QuasarRestrictionTreeNode = {
   UID: number
-  showCustom: boolean
 } & EncodedRestrictionNode
-export type ExtractRestrictionOptions<T extends { new (...args: any): any }> =
-  ConstructorParameters<T>[0]
 
 export function indexTheTree(
   nodes: EncodedNode[],
@@ -30,7 +30,6 @@ export function indexTheTree(
       const out: QuasarTreeNode = {
         ...node,
         UID: getNextUID(),
-        showCustom: false,
       }
 
       if ('children' in node) {
@@ -72,7 +71,7 @@ function cleanObjectRecursive(indexedTree: QuasarTreeNode[]): EncodedNode[] {
               }
             : {},
         ),
-        ['UID', 'showCustom'],
+        ['UID'],
       ) as EncodedNode,
     )
   }

@@ -23,7 +23,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup(props, { emit }) {
+  setup(props) {
     const treeManager = inject(TreeManagerStoreKey)
     const internalOptions = computed({
       get() {

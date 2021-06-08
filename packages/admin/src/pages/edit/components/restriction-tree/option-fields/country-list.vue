@@ -4,10 +4,15 @@
       v-model="show"
       full-height
       full-width
+      class=""
       transition-show=""
       transition-hide=""
     >
       <div class="bg-dark column">
+        <q-bar>
+          <q-space />
+          <q-btn v-close-popup dense flat icon="close" />
+        </q-bar>
         <div class="q-pt-lg q-pl-lg q-pb-none q-gutter-md">
           <q-btn-group>
             <q-btn

@@ -16,8 +16,8 @@ export abstract class RestrictionNode<
 > implements TreeNode
 {
   static defaultOptions = {
-    customInstructionTitle: '',
-    customInstructionSubtitle: '',
+    customInstructionTitle: '' as string | undefined,
+    customInstructionSubtitle: '' as string | undefined,
   }
 
   constructor(public readonly options: T) {}

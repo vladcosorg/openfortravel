@@ -1,11 +1,5 @@
 <template>
-  <q-btn
-    v-if="show"
-    :icon="!label ? icon : undefined"
-    :label="label"
-    unelevated
-    @click="doAction"
-  />
+  <q-btn v-if="show" :icon="icon" :label="label" unelevated @click="doAction" />
 </template>
 
 <script lang="ts">

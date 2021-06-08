@@ -10,18 +10,10 @@
       :duration="0"
     >
       <template #default-header="scope">
-        <tree-item
-          class="col-12"
-          :scope="scope"
-          :tree="tree"
-          :node-buffer="nodeBuffer"
-          :buffered-node="nodeToCopy"
-          :next-uid="getNextUID"
-          @copy="nodeToCopy = $event"
-        />
+        <tree-header class="col-12" :node="scope.node" />
       </template>
       <template #default-body="scope">
-        <custom-instruction :scope="scope" />
+        <tree-body class="col-12" :node="scope.node" />
       </template>
     </q-tree>
   </div>
@@ -29,11 +21,18 @@
 
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
-import { defineComponent, ref, watch, provide } from '@vue/composition-api'
+import {
+  defineComponent,
+  ref,
+  watch,
+  provide,
+  InjectionKey,
+} from '@vue/composition-api'
 import debounce from 'lodash/debounce'
+import Vue from 'vue'
 
-import CustomInstruction from '@/admin/src/pages/edit/components/restriction-tree/tree-item/custom-instruction.vue'
-import TreeItem from '@/admin/src/pages/edit/components/restriction-tree/tree-item/tree-item.vue'
+import TreeBody from '@/admin/src/pages/edit/components/restriction-tree/tree-item/tree-body.vue'
+import TreeHeader from '@/admin/src/pages/edit/components/restriction-tree/tree-item/tree-header.vue'
 import type { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
 import {
   createIndexedTree,
@@ -45,8 +44,9 @@ import {
 } from '@/admin/src/pages/edit/modules/tree-manager'
 import type { Destination } from '@/shared/src/api/destinations/models'
 
+export const EventBus: InjectionKey<Vue> = Symbol('EventBus')
 export default defineComponent({
-  components: { CustomInstruction, TreeItem },
+  components: { TreeBody, TreeHeader },
   model: {
     prop: 'destination',
   },
@@ -70,13 +70,13 @@ export default defineComponent({
     const treeElement = ref()
     const nodeBuffer = ref<QuasarTreeNode | undefined>()
     let isInitialLoad = true
-    const nodeToCopy =
-      ref<{ action: 'cut' | 'copy'; node: QuasarTreeNode } | undefined>()
+
     const tree = ref<QuasarTreeNode[]>(
       props.loading ? [] : createIndexedTree(props.destination, getNextUID),
     )
 
     provide(TreeManagerStoreKey, new TreeManager(tree, nodeBuffer, getNextUID))
+    provide(EventBus, new Vue())
 
     watch(
       () => props.loading,
@@ -114,12 +114,12 @@ export default defineComponent({
       { deep: true },
     )
 
+    const showCustomTitle = ref(false)
+    const showCustomContent = ref(false)
+
     return {
       tree,
       treeElement,
-      nodeToCopy,
-      getNextUID,
-      nodeBuffer,
     }
   },
 })

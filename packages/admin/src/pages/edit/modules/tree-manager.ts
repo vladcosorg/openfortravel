@@ -1,5 +1,6 @@
 import { InjectionKey, Ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
+import Vue from 'vue'
 
 import {
   indexTheTree,
@@ -52,12 +53,31 @@ export class TreeManager {
     Object.assign(node, { options })
   }
 
+  updateNodeOption<
+    T extends QuasarRestrictionTreeNode,
+    K extends keyof T['options'],
+    V extends T[K],
+  >(node: T, key: K, value: V): void {
+    if (!node.options) {
+      node.options = {}
+    }
+
+    Vue.set(node.options, key as string, value)
+  }
+
   updateNodeProperty<T extends QuasarTreeNode, K extends keyof T>(
     node: T,
     key: K,
     value: T[K],
   ): void {
-    Object.assign(node, { [key]: value })
+    Vue.set(node, key as string, value)
+  }
+
+  removeNodeProperty<T extends QuasarTreeNode, K extends keyof T>(
+    node: T,
+    key: K,
+  ): void {
+    Vue.delete(node, key as string)
   }
 
   updateNodeType(
@@ -90,6 +110,32 @@ export class TreeManager {
     }
   }
 
+  moveNodeUp(node: QuasarTreeNode): void {
+    const parentNode = this.findNodeParentByUID(node.UID)
+    const currentIndex = parentNode.children.indexOf(node)
+
+    if (currentIndex === 0) {
+      return
+    }
+
+    parentNode.children = this.moveChildIndex(
+      parentNode.children,
+      currentIndex,
+      currentIndex - 1,
+    )
+  }
+
+  moveNodeDown(node: QuasarTreeNode): void {
+    const parentNode = this.findNodeParentByUID(node.UID)
+    const currentIndex = parentNode.children.indexOf(node)
+
+    parentNode.children = this.moveChildIndex(
+      parentNode.children,
+      currentIndex,
+      currentIndex + 1,
+    )
+  }
+
   hasBuffer(): boolean {
     return !!this.buffer.value
   }
@@ -101,10 +147,6 @@ export class TreeManager {
 
   copyNodeToBuffer(node: QuasarTreeNode): void {
     this.buffer.value = node
-  }
-
-  toggleCustom(node: QuasarRestrictionTreeNode): void {
-    node.showCustom = !node.showCustom
   }
 
   duplicateNode(node: QuasarTreeNode): void {
@@ -131,6 +173,23 @@ export class TreeManager {
     this.buffer.value = undefined
   }
 
+  removeNode(node: QuasarTreeNode): void {
+    const parent = this.findNodeParentByUID(node.UID)
+    parent.children = parent.children.filter((item) => item.UID !== node.UID)
+  }
+
+  protected moveChildIndex<T extends QuasarTreeNode[]>(
+    array: T,
+    oldIndex: number,
+    newIndex: number,
+  ): T {
+    if (newIndex >= array.length) {
+      newIndex = array.length - 1
+    }
+    array.splice(newIndex, 0, array.splice(oldIndex, 1)[0])
+    return array
+  }
+
   protected createEmptyNodeOfType(
     type: LogicNodeType | RestrictionNodeType,
   ): QuasarTreeNode {
@@ -144,7 +203,6 @@ export class TreeManager {
 
     return {
       type,
-      showCustom: false,
       UID: this.generateUID(),
       options: {},
     }
@@ -166,32 +224,32 @@ export class TreeManager {
     return Object.values(LogicNodeType).includes(type as LogicNodeType)
   }
 
-  protected removeNode(node: QuasarTreeNode): void {
-    const parent = this.findNodeParentByUID(node.UID)
-    parent.children = parent.children.filter((item) => item.UID !== node.UID)
+  protected findNodeParentByUID(UID: number): QuasarLogicTreeNode {
+    const node = this.findRecursive(UID, this.tree.value)
+
+    if (!node) {
+      throw new Error(`Could not find the parent of node with UID ${UID}`)
+    }
+
+    return node as QuasarLogicTreeNode
   }
 
-  protected findNodeParentByUID(
+  protected findRecursive(
     UID: number,
-    treeOrSubtree?: QuasarTreeNode[],
-  ): QuasarLogicTreeNode {
-    for (const node of treeOrSubtree ?? this.tree.value) {
+    subtree: QuasarTreeNode[],
+  ): QuasarTreeNode | void {
+    for (const node of subtree) {
       if (node.UID === UID) {
         return node as QuasarLogicTreeNode
       }
 
       if ('children' in node) {
-        const found = this.findNodeParentByUID(
-          UID,
-          node.children as QuasarTreeNode[],
-        )
+        const found = this.findRecursive(UID, node.children as QuasarTreeNode[])
         if (found) {
           return found.UID === UID ? node : found
         }
       }
     }
-
-    throw new Error(`Could not find the parent of node with UID ${UID}`)
   }
 }
 export const TreeManagerStoreKey: InjectionKey<TreeManager> =
