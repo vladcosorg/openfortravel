@@ -113,7 +113,7 @@ export default defineComponent({
           return 'indigo'
 
         case LogicNodeType.AND:
-          return 'orange-10'
+          return 'indigo-10'
 
         default:
           return 'teal-6'

@@ -101,9 +101,10 @@
       dense
       standout=""
       readonly
+      stack-label
+      :label="hint"
       style="cursor: pointer"
       :value="label"
-      :hint="hint"
       @click="show = true"
     >
       <template #after>

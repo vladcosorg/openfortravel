@@ -101,10 +101,15 @@ export function createConfig(
             { label: 'None or Except', value: true },
           ],
         }),
-        createCountryList({
-          countries: setters.countryCodes,
-          not: setters.inverseSelection,
-        }),
+        createCountryList(
+          {
+            countries: setters.countryCodes,
+            not: setters.inverseSelection,
+          },
+          {
+            class: 'col',
+          },
+        ),
         createTextInput(setters.days, {
           label: 'In the last',
           type: 'number',
