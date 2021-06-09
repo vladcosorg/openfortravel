@@ -197,6 +197,10 @@ export default defineComponent({
     })
 
     const label = computed(() => {
+      if (ticked.value.length === 0) {
+        return 'No countries selected, click to select'
+      }
+
       const labels = getLabelsForCountryCodes(ticked.value).join(', ')
       if (props.not) {
         return `All countries except ${labels}`

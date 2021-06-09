@@ -1,5 +1,7 @@
 <template>
-  <q-btn v-if="node.UID > 1" :icon="icon" unelevated @click="doAction" />
+  <q-btn v-if="node.UID > 1" :icon="icon" unelevated @click="doAction"
+    ><q-tooltip>Cut</q-tooltip></q-btn
+  >
 </template>
 
 <script lang="ts">

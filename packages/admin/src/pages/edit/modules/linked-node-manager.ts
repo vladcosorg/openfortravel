@@ -26,14 +26,31 @@ export class LinkedNodeManager {
   ) {}
 
   registerLinkedNode(sourceNode: QuasarRestrictionTreeNode): void {
-    if (this.linkedNodes?.includes(sourceNode)) {
-      return
+    if (!this.linkedNodes) {
+      this.linkedNodes = this.findInitialLinkedNodes(this.tree.value)
     }
 
-    this.linkedNodes?.push(sourceNode)
+    if (!this.linkedNodes?.includes(sourceNode)) {
+      this.linkedNodes?.push(sourceNode)
+    }
+
+    const existingNodeOfTheSameGroup = this.linkedNodes
+      ?.filter(
+        (node) =>
+          node.group === sourceNode.group && sourceNode.UID !== node.UID,
+      )
+      .pop()
+
+    if (existingNodeOfTheSameGroup) {
+      this.maybeSyncLinkedNodes(existingNodeOfTheSameGroup)
+    }
   }
 
   deregisterLinkedNode(sourceNode: QuasarRestrictionTreeNode): void {
+    if (!this.linkedNodes) {
+      this.linkedNodes = this.findInitialLinkedNodes(this.tree.value)
+    }
+
     this.linkedNodes = this.linkedNodes?.filter(
       (node) => node.UID !== sourceNode.UID,
     )

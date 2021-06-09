@@ -1,5 +1,7 @@
 <template>
-  <q-btn v-if="show" :icon="icon" unelevated @click="doAction" />
+  <q-btn v-if="show" :icon="icon" unelevated @click="doAction"
+    ><q-tooltip>Paste node</q-tooltip></q-btn
+  >
 </template>
 
 <script lang="ts">
