@@ -15,7 +15,9 @@
   >
     <template #option="scope">
       <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
-        <q-item-section>
+        <q-item-section
+          :class="{ 'text-bold': ['or', 'and'].includes(scope.opt.value) }"
+        >
           <q-item-label v-html="scope.opt.label" />
           <q-item-label caption>{{
             getTypeLabel(scope.opt.value)
@@ -65,18 +67,40 @@ export default defineComponent({
         label: capitalize(value.replaceAll('-', ' ')),
       })),
 
-      ...Object.values(RestrictionNodeType).map((value) => ({
-        value,
-        label:
-          value === RestrictionNodeType.DID_NOT_VISIT_COUNTRIES
-            ? 'Recently visited'
-            : capitalize(value.replaceAll('-', ' ')),
-      })),
+      ...Object.values(RestrictionNodeType).map((value) => {
+        let label = capitalize(value.replaceAll('-', ' '))
+        switch (value) {
+          case RestrictionNodeType.DID_NOT_VISIT_COUNTRIES:
+            label = 'Recently visited'
+            break
+
+          case RestrictionNodeType.PCR_TEST:
+            label = 'COVID-19 Test'
+            break
+
+          case RestrictionNodeType.RECOVERY:
+            label = 'Recovered from COVID-19'
+            break
+
+          case RestrictionNodeType.VACCINATED:
+            label = 'Vaccination'
+            break
+
+          case RestrictionNodeType.ORIGIN:
+            label = 'Country of Origin'
+            break
+        }
+
+        return {
+          value,
+          label,
+        }
+      }),
     ]
 
     const logicTypes = Object.values(LogicNodeType)
     const getTypeLabel = (type) =>
-      logicTypes.includes(type) ? 'Condition' : 'Restriction'
+      logicTypes.includes(type) ? 'Condition' : 'Requirement'
 
     const label = computed(() => getTypeLabel(props.node.type))
     const color = computed(() => {
@@ -86,10 +110,10 @@ export default defineComponent({
 
       switch (props.node.type) {
         case LogicNodeType.OR:
-          return 'primary'
+          return 'indigo'
 
         case LogicNodeType.AND:
-          return 'indigo'
+          return 'orange-10'
 
         default:
           return 'teal-6'

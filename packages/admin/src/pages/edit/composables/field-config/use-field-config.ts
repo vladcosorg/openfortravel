@@ -59,10 +59,15 @@ export function createConfig(
       const setters = getSetters(type, options, emit)
 
       return [
-        createCountryList({
-          countries: setters.allowedOrigins,
-          not: setters.not,
-        }),
+        createCountryList(
+          {
+            countries: setters.allowedOrigins,
+            not: setters.not,
+          },
+          {
+            class: 'col-12',
+          },
+        ),
       ]
     }
 
@@ -74,10 +79,15 @@ export function createConfig(
       const setters = getSetters(type, options, emit)
 
       return [
-        createCountryList({
-          countries: setters.allowedCitizenship,
-          not: setters.not,
-        }),
+        createCountryList(
+          {
+            countries: setters.allowedCitizenship,
+            not: setters.not,
+          },
+          {
+            class: 'col-12',
+          },
+        ),
       ]
     }
 

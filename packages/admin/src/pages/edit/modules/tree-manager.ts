@@ -114,9 +114,7 @@ export class TreeManager {
       })
     }
 
-    node.type = newType
-
-    if (this.isRestrictionNode(node)) {
+    if (this.isRestrictionNode(node) && node.options) {
       const migratedOptions: Record<keyof typeof compatMap, unknown> = {}
       for (const [optionID, optionValue] of Object.entries(node.options)) {
         const key = [node.type, newType, optionID].join('')
@@ -127,6 +125,8 @@ export class TreeManager {
 
       this.updateNodeOptions(node, migratedOptions)
     }
+
+    node.type = newType
   }
 
   moveNodeUp(node: QuasarTreeNode): void {

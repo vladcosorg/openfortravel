@@ -103,8 +103,13 @@
       readonly
       style="cursor: pointer"
       :value="label"
+      :hint="hint"
       @click="show = true"
-    />
+    >
+      <template #after>
+        <q-icon name="edit"><q-tooltip>Edit</q-tooltip></q-icon>
+      </template>
+    </q-input>
   </div>
 </template>
 
@@ -182,12 +187,20 @@ export default defineComponent({
       acc.push({ value, label })
       return acc
     }, [])
-    const label = computed(() => {
+    const hint = computed(() => {
       if (props.not) {
-        return ` ${options.length - ticked.value.length} countries`
+        return ` ${options.length - ticked.value.length} countries selected`
       }
 
-      return ` ${ticked.value.length} countries`
+      return ` ${ticked.value.length} countries selected`
+    })
+
+    const label = computed(() => {
+      const labels = getLabelsForCountryCodes(ticked.value).join(', ')
+      if (props.not) {
+        return `All countries except ${labels}`
+      }
+      return labels
     })
 
     const filterMethod = (node: Node, filter: string): boolean =>
@@ -241,6 +254,7 @@ export default defineComponent({
       options,
       show,
       label,
+      hint,
       ticked,
       selectAll,
       deselectAll,
