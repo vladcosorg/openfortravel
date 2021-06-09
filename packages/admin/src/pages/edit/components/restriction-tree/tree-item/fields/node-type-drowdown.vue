@@ -43,10 +43,8 @@ import {
 import capitalize from 'lodash/capitalize'
 
 import { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
-import {
-  TreeManager,
-  TreeManagerStoreKey,
-} from '@/admin/src/pages/edit/modules/tree-manager'
+import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
+import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
 import {
   LogicNodeType,
   RestrictionNodeType,
@@ -82,6 +80,10 @@ export default defineComponent({
 
     const label = computed(() => getTypeLabel(props.node.type))
     const color = computed(() => {
+      if (props.node.UID === 1) {
+        return ''
+      }
+
       switch (props.node.type) {
         case LogicNodeType.OR:
           return 'primary'

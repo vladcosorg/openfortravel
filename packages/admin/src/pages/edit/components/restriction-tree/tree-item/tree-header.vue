@@ -34,6 +34,7 @@
       <action-add-title v-model="showCustomTitle" :node="node" />
       <action-add-content v-model="showCustomContent" :node="node" />
     </q-btn-group>
+    <action-assign-group :node="node" />
     <comments :node="node" class="col" />
   </div>
 </template>
@@ -44,6 +45,7 @@ import { defineComponent, ref } from '@vue/composition-api'
 import ActionAddContent from '@/admin/src/pages/edit/components/restriction-tree/tree-item/actions/action-add-content.vue'
 import ActionAddTitle from '@/admin/src/pages/edit/components/restriction-tree/tree-item/actions/action-add-title.vue'
 import ActionAdd from '@/admin/src/pages/edit/components/restriction-tree/tree-item/actions/action-add.vue'
+import ActionAssignGroup from '@/admin/src/pages/edit/components/restriction-tree/tree-item/actions/action-assign-group.vue'
 import ActionCopy from '@/admin/src/pages/edit/components/restriction-tree/tree-item/actions/action-copy.vue'
 import ActionCut from '@/admin/src/pages/edit/components/restriction-tree/tree-item/actions/action-cut.vue'
 import ActionDuplicate from '@/admin/src/pages/edit/components/restriction-tree/tree-item/actions/action-duplicate.vue'
@@ -56,6 +58,7 @@ import NodeTypeDrowdown from '@/admin/src/pages/edit/components/restriction-tree
 
 export default defineComponent({
   components: {
+    ActionAssignGroup,
     ActionMoveDown,
     ActionMoveUp,
     NodeTypeDrowdown,

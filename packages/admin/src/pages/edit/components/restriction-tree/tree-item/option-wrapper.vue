@@ -8,7 +8,7 @@ import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import Generic from '@/admin/src/pages/edit/components/restriction-tree/tree-item/generic.vue'
 import type { QuasarRestrictionTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
-import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/tree-manager'
+import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
 
 export default defineComponent({
   components: {

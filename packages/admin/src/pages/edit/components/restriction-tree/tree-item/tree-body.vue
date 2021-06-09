@@ -18,7 +18,7 @@ import { defineComponent, inject, ref } from '@vue/composition-api'
 
 import CustomInstruction from '@/admin/src/pages/edit/components/restriction-tree/tree-item/fields/custom-instruction.vue'
 import NodeBody from '@/admin/src/pages/edit/components/restriction-tree/tree-item/option-wrapper.vue'
-import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/tree-manager'
+import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
 
 export default defineComponent({
   components: {

@@ -12,7 +12,7 @@ import {
 } from '@vue/composition-api'
 
 import { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
-import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/tree-manager'
+import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
 import {
   LogicNodeType,
   RestrictionNodeType,

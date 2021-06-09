@@ -21,13 +21,7 @@
 
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
-import {
-  defineComponent,
-  ref,
-  watch,
-  provide,
-  InjectionKey,
-} from '@vue/composition-api'
+import { defineComponent, provide, ref, watch } from '@vue/composition-api'
 import debounce from 'lodash/debounce'
 import Vue from 'vue'
 
@@ -39,12 +33,12 @@ import {
   prepareForStorage,
 } from '@/admin/src/pages/edit/composables/use-tree'
 import {
-  TreeManager,
+  EventBus,
   TreeManagerStoreKey,
-} from '@/admin/src/pages/edit/modules/tree-manager'
+} from '@/admin/src/pages/edit/modules/symbols'
+import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
 import type { Destination } from '@/shared/src/api/destinations/models'
 
-export const EventBus: InjectionKey<Vue> = Symbol('EventBus')
 export default defineComponent({
   components: { TreeBody, TreeHeader },
   model: {
@@ -113,9 +107,6 @@ export default defineComponent({
       },
       { deep: true },
     )
-
-    const showCustomTitle = ref(false)
-    const showCustomContent = ref(false)
 
     return {
       tree,

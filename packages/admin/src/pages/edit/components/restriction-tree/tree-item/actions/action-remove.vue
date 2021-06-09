@@ -7,7 +7,7 @@ import { matRemove as icon } from '@quasar/extras/material-icons'
 import { defineComponent, inject, PropType } from '@vue/composition-api'
 
 import { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
-import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/tree-manager'
+import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
 
 export default defineComponent({
   components: {},

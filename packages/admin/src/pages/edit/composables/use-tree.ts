@@ -19,6 +19,7 @@ export type QuasarLogicTreeNode = {
 } & EncodedLogicNode
 export type QuasarRestrictionTreeNode = {
   UID: number
+  group?: string
 } & EncodedRestrictionNode
 
 export function indexTheTree(

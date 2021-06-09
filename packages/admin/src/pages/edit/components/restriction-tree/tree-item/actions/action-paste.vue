@@ -12,10 +12,8 @@ import {
 } from '@vue/composition-api'
 
 import { QuasarLogicTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
-import {
-  TreeManager,
-  TreeManagerStoreKey,
-} from '@/admin/src/pages/edit/modules/tree-manager'
+import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
+import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
 import { LogicNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({

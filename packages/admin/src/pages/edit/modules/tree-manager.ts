@@ -1,4 +1,4 @@
-import { InjectionKey, Ref } from '@vue/composition-api'
+import { Ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
 import Vue from 'vue'
 
@@ -8,6 +8,7 @@ import {
   QuasarRestrictionTreeNode,
   QuasarTreeNode,
 } from '@/admin/src/pages/edit/composables/use-tree'
+import { LinkedNodeManager } from '@/admin/src/pages/edit/modules/linked-node-manager'
 import {
   LogicNodeType,
   RestrictionNodeType,
@@ -35,11 +36,14 @@ for (const optionSet of compatibleOptions) {
 }
 
 export class TreeManager {
+  public readonly linkedNodeManager: LinkedNodeManager
   constructor(
     protected readonly tree: Ref<QuasarTreeNode[]>,
     protected readonly buffer: Ref<QuasarTreeNode | undefined>,
     protected readonly generateUID: () => number,
-  ) {}
+  ) {
+    this.linkedNodeManager = new LinkedNodeManager(this.tree, this)
+  }
 
   addNodeToParent(
     parentNode: QuasarLogicTreeNode,
@@ -49,8 +53,9 @@ export class TreeManager {
     parentNode.children.push(newNode)
   }
 
-  updateNodeOptions(node: QuasarTreeNode, options: unknown): void {
+  updateNodeOptions(node: QuasarRestrictionTreeNode, options: unknown): void {
     Object.assign(node, { options })
+    this.linkedNodeManager.maybeSyncLinkedNodes(node)
   }
 
   updateNodeOption<
@@ -71,6 +76,20 @@ export class TreeManager {
     value: T[K],
   ): void {
     Vue.set(node, key as string, value)
+  }
+
+  updateNodeGroup(
+    node: QuasarRestrictionTreeNode,
+    value: string | undefined,
+  ): void {
+    if (!value) {
+      this.removeNodeProperty(node, 'group')
+      this.linkedNodeManager.deregisterLinkedNode(node)
+      return
+    }
+
+    this.updateNodeProperty(node, 'group', value)
+    this.linkedNodeManager.registerLinkedNode(node)
   }
 
   removeNodeProperty<T extends QuasarTreeNode, K extends keyof T>(
@@ -252,5 +271,3 @@ export class TreeManager {
     }
   }
 }
-export const TreeManagerStoreKey: InjectionKey<TreeManager> =
-  Symbol('TreeManager')
