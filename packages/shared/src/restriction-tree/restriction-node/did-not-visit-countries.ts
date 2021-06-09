@@ -14,7 +14,7 @@ export class DidNotVisitCountries extends RestrictionNode<
   public static defaultOptions = {
     countryCodes: [] as string[],
     inverseSelection: false,
-    exclude: true,
+    exclude: false,
     days: 0,
     ...RestrictionNode.defaultOptions,
   }

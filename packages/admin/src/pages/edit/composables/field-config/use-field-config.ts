@@ -95,12 +95,6 @@ export function createConfig(
       const setters = getSetters(type, options, emit)
 
       return [
-        createButtonToggle(setters.exclude, {
-          options: [
-            { label: 'Only', value: false },
-            { label: 'None or Except', value: true },
-          ],
-        }),
         createCountryList(
           {
             countries: setters.countryCodes,
