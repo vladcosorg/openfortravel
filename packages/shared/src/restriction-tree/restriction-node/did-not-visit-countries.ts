@@ -14,24 +14,17 @@ export class DidNotVisitCountries extends RestrictionNode<
   public static defaultOptions = {
     countryCodes: [] as string[],
     inverseSelection: false,
-    exclude: false,
+    matchEmpty: false,
     days: 0,
     ...RestrictionNode.defaultOptions,
   }
 
   matches(userVisitedCountries: string[]): boolean {
     if (userVisitedCountries.length === 0) {
-      return this.options.exclude
+      return this.options.matchEmpty
     }
 
-    const noMatches =
-      intersection(this.getCountries(), userVisitedCountries).length === 0
-
-    if (noMatches) {
-      return this.options.exclude
-    }
-
-    return !this.options.exclude
+    return intersection(this.getCountries(), userVisitedCountries).length > 0
   }
 
   displayOrder(): number {

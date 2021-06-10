@@ -1,6 +1,6 @@
 import type { WritableComputedRef } from '@vue/composition-api'
 import { computed } from '@vue/composition-api'
-import { QBtnToggle, QInput } from 'quasar'
+import { QBtnToggle, QCheckbox, QInput } from 'quasar'
 
 import CountryList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/country-list.vue'
 import LanguageList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/language-list.vue'
@@ -49,6 +49,19 @@ export function createOptionalNumberInput(
         model.value = value
       },
     }),
+  }
+}
+
+export function createCheckboxBoolean(
+  model: WritableComputedRef<unknown>,
+  props: FieldConfig['bind'],
+): FieldConfig {
+  return {
+    type: QCheckbox,
+    bind: {
+      ...props,
+    },
+    model,
   }
 }
 

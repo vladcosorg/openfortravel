@@ -2,6 +2,7 @@ import type { Ref, SetupContext } from '@vue/composition-api'
 
 import {
   createButtonToggle,
+  createCheckboxBoolean,
   createCountryList,
   createLanguageList,
   createOptionalNumberInput,
@@ -108,6 +109,9 @@ export function createConfig(
           label: 'In the last',
           type: 'number',
           suffix: 'days',
+        }),
+        createCheckboxBoolean(setters.matchEmpty, {
+          label: 'Match empty',
         }),
       ]
     }

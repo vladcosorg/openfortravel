@@ -33,7 +33,7 @@ module.exports = configure((context) => ({
   ],
 
   // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
-  css: ['../../../front/src/css/app.sass'],
+  css: ['../../../front/src/css/app.sass', 'app.sass'],
 
   // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
   build: {
