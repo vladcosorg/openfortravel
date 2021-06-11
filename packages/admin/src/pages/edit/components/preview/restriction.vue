@@ -19,6 +19,8 @@
 import { computed, defineComponent, PropType } from '@vue/composition-api'
 
 import { getRestrictionLabel } from '@/admin/src/pages/edit/components/restriction-tree/tree-item/fields/node-type-drowdown.vue'
+import { vd } from '@/shared/src/misc/helpers'
+import { ExtractArgs } from '@/shared/src/misc/type-helpers'
 import { getLabelsForCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import { Age } from '@/shared/src/restriction-tree/restriction-node/age'
@@ -37,10 +39,10 @@ import {
   vaccineLabels,
 } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 
-function isType<T>(
-  restriction: RestrictionNode,
-  type: T,
-): restriction is InstanceType<T> {
+function isType<
+  T extends { new (...args: ExtractArgs<T>): A },
+  A extends RestrictionNode,
+>(restriction: A, type: T): restriction is InstanceType<T> {
   return restriction.constructor === type
 }
 
@@ -48,12 +50,13 @@ export default defineComponent({
   props: {
     restriction: {
       type: Object as PropType<RestrictionNode>,
+      required: true,
     },
   },
   setup(props) {
     const label = computed(() => getRestrictionLabel(props.restriction.id()))
     const options = computed(() => {
-      let output: Record<string, string> = {}
+      let output: Record<string, string | undefined | number> = {}
       const restriction = props.restriction
 
       if (restriction.options.customInstructionTitle) {
@@ -92,7 +95,7 @@ export default defineComponent({
         }
       } else if (isType(restriction, OnlineApplication)) {
         output = {
-          URL: restriction.options.url ?? 'None',
+          URL: vd(restriction.options.url, 'None'),
         }
       } else if (isType(restriction, Age)) {
         output = {
@@ -114,14 +117,20 @@ export default defineComponent({
         }
       } else if (isType(restriction, PcrTest)) {
         output = {
-          Types:
-            restriction.options.types.length > 0
-              ? restriction.options.types
-                  .map((brand) => testLabels[brand])
-                  .join(', ')
-              : 'Any',
-          'Hours before arrival': restriction.options.hoursBeforeArrival,
-          'Hours after arrival': restriction.options.hoursAfterArrival,
+          Types: vd(
+            restriction.options.types
+              .map((brand) => testLabels[brand])
+              .join(', '),
+            'Any',
+          ),
+          'Hours before arrival': vd(
+            restriction.options.hoursBeforeArrival,
+            'No',
+          ),
+          'Hours after arrival': vd(
+            restriction.options.hoursAfterArrival,
+            'No',
+          ),
         }
       } else if (isType(restriction, Quarantine)) {
         output = {

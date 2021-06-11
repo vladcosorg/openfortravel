@@ -93,8 +93,15 @@ export function createConfig(
     }
 
     case RestrictionNodeType.DID_NOT_VISIT_COUNTRIES: {
-      const setters = getSetters(type, options, emit)
+      if (options.value.exclude === true) {
+        options.value.inverseSelection = true
+        delete options.value.exclude
+      }
 
+      const setters = getSetters(type, options, emit)
+      // if (options.exclude === true) {
+      // setters.inverseSelection.value = true
+      // }
       return [
         createCountryList(
           {
