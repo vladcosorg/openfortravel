@@ -14,4 +14,11 @@ export const getters: GetterTree<RootStateType, RootStateType> &
   detectedCountryWithFallback: (_state, getters): string =>
     getters.visitorOrigin ?? 'us',
   visitorOrigin: (state) => state.visitorContext[RestrictionNodeType.ORIGIN],
+  visitorContextWithDefaults: (state) =>
+    Object.assign({}, state.visitorContext, {
+      [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [
+        ...state.visitorContext[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES],
+        state.visitorContext[RestrictionNodeType.ORIGIN],
+      ],
+    }),
 }

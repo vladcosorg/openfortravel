@@ -16,6 +16,7 @@ const linkMap = [
   ['languages'],
   ['hoursBeforeArrival'],
   ['hoursAfterArrival'],
+  ['url'],
 ]
 
 export class LinkedNodeManager {

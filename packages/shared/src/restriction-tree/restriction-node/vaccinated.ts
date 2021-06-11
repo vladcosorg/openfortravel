@@ -34,7 +34,7 @@ export class Vaccinated extends RestrictionNode<DefaultOptions> {
     daysAgo: 14,
     monthsAtMost: 9,
     authorizedBrands: [] as VaccineBrand[],
-    languages: ['en'] as string[],
+    languages: [] as string[],
     partial: false,
     ...RestrictionNode.defaultOptions,
   }

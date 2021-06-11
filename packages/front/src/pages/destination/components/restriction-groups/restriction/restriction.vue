@@ -53,7 +53,7 @@ export default defineComponent({
 
     const contextValue = computed(() => {
       const restrictionType = props.restriction.id()
-      return store.state.visitorContext[restrictionType]
+      return store.getters.visitorContextWithDefaults[restrictionType]
     })
 
     return {

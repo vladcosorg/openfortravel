@@ -36,6 +36,7 @@ export function createConfig(
           label: 'Age limit',
           type: 'number',
           suffix: 'years old',
+          style: 'width: 120px',
         }),
       ]
     }
@@ -184,6 +185,7 @@ export function createConfig(
         createTextInput(setters.url, {
           label: 'URL',
           type: 'url',
+          class: 'col-6',
         }),
       ]
     }

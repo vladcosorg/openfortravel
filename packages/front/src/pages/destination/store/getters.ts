@@ -18,15 +18,23 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
     destination: (state, _getters, _rootState, rootGetters) =>
       rootGetters.wrappedHostRules[state.currentDestinationCode],
 
-    allGroups(_state, getters, rootState): RestrictionGroupCollection {
-      return createCollection(getters.destination, rootState.visitorContext)
+    allGroups(
+      _state,
+      getters,
+      _rootState,
+      rootGetters,
+    ): RestrictionGroupCollection {
+      return createCollection(
+        getters.destination,
+        rootGetters.visitorContextWithDefaults,
+      )
     },
 
-    returnTripCard(_state, getters, rootState): TripCard {
+    returnTripCard(_state, getters, _rootState, rootGetters): TripCard {
       return createTripCard(
         getters.destination,
         getters.origin,
-        rootState.visitorContext,
+        rootGetters.visitorContextWithDefaults,
       )
     },
   }

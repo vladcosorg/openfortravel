@@ -22,7 +22,7 @@ export class PcrTest extends RestrictionNode<typeof PcrTest.defaultOptions> {
   public static defaultOptions = {
     hoursBeforeArrival: 72,
     hoursAfterArrival: 0 as number | undefined,
-    languages: ['en'] as string[],
+    languages: [] as string[],
     types: [] as TestType[],
     ...RestrictionNode.defaultOptions,
   }

@@ -1,4 +1,5 @@
-import _isEmpty from 'lodash/isEmpty'
+import isEmptyObject from 'lodash/isEmpty'
+import isObject from 'lodash/isObject'
 
 export function isEmpty(value: unknown): boolean {
   return (
@@ -9,7 +10,7 @@ export function isEmpty(value: unknown): boolean {
     (Object.prototype.hasOwnProperty.call(value, 'length') &&
       (value as [] | string).length === 0) ||
     // is an Object and has no keys
-    _isEmpty(value)
+    (isObject(value) && isEmptyObject(value))
   )
 }
 

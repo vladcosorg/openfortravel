@@ -9,7 +9,7 @@ export class RecoveryCertificate extends RestrictionNode<
   public static defaultOptions = {
     daysAtLeast: 14,
     daysAtMost: 90,
-    languages: ['en'] as string[],
+    languages: [] as string[],
     ...RestrictionNode.defaultOptions,
   }
 
