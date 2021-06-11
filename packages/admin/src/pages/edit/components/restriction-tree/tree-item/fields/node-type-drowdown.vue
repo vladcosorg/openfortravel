@@ -52,6 +52,33 @@ import {
   RestrictionNodeType,
 } from '@/shared/src/restriction-tree/types'
 
+export function getRestrictionLabel(value: RestrictionNodeType): string {
+  let label = capitalize(value.replaceAll('-', ' '))
+  switch (value) {
+    case RestrictionNodeType.DID_NOT_VISIT_COUNTRIES:
+      label = 'Recently visited'
+      break
+
+    case RestrictionNodeType.PCR_TEST:
+      label = 'COVID-19 Test'
+      break
+
+    case RestrictionNodeType.RECOVERY:
+      label = 'Recovered from COVID-19'
+      break
+
+    case RestrictionNodeType.VACCINATED:
+      label = 'Vaccination'
+      break
+
+    case RestrictionNodeType.ORIGIN:
+      label = 'Country of Origin'
+      break
+  }
+
+  return label
+}
+
 export default defineComponent({
   components: {},
   props: {
@@ -67,35 +94,10 @@ export default defineComponent({
         label: capitalize(value.replaceAll('-', ' ')),
       })),
 
-      ...Object.values(RestrictionNodeType).map((value) => {
-        let label = capitalize(value.replaceAll('-', ' '))
-        switch (value) {
-          case RestrictionNodeType.DID_NOT_VISIT_COUNTRIES:
-            label = 'Recently visited'
-            break
-
-          case RestrictionNodeType.PCR_TEST:
-            label = 'COVID-19 Test'
-            break
-
-          case RestrictionNodeType.RECOVERY:
-            label = 'Recovered from COVID-19'
-            break
-
-          case RestrictionNodeType.VACCINATED:
-            label = 'Vaccination'
-            break
-
-          case RestrictionNodeType.ORIGIN:
-            label = 'Country of Origin'
-            break
-        }
-
-        return {
-          value,
-          label,
-        }
-      }),
+      ...Object.values(RestrictionNodeType).map((value) => ({
+        value,
+        label: getRestrictionLabel(value),
+      })),
     ]
 
     const logicTypes = Object.values(LogicNodeType)

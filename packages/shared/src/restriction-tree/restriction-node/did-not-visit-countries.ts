@@ -43,7 +43,7 @@ export class DidNotVisitCountries extends RestrictionNode<
     return RestrictionNodeType.DID_NOT_VISIT_COUNTRIES
   }
 
-  protected getCountries(): string[] {
+  getCountries(): string[] {
     return this.options.inverseSelection
       ? difference(getCountryCodes(), this.options.countryCodes)
       : this.options.countryCodes

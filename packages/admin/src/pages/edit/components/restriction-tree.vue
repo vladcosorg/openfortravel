@@ -1,8 +1,9 @@
 <template>
-  <div class="q-pa-md q-gutter-sm">
+  <div class="row">
     <q-tree
       v-if="!loading"
       ref="treeElement"
+      class="col q-pa-md q-gutter-sm"
       :nodes="tree"
       node-key="UID"
       label-key="type"
@@ -16,6 +17,7 @@
         <tree-body class="col-12" :node="scope.node" />
       </template>
     </q-tree>
+    <restriction-preview class="col-4" :value="destination.restrictions" />
   </div>
 </template>
 
@@ -25,6 +27,7 @@ import { defineComponent, provide, ref, watch } from '@vue/composition-api'
 import debounce from 'lodash/debounce'
 import Vue from 'vue'
 
+import RestrictionPreview from '@/admin/src/pages/edit/components/restriction-preview.vue'
 import TreeBody from '@/admin/src/pages/edit/components/restriction-tree/tree-item/tree-body.vue'
 import TreeHeader from '@/admin/src/pages/edit/components/restriction-tree/tree-item/tree-header.vue'
 import type { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
@@ -40,7 +43,7 @@ import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
 import type { Destination } from '@/shared/src/api/destinations/models'
 
 export default defineComponent({
-  components: { TreeBody, TreeHeader },
+  components: { RestrictionPreview, TreeBody, TreeHeader },
   model: {
     prop: 'destination',
   },

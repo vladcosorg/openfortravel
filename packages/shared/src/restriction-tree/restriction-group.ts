@@ -20,18 +20,14 @@ export type RawRestrictionGroupCollection = RestrictionGroup[]
 export class RestrictionGroupCollection {
   constructor(
     protected readonly restrictionGroups: PlainRestrictionGroups,
-    protected readonly context: VisitorProfile,
+    protected readonly context?: VisitorProfile,
   ) {}
 
   public getAvailableGroups(): RestrictionGroup[] {
-    return this.sortGroups(
-      this.wrapGroups([
-        ...applyContextToRestrictionGroups(
-          this.context,
-          this.restrictionGroups,
-        ),
-      ]),
-    )
+    const contextGroups = this.context
+      ? applyContextToRestrictionGroups(this.context, this.restrictionGroups)
+      : this.restrictionGroups
+    return this.sortGroups(this.wrapGroups([...contextGroups]))
   }
 
   public getBestGroup(): RestrictionGroup {
@@ -39,9 +35,10 @@ export class RestrictionGroupCollection {
   }
 
   public getUnavailableGroups(): RestrictionGroup[] {
-    const groups = difference(this.restrictionGroups, [
-      ...applyContextToRestrictionGroups(this.context, this.restrictionGroups),
-    ])
+    const contextGroups = this.context
+      ? applyContextToRestrictionGroups(this.context, this.restrictionGroups)
+      : this.restrictionGroups
+    const groups = difference(this.restrictionGroups, [...contextGroups])
 
     return this.sortGroups(this.wrapGroups(groups))
   }

@@ -1,41 +1,44 @@
 <template>
   <component :is="wrapper" :restriction="restriction">
-    <template v-if="!restriction.options.inverseSelection" #title>
-      You did not <b>visit</b> or <b>transited through</b> one of the countries
-      below, in the last <b>{{ restriction.options.days }} days</b>
+    <template v-if="didNotVisitCountries" #title>
+      If you did not visit any other country in the last
+      <b>{{ restriction.options.days }}</b> days
     </template>
     <template v-else #title>
-      You did not <b>visit</b> or <b>transited through</b> any of the countries
-      <b>except</b> the ones below, in the last
-      <b>{{ restriction.options.days }} days</b>
+      If you have been in or through
+      <country-label-list :values="matchedCountries" />
+      in the last <b>{{ restriction.options.days }}</b> days
     </template>
-    <template v-if="!restriction.options.inverseSelection" #subtitle>
-      If you have been in or through any of the countries listed below in the
-      previous <b>{{ restriction.options.days }} days</b>, you don't meet the
-      entry requirements from this section. <br /><br />
-      Banned countries:
-      <seq v-slot="{ item }" :items="restriction.options.countryCodes"
-        ><country-label :value="item" />
-      </seq>
-    </template>
-    <template v-else #subtitle>
-      If you have been in or through any of the countries
-      <b>other than the ones</b> listed below in the previous
-      <b>{{ restriction.options.days }} days</b>, you don't meet the entry
-      requirements from this section. <br /><br />
-      Allowed countries:
-      <collapsed-country-sequence
-        :allowed="restriction.options.countryCodes"
-        :focus="context"
-      />
+
+    <template #subtitle>
+      <p>
+        Special requirements from this section apply only for the travellers
+        that have been in or through any of the countries listed below in the
+        last
+        <b>{{ restriction.options.days }} days</b>.
+      </p>
+      <p v-if="restriction.options.matchEmpty">
+        Also they apply if you did not visit any country at all in the last
+        <b>{{ restriction.options.days }}</b> days.
+      </p>
+
+      <p>
+        Countries:
+        <collapsed-country-sequence
+          :allowed="restriction.getCountries()"
+          :focus="context"
+        />
+      </p>
     </template>
   </component>
 </template>
 
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
+import intersection from 'lodash/intersection'
 
+import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
@@ -45,6 +48,7 @@ import type { DidNotVisitCountries } from '@/shared/src/restriction-tree/restric
 
 export default defineComponent({
   components: {
+    CountryLabelList,
     CountryLabel,
     Seq,
     CollapsedCountrySequence,
@@ -56,6 +60,22 @@ export default defineComponent({
       type: Object as PropType<DidNotVisitCountries>,
       required: true,
     },
+    context: {
+      type: Array as PropType<string[]>,
+      required: true,
+    },
+  },
+  setup(props) {
+    const matchedCountries = computed(() =>
+      intersection(props.restriction.getCountries(), props.context),
+    )
+
+    const didNotVisitCountries = computed(() => props.context.length === 0)
+
+    return {
+      matchedCountries,
+      didNotVisitCountries,
+    }
   },
 })
 </script>
