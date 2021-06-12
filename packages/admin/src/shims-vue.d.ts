@@ -4,3 +4,5 @@ declare module '*.vue' {
 
   export default Vue
 }
+
+declare module 'iso-639-1/src/data'

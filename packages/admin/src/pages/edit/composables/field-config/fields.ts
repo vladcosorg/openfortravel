@@ -42,11 +42,14 @@ export function createOptionalNumberInput(
         return model.value ?? 0
       },
       set(value) {
-        if (value === 0) {
+        const numberValue =
+          typeof value === 'string' ? Number.parseInt(value, 10) : value
+
+        if (numberValue === 0) {
           model.value = undefined
         }
 
-        model.value = value
+        model.value = numberValue
       },
     }),
   }

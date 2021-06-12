@@ -1,55 +1,30 @@
 <template>
-  <q-select
-    :value="value"
-    dense
-    outlined
-    multiple
+  <multiple-list
     :options="options"
-    use-input
-    label="Brands"
-    stack-label
-    clearable
-    :class="$style.select"
-    style="width: 200px; white-space: nowrap"
+    label="Vaccine producers"
+    empty-value="Any"
+    :value="value"
+    v-bind="$attrs"
     v-on="$listeners"
-  >
-    <template #selected
-      ><div class="ellipsis label">
-        {{ value && value.length ? value.join(', ') : 'Any' }}
-      </div>
-    </template>
-  </q-select>
+  />
 </template>
-
-<style lang="scss" module>
-.select :global(.q-field__input) {
-  width: 20px;
-  display: none;
-}
-
-.select:global(.q-field--focused .label) {
-  display: none;
-}
-
-.select:global(.q-field--focused .q-field__input) {
-  display: block;
-}
-</style>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-import { VaccineBrand } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
+import MultipleList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/base/multiple-list.vue'
+import { vaccineSelectList } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 
 export default defineComponent({
-  components: {},
+  components: { MultipleList },
+  inheritAttrs: false,
   props: {
     value: {
       type: [Array],
     },
   },
   setup() {
-    return { options: Object.values(VaccineBrand) }
+    return { options: vaccineSelectList }
   },
 })
 </script>

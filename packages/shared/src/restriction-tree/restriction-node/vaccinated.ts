@@ -1,3 +1,4 @@
+import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
 import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
@@ -27,7 +28,8 @@ export const vaccineLabels = {
   [VaccineBrand.SINOVAC]: 'CoronaVac (Sinovac)',
 }
 
-export const singleShotVaccines = [VaccineBrand.JOHNSON_AND_JOHNSON]
+export const vaccineSelectList = transformFlatMapToArrayOfPairs(vaccineLabels)
+
 type DefaultOptions = typeof Vaccinated.defaultOptions
 export class Vaccinated extends RestrictionNode<DefaultOptions> {
   static defaultOptions = {

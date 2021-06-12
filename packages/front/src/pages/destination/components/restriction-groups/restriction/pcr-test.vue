@@ -10,69 +10,52 @@
         <covid-test-label :value="item" />
       </seq>
       test certificate
-      <span
-        v-if="
-          restriction.options.hoursBeforeArrival == 0 &&
-          restriction.options.hoursAfterArrival > 0
-        "
-        >after arrival</span
-      >
+
+      <template v-if="restriction.options.beforeArrival">
+        <b v-if="restriction.options.beforeArrival > 0">
+          at most {{ restriction.options.hoursBeforeArrival }}h before
+          arrival</b
+        >
+        <b v-else> at most 72h before arrival</b>
+      </template>
+      <template v-else>
+        <b v-if="restriction.options.hoursBeforeArrival > 0"
+          >within {{ restriction.options.hoursBeforeArrival }}h after arrival</b
+        >
+        <b v-else>at the airport after arrival</b>
+      </template>
     </template>
-    <template
-      v-if="
-        restriction.options.hoursBeforeArrival > 0 &&
-        restriction.options.hoursAfterArrival === 0
-      "
-      #subtitle
-    >
+
+    <template #subtitle>
       <p>
-        The test has to be issued within
-        <b>{{ restriction.options.hoursBeforeArrival }} hours</b>
-        <b> before arrival</b>.
+        The COVID-19 test has to be performed
+        <template v-if="restriction.options.beforeArrival">
+          <b v-if="restriction.options.beforeArrival > 0">
+            at most {{ restriction.options.hoursBeforeArrival }}h before
+            arrival</b
+          >
+          <b v-else> at most 72h before arrival</b>
+        </template>
+        <template v-else>
+          <b v-if="restriction.options.hoursBeforeArrival > 0"
+            >within {{ restriction.options.hoursBeforeArrival }} hours after
+            arrival</b
+          >
+          <b v-else>at the airport after arrival</b>
+          . You have to self-isolate until you receive a negative result.
+        </template>
       </p>
 
       <p>
-        There is no infromation that the test can be done upon or shortly after
-        arrival, thus take into consideration that you may be denied entry or
-        quarantine if you did not bring the certificate with you.
+        Accepted tests:
+        <seq
+          v-slot="{ item }"
+          :items="restriction.getFormattedTypes()"
+          conjunction="or"
+        >
+          <covid-test-label :value="item" />
+        </seq>
       </p>
-
-      <required-languages :languages="restriction.options.languages" />
-    </template>
-    <template
-      v-else-if="
-        restriction.options.hoursBeforeArrival > 0 &&
-        restriction.options.hoursAfterArrival > 0
-      "
-      #subtitle
-    >
-      <p>
-        The test has to be issued within
-        <b>{{ restriction.options.hoursBeforeArrival }} hours</b>
-        <b> before arrival</b>.
-      </p>
-
-      <p>
-        Alternatively the COVID-19 test can be done within
-        <b>{{ restriction.options.hoursAfterArrival }} hours</b> after arrival.
-        You have to self-isolate until you receive a negative result.
-      </p>
-
-      <required-languages :languages="restriction.options.languages" />
-    </template>
-    <template
-      v-else-if="
-        restriction.options.hoursBeforeArrival == 0 &&
-        restriction.options.hoursAfterArrival > 0
-      "
-      #subtitle
-    >
-      <p>
-        The COVID-19 test can be done within
-        <b>{{ restriction.options.hoursAfterArrival }} hours</b> after arrival.
-        You have to self-isolate until you receive a negative result.
-      </p>
-
       <required-languages :languages="restriction.options.languages" />
     </template>
   </component>

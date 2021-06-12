@@ -15,7 +15,6 @@ const linkMap = [
   ['allowedOrigins', 'countryCodes', 'allowedCitizenship'],
   ['languages'],
   ['hoursBeforeArrival'],
-  ['hoursAfterArrival'],
   ['url'],
 ]
 

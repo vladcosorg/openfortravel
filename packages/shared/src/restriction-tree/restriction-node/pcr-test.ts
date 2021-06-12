@@ -20,8 +20,8 @@ export const testLabels = {
 
 export class PcrTest extends RestrictionNode<typeof PcrTest.defaultOptions> {
   public static defaultOptions = {
+    beforeArrival: true,
     hoursBeforeArrival: 72,
-    hoursAfterArrival: 0 as number | undefined,
     languages: [] as string[],
     types: [] as TestType[],
     ...RestrictionNode.defaultOptions,
@@ -45,7 +45,15 @@ export class PcrTest extends RestrictionNode<typeof PcrTest.defaultOptions> {
     return 3
   }
 
+  testAfterArrivalAndQuarantine() {
+    return this.options.beforeArrival === false
+  }
+
   penaltyScore(): number {
+    if (this.testAfterArrivalAndQuarantine()) {
+      return 5
+    }
+
     return 2
   }
 }

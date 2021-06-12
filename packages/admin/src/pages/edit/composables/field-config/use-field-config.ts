@@ -32,9 +32,8 @@ export function createConfig(
             { label: 'From', value: true },
           ],
         }),
-        createTextInput(setters.age, {
+        createOptionalNumberInput(setters.age, {
           label: 'Age limit',
-          type: 'number',
           suffix: 'years old',
           style: 'width: 120px',
         }),
@@ -45,13 +44,18 @@ export function createConfig(
       const setters = getSetters(type, options, emit)
 
       return [
-        createTextInput(setters.hoursBeforeArrival, {
-          label: 'Hours before arrival',
-          type: 'number',
+        createButtonToggle(setters.beforeArrival, {
+          options: [
+            { label: 'Before arrival', value: true },
+            { label: 'After arrival', value: false },
+          ],
         }),
-        createOptionalNumberInput(setters.hoursAfterArrival, {
-          label: 'Hours after arrival',
+        createOptionalNumberInput(setters.hoursBeforeArrival, {
+          label: 'Within timeframe',
+          suffix: 'h',
+          style: 'width: 120px',
         }),
+
         createTestList(setters.types),
         createLanguageList(setters.languages),
       ]
@@ -113,9 +117,8 @@ export function createConfig(
             class: 'col',
           },
         ),
-        createTextInput(setters.days, {
+        createOptionalNumberInput(setters.days, {
           label: 'In the last',
-          type: 'number',
           suffix: 'days',
         }),
         createCheckboxBoolean(setters.matchEmpty, {
@@ -128,14 +131,12 @@ export function createConfig(
       const setters = getSetters(type, options, emit)
 
       return [
-        createTextInput(setters.days, {
+        createOptionalNumberInput(setters.days, {
           label: 'Quarantine length',
-          type: 'number',
           suffix: 'days',
         }),
-        createTextInput(setters.earlyReleaseDays, {
+        createOptionalNumberInput(setters.earlyReleaseDays, {
           label: 'Early release after',
-          type: 'number',
           suffix: 'days',
           hint: 'Leave 0 if no early release',
         }),
@@ -146,10 +147,9 @@ export function createConfig(
       const setters = getSetters(type, options, emit)
 
       return [
-        createTextInput(setters.daysAgo, { label: 'Days ago', type: 'number' }),
-        createTextInput(setters.monthsAtMost, {
+        createOptionalNumberInput(setters.daysAgo, { label: 'Days ago' }),
+        createOptionalNumberInput(setters.monthsAtMost, {
           label: 'Months at most',
-          type: 'number',
         }),
         createVaccineList(setters.authorizedBrands),
         createButtonToggle(setters.partial, {
@@ -166,13 +166,11 @@ export function createConfig(
       const setters = getSetters(type, options, emit)
 
       return [
-        createTextInput(setters.daysAtLeast, {
+        createOptionalNumberInput(setters.daysAtLeast, {
           label: 'Days at least',
-          type: 'number',
         }),
-        createTextInput(setters.daysAtMost, {
+        createOptionalNumberInput(setters.daysAtMost, {
           label: 'Days at most',
-          type: 'number',
         }),
         createLanguageList(setters.languages),
       ]
