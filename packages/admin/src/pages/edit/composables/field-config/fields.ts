@@ -79,7 +79,7 @@ export function createButtonToggle(
       dense: true,
       unelevated: true,
       color: 'blue-grey-4',
-      toggleColor: 'teal-8',
+      toggleColor: 'blue-8',
       ...props,
     },
     model,

@@ -123,7 +123,13 @@ export default defineComponent({
               .join(', '),
             'Any',
           ),
-          Timeframe: vd(restriction.options.hoursBeforeArrival, 'No'),
+          When: restriction.options.beforeArrival
+            ? `${restriction.options.hoursBeforeArrival}h before arrival`
+            : `After arrival ${
+                restriction.options.hoursBeforeArrival > 0
+                  ? `within ${restriction.options.hoursBeforeArrival}h`
+                  : 'at the airport'
+              } `,
         }
       } else if (isType(restriction, Quarantine)) {
         output = {
