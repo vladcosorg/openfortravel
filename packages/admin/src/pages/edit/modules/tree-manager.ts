@@ -103,30 +103,9 @@ export class TreeManager {
     newType: LogicNodeType | RestrictionNodeType,
     node: QuasarTreeNode,
   ): void {
-    if (this.isLogicType(newType) && !(node as QuasarLogicTreeNode).children) {
-      node = Object.assign({}, node, { children: [] })
-    } else if (
-      !this.isLogicType(newType) &&
-      (node as QuasarLogicTreeNode).children
-    ) {
-      node = Object.assign({}, node, {
-        children: undefined,
-      })
-    }
-
-    if (this.isRestrictionNode(node) && node.options) {
-      const migratedOptions: Record<keyof typeof compatMap, unknown> = {}
-      for (const [optionID, optionValue] of Object.entries(node.options)) {
-        const key = [node.type, newType, optionID].join('')
-        if (compatMap.has(key)) {
-          migratedOptions[compatMap.get(key)] = optionValue
-        }
-      }
-
-      this.updateNodeOptions(node, migratedOptions)
-    }
-
-    node.type = newType
+    this.isLogicType(newType)
+      ? this.updateNodeToLogicType(newType, node)
+      : this.updateNodeToRestrictionType(newType, node)
   }
 
   moveNodeUp(node: QuasarTreeNode): void {
@@ -197,6 +176,11 @@ export class TreeManager {
     parent.children = parent.children.filter((item) => item.UID !== node.UID)
   }
 
+  replaceNode(oldNode: QuasarTreeNode, newNode: QuasarTreeNode): void {
+    const parentNode = this.findNodeParentByUID(oldNode.UID)
+    parentNode.children.splice(parentNode.children.indexOf(oldNode), 1, newNode)
+  }
+
   protected moveChildIndex<T extends QuasarTreeNode[]>(
     array: T,
     oldIndex: number,
@@ -207,6 +191,44 @@ export class TreeManager {
     }
     array.splice(newIndex, 0, array.splice(oldIndex, 1)[0])
     return array
+  }
+
+  protected updateNodeToLogicType(
+    newType: LogicNodeType,
+    node: QuasarTreeNode,
+  ): void {
+    if (this.isLogicNode(node)) {
+      this.updateNodeProperty(node, 'type', newType)
+    } else {
+      this.replaceNode(node, this.createEmptyNodeOfType(newType))
+    }
+  }
+
+  protected updateNodeToRestrictionType(
+    newType: RestrictionNodeType,
+    node: QuasarTreeNode,
+  ): void {
+    if (this.isLogicNode(node)) {
+      this.replaceNode(node, this.createEmptyNodeOfType(newType))
+      return
+    }
+
+    const oldNodeType = node.type
+    this.updateNodeProperty(node, 'type', newType)
+
+    if (!node.options) {
+      return
+    }
+
+    const migratedOptions: Record<keyof typeof compatMap, unknown> = {}
+    for (const [optionID, optionValue] of Object.entries(node.options)) {
+      const key = [oldNodeType, newType, optionID].join('')
+      if (compatMap.has(key)) {
+        migratedOptions[compatMap.get(key)] = optionValue
+      }
+    }
+
+    this.updateNodeOptions(node, migratedOptions)
   }
 
   protected createEmptyNodeOfType(

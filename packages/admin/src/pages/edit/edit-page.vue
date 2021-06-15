@@ -83,7 +83,7 @@ export default defineComponent({
         return destinationRef.value
       },
       set(value: Partial<PlainDestination>) {
-        destinationRef.value = destinationRef.value.cloneWithFields(value)
+        destinationRef.value = Object.assign(destinationRef.value, value)
         modifiedFields.push(...Object.keys(value))
 
         if (!isPendingUpdate) {

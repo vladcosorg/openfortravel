@@ -62,7 +62,13 @@ export function convertFromStorageFormat(nodeTree: EncodedNode): TreeNode {
     }
 
     return new (constructor as typeof Or | typeof And)(
-      nodeTree.children.map((child) => convertFromStorageFormat(child)),
+      nodeTree.children
+        .filter(
+          (child) =>
+            (isLogicNode(child) && child.children.length > 0) ||
+            !isLogicNode(child),
+        )
+        .map((child) => convertFromStorageFormat(child)),
     )
   }
 
