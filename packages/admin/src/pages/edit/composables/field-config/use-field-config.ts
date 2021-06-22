@@ -63,7 +63,6 @@ export function createConfig(
 
     case RestrictionNodeType.ORIGIN: {
       const setters = getSetters(type, options, emit)
-
       return [
         createCountryList(
           {

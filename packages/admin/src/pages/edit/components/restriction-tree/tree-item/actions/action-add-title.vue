@@ -11,14 +11,14 @@ import {
 } from '@vue/composition-api'
 import Vue from 'vue'
 
-import { QuasarRestrictionTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
 import { EventBus } from '@/admin/src/pages/edit/modules/symbols'
+import { TreeBuilderRestrictionNode } from '@/admin/src/pages/edit/types'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   props: {
     node: {
-      type: Object as PropType<QuasarRestrictionTreeNode>,
+      type: Object as PropType<TreeBuilderRestrictionNode>,
       required: true,
     },
   },

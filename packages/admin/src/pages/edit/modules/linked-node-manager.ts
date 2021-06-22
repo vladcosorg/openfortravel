@@ -1,11 +1,11 @@
 import { Ref } from '@vue/composition-api'
 
-import {
-  QuasarLogicTreeNode,
-  QuasarRestrictionTreeNode,
-  QuasarTreeNode,
-} from '@/admin/src/pages/edit/composables/use-tree'
 import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
+import {
+  TreeBuilderLogicNode,
+  TreeBuilderRestrictionNode,
+  TreeBuilderNode,
+} from '@/admin/src/pages/edit/types'
 import {
   LogicNodeType,
   RestrictionNodeType,
@@ -19,13 +19,13 @@ const linkMap = [
 ]
 
 export class LinkedNodeManager {
-  protected linkedNodes: QuasarRestrictionTreeNode[] | undefined
+  protected linkedNodes: TreeBuilderRestrictionNode[] | undefined
   constructor(
-    protected readonly tree: Ref<QuasarTreeNode[]>,
+    protected readonly tree: Ref<TreeBuilderNode[]>,
     protected readonly treeManager: TreeManager,
   ) {}
 
-  registerLinkedNode(sourceNode: QuasarRestrictionTreeNode): void {
+  registerLinkedNode(sourceNode: TreeBuilderRestrictionNode): void {
     if (!this.linkedNodes) {
       this.linkedNodes = this.findInitialLinkedNodes(this.tree.value)
     }
@@ -46,7 +46,7 @@ export class LinkedNodeManager {
     }
   }
 
-  deregisterLinkedNode(sourceNode: QuasarRestrictionTreeNode): void {
+  deregisterLinkedNode(sourceNode: TreeBuilderRestrictionNode): void {
     if (!this.linkedNodes) {
       this.linkedNodes = this.findInitialLinkedNodes(this.tree.value)
     }
@@ -56,7 +56,7 @@ export class LinkedNodeManager {
     )
   }
 
-  maybeSyncLinkedNodes(sourceNode: QuasarRestrictionTreeNode): void {
+  maybeSyncLinkedNodes(sourceNode: TreeBuilderRestrictionNode): void {
     if (!sourceNode.group || !sourceNode.options) {
       return
     }
@@ -98,9 +98,9 @@ export class LinkedNodeManager {
   }
 
   protected findInitialLinkedNodes(
-    subtree: QuasarTreeNode[],
-  ): QuasarRestrictionTreeNode[] {
-    const foundNodes: QuasarRestrictionTreeNode[] = []
+    subtree: TreeBuilderNode[],
+  ): TreeBuilderRestrictionNode[] {
+    const foundNodes: TreeBuilderRestrictionNode[] = []
 
     for (const node of subtree) {
       if (this.isRestrictionNode(node) && node.group) {
@@ -114,13 +114,13 @@ export class LinkedNodeManager {
     return foundNodes
   }
 
-  protected isLogicNode(node: QuasarTreeNode): node is QuasarLogicTreeNode {
+  protected isLogicNode(node: TreeBuilderNode): node is TreeBuilderLogicNode {
     return this.isLogicType(node.type)
   }
 
   protected isRestrictionNode(
-    node: QuasarTreeNode,
-  ): node is QuasarRestrictionTreeNode {
+    node: TreeBuilderNode,
+  ): node is TreeBuilderRestrictionNode {
     return !this.isLogicType(node.type)
   }
 

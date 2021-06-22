@@ -63,10 +63,6 @@ const storageFormat: EncodedNode = {
   ],
 }
 
-test('Encode', () => {
-  expect(combinations.toStorageFormat()).toEqual(storageFormat)
-})
-
 test('Decode', () => {
   expect(convertFromStorageFormat(storageFormat)).toEqual(combinations)
 })

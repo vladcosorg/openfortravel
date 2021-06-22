@@ -24,9 +24,9 @@ import {
   PropType,
 } from '@vue/composition-api'
 
-import { QuasarRestrictionTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
 import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
 import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
+import { TreeBuilderRestrictionNode } from '@/admin/src/pages/edit/types'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 const colorMap: Record<string, string> = {
@@ -43,7 +43,7 @@ export default defineComponent({
   components: {},
   props: {
     node: {
-      type: Object as PropType<QuasarRestrictionTreeNode>,
+      type: Object as PropType<TreeBuilderRestrictionNode>,
       required: true,
     },
   },

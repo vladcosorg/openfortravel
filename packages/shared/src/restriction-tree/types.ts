@@ -1,4 +1,3 @@
-import type { EncodedNode } from '@/shared/src/restriction-tree/converter'
 import type { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 
 export type CriteriaMap = Map<CriterionType, CriterionValue>
@@ -30,5 +29,4 @@ export type PlainRestrictionGroups<T = PlainRestrictionGroup> = T[]
 export interface TreeNode {
   id(): RestrictionNodeType | LogicNodeType
   resolveTreeNodes(): PlainRestrictionGroups
-  toStorageFormat(): EncodedNode
 }

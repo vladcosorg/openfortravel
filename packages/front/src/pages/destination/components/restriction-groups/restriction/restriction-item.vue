@@ -2,14 +2,32 @@
   <q-item-section>
     <q-item-label class="text-primary bg-elevation-1 q-pa-md">
       <span
-        v-if="restriction && restriction.options.customInstructionTitle"
+        v-if="
+          restriction.options.customInstructionTitle &&
+          (restriction.options.customTitlePlacement === 'replace' ||
+            restriction.options.customTitlePlacement === 'prepend')
+        "
         v-html="restriction.options.customInstructionTitle"
       />
-      <slot v-else name="title" />
+      <slot
+        v-if="
+          !restriction.options.customInstructionTitle ||
+          (restriction.options.customInstructionTitle &&
+            restriction.options.customTitlePlacement !== 'replace')
+        "
+        name="title"
+      />
+      <span
+        v-if="
+          restriction.options.customInstructionTitle &&
+          restriction.options.customTitlePlacement === 'append'
+        "
+        v-html="restriction.options.customInstructionTitle"
+      />
     </q-item-label>
     <q-item-label class="text-primary-subtle q-pt-xs text-body2">
       <span
-        v-if="restriction && restriction.options.customInstructionSubtitle"
+        v-if="restriction.options.customInstructionSubtitle"
         v-html="restriction.options.customInstructionSubtitle"
       />
       <slot v-else name="subtitle" />

@@ -8,8 +8,9 @@ import {
   transformCountryCodeToDestinationSlug,
   transformCountryCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import type { EncodedNode } from '@/shared/src/restriction-tree/converter'
+import type { NormalizedEncodedNode } from '@/shared/src/restriction-tree/converter'
 import { convertFromStorageFormat } from '@/shared/src/restriction-tree/converter'
+import { normalizeEncodedNode } from '@/shared/src/restriction-tree/node-normalizers'
 import {
   LogicNodeType,
   PlainRestrictionGroups,
@@ -37,7 +38,7 @@ export interface DestinationDocument {
   visitedRestrictedCountriesDaysAgo?: number
   thisWeekCasesPer100K?: number
   lastWeekCasesPer100K?: number
-  restrictionTree?: EncodedNode[]
+  restrictionTree?: Array<Partial<NormalizedEncodedNode>>
   maskRestrictions?: 'public' | 'public-enclosed'
   restaurantRestrictions?: 'closed' | 'open-with-restrictions'
   barRestrictions?: 'closed' | 'open-with-restrictions'
@@ -64,7 +65,7 @@ export class DestinationDefaults implements PlainDestination {
   public readonly proofOfRecoveryInDays = 0
   public readonly thisWeekCasesPer100K = 0
   public readonly lastWeekCasesPer100K = 0
-  public readonly restrictionTree: EncodedNode[] = []
+  public readonly restrictionTree: Array<Partial<NormalizedEncodedNode>> = []
 
   get name(): string {
     return getLabelForCountryCode(this.countryCode)
@@ -80,6 +81,10 @@ export class DestinationDefaults implements PlainDestination {
 
   public cloneWithFields(fields: Partial<PlainDestination>): Destination {
     return new Destination(Object.assign(this.toPlainObject(), fields))
+  }
+
+  public equals(instance: Destination): boolean {
+    return this.countryCode === instance.countryCode
   }
 
   get percentage(): number {
@@ -135,15 +140,36 @@ export class DestinationDefaults implements PlainDestination {
     return this.lastWeekCasesPer100K.toFixed(1)
   }
 
+  get normalizedRestrictionTree(): NormalizedEncodedNode[] {
+    return this.normalize(this.restrictionTree ?? [])
+  }
+
+  protected normalize(
+    tree: Array<Partial<NormalizedEncodedNode>>,
+  ): NormalizedEncodedNode[] {
+    const out: NormalizedEncodedNode[] = []
+    for (const node of tree) {
+      if (node.type === LogicNodeType.OR || node.type === LogicNodeType.AND) {
+        out.push(
+          Object.assign(node, {
+            children: this.normalize(
+              node.children as Array<Partial<NormalizedEncodedNode>>,
+            ),
+          }) as NormalizedEncodedNode,
+        )
+        continue
+      }
+
+      out.push(normalizeEncodedNode(node))
+    }
+    return out
+  }
+
   get restrictions(): PlainRestrictionGroups {
     return convertFromStorageFormat({
       type: LogicNodeType.OR,
-      children: this.restrictionTree ?? [],
+      children: this.normalizedRestrictionTree,
     }).resolveTreeNodes()
-  }
-
-  public equals(instance: Destination): boolean {
-    return this.countryCode === instance.countryCode
   }
 }
 

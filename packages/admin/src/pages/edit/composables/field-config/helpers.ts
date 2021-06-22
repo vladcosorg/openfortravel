@@ -22,26 +22,18 @@ export function getSetters<
   A extends ExtractOptions<T>,
   K extends keyof A,
 >(
-  type: T,
+  _type: T,
   currentOptions: Ref<Record<string, unknown>>,
   emit: SetupContext['emit'],
 ): Record<K, WritableComputedRef<A[K]>> {
-  const optionDefaults = typeConstructors[type].defaultOptions
   const out: ReturnType<typeof getSetters> = {}
-
-  for (const [optionID, optionValue] of Object.entries(optionDefaults)) {
+  for (const optionID of Object.keys(currentOptions.value)) {
     out[optionID] = computed({
       get() {
-        if (currentOptions.value[optionID] !== undefined) {
-          return currentOptions.value[optionID]
-        }
-        return (out[optionID].value = optionValue)
+        return currentOptions.value[optionID]
       },
       set(value) {
-        emit(
-          'input',
-          Object.assign({}, currentOptions.value, { [optionID]: value }),
-        )
+        emit('input', { [optionID]: value })
       },
     })
   }

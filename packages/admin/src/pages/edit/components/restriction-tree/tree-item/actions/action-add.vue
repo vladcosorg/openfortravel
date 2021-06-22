@@ -11,8 +11,8 @@ import {
   PropType,
 } from '@vue/composition-api'
 
-import { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
 import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
+import { TreeBuilderNode } from '@/admin/src/pages/edit/types'
 import {
   LogicNodeType,
   RestrictionNodeType,
@@ -22,7 +22,7 @@ export default defineComponent({
   components: {},
   props: {
     node: {
-      type: Object as PropType<QuasarTreeNode>,
+      type: Object as PropType<TreeBuilderNode>,
       required: true,
     },
     type: {
@@ -37,7 +37,8 @@ export default defineComponent({
       Object.values(LogicNodeType).includes(props.node.type),
     )
     const treeManager = inject(TreeManagerStoreKey)
-    const doAction = () => treeManager.addNodeToParent(props.node, props.type)
+    const doAction = () =>
+      treeManager.addNewNodeToParent(props.node, props.type)
     return {
       icon,
       show,

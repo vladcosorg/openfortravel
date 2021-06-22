@@ -108,7 +108,9 @@
       @click="show = true"
     >
       <template #after>
-        <q-icon name="edit"><q-tooltip>Edit</q-tooltip></q-icon>
+        <q-btn icon="edit" flat="" @click="show = true"
+          ><q-tooltip>Edit</q-tooltip></q-btn
+        >
       </template>
     </q-input>
   </div>
@@ -146,7 +148,6 @@ import {
 } from '@/shared/src/modules/country-list/country-list-helpers'
 import { EEA, EU, SCHENGEN } from '@/shared/src/restriction-tree/misc'
 
-let showw = false
 type Node = { label: string; value: string }
 export default defineComponent({
   props: {
@@ -160,8 +161,7 @@ export default defineComponent({
     },
   },
   setup(props, { emit, root }) {
-    const show = ref(showw)
-    showw = false
+    const show = ref(false)
     const filter = ref('')
     const ticked = computed<string[]>({
       get() {

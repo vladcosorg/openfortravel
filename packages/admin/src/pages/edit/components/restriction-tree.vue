@@ -2,7 +2,7 @@
   <div class="row">
     <q-tree
       v-if="!loading"
-      ref="treeElement"
+      ref="treeDOMElement"
       class="col q-pa-md q-gutter-sm"
       :nodes="tree"
       node-key="UID"
@@ -17,7 +17,7 @@
         <tree-body class="col-12" :node="scope.node" />
       </template>
     </q-tree>
-    <restriction-preview class="col-4" :value="destination.restrictions" />
+    <restriction-preview class="col-4" :value="destination" />
   </div>
 </template>
 
@@ -30,16 +30,12 @@ import Vue from 'vue'
 import RestrictionPreview from '@/admin/src/pages/edit/components/restriction-preview.vue'
 import TreeBody from '@/admin/src/pages/edit/components/restriction-tree/tree-item/tree-body.vue'
 import TreeHeader from '@/admin/src/pages/edit/components/restriction-tree/tree-item/tree-header.vue'
-import type { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
-import {
-  createIndexedTree,
-  prepareForStorage,
-} from '@/admin/src/pages/edit/composables/use-tree'
 import {
   EventBus,
   TreeManagerStoreKey,
 } from '@/admin/src/pages/edit/modules/symbols'
 import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
+import { TreeBuilderNode } from '@/admin/src/pages/edit/types'
 import type { Destination } from '@/shared/src/api/destinations/models'
 
 export default defineComponent({
@@ -58,44 +54,38 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    let currentUID = 0
-    const getNextUID = (): number => {
-      currentUID++
-      return currentUID
-    }
-
-    const treeElement = ref()
-    const nodeBuffer = ref<QuasarTreeNode | undefined>()
+    const treeDOMElement = ref()
+    const nodeBuffer = ref<TreeBuilderNode | undefined>()
     let isInitialLoad = true
 
-    const tree = ref<QuasarTreeNode[]>(
-      props.loading ? [] : createIndexedTree(props.destination, getNextUID),
-    )
+    const tree = ref<TreeBuilderNode[]>([])
+    const treeManager = new TreeManager(tree, nodeBuffer)
 
-    provide(TreeManagerStoreKey, new TreeManager(tree, nodeBuffer, getNextUID))
+    provide(TreeManagerStoreKey, treeManager)
     provide(EventBus, new Vue())
 
     watch(
       () => props.loading,
-      (newValue) => {
-        if (newValue) {
+      (isLoading) => {
+        if (isLoading) {
           return
         }
 
-        tree.value = createIndexedTree(props.destination, getNextUID)
-        setTimeout(() => treeElement.value.expandAll(), 500)
+        treeManager.initializeWith(props.destination.normalizedRestrictionTree)
+        setTimeout(() => treeDOMElement.value.expandAll(), 500)
       },
+      { immediate: true },
     )
 
-    const debouncedEmitter = debounce((changedTree) =>
+    const emitChangedTree = debounce(() =>
       emit('input', {
-        restrictionTree: prepareForStorage(changedTree),
+        restrictionTree: treeManager.exportToStorageFormat(),
       }),
     )
 
     watch(
       tree,
-      (changedTree) => {
+      () => {
         if (props.loading) {
           return
         }
@@ -105,15 +95,15 @@ export default defineComponent({
           return
         }
 
-        debouncedEmitter(changedTree)
-        treeElement.value.expandAll()
+        emitChangedTree()
+        treeDOMElement.value.expandAll()
       },
       { deep: true },
     )
 
     return {
       tree,
-      treeElement,
+      treeDOMElement,
     }
   },
 })

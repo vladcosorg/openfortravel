@@ -1,20 +1,31 @@
 import { Ref } from '@vue/composition-api'
 import cloneDeep from 'lodash/cloneDeep'
+import omit from 'lodash/omit'
 import Vue from 'vue'
 
-import {
-  indexTheTree,
-  QuasarLogicTreeNode,
-  QuasarRestrictionTreeNode,
-  QuasarTreeNode,
-} from '@/admin/src/pages/edit/composables/use-tree'
 import { LinkedNodeManager } from '@/admin/src/pages/edit/modules/linked-node-manager'
+import {
+  TreeBuilderLogicNode,
+  TreeBuilderRestrictionNode,
+  TreeBuilderNode,
+} from '@/admin/src/pages/edit/types'
+import { NormalizedEncodedNode } from '@/shared/src/restriction-tree/converter'
+import {
+  isLogicNode,
+  isLogicNodeType,
+  isRestrictionNode,
+} from '@/shared/src/restriction-tree/guards'
+import { createDefaultNodeOfType } from '@/shared/src/restriction-tree/node-normalizers'
+import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import {
   LogicNodeType,
   RestrictionNodeType,
 } from '@/shared/src/restriction-tree/types'
 
-const compatMap = new Map()
+const compatMap = new Map<
+  string,
+  keyof typeof RestrictionNode['defaultOptions']
+>()
 
 const compatibleOptions = [
   {
@@ -37,40 +48,53 @@ for (const optionSet of compatibleOptions) {
 
 export class TreeManager {
   public readonly linkedNodeManager: LinkedNodeManager
+  private lastNodeUID = 1
+
   constructor(
-    protected readonly tree: Ref<QuasarTreeNode[]>,
-    protected readonly buffer: Ref<QuasarTreeNode | undefined>,
-    protected readonly generateUID: () => number,
+    protected readonly tree: Ref<TreeBuilderNode[]>,
+    protected readonly buffer: Ref<TreeBuilderNode | undefined>,
   ) {
+    this.tree.value.push(this.createEmptyNodeOfType(LogicNodeType.OR))
     this.linkedNodeManager = new LinkedNodeManager(this.tree, this)
   }
 
-  addNodeToParent(
-    parentNode: QuasarLogicTreeNode,
+  initializeWith(rootChildren: NormalizedEncodedNode[]): void {
+    const rootNode = this.getRootNode()
+    for (const rootChild of rootChildren) {
+      this.addExistingNodeToParent(rootChild, rootNode)
+    }
+  }
+
+  addNewNodeToParent(
+    parentNode: TreeBuilderLogicNode,
     type: RestrictionNodeType = RestrictionNodeType.ORIGIN,
   ): void {
     const newNode = this.createEmptyNodeOfType(type)
     parentNode.children.push(newNode)
   }
 
-  updateNodeOptions(node: QuasarRestrictionTreeNode, options: unknown): void {
+  replaceNodeOptions(node: TreeBuilderRestrictionNode, options: unknown): void {
     Object.assign(node, { options })
     this.linkedNodeManager.maybeSyncLinkedNodes(node)
   }
 
-  updateNodeOption<
-    T extends QuasarRestrictionTreeNode,
-    K extends keyof T['options'],
-    V extends T[K],
-  >(node: T, key: K, value: V): void {
-    if (!node.options) {
-      node.options = {}
-    }
+  mergeNodeOptions<T extends TreeBuilderRestrictionNode>(
+    node: T,
+    options: Partial<T['options']>,
+  ): void {
+    node.options = Object.assign({}, node.options, options)
+    this.linkedNodeManager.maybeSyncLinkedNodes(node)
+  }
 
+  updateNodeOption<
+    T extends TreeBuilderRestrictionNode,
+    K extends keyof T['options'],
+    V extends T['options'][K],
+  >(node: T, key: K, value: V): void {
     Vue.set(node.options, key as string, value)
   }
 
-  updateNodeProperty<T extends QuasarTreeNode, K extends keyof T>(
+  updateNodeProperty<T extends TreeBuilderNode, K extends keyof T>(
     node: T,
     key: K,
     value: T[K],
@@ -79,7 +103,7 @@ export class TreeManager {
   }
 
   updateNodeGroup(
-    node: QuasarRestrictionTreeNode,
+    node: TreeBuilderRestrictionNode,
     value: string | undefined,
   ): void {
     if (!value) {
@@ -92,7 +116,7 @@ export class TreeManager {
     this.linkedNodeManager.registerLinkedNode(node)
   }
 
-  removeNodeProperty<T extends QuasarTreeNode, K extends keyof T>(
+  removeNodeProperty<T extends TreeBuilderNode, K extends keyof T>(
     node: T,
     key: K,
   ): void {
@@ -101,14 +125,14 @@ export class TreeManager {
 
   updateNodeType(
     newType: LogicNodeType | RestrictionNodeType,
-    node: QuasarTreeNode,
+    node: TreeBuilderNode,
   ): void {
-    this.isLogicType(newType)
+    isLogicNodeType(newType)
       ? this.updateNodeToLogicType(newType, node)
       : this.updateNodeToRestrictionType(newType, node)
   }
 
-  moveNodeUp(node: QuasarTreeNode): void {
+  moveNodeUp(node: TreeBuilderNode): void {
     const parentNode = this.findNodeParentByUID(node.UID)
     const currentIndex = parentNode.children.indexOf(node)
 
@@ -123,13 +147,14 @@ export class TreeManager {
     )
   }
 
-  moveNodeDown(node: QuasarTreeNode): void {
+  moveNodeDown(node: TreeBuilderNode): void {
     const parentNode = this.findNodeParentByUID(node.UID)
     const currentIndex = parentNode.children.indexOf(node)
 
     parentNode.children = this.moveChildIndex(
       parentNode.children,
       currentIndex,
+      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       currentIndex + 1,
     )
   }
@@ -138,16 +163,16 @@ export class TreeManager {
     return !!this.buffer.value
   }
 
-  cutNodeToBuffer(node: QuasarTreeNode): void {
+  cutNodeToBuffer(node: TreeBuilderNode): void {
     this.buffer.value = node
     this.removeNode(node)
   }
 
-  copyNodeToBuffer(node: QuasarTreeNode): void {
+  copyNodeToBuffer(node: TreeBuilderNode): void {
     this.buffer.value = node
   }
 
-  duplicateNode(node: QuasarTreeNode): void {
+  duplicateNode(node: TreeBuilderNode): void {
     const parentNode = this.findNodeParentByUID(node.UID)
     this.copyNodeToBuffer(node)
     if (parentNode) {
@@ -155,33 +180,58 @@ export class TreeManager {
     }
   }
 
-  pasteNodeFromBuffer(parentNode: QuasarLogicTreeNode): void {
+  pasteNodeFromBuffer(parentNode: TreeBuilderLogicNode): void {
     if (!this.buffer.value) {
       return
     }
 
-    const targetNode = cloneDeep(
-      indexTheTree([this.buffer.value], this.generateUID),
-    ).pop()
-
-    if (targetNode) {
-      parentNode.children.push(targetNode)
-    }
-
+    this.addExistingNodeToParent(this.buffer.value, parentNode)
     this.buffer.value = undefined
   }
 
-  removeNode(node: QuasarTreeNode): void {
+  removeNode(node: TreeBuilderNode): void {
     const parent = this.findNodeParentByUID(node.UID)
     parent.children = parent.children.filter((item) => item.UID !== node.UID)
   }
 
-  replaceNode(oldNode: QuasarTreeNode, newNode: QuasarTreeNode): void {
+  replaceNode(oldNode: TreeBuilderNode, newNode: TreeBuilderNode): void {
     const parentNode = this.findNodeParentByUID(oldNode.UID)
     parentNode.children.splice(parentNode.children.indexOf(oldNode), 1, newNode)
   }
 
-  protected moveChildIndex<T extends QuasarTreeNode[]>(
+  exportToStorageFormat(): NormalizedEncodedNode[] {
+    const rootNode = cloneDeep(this.getRootNode())
+    if (!rootNode || !rootNode.children) {
+      return []
+    }
+
+    return this.cleanObjectRecursive(rootNode.children)
+  }
+
+  protected cleanObjectRecursive(
+    indexedTree: TreeBuilderNode[],
+  ): NormalizedEncodedNode[] {
+    const out: NormalizedEncodedNode[] = []
+
+    for (const dirtyNode of indexedTree) {
+      const node = omit(dirtyNode, ['UID']) as NormalizedEncodedNode
+
+      if (isLogicNode(node)) {
+        if (node.children.length === 0) {
+          continue
+        }
+
+        node.children = this.cleanObjectRecursive(
+          node.children as TreeBuilderNode[],
+        )
+      }
+
+      out.push(node)
+    }
+    return out
+  }
+
+  protected moveChildIndex<T extends TreeBuilderNode[]>(
     array: T,
     oldIndex: number,
     newIndex: number,
@@ -195,9 +245,9 @@ export class TreeManager {
 
   protected updateNodeToLogicType(
     newType: LogicNodeType,
-    node: QuasarTreeNode,
+    node: TreeBuilderNode,
   ): void {
-    if (this.isLogicNode(node)) {
+    if (isLogicNode(node)) {
       this.updateNodeProperty(node, 'type', newType)
     } else {
       this.replaceNode(node, this.createEmptyNodeOfType(newType))
@@ -206,90 +256,102 @@ export class TreeManager {
 
   protected updateNodeToRestrictionType(
     newType: RestrictionNodeType,
-    node: QuasarTreeNode,
+    oldNode: TreeBuilderNode,
   ): void {
-    if (this.isLogicNode(node)) {
-      this.replaceNode(node, this.createEmptyNodeOfType(newType))
-      return
+    const newNode = this.createEmptyNodeOfType(
+      newType,
+    ) as TreeBuilderRestrictionNode
+    this.replaceNode(oldNode, newNode)
+
+    if (isRestrictionNode(oldNode)) {
+      this.mergeNodeOptions(newNode, this.getMigratedOptions(oldNode, newNode))
     }
+  }
 
-    const oldNodeType = node.type
-    this.updateNodeProperty(node, 'type', newType)
-
-    if (!node.options) {
-      return
-    }
-
-    const migratedOptions: Record<keyof typeof compatMap, unknown> = {}
-    for (const [optionID, optionValue] of Object.entries(node.options)) {
-      const key = [oldNodeType, newType, optionID].join('')
+  protected getMigratedOptions<T extends TreeBuilderRestrictionNode>(
+    oldNode: TreeBuilderRestrictionNode,
+    newNode: T,
+  ): Partial<T['options']> {
+    const migratedOptions: Partial<T['options']> = {}
+    for (const [optionID, optionValue] of Object.entries(oldNode.options)) {
+      const key = [oldNode.type, newNode.type, optionID].join('')
       if (compatMap.has(key)) {
-        migratedOptions[compatMap.get(key)] = optionValue
+        const index = compatMap.get(key) as keyof T['options']
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        migratedOptions[index] = optionValue as unknown as any
       }
     }
 
-    this.updateNodeOptions(node, migratedOptions)
+    return migratedOptions
   }
 
   protected createEmptyNodeOfType(
     type: LogicNodeType | RestrictionNodeType,
-  ): QuasarTreeNode {
-    if (this.isLogicType(type)) {
-      return {
-        type,
-        UID: this.generateUID(),
-        children: [],
-      }
-    }
-
-    return {
-      type,
-      UID: this.generateUID(),
-      options: {},
-    }
+  ): TreeBuilderNode {
+    return this.injectUID(createDefaultNodeOfType(type))
   }
 
-  protected isLogicNode(node: QuasarTreeNode): node is QuasarLogicTreeNode {
-    return this.isLogicType(node.type)
+  protected injectUID(node: NormalizedEncodedNode): TreeBuilderNode {
+    return Object.assign({}, node, {
+      UID: this.lastNodeUID++,
+    }) as TreeBuilderNode
   }
 
-  protected isRestrictionNode(
-    node: QuasarTreeNode,
-  ): node is QuasarRestrictionTreeNode {
-    return !this.isLogicType(node.type)
-  }
-
-  protected isLogicType(
-    type: LogicNodeType | RestrictionNodeType,
-  ): type is LogicNodeType {
-    return Object.values(LogicNodeType).includes(type as LogicNodeType)
-  }
-
-  protected findNodeParentByUID(UID: number): QuasarLogicTreeNode {
+  protected findNodeParentByUID(UID: number): TreeBuilderLogicNode {
     const node = this.findRecursive(UID, this.tree.value)
 
-    if (!node) {
+    if (!node || !isLogicNode(node)) {
       throw new Error(`Could not find the parent of node with UID ${UID}`)
     }
 
-    return node as QuasarLogicTreeNode
+    return node
   }
 
   protected findRecursive(
     UID: number,
-    subtree: QuasarTreeNode[],
-  ): QuasarTreeNode | void {
+    subtree: TreeBuilderNode[],
+  ): TreeBuilderNode | void {
     for (const node of subtree) {
       if (node.UID === UID) {
-        return node as QuasarLogicTreeNode
+        return node
       }
 
       if ('children' in node) {
-        const found = this.findRecursive(UID, node.children as QuasarTreeNode[])
+        const found = this.findRecursive(
+          UID,
+          node.children as TreeBuilderNode[],
+        )
         if (found) {
           return found.UID === UID ? node : found
         }
       }
     }
+  }
+
+  protected addExistingNodeToParent(
+    existingNode: NormalizedEncodedNode,
+    parentNode: TreeBuilderLogicNode,
+  ): void {
+    const normalizedNode = this.injectUID(existingNode)
+
+    if (isLogicNode(normalizedNode) && normalizedNode.children.length > 0) {
+      const rawChildren = normalizedNode.children
+      normalizedNode.children = []
+      rawChildren.map((existingChildNode) =>
+        this.addExistingNodeToParent(existingChildNode, normalizedNode),
+      )
+    }
+
+    parentNode.children.push(normalizedNode)
+  }
+
+  protected getRootNode(): TreeBuilderLogicNode {
+    const rootNode = this.tree.value[0]
+
+    if (!isLogicNode(rootNode)) {
+      throw new Error('Unexpected root node type')
+    }
+
+    return rootNode
   }
 }

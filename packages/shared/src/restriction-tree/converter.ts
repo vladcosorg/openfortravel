@@ -1,5 +1,7 @@
+import { isLogicNode } from '@/shared/src/restriction-tree/guards'
 import { And } from '@/shared/src/restriction-tree/logic-node/and'
 import { Or } from '@/shared/src/restriction-tree/logic-node/or'
+import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import { Age } from '@/shared/src/restriction-tree/restriction-node/age'
 import { Citizenship } from '@/shared/src/restriction-tree/restriction-node/citizenship'
 import { CustomRequirement } from '@/shared/src/restriction-tree/restriction-node/custom-requirement'
@@ -25,6 +27,28 @@ export type EncodedRestrictionNode = {
 export type EncodedLogicNode = {
   type: LogicNodeType
   children: Array<EncodedLogicNode | EncodedRestrictionNode>
+}
+
+export type NormalizedEncodedNode =
+  | NormalizedEncodedRestrictionNode
+  | NormalizedEncodedLogicNode
+
+export type IncompleteEncodedNode = Partial<NormalizedEncodedNode>
+
+export type NormalizedEncodedRestrictionNode<
+  T = typeof RestrictionNode['defaultOptions'],
+> = {
+  type: RestrictionNodeType
+  options: T
+  comment?: string
+  group?: string
+}
+export interface NormalizedEncodedLogicNode<
+  T extends NormalizedEncodedNode = NormalizedEncodedNode,
+> {
+  type: LogicNodeType
+  children: T[]
+  comment?: string
 }
 
 export const typeConstructors = {
@@ -75,9 +99,4 @@ export function convertFromStorageFormat(nodeTree: EncodedNode): TreeNode {
   const defaultOptions = (constructor as typeof Origin).defaultOptions
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return new constructor(Object.assign({}, defaultOptions, nodeTree.options))
-}
-
-function isLogicNode(node: EncodedNode): node is EncodedLogicNode {
-  const type = (node as EncodedLogicNode).type
-  return Object.values(LogicNodeType).includes(type)
 }

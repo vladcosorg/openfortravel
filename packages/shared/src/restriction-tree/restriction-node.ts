@@ -1,4 +1,3 @@
-import type { EncodedRestrictionNode } from '@/shared/src/restriction-tree/converter'
 import type {
   PlainRestrictionGroups,
   TreeNode,
@@ -10,14 +9,22 @@ export enum RestrictionCategory {
   ACTION = 'action',
 }
 
+export enum Placement {
+  APPEND = 'append',
+  PREPEND = 'prepend',
+  REPLACE = 'replace',
+}
+
 export abstract class RestrictionNode<
   T extends Record<string, unknown> &
     typeof RestrictionNode.defaultOptions = typeof RestrictionNode.defaultOptions,
 > implements TreeNode
 {
   static defaultOptions = {
-    customInstructionTitle: '' as string | undefined,
-    customInstructionSubtitle: '' as string | undefined,
+    customInstructionTitle: undefined as string | undefined,
+    customInstructionSubtitle: undefined as string | undefined,
+    customContentPlacement: Placement.APPEND,
+    customTitlePlacement: Placement.APPEND,
   }
 
   constructor(public readonly options: T) {}
@@ -45,18 +52,6 @@ export abstract class RestrictionNode<
 
   toI18nConfig(): [string, Record<string, unknown>?] {
     return [this.id(), this.options]
-  }
-
-  toStorageFormat(): EncodedRestrictionNode {
-    const out: EncodedRestrictionNode = {
-      type: this.id(),
-    }
-
-    if (this.options) {
-      out.options = this.options
-    }
-
-    return out
   }
 
   abstract id(): RestrictionNodeType

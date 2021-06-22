@@ -10,15 +10,15 @@ import {
   PropType,
 } from '@vue/composition-api'
 
-import { QuasarTreeNode } from '@/admin/src/pages/edit/composables/use-tree'
 import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
 import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
+import { TreeBuilderNode } from '@/admin/src/pages/edit/types'
 
 export default defineComponent({
   components: {},
   props: {
     node: {
-      type: Object as PropType<QuasarTreeNode>,
+      type: Object as PropType<TreeBuilderNode>,
       required: true,
     },
   },

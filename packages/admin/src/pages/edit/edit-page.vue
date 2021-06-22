@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import pick from 'lodash/pick'
+import { pick } from 'lodash'
 import { Portal } from 'portal-vue'
 
 import RestrictionTree from '@/admin/src/pages/edit/components/restriction-tree.vue'
@@ -76,6 +76,7 @@ export default defineComponent({
     const { destinationRef, loadingRef } = useDestination(props.originCode)
     const modifiedFields: string[] = []
     let isPendingUpdate = false
+
     const { addSaveHandlerProp, isSaving, isPending, runPendings } =
       useSaveHandler()
     const destination = computed({
