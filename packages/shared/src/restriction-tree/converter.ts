@@ -19,23 +19,11 @@ import {
   RestrictionNodeType,
 } from '@/shared/src/restriction-tree/types'
 
-export type EncodedNode = EncodedLogicNode | EncodedRestrictionNode
-export type EncodedRestrictionNode = {
-  type: RestrictionNodeType
-  options?: Record<string, unknown>
-}
-export type EncodedLogicNode = {
-  type: LogicNodeType
-  children: Array<EncodedLogicNode | EncodedRestrictionNode>
-}
+export type EncodedTreeNode = EncodedRestrictionNode | EncodedLogicNode
 
-export type NormalizedEncodedNode =
-  | NormalizedEncodedRestrictionNode
-  | NormalizedEncodedLogicNode
+export type IncompleteEncodedNode = Partial<EncodedTreeNode>
 
-export type IncompleteEncodedNode = Partial<NormalizedEncodedNode>
-
-export type NormalizedEncodedRestrictionNode<
+export type EncodedRestrictionNode<
   T = typeof RestrictionNode['defaultOptions'],
 > = {
   type: RestrictionNodeType
@@ -43,9 +31,7 @@ export type NormalizedEncodedRestrictionNode<
   comment?: string
   group?: string
 }
-export interface NormalizedEncodedLogicNode<
-  T extends NormalizedEncodedNode = NormalizedEncodedNode,
-> {
+export interface EncodedLogicNode<T extends EncodedTreeNode = EncodedTreeNode> {
   type: LogicNodeType
   children: T[]
   comment?: string
@@ -67,7 +53,9 @@ export const typeConstructors = {
   [RestrictionNodeType.CUSTOM_REQUIREMENT]: CustomRequirement,
 }
 
-export function convertFromStorageFormat(nodeTree: EncodedNode): TreeNode {
+export function convertFromStorageFormat<T extends EncodedTreeNode>(
+  nodeTree: T,
+): TreeNode {
   if (!nodeTree.type) {
     throw new Error('Malformed tree: type is not specified')
   }
@@ -96,7 +84,6 @@ export function convertFromStorageFormat(nodeTree: EncodedNode): TreeNode {
     )
   }
 
-  const defaultOptions = (constructor as typeof Origin).defaultOptions
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return new constructor(Object.assign({}, defaultOptions, nodeTree.options))
+  return new constructor(nodeTree.options)
 }

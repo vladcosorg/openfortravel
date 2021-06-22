@@ -2,9 +2,9 @@ import cloneDeep from 'lodash/cloneDeep'
 import merge from 'lodash/merge'
 
 import {
-  NormalizedEncodedLogicNode,
-  NormalizedEncodedNode,
-  NormalizedEncodedRestrictionNode,
+  EncodedLogicNode,
+  EncodedTreeNode,
+  EncodedRestrictionNode,
   typeConstructors,
 } from '@/shared/src/restriction-tree/converter'
 import { isLogicNodeType } from '@/shared/src/restriction-tree/guards'
@@ -15,7 +15,7 @@ import {
 
 export function createDefaultLogicNodeForType(
   type: LogicNodeType,
-): NormalizedEncodedLogicNode {
+): EncodedLogicNode {
   return {
     type,
     children: [],
@@ -23,8 +23,8 @@ export function createDefaultLogicNodeForType(
 }
 
 export function normalizeEncodedLogicNode(
-  node: Partial<NormalizedEncodedLogicNode>,
-): NormalizedEncodedLogicNode {
+  node: Partial<EncodedLogicNode>,
+): EncodedLogicNode {
   if (!node.type) {
     throw new Error('Undefined type')
   }
@@ -34,7 +34,7 @@ export function normalizeEncodedLogicNode(
 
 export function createDefaultRestrictionNodeForType(
   type: RestrictionNodeType,
-): NormalizedEncodedRestrictionNode {
+): EncodedRestrictionNode {
   const defaultOptions = cloneDeep(typeConstructors[type].defaultOptions)
 
   return {
@@ -44,8 +44,8 @@ export function createDefaultRestrictionNodeForType(
 }
 
 export function normalizeEncodedRestrictionNode(
-  node: Partial<NormalizedEncodedRestrictionNode>,
-): NormalizedEncodedRestrictionNode {
+  node: Partial<EncodedRestrictionNode>,
+): EncodedRestrictionNode {
   if (!node.type) {
     throw new Error('Undefined type')
   }
@@ -55,22 +55,20 @@ export function normalizeEncodedRestrictionNode(
 
 export function createDefaultNodeOfType(
   type: RestrictionNodeType | LogicNodeType,
-): NormalizedEncodedNode {
+): EncodedTreeNode {
   return isLogicNodeType(type)
     ? createDefaultLogicNodeForType(type)
     : createDefaultRestrictionNodeForType(type)
 }
 
 export function normalizeEncodedNode(
-  node: Partial<NormalizedEncodedNode>,
-): NormalizedEncodedNode {
+  node: Partial<EncodedTreeNode>,
+): EncodedTreeNode {
   if (!node.type) {
     throw new Error('Undefined type')
   }
 
   return isLogicNodeType(node.type)
-    ? normalizeEncodedLogicNode(node as Partial<NormalizedEncodedLogicNode>)
-    : normalizeEncodedRestrictionNode(
-        node as Partial<NormalizedEncodedRestrictionNode>,
-      )
+    ? normalizeEncodedLogicNode(node as Partial<EncodedLogicNode>)
+    : normalizeEncodedRestrictionNode(node as Partial<EncodedRestrictionNode>)
 }

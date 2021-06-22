@@ -9,7 +9,7 @@ import {
   TreeBuilderRestrictionNode,
   TreeBuilderNode,
 } from '@/admin/src/pages/edit/types'
-import { NormalizedEncodedNode } from '@/shared/src/restriction-tree/converter'
+import { EncodedTreeNode } from '@/shared/src/restriction-tree/converter'
 import {
   isLogicNode,
   isLogicNodeType,
@@ -58,7 +58,7 @@ export class TreeManager {
     this.linkedNodeManager = new LinkedNodeManager(this.tree, this)
   }
 
-  initializeWith(rootChildren: NormalizedEncodedNode[]): void {
+  initializeWith(rootChildren: EncodedTreeNode[]): void {
     const rootNode = this.getRootNode()
     for (const rootChild of rootChildren) {
       this.addExistingNodeToParent(rootChild, rootNode)
@@ -199,7 +199,7 @@ export class TreeManager {
     parentNode.children.splice(parentNode.children.indexOf(oldNode), 1, newNode)
   }
 
-  exportToStorageFormat(): NormalizedEncodedNode[] {
+  exportToStorageFormat(): EncodedTreeNode[] {
     const rootNode = cloneDeep(this.getRootNode())
     if (!rootNode || !rootNode.children) {
       return []
@@ -210,11 +210,11 @@ export class TreeManager {
 
   protected cleanObjectRecursive(
     indexedTree: TreeBuilderNode[],
-  ): NormalizedEncodedNode[] {
-    const out: NormalizedEncodedNode[] = []
+  ): EncodedTreeNode[] {
+    const out: EncodedTreeNode[] = []
 
     for (const dirtyNode of indexedTree) {
-      const node = omit(dirtyNode, ['UID']) as NormalizedEncodedNode
+      const node = omit(dirtyNode, ['UID']) as EncodedTreeNode
 
       if (isLogicNode(node)) {
         if (node.children.length === 0) {
@@ -291,7 +291,7 @@ export class TreeManager {
     return this.injectUID(createDefaultNodeOfType(type))
   }
 
-  protected injectUID(node: NormalizedEncodedNode): TreeBuilderNode {
+  protected injectUID(node: EncodedTreeNode): TreeBuilderNode {
     return Object.assign({}, node, {
       UID: this.lastNodeUID++,
     }) as TreeBuilderNode
@@ -317,10 +317,7 @@ export class TreeManager {
       }
 
       if ('children' in node) {
-        const found = this.findRecursive(
-          UID,
-          node.children as TreeBuilderNode[],
-        )
+        const found = this.findRecursive(UID, node.children)
         if (found) {
           return found.UID === UID ? node : found
         }
@@ -329,7 +326,7 @@ export class TreeManager {
   }
 
   protected addExistingNodeToParent(
-    existingNode: NormalizedEncodedNode,
+    existingNode: EncodedTreeNode,
     parentNode: TreeBuilderLogicNode,
   ): void {
     const normalizedNode = this.injectUID(existingNode)

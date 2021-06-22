@@ -8,7 +8,7 @@ import {
   transformCountryCodeToDestinationSlug,
   transformCountryCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import type { NormalizedEncodedNode } from '@/shared/src/restriction-tree/converter'
+import type { EncodedTreeNode } from '@/shared/src/restriction-tree/converter'
 import { convertFromStorageFormat } from '@/shared/src/restriction-tree/converter'
 import { normalizeEncodedNode } from '@/shared/src/restriction-tree/node-normalizers'
 import {
@@ -38,7 +38,7 @@ export interface DestinationDocument {
   visitedRestrictedCountriesDaysAgo?: number
   thisWeekCasesPer100K?: number
   lastWeekCasesPer100K?: number
-  restrictionTree?: Array<Partial<NormalizedEncodedNode>>
+  restrictionTree?: Array<Partial<EncodedTreeNode>>
   maskRestrictions?: 'public' | 'public-enclosed'
   restaurantRestrictions?: 'closed' | 'open-with-restrictions'
   barRestrictions?: 'closed' | 'open-with-restrictions'
@@ -65,7 +65,7 @@ export class DestinationDefaults implements PlainDestination {
   public readonly proofOfRecoveryInDays = 0
   public readonly thisWeekCasesPer100K = 0
   public readonly lastWeekCasesPer100K = 0
-  public readonly restrictionTree: Array<Partial<NormalizedEncodedNode>> = []
+  public readonly restrictionTree: Array<Partial<EncodedTreeNode>> = []
 
   get name(): string {
     return getLabelForCountryCode(this.countryCode)
@@ -140,22 +140,22 @@ export class DestinationDefaults implements PlainDestination {
     return this.lastWeekCasesPer100K.toFixed(1)
   }
 
-  get normalizedRestrictionTree(): NormalizedEncodedNode[] {
+  get normalizedRestrictionTree(): EncodedTreeNode[] {
     return this.normalize(this.restrictionTree ?? [])
   }
 
   protected normalize(
-    tree: Array<Partial<NormalizedEncodedNode>>,
-  ): NormalizedEncodedNode[] {
-    const out: NormalizedEncodedNode[] = []
+    tree: Array<Partial<EncodedTreeNode>>,
+  ): EncodedTreeNode[] {
+    const out: EncodedTreeNode[] = []
     for (const node of tree) {
       if (node.type === LogicNodeType.OR || node.type === LogicNodeType.AND) {
         out.push(
           Object.assign(node, {
             children: this.normalize(
-              node.children as Array<Partial<NormalizedEncodedNode>>,
+              node.children as Array<Partial<EncodedTreeNode>>,
             ),
-          }) as NormalizedEncodedNode,
+          }) as EncodedTreeNode,
         )
         continue
       }

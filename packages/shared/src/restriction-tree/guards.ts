@@ -1,6 +1,6 @@
 import {
   EncodedLogicNode,
-  EncodedNode,
+  EncodedTreeNode,
   EncodedRestrictionNode,
 } from '@/shared/src/restriction-tree/converter'
 import {
@@ -22,12 +22,12 @@ export function isRestrictionNodeType(
   )
 }
 
-export function isLogicNode(node: EncodedNode): node is EncodedLogicNode {
+export function isLogicNode(node: EncodedTreeNode): node is EncodedLogicNode {
   return isLogicNodeType(node.type)
 }
 
 export function isRestrictionNode(
-  node: EncodedNode,
+  node: EncodedTreeNode,
 ): node is EncodedRestrictionNode {
   return isRestrictionNodeType(node.type)
 }
