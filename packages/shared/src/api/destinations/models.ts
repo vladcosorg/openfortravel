@@ -1,4 +1,5 @@
 import { Timestamp } from 'firebase/firestore'
+import cloneDeep from 'lodash/cloneDeep'
 
 import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import {
@@ -141,7 +142,7 @@ export class DestinationDefaults implements PlainDestination {
   }
 
   get normalizedRestrictionTree(): EncodedTreeNode[] {
-    return this.normalize(this.restrictionTree ?? [])
+    return this.normalize(cloneDeep(this.restrictionTree) ?? [])
   }
 
   protected normalize(
