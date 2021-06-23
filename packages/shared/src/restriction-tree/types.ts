@@ -9,6 +9,7 @@ export enum LogicNodeType {
 
 export enum RestrictionNodeType {
   ORIGIN = 'origin',
+  SUB_DESTINATION = 'sub-destination',
   QUARANTINE = 'quarantine',
   VACCINATED = 'vaccinated',
   RECOVERY = 'recovery',

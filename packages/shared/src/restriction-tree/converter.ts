@@ -12,6 +12,7 @@ import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
 import { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
 import { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
 import { RecoveryCertificate } from '@/shared/src/restriction-tree/restriction-node/recovery-certificate'
+import { SubDestination } from '@/shared/src/restriction-tree/restriction-node/sub-destination'
 import { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import type { TreeNode } from '@/shared/src/restriction-tree/types'
 import {
@@ -41,6 +42,7 @@ export const typeConstructors = {
   [LogicNodeType.OR]: Or,
   [LogicNodeType.AND]: And,
   [RestrictionNodeType.ORIGIN]: Origin,
+  [RestrictionNodeType.SUB_DESTINATION]: SubDestination,
   [RestrictionNodeType.QUARANTINE]: Quarantine,
   [RestrictionNodeType.VACCINATED]: Vaccinated,
   [RestrictionNodeType.RECOVERY]: RecoveryCertificate,
