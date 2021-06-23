@@ -1,7 +1,7 @@
 <template>
   <component :is="wrapper" :restriction="restriction">
     <template #title>
-      <div class="row">
+      <div class="row items-center">
         <q-icon
           color="negative"
           class="col-auto"

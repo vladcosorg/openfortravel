@@ -1,15 +1,22 @@
 <template>
   <component :is="wrapper" :restriction="restriction">
     <template #title>
-      <span>
-        Required age is {{ restriction.options.age }} or
-        <template v-if="restriction.options.orMore"> more </template>
-        <template v-else> less </template>
-      </span>
+      <div class="row items-center">
+        <q-icon
+          color="negative"
+          class="col-auto"
+          :name="attentionIcon"
+          size="lg"
+        />
+        <span class="col">
+          This section is only applicable to travellers aged
+          <b>{{ restriction.options.age }} years old</b> or
+          <template v-if="restriction.options.orMore"> more </template>
+          <template v-else> less </template>
+        </span>
+      </div>
     </template>
-    <template #subtitle>
-      <p>d</p>
-    </template>
+    <template #subtitle />
   </component>
 </template>
 
@@ -22,6 +29,7 @@ a[href^='#'] {
 </style>
 
 <script lang="ts">
+import { matPriorityHigh as attentionIcon } from '@quasar/extras/material-icons'
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
@@ -48,7 +56,7 @@ export default defineComponent({
   setup() {
     const store = inject(StoreKey) as StoreModule
     const destination = computed(() => store.getters.destination)
-    return { destination }
+    return { destination, attentionIcon }
   },
 })
 </script>
