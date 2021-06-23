@@ -3,7 +3,7 @@
     v-model="value"
     multiple
     label="Citizenship"
-    :clearable="!hideReset"
+    clearable
     v-bind="$attrs"
     bottom-slots
   >
@@ -31,28 +31,21 @@ export default defineComponent({
   setup() {
     const store = useRootStore()
     const setter = createComputedSetter(RestrictionNodeType.CITIZENSHIP)
-    const hideReset = computed(
-      () =>
-        setter.value.length === 1 &&
-        setter.value[0] ===
-          store.state.visitorContext[RestrictionNodeType.ORIGIN],
-    )
+
     const value = computed<typeof setter.value>({
       get() {
         return setter.value
       },
       set(value) {
         if (!value) {
-          setter.value = [
-            store.state.visitorContext[RestrictionNodeType.ORIGIN],
-          ]
+          setter.value = undefined
           return
         }
 
         setter.value = value
       },
     })
-    return { value, hideReset }
+    return { value }
   },
 })
 </script>

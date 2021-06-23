@@ -44,6 +44,12 @@ export const mutations: MutationTree<RootState> & MutationSignatures = {
         // eslint-disable-next-line unicorn/no-useless-undefined
         Vue.set(state.visitorContext, RestrictionNodeType.RECOVERY, undefined)
         break
+
+      case RestrictionNodeType.CITIZENSHIP:
+        if (value === undefined) {
+          Vue.delete(state.visitorContext, field)
+        }
+        break
     }
 
     saveContextToCookie(state.visitorContext)

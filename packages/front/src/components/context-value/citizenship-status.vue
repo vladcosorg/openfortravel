@@ -21,11 +21,11 @@ export default defineComponent({
     const store = useRootStore()
     const value = computed(() => {
       let citizenshipList =
-        store.state.visitorContext[RestrictionNodeType.CITIZENSHIP]
+        store.getters.visitorContextWithDefaults[
+          RestrictionNodeType.CITIZENSHIP
+        ]
 
-      const firstCitizenship = getOriginLabelForCountryCode(
-        citizenshipList[0] as string,
-      )
+      const firstCitizenship = getOriginLabelForCountryCode(citizenshipList[0])
 
       if (citizenshipList.length === 1) {
         return firstCitizenship

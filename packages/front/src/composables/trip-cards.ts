@@ -17,7 +17,7 @@ export function createTripsCards(
   const store = useRootStore()
   return computed<TripCard[]>(() => {
     const countries = store.getters.wrappedHostRules
-    const context = store.state.visitorContext
+    const context = store.getters.visitorContextWithDefaults
 
     const originCountry = countries[context[RestrictionNodeType.ORIGIN]]
     return Object.values(countries)

@@ -33,7 +33,6 @@ export class RootState implements StateInterface {
     [RestrictionNodeType.ORIGIN]: 'us',
     [RestrictionNodeType.RECOVERY]: undefined,
     [RestrictionNodeType.VACCINATED]: undefined,
-    [RestrictionNodeType.CITIZENSHIP]: ['us'],
     [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [],
   }
 }

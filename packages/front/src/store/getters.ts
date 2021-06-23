@@ -15,10 +15,23 @@ export const getters: GetterTree<RootStateType, RootStateType> &
     getters.visitorOrigin ?? 'us',
   visitorOrigin: (state) => state.visitorContext[RestrictionNodeType.ORIGIN],
   visitorContextWithDefaults: (state) =>
-    Object.assign({}, state.visitorContext, {
-      [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [
-        ...state.visitorContext[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES],
-        state.visitorContext[RestrictionNodeType.ORIGIN],
-      ],
-    }),
+    Object.assign(
+      {
+        [RestrictionNodeType.CITIZENSHIP]: [
+          state.visitorContext[RestrictionNodeType.ORIGIN],
+        ],
+      },
+      state.visitorContext,
+      {
+        [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [
+          ...state.visitorContext[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES],
+          state.visitorContext[RestrictionNodeType.ORIGIN],
+        ],
+        [RestrictionNodeType.CITIZENSHIP]: Array.isArray(
+          state.visitorContext[RestrictionNodeType.CITIZENSHIP],
+        )
+          ? state.visitorContext[RestrictionNodeType.CITIZENSHIP]
+          : [state.visitorContext[RestrictionNodeType.ORIGIN]],
+      },
+    ),
 }
