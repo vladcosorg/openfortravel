@@ -9,6 +9,7 @@ import {
   createTestList,
   createTextInput,
   createVaccineList,
+  createNewValueSelect,
 } from '@/admin/src/pages/edit/composables/field-config/fields'
 import type {
   ExtractOptions,
@@ -93,6 +94,14 @@ export function createConfig(
             class: 'col-12',
           },
         ),
+      ]
+    }
+
+    case RestrictionNodeType.SUB_DESTINATION: {
+      const setters = getSetters(type, options, emit)
+
+      return [
+        createNewValueSelect(setters.subDestinations, { class: 'col-12' }),
       ]
     }
 

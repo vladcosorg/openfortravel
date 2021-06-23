@@ -4,6 +4,7 @@ import { QBtnToggle, QCheckbox, QInput } from 'quasar'
 
 import CountryList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/country-list.vue'
 import LanguageList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/language-list.vue'
+import NewValueList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/new-value-list.vue'
 import TestList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/test-list.vue'
 import VaccineBrandList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/vaccine-brand-list.vue'
 import type { FieldConfig } from '@/admin/src/pages/edit/composables/field-config/helpers'
@@ -145,5 +146,18 @@ export function createCountryList(
     on: {
       'update:not': (val: string) => (not.value = val),
     },
+  }
+}
+
+export function createNewValueSelect(
+  model: WritableComputedRef<unknown>,
+  props?: FieldConfig['bind'],
+): FieldConfig {
+  return {
+    type: NewValueList,
+    bind: {
+      ...props,
+    },
+    model,
   }
 }

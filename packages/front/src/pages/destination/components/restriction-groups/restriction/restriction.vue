@@ -22,6 +22,7 @@ import PcrTest from '@/front/src/pages/destination/components/restriction-groups
 import Quarantine from '@/front/src/pages/destination/components/restriction-groups/restriction/quarantine.vue'
 import Recovery from '@/front/src/pages/destination/components/restriction-groups/restriction/recovery.vue'
 import RestrictionItem from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item.vue'
+import SubDestination from '@/front/src/pages/destination/components/restriction-groups/restriction/sub-destination.vue'
 import Vaccinated from '@/front/src/pages/destination/components/restriction-groups/restriction/vaccinated.vue'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 import type { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
@@ -41,6 +42,7 @@ export default defineComponent({
     [RestrictionNodeType.ONLINE_APPLICATION]: OnlineApplication,
     [RestrictionNodeType.INSURANCE]: Insurance,
     [RestrictionNodeType.CUSTOM_REQUIREMENT]: CustomRequirement,
+    [RestrictionNodeType.SUB_DESTINATION]: SubDestination,
   },
   props: {
     restriction: {
