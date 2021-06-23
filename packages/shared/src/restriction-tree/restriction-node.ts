@@ -23,8 +23,8 @@ export abstract class RestrictionNode<
   static defaultOptions = {
     customInstructionTitle: undefined as string | undefined,
     customInstructionSubtitle: undefined as string | undefined,
-    customContentPlacement: Placement.APPEND,
-    customTitlePlacement: Placement.APPEND,
+    customContentPlacement: Placement.APPEND as Placement,
+    customTitlePlacement: Placement.APPEND as Placement,
   }
 
   constructor(public readonly options: T) {}

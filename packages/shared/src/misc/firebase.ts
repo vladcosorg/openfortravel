@@ -1,5 +1,9 @@
 import { initializeApp, getApps, getApp } from 'firebase/app'
-import { collection, initializeFirestore } from 'firebase/firestore'
+import {
+  collection,
+  getFirestore,
+  initializeFirestore,
+} from 'firebase/firestore'
 
 import { dataConverter as destinationDataConverter } from '@/shared/src/api/destinations/common'
 import { dataConverter as restrictionDataConverter } from '@/shared/src/api/restrictions/common'
@@ -18,9 +22,13 @@ const firebaseApp =
         measurementId: 'G-NHT0P83PH5',
       })
 
-const firestore = initializeFirestore(firebaseApp, {
-  ignoreUndefinedProperties: true,
-})
+const firestore =
+  getApps().length > 0
+    ? getFirestore(firebaseApp)
+    : initializeFirestore(firebaseApp, {
+        ignoreUndefinedProperties: true,
+      })
+
 const countryCollection = collection(firestore, 'countries').withConverter(
   destinationDataConverter,
 )
