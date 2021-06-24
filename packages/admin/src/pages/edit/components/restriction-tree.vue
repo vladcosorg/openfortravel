@@ -17,7 +17,11 @@
         <tree-body class="col-12" :node="scope.node" />
       </template>
     </q-tree>
-    <restriction-preview class="col-4" :value="destination" />
+    <restriction-preview
+      v-if="showPreview"
+      class="col-4"
+      :value="destination"
+    />
   </div>
 </template>
 
@@ -51,6 +55,9 @@ export default defineComponent({
     loading: {
       type: Boolean,
       required: true,
+    },
+    showPreview: {
+      type: Boolean,
     },
   },
   setup(props, { emit }) {

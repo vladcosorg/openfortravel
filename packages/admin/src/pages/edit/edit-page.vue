@@ -18,8 +18,14 @@
         <q-space />
 
         <q-btn
+          class="bg-elevation-1"
+          unelevated
+          :label="showPreview ? 'Hide preview' : 'Show preview'"
+          @click="showPreview = !showPreview"
+        />
+        <q-btn
+          class="bg-elevation-1 q-mx-sm"
           :disable="!isPending"
-          class="q-mx-md"
           :color="isPending ? 'red' : 'gray'"
           unelevated
           label="Save"
@@ -35,6 +41,7 @@
           v-if="tab === 'tree'"
           v-model="destination"
           :loading="loadingRef"
+          :show-preview="showPreview"
         />
         <table-header
           v-else-if="tab === 'info'"
@@ -111,6 +118,7 @@ export default defineComponent({
       isSaving,
       isPending,
       runPendings,
+      showPreview: ref(false),
     }
   },
 })
