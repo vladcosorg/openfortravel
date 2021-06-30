@@ -28,7 +28,7 @@ export class PcrTest extends RestrictionNode<typeof PcrTest.defaultOptions> {
   }
 
   getFormattedTypes(): TestType[] {
-    return this.options.types?.length > 1
+    return this.options.types?.length >= 1
       ? this.options.types
       : Object.values(TestType)
   }
