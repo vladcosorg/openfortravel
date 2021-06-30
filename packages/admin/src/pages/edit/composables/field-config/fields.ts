@@ -1,5 +1,5 @@
 import type { WritableComputedRef } from '@vue/composition-api'
-import { computed } from '@vue/composition-api'
+import { computed, reactive } from '@vue/composition-api'
 import { QBtnToggle, QCheckbox, QInput } from 'quasar'
 
 import CountryList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/country-list.vue'
@@ -15,13 +15,16 @@ export function createTextInput(
 ): FieldConfig {
   return {
     type: QInput,
-    bind: {
+    bind: reactive({
       standout: '',
       dense: true,
       unelevated: true,
+      value: model,
       ...props,
+    }),
+    on: {
+      input: (val: string[]) => (model.value = val),
     },
-    model,
   }
 }
 
@@ -29,30 +32,35 @@ export function createOptionalNumberInput(
   model: WritableComputedRef<unknown>,
   props: FieldConfig['bind'],
 ): FieldConfig {
+  const imodel = computed({
+    get() {
+      return model.value ?? 0
+    },
+    set(value) {
+      const numberValue =
+        typeof value === 'string' ? Number.parseInt(value, 10) : value
+
+      if (numberValue === 0) {
+        model.value = undefined
+      }
+
+      model.value = numberValue
+    },
+  })
+
   return {
     type: QInput,
-    bind: {
+    bind: reactive({
+      value: imodel,
       standout: '',
       dense: true,
       unelevated: true,
       type: 'number',
       ...props,
-    },
-    model: computed({
-      get() {
-        return model.value ?? 0
-      },
-      set(value) {
-        const numberValue =
-          typeof value === 'string' ? Number.parseInt(value, 10) : value
-
-        if (numberValue === 0) {
-          model.value = undefined
-        }
-
-        model.value = numberValue
-      },
     }),
+    on: {
+      input: (val: string[]) => (imodel.value = val),
+    },
   }
 }
 
@@ -62,10 +70,13 @@ export function createCheckboxBoolean(
 ): FieldConfig {
   return {
     type: QCheckbox,
-    bind: {
+    bind: reactive({
+      value: model,
       ...props,
+    }),
+    on: {
+      input: (val: string[]) => (model.value = val),
     },
-    model,
   }
 }
 
@@ -75,15 +86,18 @@ export function createButtonToggle(
 ): FieldConfig {
   return {
     type: QBtnToggle,
-    bind: {
+    bind: reactive({
       noCaps: true,
       dense: true,
       unelevated: true,
       color: 'blue-grey-4',
       toggleColor: 'blue-8',
+      value: model,
       ...props,
+    }),
+    on: {
+      input: (val: string[]) => (model.value = val),
     },
-    model,
   }
 }
 
@@ -93,11 +107,14 @@ export function createLanguageList(
 ): FieldConfig {
   return {
     type: LanguageList,
-    bind: {
+    bind: reactive({
       label: 'Languages',
+      value: model,
       ...props,
+    }),
+    on: {
+      input: (val: string[]) => (model.value = val),
     },
-    model,
   }
 }
 
@@ -107,10 +124,13 @@ export function createVaccineList(
 ): FieldConfig {
   return {
     type: VaccineBrandList,
-    bind: {
+    bind: reactive({
+      value: model,
       ...props,
+    }),
+    on: {
+      input: (val: string[]) => (model.value = val),
     },
-    model,
   }
 }
 export function createTestList(
@@ -119,10 +139,13 @@ export function createTestList(
 ): FieldConfig {
   return {
     type: TestList,
-    bind: {
+    bind: reactive({
+      value: model,
       ...props,
+    }),
+    on: {
+      input: (val: string[]) => (model.value = val),
     },
-    model,
   }
 }
 export function createCountryList(
@@ -137,13 +160,14 @@ export function createCountryList(
 ): FieldConfig {
   return {
     type: CountryList,
-    bind: {
+    bind: reactive({
       label: 'Countries',
-      not: not.value,
+      value: countries,
+      not,
       ...props,
-    },
-    model: countries,
+    }),
     on: {
+      input: (val: string[]) => (countries.value = val),
       'update:not': (val: string) => (not.value = val),
     },
   }
@@ -155,9 +179,13 @@ export function createNewValueSelect(
 ): FieldConfig {
   return {
     type: NewValueList,
-    bind: {
+    class: props?.class as string,
+    bind: reactive({
+      value: model,
       ...props,
+    }),
+    on: {
+      input: (val: string[]) => (model.value = val),
     },
-    model,
   }
 }

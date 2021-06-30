@@ -1,18 +1,12 @@
-<template>
-  <div class="row q-gutter-x-sm">
-    <component
-      :is="field.type"
-      v-bind="field.bind"
-      v-for="(field, key) in config"
-      :key="key"
-      v-model="field.model.value"
-    />
-  </div>
-</template>
-
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent, ref, watch } from '@vue/composition-api'
+import {
+  computed,
+  defineComponent,
+  ref,
+  watch,
+  createElement,
+} from '@vue/composition-api'
 
 import { createConfig } from '@/admin/src/pages/edit/composables/field-config/use-field-config'
 import { TreeBuilderRestrictionNode } from '@/admin/src/pages/edit/types'
@@ -29,9 +23,8 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
-    const config = ref({})
+    const config = ref<ReturnType<typeof createConfig>>([])
     const options = computed(() => props.node.options)
-
     watch(
       () => props.node.type,
       (type) => {
@@ -39,7 +32,20 @@ export default defineComponent({
       },
       { immediate: true },
     )
-    return { config }
+
+    return () =>
+      createElement(
+        'div',
+        { class: 'row q-gutter-x-sm' },
+        Object.entries(config.value)?.map(([key, field]) =>
+          createElement(field.type, {
+            class: field.bind.class,
+            props: Object.assign({}, field.bind),
+            on: Object.assign({}, field.on),
+            key,
+          }),
+        ),
+      )
   },
 })
 </script>

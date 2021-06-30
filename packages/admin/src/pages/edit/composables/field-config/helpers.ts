@@ -13,8 +13,8 @@ export type ExtractOptions<T extends RestrictionNodeType> =
 export type FieldConfig = {
   type: unknown
   bind: Record<string, unknown>
-  model: WritableComputedRef<unknown>
   on?: Record<string, unknown>
+  class?: string
 }
 
 export function getSetters<
