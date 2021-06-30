@@ -57,6 +57,11 @@
         </seq>
       </p>
       <required-languages :languages="restriction.options.languages" />
+
+      <issuer-section
+        :destination-id="destinationId"
+        :issuers="restriction.options.issuer"
+      />
     </template>
   </component>
 </template>
@@ -71,20 +76,26 @@ a[href^='#'] {
 
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import CovidTestLabel from '@/front/src/components/covid-test-label.vue'
+import IssuerList from '@/front/src/components/issuer-list.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
+import IssuerSection from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/issuer-section.vue'
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
 import Languages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/languages.vue'
 import RequiredLanguages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/required-languages.vue'
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
+import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import type { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
 
 export default defineComponent({
   components: {
+    IssuerSection,
+    IssuerList,
     CovidTestLabel,
     Seq,
     RequiredLanguages,
@@ -99,6 +110,11 @@ export default defineComponent({
       type: Object as PropType<PcrTest>,
       required: true,
     },
+  },
+  setup() {
+    const store = inject(StoreKey) as StoreModule
+    const destinationId = computed(() => store.state.currentDestinationCode)
+    return { destinationId }
   },
 })
 </script>

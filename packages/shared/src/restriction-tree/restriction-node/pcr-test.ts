@@ -24,6 +24,7 @@ export class PcrTest extends RestrictionNode<typeof PcrTest.defaultOptions> {
     hoursBeforeArrival: 72,
     languages: [] as string[],
     types: [] as TestType[],
+    issuer: [] as string[],
     ...RestrictionNode.defaultOptions,
   }
 

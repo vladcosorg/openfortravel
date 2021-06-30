@@ -136,6 +136,23 @@ export function createVaccineList(
     },
   }
 }
+
+export function createIssuerList(
+  model: WritableComputedRef<unknown>,
+  props?: FieldConfig['bind'],
+): FieldConfig {
+  return createCountryList(
+    {
+      countries: model,
+    },
+    {
+      class: 'col',
+      label: 'Issuer',
+      ...props,
+    },
+  )
+}
+
 export function createTestList(
   model: WritableComputedRef<unknown>,
   props?: FieldConfig['bind'],
@@ -157,7 +174,7 @@ export function createCountryList(
     not,
   }: {
     countries: WritableComputedRef<unknown>
-    not: WritableComputedRef<unknown>
+    not?: WritableComputedRef<unknown>
   },
   props?: FieldConfig['bind'],
 ): FieldConfig {

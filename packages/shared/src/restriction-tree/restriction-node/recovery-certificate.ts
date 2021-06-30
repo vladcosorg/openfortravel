@@ -10,6 +10,7 @@ export class RecoveryCertificate extends RestrictionNode<
     daysAtLeast: 14,
     daysAtMost: 90,
     languages: [] as string[],
+    issuer: [] as string[],
     ...RestrictionNode.defaultOptions,
   }
 

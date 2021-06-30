@@ -104,7 +104,7 @@
       stack-label
       :label="hint"
       style="cursor: pointer"
-      :value="label"
+      :value="compoundLabel"
       @click="show = true"
     >
       <template #after>
@@ -150,6 +150,7 @@ import { EEA, EU, SCHENGEN } from '@/shared/src/restriction-tree/misc'
 
 type Node = { label: string; value: string }
 export default defineComponent({
+  inheritAttrs: false,
   props: {
     value: {
       type: Array as PropType<string[]>,
@@ -157,6 +158,10 @@ export default defineComponent({
     },
     not: {
       type: Boolean,
+      required: false,
+    },
+    label: {
+      type: String,
       required: false,
     },
   },
@@ -196,16 +201,16 @@ export default defineComponent({
       return ` ${ticked.value.length} countries selected`
     })
 
-    const label = computed(() => {
+    const compoundLabel = computed(() => {
       if (ticked.value.length === 0) {
-        return 'No countries selected, click to select'
+        return `${props.label}: No countries selected, click to select`
       }
 
       const labels = getLabelsForCountryCodes(ticked.value).join(', ')
       if (props.not) {
-        return `All countries except ${labels}`
+        return `${props.label}:  All countries except ${labels}`
       }
-      return labels
+      return `${props.label}: ${labels}`
     })
 
     const filterMethod = (node: Node, filter: string): boolean =>
@@ -258,7 +263,7 @@ export default defineComponent({
       selectedLabels,
       options,
       show,
-      label,
+      compoundLabel,
       hint,
       ticked,
       selectAll,

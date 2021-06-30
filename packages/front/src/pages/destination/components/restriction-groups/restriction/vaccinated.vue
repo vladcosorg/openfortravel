@@ -9,8 +9,8 @@
         dose are in the process of vaccination and are not yet fully vaccinated.
       </p>
       <p v-if="restriction.options.authorizedBrands.length">
-        Currently <country-label :value="destination.countryCode" /> only
-        accepts visitors vaccinated with the vaccine of the following brands:
+        Currently <country-label :value="destinationId" /> only accepts visitors
+        vaccinated with the vaccine of the following brands:
         <seq v-slot="{ item }" :items="restriction.options.authorizedBrands">
           <vaccine :id="item" /> </seq
         >.
@@ -22,6 +22,11 @@
         your arrival.
       </p>
       <required-languages :languages="restriction.options.languages" />
+
+      <issuer-section
+        :destination-id="destinationId"
+        :issuers="restriction.options.issuer"
+      />
     </template>
 
     <template #reason>
@@ -51,6 +56,7 @@ import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
+import IssuerSection from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/issuer-section.vue'
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
 import Languages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/languages.vue'
 import RequiredLanguages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/required-languages.vue'
@@ -64,6 +70,7 @@ import type { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/
 
 export default defineComponent({
   components: {
+    IssuerSection,
     CountryLabel,
     RequiredLanguages,
     Vaccine,
@@ -82,8 +89,8 @@ export default defineComponent({
   },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const destination = computed(() => store.getters.destination)
-    return { destination }
+    const destinationId = computed(() => store.state.currentDestinationCode)
+    return { destinationId }
   },
 })
 </script>

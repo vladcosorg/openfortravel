@@ -10,6 +10,7 @@ import {
   createTextInput,
   createVaccineList,
   createNewValueSelect,
+  createIssuerList,
 } from '@/admin/src/pages/edit/composables/field-config/fields'
 import type {
   ExtractOptions,
@@ -59,6 +60,7 @@ export function createConfig(
 
         createTestList(setters.types),
         createLanguageList(setters.languages),
+        createIssuerList(setters.issuer),
       ]
     }
 
@@ -167,6 +169,7 @@ export function createConfig(
           ],
         }),
         createLanguageList(setters.languages),
+        createIssuerList(setters.issuer),
       ]
     }
 
@@ -181,6 +184,7 @@ export function createConfig(
           label: 'Days at most',
         }),
         createLanguageList(setters.languages),
+        createIssuerList(setters.issuer),
       ]
     }
 

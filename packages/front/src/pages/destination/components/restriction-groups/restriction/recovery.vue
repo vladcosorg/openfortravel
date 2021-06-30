@@ -17,16 +17,21 @@
       </p>
 
       <required-languages :languages="restriction.options.languages" />
+
+      <issuer-section
+        :destination-id="destinationId"
+        :issuers="restriction.options.issuer"
+      />
     </template>
   </component>
 </template>
 
 <script lang="ts">
-import { matWarning as notMatchedIcon } from '@quasar/extras/material-icons'
 import type { PropType } from '@vue/composition-api'
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
+import IssuerSection from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/issuer-section.vue'
 import RequiredLanguages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/required-languages.vue'
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
@@ -37,6 +42,7 @@ import type { RecoveryCertificate } from '@/shared/src/restriction-tree/restrict
 
 export default defineComponent({
   components: {
+    IssuerSection,
     RequiredLanguages,
     Seq,
     CollapsedCountrySequence,
@@ -51,8 +57,8 @@ export default defineComponent({
   },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const destination = computed(() => store.getters.destination)
-    return { destination, notMatchedIcon }
+    const destinationId = computed(() => store.state.currentDestinationCode)
+    return { destinationId }
   },
 })
 </script>
