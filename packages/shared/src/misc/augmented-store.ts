@@ -21,7 +21,9 @@ export type ActionAccessors<Actions> = {
 export type MutationAccesors<Mutations> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [P in keyof Mutations]: Mutations[P] extends (...args: any) => unknown
-    ? (payload: Parameters<Mutations[P]>[1]) => ReturnType<Mutations[P]>
+    ? Parameters<Mutations[P]> extends [unknown, unknown]
+      ? (payload: Parameters<Mutations[P]>[1]) => ReturnType<Mutations[P]>
+      : () => ReturnType<Mutations[P]>
     : never
 }
 

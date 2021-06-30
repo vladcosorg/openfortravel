@@ -9,9 +9,11 @@ export enum MutationTypes {
   setCurrentCountryPair = 'setCurrentCountryPair',
   setReturnRestriction = 'setReturnRestriction',
   setRelatedRestrictions = 'setRelatedRestrictions',
+  toggleProfileEditor = 'toggleProfileEditor',
 }
 
 export type MutationSignatures<S = StateType> = {
+  [MutationTypes.toggleProfileEditor](state: S): void
   [MutationTypes.setCurrentCountryPair](
     state: S,
     payload: CurrentCountryPair,

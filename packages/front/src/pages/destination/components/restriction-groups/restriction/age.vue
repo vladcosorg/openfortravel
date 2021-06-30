@@ -1,32 +1,14 @@
 <template>
   <component :is="wrapper" :restriction="restriction">
     <template #title>
-      <div class="row items-center">
-        <q-icon
-          color="negative"
-          class="col-auto"
-          :name="attentionIcon"
-          size="lg"
-        />
-        <span class="col">
-          This section is only applicable to travellers aged
-          <b>{{ restriction.options.age }} years old</b> or
-          <template v-if="restriction.options.orMore"> more </template>
-          <template v-else> less </template>
-        </span>
-      </div>
+      This section only applies to travellers aged
+      <b>{{ restriction.options.age }} years old</b> or
+      <template v-if="restriction.options.orMore">older</template>
+      <template v-else> younger</template>.
     </template>
     <template #subtitle />
   </component>
 </template>
-
-<style lang="scss" module>
-a[href^='#'] {
-  color: var(--q-color-primary);
-  text-decoration: none;
-  border-bottom: 1px dashed var(--q-color-secondary);
-}
-</style>
 
 <script lang="ts">
 import { matPriorityHigh as attentionIcon } from '@quasar/extras/material-icons'

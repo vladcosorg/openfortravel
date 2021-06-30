@@ -143,6 +143,18 @@ export class RestrictionGroup {
     return this.indexedGroup.has(RestrictionNodeType.INSURANCE)
   }
 
+  get hasNoRestrictions(): boolean {
+    if (this.indexedGroup.size !== 1) {
+      return false
+    }
+
+    if (!this.indexedGroup.has(RestrictionNodeType.ORIGIN)) {
+      return false
+    }
+
+    return true
+  }
+
   protected sortByDisplayOrder(
     group: PlainRestrictionGroup,
   ): PlainRestrictionGroup {

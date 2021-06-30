@@ -1,27 +1,29 @@
 <template>
   <q-item-section>
-    <q-item-label class="text-primary bg-elevation-1 q-pa-md">
+    <q-item-label>
       <restriction-item-title :restriction="restriction">
         <template #default>
           <slot name="title" />
         </template>
       </restriction-item-title>
     </q-item-label>
-    <q-item-label class="text-primary-subtle q-pt-xs text-body2">
+
+    <q-separator v-if="isExpanded" class="q-my-md" />
+    <q-item-label v-if="isExpanded" class="text-primary-subtle text-body2">
       <restriction-item-content :restriction="restriction">
         <template #default>
           <slot name="subtitle" />
         </template>
       </restriction-item-content>
     </q-item-label>
-    <q-item-label caption class="text-primary-subtle"
+    <q-item-label v-if="isExpanded" caption class="text-primary-subtle"
       ><slot name="reason" />
     </q-item-label>
   </q-item-section>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import { defineComponent, inject, PropType, Ref } from '@vue/composition-api'
 
 import RestrictionItemContent from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item-content.vue'
 import RestrictionItemTitle from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item-title.vue'
@@ -34,6 +36,10 @@ export default defineComponent({
       type: Object as PropType<RestrictionNode>,
       required: true,
     },
+  },
+  setup() {
+    const isExpanded = inject('isExpanded') as Ref<boolean>
+    return { isExpanded }
   },
 })
 </script>

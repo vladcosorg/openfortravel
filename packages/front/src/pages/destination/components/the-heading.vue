@@ -1,14 +1,16 @@
 <template>
-  <div class="text-center q-mb-xl">
-    <h5
-      v-if="!isLoading"
-      v-html="
-        $t('page.destination.heading', {
-          origin,
-          destination,
-        })
-      "
-    />
+  <div class="q-my-xs">
+    <div v-if="!isLoading">
+      <h5 class="text-h4 q-ma-none">
+        Travel restrictions from
+        <country-label regular focused :value="origin" /> to
+        <country-label regular focused :value="destination" />
+      </h5>
+      <h6 class="text-subtitle1">
+        as a citizen of <span class="text-accent">Ukraine</span> that is
+        <span class="text-accent">not vaccinated</span>
+      </h6>
+    </div>
     <h5 v-else>
       <q-skeleton class="inline-block" type="text" width="80%" />
     </h5>
@@ -18,14 +20,12 @@
 <script lang="ts">
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 import { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import {
-  getDestinationLabelForCountryCode,
-  getOriginLabelForCountryCode,
-} from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
+  components: { CountryLabel },
   props: {
     isLoading: {
       type: Boolean,
@@ -33,12 +33,8 @@ export default defineComponent({
   },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const origin = computed(() =>
-      getOriginLabelForCountryCode(store.state.currentOriginCode),
-    )
-    const destination = computed(() =>
-      getDestinationLabelForCountryCode(store.state.currentDestinationCode),
-    )
+    const origin = computed(() => store.state.currentOriginCode)
+    const destination = computed(() => store.state.currentDestinationCode)
     return {
       origin,
       destination,

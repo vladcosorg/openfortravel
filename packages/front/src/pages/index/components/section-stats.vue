@@ -67,7 +67,7 @@
 
 <style lang="scss" module>
 .stats {
-  background-color: #272f56;
+  //background-color: #272f56;
   @media (min-width: $breakpoint-md-min) {
     background-image: url('../../../assets/stats.svg');
     background-repeat: repeat-x;

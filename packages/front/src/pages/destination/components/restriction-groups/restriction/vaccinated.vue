@@ -1,6 +1,6 @@
 <template>
   <component :is="wrapper" :restriction="restriction">
-    <template #title>Bring your certificate of vaccination</template>
+    <template #title>You have a valid certificate of vaccination</template>
     <template #subtitle>
       <p>
         You must provide proof of having received the full course of vaccination
@@ -36,14 +36,6 @@
     </template>
   </component>
 </template>
-
-<style lang="scss" module>
-a[href^='#'] {
-  color: var(--q-color-primary);
-  text-decoration: none;
-  border-bottom: 1px dashed var(--q-color-secondary);
-}
-</style>
 
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'

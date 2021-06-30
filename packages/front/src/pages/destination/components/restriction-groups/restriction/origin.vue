@@ -2,12 +2,8 @@
   <component :is="wrapper" :restriction="restriction">
     <template #title>
       <span>
-        If you are arriving from
-        <title-country
-          :allowed="restriction.getAllowedCountries()"
-          :focus="context"
-          regular
-        />
+        You need to arrive directly from
+        <country-label regular focused :value="context" />
       </span>
     </template>
     <template #subtitle>
@@ -27,14 +23,6 @@
     </template>
   </component>
 </template>
-
-<style lang="scss" module>
-a[href^='#'] {
-  color: var(--q-color-primary);
-  text-decoration: none;
-  border-bottom: 1px dashed var(--q-color-secondary);
-}
-</style>
 
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'

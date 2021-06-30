@@ -1,5 +1,5 @@
 <template>
-  <seq v-slot="{ item }" :items="list"
+  <seq v-slot="{ item }" :items="list" :conjunction="conjunction"
     ><country-label v-bind="$props" :key="item" :value="item"
   /></seq>
 </template>
@@ -18,6 +18,9 @@ export default defineComponent({
     values: {
       type: [String, Array] as PropType<string | string[]>,
       required: true,
+    },
+    conjunction: {
+      type: String,
     },
   },
   setup(props) {

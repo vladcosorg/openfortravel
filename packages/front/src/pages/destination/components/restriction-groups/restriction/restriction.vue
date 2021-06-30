@@ -4,6 +4,7 @@
     :wrapper="template"
     :restriction="restriction"
     :context="contextValue"
+    v-bind="$attrs"
   />
 </template>
 
@@ -44,12 +45,14 @@ export default defineComponent({
     [RestrictionNodeType.CUSTOM_REQUIREMENT]: CustomRequirement,
     [RestrictionNodeType.SUB_DESTINATION]: SubDestination,
   },
+  inheritAttrs: false,
   props: {
     restriction: {
       type: Object as PropType<RestrictionNode>,
       required: true,
     },
   },
+
   setup(props) {
     const store = useRootStore()
 

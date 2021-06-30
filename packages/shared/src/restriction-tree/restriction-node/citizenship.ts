@@ -1,4 +1,5 @@
 import difference from 'lodash/difference'
+import intersection from 'lodash/intersection'
 
 import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 import {
@@ -15,6 +16,7 @@ export class Citizenship extends RestrictionNode<
     not: false,
     ...RestrictionNode.defaultOptions,
   }
+
   matches(citizenships: string[]): boolean {
     return this.getAllowedCountries().some((allowedCitizenship) =>
       citizenships.includes(allowedCitizenship),
@@ -33,5 +35,9 @@ export class Citizenship extends RestrictionNode<
     return this.options.not
       ? difference(getCountryCodes(), this.options.allowedCitizenship)
       : this.options.allowedCitizenship
+  }
+
+  public getMatchingAllowedCountries(citizenships: string[]): string[] {
+    return intersection(this.getAllowedCountries(), citizenships)
   }
 }

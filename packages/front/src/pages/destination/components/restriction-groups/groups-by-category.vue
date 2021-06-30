@@ -1,19 +1,21 @@
 <template>
   <div>
     <q-item-label
-      v-if="restrictions"
       header
-      class="text-h6 text-center text-primary"
+      class="text-h6 text-primary text-center"
+      style="font-weight: normal"
     >
       {{ label }}
     </q-item-label>
-    <group-restriction
-      v-for="(restriction, key) in restrictions"
-      :key="key"
-      :index="key + 1"
-      :restriction="restriction"
-      :type="type"
-    />
+    <div class="q-gutter-y-md">
+      <group-restriction
+        v-for="(restriction, key) in restrictions"
+        :key="key"
+        :index="key + 1"
+        :restriction="restriction"
+        :type="type"
+      />
+    </div>
   </div>
 </template>
 

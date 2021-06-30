@@ -3,8 +3,9 @@
     v-model="value"
     multiple
     stack-label
-    placeholder="dawdw"
-    :label="`Citizenship ${!value ? '(automatic value)' : ''}`"
+    :label="`Citizenship or permanent residence  ${
+      !value ? '(automatic value)' : ''
+    }`"
     clearable
     v-bind="$attrs"
     bottom-slots
@@ -14,7 +15,8 @@
     /></template>
     <template #hint>
       <hint>
-        Most of the countries apply restrictions based on a citizenship.
+        Most of the countries apply restrictions based on a citizenship or
+        residence.
       </hint>
     </template>
   </country-dropdown>
