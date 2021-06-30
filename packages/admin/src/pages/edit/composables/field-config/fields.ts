@@ -61,6 +61,9 @@ export function createOptionalNumberInput(
     on: {
       input: (val: string[]) => (imodel.value = val),
     },
+    attrs: {
+      min: '0',
+    },
   }
 }
 

@@ -42,6 +42,7 @@ export default defineComponent({
             class: field.bind.class,
             props: Object.assign({}, field.bind),
             on: Object.assign({}, field.on),
+            attrs: Object.assign({}, field.attrs),
             key,
           }),
         ),

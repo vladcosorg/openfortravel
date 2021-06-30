@@ -13,6 +13,7 @@ export type ExtractOptions<T extends RestrictionNodeType> =
 export type FieldConfig = {
   type: unknown
   bind: Record<string, unknown>
+  attrs?: Record<string, unknown>
   on?: Record<string, unknown>
   class?: string
 }
