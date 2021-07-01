@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        function: [ translate, safetyLevelCalculatorJob, statsAggregatorJob, emailForwarder ]
+        function: [ emailForwarder ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -36,6 +36,6 @@ jobs:
         working-directory: ./packages/functions
       - uses: w9jds/firebase-action@master
         with:
-          args: deploy --only functions:${{ matrix.function }}
+          args: deploy --only functions
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
