@@ -34,9 +34,8 @@ jobs:
         run: yarn install --ignore-platform --frozen-lockfile
       - run: yarn build
         working-directory: ./packages/functions
-      - uses: google-github-actions/deploy-cloud-functions@main
+      - uses: w9jds/firebase-action@master
         with:
-          source_dir: ./packages/functions/dist
-          name: ${{ matrix.function }}
-          runtime: nodejs14
-          credentials: ${{ secrets.GCP_SA_KEY }}
+          args: deploy --only functions:${{ matrix.function }}
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
