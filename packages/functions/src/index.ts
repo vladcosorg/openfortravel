@@ -1,5 +1,7 @@
 import firebase from 'firebase-admin'
 
+import { emailForwarder } from '@/functions/src/email-forwarder'
+
 import { safetyLevelCalculatorJob } from './cdc-scraper'
 import { countryAggregator, countryLastUpdated } from './country-aggregator'
 import { restrictionBuilder } from './restriction-builder'
@@ -15,4 +17,5 @@ export {
   countryAggregator,
   countryLastUpdated,
   statsAggregatorJob,
+  emailForwarder,
 }

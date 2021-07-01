@@ -27,7 +27,7 @@ async function runScraper(): Promise<void> {
           level: {
             selector: '.card-header',
             convert: (header: string) => {
-              const matches = header.match(/Level (\d)/)
+              const matches = /Level (\d)/.exec(header)
               let level = 0
               if (matches && matches[1]) {
                 level = Number.parseInt(matches[1], 10)
@@ -52,7 +52,7 @@ async function runScraper(): Promise<void> {
           },
           countries: {
             listItem: 'li > a',
-            convert: (country) => {
+            convert: (country): void | string => {
               const replacement = finder(country)
               if (!replacement) {
                 return
@@ -67,7 +67,7 @@ async function runScraper(): Promise<void> {
   )
   const recordsSet: Record<string, string> = {}
 
-  data.data.countries.forEach(({ level, countries }) => {
+  for (const { level, countries } of data.data.countries) {
     for (const countryCode of countries) {
       if (!countryCode) {
         continue
@@ -75,7 +75,7 @@ async function runScraper(): Promise<void> {
 
       recordsSet[countryCode] = level
     }
-  })
+  }
 
   await persistToFirestore(recordsSet)
 }

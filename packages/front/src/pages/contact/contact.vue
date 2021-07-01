@@ -54,12 +54,15 @@ export default defineComponent({
       isSuccessful,
       onSubmit() {
         dispatcher(
-          useKy().post('/send-message', {
-            body: new URLSearchParams({
-              email: email.value,
-              message: message.value,
-            }),
-          }),
+          useKy().post(
+            'https://us-central1-openfortravel.cloudfunctions.net/emailForwarder',
+            {
+              body: new URLSearchParams({
+                from: email.value,
+                message: message.value,
+              }),
+            },
+          ),
           t('page.contact.messageSent') as string,
         )
       },
