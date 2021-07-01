@@ -2,6 +2,7 @@ name: Front deploy
 on:
   push:
     paths:
+      - .github/workflows/deploy-front.yml
       - packages/front/**
       - packages/shared/**
     branches:
