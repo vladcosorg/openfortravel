@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-gutter-x-sm" @click.stop @keypress.stop>
+  <div class="row q-gutter-sm" @click.stop @keypress.stop>
     <node-type-drowdown :node="node" />
     <q-btn-group unelevated style="background-color: #556066">
       <action-remove :node="node" />

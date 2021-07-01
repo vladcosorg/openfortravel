@@ -3,7 +3,7 @@
     <q-tree
       v-if="!loading"
       ref="treeDOMElement"
-      class="col q-pa-md q-gutter-sm"
+      :class="`${$style.tree} col q-pa-md q-gutter-sm`"
       :nodes="tree"
       node-key="UID"
       label-key="type"
@@ -25,6 +25,19 @@
   </div>
 </template>
 
+<style lang="sass" module>
+.tree
+  \:global
+    .q-tree__node
+      padding-bottom: 10px
+    .q-tree__node--child
+      .q-tree__node-header
+        border-bottom: 1px solid rgb(0, 0, 0, 20%)
+      .q-tree__node-body, .q-tree__node-header
+        background-color: rgb(0, 0, 0, 20%)
+        padding: 10px
+</style>
+
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
 import { defineComponent, provide, ref, watch } from '@vue/composition-api'
@@ -41,6 +54,8 @@ import {
 import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
 import { TreeBuilderNode } from '@/admin/src/pages/edit/types'
 import type { Destination } from '@/shared/src/api/destinations/models'
+import { isRestrictionNodeType } from '@/shared/src/restriction-tree/guards'
+import { Prerequisites } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: { RestrictionPreview, TreeBody, TreeHeader },
@@ -108,7 +123,20 @@ export default defineComponent({
       { deep: true },
     )
 
+    const getConjuction = (type) => {
+      if (!isRestrictionNodeType(type)) {
+        return
+      }
+
+      if (Prerequisites.includes(type)) {
+        return 'If'
+      }
+
+      return 'Then'
+    }
+
     return {
+      getConjuction,
       tree,
       treeDOMElement,
     }

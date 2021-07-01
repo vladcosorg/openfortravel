@@ -36,7 +36,7 @@ export default defineComponent({
     return () =>
       createElement(
         'div',
-        { class: 'row q-gutter-x-sm' },
+        { class: 'row q-gutter-sm' },
         Object.entries(config.value)?.map(([key, field]) =>
           createElement(field.type, {
             class: field.bind.class,

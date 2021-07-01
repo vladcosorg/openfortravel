@@ -9,18 +9,28 @@ export enum LogicNodeType {
 
 export enum RestrictionNodeType {
   ORIGIN = 'origin',
-  SUB_DESTINATION = 'sub-destination',
-  QUARANTINE = 'quarantine',
-  VACCINATED = 'vaccinated',
-  RECOVERY = 'recovery',
-  PCR_TEST = 'pcr-test',
-  AGE = 'age',
-  ONLINE_APPLICATION = 'online-application',
   CITIZENSHIP = 'citizenship',
   DID_NOT_VISIT_COUNTRIES = 'did-not-visit-countries',
+  AGE = 'age',
+  VACCINATED = 'vaccinated',
+  RECOVERY = 'recovery',
+
+  PCR_TEST = 'pcr-test',
+  ONLINE_APPLICATION = 'online-application',
+  SUB_DESTINATION = 'sub-destination',
   INSURANCE = 'insurance',
+  QUARANTINE = 'quarantine',
   CUSTOM_REQUIREMENT = 'custom-requirement',
 }
+
+export const Prerequisites: RestrictionNodeType[] = [
+  RestrictionNodeType.ORIGIN,
+  RestrictionNodeType.CITIZENSHIP,
+  RestrictionNodeType.DID_NOT_VISIT_COUNTRIES,
+  RestrictionNodeType.AGE,
+  RestrictionNodeType.VACCINATED,
+  RestrictionNodeType.RECOVERY,
+]
 
 export type CriterionType = RestrictionNodeType
 export type CriterionValue = string | number | boolean | string[]

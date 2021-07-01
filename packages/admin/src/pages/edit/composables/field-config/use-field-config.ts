@@ -149,6 +149,7 @@ export function createConfig(
           label: 'Early release after',
           suffix: 'days',
           hint: 'Leave 0 if no early release',
+          class: 'col-2',
         }),
       ]
     }

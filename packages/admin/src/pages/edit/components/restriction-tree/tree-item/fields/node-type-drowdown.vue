@@ -49,6 +49,7 @@ import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
 import { TreeBuilderNode } from '@/admin/src/pages/edit/types'
 import {
   LogicNodeType,
+  Prerequisites,
   RestrictionNodeType,
 } from '@/shared/src/restriction-tree/types'
 
@@ -102,7 +103,11 @@ export default defineComponent({
 
     const logicTypes = Object.values(LogicNodeType)
     const getTypeLabel = (type) =>
-      logicTypes.includes(type) ? 'Condition' : 'Requirement'
+      logicTypes.includes(type)
+        ? 'Group'
+        : Prerequisites.includes(type)
+        ? 'Condition'
+        : 'Requirement'
 
     const label = computed(() => getTypeLabel(props.node.type))
     const color = computed(() => {
@@ -118,7 +123,7 @@ export default defineComponent({
           return 'indigo-10'
 
         default:
-          return 'teal-6'
+          return Prerequisites.includes(props.node.type) ? 'teal-6' : 'teal-10'
       }
     })
 
