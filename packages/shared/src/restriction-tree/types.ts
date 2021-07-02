@@ -14,6 +14,7 @@ export enum RestrictionNodeType {
   AGE = 'age',
   VACCINATED = 'vaccinated',
   RECOVERY = 'recovery',
+  EU_DIGITAL_CERTIFICATE = 'eu-digital-certificate',
 
   PCR_TEST = 'pcr-test',
   ONLINE_APPLICATION = 'online-application',

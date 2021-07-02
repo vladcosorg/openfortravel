@@ -6,6 +6,7 @@ import { Age } from '@/shared/src/restriction-tree/restriction-node/age'
 import { Citizenship } from '@/shared/src/restriction-tree/restriction-node/citizenship'
 import { CustomRequirement } from '@/shared/src/restriction-tree/restriction-node/custom-requirement'
 import { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
+import { EuDigitalCertificate } from '@/shared/src/restriction-tree/restriction-node/eu-digital-certificate'
 import { Insurance } from '@/shared/src/restriction-tree/restriction-node/insurance'
 import { OnlineApplication } from '@/shared/src/restriction-tree/restriction-node/online-application'
 import { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
@@ -47,6 +48,7 @@ export const typeConstructors = {
   [RestrictionNodeType.VACCINATED]: Vaccinated,
   [RestrictionNodeType.RECOVERY]: RecoveryCertificate,
   [RestrictionNodeType.PCR_TEST]: PcrTest,
+  [RestrictionNodeType.EU_DIGITAL_CERTIFICATE]: EuDigitalCertificate,
   [RestrictionNodeType.ONLINE_APPLICATION]: OnlineApplication,
   [RestrictionNodeType.CITIZENSHIP]: Citizenship,
   [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: DidNotVisitCountries,

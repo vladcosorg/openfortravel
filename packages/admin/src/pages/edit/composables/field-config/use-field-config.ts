@@ -25,6 +25,11 @@ export function createConfig(
   emit: SetupContext['emit'],
 ): FieldConfig[] {
   switch (type) {
+    case RestrictionNodeType.EU_DIGITAL_CERTIFICATE: {
+      const setters = getSetters(type, options, emit)
+      return [createIssuerList(setters.issuer)]
+    }
+
     case RestrictionNodeType.AGE: {
       const setters = getSetters(type, options, emit)
       return [

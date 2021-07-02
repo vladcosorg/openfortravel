@@ -15,6 +15,7 @@ import Age from '@/front/src/pages/destination/components/restriction-groups/res
 import Citizenship from '@/front/src/pages/destination/components/restriction-groups/restriction/citizenship.vue'
 import CustomRequirement from '@/front/src/pages/destination/components/restriction-groups/restriction/custom-requirement.vue'
 import DidNotVisitCountries from '@/front/src/pages/destination/components/restriction-groups/restriction/did-not-visit-countries.vue'
+import EuDigitalCertificate from '@/front/src/pages/destination/components/restriction-groups/restriction/eu-digital-certificate.vue'
 import Insurance from '@/front/src/pages/destination/components/restriction-groups/restriction/insurance.vue'
 import OnlineApplication from '@/front/src/pages/destination/components/restriction-groups/restriction/online-application.vue'
 import Origin from '@/front/src/pages/destination/components/restriction-groups/restriction/origin.vue'
@@ -43,6 +44,7 @@ export default defineComponent({
     [RestrictionNodeType.INSURANCE]: Insurance,
     [RestrictionNodeType.CUSTOM_REQUIREMENT]: CustomRequirement,
     [RestrictionNodeType.SUB_DESTINATION]: SubDestination,
+    [RestrictionNodeType.EU_DIGITAL_CERTIFICATE]: EuDigitalCertificate,
   },
   props: {
     restriction: {
