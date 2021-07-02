@@ -1,33 +1,42 @@
 <template>
   <q-list :class="['text-subtitle1']">
-    <widget-header
-      :title="$t('page.destination.widgets.entryRequirements.title')"
-      :subtitle="$t('page.destination.widgets.entryRequirements.subtitle')"
-    />
+    <widget-header>
+      <template v-if="returnRestrictions" #title> Return travel </template>
+      <template v-else #title> Outgoing travel </template>
+
+      <template #subtitle>
+        {{ returnRestrictions ? 'returning' : 'travelling' }} from
+        <country-label :value="originISO" /> to
+        <country-label :value="destinationISO" />
+      </template>
+    </widget-header>
+
     <groups-by-type
-      v-if="availableGroups.length"
-      :restrictions-groups="availableGroups"
+      v-if="bestAvailableGroup.length > 0"
+      :restrictions-groups="bestAvailableGroup"
       type-label="Available"
       :available="true"
     />
-    <div
+    <q-item
       v-else
-      class="text-center rounded-borders q-pa-lg q-mb-lg"
-      style="border: 1px solid gray"
+      class="rounded-borders bg-elevation-1 q-py-md q-my-md bg-negative"
     >
-      <q-icon :name="stopIcon" color="negative" size="xl" class="q-mb-sm" />
-      <h4>According to available information</h4>
-      <h5 class="text-negative">currently you cannot enter this country</h5>
-      <div class="text-subtitle2">
-        Please subcribe to alerts in the form below to be notified when you can
-        access this country
-      </div>
-    </div>
-    <groups-by-type
-      :restrictions-groups="unavailableGroups"
-      type-label="You didn't match these requirements"
-      :available="false"
-    />
+      <q-item-section avatar top class="justify-center">
+        <q-icon :name="stopIcon" color="primary-inverse" size="xl" />
+      </q-item-section>
+      <q-item-section>
+        <q-item-label class="text-primary-inverse">
+          According to available information currently you cannot enter this
+          country.</q-item-label
+        >
+      </q-item-section>
+    </q-item>
+
+    <!--    <groups-by-type-->
+    <!--      :restrictions-groups="unavailableGroups"-->
+    <!--      type-label="You didn't match these requirements"-->
+    <!--      :available="false"-->
+    <!--    />-->
   </q-list>
 </template>
 
@@ -35,25 +44,61 @@
 import { matDangerous as stopIcon } from '@quasar/extras/material-icons'
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
+import CountryLabel from '@/front/src/components/country/country-label.vue'
+import { createCollection } from '@/front/src/composables/trip-cards'
 import GroupsByType from '@/front/src/pages/destination/components/restriction-groups/groups-by-type.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
-  components: { GroupsByType, WidgetHeader },
-  setup() {
+  components: { CountryLabel, GroupsByType, WidgetHeader },
+  props: {
+    returnRestrictions: {
+      type: Boolean,
+    },
+  },
+  setup(props) {
+    const rootStore = useRootStore()
     const store = inject(StoreKey) as StoreModule
-    const availableGroups = computed(() =>
-      store.getters.allGroups.getAvailableGroups(),
+
+    const groups = computed(() =>
+      createCollection(
+        props.returnRestrictions
+          ? store.getters.origin
+          : store.getters.destination,
+        rootStore.getters.visitorContextWithDefaults,
+      ),
     )
+    const bestAvailableGroup = computed(() => {
+      const group = groups.value.getBestGroup()
+      return group ? [group] : []
+    })
+    const availableGroups = computed(() => groups.value.getAvailableGroups())
     const unavailableGroups = computed(() =>
-      store.getters.allGroups.getUnavailableGroups(),
+      groups.value.getUnavailableGroups(),
     )
+
+    const originISO = computed(() =>
+      props.returnRestrictions
+        ? store.state.currentDestinationCode
+        : store.state.currentOriginCode,
+    )
+
+    const destinationISO = computed(() =>
+      props.returnRestrictions
+        ? store.state.currentOriginCode
+        : store.state.currentDestinationCode,
+    )
+
     return {
+      bestAvailableGroup,
       availableGroups,
       unavailableGroups,
       stopIcon,
+      originISO,
+      destinationISO,
     }
   },
 })

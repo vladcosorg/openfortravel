@@ -3,41 +3,43 @@
     <portal to="under-header">
       <the-breadcrumbs :items="breadcrumbs" />
     </portal>
-    <the-search-header
-      :origin-code="originCode"
-      :destination-code="destinationCode"
-    />
-    <div class="container">
-      <the-heading />
+    <div class="overflow-auto q-pb-lg q-pt-md relative-position bg-elevation-1">
+      <div class="container">
+        <the-heading />
+      </div>
+    </div>
+    <the-profile-bar />
+    <q-separator color="elevation-1" />
+    <div class="container q-mt-xl">
       <div class="row q-col-gutter-xl">
-        <div class="col-md-7 col-12">
-          <entry-restrictions class="q-mx-xs-sm q-mx-none q-mb-xl" />
-          <!--          <property-list-->
-          <!--            class="q-mx-xs-sm q-mx-none"-->
-          <!--            :destination="destination"-->
-          <!--            :restriction="restriction"-->
-          <!--            :is-loading="isLoading"-->
-          <!--          />-->
+        <div class="col-md-6 col-12">
+          <entry-restrictions />
         </div>
-        <div class="col-md-5 col-12">
-          <return class="q-mb-xl" />
-          <!--          <question-index-->
-          <!--            class="q-mb-xl"-->
-          <!--            :is-loading="isLoading"-->
-          <!--            :destination="destination"-->
-          <!--            :restriction="restriction"-->
-          <!--          />-->
+        <div class="col-md-6 col-12">
+          <entry-restrictions return-restrictions />
+        </div>
+      </div>
+      <q-separator class="q-my-xl" />
+      <div class="row q-col-gutter-xl">
+        <div class="col-md-4 col-12">
           <stats class="q-mb-xl" :is-loading="isLoading" />
+        </div>
+        <div class="col-md-4 col-12">
           <links
             class="q-mb-xl"
             :destination="destination"
             :is-loading="isLoading"
           />
-          <section class="q-pb-xl">
-            <!--            <inline-subscribe-form no-autofocus :restriction="restriction" />-->
-          </section>
+        </div>
+        <div class="col-md-4 col-12">
+          <links
+            class="q-mb-xl"
+            :destination="destination"
+            :is-loading="isLoading"
+          />
         </div>
       </div>
+
       <!--      <questions-->
       <!--        class="q-my-xl"-->
       <!--        :is-loading="isLoading"-->
@@ -53,6 +55,7 @@
 </template>
 
 <script lang="ts">
+import { matBadge as badgeIcon } from '@quasar/extras/material-icons'
 import {
   computed,
   defineComponent,
@@ -70,11 +73,9 @@ import TheSearchHeader from '@/front/src/layouts/components/the-search-header.vu
 import EntryRestrictions from '@/front/src/pages/destination/components/entry-restrictions.vue'
 import InlineSubscribeForm from '@/front/src/pages/destination/components/inline-subscribe-form.vue'
 import Links from '@/front/src/pages/destination/components/links.vue'
-import Return from '@/front/src/pages/destination/components/return.vue'
-import Sharing from '@/front/src/pages/destination/components/sharing.vue'
 import Stats from '@/front/src/pages/destination/components/stats.vue'
 import TheHeading from '@/front/src/pages/destination/components/the-heading.vue'
-import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
+import TheProfileBar from '@/front/src/pages/destination/components/the-profile-bar/the-profile-bar.vue'
 import { useBreadcrumbs } from '@/front/src/pages/destination/destination-composable'
 import { meta } from '@/front/src/pages/destination/destination-meta'
 import { registerStoreModule } from '@/front/src/pages/destination/destination-store'
@@ -85,14 +86,12 @@ import { useLoading } from '@/shared/src/composables/use-promise-loading'
 export default defineComponent({
   meta,
   components: {
+    TheProfileBar,
+    TheSearchHeader,
     TheHeading,
-    Return,
     EntryRestrictions,
     Stats,
-    WidgetHeader,
-    Sharing,
     Links,
-    TheSearchHeader,
     TheBreadcrumbs,
     InnerPage,
     InlineSubscribeForm,
@@ -136,6 +135,7 @@ export default defineComponent({
       destination: computed(() => store.getters.destination),
       isLoading: loading,
       breadcrumbs: useBreadcrumbs(originCode, destinationCode),
+      badgeIcon,
     }
   },
 })

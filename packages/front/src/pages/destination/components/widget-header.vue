@@ -1,18 +1,13 @@
 <template>
   <div class="q-mb-lg">
-    <h6 :class="$style.sectionHeader">{{ title }}</h6>
-    <div v-if="subtitle" class="text-body2 text-grey-5" v-html="subtitle" />
+    <h5 class="text-capitalize no-margin text-bold">
+      <slot name="title">{{ title }}</slot>
+    </h5>
+    <div v-if="subtitle || $slots.subtitle" class="text-subtitle1 text-grey-5">
+      <slot name="subtitle">{{ subtitle }}</slot>
+    </div>
   </div>
 </template>
-
-<style lang="scss" module>
-.sectionHeader {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: bold;
-  text-transform: uppercase;
-}
-</style>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
@@ -25,11 +20,9 @@ export default defineComponent({
   props: {
     title: {
       type: String,
-      required: true,
     },
     subtitle: {
       type: String,
-      required: false,
     },
   },
 })

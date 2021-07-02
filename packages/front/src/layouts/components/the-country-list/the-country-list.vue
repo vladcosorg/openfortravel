@@ -6,7 +6,6 @@
       'justify-center',
       'q-col-gutter-md',
       'q-col-gutter-sm-lg',
-      'q-px-md-xl',
     ]"
   >
     <div v-if="!isIntro" :class="[$style.intro, ' text-h5 text-center col-12']">
@@ -59,11 +58,13 @@
         />
       </div>
     </div>
-    <div class="col-12 row q-col-gutter-x-md">
-      <citizenship-context class="col-sm-3 col-12" />
-      <did-not-visit-countries-context class="col-sm-3 col-12" />
-      <vaccination-context class="col-sm-3 col-12" />
-      <recovery-context class="col-sm-3 col-12" />
+    <div class="col-12">
+      <div class="row q-col-gutter-x-md">
+        <citizenship-context class="col-sm-3 col-12" />
+        <did-not-visit-countries-context class="col-sm-3 col-12" />
+        <vaccination-context class="col-sm-3 col-12" />
+        <recovery-context class="col-sm-3 col-12" />
+      </div>
     </div>
 
     <slot />

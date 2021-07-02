@@ -222,7 +222,7 @@ export default {
           '{destination} travel restrictions from {origin}: flight restrictions, quarantine measures,  COVID-19 vaccine passport  and other entry requirements',
       },
       heading:
-        'Travel restrictions from <b>{origin}</b> to <b>{destination}</b>',
+        'Travel restrictions for travelling from <b>{origin}</b> to <b>{destination}</b>',
       breadcrumb: 'To {country}',
       title: 'Latest information on travelling from {origin} to {destination}',
       seeReturnPage: 'See return travel',
@@ -238,8 +238,7 @@ export default {
         entryRequirements: {
           title: 'Personalized entry requirements',
           subtitle:
-            'This table is dynamically generated for your specific profile based on the following information: <br>' +
-            'Origin: <b>Austria</b> / Citizenship: <b>Austria</b> / Vaccinated: <b>No</b> / Visited countries: <b>Austria</b>',
+            'These restrictions are generated based on the information entered above.',
         },
         summary: {
           title: 'Summary',

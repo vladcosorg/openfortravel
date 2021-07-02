@@ -14,8 +14,7 @@ type LocalGetterContext<
 export type GetterSignatures = {
   origin(...args: LocalGetterContext): Destination
   destination(...args: LocalGetterContext): Destination
-
-  allGroups(...args: LocalGetterContext): RestrictionGroupCollection
-
+  outgoingRestrictions(...args: LocalGetterContext): RestrictionGroupCollection
+  returnRestrictions(...args: LocalGetterContext): RestrictionGroupCollection
   returnTripCard(...args: LocalGetterContext): TripCard
 }

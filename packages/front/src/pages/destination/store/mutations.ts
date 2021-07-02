@@ -6,6 +6,9 @@ import { MutationTypes } from '@/front/src/pages/destination/store/types/mutatio
 import type { PlainRestriction } from '@/shared/src/api/restrictions/models'
 
 export const mutations: MutationTree<StateType> & MutationSignatures = {
+  [MutationTypes.toggleProfileEditor](state): void {
+    state.isEditingProfile = !state.isEditingProfile
+  },
   [MutationTypes.setCurrentCountryPair](state, countryPair): void {
     state.currentOriginCode = countryPair.originCode
     state.currentDestinationCode = countryPair.destinationCode

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-header height-hint="99" :class="$style.header">
+    <q-header height-hint="99">
       <q-toolbar class="q-py-md justify-between container">
         <the-menu v-model="menuOpen" />
         <logo class="order-md-first" />
@@ -13,9 +13,6 @@
 </template>
 
 <style lang="scss" module>
-.header {
-  border-bottom: 1px solid #262b32 !important;
-}
 .logo {
   height: auto;
   cursor: pointer;
@@ -39,12 +36,6 @@ export default defineComponent({
     TheLanguageSwitcher: hydrateWhenIdle(TheLanguageSwitcher),
     Logo: hydrateWhenIdle(Logo),
     PortalTarget,
-  },
-  props: {
-    value: {
-      type: Boolean,
-      default: false,
-    },
   },
   setup() {
     const menuOpen = ref(false)

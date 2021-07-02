@@ -23,9 +23,14 @@ export function useStore(): typeof storeInstance {
 export function useRootStore(): ReturnType<typeof augmentedStore> {
   return augmentedStore(useStore())
 }
-
+type Events = {
+  'toggle-menu-bar': () => void
+}
 const eventBusInstance = new Vue()
-export function useEventBus(): Vue {
+export function useEventBus(): {
+  $on: (eventName: keyof Events) => void
+  $emit: (eventName: keyof Events) => void
+} & Vue {
   return eventBusInstance
 }
 

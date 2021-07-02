@@ -1,29 +1,40 @@
 <template>
-  <q-item class="rounded-borders q-py-md">
-    <q-item-section avatar top>
+  <q-item
+    class="rounded-borders bg-elevation-1 q-py-lg"
+    :clickable="!isExpanded"
+    @click="isExpanded = !isExpanded"
+  >
+    <q-item-section avatar class="justify-center items-center">
       <q-icon
         v-if="type === 'prerequisite'"
         :name="prerequisiteIcon"
-        color="info"
+        color="positive"
         size="lg"
       />
-      <div v-else class="text-center">
-        <q-item-label caption class="q-pt-xs">Step</q-item-label>
-        <q-avatar text-color="info" size="xl">{{ index }}</q-avatar>
+      <div v-else class="text-center text-h4 text-positive">
+        {{ index }}
       </div>
     </q-item-section>
 
     <restriction :restriction="restriction" />
+    <q-tooltip v-if="!isExpanded"
+      >Click to show full restriction text</q-tooltip
+    >
+    <q-item-section v-if="!isExpanded" side>
+      <q-icon :name="showMoreIcon" />
+    </q-item-section>
   </q-item>
 </template>
 
 <script lang="ts">
-import { matChevronRight as prerequisiteIcon } from '@quasar/extras/material-icons'
-import type { PropType } from '@vue/composition-api'
-import { defineComponent } from '@vue/composition-api'
+import {
+  matCheck as prerequisiteIcon,
+  matUnfoldMore as showMoreIcon,
+} from '@quasar/extras/material-icons'
+import { PropType, defineComponent, ref, provide } from '@vue/composition-api'
 
 import Restriction from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction.vue'
-import type {
+import {
   RestrictionCategory,
   RestrictionNode,
 } from '@/shared/src/restriction-tree/restriction-node'
@@ -46,7 +57,13 @@ export default defineComponent({
     },
   },
   setup() {
-    return { prerequisiteIcon }
+    const isExpanded = ref(false)
+    provide('isExpanded', isExpanded)
+    return {
+      prerequisiteIcon,
+      isExpanded,
+      showMoreIcon,
+    }
   },
 })
 </script>

@@ -1,10 +1,11 @@
 <template>
   <span v-if="hasIntersection">
-    <country-label-list :values="focusedIntersection" focused />
-    <span v-if="allowedCountriesCount > 0">
-      or one of the matching
-      {{ allowedCountriesCount }} countries
-    </span>
+    <country-label-list
+      :values="focusedIntersection"
+      focused
+      regular
+      conjunction="or"
+    />
   </span>
   <span v-else>
     one of the {{ allowedCountriesCount }} matching countries

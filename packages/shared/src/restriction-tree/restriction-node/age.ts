@@ -19,7 +19,7 @@ export class Age extends RestrictionNode<typeof Age.defaultOptions> {
     return RestrictionCategory.PREREQUISITE
   }
   displayOrder(): number {
-    return 3
+    return 10
   }
 
   penaltyScore(): number {

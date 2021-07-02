@@ -26,14 +26,6 @@
   </component>
 </template>
 
-<style lang="scss" module>
-a[href^='#'] {
-  color: var(--q-color-primary);
-  text-decoration: none;
-  border-bottom: 1px dashed var(--q-color-secondary);
-}
-</style>
-
 <script lang="ts">
 import { matPriorityHigh as attentionIcon } from '@quasar/extras/material-icons'
 import type { PropType } from '@vue/composition-api'

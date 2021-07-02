@@ -1,13 +1,11 @@
 <template>
   <component :is="wrapper" :restriction="restriction">
     <template #title>
-      <span>
-        If you are a citizen or a permanent resident of
-        <title-country
-          :allowed="restriction.getAllowedCountries()"
-          :focus="context"
-        />
-      </span>
+      You are a citizen or a permanent resident of
+      <title-country
+        :focus="context"
+        :allowed="restriction.getAllowedCountries()"
+      />
     </template>
     <template #subtitle>
       <p>
@@ -26,8 +24,11 @@
     <template #reason>
       <div v-if="restriction.matches(context)">
         You've <span class="text-positive">matched</span> this because you've
-        selected <country-label-list :values="context" /> as your departure
-        country
+        selected
+        <country-label-list
+          :values="restriction.getMatchingAllowedCountries(context)"
+        />
+        as your citizenship or residence
       </div>
       <div v-else>
         You <span class="text-negative">didn't match</span> this because you've
@@ -37,14 +38,6 @@
     </template>
   </component>
 </template>
-
-<style lang="scss" module>
-a[href^='#'] {
-  color: var(--q-color-primary);
-  text-decoration: none;
-  border-bottom: 1px dashed var(--q-color-secondary);
-}
-</style>
 
 <script lang="ts">
 import type { PropType } from '@vue/composition-api'
