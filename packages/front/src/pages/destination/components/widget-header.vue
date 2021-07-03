@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mb-lg">
+  <div class="q-mb-sm">
     <h5 class="text-capitalize no-margin text-bold">
       <slot name="title">{{ title }}</slot>
     </h5>

@@ -1,7 +1,9 @@
 <template>
   <q-list :class="['text-subtitle1']">
     <widget-header>
-      <template v-if="returnRestrictions" #title> Return travel </template>
+      <template v-if="returnRestrictions" #title
+        ><div>Return travel</div></template
+      >
       <template v-else #title> Outgoing travel </template>
 
       <template #subtitle>
@@ -10,15 +12,31 @@
         <country-label :value="destinationISO" />
       </template>
     </widget-header>
-
+    <category-switcher
+      v-model="currentRestrictionCategory"
+      :available-count="availableGroups.length"
+      :unavailable-count="unavailableGroups.length"
+    />
     <groups-by-type
-      v-if="bestAvailableGroup.length > 0"
-      :restrictions-groups="bestAvailableGroup"
-      type-label="Available"
-      :available="true"
+      v-if="currentGroupList.length > 0"
+      :restrictions-groups="currentGroupList"
+      :show-header="
+        currentRestrictionCategory !== RestrictionListType.BEST_OPTION
+      "
+      :type-label="
+        currentRestrictionCategory !== RestrictionListType.ALL_UNAVAILABLE
+          ? 'Available'
+          : 'Unavailable'
+      "
+      :available="
+        currentRestrictionCategory !== RestrictionListType.ALL_UNAVAILABLE
+      "
     />
     <q-item
-      v-else
+      v-else-if="
+        currentRestrictionCategory === RestrictionListType.BEST_OPTION &&
+        currentGroupList.length === 0
+      "
       class="rounded-borders bg-elevation-1 q-py-md q-my-md bg-negative"
     >
       <q-item-section avatar top class="justify-center">
@@ -31,29 +49,35 @@
         >
       </q-item-section>
     </q-item>
-
-    <!--    <groups-by-type-->
-    <!--      :restrictions-groups="unavailableGroups"-->
-    <!--      type-label="You didn't match these requirements"-->
-    <!--      :available="false"-->
-    <!--    />-->
   </q-list>
 </template>
 
 <script lang="ts">
 import { matDangerous as stopIcon } from '@quasar/extras/material-icons'
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import { computed, defineComponent, inject, ref } from '@vue/composition-api'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import { createCollection } from '@/front/src/composables/trip-cards'
+import CategorySwitcher from '@/front/src/pages/destination/components/category-switcher.vue'
 import GroupsByType from '@/front/src/pages/destination/components/restriction-groups/groups-by-type.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 
+export enum RestrictionListType {
+  BEST_OPTION = 'best-option',
+  ALL_AVAILABLE = 'all-available',
+  ALL_UNAVAILABLE = 'all-unavailable',
+}
+
 export default defineComponent({
-  components: { CountryLabel, GroupsByType, WidgetHeader },
+  components: {
+    CategorySwitcher,
+    CountryLabel,
+    GroupsByType,
+    WidgetHeader,
+  },
   props: {
     returnRestrictions: {
       type: Boolean,
@@ -75,6 +99,7 @@ export default defineComponent({
       const group = groups.value.getBestGroup()
       return group ? [group] : []
     })
+
     const availableGroups = computed(() => groups.value.getAvailableGroups())
     const unavailableGroups = computed(() =>
       groups.value.getUnavailableGroups(),
@@ -92,8 +117,26 @@ export default defineComponent({
         : store.state.currentDestinationCode,
     )
 
+    const currentRestrictionCategory = ref<RestrictionListType>(
+      RestrictionListType.BEST_OPTION,
+    )
+
+    const currentGroupList = computed(() => {
+      switch (currentRestrictionCategory.value) {
+        case RestrictionListType.ALL_AVAILABLE:
+          return availableGroups.value
+
+        case RestrictionListType.ALL_UNAVAILABLE:
+          return unavailableGroups.value
+      }
+
+      return bestAvailableGroup.value
+    })
+
     return {
-      bestAvailableGroup,
+      RestrictionListType,
+      currentGroupList,
+      currentRestrictionCategory,
       availableGroups,
       unavailableGroups,
       stopIcon,
