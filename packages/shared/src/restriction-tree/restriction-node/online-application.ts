@@ -9,6 +9,7 @@ export class OnlineApplication extends RestrictionNode<
 > {
   static defaultOptions = {
     url: '',
+    hoursBeforeArrival: undefined as number | undefined,
     ...RestrictionNode.defaultOptions,
   }
 

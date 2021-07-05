@@ -203,6 +203,11 @@ export function createConfig(
           type: 'url',
           class: 'col-6',
         }),
+        createOptionalNumberInput(setters.hoursBeforeArrival, {
+          label: 'Hours prior to departure',
+          suffix: 'h',
+          style: 'width: 120px',
+        }),
       ]
     }
 
