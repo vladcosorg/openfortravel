@@ -22,7 +22,7 @@ ssr.mergeRendererOptions({
   shouldPrefetch: (file) => {
     return [
       'countries',
-      'lang',sar
+      'lang',
       '0.',
       'declension',
       'all-i18n',
@@ -93,7 +93,7 @@ app.get(ssr.resolveUrl('*'), (req, res) => {
   // here are a few that you might like to consider adding to your CSP
   // object-src, media-src, script-src, frame-src, unsafe-inline
   const hit = microCache.get(req.url)
-  if (hit) {
+  if (hit && false) {
     return res.end(hit)
   }
 
