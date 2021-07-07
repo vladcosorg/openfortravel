@@ -2,7 +2,7 @@ import { matFlightLand, matFlightTakeoff } from '@quasar/extras/material-icons'
 import type { ComputedRef, Ref } from '@vue/composition-api'
 import { computed } from '@vue/composition-api'
 
-import { useVueI18n } from '@/shared/src/composables/use-plugins'
+import { useRootStore, useVueI18n } from '@/shared/src/composables/use-plugins'
 import {
   getDestinationLabelForCountryCode,
   getOriginLabelForCountryCode,
@@ -23,6 +23,7 @@ export function useBreadcrumbs(
         name: 'origin',
         params: {
           originSlug: transformCountryCodeToOriginSlug(originCode.value),
+          searchId: useRootStore().state.searchId,
         },
       },
       icon: matFlightTakeoff,

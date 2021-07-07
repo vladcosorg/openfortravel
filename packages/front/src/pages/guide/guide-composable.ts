@@ -18,7 +18,7 @@ export function createComputedSetter<
     },
 
     set(value) {
-      store.mutations.setVisitorContextField({
+      store.actions.updateVisitorProfileField({
         field,
         value,
       })

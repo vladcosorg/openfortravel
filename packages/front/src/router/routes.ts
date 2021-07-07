@@ -85,7 +85,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
         },
         {
           name: 'origin',
-          path: `${i18n.t('page.country.route')}/:originSlug/`,
+          path: `${i18n.t('page.country.route')}/:originSlug/:searchId?`,
           component: () =>
             import(
               /* webpackChunkName: "page-origin" */
@@ -111,7 +111,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
           name: 'destination',
           path: `${i18n.t('page.country.route')}/:originSlug/${i18n.t(
             'page.destination.route',
-          )}/:destinationSlug/`,
+          )}/:destinationSlug/:searchId?`,
           component: () =>
             import(
               /* webpackChunkName: "page-destination" */

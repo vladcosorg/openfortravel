@@ -86,12 +86,13 @@ export class TripCard {
     return highlights
   }
 
-  get detailsURL(): Location {
+  getDetailsURL(searchId?: string): Location {
     return {
       name: 'destination',
       params: {
         originSlug: this.origin.originSlug,
         destinationSlug: this.destination.destinationSlug,
+        searchId,
       },
     }
   }

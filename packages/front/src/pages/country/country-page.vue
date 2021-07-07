@@ -9,6 +9,7 @@
 import { defineComponent } from '@vue/composition-api'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
+import { useSearchIdRouterUpdater } from '@/front/src/composables/search-id'
 import SearchHeader from '@/front/src/pages/country/components/search-header.vue'
 import SearchResults from '@/front/src/pages/country/components/search-results.vue'
 import { meta } from '@/front/src/pages/country/country-meta'
@@ -28,6 +29,9 @@ export default defineComponent({
     isFallback: {
       type: Boolean,
     },
+  },
+  setup() {
+    useSearchIdRouterUpdater()
   },
 })
 </script>

@@ -53,7 +53,11 @@ import RecoveryContext from '@/front/src/components/context-field/recovery-conte
 import VaccinationContext from '@/front/src/components/context-field/vaccination-context.vue'
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
-import { useRouter, useI18n } from '@/shared/src/composables/use-plugins'
+import {
+  useRouter,
+  useI18n,
+  useRootStore,
+} from '@/shared/src/composables/use-plugins'
 import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
 import { transformCountryCodeToOriginSlug } from '@/shared/src/modules/country-list/country-list-helpers'
 
@@ -88,6 +92,7 @@ export default defineComponent({
           params: {
             originSlug: transformCountryCodeToOriginSlug(originCode),
             locale: useI18n().locale,
+            searchId: useRootStore().state.searchId,
           },
         })
       },

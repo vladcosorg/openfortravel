@@ -8,11 +8,16 @@ import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 export default boot(({ router, urlPath, ssrContext }) => {
   const rootStore = useRootStore()
   if (!ssrContext) {
-    router.afterEach((to) => {
+    router.afterEach(async (to, from) => {
       if (!to.params.originSlug) {
         return
       }
-      rootStore.mutations.setVisitorContextField({
+
+      if (to.params.originSlug === from.params.originSlug) {
+        return
+      }
+
+      await rootStore.actions.updateVisitorProfileField({
         field: RestrictionNodeType.ORIGIN,
         value: transformOriginSlugToCode(to.params.originSlug),
       })

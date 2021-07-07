@@ -68,6 +68,7 @@ import {
 import { Portal } from 'portal-vue'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
+import { useSearchIdRouterUpdater } from '@/front/src/composables/search-id'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import TheSearchHeader from '@/front/src/layouts/components/the-search-header.vue'
 import EntryRestrictions from '@/front/src/pages/destination/components/entry-restrictions.vue'
@@ -112,6 +113,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    useSearchIdRouterUpdater()
     const store = registerStoreModule(useStore(), {
       currentOriginCode: props.originCode,
       currentDestinationCode: props.destinationCode,

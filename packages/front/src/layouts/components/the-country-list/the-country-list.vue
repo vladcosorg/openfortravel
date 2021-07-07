@@ -102,7 +102,11 @@ import VaccinationContext from '@/front/src/components/context-field/vaccination
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import Swapper from '@/front/src/layouts/components/the-country-list/swapper.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
-import { useRouter, useI18n } from '@/shared/src/composables/use-plugins'
+import {
+  useRouter,
+  useI18n,
+  useRootStore,
+} from '@/shared/src/composables/use-plugins'
 import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
 import {
   transformCountryCodeToDestinationSlug,
@@ -154,6 +158,7 @@ export default defineComponent({
           params: {
             originSlug: transformCountryCodeToOriginSlug(originCode),
             locale: useI18n().locale,
+            searchId: useRootStore().state.searchId,
           },
         })
       },

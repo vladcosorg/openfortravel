@@ -7,7 +7,6 @@ import type { MutationSignatures } from '@/front/src/store/types/mutations'
 import { MutationTypes } from '@/front/src/store/types/mutations'
 import { useCookies } from '@/shared/src/composables/use-plugins'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export const mutations: MutationTree<RootState> & MutationSignatures = {
   [MutationTypes.setCountryToContinentMap](state, map) {
@@ -36,33 +35,29 @@ export const mutations: MutationTree<RootState> & MutationSignatures = {
   [MutationTypes.setHostRules](state, hostRules) {
     state.hostRules = hostRules
   },
+
   [MutationTypes.setVisitorContextField](state, { field, value }) {
     Vue.set(state.visitorContext, field, value)
+  },
 
-    switch (field) {
-      case RestrictionNodeType.VACCINATED:
-        // eslint-disable-next-line unicorn/no-useless-undefined
-        Vue.set(state.visitorContext, RestrictionNodeType.RECOVERY, undefined)
-        break
+  [MutationTypes.mergeVisitorContext](
+    state,
+    { context, searchId, persistLocally = true },
+  ) {
+    state.visitorContext = Object.assign({}, state.visitorContext, context)
 
-      case RestrictionNodeType.CITIZENSHIP:
-        if (value === undefined) {
-          Vue.delete(state.visitorContext, field)
-        }
-        break
+    if (!persistLocally) {
+      return
     }
 
-    saveContextToCookie(state.visitorContext)
+    saveContextToCookie(state.visitorContext, searchId)
   },
-  [MutationTypes.setVisitorContext](state, { context, persist = true }) {
-    ;(state.visitorContext as VisitorProfile) = context
 
-    if (persist) {
-      saveContextToCookie(context)
-    }
-  },
   [MutationTypes.setVisitorOrigin](state, country) {
     Vue.set(state.visitorContext, RestrictionNodeType.ORIGIN, country)
     useCookies().set('country', country, { path: '/' })
+  },
+  [MutationTypes.setSearchId](state, searchId) {
+    state.searchId = searchId
   },
 }

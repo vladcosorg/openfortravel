@@ -7,6 +7,7 @@ import {
 
 import { dataConverter as destinationDataConverter } from '@/shared/src/api/destinations/common'
 import { dataConverter as restrictionDataConverter } from '@/shared/src/api/restrictions/common'
+import { dataConverter as searchIdDataConverter } from '@/shared/src/api/searchIds/common'
 
 const firebaseApp =
   getApps().length > 0
@@ -35,10 +36,21 @@ try {
 const countryCollection = collection(firestore, 'countries').withConverter(
   destinationDataConverter,
 )
+
+const searchIdCollection = collection(firestore, 'searchIds').withConverter(
+  searchIdDataConverter,
+)
+
 const restrictionCollection = collection(
   firestore,
   'restrictions',
 ).withConverter(restrictionDataConverter)
 
 // eslint-disable-next-line import/no-unused-modules
-export { firestore, firebaseApp, countryCollection, restrictionCollection }
+export {
+  firestore,
+  firebaseApp,
+  countryCollection,
+  restrictionCollection,
+  searchIdCollection,
+}

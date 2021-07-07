@@ -22,7 +22,7 @@ ssr.mergeRendererOptions({
   shouldPrefetch: (file) => {
     return [
       'countries',
-      'lang',
+      'lang',sar
       '0.',
       'declension',
       'all-i18n',

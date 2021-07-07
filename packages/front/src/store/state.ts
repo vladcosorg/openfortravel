@@ -35,6 +35,8 @@ export class RootState implements StateInterface {
     [RestrictionNodeType.VACCINATED]: undefined,
     [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [],
   }
+  // eslint-disable-next-line unicorn/no-null
+  searchId = null as string | null
 }
 
 export function state(): RootState {
