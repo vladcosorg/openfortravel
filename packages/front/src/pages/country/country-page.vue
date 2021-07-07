@@ -6,13 +6,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, watch } from '@vue/composition-api'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
 import { useSearchIdRouterUpdater } from '@/front/src/composables/search-id'
 import SearchHeader from '@/front/src/pages/country/components/search-header.vue'
 import SearchResults from '@/front/src/pages/country/components/search-results.vue'
 import { meta } from '@/front/src/pages/country/country-meta'
+import { useRootStore, useRouter } from '@/shared/src/composables/use-plugins'
+import {
+  createDestinationRoute,
+  createOriginRoute,
+} from '@/front/src/router/factory'
 
 export default defineComponent({
   meta,
@@ -31,7 +36,17 @@ export default defineComponent({
     },
   },
   setup() {
-    useSearchIdRouterUpdater()
+    watch(
+      () => useRootStore().state.searchId,
+      (searchId) => {
+        const router = useRouter()
+        router.push(
+          createOriginRoute({
+            searchId,
+          }),
+        )
+      },
+    )
   },
 })
 </script>

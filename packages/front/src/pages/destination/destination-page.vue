@@ -55,7 +55,6 @@
 </template>
 
 <script lang="ts">
-import { matBadge as badgeIcon } from '@quasar/extras/material-icons'
 import {
   computed,
   defineComponent,
@@ -68,7 +67,6 @@ import {
 import { Portal } from 'portal-vue'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
-import { useSearchIdRouterUpdater } from '@/front/src/composables/search-id'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import TheSearchHeader from '@/front/src/layouts/components/the-search-header.vue'
 import EntryRestrictions from '@/front/src/pages/destination/components/entry-restrictions.vue'
@@ -81,7 +79,12 @@ import { useBreadcrumbs } from '@/front/src/pages/destination/destination-compos
 import { meta } from '@/front/src/pages/destination/destination-meta'
 import { registerStoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { useStore } from '@/shared/src/composables/use-plugins'
+import { createDestinationRoute } from '@/front/src/router/factory'
+import {
+  useRootStore,
+  useRouter,
+  useStore,
+} from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
@@ -113,7 +116,6 @@ export default defineComponent({
     },
   },
   setup(props) {
-    useSearchIdRouterUpdater()
     const store = registerStoreModule(useStore(), {
       currentOriginCode: props.originCode,
       currentDestinationCode: props.destinationCode,
@@ -133,11 +135,23 @@ export default defineComponent({
     onServerPrefetch(init)
     watch(props, init)
 
+    watch(
+      () => useRootStore().state.searchId,
+      (searchId) => {
+        const router = useRouter()
+        router.push(
+          createDestinationRoute({
+            searchId,
+            destinationCode: props.destinationCode,
+          }),
+        )
+      },
+    )
+
     return {
       destination: computed(() => store.getters.destination),
       isLoading: loading,
       breadcrumbs: useBreadcrumbs(originCode, destinationCode),
-      badgeIcon,
     }
   },
 })

@@ -84,8 +84,31 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
             ),
         },
         {
+          name: 'destination',
+          path: `:searchId?/${i18n.t(
+            'page.country.route',
+          )}/:originSlug/${i18n.t(
+            'page.destination.route',
+          )}/:destinationSlug/:catchAll?(.*)*`,
+          component: () =>
+            import(
+              /* webpackChunkName: "page-destination" */
+              '@/front/src/pages/destination/destination-page.vue'
+            ),
+          props(route) {
+            return {
+              originCode: transformOriginSlugToCode(route.params.originSlug),
+              destinationCode: transformDestinationSlugToCode(
+                route.params.destinationSlug,
+              ),
+            }
+          },
+        },
+        {
           name: 'origin',
-          path: `${i18n.t('page.country.route')}/:originSlug/:searchId?`,
+          path: `:searchId?/${i18n.t(
+            'page.country.route',
+          )}/:originSlug/:catchAll?(.*)*`,
           component: () =>
             import(
               /* webpackChunkName: "page-origin" */
@@ -107,25 +130,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
               '@/front/src/pages/guide/guide-page.vue'
             ),
         },
-        {
-          name: 'destination',
-          path: `${i18n.t('page.country.route')}/:originSlug/${i18n.t(
-            'page.destination.route',
-          )}/:destinationSlug/:searchId?`,
-          component: () =>
-            import(
-              /* webpackChunkName: "page-destination" */
-              '@/front/src/pages/destination/destination-page.vue'
-            ),
-          props(route) {
-            return {
-              originCode: transformOriginSlugToCode(route.params.originSlug),
-              destinationCode: transformDestinationSlugToCode(
-                route.params.destinationSlug,
-              ),
-            }
-          },
-        },
+
         {
           name: 'index-targeted',
           path: `${i18n.t('page.index.route')}/:originSlug/`,

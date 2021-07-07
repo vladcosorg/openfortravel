@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import { matHome, matChevronRight } from '@quasar/extras/material-icons'
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 
 import { getMenuItemURL } from '@/front/src/misc/menu'
 
@@ -53,7 +53,11 @@ export default defineComponent({
     },
   },
   setup() {
-    return { matHome, matChevronRight, homepageURL: getMenuItemURL('index') }
+    return {
+      matHome,
+      matChevronRight,
+      homepageURL: computed(() => getMenuItemURL('index')),
+    }
   },
 })
 </script>

@@ -10,3 +10,9 @@ export type Flavor<T, FlavorT> = T & Flavoring<FlavorT>
 export type Brand<T, BrandT> = T & Branding<BrandT>
 
 export type ExtractArgs<T> = T extends (...args: infer U) => T ? U : never
+
+export type Entries<T> = Array<
+  {
+    [K in keyof T]: [K, T[K]]
+  }[keyof T]
+>

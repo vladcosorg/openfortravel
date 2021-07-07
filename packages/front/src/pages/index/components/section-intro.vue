@@ -44,7 +44,7 @@
             color="accent"
             class="text-bold text-capitalize"
             :label="$t('page.index.sections.hero.button')"
-            :to="getMenuItemURL('origin')"
+            :to="url"
           />
         </div>
         <the-boy class="col-md-6 col-sm-5 col-10" />
@@ -71,7 +71,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import TheBoy from '@/front/src/layouts/components/the-boy/the-boy.vue'
-import { getMenuItemURL } from '@/front/src/misc/menu'
+import { createOriginRoute } from '@/front/src/router/factory'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
@@ -83,12 +83,15 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const url = computed(() =>
+      createOriginRoute({ originCode: props.originCode }),
+    )
     const countryLabel = computed(() =>
       getLabelForCountryCode(props.originCode),
     )
     return {
+      url,
       countryLabel,
-      getMenuItemURL,
     }
   },
 })

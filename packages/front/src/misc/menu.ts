@@ -1,15 +1,12 @@
 import type { IVueI18n, TranslateResult } from 'vue-i18n'
-import type { Location } from 'vue-router'
+import type { RawLocation } from 'vue-router'
 
 import { getCurrentOriginSlug } from '@/front/src/misc/country-decider'
-import {
-  useI18n,
-  useRootStore,
-  useRouter,
-} from '@/shared/src/composables/use-plugins'
+import { createOriginRoute } from '@/front/src/router/factory'
+import { useI18n, useRouter } from '@/shared/src/composables/use-plugins'
 
 type MenuItemRawPair = {
-  url: (locale: string) => Location
+  url: (locale: string) => RawLocation
   title: (i18n: IVueI18n) => TranslateResult
 }
 type MenuItemPair = { url: string; title: string }
@@ -30,14 +27,7 @@ const links: Record<string, MenuItemRawPair> = {
     title: () => 'Travel wizard',
   },
   origin: {
-    url: (locale) => ({
-      name: 'origin',
-      params: {
-        locale,
-        originSlug: getCurrentOriginSlug(),
-        searchId: useRootStore().state.searchId,
-      },
-    }),
+    url: (locale) => createOriginRoute({ locale }),
     title: (i18n) => i18n.t('page.country.link'),
   },
   terms: {

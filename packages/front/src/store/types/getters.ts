@@ -19,6 +19,7 @@ export interface GetterSignatures {
 
   visitorOrigin(...args: LocalGetterContext): string
   visitorContextWithDefaults(...args: LocalGetterContext): VisitorProfile
+  contextSlug(...args: LocalGetterContext): string
 }
 
 export type RootGetterAccessors = {
