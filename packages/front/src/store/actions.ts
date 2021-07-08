@@ -5,17 +5,12 @@ import type { RootStateType } from '@/front/src/store/state'
 import type { ActionSignatures } from '@/front/src/store/types/actions'
 import { RootActionTypes } from '@/front/src/store/types/actions'
 import { MutationTypes } from '@/front/src/store/types/mutations'
-import { findMappedOrigins } from '@/shared/src/api/destinations/repository'
 import { getOrCreateSearchId } from '@/shared/src/api/searchIds/repository'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export const actions: ActionTree<RootStateType, RootStateType> &
   ActionSignatures = {
-  async [RootActionTypes.fetchHostRules]({ commit }) {
-    commit(MutationTypes.setHostRules, await findMappedOrigins())
-  },
-
   async [RootActionTypes.assignSearchId]({ commit }, { visitorProfile }) {
     const filtered = Object.entries(visitorProfile).filter(([name, value]) => {
       if (value === undefined) {

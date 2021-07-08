@@ -4,6 +4,7 @@ import VueI18n from 'vue-i18n'
 
 import { serverCache } from '@/front/src/misc/server-cache'
 import { pregenerateLocalizableRouter } from '@/front/src/router/route-preloader'
+import { listenToMappedOrigins } from '@/shared/src/api/destinations/repository'
 import messages from '@/shared/src/i18n/index'
 import { loadContinentMap } from '@/shared/src/modules/continent-map/ssr-loader'
 import {
@@ -21,7 +22,11 @@ if (!process.env.SERVER) {
   throw new Error('The node-cache should not run on client!')
 }
 
-const promises: Array<Promise<unknown>> = []
+const promises: Array<Promise<unknown>> = [
+  listenToMappedOrigins(
+    (collection) => (serverCache.destinations = collection),
+  ),
+]
 
 serverCache.availableLocales = getTranslatedOrTranslatableLocales()
 serverCache.labeledLocales = langs.filter((langPair) =>

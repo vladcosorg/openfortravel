@@ -1,5 +1,6 @@
 import type { LocaleMessages } from 'vue-i18n'
 
+import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
 import type { CountryListTypes } from '@/shared/src/modules/country-list/country-list-store'
 import type { LocaleList } from '@/shared/src/modules/language/locales'
 import type { PrefetchedLocalizedLanguages } from '@/shared/src/modules/language/ssr-loaders'
@@ -17,6 +18,7 @@ class ServerCache {
   public languages!: PrefetchedLocalizedLanguages
   public nationalities!: PreloadedNationalityList
   public quasarLocales!: Record<string, string>
+  public destinations: MappedPlainDestinationCollection = {}
 
   public getCountryCodeToLabelMap(locale: string): CountryListTypes {
     return (

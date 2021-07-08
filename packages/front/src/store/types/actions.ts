@@ -4,13 +4,11 @@ import type { AugmentedActionContext } from '@/shared/src/misc/augmented-store'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export enum RootActionTypes {
-  fetchHostRules = 'fetchHostRules',
   assignSearchId = 'assignSearchId',
   updateVisitorProfileField = 'updateVisitorProfileField',
 }
 
 export type ActionSignatures = {
-  [RootActionTypes.fetchHostRules](context: Context): Promise<void>
   [RootActionTypes.assignSearchId](
     context: Context,
     data: { visitorProfile: Partial<VisitorProfile> },

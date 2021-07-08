@@ -1,4 +1,11 @@
-import { getDoc, doc, collection, setDoc, Timestamp } from 'firebase/firestore'
+import {
+  getDoc,
+  doc,
+  setDoc,
+  Timestamp,
+  doc,
+  onSnapshot,
+} from 'firebase/firestore'
 
 import {
   createDummyPlainDestination,
@@ -9,7 +16,7 @@ import type {
   MappedPlainDestinationCollection,
   PlainDestination,
 } from '@/shared/src/api/destinations/models'
-import { countryCollection, firestore } from '@/shared/src/misc/firebase'
+import { countryCollection } from '@/shared/src/misc/firebase'
 
 export async function findOrigin(code: string): Promise<PlainDestination> {
   const snapshot = await getDoc(doc(countryCollection, code))
@@ -29,15 +36,36 @@ export async function findOriginAsRichObject(
 }
 
 export async function findMappedOrigins(): Promise<MappedPlainDestinationCollection> {
-  const result = (
-    await getDoc(doc(collection(firestore, 'countries'), '_all'))
-  ).data()
+  const result = (await getDoc(doc(countryCollection, '_all'))).data()
 
   if (result === undefined) {
     throw new Error('Aggegated country result is missing')
   }
-
   return result.collection as MappedPlainDestinationCollection
+}
+
+export function listenToMappedOrigins(
+  callback: (collection: MappedPlainDestinationCollection) => void,
+): Promise<void> {
+  if (
+    process.env.NODE_ENV === 'development' &&
+    global['_openfortravel_listener_created']
+  ) {
+    return Promise.resolve()
+  }
+
+  const promise = new Promise((resolve) => {
+    onSnapshot(doc(countryCollection, '_all'), (doc) => {
+      callback(doc.data().collection)
+      resolve()
+    })
+  })
+
+  if (process.env.NODE_ENV === 'development') {
+    global['_openfortravel_listener_created'] = true
+  }
+
+  return promise
 }
 
 export async function findOrigins(): Promise<PlainDestination[]> {
