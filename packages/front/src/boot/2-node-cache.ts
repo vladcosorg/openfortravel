@@ -23,9 +23,9 @@ if (!process.env.SERVER) {
 }
 
 const promises: Array<Promise<unknown>> = [
-  listenToMappedOrigins(
-    (collection) => (serverCache.destinations = collection),
-  ),
+  listenToMappedOrigins((collection) => {
+    serverCache.destinations = collection
+  }),
 ]
 
 serverCache.availableLocales = getTranslatedOrTranslatableLocales()

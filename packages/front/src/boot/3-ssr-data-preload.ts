@@ -50,4 +50,6 @@ export default boot(({ store }) => {
       serverCache.nationalities[locale],
     )
   }
+
+  store.commit('setHostRules', serverCache.destinations)
 })
