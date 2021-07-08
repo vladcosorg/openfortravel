@@ -65,6 +65,6 @@ export const getters: GetterTree<RootStateType, RootStateType> &
         }
       }
     }
-    return 'as/' + Object.values(segments).join('/')
+    return '/as/' + Object.values(segments).join('/')
   },
 }

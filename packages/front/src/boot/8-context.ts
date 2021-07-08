@@ -21,8 +21,6 @@ export default boot(({ router, redirect }) => {
       return
     }
 
-    console.log(to)
-
     const searchId = to.params.searchId
     let persistLocally = false
     useRootStore().mutations.setSearchId(searchId)

@@ -89,7 +89,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
             'page.country.route',
           )}/:originSlug/${i18n.t(
             'page.destination.route',
-          )}/:destinationSlug/:catchAll?(.*)*`,
+          )}/:destinationSlug/:g1?/:g2?/:g3?/:g4?`,
           component: () =>
             import(
               /* webpackChunkName: "page-destination" */
@@ -108,7 +108,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
           name: 'origin',
           path: `:searchId?/${i18n.t(
             'page.country.route',
-          )}/:originSlug/:catchAll?(.*)*`,
+          )}/:originSlug/:g1?/:g2?/:g3?/:g4?`,
           component: () =>
             import(
               /* webpackChunkName: "page-origin" */

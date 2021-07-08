@@ -47,23 +47,12 @@ export async function findMappedOrigins(): Promise<MappedPlainDestinationCollect
 export function listenToMappedOrigins(
   callback: (collection: MappedPlainDestinationCollection) => void,
 ): Promise<void> {
-  if (
-    process.env.NODE_ENV === 'development' &&
-    global['_openfortravel_listener_created']
-  ) {
-    return Promise.resolve()
-  }
-
   const promise = new Promise((resolve) => {
     onSnapshot(doc(countryCollection, '_all'), (doc) => {
       callback(doc.data().collection)
       resolve()
     })
   })
-
-  if (process.env.NODE_ENV === 'development') {
-    global['_openfortravel_listener_created'] = true
-  }
 
   return promise
 }
