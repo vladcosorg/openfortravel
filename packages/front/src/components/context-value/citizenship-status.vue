@@ -1,21 +1,22 @@
 <template>
-  <a href="" class="text-dotted-underline">
-    {{ value }}
-  </a>
+  <citizenship-context inline />
 </template>
 
-<style lang="scss" module />
-
 <script lang="ts">
-import { matEdit as editIcon } from '@quasar/extras/material-icons'
+import {
+  matEdit as editIcon,
+  matHelpOutline as helpIcon,
+  matArrowDropDown as downIcon,
+} from '@quasar/extras/material-icons'
 import { computed, defineComponent } from '@vue/composition-api'
 
+import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
-  components: {},
+  components: { CitizenshipContext },
   props: {},
   setup() {
     const store = useRootStore()
@@ -31,10 +32,12 @@ export default defineComponent({
         return firstCitizenship
       }
 
-      return `${firstCitizenship} (and ${citizenshipList.length - 1} more)`
+      return `${firstCitizenship} (and ${
+        citizenshipList.length - 1
+      } more countries)`
     })
 
-    return { value, editIcon }
+    return { value, editIcon, helpIcon, downIcon }
   },
 })
 </script>

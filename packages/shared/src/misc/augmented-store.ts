@@ -55,7 +55,7 @@ export type AugmentedActionContext<
     R extends keyof RootActionSignatures,
   >(
     key: T extends { root: true } ? R : K,
-    payload: Parameters<
+    payload?: Parameters<
       T extends { root: true } ? RootActionSignatures[R] : ActionSignatures[K]
     >[1],
     options?: T,

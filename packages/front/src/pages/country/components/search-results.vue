@@ -14,7 +14,7 @@
           :is-loading="isListLoading"
           :origin-code="originCode"
         />
-        <generic-select label="Sort by" dense :value="[]" />
+        <!--        <generic-select label="Sort by" dense :value="[]" />-->
       </div>
       <destination-group
         v-if="isFiltering"
@@ -25,10 +25,11 @@
         <div class="text-h5" style="font-weight: normal">
           Countries currently <span class="text-positive">open</span> for travel
           from
-          <country-label :value="originCode" regular focused />
+          <origin-context-inline />
           <div class="text-subtitle1">
-            as a citizen of <span class="text-accent">Ukraine</span> that is
-            <span class="text-accent">not vaccinated</span>
+            for citizens, nationals and residents of
+            <citizenship-context-inline /> that are
+            <vaccination-context-inline />
           </div>
         </div>
 
@@ -40,11 +41,11 @@
         <div class="text-h5" style="font-weight: normal">
           Countries currently
           <span class="text-negative text-bold">closed</span> for travel from
-          <origin-status />
+          <origin-context-inline />
           <div class="text-subtitle1">
-            as a citizen of <citizenship-status /> that is
-
-            <vaccination-status />
+            for citizens, nationals and residents of
+            <citizenship-context-inline /> that are
+            <vaccination-context-inline />
           </div>
         </div>
 
@@ -62,7 +63,10 @@
 import { computed, defineComponent, toRef } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
+import CitizenshipContextInline from '@/front/src/components/context-field/citizenship/citizenship-context-inline.vue'
 import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
+import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
+import VaccinationContextInline from '@/front/src/components/context-field/vaccination/vaccination-context-inline.vue'
 import CitizenshipStatus from '@/front/src/components/context-value/citizenship-status.vue'
 import OriginStatus from '@/front/src/components/context-value/origin-status.vue'
 import VaccinationStatus from '@/front/src/components/context-value/vaccination-status.vue'
@@ -79,6 +83,9 @@ import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
   components: {
+    VaccinationContextInline,
+    CitizenshipContextInline,
+    OriginContextInline,
     CountryLabel,
     OriginStatus,
     CitizenshipStatus,

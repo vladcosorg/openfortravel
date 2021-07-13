@@ -1,15 +1,17 @@
 <template>
   <div class="q-my-xs">
     <div v-if="!isLoading">
-      <h5 class="text-h4 q-ma-none">
+      <h1 class="text-h4 q-ma-none">
         Travel restrictions from
-        <country-label regular focused :value="origin" /> to
-        <country-label regular focused :value="destination" />
-      </h5>
-      <h6 class="text-subtitle1">
-        as a citizen of <span class="text-accent">Ukraine</span> that is
-        <span class="text-accent">not vaccinated</span>
-      </h6>
+        <origin-context-inline /> to
+        <destination-context-inline :destination-iso="destinationIso" />
+      </h1>
+      <h2 class="text-h6 text-primary-subtle" style="font-weight: normal">
+        for citizens, nationals and residents of
+        <citizenship-context-inline />
+        that are
+        <vaccination-context-inline />
+      </h2>
     </div>
     <h5 v-else>
       <q-skeleton class="inline-block" type="text" width="80%" />
@@ -20,12 +22,20 @@
 <script lang="ts">
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
-import CountryLabel from '@/front/src/components/country/country-label.vue'
+import CitizenshipContextInline from '@/front/src/components/context-field/citizenship/citizenship-context-inline.vue'
+import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
+import VaccinationContextInline from '@/front/src/components/context-field/vaccination/vaccination-context-inline.vue'
+import DestinationContextInline from '@/front/src/pages/destination/components/destination-context-inline.vue'
 import { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 
 export default defineComponent({
-  components: { CountryLabel },
+  components: {
+    DestinationContextInline,
+    OriginContextInline,
+    VaccinationContextInline,
+    CitizenshipContextInline,
+  },
   props: {
     isLoading: {
       type: Boolean,
@@ -33,11 +43,9 @@ export default defineComponent({
   },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const origin = computed(() => store.state.currentOriginCode)
-    const destination = computed(() => store.state.currentDestinationCode)
+    const destinationIso = computed(() => store.state.currentDestinationCode)
     return {
-      origin,
-      destination,
+      destinationIso,
     }
   },
 })

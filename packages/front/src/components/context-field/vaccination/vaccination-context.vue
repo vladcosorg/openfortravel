@@ -1,6 +1,11 @@
 <template>
-  <vaccine-dropdown v-model="value" bottom-slots>
-    <template #hint>
+  <vaccine-dropdown
+    v-model="value"
+    :dense="inline"
+    :bottom-slots="!inline"
+    :inline="inline"
+  >
+    <template v-if="!inline" #hint>
       <hint>
         The fact whether you're vaccinated or not dramatically changes the
         restrictions applied to you. <br />
@@ -24,7 +29,11 @@ import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 export default defineComponent({
   components: { Hint, VaccineDropdown },
   inheritAttrs: false,
-  props: {},
+  props: {
+    inline: {
+      type: Boolean,
+    },
+  },
   setup() {
     const setter = createComputedSetter(RestrictionNodeType.VACCINATED)
     return {

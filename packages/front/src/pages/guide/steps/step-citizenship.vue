@@ -21,7 +21,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 
-import CitizenshipContext from '@/front/src/components/context-field/citizenship-context.vue'
+import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
 import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'
 import { useCaption } from '@/front/src/pages/guide/guide-composable'
 import mixin from '@/front/src/pages/guide/steps/mixin.vue'

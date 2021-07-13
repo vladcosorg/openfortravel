@@ -1,14 +1,23 @@
 <template>
   <generic-select
-    label="Vaccination status"
+    :label="!inline ? 'Vaccination status' : undefined"
     :value="value === undefined ? false : value"
     :options="list"
     v-bind="$attrs"
+    :inline="inline"
     @input="$emit('input', $event === false ? undefined : $event)"
   >
     <template v-for="(_, slot) of $scopedSlots" #[slot]="scope"
       ><slot :name="slot" v-bind="scope"
     /></template>
+
+    <template #selected>
+      <span v-if="value">
+        <span v-if="inline">vaccinated with </span>
+        <vaccine-label regular :value="value" />
+      </span>
+      <span v-else>not vaccinated</span>
+    </template>
   </generic-select>
 </template>
 
@@ -16,13 +25,17 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
+import VaccineLabel from '@/front/src/components/vaccine-label.vue'
 import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
 import { vaccineLabels } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 
 export default defineComponent({
-  components: { GenericSelect },
+  components: { VaccineLabel, GenericSelect },
   inheritAttrs: false,
   props: {
+    inline: {
+      type: Boolean,
+    },
     value: {
       type: [String, Array, Boolean],
     },

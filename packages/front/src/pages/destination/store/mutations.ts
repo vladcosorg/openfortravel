@@ -22,4 +22,7 @@ export const mutations: MutationTree<StateType> & MutationSignatures = {
   [MutationTypes.setRelatedRestrictions](state, result): void {
     state.relatedRestrictions = result
   },
+  [MutationTypes.setRelatedURLs](state, links): void {
+    state.relatedURLs = links
+  },
 }

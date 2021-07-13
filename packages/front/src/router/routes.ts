@@ -3,12 +3,13 @@ import type { RouteConfig, RouterOptions } from 'vue-router'
 import VueRouter from 'vue-router'
 
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
-import { useRouter } from '@/shared/src/composables/use-plugins'
+import { useRootStore, useRouter } from '@/shared/src/composables/use-plugins'
 import {
   transformCountryCodeToOriginSlug,
   transformDestinationSlugToCode,
   transformOriginSlugToCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export function getRoutes(i18n: IVueI18n): RouteConfig[] {
   return [
@@ -85,17 +86,41 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
         },
         {
           name: 'destination',
-          path: `:searchId?/${i18n.t(
-            'page.country.route',
-          )}/:originSlug/${i18n.t(
+          path: `${i18n.t('page.country.route')}/:originSlug/${i18n.t(
             'page.destination.route',
-          )}/:destinationSlug/:g1?/:g2?/:g3?/:g4?`,
+          )}/:destinationSlug/:vaccination?/`,
           component: () =>
             import(
               /* webpackChunkName: "page-destination" */
               '@/front/src/pages/destination/destination-page.vue'
             ),
           props(route) {
+            const store = useRootStore()
+            switch (route.params.vaccination) {
+              case 'not-vaccinated':
+                store.mutations.setVisitorContextField({
+                  field: RestrictionNodeType.VACCINATED,
+                  value: undefined,
+                })
+                break
+
+              default: {
+                const type = route.params.vaccination
+                  .split('vaccinated-with-')
+                  .pop()
+
+                if (type) {
+                  store.mutations.setVisitorContextField({
+                    field: RestrictionNodeType.VACCINATED,
+                    value: {
+                      partial: false,
+                      brand: type,
+                    },
+                  })
+                }
+              }
+            }
+
             return {
               originCode: transformOriginSlugToCode(route.params.originSlug),
               destinationCode: transformDestinationSlugToCode(

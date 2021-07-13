@@ -6,6 +6,7 @@ import { getContextBySearchId } from '@/shared/src/api/searchIds/repository'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default boot(({ router, redirect }) => {
+  return
   router.beforeEach(async (to, _from, next) => {
     if (!to.params.searchId) {
       const context = loadContextFromCookie()

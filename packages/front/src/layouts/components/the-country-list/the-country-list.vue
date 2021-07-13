@@ -95,10 +95,10 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 
-import CitizenshipContext from '@/front/src/components/context-field/citizenship-context.vue'
+import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
 import DidNotVisitCountriesContext from '@/front/src/components/context-field/did-not-visit-countries-context.vue'
 import RecoveryContext from '@/front/src/components/context-field/recovery-context.vue'
-import VaccinationContext from '@/front/src/components/context-field/vaccination-context.vue'
+import VaccinationContext from '@/front/src/components/context-field/vaccination/vaccination-context.vue'
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import Swapper from '@/front/src/layouts/components/the-country-list/swapper.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'

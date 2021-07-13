@@ -38,33 +38,37 @@ export const getters: GetterTree<RootStateType, RootStateType> &
     ),
   contextSlug: (_state, getters) => {
     const context = getters.visitorContextWithDefaults
-    const segments: Partial<Record<keyof VisitorProfile, string>> = {
-      [RestrictionNodeType.CITIZENSHIP]: '',
-      [RestrictionNodeType.VACCINATED]: 'not-vaccinated',
-    }
+    return generateContextSlug(context)
+  },
+}
 
-    for (const type of Object.keys(context) as Array<keyof VisitorProfile>) {
-      switch (type) {
-        case RestrictionNodeType.VACCINATED: {
-          const value = context[type]
+export function generateContextSlug(context: VisitorProfile): string {
+  const segments: Partial<Record<keyof VisitorProfile, string>> = {
+    [RestrictionNodeType.CITIZENSHIP]: '',
+    [RestrictionNodeType.VACCINATED]: 'not-vaccinated',
+  }
 
-          if (!value) {
-            break
-          }
+  for (const type of Object.keys(context) as Array<keyof VisitorProfile>) {
+    switch (type) {
+      case RestrictionNodeType.VACCINATED: {
+        const value = context[type]
 
-          segments[
-            RestrictionNodeType.VACCINATED
-          ] = `vaccinated-with-${value?.brand}`
+        if (!value) {
           break
         }
 
-        case RestrictionNodeType.CITIZENSHIP: {
-          const value = transformCountryCodeToOriginSlug(context[type][0])
-          segments[RestrictionNodeType.CITIZENSHIP] = `citizen-of-${value}`
-          break
-        }
+        segments[
+          RestrictionNodeType.VACCINATED
+        ] = `vaccinated-with-${value?.brand}`
+        break
+      }
+
+      case RestrictionNodeType.CITIZENSHIP: {
+        const value = transformCountryCodeToOriginSlug(context[type][0])
+        segments[RestrictionNodeType.CITIZENSHIP] = `citizen-of-${value}`
+        break
       }
     }
-    return '/as/' + Object.values(segments).join('/')
-  },
+  }
+  return '/as/' + Object.values(segments).join('/')
 }

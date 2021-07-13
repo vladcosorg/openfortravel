@@ -37,7 +37,11 @@ export const mutations: MutationTree<RootState> & MutationSignatures = {
   },
 
   [MutationTypes.setVisitorContextField](state, { field, value }) {
-    Vue.set(state.visitorContext, field, value)
+    if (value === undefined) {
+      Vue.delete(state.visitorContext, field)
+    } else {
+      Vue.set(state.visitorContext, field, value)
+    }
   },
 
   [MutationTypes.mergeVisitorContext](

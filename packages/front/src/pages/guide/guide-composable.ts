@@ -10,11 +10,13 @@ import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export function createComputedSetter<
   T extends keyof RootStateType['visitorContext'],
->(field: T): WritableComputedRef<VisitorProfile[T]> {
+>(field: T, withDefaults: false): WritableComputedRef<VisitorProfile[T]> {
   const store = useRootStore()
   return computed<VisitorProfile[T]>({
     get() {
-      return store.state.visitorContext[field]
+      return withDefaults
+        ? store.getters.visitorContextWithDefaults[field]
+        : store.state.visitorContext[field]
     },
 
     set(value) {

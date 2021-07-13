@@ -1,5 +1,8 @@
 import type { StateType } from '@/front/src/pages/destination/store/state'
-import type { CurrentCountryPair } from '@/front/src/pages/destination/store/types/actions'
+import type {
+  CurrentCountryPair,
+  Links,
+} from '@/front/src/pages/destination/store/types/actions'
 import type {
   PlainRestriction,
   PlainRestrictionCollection,
@@ -10,6 +13,7 @@ export enum MutationTypes {
   setReturnRestriction = 'setReturnRestriction',
   setRelatedRestrictions = 'setRelatedRestrictions',
   toggleProfileEditor = 'toggleProfileEditor',
+  setRelatedURLs = 'setRelatedURLs',
 }
 
 export type MutationSignatures<S = StateType> = {
@@ -29,4 +33,5 @@ export type MutationSignatures<S = StateType> = {
       restrictions: PlainRestrictionCollection
     },
   ): void
+  [MutationTypes.setRelatedURLs](state: S, links: Links): void
 }
