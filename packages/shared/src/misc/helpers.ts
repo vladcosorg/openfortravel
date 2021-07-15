@@ -17,3 +17,15 @@ export function isEmpty(value: unknown): boolean {
 export function vd<V, D>(value: V, defaultValue: D): V | D {
   return isEmpty(value) ? defaultValue : value
 }
+
+export function removeUndefinedFromObject<T extends Record<string, unknown>>(
+  obj: T,
+): T {
+  return Object.keys(obj).reduce<T>((acc, key) => {
+    const _acc = acc
+    if (obj[key] !== undefined) {
+      _acc[key] = obj[key]
+    }
+    return _acc
+  }, {} as T)
+}

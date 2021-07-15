@@ -9,19 +9,19 @@
     dense
   >
     <template #selected>
-      <country-label regular focused :value="destinationIso" />
+      <country-label regular focused :value="model" />
     </template>
   </country-dropdown>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent, inject } from '@vue/composition-api'
 
 import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
 import CountryLabel from '@/front/src/components/country/country-label.vue'
-import { createDestinationRoute } from '@/front/src/router/factory'
-import { useRootStore, useRouter } from '@/shared/src/composables/use-plugins'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { StoreModule } from '@/front/src/pages/destination/destination-store'
+import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { updateRouteParameter } from '@/front/src/router/route-builders/common'
 
 export default defineComponent({
   components: {
@@ -29,25 +29,14 @@ export default defineComponent({
     CountryDropdown,
   },
   inheritAttrs: false,
-  props: {
-    destinationIso: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
+  setup() {
+    const store = inject(StoreKey) as StoreModule
     const model = computed({
       get() {
-        return props.destinationIso
+        return store.state.currentDestinationCode
       },
-      async set(destinationCode: string) {
-        await useRouter().push(
-          createDestinationRoute({
-            originCode:
-              useRootStore().state.visitorContext[RestrictionNodeType.ORIGIN],
-            destinationCode,
-          }),
-        )
+      set(destinationCode: string) {
+        updateRouteParameter('destinationSlug', destinationCode)
       },
     })
 

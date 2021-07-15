@@ -30,6 +30,10 @@ export const vaccineLabels = {
 
 export const vaccineSelectList = transformFlatMapToArrayOfPairs(vaccineLabels)
 
+export function isVaccineBrand(brand: string): brand is VaccineBrand {
+  return Object.values(VaccineBrand).includes(brand as VaccineBrand)
+}
+
 type DefaultOptions = typeof Vaccinated.defaultOptions
 export class Vaccinated extends RestrictionNode<DefaultOptions> {
   static defaultOptions = {

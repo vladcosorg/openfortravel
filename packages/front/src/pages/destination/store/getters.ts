@@ -9,11 +9,15 @@ import type { StateClass } from '@/front/src/pages/destination/store/state'
 import type { GetterSignatures } from '@/front/src/pages/destination/store/types/getters'
 import type { RootStateType } from '@/front/src/store/state'
 import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
   {
-    origin: (state, _getters, _rootState, rootGetters) =>
-      rootGetters.wrappedHostRules[state.currentOriginCode],
+    origin: (_state, getters, _rootState, rootGetters) =>
+      rootGetters.wrappedHostRules[getters.currentOriginCode],
+
+    currentOriginCode: (_state, _getters, rootState) =>
+      rootState.visitorContext[RestrictionNodeType.ORIGIN],
 
     destination: (state, _getters, _rootState, rootGetters) =>
       rootGetters.wrappedHostRules[state.currentDestinationCode],

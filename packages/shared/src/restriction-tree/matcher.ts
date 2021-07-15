@@ -14,7 +14,8 @@ type RestrictionConstructors<T extends RestrictionNodeType> = Exclude<
 type Method<T extends RestrictionNodeType> = InstanceType<
   RestrictionConstructors<T>
 >['matches']
-type Value<T extends RestrictionNodeType> = Parameters<Method<T>>[0]
+export type RestrictionNodeTypeValue<T extends RestrictionNodeType> =
+  Parameters<Method<T>>[0]
 
 export class Matcher implements IterableIterator<PlainRestrictionGroup> {
   private pointer = 0
@@ -23,14 +24,14 @@ export class Matcher implements IterableIterator<PlainRestrictionGroup> {
 
   withOptional<T extends RestrictionNodeType>(
     criteriaType: T,
-    criteriaValue: Value<T>,
+    criteriaValue: RestrictionNodeTypeValue<T>,
   ): Matcher {
     return this.withOptionalCriteria(new Map([[criteriaType, criteriaValue]]))
   }
 
   withRequired<T extends RestrictionNodeType>(
     criteriaType: T,
-    criteriaValue: Value<T>,
+    criteriaValue: RestrictionNodeTypeValue<T>,
   ): Matcher {
     return this.withRequiredCriteria(new Map([[criteriaType, criteriaValue]]))
   }

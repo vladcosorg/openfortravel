@@ -16,9 +16,9 @@ export enum MutationTypes {
   setHostRules = 'setHostRules',
 
   mergeVisitorContext = 'mergeVisitorContext',
+  replaceVisitorContext = 'replaceVisitorContext',
   setVisitorContextField = 'setVisitorContextField',
   setVisitorOrigin = 'setVisitorOrigin',
-  setSearchId = 'setSearchId',
 }
 
 export type MutationSignatures<S = RootStateType> = {
@@ -34,7 +34,6 @@ export type MutationSignatures<S = RootStateType> = {
 
   [MutationTypes.setLocales](state: S, locales: LocaleMessageObject): void
   [MutationTypes.setAvailableLocales](state: S, locales: string[]): void
-  [MutationTypes.setSearchId](state: S, searchId: string | null): void
   [MutationTypes.setLabeledLocales](
     state: S,
     locales: StateInterface['labeledLocales'],
@@ -49,10 +48,18 @@ export type MutationSignatures<S = RootStateType> = {
     state: S,
     payload: {
       context: Partial<VisitorProfile>
-      searchId?: string
       persistLocally: boolean
     },
   ): void
+
+  [MutationTypes.replaceVisitorContext](
+    state: S,
+    payload: {
+      context: VisitorProfile
+      persistLocally?: boolean
+    },
+  ): void
+
   [MutationTypes.setVisitorContextField]<
     K extends keyof VisitorProfile,
     V extends VisitorProfile[K],

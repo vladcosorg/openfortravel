@@ -1,23 +1,20 @@
 <template>
   <inner-page disable-container disable-margins>
-    <search-header :origin-code="originCode" />
-    <search-results :origin-code="originCode" />
+    <search-header :origin-code="originSlug" />
+    <search-results :origin-code="originSlug" />
   </inner-page>
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from '@vue/composition-api'
+import { defineComponent, PropType, watch } from '@vue/composition-api'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
-import { useSearchIdRouterUpdater } from '@/front/src/composables/search-id'
+import { applyContextFromProps } from '@/front/src/composables/visitor-context-applier'
 import SearchHeader from '@/front/src/pages/country/components/search-header.vue'
 import SearchResults from '@/front/src/pages/country/components/search-results.vue'
 import { meta } from '@/front/src/pages/country/country-meta'
-import { useRootStore, useRouter } from '@/shared/src/composables/use-plugins'
-import {
-  createDestinationRoute,
-  createOriginRoute,
-} from '@/front/src/router/factory'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export default defineComponent({
   meta,
@@ -27,25 +24,31 @@ export default defineComponent({
     InnerPage,
   },
   props: {
-    originCode: {
-      type: String,
+    // eslint-disable-next-line vue/no-unused-properties
+    originSlug: {
+      type: String as PropType<VisitorProfile[RestrictionNodeType.ORIGIN]>,
       required: true,
+    },
+    // eslint-disable-next-line vue/no-unused-properties
+    citizenship: {
+      type: Array as PropType<VisitorProfile[RestrictionNodeType.CITIZENSHIP]>,
+      required: true,
+    },
+    // eslint-disable-next-line vue/no-unused-properties
+    vaccinated: {
+      type: Object as PropType<VisitorProfile[RestrictionNodeType.VACCINATED]>,
     },
     isFallback: {
       type: Boolean,
     },
   },
-  setup() {
+  setup(props) {
     watch(
-      () => useRootStore().state.searchId,
-      (searchId) => {
-        const router = useRouter()
-        router.push(
-          createOriginRoute({
-            searchId,
-          }),
-        )
+      props,
+      () => {
+        applyContextFromProps(props)
       },
+      { immediate: true },
     )
   },
 })

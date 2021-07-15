@@ -17,7 +17,7 @@ export type StoreModule = ReturnType<typeof registerStoreModule>
 type DestinationState = StateInterface & { [MODULE_ID]: StateType }
 export const registerStoreModule = (
   store: Store<DestinationState>,
-  initialStateOverrides: NonNullable<StateType>,
+  initialStateOverrides: Partial<StateType>,
 ) => {
   useModule(MODULE_ID, {
     namespaced: true,

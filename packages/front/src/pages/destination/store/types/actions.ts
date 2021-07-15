@@ -8,17 +8,8 @@ export type Links = Array<{
   title: string
   label: string
 }>
-export type CurrentCountryPair = {
-  originCode: string
-  destinationCode: string
-}
 
-export enum ActionTypes {
-  init = 'init',
-  fetchReturnRestriction = 'fetchReturnRestriction',
-  fetch = 'fetch',
-  fetchRelatedURLs = 'fetchRelatedURLs',
-}
+export enum ActionTypes {}
 type Context = AugmentedActionContext<
   MutationSignatures,
   ActionSignatures,
@@ -26,18 +17,4 @@ type Context = AugmentedActionContext<
   StateType
 >
 
-export type ActionSignatures = {
-  [ActionTypes.init](
-    context: Context,
-    countryPair: CurrentCountryPair,
-  ): Promise<void>
-  [ActionTypes.fetchRelatedURLs](context: Context): Promise<Links>
-  [ActionTypes.fetch](
-    context: Context,
-    countryPair: CurrentCountryPair,
-  ): Promise<void>
-  [ActionTypes.fetchReturnRestriction](
-    context: Context,
-    countryPair: { originCode: string; destinationCode: string },
-  ): Promise<void>
-}
+export type ActionSignatures = {}

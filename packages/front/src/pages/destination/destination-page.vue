@@ -59,19 +59,17 @@
 import {
   computed,
   defineComponent,
-  onMounted,
-  onServerPrefetch,
+  PropType,
   provide,
-  toRefs,
+  toRef,
   watch,
 } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
+import { applyContextFromProps } from '@/front/src/composables/visitor-context-applier'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
-import TheSearchHeader from '@/front/src/layouts/components/the-search-header.vue'
 import EntryRestrictions from '@/front/src/pages/destination/components/entry-restrictions.vue'
-import InlineSubscribeForm from '@/front/src/pages/destination/components/inline-subscribe-form.vue'
 import Links from '@/front/src/pages/destination/components/links.vue'
 import TheRelatedCriteriaSection from '@/front/src/pages/destination/components/sections/the-related-criteria-section.vue'
 import Stats from '@/front/src/pages/destination/components/stats.vue'
@@ -83,73 +81,71 @@ import { registerStoreModule } from '@/front/src/pages/destination/destination-s
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import { useStore } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export default defineComponent({
   meta,
   components: {
     TheRelatedCriteriaSection,
     TheProfileBar,
-    TheSearchHeader,
     TheHeading,
     EntryRestrictions,
     Stats,
     Links,
     TheBreadcrumbs,
     InnerPage,
-    InlineSubscribeForm,
     Portal,
   },
+  inheritAttrs: false,
   props: {
-    originCode: {
+    destinationSlug: {
       type: String,
       required: true,
     },
-    destinationCode: {
-      type: String,
+    // eslint-disable-next-line vue/no-unused-properties
+    originSlug: {
+      type: String as PropType<VisitorProfile[RestrictionNodeType.ORIGIN]>,
       required: true,
     },
+    // eslint-disable-next-line vue/no-unused-properties
+    citizenship: {
+      type: Array as PropType<VisitorProfile[RestrictionNodeType.CITIZENSHIP]>,
+      required: true,
+    },
+    // eslint-disable-next-line vue/no-unused-properties
+    vaccinated: {
+      type: Object as PropType<VisitorProfile[RestrictionNodeType.VACCINATED]>,
+    },
+    // eslint-disable-next-line vue/no-unused-properties
     isFallback: {
       type: Boolean,
-      default: false,
     },
   },
   setup(props) {
     const store = registerStoreModule(useStore(), {
-      currentOriginCode: props.originCode,
-      currentDestinationCode: props.destinationCode,
+      currentDestinationCode: props.destinationSlug,
     })
-    const { originCode, destinationCode } = toRefs(props)
+
     const { loading } = useLoading(false)
 
-    const init = () => {
-      store.mutations.setCurrentCountryPair({
-        originCode: props.originCode,
-        destinationCode: props.destinationCode,
-      })
-    }
-
     provide(StoreKey, store)
-    onMounted(init)
-    onServerPrefetch(init)
-    watch(props, init)
-
-    // watch(
-    //   () => useRootStore().state.searchId,
-    //   (searchId) => {
-    //     const router = useRouter()
-    //     router.push(
-    //       createDestinationRoute({
-    //         searchId,
-    //         destinationCode: props.destinationCode,
-    //       }),
-    //     )
-    //   },
-    // )
+    watch(
+      props,
+      () => {
+        applyContextFromProps(props)
+        store.mutations.setCurrentDestinationIso(props.destinationSlug)
+      },
+      { immediate: true },
+    )
 
     return {
       destination: computed(() => store.getters.destination),
       isLoading: loading,
-      breadcrumbs: useBreadcrumbs(originCode, destinationCode),
+      breadcrumbs: useBreadcrumbs(
+        computed(() => store.getters.currentOriginCode),
+        toRef(props, 'destinationSlug'),
+      ),
     }
   },
 })

@@ -10,7 +10,7 @@ type HreflangList = Record<
   string,
   { href: string; rel: string; hreflang: string }
 >
-export async function generateHreflangTags(): Promise<HreflangList> {
+export function generateHreflangTags(): HreflangList {
   const currentRoute = useRouter().currentRoute
   const list: HreflangList = {}
 

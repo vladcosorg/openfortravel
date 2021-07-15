@@ -1,33 +1,35 @@
 <template>
   <section>
     <widget-header title="Related restrictions" />
-    <related-url
-      v-for="(link, key) in links"
-      :key="key"
-      class="text-primary-subtle"
-      :title="link.title"
-      :label="link.label"
-      :url="link.url"
-    />
+    <div class="row q-gutter-sm">
+      <q-btn
+        v-for="(link, key) in links"
+        :key="key"
+        type="a"
+        no-caps
+        unelevated
+        color="elevation-1"
+        :title="link.title"
+        :to="link.url"
+        :label="link.label"
+      />
+    </div>
   </section>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, inject } from '@vue/composition-api'
 
-import RelatedUrl from '@/front/src/pages/destination/components/sections/related-url.vue'
+import { useLinks } from '@/front/src/pages/destination/components/sections/composables'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 
 export default defineComponent({
-  components: { RelatedUrl, WidgetHeader },
+  components: { WidgetHeader },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const links = computed(() => store.state.relatedURLs)
-
-    // onMounted(store.actions.fetchRelatedURLs)
-    // onServerPrefetch(store.actions.fetchRelatedURLs)
+    const links = useLinks(computed(() => store.state.currentDestinationCode))
 
     return { links }
   },

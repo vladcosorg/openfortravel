@@ -46,7 +46,7 @@ export const mutations: MutationTree<RootState> & MutationSignatures = {
 
   [MutationTypes.mergeVisitorContext](
     state,
-    { context, searchId, persistLocally = true },
+    { context, persistLocally = true },
   ) {
     state.visitorContext = Object.assign({}, state.visitorContext, context)
 
@@ -54,14 +54,24 @@ export const mutations: MutationTree<RootState> & MutationSignatures = {
       return
     }
 
-    saveContextToCookie(state.visitorContext, searchId)
+    saveContextToCookie(state.visitorContext)
+  },
+
+  [MutationTypes.replaceVisitorContext](
+    state,
+    { context, persistLocally = true },
+  ) {
+    state.visitorContext = context
+
+    if (!persistLocally) {
+      return
+    }
+
+    saveContextToCookie(state.visitorContext)
   },
 
   [MutationTypes.setVisitorOrigin](state, country) {
     Vue.set(state.visitorContext, RestrictionNodeType.ORIGIN, country)
     useCookies().set('country', country, { path: '/' })
-  },
-  [MutationTypes.setSearchId](state, searchId) {
-    state.searchId = searchId
   },
 }

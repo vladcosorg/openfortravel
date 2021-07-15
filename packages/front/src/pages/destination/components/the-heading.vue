@@ -4,7 +4,7 @@
       <h1 class="text-h4 q-ma-none">
         Travel restrictions from
         <origin-context-inline /> to
-        <destination-context-inline :destination-iso="destinationIso" />
+        <destination-context-inline />
       </h1>
       <h2 class="text-h6 text-primary-subtle" style="font-weight: normal">
         for citizens, nationals and residents of

@@ -1,8 +1,9 @@
 <template>
-  <router-link v-if="url" class="text-primary-subtle" :title="title" :to="url">
-    {{ label }}
-  </router-link>
-  <q-skeleton v-else type="text" />
+  <q-list>
+    <q-item class="text-primary-subtle" :to="url" :title="title">
+      {{ label }}
+    </q-item>
+  </q-list>
 </template>
 
 <style lang="scss" module></style>

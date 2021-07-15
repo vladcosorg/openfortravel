@@ -14,10 +14,10 @@
           :label="$t('components.theCountryList.from')"
           :show-prefix-text="!!originCode"
         />
-        <citizenship-context class="col-sm-4 col-12" />
-        <did-not-visit-countries-context class="col-sm-4 col-12" />
-        <vaccination-context class="col-sm-4 col-12" />
-        <recovery-context class="col-sm-4 col-12" />
+        <!--        <citizenship-context class="col-sm-4 col-12" />-->
+        <!--        <did-not-visit-countries-context class="col-sm-4 col-12" />-->
+        <!--        <vaccination-context class="col-sm-4 col-12" />-->
+        <!--        <recovery-context class="col-sm-4 col-12" />-->
       </div>
     </div>
   </div>

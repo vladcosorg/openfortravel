@@ -1,9 +1,15 @@
-import { set } from 'lodash'
+import mapValues from 'lodash/mapValues'
+import set from 'lodash/set'
 import type { IVueI18n } from 'vue-i18n'
 import type VueRouter from 'vue-router'
 
 import { serverCache } from '@/front/src/misc/server-cache'
+import { originParameterTransformers } from '@/front/src/router/route-builders/origin'
 import { createGenericRouter } from '@/front/src/router/routes'
+import {
+  EncodedParameters,
+  ParameterTransformerMap,
+} from '@/front/src/router/transformers/_types'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 
 export const routesThatNeedLocalization = [
@@ -35,16 +41,23 @@ export function pregenerateLocalizableRouter(): Record<
         [routeName, locale],
         router.resolve({
           name: 'origin',
-          params: {
-            locale: locale,
-            originSlug: '*originSlug*',
-            destinationSlug: '*destinationSlug*',
-          },
+          params: createPlaceholders(originParameterTransformers, { locale }),
         }).href,
       )
     }
   }
   return routes
+}
+
+export function createPlaceholders<T extends ParameterTransformerMap>(
+  allParams: T,
+  currentValues: Partial<EncodedParameters<T>>,
+): EncodedParameters<T> {
+  return Object.assign(
+    {},
+    mapValues(allParams, (_value, key) => `*${key}*`),
+    mapValues(currentValues, (value, key) => allParams[key].encode(value)),
+  )
 }
 
 export function replacePlaceholders(

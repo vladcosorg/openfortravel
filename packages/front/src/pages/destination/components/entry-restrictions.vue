@@ -108,12 +108,12 @@ export default defineComponent({
     const originISO = computed(() =>
       props.returnRestrictions
         ? store.state.currentDestinationCode
-        : store.state.currentOriginCode,
+        : store.getters.currentOriginCode,
     )
 
     const destinationISO = computed(() =>
       props.returnRestrictions
-        ? store.state.currentOriginCode
+        ? store.getters.currentOriginCode
         : store.state.currentDestinationCode,
     )
 

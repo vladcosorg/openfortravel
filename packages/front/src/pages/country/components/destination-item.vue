@@ -13,7 +13,7 @@
       class="column full-height relative-position"
       style="text-decoration: none; color: inherit"
       clickable
-      :to="journey.getDetailsURL(searchId)"
+      :to="journey.url"
       @click.native="isClicked = true"
     >
       <q-card-section>
@@ -146,7 +146,7 @@
 <script lang="ts">
 import { ionRemoveCircleOutline as accessDeniedIcon } from '@quasar/extras/ionicons-v5'
 import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import { TripCard } from '@/front/src/models/TripCard'
@@ -154,7 +154,6 @@ import TripHighlights from '@/front/src/pages/country/components/trip-highlights
 import TripSummary from '@/front/src/pages/country/components/trip-summary.vue'
 import { riskLevelColor } from '@/front/src/pages/country/composable'
 import GroupScore from '@/front/src/pages/destination/components/restriction-groups/group-score.vue'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { GroupScore, CountryLabel, TripHighlights, TripSummary },
@@ -177,9 +176,7 @@ export default defineComponent({
   },
 
   setup() {
-    const searchId = computed(() => useRootStore().state.searchId)
     return {
-      searchId,
       riskLevelColor,
       accessDeniedIcon,
       isClicked: ref(false),

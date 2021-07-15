@@ -1,4 +1,4 @@
-import { createDestinationRoute } from '@/front/src/router/factory'
+import { getDestinationRouteURL } from '@/front/src/router/route-builders/destination'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { RestrictionGroup } from '@/shared/src/restriction-tree/restriction-group'
@@ -85,11 +85,10 @@ export class TripCard {
     return highlights
   }
 
-  getDetailsURL(searchId?: string): string {
-    return createDestinationRoute({
-      originCode: this.origin.countryCode,
-      destinationCode: this.destination.countryCode,
-      searchId,
+  get url(): string {
+    return getDestinationRouteURL({
+      originSlug: this.origin.countryCode,
+      destinationSlug: this.destination.countryCode,
     })
   }
 

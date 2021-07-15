@@ -71,7 +71,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import TheBoy from '@/front/src/layouts/components/the-boy/the-boy.vue'
-import { createOriginRoute } from '@/front/src/router/factory'
+import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
@@ -83,9 +83,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const url = computed(() =>
-      createOriginRoute({ originCode: props.originCode }),
-    )
+    const url = computed(() => getOriginRouteURL())
     const countryLabel = computed(() =>
       getLabelForCountryCode(props.originCode),
     )
