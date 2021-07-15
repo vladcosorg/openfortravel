@@ -1,6 +1,9 @@
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+
 export type ParameterTransformer<D = string> = {
-  encode: (input: D) => string
-  decode: (input: string) => D
+  encode: (input?: D) => string | undefined
+  decode: (input?: string) => D
+  contextField?: RestrictionNodeType
 }
 
 export type DecodedParameters<T extends ParameterTransformerMap> = {

@@ -13,7 +13,7 @@
       inheritFontSize ? 'q-field--inherit-font-size' : '',
       $attrs.behavior === 'dialog' ? 'q-field--dialog' : '',
     ]"
-    use-input
+    :use-input="!disableInput"
     :options="internalOptions"
     :value="value"
     :multiple="multiple"
@@ -23,6 +23,14 @@
   >
     <template v-for="(_, slot) of $scopedSlots" #[slot]="scope">
       <slot :name="slot" v-bind="scope" />
+    </template>
+
+    <template #option="scope">
+      <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
+        <q-item-section>
+          <q-item-label class="text-capitalize" v-html="scope.opt.label" />
+        </q-item-section>
+      </q-item>
     </template>
   </q-select>
 </template>
@@ -60,6 +68,9 @@
 .selectBlock
   min-width: 250px
   max-width: 500px
+  \:global
+    .q-field__control-container
+      text-transform: capitalize
 
 .selectInline
   display: inline-block
@@ -110,6 +121,9 @@ export default defineComponent({
       type: Boolean,
     },
     inheritFontSize: {
+      type: Boolean,
+    },
+    disableInput: {
       type: Boolean,
     },
   },

@@ -7,14 +7,10 @@
     label="Citizenship or permanent residence"
     bottom-slots
     stack-label
-    :clearable="isModified"
+    :clearable="!isDefault"
   >
     <template #selected>
-      <country-label-list
-        regular
-        :focused="isModified"
-        :values="isModified ? value : defaultValue"
-      />
+      <country-label-list regular focused :values="value" />
     </template>
     <template #hint>
       <hint>
@@ -65,27 +61,19 @@ export default defineComponent({
     CountryDropdown,
   },
   setup() {
-    const isModified = computed(
-      () =>
-        useRootStore().state.visitorContext[RestrictionNodeType.CITIZENSHIP] !==
-        undefined,
-    )
-
-    const defaultValue = computed(
-      () =>
-        useRootStore().getters.visitorContextWithDefaults[
+    const isDefault = computed(() => {
+      const rootStore = useRootStore()
+      const origin =
+        rootStore.getters.visitorContextWithDefaults[RestrictionNodeType.ORIGIN]
+      const citizenshipList =
+        rootStore.getters.visitorContextWithDefaults[
           RestrictionNodeType.CITIZENSHIP
-        ],
-    )
+        ]
 
-    const label = computed(
-      () =>
-        `Citizenship or permanent residence  ${
-          !isModified.value ? '(automatic value)' : ''
-        }`,
-    )
+      return citizenshipList.length === 1 && citizenshipList.includes(origin)
+    })
     const value = useModel()
-    return { label, value, isModified, defaultValue }
+    return { value, isDefault }
   },
 })
 </script>

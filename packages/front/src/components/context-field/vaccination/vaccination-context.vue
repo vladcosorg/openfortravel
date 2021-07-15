@@ -1,11 +1,6 @@
 <template>
-  <vaccine-dropdown
-    v-model="value"
-    :dense="inline"
-    :bottom-slots="!inline"
-    :inline="inline"
-  >
-    <template v-if="!inline" #hint>
+  <vaccine-dropdown v-model="value" label="Vaccination status">
+    <template #hint>
       <hint>
         The fact whether you're vaccinated or not dramatically changes the
         restrictions applied to you. <br />
@@ -18,39 +13,19 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
 import VaccineDropdown from '@/front/src/components/context-field/helpers/vaccine-dropdown.vue'
-import { createComputedSetter } from '@/front/src/pages/guide/guide-composable'
-import { VaccineBrand } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { useModel } from '@/front/src/components/context-field/vaccination/composables'
 
 export default defineComponent({
   components: { Hint, VaccineDropdown },
   inheritAttrs: false,
-  props: {
-    inline: {
-      type: Boolean,
-    },
-  },
   setup() {
-    const setter = createComputedSetter(RestrictionNodeType.VACCINATED)
+    const value = useModel()
     return {
-      value: computed({
-        get() {
-          return setter.value === undefined ? undefined : setter.value.brand
-        },
-        set(value: undefined | VaccineBrand) {
-          setter.value =
-            value === undefined
-              ? undefined
-              : {
-                  partial: false,
-                  brand: value,
-                }
-        },
-      }),
+      value,
     }
   },
 })

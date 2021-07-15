@@ -128,7 +128,7 @@ export function riskLevelColor(riskLevel: RiskLevel): string {
 }
 
 export function getBreadcrumbs(
-  originCode: Ref<string>,
+  originCode: ComputedRef<string>,
   isLoading: Ref<boolean>,
 ): ComputedRef {
   const { t } = useVueI18n()

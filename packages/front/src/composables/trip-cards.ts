@@ -1,5 +1,6 @@
 import type { ComputedRef } from '@vue/composition-api'
-import { computed } from '@vue/composition-api'
+import { ref, watch } from '@vue/composition-api'
+import debounce from 'lodash/debounce'
 
 import { TripCard } from '@/front/src/models/TripCard'
 import { Destination } from '@/shared/src/api/destinations/models'
@@ -15,12 +16,11 @@ export function createTripsCards(
   includeReturnData = false,
 ): ComputedRef<TripCard[]> {
   const store = useRootStore()
-  return computed<TripCard[]>(() => {
-    const countries = store.getters.wrappedHostRules
-    const context = store.getters.visitorContextWithDefaults
-
+  const results = ref<TripCard[]>([])
+  const countries = store.getters.wrappedHostRules
+  const debounced = debounce((context) => {
     const originCountry = countries[context[RestrictionNodeType.ORIGIN]]
-    return Object.values(countries)
+    results.value = Object.values(countries)
       .filter((destinationCountry) => !destinationCountry.equals(originCountry))
       .map((destinationCountry) => {
         const optimalGroup = createCollection(
@@ -38,7 +38,18 @@ export function createTripsCards(
             : undefined,
         )
       })
-  })
+  }, 100)
+
+  watch(
+    () => store.getters.visitorContextWithDefaults,
+    (context) => {
+      results.value = []
+      debounced(context)
+    },
+    { immediate: true },
+  )
+
+  return results
 }
 
 export function createTripCard(

@@ -1,10 +1,10 @@
 <template>
   <generic-select
     v-model="selectValue"
-    :disable="masterValue !== undefined"
     :options="options"
     label="Have you had COVID-19?"
     bottom-slots
+    disable-input
   >
     <template #hint>
       <hint>
@@ -33,15 +33,13 @@ import { computed, defineComponent } from '@vue/composition-api'
 
 import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
-import { createComputedSetter } from '@/front/src/pages/guide/guide-composable'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { useModel } from '@/front/src/components/context-field/recovery/composables'
 
 export default defineComponent({
   components: { Hint, GenericSelect },
   inheritAttrs: false,
   setup() {
-    const internalValue = createComputedSetter(RestrictionNodeType.RECOVERY)
-    const masterValue = createComputedSetter(RestrictionNodeType.VACCINATED)
+    const internalValue = useModel()
     const options = [
       { label: 'Yes', value: true },
       { label: 'No', value: false },
@@ -67,7 +65,7 @@ export default defineComponent({
           : (internalValue.value = undefined)
       },
     })
-    return { masterValue, inputValue, selectValue, options }
+    return { inputValue, selectValue, options }
   },
 })
 </script>

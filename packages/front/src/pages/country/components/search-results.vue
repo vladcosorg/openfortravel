@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, toRef } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 import { Portal } from 'portal-vue'
 
 import CitizenshipContextInline from '@/front/src/components/context-field/citizenship/citizenship-context-inline.vue'
@@ -79,6 +79,7 @@ import {
   useRestrictionFilterer,
   useRestrictionList,
 } from '@/front/src/pages/country/composable'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
@@ -96,14 +97,9 @@ export default defineComponent({
     DestinationGroup,
     Portal,
   },
-  props: {
-    originCode: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
-    const originCode = toRef(props, 'originCode')
+
+  setup() {
+    const originCode = computed(() => useRootStore().getters.visitorOrigin)
     const { loading: isLoading } = useLoading(false)
     const { allowedDestinations, forbiddenDestinations, allDestinations } =
       useRestrictionList()
@@ -113,6 +109,7 @@ export default defineComponent({
     const isFiltering = computed(() => countryMatchFilterValue.value.length > 0)
 
     return {
+      originCode,
       isFiltering,
       filteredDestinations,
       countryMatchFilterValue,

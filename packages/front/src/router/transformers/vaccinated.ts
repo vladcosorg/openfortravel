@@ -14,27 +14,24 @@ export const vaccinatedTransformer: ParameterTransformer<
     return `vaccinated-with-${input.brand}`
   },
   decode(input) {
-    switch (input) {
-      case undefined:
-      case 'not-vaccinated':
-        return
+    if (!input || input === 'not-vaccinated') {
+      return
+    }
 
-      default: {
-        const type = input.split('vaccinated-with-').pop()
+    const type = input.split('vaccinated-with-').pop()
 
-        if (!type) {
-          return
-        }
+    if (!type) {
+      return
+    }
 
-        if (!isVaccineBrand(type)) {
-          return
-        }
+    if (!isVaccineBrand(type)) {
+      return
+    }
 
-        return {
-          partial: false,
-          brand: type,
-        }
-      }
+    return {
+      partial: false,
+      brand: type,
     }
   },
+  contextField: RestrictionNodeType.VACCINATED,
 }

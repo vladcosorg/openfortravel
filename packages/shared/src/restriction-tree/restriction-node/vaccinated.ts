@@ -30,6 +30,10 @@ export const vaccineLabels = {
 
 export const vaccineSelectList = transformFlatMapToArrayOfPairs(vaccineLabels)
 
+export function getVaccineLabel(id?: VaccineBrand): string {
+  return id ? vaccineLabels[id] : 'not vaccinated'
+}
+
 export function isVaccineBrand(brand: string): brand is VaccineBrand {
   return Object.values(VaccineBrand).includes(brand as VaccineBrand)
 }

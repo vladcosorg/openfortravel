@@ -15,7 +15,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'
-import RecoveryContext from '@/front/src/components/context-field/recovery-context.vue'
+import RecoveryContext from '@/front/src/components/context-field/recovery/recovery-context.vue'
 import {
   createComputedSetter,
   useCaption,

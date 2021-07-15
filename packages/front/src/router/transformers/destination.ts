@@ -6,9 +6,17 @@ import {
 
 export const destinationTransformer: ParameterTransformer = {
   encode(input) {
+    if (!input) {
+      throw new Error('Missing mandatory parameter')
+    }
+
     return transformCountryCodeToDestinationSlug(input)
   },
   decode(input) {
+    if (!input) {
+      throw new Error('Missing mandatory parameter')
+    }
+
     return transformDestinationSlugToCode(input)
   },
 }

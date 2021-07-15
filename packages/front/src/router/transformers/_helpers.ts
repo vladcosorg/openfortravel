@@ -21,13 +21,20 @@ export function getRouteURL<T extends ParameterTransformerMap>(
 
 export function encodeParameters<T extends ParameterTransformerMap>(
   transformationConfig: T,
-  customParameters?: DecodedParameters<T>,
+  customParameters: DecodedParameters<T> = {} as DecodedParameters<T>,
 ): EncodedParameters<T> {
+  const currentRoute = useRouter().currentRoute
   return (Object.entries(transformationConfig) as Entries<T>).reduce(
     (acc, [parameterName, parameterTransformer]) => {
-      acc[parameterName] = parameterTransformer.encode(
-        customParameters ? customParameters[parameterName] : undefined,
-      )
+      if (customParameters.hasOwnProperty(parameterName)) {
+        acc[parameterName] = parameterTransformer.encode(
+          customParameters[parameterName],
+        )
+      } else {
+        acc[parameterName] =
+          currentRoute.params[parameterName] ?? parameterTransformer.encode()
+      }
+
       return acc
     },
     {} as EncodedParameters<T>,

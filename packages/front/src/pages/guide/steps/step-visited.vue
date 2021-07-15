@@ -17,9 +17,9 @@
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { defineComponent } from '@vue/composition-api'
 
-import DidNotVisitCountriesContext from '@/front/src/components/context-field/did-not-visit-countries-context.vue'
 import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
 import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'
+import DidNotVisitCountriesContext from '@/front/src/components/context-field/visited/did-not-visit-countries-context.vue'
 import {
   createComputedSetter,
   useCaption,

@@ -8,6 +8,8 @@ import { DecodedParameters } from '@/front/src/router/transformers/_types'
 import { citizenshipTransformer } from '@/front/src/router/transformers/citizenship'
 import { localeTransformer } from '@/front/src/router/transformers/locale'
 import { originTransformer } from '@/front/src/router/transformers/origin'
+import { recentlyVisitedTransformer } from '@/front/src/router/transformers/recently-visited'
+import { recoveredTransformer } from '@/front/src/router/transformers/recovered'
 import { vaccinatedTransformer } from '@/front/src/router/transformers/vaccinated'
 
 export const originParameterTransformers = {
@@ -15,6 +17,8 @@ export const originParameterTransformers = {
   originSlug: originTransformer,
   citizenship: citizenshipTransformer,
   vaccinated: vaccinatedTransformer,
+  recovered: recoveredTransformer,
+  visited: recentlyVisitedTransformer,
 }
 
 export function getOriginRouteURL(

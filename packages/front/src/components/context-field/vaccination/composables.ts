@@ -2,19 +2,27 @@ import { computed } from '@vue/composition-api'
 
 import { updateRouteParameter } from '@/front/src/router/route-builders/common'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { RestrictionNodeTypeValue } from '@/shared/src/restriction-tree/matcher'
+import { VaccineBrand } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export function useModel() {
   const store = useRootStore()
-  return computed<RestrictionNodeTypeValue<RestrictionNodeType.CITIZENSHIP>>({
+  return computed({
     get() {
       return store.getters.visitorContextWithDefaults[
-        RestrictionNodeType.CITIZENSHIP
-      ]
+        RestrictionNodeType.VACCINATED
+      ]?.brand
     },
-    set(value) {
-      updateRouteParameter(RestrictionNodeType.CITIZENSHIP, value)
+    set(value: undefined | VaccineBrand) {
+      updateRouteParameter(
+        RestrictionNodeType.VACCINATED,
+        value === undefined
+          ? undefined
+          : {
+              partial: false,
+              brand: value,
+            },
+      )
     },
   })
 }

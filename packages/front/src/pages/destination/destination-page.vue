@@ -59,7 +59,6 @@
 import {
   computed,
   defineComponent,
-  PropType,
   provide,
   toRef,
   watch,
@@ -67,7 +66,10 @@ import {
 import { Portal } from 'portal-vue'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
-import { applyContextFromProps } from '@/front/src/composables/visitor-context-applier'
+import {
+  applyContextFromProps,
+  contextProps,
+} from '@/front/src/composables/visitor-context-applier'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import EntryRestrictions from '@/front/src/pages/destination/components/entry-restrictions.vue'
 import Links from '@/front/src/pages/destination/components/links.vue'
@@ -81,8 +83,6 @@ import { registerStoreModule } from '@/front/src/pages/destination/destination-s
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import { useStore } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export default defineComponent({
   meta,
@@ -104,23 +104,10 @@ export default defineComponent({
       required: true,
     },
     // eslint-disable-next-line vue/no-unused-properties
-    originSlug: {
-      type: String as PropType<VisitorProfile[RestrictionNodeType.ORIGIN]>,
-      required: true,
-    },
-    // eslint-disable-next-line vue/no-unused-properties
-    citizenship: {
-      type: Array as PropType<VisitorProfile[RestrictionNodeType.CITIZENSHIP]>,
-      required: true,
-    },
-    // eslint-disable-next-line vue/no-unused-properties
-    vaccinated: {
-      type: Object as PropType<VisitorProfile[RestrictionNodeType.VACCINATED]>,
-    },
-    // eslint-disable-next-line vue/no-unused-properties
     isFallback: {
       type: Boolean,
     },
+    ...contextProps,
   },
   setup(props) {
     const store = registerStoreModule(useStore(), {

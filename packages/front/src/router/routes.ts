@@ -84,11 +84,12 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
               /* webpackChunkName: "page-contact" */ '@/front/src/pages/contact/contact.vue'
             ),
         },
+
         {
           name: 'destination',
           path: `${i18n.t('page.country.route')}/:originSlug/${i18n.t(
             'page.destination.route',
-          )}/:destinationSlug/:citizenship/:vaccinated`,
+          )}/:destinationSlug/:citizenship?/:vaccinated?/:recovered?/:visited?`,
           component: () =>
             import(
               /* webpackChunkName: "page-destination" */
@@ -102,7 +103,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
           name: 'origin',
           path: `${i18n.t(
             'page.country.route',
-          )}/:originSlug/:citizenship/:vaccinated`,
+          )}/:originSlug/:citizenship?/:vaccinated?/:recovered?/:visited?`,
           component: () =>
             import(
               /* webpackChunkName: "page-origin" */

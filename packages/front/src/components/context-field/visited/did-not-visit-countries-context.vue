@@ -1,6 +1,6 @@
 <template>
   <country-dropdown
-    v-model="value"
+    v-model="model"
     multiple
     label="Recently visited countries"
     clearable
@@ -17,30 +17,18 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 
 import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
-import { createComputedSetter } from '@/front/src/pages/guide/guide-composable'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: { Hint, CountryDropdown },
   inheritAttrs: false,
   props: {},
   setup() {
-    const setter = createComputedSetter(
-      RestrictionNodeType.DID_NOT_VISIT_COUNTRIES,
-    )
-    const value = computed({
-      get() {
-        return setter.value
-      },
-      set(value: string[] | null) {
-        setter.value = value ?? []
-      },
-    })
-    return { value }
+    const model = ref([])
+    return { model }
   },
 })
 </script>

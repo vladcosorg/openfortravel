@@ -2,19 +2,18 @@ import { computed } from '@vue/composition-api'
 
 import { updateRouteParameter } from '@/front/src/router/route-builders/common'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { RestrictionNodeTypeValue } from '@/shared/src/restriction-tree/matcher'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export function useModel() {
   const store = useRootStore()
-  return computed<RestrictionNodeTypeValue<RestrictionNodeType.CITIZENSHIP>>({
+  return computed({
     get() {
       return store.getters.visitorContextWithDefaults[
-        RestrictionNodeType.CITIZENSHIP
+        RestrictionNodeType.RECOVERY
       ]
     },
     set(value) {
-      updateRouteParameter(RestrictionNodeType.CITIZENSHIP, value)
+      updateRouteParameter('recovered', value)
     },
   })
 }

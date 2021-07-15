@@ -7,21 +7,22 @@ import {
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
-export const citizenshipTransformer: ParameterTransformer<
-  VisitorProfile[RestrictionNodeType.CITIZENSHIP] | undefined
+export const recentlyVisitedTransformer: ParameterTransformer<
+  VisitorProfile[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES] | undefined
 > = {
   encode(input) {
     if (!input) {
-      input = useRootStore().state.visitorContext[
-        RestrictionNodeType.CITIZENSHIP
-      ] ?? [
-        useRootStore().getters.visitorContextWithDefaults[
-          RestrictionNodeType.ORIGIN
-        ],
-      ]
+      input =
+        useRootStore().state.visitorContext[
+          RestrictionNodeType.DID_NOT_VISIT_COUNTRIES
+        ]
     }
 
-    return `citizen-of-${input
+    if (!input) {
+      return
+    }
+
+    return `recently-visited-${input
       .map((countryIso) => transformCountryCodeToOriginSlug(countryIso))
       .join('--and--')}`
   },
@@ -30,12 +31,13 @@ export const citizenshipTransformer: ParameterTransformer<
       return
     }
 
-    const parts = input.split('citizen-of-').pop()
+    const parts = input.split('recently-visited-').pop()
+
     if (!parts) {
       return
     }
 
     return parts.split('--and--').map((slug) => transformOriginSlugToCode(slug))
   },
-  contextField: RestrictionNodeType.CITIZENSHIP,
+  contextField: RestrictionNodeType.DID_NOT_VISIT_COUNTRIES,
 }

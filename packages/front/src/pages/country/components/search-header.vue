@@ -14,10 +14,10 @@
           :label="$t('components.theCountryList.from')"
           :show-prefix-text="!!originCode"
         />
-        <!--        <citizenship-context class="col-sm-4 col-12" />-->
-        <!--        <did-not-visit-countries-context class="col-sm-4 col-12" />-->
-        <!--        <vaccination-context class="col-sm-4 col-12" />-->
-        <!--        <recovery-context class="col-sm-4 col-12" />-->
+        <citizenship-context class="col-sm-4 col-12" />
+        <did-not-visit-countries-context class="col-sm-4 col-12" />
+        <vaccination-context class="col-sm-4 col-12" />
+        <recovery-context class="col-sm-4 col-12" />
       </div>
     </div>
   </div>
@@ -48,9 +48,9 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
-import DidNotVisitCountriesContext from '@/front/src/components/context-field/did-not-visit-countries-context.vue'
-import RecoveryContext from '@/front/src/components/context-field/recovery-context.vue'
+import RecoveryContext from '@/front/src/components/context-field/recovery/recovery-context.vue'
 import VaccinationContext from '@/front/src/components/context-field/vaccination/vaccination-context.vue'
+import DidNotVisitCountriesContext from '@/front/src/components/context-field/visited/did-not-visit-countries-context.vue'
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 import {
@@ -69,22 +69,8 @@ export default defineComponent({
     CitizenshipContext,
     CountrySelect,
   },
-  props: {
-    originCode: {
-      type: String,
-      default: undefined,
-    },
-    destinationCode: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-    showDestinationIfEmpty: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup(props) {
+  setup() {
+    const originCode = computed(() => useRootStore().getters.visitorOrigin)
     const { loading: loadingRef, callback: navigateToPage } = useClosureLoading(
       async (originCode: string): Promise<void> => {
         await useRouter().push({
@@ -100,7 +86,7 @@ export default defineComponent({
 
     const originValueRef = computed({
       get() {
-        return props.originCode ?? getPersistedOriginOrDefault()
+        return originCode.value ?? getPersistedOriginOrDefault()
       },
       set(newOriginCode) {
         void navigateToPage(newOriginCode)
@@ -111,6 +97,7 @@ export default defineComponent({
       loading: loadingRef,
       navigateToPage,
       currentOrigin: originValueRef,
+      originCode,
     }
   },
 })

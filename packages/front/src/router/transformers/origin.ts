@@ -4,6 +4,7 @@ import {
   transformCountryCodeToOriginSlug,
   transformOriginSlugToCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export const originTransformer: ParameterTransformer<string | undefined> = {
   encode(input) {
@@ -14,4 +15,5 @@ export const originTransformer: ParameterTransformer<string | undefined> = {
   decode(input) {
     return transformOriginSlugToCode(input)
   },
+  contextField: RestrictionNodeType.ORIGIN,
 }
