@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-if="value !== undefined" v-bind="$props" v-on="$listeners">
+  <q-dialog v-if="value !== undefined" v-bind="$props">
     <div>
       <q-form class="bg-blue-grey-10" @submit.prevent.stop="onSubmit">
         <q-card-section class="bg-blue-grey-9">
@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 
 import RichEmailInput from '@/front/src/components/form/rich-email-input.vue'
 import SubmitButton from '@/front/src/components/form/submit-button.vue'
@@ -57,7 +57,6 @@ import { useRequestDispatcher } from '@/front/src/components/subscribe-form/comp
 
 export default defineComponent({
   components: { RichEmailInput, SubmitButton },
-  inheritAttrs: false,
   props: {
     value: {
       type: Boolean,

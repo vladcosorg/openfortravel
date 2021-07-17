@@ -1,6 +1,14 @@
+import {
+  Router,
+  createRouter,
+  RouteRecordRaw,
+  RouterOptions,
+  createMemoryHistory,
+  createWebHistory,
+  createWebHashHistory,
+} from 'vue-router'
 import type { IVueI18n } from 'vue-i18n'
 import type { RouteConfig, RouterOptions } from 'vue-router'
-import VueRouter from 'vue-router'
 
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 import { parseDestinationRoute } from '@/front/src/router/route-builders/destination'
@@ -59,6 +67,10 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
           name: 'index-redirect',
           path: '',
           redirect: '/',
+        },
+        {
+          path: 'test',
+          component: { template: 'dawd' },
         },
         {
           name: 'privacy',
@@ -151,7 +163,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
     // Always leave this as last one,
     // but you can also remove it
     {
-      path: '*',
+      path: '/:catchAll(.*)*',
       component: () =>
         import(
           /* webpackChunkName: "page-error" */ '@/front/src/pages/error-404-page.vue'
@@ -163,12 +175,20 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
 export function createGenericRouter(
   i18n: IVueI18n,
   options?: RouterOptions,
-): VueRouter {
-  return new VueRouter({
+): Router {
+  const createHistory = process.env.SERVER
+    ? createMemoryHistory
+    : process.env.VUE_ROUTER_MODE === 'history'
+    ? createWebHistory
+    : createWebHashHistory
+  return createRouter({
     scrollBehavior: function (to) {
       return to.hash ? { selector: to.hash } : { x: 0, y: 0 }
     },
     routes: getRoutes(i18n),
+    history: createHistory(
+      process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE,
+    ),
     ...options,
   })
 }

@@ -37,8 +37,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { defineComponent, ref, toRef } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { defineComponent, ref, toRef } from 'vue'
 
 import RichEmailInput from '@/front/src/components/form/rich-email-input.vue'
 import SubmitButton from '@/front/src/components/form/submit-button.vue'

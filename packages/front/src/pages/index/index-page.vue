@@ -13,7 +13,7 @@
 </style>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 import { hydrateWhenIdle, hydrateWhenVisible } from 'vue-lazy-hydration'
 
 import SectionIntro from '@/front/src/pages/index/components/section-intro.vue'

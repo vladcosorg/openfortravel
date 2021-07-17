@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import { computed, defineComponent, inject } from 'vue'
 
 import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
 import CountryLabel from '@/front/src/components/country/country-label.vue'

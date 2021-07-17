@@ -1,6 +1,6 @@
 import { matFlightTakeoff } from '@quasar/extras/material-icons'
-import type { ComputedRef, Ref } from '@vue/composition-api'
-import { computed, ref } from '@vue/composition-api'
+import type { ComputedRef, Ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import { createTripsCards } from '@/front/src/composables/trip-cards'
 import { TripCard } from '@/front/src/models/TripCard'

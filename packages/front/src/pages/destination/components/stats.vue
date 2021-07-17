@@ -83,7 +83,7 @@ import {
   matCoronavirus as coronavirus,
   matAnnouncement as cdcRiskLevel,
 } from '@quasar/extras/material-icons'
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import { computed, defineComponent, inject } from 'vue'
 
 import { riskLevelColor } from '@/front/src/pages/country/composable'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'

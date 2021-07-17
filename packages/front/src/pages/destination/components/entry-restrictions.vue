@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import { matDangerous as stopIcon } from '@quasar/extras/material-icons'
-import { computed, defineComponent, inject, ref } from '@vue/composition-api'
+import { computed, defineComponent, inject, ref } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import { createCollection } from '@/front/src/composables/trip-cards'

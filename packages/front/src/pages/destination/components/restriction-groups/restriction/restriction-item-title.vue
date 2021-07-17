@@ -1,9 +1,5 @@
 <script lang="ts">
-import {
-  createElement as h,
-  defineComponent,
-  PropType,
-} from '@vue/composition-api'
+import { createElement as h, defineComponent, PropType } from 'vue'
 
 import {
   Placement,

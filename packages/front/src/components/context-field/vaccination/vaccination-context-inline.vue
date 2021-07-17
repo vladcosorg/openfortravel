@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import VaccineDropdown from '@/front/src/components/context-field/helpers/vaccine-dropdown.vue'
 import { useModel } from '@/front/src/components/context-field/vaccination/composables'

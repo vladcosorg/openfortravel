@@ -93,7 +93,7 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
 import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'

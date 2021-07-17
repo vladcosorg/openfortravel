@@ -1,5 +1,5 @@
-import type { Ref } from '@vue/composition-api'
-import { computed, ref } from '@vue/composition-api'
+import type { Ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 

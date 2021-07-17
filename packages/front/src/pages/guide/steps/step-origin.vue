@@ -12,12 +12,12 @@
     <div class="row">
       <country-dropdown v-model="internalValue" />
     </div>
-    <step-navigation :step="step" v-on="$listeners" />
+    <step-navigation :step="step" v-bind="$attrs" />
   </q-step>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
 import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'

@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, watch } from '@vue/composition-api'
+import { defineComponent, watch } from 'vue'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
 import {

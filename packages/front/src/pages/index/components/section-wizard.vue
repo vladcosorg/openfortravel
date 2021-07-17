@@ -23,7 +23,7 @@
 </style>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import Guide from '@/front/src/pages/guide/components/guide.vue'
 import GuidePage from '@/front/src/pages/guide/guide-page.vue'

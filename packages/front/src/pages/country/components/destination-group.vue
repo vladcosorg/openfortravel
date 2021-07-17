@@ -65,8 +65,8 @@
 </style>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { TripCard } from '@/front/src/models/TripCard'
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'

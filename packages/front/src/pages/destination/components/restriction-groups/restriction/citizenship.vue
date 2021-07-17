@@ -40,8 +40,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 
 import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
 import CountryLabel from '@/front/src/components/country/country-label.vue'

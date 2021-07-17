@@ -31,6 +31,7 @@ export function pregenerateLocalizableRouter(): Record<
   string,
   Record<string, string>
 > {
+  return {}
   const routes: Record<string, Record<string, string>> = {}
 
   for (const locale of serverCache.availableLocales) {

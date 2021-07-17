@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { matContentCut as icon } from '@quasar/extras/material-icons'
-import { defineComponent, inject, PropType } from '@vue/composition-api'
+import { defineComponent, inject, PropType } from 'vue'
 
 import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
 import { TreeBuilderNode } from '@/admin/src/pages/edit/types'

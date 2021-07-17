@@ -1,13 +1,11 @@
-import { createGenericRouter } from '@/front/src/router/routes'
+import { getRoutes } from '@/front/src/router/routes'
 import { useI18n, useRouter } from '@/shared/src/composables/use-plugins'
 
+
 export function reloadRoutes(): void {
-  const freshRouter = createGenericRouter(useI18n(), {
-    mode: process.env.VUE_ROUTER_MODE,
-    base: process.env.VUE_ROUTER_BASE,
-  })
-  //eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ;(useRouter() as any).matcher = (freshRouter as any).matcher
+  const routes = getRoutes(useI18n()).map((route) =>
+    useRouter().addRoute(route),
+  )
 }
 
 export function getAbsoluteURL(relativeURL: string, hash?: string): string {

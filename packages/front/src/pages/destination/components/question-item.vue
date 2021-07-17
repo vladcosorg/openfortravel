@@ -29,8 +29,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 
 import type { Question } from '@/front/src/pages/destination/questions/question'
 import { createGeneratorForRandomIntegerInRange } from '@/shared/src/misc/misc'

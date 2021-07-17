@@ -67,8 +67,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent, inject } from 'vue'
 
 import CovidTestLabel from '@/front/src/components/covid-test-label.vue'
 import IssuerList from '@/front/src/components/issuer-list.vue'

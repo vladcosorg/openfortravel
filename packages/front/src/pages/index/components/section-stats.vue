@@ -78,7 +78,7 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from '@vue/composition-api'
+import { defineComponent, onMounted, ref } from 'vue'
 import { hydrateWhenVisible } from 'vue-lazy-hydration'
 
 import { createTripsCards } from '@/front/src/composables/trip-cards'

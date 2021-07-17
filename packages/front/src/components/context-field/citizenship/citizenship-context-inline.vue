@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import { useModel } from '@/front/src/components/context-field/citizenship/composables'
 import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'

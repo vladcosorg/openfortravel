@@ -8,7 +8,7 @@ import {
   matHelpOutline as helpIcon,
   matArrowDropDown as downIcon,
 } from '@quasar/extras/material-icons'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
 import { useRootStore } from '@/shared/src/composables/use-plugins'

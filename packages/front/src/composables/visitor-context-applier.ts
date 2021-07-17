@@ -1,4 +1,4 @@
-import { PropType } from '@vue/composition-api'
+import { PropType } from 'vue'
 
 import { originParameterTransformers } from '@/front/src/router/route-builders/origin'
 import { useRootStore } from '@/shared/src/composables/use-plugins'

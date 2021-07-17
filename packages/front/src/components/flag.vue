@@ -12,7 +12,7 @@
 
 <script lang="ts">
 /* eslint-disable no-undef,import/extensions */
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},

@@ -61,7 +61,7 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, toRef } from '@vue/composition-api'
+import { defineComponent, toRef } from 'vue'
 import { hydrateWhenVisible } from 'vue-lazy-hydration'
 
 import { useGroupedDestinations } from '@/front/src/pages/country/composable'

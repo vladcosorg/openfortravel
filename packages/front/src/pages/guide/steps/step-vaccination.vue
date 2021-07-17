@@ -16,13 +16,13 @@
     <step-navigation
       :step="step"
       :next-step="!isVaccinated ? 5 : 6"
-      v-on="$listeners"
+      v-bind="$attrs"
     />
   </q-step>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'
 import CitizenshipField from '@/front/src/components/context-field/vaccination/vaccination-context.vue'

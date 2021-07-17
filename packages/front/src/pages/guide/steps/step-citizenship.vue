@@ -14,12 +14,12 @@
       <citizenship-context />
     </div>
 
-    <step-navigation :step="step" v-on="$listeners" />
+    <step-navigation :step="step" v-bind="$attrs" />
   </q-step>
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
 import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'

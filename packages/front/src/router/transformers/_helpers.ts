@@ -1,11 +1,11 @@
-import { Route } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 import {
   DecodedParameters,
   EncodedParameters,
   ParameterTransformerMap,
 } from '@/front/src/router/transformers/_types'
-import { useRootStore, useRouter } from '@/shared/src/composables/use-plugins'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { Entries } from '@/shared/src/misc/type-helpers'
 
 export function getRouteURL<T extends ParameterTransformerMap>(
@@ -23,7 +23,7 @@ export function encodeParameters<T extends ParameterTransformerMap>(
   transformationConfig: T,
   customParameters: DecodedParameters<T> = {} as DecodedParameters<T>,
 ): EncodedParameters<T> {
-  const currentRoute = useRouter().currentRoute
+  const routeParams = useRoute().params
   const store = useRootStore()
   return (Object.entries(transformationConfig) as Entries<T>).reduce(
     (acc, [parameterName, parameterTransformer]) => {
@@ -33,7 +33,7 @@ export function encodeParameters<T extends ParameterTransformerMap>(
         )
       } else {
         acc[parameterName] =
-          currentRoute.params[parameterName] ??
+          routeParams[parameterName] ??
           parameterTransformer.encode(
             store.state.visitorContext[parameterTransformer.contextField],
           )

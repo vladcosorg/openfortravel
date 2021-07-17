@@ -68,7 +68,7 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import TheBoy from '@/front/src/layouts/components/the-boy/the-boy.vue'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'

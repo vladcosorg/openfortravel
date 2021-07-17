@@ -1,10 +1,5 @@
 <template>
-  <generic-select
-    :value="value"
-    :options="list"
-    v-bind="$attrs"
-    v-on="$listeners"
-  >
+  <generic-select :value="value" :options="list" v-bind="$attrs">
     <template v-for="(_, slot) of $scopedSlots" #[slot]="scope"
       ><slot :name="slot" v-bind="scope"
     /></template>
@@ -12,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'

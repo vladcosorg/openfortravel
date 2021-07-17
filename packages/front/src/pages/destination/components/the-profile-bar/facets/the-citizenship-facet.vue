@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
 import Facet from '@/front/src/pages/destination/components/the-profile-bar/facets/facet.vue'

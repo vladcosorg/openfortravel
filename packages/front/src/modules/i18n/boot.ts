@@ -24,7 +24,7 @@ export function extractCurrentLocale(
 
   if (ssrContext) {
     currentLocale =
-      extractLanguageFromURL(ssrContext?.url) ??
+      extractLanguageFromURL(ssrContext.req.url) ??
       useCookies().get('locale') ??
       currentLocale
   }
@@ -34,6 +34,7 @@ export function extractCurrentLocale(
 export function extractLanguageFromURL(
   url?: string,
 ): LanguageLocale | undefined {
+  console.log(url)
   if (!url) {
     return
   }
@@ -94,13 +95,14 @@ export async function autoTranslateIfNecessary(
   if (currentLocale === 'en') {
     return
   }
-
-  if (!translator) {
-    const { createAutoI18n } = await import(
-      /* webpackChunkName: "auto-i18n" */ '@/front/src/misc/vue-auto-i18n.lazy'
-    )
-    translator = createAutoI18n(i18n)
-  }
-
-  await translator(i18n.locale)
+  return
+  //
+  // if (!translator) {
+  //   const { createAutoI18n } = await import(
+  //     /* webpackChunkName: "auto-i18n" */ '@/front/src/misc/vue-auto-i18n.lazy'
+  //   )
+  //   translator = createAutoI18n(i18n)
+  // }
+  //
+  // await translator(i18n.locale)
 }

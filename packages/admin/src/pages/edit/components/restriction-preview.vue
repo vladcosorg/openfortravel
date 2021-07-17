@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from 'vue'
 
 import Restriction from '@/admin/src/pages/edit/components/preview/restriction.vue'
 import { Destination } from '@/shared/src/api/destinations/models'

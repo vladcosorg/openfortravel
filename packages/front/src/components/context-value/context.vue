@@ -9,12 +9,12 @@
 .context
   cursor: pointer
   &:hover
-    background-color: 1px solid var(--q-color-elevation-2)
+    background-color: 1px solid var(--q-elevation-2)
 </style>
 
 <script lang="ts">
 import { matKeyboardArrowDown as downIcon } from '@quasar/extras/material-icons'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
 

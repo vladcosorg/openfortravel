@@ -63,7 +63,7 @@ import {
   matCheckCircleOutline as avaialbleIcon,
   matStar as bestIcon,
 } from '@quasar/extras/material-icons'
-import { defineComponent, PropType } from '@vue/composition-api'
+import { defineComponent, PropType } from 'vue'
 
 import { RestrictionListType } from '@/front/src/pages/destination/components/entry-restrictions.vue'
 

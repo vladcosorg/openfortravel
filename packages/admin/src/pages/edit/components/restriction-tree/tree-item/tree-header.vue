@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 
 import ActionAddContent from '@/admin/src/pages/edit/components/restriction-tree/tree-item/actions/action-add-content.vue'
 import ActionAddTitle from '@/admin/src/pages/edit/components/restriction-tree/tree-item/actions/action-add-title.vue'

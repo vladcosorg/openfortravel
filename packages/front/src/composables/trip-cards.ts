@@ -1,5 +1,5 @@
-import type { ComputedRef } from '@vue/composition-api'
-import { ref, watch } from '@vue/composition-api'
+import type { ComputedRef } from 'vue'
+import { ref, watch } from 'vue'
 import debounce from 'lodash/debounce'
 
 import { TripCard } from '@/front/src/models/TripCard'

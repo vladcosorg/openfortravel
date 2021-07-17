@@ -31,7 +31,7 @@ import {
   matCheck as prerequisiteIcon,
   matUnfoldMore as showMoreIcon,
 } from '@quasar/extras/material-icons'
-import { PropType, defineComponent, ref, provide } from '@vue/composition-api'
+import { PropType, defineComponent, ref, provide } from 'vue'
 
 import Restriction from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction.vue'
 import {

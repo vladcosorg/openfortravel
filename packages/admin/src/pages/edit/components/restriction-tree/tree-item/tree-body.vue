@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, PropType, ref } from '@vue/composition-api'
+import { defineComponent, inject, PropType, ref } from 'vue'
 
 import CustomInstruction from '@/admin/src/pages/edit/components/restriction-tree/tree-item/fields/custom-instruction.vue'
 import OptionsWrapper from '@/admin/src/pages/edit/components/restriction-tree/tree-item/option-wrapper.vue'

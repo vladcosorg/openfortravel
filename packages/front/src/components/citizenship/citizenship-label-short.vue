@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from 'vue'
 
 import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 

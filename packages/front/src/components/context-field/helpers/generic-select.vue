@@ -19,7 +19,6 @@
     :multiple="multiple"
     placeholder="Start typing to search"
     fill-input
-    v-on="$listeners"
     @filter="filterFn"
   >
     <template v-for="(_, slot) of $scopedSlots" #[slot]="scope">
@@ -99,7 +98,7 @@ import {
   matCancel as clearIcon,
   matUnfoldMore as dropdownIcon,
 } from '@quasar/extras/material-icons'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({
   inheritAttrs: false,

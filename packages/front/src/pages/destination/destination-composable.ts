@@ -1,6 +1,6 @@
 import { matFlightLand, matFlightTakeoff } from '@quasar/extras/material-icons'
-import type { ComputedRef, Ref } from '@vue/composition-api'
-import { computed } from '@vue/composition-api'
+import type { ComputedRef, Ref } from 'vue'
+import { computed } from 'vue'
 
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'

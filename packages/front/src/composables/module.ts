@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted } from '@vue/composition-api'
+import { onMounted, onUnmounted } from 'vue'
 import type { Module } from 'vuex'
 
 import { useStore } from '@/shared/src/composables/use-plugins'

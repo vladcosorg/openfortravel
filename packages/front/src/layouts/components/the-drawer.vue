@@ -1,5 +1,6 @@
 <template>
-  <q-drawer v-bind="$attrs" behavior="mobile" v-on="$listeners">
+  <q-drawer v-bind="$attrs" behavior="mobile">
+
     <q-scroll-area class="fit">
       <q-list padding :class="$style.links">
         <q-item
@@ -23,7 +24,7 @@
 <style lang="scss" module>
 .links {
   a {
-    color: var(--q-color-primary);
+    color: var(--q-primary);
   }
   :global(.q-router-link--active) {
     font-weight: bold;
@@ -32,7 +33,7 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import TheDarkModeToggle from '@/front/src/layouts/components/the-header/the-dark-mode-toggle.vue'
 import { getDrawerMenuItems } from '@/front/src/misc/menu'

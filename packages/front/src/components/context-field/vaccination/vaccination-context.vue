@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
 import VaccineDropdown from '@/front/src/components/context-field/helpers/vaccine-dropdown.vue'

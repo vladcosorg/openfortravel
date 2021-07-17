@@ -6,12 +6,7 @@
 
 <script lang="ts">
 import { matContentPaste as icon } from '@quasar/extras/material-icons'
-import {
-  computed,
-  defineComponent,
-  inject,
-  PropType,
-} from '@vue/composition-api'
+import { computed, defineComponent, inject, PropType } from 'vue'
 
 import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
 import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'

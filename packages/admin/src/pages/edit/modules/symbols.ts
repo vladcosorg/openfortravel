@@ -1,4 +1,4 @@
-import { InjectionKey } from '@vue/composition-api'
+import { InjectionKey } from 'vue'
 import Vue from 'vue'
 
 import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'

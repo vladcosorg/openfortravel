@@ -145,8 +145,8 @@
 
 <script lang="ts">
 import { ionRemoveCircleOutline as accessDeniedIcon } from '@quasar/extras/ionicons-v5'
-import type { PropType } from '@vue/composition-api'
-import { defineComponent, ref } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import { TripCard } from '@/front/src/models/TripCard'

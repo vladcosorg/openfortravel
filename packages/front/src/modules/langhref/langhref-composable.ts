@@ -1,5 +1,5 @@
-import type { Ref } from '@vue/composition-api'
-import { onServerPrefetch, ref } from '@vue/composition-api'
+import type { Ref } from 'vue'
+import { onServerPrefetch, ref } from 'vue'
 
 export function useMeta(): Ref {
   const meta = ref({})

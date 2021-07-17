@@ -59,7 +59,7 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 import { formatDistanceToNow, isPast, parseISO } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
 

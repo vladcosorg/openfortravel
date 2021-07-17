@@ -56,13 +56,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  provide,
-  toRef,
-  watch,
-} from '@vue/composition-api'
+import { computed, defineComponent, provide, toRef, watch } from 'vue'
 import { Portal } from 'portal-vue'
 
 import InnerPage from '@/front/src/components/inner-page.vue'

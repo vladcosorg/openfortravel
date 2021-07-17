@@ -13,10 +13,10 @@ $statuses: ()
 @each $theme in (dark, light)
   .body--#{$theme}
     @each $label, $value in $statuses
-      --q-color-status-#{$label}: #{map-get($value, $theme)}
+      --q-status-#{$label}: #{map-get($value, $theme)}
 
 @each $label, $value in $statuses
   .text-#{$label}
-    color: var(--q-color-status-#{$label}) !important
+    color: var(--q-status-#{$label}) !important
   .bg-#{$label}
-    background-color: var(--q-color-status-#{$label}) !important
+    background-color: var(--q-status-#{$label}) !important

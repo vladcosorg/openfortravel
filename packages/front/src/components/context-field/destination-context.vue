@@ -32,11 +32,11 @@
 .select
   \:global
     .q-field__native
-      color: var(--q-color-accent)
+      color: var(--q-accent)
 </style>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import CitizenshipLabelShort from '@/front/src/components/citizenship/citizenship-label-short.vue'
 import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
@@ -74,7 +74,7 @@ export default defineComponent({
       }
 
       return `Citizenship or permanent residence  ${
-        !value ? '(automatic value)' : ''
+        !value.value ? '(automatic value)' : ''
       }`
     })
     const value = computed<typeof setter.value>({

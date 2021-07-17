@@ -2,7 +2,7 @@
   <q-input
     ref="domObj"
     lazy-rules="ondemand"
-    :rules="[isRequired ? isRequiredValidator : undefined, ...$attrs.rules]"
+    :rules="[isRequired ? isRequiredValidator : undefined]"
     :class="[$style.input]"
     no-error-icon
     standout
@@ -10,7 +10,6 @@
     :readonly="isLoading || isSuccessful"
     v-bind="$attrs"
     :value="value"
-    v-on="$listeners"
     @input="onInput"
   >
     <template v-if="!isLoading && !isSuccessful" #append>
@@ -32,10 +31,10 @@
 .input:global(.q-field--highlighted) {
   :global {
     .q-field__control {
-      background-color: var(--q-color-primary-elevated) !important;
+      background-color: var(--q-primary-elevated) !important;
     }
     .q-field__native {
-      color: var(--q-color-primary) !important;
+      color: var(--q-primary) !important;
     }
   }
 }
@@ -46,7 +45,7 @@ import {
   matDone as successIcon,
   matPriorityHigh as errorIcon,
 } from '@quasar/extras/material-icons'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from 'vue'
 import { defer, throttle } from 'lodash'
 
 import { useI18n } from '@/shared/src/composables/use-plugins'

@@ -136,11 +136,11 @@
 </style>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import difference from 'lodash/difference'
 import union from 'lodash/union'
-
+import { useQuasar } from 'quasar'
 import SelectorInput from '@/admin/src/pages/edit/components/selector-input.vue'
 import {
   getLabelsForCountryCodes,
@@ -165,7 +165,7 @@ export default defineComponent({
       required: false,
     },
   },
-  setup(props, { emit, root }) {
+  setup(props, { emit }) {
     const show = ref(false)
     const filter = ref('')
     const ticked = computed<string[]>({
@@ -245,7 +245,7 @@ export default defineComponent({
     }
 
     const openParseDialog = () => {
-      root.$q
+      useQuasar()
         .dialog({
           component: SelectorInput,
           value: ticked.value,

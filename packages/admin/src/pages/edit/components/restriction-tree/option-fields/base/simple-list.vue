@@ -31,7 +31,7 @@
 
 <script lang="ts">
 /* eslint-disable vue/no-unused-properties,vue/no-boolean-default */
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   components: {},

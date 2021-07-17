@@ -1,12 +1,6 @@
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import {
-  computed,
-  defineComponent,
-  ref,
-  watch,
-  createElement,
-} from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent, ref, watch, createElement } from 'vue'
 
 import { createConfig } from '@/admin/src/pages/edit/composables/field-config/use-field-config'
 import { TreeBuilderRestrictionNode } from '@/admin/src/pages/edit/types'

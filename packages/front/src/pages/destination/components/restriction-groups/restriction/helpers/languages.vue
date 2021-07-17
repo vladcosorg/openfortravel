@@ -9,8 +9,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
 import { useRootStore } from '@/shared/src/composables/use-plugins'

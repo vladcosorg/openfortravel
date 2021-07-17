@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 
 import RichEmailInput from '@/front/src/components/form/rich-email-input.vue'
 import RichTextInput from '@/front/src/components/form/rich-text-input.vue'

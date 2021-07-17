@@ -33,14 +33,14 @@
 
 <style lang="scss" module>
 .breadcrumbs a {
-  color: var(--q-color-secondary);
+  color: var(--q-secondary);
   text-decoration: underline;
 }
 </style>
 
 <script lang="ts">
 import { matHome, matChevronRight } from '@quasar/extras/material-icons'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import { getMenuItemURL } from '@/front/src/misc/menu'
 

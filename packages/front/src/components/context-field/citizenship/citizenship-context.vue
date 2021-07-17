@@ -27,8 +27,8 @@
 //  cursor: pointer
 //  \:global
 //    .q-field__native
-//      color: var(--q-color-accent) !important
-//      text-decoration: var(--q-color-accent) !important
+//      color: var(--q-accent) !important
+//      text-decoration: var(--q-accent) !important
 //      font-weight: bold
 //.select:hover:not(:global(.q-field--focused)) :global(.q-field__control)
 //  background: initial !important
@@ -36,8 +36,8 @@
   \:global
     .q-field__native
       cursor: pointer
-      color: var(--q-color-accent) !important
-      text-decoration: var(--q-color-accent) !important
+      color: var(--q-accent) !important
+      text-decoration: var(--q-accent) !important
 
     .q-field__control, .q-field__native, .q-field__append
       min-height: auto !important
@@ -45,7 +45,7 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import { useModel } from '@/front/src/components/context-field/citizenship/composables'
 import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'

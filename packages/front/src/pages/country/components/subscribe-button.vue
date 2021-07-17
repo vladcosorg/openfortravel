@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { matNotificationsNone as iconSubscribe } from '@quasar/extras/material-icons'
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 
 import DialogSubscribeForm from '@/front/src/pages/country/components/dialog-subscribe-form.vue'
 

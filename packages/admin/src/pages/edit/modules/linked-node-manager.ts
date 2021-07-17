@@ -1,4 +1,4 @@
-import { Ref } from '@vue/composition-api'
+import { Ref } from 'vue'
 
 import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
 import {

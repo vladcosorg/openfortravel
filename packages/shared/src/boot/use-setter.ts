@@ -15,14 +15,14 @@ export default boot(({ store, router, ssrContext }) => {
   setStore(store)
   setSSRContext(ssrContext)
   initCookies(ssrContext)
-
-  if (ssrContext) {
-    setSharedCache(
-      (
-        ssrContext.req as Request & {
-          sharedCache: ReturnType<typeof useSharedCache>
-        }
-      ).sharedCache,
-    )
-  }
+  //
+  // if (ssrContext) {
+  //   setSharedCache(
+  //     (
+  //       ssrContext.req as Request & {
+  //         sharedCache: ReturnType<typeof useSharedCache>
+  //       }
+  //     ).sharedCache,
+  //   )
+  // }
 })

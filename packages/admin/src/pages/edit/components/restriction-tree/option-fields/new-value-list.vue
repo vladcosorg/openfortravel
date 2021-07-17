@@ -12,12 +12,11 @@
     clearable
     multiple
     :dense="false"
-    v-on="$listeners"
   />
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import SimpleList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/base/simple-list.vue'
 

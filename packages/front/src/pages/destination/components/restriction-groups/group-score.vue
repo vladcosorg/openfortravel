@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { matGrade as icon } from '@quasar/extras/material-icons'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},

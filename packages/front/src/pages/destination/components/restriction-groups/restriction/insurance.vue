@@ -13,8 +13,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
 import { Insurance } from '@/shared/src/restriction-tree/restriction-node/insurance'

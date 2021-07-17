@@ -41,7 +41,7 @@ export default boot(({ router, urlPath, ssrContext }) => {
       rootStore.mutations.setVisitorOrigin(countryCode)
     }
   } else {
-    const route = router.resolve(urlPath).route
+    const route = router.resolve(urlPath)
     const originSlug = route.params.originSlug
     if (route.params.originSlug) {
       rootStore.mutations.setVisitorOrigin(

@@ -40,7 +40,7 @@ module.exports = {
     // Uncomment any of the lines below to choose desired strictness,
     // but leave only one uncommented!
     // See https://eslint.vuejs.org/rules/#available-rules
-    'plugin:vue/recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
+    'plugin:vue/vue3-recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
 
     'plugin:unicorn/recommended',
 
@@ -54,17 +54,22 @@ module.exports = {
   plugins: [
     // required to apply rules which need type information
     '@typescript-eslint',
+    'vue',
     'import',
     'unused-imports',
   ],
 
   globals: {
-    ga: true, // Google Analytics
-    cordova: true,
-    __statics: true,
-    process: true,
-    Capacitor: true,
-    chrome: true,
+    ga: 'readonly', // Google Analytics
+    cordova: 'readonly',
+    __statics: 'readonly',
+    __QUASAR_SSR__: 'readonly',
+    __QUASAR_SSR_SERVER__: 'readonly',
+    __QUASAR_SSR_CLIENT__: 'readonly',
+    __QUASAR_SSR_PWA__: 'readonly',
+    process: 'readonly',
+    Capacitor: 'readonly',
+    chrome: 'readonly',
   },
 
   // add your custom rules here

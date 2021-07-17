@@ -38,7 +38,7 @@
 
 <script lang="ts">
 import { matUnfoldMore as showMoreIcon } from '@quasar/extras/material-icons'
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   components: {},

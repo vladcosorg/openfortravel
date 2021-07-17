@@ -1,4 +1,4 @@
-import { getCurrentInstance } from '@vue/composition-api'
+import { getCurrentInstance } from 'vue'
 import Vue from 'vue'
 import type { NavigationGuard } from 'vue-router'
 import type { ComponentOptions } from 'vue/types/umd'

@@ -1,8 +1,4 @@
-import {
-  computed,
-  ComputedRef,
-  WritableComputedRef,
-} from '@vue/composition-api'
+import { computed, ComputedRef, WritableComputedRef } from 'vue'
 
 import { RootStateType } from '@/front/src/store/state'
 import { useRootStore } from '@/shared/src/composables/use-plugins'

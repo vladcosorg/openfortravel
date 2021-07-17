@@ -1,5 +1,5 @@
 <template>
-  <q-field v-if="$q.platform.is.mobile" v-bind="$attrs" v-on="$listeners">
+  <q-field v-if="$q.platform.is.mobile" v-bind="$attrs" >
     <template #control>
       <div :class="['col', 'ellipsis-improved']">
         {{ currentLabelRef }}
@@ -7,7 +7,7 @@
     </template>
     <template #append>
       <q-icon :name="icon" />
-      <invisible-native-select v-bind="$props" v-on="$listeners" />
+      <invisible-native-select   v-bind="{ ...$props, ...$attrs }" />
     </template>
   </q-field>
   <q-select
@@ -16,14 +16,12 @@
     v-bind="{ ...$props, ...$attrs }"
     options-selected-class="text-bold text-white"
     :dropdown-icon="icon"
-    v-on="$listeners"
   />
 </template>
-
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import InvisibleNativeSelect from '@/front/src/components/invisible-native-select.vue'
 
@@ -36,9 +34,8 @@ export type SelectList = SelectItem[]
 
 export default defineComponent({
   components: { InvisibleNativeSelect },
-  inheritAttrs: false,
   props: {
-    value: {
+    modelValue: {
       required: true,
       type: [String, Boolean, Number],
     },
@@ -54,7 +51,7 @@ export default defineComponent({
     const currentOptionRef = computed(
       () =>
         props.options.find(
-          (option) => option.value === props.value,
+          (option) => option.value === props.modelValue,
         ) as unknown as SelectItem,
     )
 

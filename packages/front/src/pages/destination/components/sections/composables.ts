@@ -1,4 +1,4 @@
-import { computed, ComputedRef, Ref } from '@vue/composition-api'
+import { computed, ComputedRef, Ref } from 'vue'
 
 import { getDestinationRouteURL } from '@/front/src/router/route-builders/destination'
 import {

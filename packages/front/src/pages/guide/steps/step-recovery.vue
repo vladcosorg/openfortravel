@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'
 import RecoveryContext from '@/front/src/components/context-field/recovery/recovery-context.vue'

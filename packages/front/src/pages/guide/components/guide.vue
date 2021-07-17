@@ -53,7 +53,7 @@ import {
   matDone as doneIcon,
   matEdit as editIcon,
 } from '@quasar/extras/material-icons'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from 'vue'
 
 import StepCitizenship from '@/front/src/pages/guide/steps/step-citizenship.vue'
 import StepFinal from '@/front/src/pages/guide/steps/step-final.vue'

@@ -8,7 +8,7 @@
     debounce="300"
     stack-label
     dark
-    v-on="$listeners"
+    v-bind="$attrs"
   >
     <template #prepend>
       <q-icon :name="iconSearch" />
@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { matSearch as iconSearch } from '@quasar/extras/material-icons'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import SubscribeButton from '@/front/src/pages/country/components/subscribe-button.vue'
 

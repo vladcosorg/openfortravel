@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from 'vue'
 
 import { withProps } from '@/front/src/components/country/composables'
 import CountryLabel from '@/front/src/components/country/country-label.vue'

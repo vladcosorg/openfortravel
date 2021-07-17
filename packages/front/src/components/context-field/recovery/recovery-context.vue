@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'

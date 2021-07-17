@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import type { VaccineBrand } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import { vaccineLabels } from '@/shared/src/restriction-tree/restriction-node/vaccinated'

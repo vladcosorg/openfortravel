@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { roundFlag as finish } from '@quasar/extras/material-icons-round'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import mixin from '@/front/src/pages/guide/steps/mixin.vue'
 import { useI18n, useRootStore } from '@/shared/src/composables/use-plugins'

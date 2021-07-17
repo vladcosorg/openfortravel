@@ -7,7 +7,7 @@
 <style lang="scss" module />
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import { useRootStore } from '@/shared/src/composables/use-plugins'

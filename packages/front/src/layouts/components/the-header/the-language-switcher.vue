@@ -44,13 +44,14 @@
 
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 
 import SimpleSelect from '@/front/src/components/simple-select.vue'
 import type { StateInterface } from '@/front/src/store/state'
-import { useI18n, useRouter } from '@/shared/src/composables/use-plugins'
+import { useI18n } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import { useStateProperty } from '@/shared/src/composables/use-vuex'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   components: { SimpleSelect },

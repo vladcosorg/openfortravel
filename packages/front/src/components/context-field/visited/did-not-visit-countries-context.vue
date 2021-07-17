@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'

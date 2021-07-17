@@ -2,9 +2,6 @@
 .thumbs.db
 node_modules
 
-/var
-!/var/.gitkeep
-
 # Quasar core related directories
 .quasar
 /dist
