@@ -52,7 +52,7 @@ import { isFunction } from 'lodash'
 
 export default defineComponent({
   props: {
-    value: {
+    modelValue: {
       required: false,
       type: String,
     },

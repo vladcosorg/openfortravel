@@ -1,6 +1,6 @@
 <template>
-  <generic-select :value="value" :options="list" v-bind="$attrs">
-    <template v-for="(_, slot) of $scopedSlots" #[slot]="scope"
+  <generic-select :model-value="value" :options="list" v-bind="$attrs">
+    <template v-for="(_, slot) of $slots" #[slot]="scope"
       ><slot :name="slot" v-bind="scope"
     /></template>
   </generic-select>
@@ -17,7 +17,7 @@ export default defineComponent({
   components: { GenericSelect },
   inheritAttrs: false,
   props: {
-    value: {
+    modelValue: {
       type: [String, Array],
     },
   },

@@ -41,7 +41,6 @@ import { useKy, useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { SubmitButton, InnerPage, RichTextInput, RichEmailInput },
-  props: {},
   setup() {
     const { t } = useVueI18n()
     const { isLoading, isSuccessful, dispatcher } = useRequestDispatcher()
@@ -63,7 +62,7 @@ export default defineComponent({
               }),
             },
           ),
-          t('page.contact.messageSent') as string,
+          t('page.contact.messageSent') ,
         )
       },
     }

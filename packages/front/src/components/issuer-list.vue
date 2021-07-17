@@ -23,8 +23,5 @@ export default defineComponent({
       default: 'any country',
     },
   },
-  setup(props) {
-    return {}
-  },
 })
 </script>

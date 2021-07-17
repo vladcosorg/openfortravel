@@ -1,17 +1,17 @@
 <template>
   <generic-select
-    :value="value === undefined ? false : value"
+    :value="modelValue === undefined ? false : modelValue"
     :options="list"
     v-bind="$attrs"
     :inline="inline"
-    @input="$emit('input', $event === false ? undefined : $event)"
+    @input="$emit('update:modelValue', $event === false ? undefined : $event)"
   >
-    <template v-for="(_, slot) of $scopedSlots" #[slot]="scope"
+    <template v-for="(_, slot) of $slots" #[slot]="scope"
       ><slot :name="slot" v-bind="scope"
     /></template>
 
     <template #selected>
-      <vaccine-label regular :capitalize="!inline" :value="value" />
+      <vaccine-label regular :capitalize="!inline" :value="modelValue" />
     </template>
   </generic-select>
 </template>
@@ -34,7 +34,7 @@ export default defineComponent({
     inline: {
       type: Boolean,
     },
-    value: {
+    modelValue: {
       type: [String, Array, Boolean],
     },
   },

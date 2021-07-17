@@ -97,7 +97,7 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    value: {
+    modelValue: {
       type: String,
       required: false,
     },
@@ -157,24 +157,24 @@ export default defineComponent({
 
     const currentCountryValueRef = computed<string | undefined>({
       get() {
-        return props.value
+        return props.modelValue
       },
       set(value) {
-        emit('input', value)
+        emit('update:modelValue', value)
       },
     })
 
     const currentCountry = computed<ListItem | undefined>({
       get() {
-        if (!props.value) {
+        if (!props.modelValue) {
           return
         }
 
         return {
           label: props.isDestination
-            ? getDestinationLabelForCountryCode(props.value)
-            : getOriginLabelForCountryCode(props.value),
-          value: props.value,
+            ? getDestinationLabelForCountryCode(props.modelValue)
+            : getOriginLabelForCountryCode(props.modelValue),
+          value: props.modelValue,
         }
       },
       set(item) {

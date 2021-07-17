@@ -9,7 +9,7 @@
     stack-label
     :readonly="isLoading || isSuccessful"
     v-bind="$attrs"
-    :value="value"
+    :model-value="modelValue"
     @input="onInput"
   >
     <template v-if="!isLoading && !isSuccessful" #append>
@@ -51,7 +51,6 @@ import { defer, throttle } from 'lodash'
 import { useI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
-  components: {},
   inheritAttrs: false,
   props: {
     isRequired: {
@@ -62,7 +61,7 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    value: {
+    modelValue: {
       type: String,
       default: '',
     },
@@ -77,7 +76,7 @@ export default defineComponent({
       if (!domObj.value) {
         return
       }
-      if (!domObj.value || props.value.length === 0) {
+      if (!domObj.value || props.modelValue.length === 0) {
         return
       }
 

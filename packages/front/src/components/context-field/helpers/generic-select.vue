@@ -15,13 +15,13 @@
     ]"
     :use-input="!disableInput"
     :options="internalOptions"
-    :value="value"
+    :model-value="modelValue"
     :multiple="multiple"
     placeholder="Start typing to search"
     fill-input
     @filter="filterFn"
   >
-    <template v-for="(_, slot) of $scopedSlots" #[slot]="scope">
+    <template v-for="(_, slot) of $slots" #[slot]="scope">
       <slot :name="slot" v-bind="scope" />
     </template>
 
@@ -113,7 +113,7 @@ export default defineComponent({
       type: [Object, Array],
       required: true,
     },
-    value: {
+    modelValue: {
       type: [String, Array, Boolean],
       required: true,
     },
@@ -159,7 +159,7 @@ export default defineComponent({
       }
 
       options.sort(
-        (a, b) => props.value.includes(b.value) - props.value.includes(a.value),
+        (a, b) => props.modelValue.includes(b.value) - props.modelValue.includes(a.value),
       )
 
       return options

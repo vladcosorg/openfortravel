@@ -13,12 +13,12 @@
     header-nav
   >
     <template #default>
-      <step-origin :step.sync="step" />
-      <step-citizenship :step.sync="step" />
-      <step-vaccination :step.sync="step" />
-      <step-recovery v-if="showRecoveryStep" :step.sync="step" />
-      <step-visited :step.sync="step" />
-      <step-final :step.sync="step" />
+      <step-origin v-model:step="step" />
+      <step-citizenship v-model:step="step" />
+      <step-vaccination v-model:step="step" />
+      <step-recovery v-if="showRecoveryStep" v-model:step="step" />
+      <step-visited v-model:step="step" />
+      <step-final v-model:step="step" />
     </template>
   </q-stepper>
 </template>
@@ -73,7 +73,6 @@ export default defineComponent({
     StepCitizenship,
     StepOrigin,
   },
-  props: {},
   setup() {
     const step = ref(2)
     const store = useRootStore()

@@ -1,6 +1,6 @@
 <template>
   <q-rating
-    :value="score"
+    :model-value="score"
     color="grey"
     :color-selected="color"
     :icon="icon"

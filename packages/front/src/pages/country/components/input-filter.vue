@@ -1,6 +1,6 @@
 <template>
   <q-input
-    :value="value"
+    :model-value="modelValue"
     :placeholder="$t('page.country.quickSearch')"
     :loading="isLoading"
     standout
@@ -32,7 +32,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    value: {
+    modelValue: {
       type: String,
       required: true,
     },
