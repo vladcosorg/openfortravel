@@ -9,7 +9,10 @@ export function applyContextFromProps(props: Record<string, any>): void {
   useRootStore().mutations.replaceVisitorContext({
     context: Object.entries(originParameterTransformers).reduce(
       (context, [parameterName, parameterTransformer]) => {
-        if (parameterTransformer.contextField) {
+        if (
+          parameterTransformer.contextField &&
+          props[parameterName] !== undefined
+        ) {
           context[parameterTransformer.contextField] = props[parameterName]
         }
 

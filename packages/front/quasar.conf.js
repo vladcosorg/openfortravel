@@ -36,6 +36,7 @@ module.exports = configure((context) => ({
     '~shared/src/boot/composition-api',
     '~shared/src/boot/use-setter',
     { path: '4-ssr-url-decoder', client: false },
+    { path: '4.1-legacy-url-302', client: false },
     '5-i18n',
     { path: '3-ssr-data-preload', client: false },
     '6-country-detector',

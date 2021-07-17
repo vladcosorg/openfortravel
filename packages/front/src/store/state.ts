@@ -1,7 +1,6 @@
 import type { LocaleMessageObject } from 'vue-i18n'
 
 import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export interface StateInterface {
@@ -15,7 +14,7 @@ export interface StateInterface {
   labeledLocales: Array<Record<string, string>>
   countryToContinentMap: Record<string, string>
   hostRules: MappedPlainDestinationCollection
-  visitorContext: VisitorProfile
+  visitorContext: Partial<VisitorProfile>
 }
 
 export class RootState implements StateInterface {
@@ -29,12 +28,7 @@ export class RootState implements StateInterface {
   labeledLocales = {} as StateInterface['labeledLocales']
   countryToContinentMap = {}
   hostRules: MappedPlainDestinationCollection = {}
-  visitorContext = {
-    [RestrictionNodeType.ORIGIN]: 'us',
-    [RestrictionNodeType.RECOVERY]: undefined,
-    [RestrictionNodeType.VACCINATED]: undefined,
-    [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [],
-  }
+  visitorContext: Partial<VisitorProfile> = {}
   // eslint-disable-next-line unicorn/no-null
   searchId = null as string | null
 }

@@ -17,17 +17,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
 import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
+import { useModel } from '@/front/src/components/context-field/visited/composables'
 
 export default defineComponent({
   components: { Hint, CountryDropdown },
   inheritAttrs: false,
   props: {},
   setup() {
-    const model = ref([])
+    const model = useModel()
     return { model }
   },
 })

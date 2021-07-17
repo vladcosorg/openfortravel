@@ -18,6 +18,7 @@
     :value="value"
     :multiple="multiple"
     placeholder="Start typing to search"
+    fill-input
     v-on="$listeners"
     @filter="filterFn"
   >

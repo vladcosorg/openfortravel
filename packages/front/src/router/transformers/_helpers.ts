@@ -5,7 +5,7 @@ import {
   EncodedParameters,
   ParameterTransformerMap,
 } from '@/front/src/router/transformers/_types'
-import { useRouter } from '@/shared/src/composables/use-plugins'
+import { useRootStore, useRouter } from '@/shared/src/composables/use-plugins'
 import { Entries } from '@/shared/src/misc/type-helpers'
 
 export function getRouteURL<T extends ParameterTransformerMap>(
@@ -24,6 +24,7 @@ export function encodeParameters<T extends ParameterTransformerMap>(
   customParameters: DecodedParameters<T> = {} as DecodedParameters<T>,
 ): EncodedParameters<T> {
   const currentRoute = useRouter().currentRoute
+  const store = useRootStore()
   return (Object.entries(transformationConfig) as Entries<T>).reduce(
     (acc, [parameterName, parameterTransformer]) => {
       if (customParameters.hasOwnProperty(parameterName)) {
@@ -32,7 +33,10 @@ export function encodeParameters<T extends ParameterTransformerMap>(
         )
       } else {
         acc[parameterName] =
-          currentRoute.params[parameterName] ?? parameterTransformer.encode()
+          currentRoute.params[parameterName] ??
+          parameterTransformer.encode(
+            store.state.visitorContext[parameterTransformer.contextField],
+          )
       }
 
       return acc

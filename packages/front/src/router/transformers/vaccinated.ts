@@ -8,13 +8,13 @@ export const vaccinatedTransformer: ParameterTransformer<
 > = {
   encode(input) {
     if (!input) {
-      return 'not-vaccinated'
+      return 'unvaccinated'
     }
 
     return `vaccinated-with-${input.brand}`
   },
   decode(input) {
-    if (!input || input === 'not-vaccinated') {
+    if (!input || input === 'unvaccinated') {
       return
     }
 

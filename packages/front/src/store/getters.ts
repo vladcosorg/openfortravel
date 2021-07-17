@@ -13,29 +13,20 @@ export const getters: GetterTree<RootStateType, RootStateType> &
     getters.wrappedHostRules[getters.visitorOrigin],
   detectedCountryWithFallback: (_state, getters): string =>
     getters.visitorOrigin ?? 'us',
-  visitorOrigin: (state) => state.visitorContext[RestrictionNodeType.ORIGIN],
-  visitorContextWithDefaults: (state) =>
-    Object.assign(
-      {
-        [RestrictionNodeType.CITIZENSHIP]: [
-          state.visitorContext[RestrictionNodeType.ORIGIN],
-        ],
-      },
-      state.visitorContext,
-      {
-        [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [
-          ...(Array.isArray(
-            state.visitorContext[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES],
-          )
-            ? state.visitorContext[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]
-            : []),
-          state.visitorContext[RestrictionNodeType.ORIGIN],
-        ],
-        [RestrictionNodeType.CITIZENSHIP]: Array.isArray(
-          state.visitorContext[RestrictionNodeType.CITIZENSHIP],
-        )
-          ? state.visitorContext[RestrictionNodeType.CITIZENSHIP]
-          : [state.visitorContext[RestrictionNodeType.ORIGIN]],
-      },
-    ),
+  visitorOrigin: (_state, getterse) =>
+    getterse.visitorContextWithDefaults[RestrictionNodeType.ORIGIN],
+  visitorContextWithDefaults: (state) => {
+    const origin = state.visitorContext[RestrictionNodeType.ORIGIN] ?? 'us'
+    return Object.assign({}, state.visitorContext, {
+      [RestrictionNodeType.ORIGIN]: origin,
+      [RestrictionNodeType.CITIZENSHIP]: state.visitorContext[
+        RestrictionNodeType.CITIZENSHIP
+      ] ?? [origin],
+      [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [
+        origin,
+        ...(state.visitorContext[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES] ||
+          []),
+      ],
+    })
+  },
 }

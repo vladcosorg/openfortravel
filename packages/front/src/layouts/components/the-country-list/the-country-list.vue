@@ -96,6 +96,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
+import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import RecoveryContext from '@/front/src/components/context-field/recovery/recovery-context.vue'
 import VaccinationContext from '@/front/src/components/context-field/vaccination/vaccination-context.vue'
 import DidNotVisitCountriesContext from '@/front/src/components/context-field/visited/did-not-visit-countries-context.vue'
@@ -115,6 +116,7 @@ import {
 
 export default defineComponent({
   components: {
+    GenericSelect,
     RecoveryContext,
     DidNotVisitCountriesContext,
     VaccinationContext,

@@ -14,7 +14,7 @@ export const destinationParameterTransformers = Object.assign(
 )
 
 export function getDestinationRouteURL(
-  customParameters: DecodedParameters<typeof destinationParameterTransformers>,
+  customParameters?: DecodedParameters<typeof destinationParameterTransformers>,
 ): string {
   return getRouteURL(
     'destination',

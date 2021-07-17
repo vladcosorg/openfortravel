@@ -9,24 +9,18 @@ export const recoveredTransformer: ParameterTransformer<
 > = {
   encode(input) {
     if (!input) {
-      return 'no-covid-recovery-certificate'
+      return
     }
 
     return `with-covid-recovery-certificate-${input}`
   },
   decode(input) {
     if (!input) {
-      return this.getDefault()
-    }
-
-    if (input === 'no-covid-recovery-certificate') {
       return
     }
+
     const days = input.split('with-covid-recovery-certificate-').pop()
     return toInteger(days)
-  },
-  getDefault(): undefined {
-    return undefined
   },
   contextField: RestrictionNodeType.RECOVERY,
 }

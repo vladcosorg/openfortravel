@@ -86,10 +86,14 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
         },
 
         {
-          name: 'destination',
+          name: 'destination-old',
           path: `${i18n.t('page.country.route')}/:originSlug/${i18n.t(
             'page.destination.route',
-          )}/:destinationSlug/:citizenship?/:vaccinated?/:recovered?/:visited?`,
+          )}/:destinationSlug`,
+        },
+        {
+          name: 'destination',
+          path: 'travel-restrictions/from-:originSlug/to-:destinationSlug/:citizenship?/:vaccinated?/:recovered?/:visited?',
           component: () =>
             import(
               /* webpackChunkName: "page-destination" */
@@ -99,11 +103,10 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
             return parseDestinationRoute(route)
           },
         },
+
         {
           name: 'origin',
-          path: `${i18n.t(
-            'page.country.route',
-          )}/:originSlug/:citizenship?/:vaccinated?/:recovered?/:visited?`,
+          path: 'travel-restrictions/from-:originSlug/:citizenship?/:vaccinated?/:recovered?/:visited?',
           component: () =>
             import(
               /* webpackChunkName: "page-origin" */
@@ -112,6 +115,11 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
           props(route) {
             return parseOriginRoute(route)
           },
+        },
+
+        {
+          name: 'origin-old',
+          path: `${i18n.t('page.country.route')}/:originSlug`,
         },
 
         {

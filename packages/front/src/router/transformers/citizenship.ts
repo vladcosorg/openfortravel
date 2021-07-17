@@ -12,9 +12,7 @@ export const citizenshipTransformer: ParameterTransformer<
 > = {
   encode(input) {
     if (!input) {
-      input = useRootStore().state.visitorContext[
-        RestrictionNodeType.CITIZENSHIP
-      ] ?? [
+      input = [
         useRootStore().getters.visitorContextWithDefaults[
           RestrictionNodeType.ORIGIN
         ],
@@ -35,7 +33,21 @@ export const citizenshipTransformer: ParameterTransformer<
       return
     }
 
-    return parts.split('--and--').map((slug) => transformOriginSlugToCode(slug))
+    const isoList = parts
+      .split('--and--')
+      .map((slug) => transformOriginSlugToCode(slug))
+
+    if (
+      isoList.length === 1 &&
+      isoList.pop() ===
+        useRootStore().getters.visitorContextWithDefaults[
+          RestrictionNodeType.ORIGIN
+        ]
+    ) {
+      return
+    }
+
+    return isoList
   },
   contextField: RestrictionNodeType.CITIZENSHIP,
 }

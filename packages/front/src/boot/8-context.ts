@@ -6,11 +6,9 @@ import { getContextBySearchId } from '@/shared/src/api/searchIds/repository'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default boot(({ router, redirect }) => {
-  return
   router.beforeEach(async (to, _from, next) => {
-    if (!to.params.searchId) {
+    if (to.name !== 'origin' && to.name !== 'destination') {
       const context = loadContextFromCookie()
-
       if (context) {
         useRootStore().mutations.mergeVisitorContext({
           context,
@@ -21,6 +19,8 @@ export default boot(({ router, redirect }) => {
       next()
       return
     }
+    next()
+    return
 
     const searchId = to.params.searchId
     let persistLocally = false

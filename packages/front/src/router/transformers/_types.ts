@@ -6,10 +6,11 @@ export type ParameterTransformer<D = string> = {
   contextField?: RestrictionNodeType
 }
 
-export type DecodedParameters<T extends ParameterTransformerMap> = {
-  [K in keyof T]: ReturnType<T[K]['decode']>
-}
-
+export type DecodedParameters<T extends ParameterTransformerMap> = Partial<
+  {
+    [K in keyof T]: ReturnType<T[K]['decode']>
+  }
+>
 export type EncodedParameters<T extends ParameterTransformerMap> = {
   [K in keyof T]: string
 }

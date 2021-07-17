@@ -5,7 +5,7 @@ export const sharedProps = {
       required: true,
     },
     context: {
-      type: [String, Boolean, Array, Object],
+      type: [String, Boolean, Array, Object, Number],
       required: false,
     },
     wrapper: {
