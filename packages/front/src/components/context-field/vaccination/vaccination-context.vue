@@ -1,5 +1,15 @@
 <template>
-  <vaccine-dropdown v-model="value" label="Vaccination status">
+  <generic-select
+    v-model="modelValue"
+    label="Vaccination status"
+    :options="options"
+    :use-input="false"
+    bottom-slots
+    :multiple="false"
+  >
+    <template #selected>
+      <vaccine-label regular :value="labelValue" />
+    </template>
     <template #hint>
       <hint>
         The fact whether you're vaccinated or not dramatically changes the
@@ -9,23 +19,29 @@
         from priviledges offered to vaccinated travellers.
       </hint>
     </template>
-  </vaccine-dropdown>
+  </generic-select>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
+import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
-import VaccineDropdown from '@/front/src/components/context-field/helpers/vaccine-dropdown.vue'
 import { useModel } from '@/front/src/components/context-field/vaccination/composables'
+import VaccineLabel from '@/front/src/components/vaccine-label.vue'
+import { useVaccinationOptions } from '@/front/src/composables/vaccination'
 
 export default defineComponent({
-  components: { Hint, VaccineDropdown },
-  inheritAttrs: false,
+  components: { VaccineLabel, GenericSelect, Hint },
+  emits: ['update:modelValue'],
   setup() {
-    const value = useModel()
+    const modelValue = useModel()
+    const labelValue = computed(() => modelValue.value || undefined)
+    const options = useVaccinationOptions()
     return {
-      value,
+      modelValue,
+      labelValue,
+      options,
     }
   },
 })

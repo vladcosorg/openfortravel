@@ -1,6 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import type { VueI18n } from 'vue-i18n'
-
+import { useI18n } from 'vue-i18n'
 import { serverCache } from '@/front/src/misc/server-cache'
 // import {
 //   autoTranslateIfNecessary,
@@ -31,6 +31,7 @@ export const i18nPlugin = createVueI18n(serverCache.i18nMessages)
 export default boot(async ({ app, store, ssrContext, redirect, router }) => {
   app.use(i18nPlugin)
   const i18n = i18nPlugin.global
+
   const isClient = !ssrContext
 
   app.i18n = i18n

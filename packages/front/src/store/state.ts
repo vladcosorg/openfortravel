@@ -2,6 +2,7 @@ import type { LocaleMessageObject } from 'vue-i18n'
 
 import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+import { QBreadcrumbsEl } from 'quasar'
 
 export interface StateInterface {
   countrySelectorLoading: boolean
@@ -29,8 +30,7 @@ export class RootState implements StateInterface {
   countryToContinentMap = {}
   hostRules: MappedPlainDestinationCollection = {}
   visitorContext: Partial<VisitorProfile> = {}
-  // eslint-disable-next-line unicorn/no-null
-  searchId = null as string | null
+  slugs: any
 }
 
 export function state(): RootState {

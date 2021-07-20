@@ -1,36 +1,30 @@
 <template>
-  <country-dropdown
-    v-model="value"
-    borderless
-    behavior="dialog"
-    inherit-font-size
-    multiple
-    inline
-    no-ellipsis
-    dense
-  >
-    <template #selected>
-      <country-label-list regular :values="value" />
+  <inline-select v-model="model" :options="options" multiple>
+    <template #inline-label>
+      <country-label-list regular :values="model" />
     </template>
-  </country-dropdown>
+  </inline-select>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 import { useModel } from '@/front/src/components/context-field/citizenship/composables'
-import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
+import InlineSelect from '@/front/src/components/context-field/helpers/inline-select.vue'
 import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
+import { useCountryOptions } from '@/front/src/composables/misc'
 
 export default defineComponent({
   components: {
+    InlineSelect,
     CountryLabelList,
-    CountryDropdown,
   },
   inheritAttrs: false,
   setup() {
-    const value = useModel()
-    return { value }
+    const model = useModel()
+    const options = useCountryOptions()
+
+    return { model, options }
   },
 })
 </script>

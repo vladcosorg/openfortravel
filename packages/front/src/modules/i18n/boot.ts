@@ -4,7 +4,6 @@ import type { ManualTranslator } from 'vue-auto-i18n'
 import VueRouter, { Location } from 'vue-router'
 import type { Store } from 'vuex'
 
-import { i18n } from '@/front/src/boot/5-i18n'
 import { serverCache } from '@/front/src/misc/server-cache'
 import type { LanguageLocale } from '@/front/src/modules/i18n/types'
 import { reloadRoutes } from '@/front/src/router/helpers'
@@ -34,7 +33,6 @@ export function extractCurrentLocale(
 export function extractLanguageFromURL(
   url?: string,
 ): LanguageLocale | undefined {
-  console.log(url)
   if (!url) {
     return
   }

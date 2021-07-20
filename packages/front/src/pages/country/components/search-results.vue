@@ -1,11 +1,5 @@
 <template>
   <div class="container">
-    <portal to="under-header">
-      <the-breadcrumbs
-        :items="breadcrumbs.items"
-        :loading="breadcrumbs.loading"
-      />
-    </portal>
     <div class="justify-center q-col-gutter-md">
       <div class="row q-gutter-x-md q-mb-lg">
         <input-filter
@@ -49,11 +43,11 @@
           </div>
         </div>
 
-        <destination-group
-          :loading="isListLoading"
-          :destinations="forbiddenDestinations"
-          :collapse-after="3"
-        />
+        <!--        <destination-group-->
+        <!--          :loading="isListLoading"-->
+        <!--          :destinations="forbiddenDestinations"-->
+        <!--          :collapse-after="3"-->
+        <!--        />-->
       </div>
     </div>
   </div>
@@ -61,7 +55,6 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { Portal } from 'portal-vue'
 
 import CitizenshipContextInline from '@/front/src/components/context-field/citizenship/citizenship-context-inline.vue'
 import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
@@ -75,7 +68,6 @@ import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadc
 import DestinationGroup from '@/front/src/pages/country/components/destination-group.vue'
 import InputFilter from '@/front/src/pages/country/components/input-filter.vue'
 import {
-  getBreadcrumbs,
   useRestrictionFilterer,
   useRestrictionList,
 } from '@/front/src/pages/country/composable'
@@ -95,7 +87,6 @@ export default defineComponent({
     InputFilter,
     TheBreadcrumbs,
     DestinationGroup,
-    Portal,
   },
 
   setup() {
@@ -114,7 +105,6 @@ export default defineComponent({
       filteredDestinations,
       countryMatchFilterValue,
       isListLoading: isLoading,
-      breadcrumbs: getBreadcrumbs(originCode, isLoading),
       allowedDestinations,
       forbiddenDestinations,
     }

@@ -13,12 +13,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { hydrateWhenIdle } from 'vue-lazy-hydration'
 
 import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
 
 export default defineComponent({
-  components: { TheCountryList: hydrateWhenIdle(TheCountryList) },
+  components: { TheCountryList },
   props: {},
 })
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="row items-center q-gutter-x-md">
-    <div :class="['q-gutter-x-md gt-sm text-white', $style.links]">
+    <div :class="['q-gutter-x-md gt-sm text-white links']">
       <router-link
         v-for="(title, url, index) in menuItems"
         :key="index"
@@ -20,13 +20,12 @@
   </div>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 .links {
-  display: none;
   & > a {
     color: var(--q-primary);
   }
-  :global(.router-link-active) {
+  .router-link-active {
     color: var(--q-secondary);
     font-weight: bold;
   }
@@ -47,8 +46,8 @@ export default defineComponent({
   props: {
     modelValue: {
       type: Boolean,
-      required: true
-    }
+      required: true,
+    },
   },
   setup() {
     return { menuItems: computed(getShortHeaderMenuItems), menuIcon, moreIcon }

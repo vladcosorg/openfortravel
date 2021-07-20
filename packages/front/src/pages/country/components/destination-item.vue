@@ -2,8 +2,7 @@
   <q-card
     flat
     :class="[
-      $style.card,
-      'bg-elevation-1 full-height relative-position',
+      'card bg-elevation-1 full-height relative-position',
       hideBorder || loading ? '' : `status-${journey.status}`,
     ]"
   >
@@ -60,7 +59,7 @@
 
     <q-item
       v-else
-      :class="[$style.item, 'rounded-borders q-pa-md']"
+      class="item rounded-borders q-pa-md"
       style="min-height: 212px"
     >
       <q-item-section>
@@ -92,17 +91,17 @@
   </q-card>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 .card {
-  &:global(.status-allowed) {
+  .status-allowed {
     border: 2px solid rgba($positive, 0.5);
   }
 
-  &:global(.status-conditional) {
+  .status-conditional {
     border: 2px solid rgba($warning, 0.5);
   }
 
-  &:global(.status-forbidden) {
+  .status-forbidden {
     opacity: 0.5;
     border: 2px solid rgba($negative, 0.5);
   }

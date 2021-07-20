@@ -1,11 +1,11 @@
 import type { MutationTree } from 'vuex'
+
 import { saveContextToCookie } from '@/front/src/modules/visitor-context/cookies'
 import type { RootState } from '@/front/src/store/state'
 import type { MutationSignatures } from '@/front/src/store/types/mutations'
 import { MutationTypes } from '@/front/src/store/types/mutations'
 import { useCookies } from '@/shared/src/composables/use-plugins'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-
 
 export const mutations: MutationTree<RootState> & MutationSignatures = {
   [MutationTypes.setCountryToContinentMap](state, map) {
@@ -72,5 +72,8 @@ export const mutations: MutationTree<RootState> & MutationSignatures = {
   [MutationTypes.setVisitorOrigin](state, country) {
     state.visitorContext[RestrictionNodeType.ORIGIN] = country
     useCookies().set('country', country, { path: '/' })
+  },
+  [MutationTypes.setSlugs](state, slugs) {
+    state.slugs = slugs
   },
 }

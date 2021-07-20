@@ -5,6 +5,7 @@
         class="col-md-6 col-sm-8 col-12 q-gutter-md text-sm-left text-center"
         @submit.prevent.stop="onSubmit"
       >
+        <span class="a"> ddddddddddddd </span>
         <rich-email-input
           v-model="email"
           :is-loading="isLoading"
@@ -28,7 +29,6 @@
     </div>
   </inner-page>
 </template>
-
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
@@ -62,7 +62,7 @@ export default defineComponent({
               }),
             },
           ),
-          t('page.contact.messageSent') ,
+          t('page.contact.messageSent'),
         )
       },
     }

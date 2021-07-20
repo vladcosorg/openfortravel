@@ -13,6 +13,7 @@ type LocalGetterContext<
 
 export type GetterSignatures = {
   currentOriginCode(...args: LocalGetterContext): string
+  currentDestinationCode(...args: LocalGetterContext): string
   origin(...args: LocalGetterContext): Destination
   destination(...args: LocalGetterContext): Destination
   outgoingRestrictions(...args: LocalGetterContext): RestrictionGroupCollection

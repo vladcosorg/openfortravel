@@ -1,8 +1,6 @@
 <template>
   <inner-page disable-container disable-margins>
-    <portal to="under-header">
-      <the-breadcrumbs :items="breadcrumbs" />
-    </portal>
+    <the-breadcrumbs :items="breadcrumbs" />
     <div class="overflow-auto q-pb-lg q-pt-md relative-position bg-elevation-1">
       <div class="container">
         <the-heading />
@@ -56,14 +54,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, toRef, watch } from 'vue'
-import { Portal } from 'portal-vue'
+import { computed, defineComponent, provide } from 'vue'
+import { useStore } from 'vuex'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
-import {
-  applyContextFromProps,
-  contextProps,
-} from '@/front/src/composables/visitor-context-applier'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import EntryRestrictions from '@/front/src/pages/destination/components/entry-restrictions.vue'
 import Links from '@/front/src/pages/destination/components/links.vue'
@@ -72,61 +66,35 @@ import Stats from '@/front/src/pages/destination/components/stats.vue'
 import TheHeading from '@/front/src/pages/destination/components/the-heading.vue'
 import TheProfileBar from '@/front/src/pages/destination/components/the-profile-bar/the-profile-bar.vue'
 import { useBreadcrumbs } from '@/front/src/pages/destination/destination-composable'
-import { meta } from '@/front/src/pages/destination/destination-meta'
 import { registerStoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { useStore } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
-  meta,
   components: {
     TheRelatedCriteriaSection,
+    Links,
+    Stats,
+    EntryRestrictions,
     TheProfileBar,
     TheHeading,
-    EntryRestrictions,
-    Stats,
-    Links,
     TheBreadcrumbs,
     InnerPage,
-    Portal,
   },
-  inheritAttrs: false,
-  props: {
-    destinationSlug: {
-      type: String,
-      required: true,
-    },
-    // eslint-disable-next-line vue/no-unused-properties
-    isFallback: {
-      type: Boolean,
-    },
-    ...contextProps,
-  },
-  setup(props) {
-    const store = registerStoreModule(useStore(), {
-      currentDestinationCode: props.destinationSlug,
-    })
+  setup() {
+    const store = registerStoreModule(useStore())
 
     const { loading } = useLoading(false)
-
-    provide(StoreKey, store)
-    watch(
-      props,
-      () => {
-        applyContextFromProps(props)
-        store.mutations.setCurrentDestinationIso(props.destinationSlug)
-      },
-      { immediate: true },
+    const breadcrumbs = useBreadcrumbs(
+      computed(() => store.getters.currentOriginCode),
+      computed(() => store.getters.currentDestinationCode),
     )
+    provide(StoreKey, store)
 
     return {
       destination: computed(() => store.getters.destination),
       isLoading: loading,
-      breadcrumbs: useBreadcrumbs(
-        computed(() => store.getters.currentOriginCode),
-        toRef(props, 'destinationSlug'),
-      ),
+      breadcrumbs,
     }
   },
 })

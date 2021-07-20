@@ -1,8 +1,8 @@
 <template>
-  <generic-select :model-value="value" :options="list" v-bind="$attrs">
-    <template v-for="(_, slot) of $slots" #[slot]="scope"
-      ><slot :name="slot" v-bind="scope"
-    /></template>
+  <generic-select :model-value="modelValue" :options="list" v-bind="$attrs">
+    <template #selected v-if="$slots.selected">
+      <slot name="selected" />
+    </template>
   </generic-select>
 </template>
 
@@ -21,7 +21,7 @@ export default defineComponent({
       type: [String, Array],
     },
   },
-  setup() {
+  setup(props) {
     const list = computed(() =>
       transformFlatMapToArrayOfPairs(getOriginLabels()),
     )

@@ -81,7 +81,7 @@ export default defineComponent({
   },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const destinationId = computed(() => store.state.currentDestinationCode)
+    const destinationId = computed(() => store.getters.currentDestinationCode)
     return { destinationId }
   },
 })

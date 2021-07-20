@@ -17,16 +17,9 @@
             items-sm-start items-center
           "
         >
-          <h1 :class="['text-h2', $style.intro]">
-            <div v-html="$t('page.index.sections.hero.title')" />
-
-            <router-link
-              class="text-secondary"
-              :to="{ hash: 'country-list' }"
-              append
-            >
-              <span>{{ countryLabel }}</span>
-            </router-link>
+          <h1 class="text-h1 text-bold">
+            <span v-html="$t('page.index.sections.hero.title')" />
+            <origin-context-inline />
           </h1>
 
           <h2
@@ -37,7 +30,6 @@
               })
             "
           />
-
           <q-btn
             size="lg"
             text-color="primary-inverse"
@@ -53,29 +45,16 @@
   </section>
 </template>
 
-<style lang="scss" module>
-.intro {
-  font-weight: bold;
-  //line-height: 2.7rem;
-  a {
-    text-decoration: none;
-    font-weight: normal;
-  }
-  span {
-    border-bottom: 1px dashed;
-  }
-}
-</style>
-
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
 import TheBoy from '@/front/src/layouts/components/the-boy/the-boy.vue'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
+import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
 
 export default defineComponent({
-  components: { TheBoy },
+  components: { OriginContextInline, TheBoy },
   props: {
     originCode: {
       type: String,

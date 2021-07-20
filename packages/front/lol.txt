@@ -1,0 +1,4794 @@
+
+ Dev mode.......... ssr
+ Pkg quasar........ v2.0.3
+ Pkg @quasar/app... v3.0.3
+ Pkg webpack....... v5
+ Debugging......... enabled
+
+ Configured browser support (>= 85.58% of global marketshare):
+ · Chrome for Android >= 91
+ · Firefox for Android >= 89
+ · Android >= 91
+ · Chrome >= 87
+ · Edge >= 90
+ · Firefox >= 86
+ · iOS >= 13.4-13.7
+ · Safari >= 13.1
+
+ App • Chaining "Webserver" Webpack config
+ App • Extending "Client-side" Webpack config
+ App • Extending "Server-side" Webpack config
+
+ App • Showing Webpack config for "Server-side" with depth of 9
+
+{
+  mode: [32m'development'[39m,
+  devtool: [32m'source-map'[39m,
+  target: [32m'node'[39m,
+  externals: [36m<ref *1>[39m [Function (anonymous)] {
+    [length]: [33m0[39m,
+    [name]: [32m''[39m,
+    [arguments]: [1mnull[22m,
+    [caller]: [1mnull[22m,
+    [prototype]: {
+      [constructor]: [36m[Circular *1][39m
+    }
+  },
+  output: {
+    path: [32m'/Users/chetzof/Work/openfortravel/packages/front/dist/ssr/www'[39m,
+    publicPath: [32m'/'[39m,
+    filename: [32m'render-app.js'[39m,
+    chunkFilename: [32m'chunk-[name].js'[39m,
+    libraryTarget: [32m'commonjs2'[39m
+  },
+  resolve: {
+    symlinks: [33mfalse[39m,
+    alias: {
+      src: [32m'/Users/chetzof/Work/openfortravel/packages/front/src'[39m,
+      app: [32m'/Users/chetzof/Work/openfortravel/packages/front'[39m,
+      components: [32m'/Users/chetzof/Work/openfortravel/packages/front/src/components'[39m,
+      layouts: [32m'/Users/chetzof/Work/openfortravel/packages/front/src/layouts'[39m,
+      pages: [32m'/Users/chetzof/Work/openfortravel/packages/front/src/pages'[39m,
+      assets: [32m'/Users/chetzof/Work/openfortravel/packages/front/src/assets'[39m,
+      boot: [32m'/Users/chetzof/Work/openfortravel/packages/front/src/boot'[39m,
+      [32m'src-bex'[39m: [32m'/Users/chetzof/Work/openfortravel/packages/front/src-bex'[39m,
+      [32m'vue$'[39m: [32m'vue/dist/vue.cjs.js'[39m,
+      [32m'vue-i18n$'[39m: [32m'vue-i18n/dist/vue-i18n.cjs.js'[39m,
+      [32m'quasar$'[39m: [32m'quasar/dist/quasar.cjs.prod.js'[39m,
+      [32m'@'[39m: [32m'/Users/chetzof/Work/openfortravel'[39m
+    },
+    extensions: [
+      [32m'.mjs'[39m,
+      [32m'.ts'[39m,
+      [32m'.js'[39m,
+      [32m'.vue'[39m,
+      [32m'.json'[39m,
+      [32m'.wasm'[39m,
+      [length]: [33m6[39m
+    ],
+    modules: [
+      [32m'node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/packages/front/node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/node_modules'[39m,
+      [length]: [33m3[39m
+    ],
+    plugins: [
+      TsconfigPathsPlugin {
+        source: [32m'described-resolve'[39m,
+        target: [32m'resolve'[39m,
+        extensions: [
+          [32m'.ts'[39m,
+          [32m'.tsx'[39m,
+          [length]: [33m2[39m
+        ],
+        log: {
+          log: [Function (anonymous)] {
+            [length]: [33m1[39m,
+            [name]: [32m''[39m
+          },
+          logInfo: [Function: doNothingLogger] {
+            [length]: [33m1[39m,
+            [name]: [32m'doNothingLogger'[39m
+          },
+          logWarning: [Function (anonymous)] {
+            [length]: [33m1[39m,
+            [name]: [32m''[39m
+          },
+          logError: [Function (anonymous)] {
+            [length]: [33m1[39m,
+            [name]: [32m''[39m
+          }
+        },
+        baseUrl: [32m'./'[39m,
+        absoluteBaseUrl: [32m'/Users/chetzof/Work/openfortravel/packages/front/'[39m,
+        matchPath: [36m<ref *2>[39m [Function (anonymous)] {
+          [length]: [33m5[39m,
+          [name]: [32m''[39m,
+          [prototype]: {
+            [constructor]: [36m[Circular *2][39m
+          }
+        }
+      },
+      [length]: [33m1[39m
+    ]
+  },
+  resolveLoader: {
+    modules: [
+      [32m'node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/packages/front/node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/node_modules'[39m,
+      [length]: [33m3[39m
+    ]
+  },
+  module: {
+    noParse: /^(vue|vue-router|vuex|vuex-router-sync|@quasar[\\/]extras|quasar[\\/]dist)$/ {
+      [lastIndex]: [33m0[39m
+    },
+    rules: [
+      {
+        test: /\.vue$/ {
+          [lastIndex]: [33m0[39m
+        },
+        use: [
+          {
+            loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/lib/webpack/loader.vue.auto-import-quasar.js'[39m,
+            options: {
+              autoImportComponentCase: [32m'kebab'[39m,
+              isServerBuild: [33mtrue[39m
+            },
+            [__useName]: [32m'vue-auto-import-quasar'[39m,
+            [__ruleNames]: [
+              [32m'vue'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          {
+            loader: [32m'vue-loader'[39m,
+            options: {
+              compilerOptions: {
+                directiveTransforms: {
+                  [32m'close-popup'[39m: [Function: noopTransform] {
+                    [length]: [33m0[39m,
+                    [name]: [32m'noopTransform'[39m
+                  },
+                  intersection: [Function: noopTransform] {
+                    [length]: [33m0[39m,
+                    [name]: [32m'noopTransform'[39m
+                  },
+                  morph: [Function: Morph_ssr] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'Morph_ssr'[39m
+                  },
+                  mutation: [Function: noopTransform] {
+                    [length]: [33m0[39m,
+                    [name]: [32m'noopTransform'[39m
+                  },
+                  ripple: [Function: noopTransform] {
+                    [length]: [33m0[39m,
+                    [name]: [32m'noopTransform'[39m
+                  },
+                  scroll: [Function: noopTransform] {
+                    [length]: [33m0[39m,
+                    [name]: [32m'noopTransform'[39m
+                  },
+                  [32m'scroll-fire'[39m: [Function: noopTransform] {
+                    [length]: [33m0[39m,
+                    [name]: [32m'noopTransform'[39m
+                  },
+                  [32m'touch-hold'[39m: [Function: noopTransform] {
+                    [length]: [33m0[39m,
+                    [name]: [32m'noopTransform'[39m
+                  },
+                  [32m'touch-pan'[39m: [Function: noopTransform] {
+                    [length]: [33m0[39m,
+                    [name]: [32m'noopTransform'[39m
+                  },
+                  [32m'touch-repeat'[39m: [Function: noopTransform] {
+                    [length]: [33m0[39m,
+                    [name]: [32m'noopTransform'[39m
+                  },
+                  [32m'touch-swipe'[39m: [Function: noopTransform] {
+                    [length]: [33m0[39m,
+                    [name]: [32m'noopTransform'[39m
+                  }
+                },
+                ssr: [33mtrue[39m
+              },
+              transformAssetUrls: {
+                base: [1mnull[22m,
+                includeAbsolute: [33mfalse[39m,
+                tags: {
+                  video: [
+                    [32m'src'[39m,
+                    [32m'poster'[39m,
+                    [32m'src'[39m,
+                    [32m'poster'[39m,
+                    [length]: [33m4[39m
+                  ],
+                  source: [
+                    [32m'src'[39m,
+                    [32m'src'[39m,
+                    [length]: [33m2[39m
+                  ],
+                  img: [
+                    [32m'src'[39m,
+                    [32m'src'[39m,
+                    [length]: [33m2[39m
+                  ],
+                  image: [
+                    [32m'xlink:href'[39m,
+                    [32m'href'[39m,
+                    [32m'xlink:href'[39m,
+                    [32m'href'[39m,
+                    [length]: [33m4[39m
+                  ],
+                  use: [
+                    [32m'xlink:href'[39m,
+                    [32m'href'[39m,
+                    [32m'xlink:href'[39m,
+                    [32m'href'[39m,
+                    [length]: [33m4[39m
+                  ],
+                  QCarouselSlide: [32m'img-src'[39m,
+                  [32m'q-carousel-slide'[39m: [32m'img-src'[39m,
+                  QChatMessage: [32m'avatar'[39m,
+                  [32m'q-chat-message'[39m: [32m'avatar'[39m,
+                  QImg: [
+                    [32m'src'[39m,
+                    [32m'placeholder-src'[39m,
+                    [length]: [33m2[39m
+                  ],
+                  [32m'q-img'[39m: [
+                    [32m'src'[39m,
+                    [32m'placeholder-src'[39m,
+                    [length]: [33m2[39m
+                  ],
+                  QParallax: [32m'src'[39m,
+                  [32m'q-parallax'[39m: [32m'src'[39m,
+                  QTimelineEntry: [32m'avatar'[39m,
+                  [32m'q-timeline-entry'[39m: [32m'avatar'[39m
+                }
+              },
+              isServerBuild: [33mtrue[39m
+            },
+            [__useName]: [32m'vue-loader'[39m,
+            [__ruleNames]: [
+              [32m'vue'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m2[39m
+        ],
+        [__ruleNames]: [
+          [32m'vue'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.ts$/ {
+          [lastIndex]: [33m0[39m
+        },
+        use: [
+          {
+            loader: [32m'ts-loader'[39m,
+            options: {
+              appendTsSuffixTo: [
+                /\.vue$/ {
+                  [lastIndex]: [33m0[39m
+                },
+                [length]: [33m1[39m
+              ],
+              transpileOnly: [33mtrue[39m
+            },
+            [__useName]: [32m'ts-loader'[39m,
+            [__ruleNames]: [
+              [32m'typescript'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'typescript'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|webp|avif|ico)(\?.*)?$/ {
+          [lastIndex]: [33m0[39m
+        },
+        type: [32m'javascript/auto'[39m,
+        use: [
+          {
+            loader: [32m'url-loader'[39m,
+            options: {
+              esModule: [33mfalse[39m,
+              limit: [33m10000[39m,
+              name: [32m'img/[name].[ext]'[39m
+            },
+            [__useName]: [32m'url-loader'[39m,
+            [__ruleNames]: [
+              [32m'images'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'images'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/ {
+          [lastIndex]: [33m0[39m
+        },
+        type: [32m'javascript/auto'[39m,
+        use: [
+          {
+            loader: [32m'url-loader'[39m,
+            options: {
+              esModule: [33mfalse[39m,
+              limit: [33m10000[39m,
+              name: [32m'fonts/[name].[ext]'[39m
+            },
+            [__useName]: [32m'url-loader'[39m,
+            [__ruleNames]: [
+              [32m'fonts'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'fonts'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/ {
+          [lastIndex]: [33m0[39m
+        },
+        type: [32m'javascript/auto'[39m,
+        use: [
+          {
+            loader: [32m'url-loader'[39m,
+            options: {
+              esModule: [33mfalse[39m,
+              limit: [33m10000[39m,
+              name: [32m'media/[name].[ext]'[39m
+            },
+            [__useName]: [32m'url-loader'[39m,
+            [__ruleNames]: [
+              [32m'media'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'media'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.css$/ {
+          [lastIndex]: [33m0[39m
+        },
+        oneOf: [
+          {
+            resourceQuery: /module/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'css'[39m,
+              [32m'modules-query'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            test: /\.module\.\w+$/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'css'[39m,
+              [32m'modules-ext'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'css'[39m,
+              [32m'normal'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          [length]: [33m3[39m
+        ],
+        [__ruleNames]: [
+          [32m'css'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.styl(us)?$/ {
+          [lastIndex]: [33m0[39m
+        },
+        oneOf: [
+          {
+            resourceQuery: /module/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'stylus'[39m,
+              [32m'modules-query'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            test: /\.module\.\w+$/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'stylus'[39m,
+              [32m'modules-ext'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'stylus'[39m,
+              [32m'normal'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          [length]: [33m3[39m
+        ],
+        [__ruleNames]: [
+          [32m'stylus'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.scss$/ {
+          [lastIndex]: [33m0[39m
+        },
+        oneOf: [
+          {
+            resourceQuery: /module/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'scss'[39m,
+              [32m'modules-query'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            test: /\.module\.\w+$/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'scss'[39m,
+              [32m'modules-ext'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'scss'[39m,
+              [32m'normal'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          [length]: [33m3[39m
+        ],
+        [__ruleNames]: [
+          [32m'scss'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.sass$/ {
+          [lastIndex]: [33m0[39m
+        },
+        oneOf: [
+          {
+            resourceQuery: /module/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'sass'[39m,
+              [32m'modules-query'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            test: /\.module\.\w+$/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'sass'[39m,
+              [32m'modules-ext'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'sass'[39m,
+              [32m'normal'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          [length]: [33m3[39m
+        ],
+        [__ruleNames]: [
+          [32m'sass'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.less$/ {
+          [lastIndex]: [33m0[39m
+        },
+        oneOf: [
+          {
+            resourceQuery: /module/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'less'[39m,
+              [32m'modules-query'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            test: /\.module\.\w+$/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'less'[39m,
+              [32m'modules-ext'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            use: [
+              {
+                loader: [32m'null-loader'[39m,
+                [__useName]: [32m'null-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m1[39m
+            ],
+            [__ruleNames]: [
+              [32m'less'[39m,
+              [32m'normal'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          [length]: [33m3[39m
+        ],
+        [__ruleNames]: [
+          [32m'less'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.mjs$/ {
+          [lastIndex]: [33m0[39m
+        },
+        type: [32m'javascript/auto'[39m,
+        include: [
+          /[\\/]node_modules[\\/]/ {
+            [lastIndex]: [33m0[39m
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'mjs'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      [length]: [33m11[39m
+    ]
+  },
+  optimization: {
+    nodeEnv: [33mfalse[39m,
+    emitOnErrors: [33mfalse[39m
+  },
+  plugins: [
+    VueLoaderPlugin {
+      [__pluginName]: [32m'vue-loader'[39m,
+      [__pluginType]: [32m'plugin'[39m,
+      [__pluginArgs]: [
+        [length]: [33m0[39m
+      ],
+      [__pluginConstructorName]: [32m'VueLoaderPlugin'[39m,
+      [__pluginPath]: [1mnull[22m
+    },
+    DefinePlugin {
+      definitions: {
+        [32m'process.env.PROJECT_URL'[39m: [32m'"http://localhost:8080"'[39m,
+        [32m'process.env.NODE_ENV'[39m: [32m'"development"'[39m,
+        [32m'process.env.CLIENT'[39m: [33mfalse[39m,
+        [32m'process.env.SERVER'[39m: [33mtrue[39m,
+        [32m'process.env.DEV'[39m: [32m'true'[39m,
+        [32m'process.env.PROD'[39m: [32m'false'[39m,
+        [32m'process.env.DEBUGGING'[39m: [32m'true'[39m,
+        [32m'process.env.MODE'[39m: [32m'"ssr"'[39m,
+        [32m'process.env.VUE_ROUTER_MODE'[39m: [32m'"history"'[39m,
+        [32m'process.env.VUE_ROUTER_BASE'[39m: [32m'"/"'[39m,
+        [32m'process.env.APP_URL'[39m: [32m'"http://localhost:8080/"'[39m,
+        __VUE_OPTIONS_API__: [33mtrue[39m,
+        __VUE_PROD_DEVTOOLS__: [33mtrue[39m,
+        __QUASAR_VERSION__: [32m'"2.0.3"'[39m,
+        __QUASAR_SSR__: [33mtrue[39m,
+        __QUASAR_SSR_SERVER__: [33mtrue[39m,
+        __QUASAR_SSR_CLIENT__: [33mfalse[39m,
+        __QUASAR_SSR_PWA__: [33mfalse[39m,
+        __VUE_I18N_FULL_INSTALL__: [33mtrue[39m,
+        __VUE_I18N_LEGACY_API__: [33mtrue[39m,
+        __VUE_I18N_PROD_DEVTOOLS__: [33mtrue[39m,
+        __INTLIFY_PROD_DEVTOOLS__: [33mtrue[39m
+      },
+      [__pluginName]: [32m'define'[39m,
+      [__pluginType]: [32m'plugin'[39m,
+      [__pluginArgs]: [
+        {
+          [32m'process.env.PROJECT_URL'[39m: [32m'"http://localhost:8080"'[39m,
+          [32m'process.env.NODE_ENV'[39m: [32m'"development"'[39m,
+          [32m'process.env.CLIENT'[39m: [33mfalse[39m,
+          [32m'process.env.SERVER'[39m: [33mtrue[39m,
+          [32m'process.env.DEV'[39m: [32m'true'[39m,
+          [32m'process.env.PROD'[39m: [32m'false'[39m,
+          [32m'process.env.DEBUGGING'[39m: [32m'true'[39m,
+          [32m'process.env.MODE'[39m: [32m'"ssr"'[39m,
+          [32m'process.env.VUE_ROUTER_MODE'[39m: [32m'"history"'[39m,
+          [32m'process.env.VUE_ROUTER_BASE'[39m: [32m'"/"'[39m,
+          [32m'process.env.APP_URL'[39m: [32m'"http://localhost:8080/"'[39m,
+          __VUE_OPTIONS_API__: [33mtrue[39m,
+          __VUE_PROD_DEVTOOLS__: [33mtrue[39m,
+          __QUASAR_VERSION__: [32m'"2.0.3"'[39m,
+          __QUASAR_SSR__: [33mtrue[39m,
+          __QUASAR_SSR_SERVER__: [33mtrue[39m,
+          __QUASAR_SSR_CLIENT__: [33mfalse[39m,
+          __QUASAR_SSR_PWA__: [33mfalse[39m,
+          __VUE_I18N_FULL_INSTALL__: [33mtrue[39m,
+          __VUE_I18N_LEGACY_API__: [33mtrue[39m,
+          __VUE_I18N_PROD_DEVTOOLS__: [33mtrue[39m,
+          __INTLIFY_PROD_DEVTOOLS__: [33mtrue[39m
+        },
+        [length]: [33m1[39m
+      ],
+      [__pluginConstructorName]: [32m'DefinePlugin'[39m,
+      [__pluginPath]: [1mnull[22m
+    },
+    WebpackProgressPlugin {
+      profile: [33mfalse[39m,
+      handler: [Function: handler] {
+        [length]: [33m0[39m,
+        [name]: [32m'handler'[39m
+      },
+      modulesCount: [33m5000[39m,
+      dependenciesCount: [33m10000[39m,
+      showEntries: [33mtrue[39m,
+      showModules: [33mtrue[39m,
+      showDependencies: [33mtrue[39m,
+      showActiveModules: [33mfalse[39m,
+      percentBy: [90mundefined[39m,
+      opts: {
+        name: [32m'Server-side'[39m,
+        useBars: [33mfalse[39m,
+        hasExternalWork: [90mundefined[39m
+      },
+      [__pluginName]: [32m'progress'[39m,
+      [__pluginType]: [32m'plugin'[39m,
+      [__pluginArgs]: [
+        {
+          name: [32m'Server-side'[39m,
+          cfg: {
+            ctx: {
+              dev: [33mtrue[39m,
+              prod: [33mfalse[39m,
+              mode: {
+                ssr: [33mtrue[39m,
+                pwa: [33mfalse[39m
+              },
+              modeName: [32m'ssr'[39m,
+              target: {},
+              targetName: [90mundefined[39m,
+              emulator: [90mundefined[39m,
+              arch: {},
+              archName: [90mundefined[39m,
+              bundler: {},
+              bundlerName: [90mundefined[39m,
+              debug: [33mfalse[39m,
+              publish: [90mundefined[39m,
+              vueDevtools: [33mfalse[39m
+            },
+            css: [
+              {
+                path: [32m'src/css/app.sass'[39m
+              },
+              [length]: [33m1[39m
+            ],
+            boot: [
+              {
+                path: [32m'boot/../../../shared/src/boot/use-setter'[39m
+              },
+              {
+                path: [32m'boot/2-node-cache'[39m,
+                client: [33mfalse[39m
+              },
+              {
+                path: [32m'boot/5-i18n'[39m
+              },
+              {
+                path: [32m'boot/3-ssr-data-preload'[39m,
+                client: [33mfalse[39m
+              },
+              {
+                path: [32m'boot/7-gtag'[39m,
+                server: [33mfalse[39m
+              },
+              {
+                path: [32m'boot/8-context'[39m,
+                client: [33mfalse[39m
+              },
+              [length]: [33m6[39m
+            ],
+            vendor: {
+              add: [
+                [length]: [33m0[39m
+              ],
+              remove: [
+                [32m'i18n-iso-countries'[39m,
+                [32m'svg-country-flags'[39m,
+                [32m'quasar/src/components/table'[39m,
+                [length]: [33m3[39m
+              ],
+              disable: [33mtrue[39m
+            },
+            build: {
+              vueLoaderOptions: {
+                compilerOptions: {},
+                transformAssetUrls: {
+                  base: [1mnull[22m,
+                  includeAbsolute: [33mfalse[39m,
+                  tags: {
+                    video: [36m[Array][39m,
+                    source: [36m[Array][39m,
+                    img: [36m[Array][39m,
+                    image: [36m[Array][39m,
+                    use: [36m[Array][39m,
+                    QCarouselSlide: [32m'img-src'[39m,
+                    [32m'q-carousel-slide'[39m: [32m'img-src'[39m,
+                    QChatMessage: [32m'avatar'[39m,
+                    [32m'q-chat-message'[39m: [32m'avatar'[39m,
+                    QImg: [36m[Array][39m,
+                    [32m'q-img'[39m: [36m[Array][39m,
+                    QParallax: [32m'src'[39m,
+                    [32m'q-parallax'[39m: [32m'src'[39m,
+                    QTimelineEntry: [32m'avatar'[39m,
+                    [32m'q-timeline-entry'[39m: [32m'avatar'[39m
+                  }
+                }
+              },
+              showProgress: [33mtrue[39m,
+              productName: [32m'Open For Travel Guide'[39m,
+              productDescription: [32m'A Quasar Framework app'[39m,
+              extractCSS: [33mtrue[39m,
+              sourceMap: [33mtrue[39m,
+              minify: [33mfalse[39m,
+              distDir: [32m'/Users/chetzof/Work/openfortravel/packages/front/dist/ssr'[39m,
+              htmlFilename: [32m'index.html'[39m,
+              ssrPwaHtmlFilename: [32m'offline.html'[39m,
+              vueRouterMode: [32m'history'[39m,
+              transpile: [33mfalse[39m,
+              devtool: [32m'eval-source-map'[39m,
+              uglifyOptions: {
+                compress: {
+                  arrows: [33mfalse[39m,
+                  collapse_vars: [33mfalse[39m,
+                  comparisons: [33mfalse[39m,
+                  computed_props: [33mfalse[39m,
+                  hoist_funs: [33mfalse[39m,
+                  hoist_props: [33mfalse[39m,
+                  hoist_vars: [33mfalse[39m,
+                  inline: [33mfalse[39m,
+                  loops: [33mfalse[39m,
+                  negate_iife: [33mfalse[39m,
+                  properties: [33mfalse[39m,
+                  reduce_funcs: [33mfalse[39m,
+                  reduce_vars: [33mfalse[39m,
+                  switches: [33mfalse[39m,
+                  toplevel: [33mfalse[39m,
+                  typeofs: [33mfalse[39m,
+                  booleans: [33mtrue[39m,
+                  if_return: [33mtrue[39m,
+                  sequences: [33mtrue[39m,
+                  unused: [33mtrue[39m,
+                  conditionals: [33mtrue[39m,
+                  dead_code: [33mtrue[39m,
+                  evaluate: [33mtrue[39m
+                },
+                mangle: {
+                  safari10: [33mtrue[39m
+                }
+              },
+              transpileDependencies: [
+                [length]: [33m0[39m
+              ],
+              sassLoaderOptions: {},
+              scssLoaderOptions: {},
+              stylusLoaderOptions: {},
+              lessLoaderOptions: {},
+              env: {
+                PROJECT_URL: [32m'http://localhost:8080'[39m,
+                NODE_ENV: [32m'development'[39m,
+                CLIENT: [33mtrue[39m,
+                SERVER: [33mfalse[39m,
+                DEV: [33mtrue[39m,
+                PROD: [33mfalse[39m,
+                DEBUGGING: [33mtrue[39m,
+                MODE: [32m'ssr'[39m,
+                VUE_ROUTER_MODE: [32m'history'[39m,
+                VUE_ROUTER_BASE: [32m'/'[39m,
+                APP_URL: [32m'http://localhost:8080/'[39m
+              },
+              extendWebpack: [Function: extendWebpack] {
+                [length]: [33m1[39m,
+                [name]: [32m'extendWebpack'[39m
+              },
+              gzip: [33mfalse[39m,
+              publicPath: [32m'/'[39m,
+              vueRouterBase: [32m'/'[39m,
+              appBase: [32m'/'[39m,
+              APP_URL: [32m'http://localhost:8080/'[39m
+            },
+            devServer: {
+              hot: [33mtrue[39m,
+              firewall: [33mfalse[39m,
+              compress: [33mtrue[39m,
+              open: [33mfalse[39m,
+              client: {
+                overlay: {
+                  warnings: [33mfalse[39m
+                }
+              },
+              devMiddleware: {
+                publicPath: [32m'/'[39m,
+                stats: [33mfalse[39m,
+                index: [33mfalse[39m
+              },
+              static: {
+                serveIndex: [33mfalse[39m
+              },
+              https: [33mfalse[39m,
+              port: [33m8080[39m,
+              host: [32m'0.0.0.0'[39m,
+              onBeforeSetupMiddleware: [Function: onBeforeSetupMiddleware] {
+                [length]: [33m1[39m,
+                [name]: [32m'onBeforeSetupMiddleware'[39m
+              }
+            },
+            framework: {
+              components: [
+                [length]: [33m0[39m
+              ],
+              directives: [
+                [length]: [33m0[39m
+              ],
+              plugins: [
+                [32m'Cookies'[39m,
+                [32m'Meta'[39m,
+                [32m'Notify'[39m,
+                [length]: [33m3[39m
+              ],
+              config: {
+                dark: [33mtrue[39m,
+                loadingBar: {
+                  position: [32m'bottom'[39m,
+                  skipHijack: [33mtrue[39m
+                },
+                notify: {}
+              },
+              iconSet: [32m'material-icons'[39m,
+              lang: [32m'en-US'[39m,
+              cssAddon: [33mtrue[39m,
+              autoImportComponentCase: [32m'kebab'[39m
+            },
+            animations: [
+              [32m'fadeIn'[39m,
+              [32m'fadeOut'[39m,
+              [32m'fadeInRight'[39m,
+              [32m'fadeOutRight'[39m,
+              [32m'bounceInUp'[39m,
+              [32m'bounce'[39m,
+              [length]: [33m6[39m
+            ],
+            extras: [
+              [length]: [33m0[39m
+            ],
+            sourceFiles: {
+              rootComponent: [32m'src/app.vue'[39m,
+              router: [32m'src/router/index'[39m,
+              store: [32m'src/store/index'[39m,
+              indexHtmlTemplate: [32m'src/index.template.html'[39m,
+              registerServiceWorker: [32m'src-pwa/register-service-worker'[39m,
+              serviceWorker: [32m'src-pwa/custom-service-worker'[39m,
+              electronMain: [32m'src-electron/electron-main'[39m,
+              electronPreload: [32m'src-electron/electron-preload'[39m
+            },
+            ssr: {
+              pwa: [33mfalse[39m,
+              manualStoreHydration: [33mfalse[39m,
+              manualPostHydrationTrigger: [33mfalse[39m,
+              prodPort: [33m3000[39m,
+              maxAge: [33m2592000000[39m,
+              middlewares: [
+                {
+                  path: [32m'src-ssr/middlewares/render'[39m
+                },
+                [length]: [33m1[39m
+              ],
+              chainWebpackWebserver: [Function: chainWebpackWebserver] {
+                [length]: [33m0[39m,
+                [name]: [32m'chainWebpackWebserver'[39m
+              },
+              directiveTransforms: {
+                [32m'close-popup'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                intersection: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                morph: [Function: Morph_ssr] {
+                  [length]: [33m1[39m,
+                  [name]: [32m'Morph_ssr'[39m
+                },
+                mutation: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                ripple: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                scroll: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'scroll-fire'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-hold'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-pan'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-repeat'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-swipe'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                }
+              }
+            },
+            pwa: {
+              workboxOptions: {},
+              manifest: {
+                icons: [
+                  [length]: [33m0[39m
+                ]
+              },
+              metaVariables: {}
+            },
+            electron: {
+              unPackagedInstallParams: [
+                [length]: [33m0[39m
+              ],
+              packager: {},
+              builder: {}
+            },
+            cordova: {},
+            capacitor: {
+              capacitorCliPreparationParams: [
+                [length]: [33m0[39m
+              ]
+            },
+            bin: {},
+            bex: {
+              builder: {
+                directories: {}
+              }
+            },
+            htmlVariables: {
+              ctx: {
+                dev: [33mtrue[39m,
+                prod: [33mfalse[39m,
+                mode: {
+                  ssr: [33mtrue[39m,
+                  pwa: [33mfalse[39m
+                },
+                modeName: [32m'ssr'[39m,
+                target: {},
+                targetName: [90mundefined[39m,
+                emulator: [90mundefined[39m,
+                arch: {},
+                archName: [90mundefined[39m,
+                bundler: {},
+                bundlerName: [90mundefined[39m,
+                debug: [33mfalse[39m,
+                publish: [90mundefined[39m,
+                vueDevtools: [33mfalse[39m
+              },
+              process: {
+                env: {
+                  PROJECT_URL: [32m'http://localhost:8080'[39m,
+                  NODE_ENV: [32m'development'[39m,
+                  CLIENT: [33mtrue[39m,
+                  SERVER: [33mfalse[39m,
+                  DEV: [33mtrue[39m,
+                  PROD: [33mfalse[39m,
+                  DEBUGGING: [33mtrue[39m,
+                  MODE: [32m'ssr'[39m,
+                  VUE_ROUTER_MODE: [32m'history'[39m,
+                  VUE_ROUTER_BASE: [32m'/'[39m,
+                  APP_URL: [32m'http://localhost:8080/'[39m
+                }
+              },
+              productName: [32m'Open For Travel Guide'[39m,
+              productDescription: [32m'A Quasar Framework app'[39m
+            },
+            supportTS: {
+              tsCheckerConfig: {
+                eslint: {
+                  enabled: [33mfalse[39m,
+                  files: [32m'./src/**/*.{ts,tsx,js,jsx,vue}'[39m
+                }
+              }
+            },
+            __rootDefines: {
+              __VUE_OPTIONS_API__: [33mtrue[39m,
+              __VUE_PROD_DEVTOOLS__: [33mtrue[39m,
+              __QUASAR_VERSION__: [32m'"2.0.3"'[39m,
+              __QUASAR_SSR__: [33mtrue[39m,
+              __QUASAR_SSR_SERVER__: [33mfalse[39m,
+              __QUASAR_SSR_CLIENT__: [33mfalse[39m,
+              __QUASAR_SSR_PWA__: [33mfalse[39m,
+              __VUE_I18N_FULL_INSTALL__: [33mtrue[39m,
+              __VUE_I18N_LEGACY_API__: [33mtrue[39m,
+              __VUE_I18N_PROD_DEVTOOLS__: [33mtrue[39m,
+              __INTLIFY_PROD_DEVTOOLS__: [33mtrue[39m
+            },
+            __needsAppMountHook: [33mtrue[39m,
+            __vueDevtools: [33mfalse[39m,
+            __transpileBanner: [32m'no'[39m,
+            __loadingBar: [33mfalse[39m,
+            __meta: [33mtrue[39m,
+            store: [33mtrue[39m,
+            preFetch: [33mfalse[39m,
+            __devServer: {},
+            __getUrl: [Function (anonymous)] {
+              [length]: [33m1[39m,
+              [name]: [32m''[39m
+            },
+            __html: {
+              minifyOptions: [33mfalse[39m
+            },
+            __versions: {},
+            __css: {
+              quasarSrcExt: [32m'sass'[39m
+            }
+          }
+        },
+        [length]: [33m1[39m
+      ],
+      [__pluginConstructorName]: [32m'WebpackProgressPlugin'[39m,
+      [__pluginPath]: [1mnull[22m
+    },
+    BootDefaultExport {
+      [__pluginName]: [32m'boot-default-export'[39m,
+      [__pluginType]: [32m'plugin'[39m,
+      [__pluginArgs]: [
+        [length]: [33m0[39m
+      ],
+      [__pluginConstructorName]: [32m'BootDefaultExport'[39m,
+      [__pluginPath]: [1mnull[22m
+    },
+    [length]: [33m4[39m
+  ],
+  performance: {
+    hints: [33mfalse[39m,
+    maxAssetSize: [33m500000[39m
+  },
+  entry: {
+    app: [
+      [32m'/Users/chetzof/Work/openfortravel/packages/front/.quasar/server-entry.js'[39m,
+      [length]: [33m1[39m
+    ]
+  },
+  infrastructureLogging: {
+    colors: [33mtrue[39m,
+    level: [32m'warn'[39m
+  }
+}
+
+ App • Showing Webpack config for "Client-side" with depth of 9
+
+{
+  mode: [32m'development'[39m,
+  devtool: [32m'eval-source-map'[39m,
+  output: {
+    path: [32m'/Users/chetzof/Work/openfortravel/packages/front/dist/ssr/www'[39m,
+    publicPath: [32m'/'[39m,
+    filename: [32m'js/[name].js'[39m,
+    chunkFilename: [32m'js/[name].js'[39m
+  },
+  resolve: {
+    symlinks: [33mfalse[39m,
+    alias: {
+      src: [32m'/Users/chetzof/Work/openfortravel/packages/front/src'[39m,
+      app: [32m'/Users/chetzof/Work/openfortravel/packages/front'[39m,
+      components: [32m'/Users/chetzof/Work/openfortravel/packages/front/src/components'[39m,
+      layouts: [32m'/Users/chetzof/Work/openfortravel/packages/front/src/layouts'[39m,
+      pages: [32m'/Users/chetzof/Work/openfortravel/packages/front/src/pages'[39m,
+      assets: [32m'/Users/chetzof/Work/openfortravel/packages/front/src/assets'[39m,
+      boot: [32m'/Users/chetzof/Work/openfortravel/packages/front/src/boot'[39m,
+      [32m'src-bex'[39m: [32m'/Users/chetzof/Work/openfortravel/packages/front/src-bex'[39m,
+      [32m'vue$'[39m: [32m'vue/dist/vue.runtime.esm-bundler.js'[39m,
+      [32m'vue-i18n$'[39m: [32m'vue-i18n/dist/vue-i18n.esm-bundler.js'[39m,
+      [32m'@'[39m: [32m'/Users/chetzof/Work/openfortravel'[39m
+    },
+    extensions: [
+      [32m'.mjs'[39m,
+      [32m'.ts'[39m,
+      [32m'.js'[39m,
+      [32m'.vue'[39m,
+      [32m'.json'[39m,
+      [32m'.wasm'[39m,
+      [length]: [33m6[39m
+    ],
+    modules: [
+      [32m'node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/packages/front/node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/node_modules'[39m,
+      [length]: [33m3[39m
+    ],
+    plugins: [
+      TsconfigPathsPlugin {
+        source: [32m'described-resolve'[39m,
+        target: [32m'resolve'[39m,
+        extensions: [
+          [32m'.ts'[39m,
+          [32m'.tsx'[39m,
+          [length]: [33m2[39m
+        ],
+        log: {
+          log: [Function (anonymous)] {
+            [length]: [33m1[39m,
+            [name]: [32m''[39m
+          },
+          logInfo: [Function: doNothingLogger] {
+            [length]: [33m1[39m,
+            [name]: [32m'doNothingLogger'[39m
+          },
+          logWarning: [Function (anonymous)] {
+            [length]: [33m1[39m,
+            [name]: [32m''[39m
+          },
+          logError: [Function (anonymous)] {
+            [length]: [33m1[39m,
+            [name]: [32m''[39m
+          }
+        },
+        baseUrl: [32m'./'[39m,
+        absoluteBaseUrl: [32m'/Users/chetzof/Work/openfortravel/packages/front/'[39m,
+        matchPath: [36m<ref *1>[39m [Function (anonymous)] {
+          [length]: [33m5[39m,
+          [name]: [32m''[39m,
+          [prototype]: {
+            [constructor]: [36m[Circular *1][39m
+          }
+        }
+      },
+      [length]: [33m1[39m
+    ]
+  },
+  resolveLoader: {
+    modules: [
+      [32m'node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/packages/front/node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/node_modules'[39m,
+      [length]: [33m3[39m
+    ]
+  },
+  module: {
+    noParse: /^(vue|vue-router|vuex|vuex-router-sync|@quasar[\\/]extras|quasar[\\/]dist)$/ {
+      [lastIndex]: [33m0[39m
+    },
+    rules: [
+      {
+        test: /\.vue$/ {
+          [lastIndex]: [33m0[39m
+        },
+        use: [
+          {
+            loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/lib/webpack/loader.vue.auto-import-quasar.js'[39m,
+            options: {
+              autoImportComponentCase: [32m'kebab'[39m,
+              isServerBuild: [33mfalse[39m
+            },
+            [__useName]: [32m'vue-auto-import-quasar'[39m,
+            [__ruleNames]: [
+              [32m'vue'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          {
+            loader: [32m'vue-loader'[39m,
+            options: {
+              compilerOptions: {},
+              transformAssetUrls: {
+                base: [1mnull[22m,
+                includeAbsolute: [33mfalse[39m,
+                tags: {
+                  video: [
+                    [32m'src'[39m,
+                    [32m'poster'[39m,
+                    [32m'src'[39m,
+                    [32m'poster'[39m,
+                    [length]: [33m4[39m
+                  ],
+                  source: [
+                    [32m'src'[39m,
+                    [32m'src'[39m,
+                    [length]: [33m2[39m
+                  ],
+                  img: [
+                    [32m'src'[39m,
+                    [32m'src'[39m,
+                    [length]: [33m2[39m
+                  ],
+                  image: [
+                    [32m'xlink:href'[39m,
+                    [32m'href'[39m,
+                    [32m'xlink:href'[39m,
+                    [32m'href'[39m,
+                    [length]: [33m4[39m
+                  ],
+                  use: [
+                    [32m'xlink:href'[39m,
+                    [32m'href'[39m,
+                    [32m'xlink:href'[39m,
+                    [32m'href'[39m,
+                    [length]: [33m4[39m
+                  ],
+                  QCarouselSlide: [32m'img-src'[39m,
+                  [32m'q-carousel-slide'[39m: [32m'img-src'[39m,
+                  QChatMessage: [32m'avatar'[39m,
+                  [32m'q-chat-message'[39m: [32m'avatar'[39m,
+                  QImg: [
+                    [32m'src'[39m,
+                    [32m'placeholder-src'[39m,
+                    [length]: [33m2[39m
+                  ],
+                  [32m'q-img'[39m: [
+                    [32m'src'[39m,
+                    [32m'placeholder-src'[39m,
+                    [length]: [33m2[39m
+                  ],
+                  QParallax: [32m'src'[39m,
+                  [32m'q-parallax'[39m: [32m'src'[39m,
+                  QTimelineEntry: [32m'avatar'[39m,
+                  [32m'q-timeline-entry'[39m: [32m'avatar'[39m
+                }
+              },
+              isServerBuild: [33mfalse[39m
+            },
+            [__useName]: [32m'vue-loader'[39m,
+            [__ruleNames]: [
+              [32m'vue'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m2[39m
+        ],
+        [__ruleNames]: [
+          [32m'vue'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.(t|j)sx?$/ {
+          [lastIndex]: [33m0[39m
+        },
+        use: [
+          {
+            loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/lib/webpack/loader.js.transform-quasar-imports.js'[39m,
+            [__useName]: [32m'transform-quasar-imports'[39m,
+            [__ruleNames]: [
+              [32m'js-transform-quasar-imports'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'js-transform-quasar-imports'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.ts$/ {
+          [lastIndex]: [33m0[39m
+        },
+        use: [
+          {
+            loader: [32m'ts-loader'[39m,
+            options: {
+              appendTsSuffixTo: [
+                /\.vue$/ {
+                  [lastIndex]: [33m0[39m
+                },
+                [length]: [33m1[39m
+              ],
+              transpileOnly: [33mtrue[39m
+            },
+            [__useName]: [32m'ts-loader'[39m,
+            [__ruleNames]: [
+              [32m'typescript'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'typescript'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|webp|avif|ico)(\?.*)?$/ {
+          [lastIndex]: [33m0[39m
+        },
+        type: [32m'javascript/auto'[39m,
+        use: [
+          {
+            loader: [32m'url-loader'[39m,
+            options: {
+              esModule: [33mfalse[39m,
+              limit: [33m10000[39m,
+              name: [32m'img/[name].[ext]'[39m
+            },
+            [__useName]: [32m'url-loader'[39m,
+            [__ruleNames]: [
+              [32m'images'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'images'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/ {
+          [lastIndex]: [33m0[39m
+        },
+        type: [32m'javascript/auto'[39m,
+        use: [
+          {
+            loader: [32m'url-loader'[39m,
+            options: {
+              esModule: [33mfalse[39m,
+              limit: [33m10000[39m,
+              name: [32m'fonts/[name].[ext]'[39m
+            },
+            [__useName]: [32m'url-loader'[39m,
+            [__ruleNames]: [
+              [32m'fonts'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'fonts'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/ {
+          [lastIndex]: [33m0[39m
+        },
+        type: [32m'javascript/auto'[39m,
+        use: [
+          {
+            loader: [32m'url-loader'[39m,
+            options: {
+              esModule: [33mfalse[39m,
+              limit: [33m10000[39m,
+              name: [32m'media/[name].[ext]'[39m
+            },
+            [__useName]: [32m'url-loader'[39m,
+            [__ruleNames]: [
+              [32m'media'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'media'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.css$/ {
+          [lastIndex]: [33m0[39m
+        },
+        oneOf: [
+          {
+            resourceQuery: /module/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m2[39m,
+                  modules: {
+                    localIdentName: [32m'[name]_[local]_[hash:base64:5]'[39m
+                  }
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m3[39m
+            ],
+            [__ruleNames]: [
+              [32m'css'[39m,
+              [32m'modules-query'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            test: /\.module\.\w+$/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m2[39m,
+                  modules: {
+                    localIdentName: [32m'[name]_[local]_[hash:base64:5]'[39m
+                  }
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m3[39m
+            ],
+            [__ruleNames]: [
+              [32m'css'[39m,
+              [32m'modules-ext'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m2[39m
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'css'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m3[39m
+            ],
+            [__ruleNames]: [
+              [32m'css'[39m,
+              [32m'normal'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          [length]: [33m3[39m
+        ],
+        [__ruleNames]: [
+          [32m'css'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.styl(us)?$/ {
+          [lastIndex]: [33m0[39m
+        },
+        oneOf: [
+          {
+            resourceQuery: /module/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m3[39m,
+                  modules: {
+                    localIdentName: [32m'[name]_[local]_[hash:base64:5]'[39m
+                  }
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'stylus-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  preferPathResolver: [32m'webpack'[39m
+                },
+                [__useName]: [32m'stylus-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m4[39m
+            ],
+            [__ruleNames]: [
+              [32m'stylus'[39m,
+              [32m'modules-query'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            test: /\.module\.\w+$/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m3[39m,
+                  modules: {
+                    localIdentName: [32m'[name]_[local]_[hash:base64:5]'[39m
+                  }
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'stylus-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  preferPathResolver: [32m'webpack'[39m
+                },
+                [__useName]: [32m'stylus-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m4[39m
+            ],
+            [__ruleNames]: [
+              [32m'stylus'[39m,
+              [32m'modules-ext'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m3[39m
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'stylus-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  preferPathResolver: [32m'webpack'[39m
+                },
+                [__useName]: [32m'stylus-loader'[39m,
+                [__ruleNames]: [
+                  [32m'stylus'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m4[39m
+            ],
+            [__ruleNames]: [
+              [32m'stylus'[39m,
+              [32m'normal'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          [length]: [33m3[39m
+        ],
+        [__ruleNames]: [
+          [32m'stylus'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.scss$/ {
+          [lastIndex]: [33m0[39m
+        },
+        oneOf: [
+          {
+            resourceQuery: /module/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m4[39m,
+                  modules: {
+                    localIdentName: [32m'[name]_[local]_[hash:base64:5]'[39m
+                  }
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'sass-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  sassOptions: {
+                    outputStyle: [32m'expanded'[39m
+                  }
+                },
+                [__useName]: [32m'sass-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/lib/webpack/loader.quasar-scss-variables'[39m,
+                [__useName]: [32m'quasar-scss-variables-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m5[39m
+            ],
+            [__ruleNames]: [
+              [32m'scss'[39m,
+              [32m'modules-query'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            test: /\.module\.\w+$/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m4[39m,
+                  modules: {
+                    localIdentName: [32m'[name]_[local]_[hash:base64:5]'[39m
+                  }
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'sass-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  sassOptions: {
+                    outputStyle: [32m'expanded'[39m
+                  }
+                },
+                [__useName]: [32m'sass-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/lib/webpack/loader.quasar-scss-variables'[39m,
+                [__useName]: [32m'quasar-scss-variables-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m5[39m
+            ],
+            [__ruleNames]: [
+              [32m'scss'[39m,
+              [32m'modules-ext'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m4[39m
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'sass-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  sassOptions: {
+                    outputStyle: [32m'expanded'[39m
+                  }
+                },
+                [__useName]: [32m'sass-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/lib/webpack/loader.quasar-scss-variables'[39m,
+                [__useName]: [32m'quasar-scss-variables-loader'[39m,
+                [__ruleNames]: [
+                  [32m'scss'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m5[39m
+            ],
+            [__ruleNames]: [
+              [32m'scss'[39m,
+              [32m'normal'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          [length]: [33m3[39m
+        ],
+        [__ruleNames]: [
+          [32m'scss'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.sass$/ {
+          [lastIndex]: [33m0[39m
+        },
+        oneOf: [
+          {
+            resourceQuery: /module/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m4[39m,
+                  modules: {
+                    localIdentName: [32m'[name]_[local]_[hash:base64:5]'[39m
+                  }
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'sass-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  sassOptions: {
+                    indentedSyntax: [33mtrue[39m,
+                    outputStyle: [32m'expanded'[39m
+                  }
+                },
+                [__useName]: [32m'sass-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/lib/webpack/loader.quasar-sass-variables'[39m,
+                [__useName]: [32m'quasar-sass-variables-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m5[39m
+            ],
+            [__ruleNames]: [
+              [32m'sass'[39m,
+              [32m'modules-query'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            test: /\.module\.\w+$/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m4[39m,
+                  modules: {
+                    localIdentName: [32m'[name]_[local]_[hash:base64:5]'[39m
+                  }
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'sass-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  sassOptions: {
+                    indentedSyntax: [33mtrue[39m,
+                    outputStyle: [32m'expanded'[39m
+                  }
+                },
+                [__useName]: [32m'sass-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/lib/webpack/loader.quasar-sass-variables'[39m,
+                [__useName]: [32m'quasar-sass-variables-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m5[39m
+            ],
+            [__ruleNames]: [
+              [32m'sass'[39m,
+              [32m'modules-ext'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m4[39m
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'sass-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  sassOptions: {
+                    indentedSyntax: [33mtrue[39m,
+                    outputStyle: [32m'expanded'[39m
+                  }
+                },
+                [__useName]: [32m'sass-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/lib/webpack/loader.quasar-sass-variables'[39m,
+                [__useName]: [32m'quasar-sass-variables-loader'[39m,
+                [__ruleNames]: [
+                  [32m'sass'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m5[39m
+            ],
+            [__ruleNames]: [
+              [32m'sass'[39m,
+              [32m'normal'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          [length]: [33m3[39m
+        ],
+        [__ruleNames]: [
+          [32m'sass'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.less$/ {
+          [lastIndex]: [33m0[39m
+        },
+        oneOf: [
+          {
+            resourceQuery: /module/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m3[39m,
+                  modules: {
+                    localIdentName: [32m'[name]_[local]_[hash:base64:5]'[39m
+                  }
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'less-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m
+                },
+                [__useName]: [32m'less-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'modules-query'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m4[39m
+            ],
+            [__ruleNames]: [
+              [32m'less'[39m,
+              [32m'modules-query'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            test: /\.module\.\w+$/ {
+              [lastIndex]: [33m0[39m
+            },
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m3[39m,
+                  modules: {
+                    localIdentName: [32m'[name]_[local]_[hash:base64:5]'[39m
+                  }
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'less-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m
+                },
+                [__useName]: [32m'less-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'modules-ext'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m4[39m
+            ],
+            [__ruleNames]: [
+              [32m'less'[39m,
+              [32m'modules-ext'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          {
+            use: [
+              {
+                loader: [32m'/Users/chetzof/Work/openfortravel/node_modules/mini-css-extract-plugin/dist/loader.js'[39m,
+                options: {
+                  publicPath: [32m'../'[39m
+                },
+                [__useName]: [32m'mini-css-extract'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'css-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m,
+                  url: [Function: shouldRequireUrl] {
+                    [length]: [33m1[39m,
+                    [name]: [32m'shouldRequireUrl'[39m,
+                    [arguments]: [1mnull[22m,
+                    [caller]: [1mnull[22m,
+                    [prototype]: [36m[Object][39m
+                  },
+                  importLoaders: [33m3[39m
+                },
+                [__useName]: [32m'css-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'postcss-loader'[39m,
+                options: {
+                  postcssOptions: {
+                    sourceMap: [33mtrue[39m,
+                    plugins: [36m[Array][39m
+                  }
+                },
+                [__useName]: [32m'postcss-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              {
+                loader: [32m'less-loader'[39m,
+                options: {
+                  sourceMap: [33mtrue[39m
+                },
+                [__useName]: [32m'less-loader'[39m,
+                [__ruleNames]: [
+                  [32m'less'[39m,
+                  [32m'normal'[39m,
+                  [length]: [33m2[39m
+                ],
+                [__ruleTypes]: [
+                  [32m'rule'[39m,
+                  [32m'oneOf'[39m,
+                  [length]: [33m2[39m
+                ]
+              },
+              [length]: [33m4[39m
+            ],
+            [__ruleNames]: [
+              [32m'less'[39m,
+              [32m'normal'[39m,
+              [length]: [33m2[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [32m'oneOf'[39m,
+              [length]: [33m2[39m
+            ]
+          },
+          [length]: [33m3[39m
+        ],
+        [__ruleNames]: [
+          [32m'less'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.mjs$/ {
+          [lastIndex]: [33m0[39m
+        },
+        type: [32m'javascript/auto'[39m,
+        include: [
+          /[\\/]node_modules[\\/]/ {
+            [lastIndex]: [33m0[39m
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'mjs'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      [length]: [33m12[39m
+    ]
+  },
+  optimization: {
+    nodeEnv: [33mfalse[39m,
+    emitOnErrors: [33mfalse[39m
+  },
+  plugins: [
+    VueLoaderPlugin {
+      [__pluginName]: [32m'vue-loader'[39m,
+      [__pluginType]: [32m'plugin'[39m,
+      [__pluginArgs]: [
+        [length]: [33m0[39m
+      ],
+      [__pluginConstructorName]: [32m'VueLoaderPlugin'[39m,
+      [__pluginPath]: [1mnull[22m
+    },
+    DefinePlugin {
+      definitions: {
+        [32m'process.env.PROJECT_URL'[39m: [32m'"http://localhost:8080"'[39m,
+        [32m'process.env.NODE_ENV'[39m: [32m'"development"'[39m,
+        [32m'process.env.CLIENT'[39m: [32m'true'[39m,
+        [32m'process.env.SERVER'[39m: [32m'false'[39m,
+        [32m'process.env.DEV'[39m: [32m'true'[39m,
+        [32m'process.env.PROD'[39m: [32m'false'[39m,
+        [32m'process.env.DEBUGGING'[39m: [32m'true'[39m,
+        [32m'process.env.MODE'[39m: [32m'"ssr"'[39m,
+        [32m'process.env.VUE_ROUTER_MODE'[39m: [32m'"history"'[39m,
+        [32m'process.env.VUE_ROUTER_BASE'[39m: [32m'"/"'[39m,
+        [32m'process.env.APP_URL'[39m: [32m'"http://localhost:8080/"'[39m,
+        __VUE_OPTIONS_API__: [33mtrue[39m,
+        __VUE_PROD_DEVTOOLS__: [33mtrue[39m,
+        __QUASAR_VERSION__: [32m'"2.0.3"'[39m,
+        __QUASAR_SSR__: [33mtrue[39m,
+        __QUASAR_SSR_SERVER__: [33mfalse[39m,
+        __QUASAR_SSR_CLIENT__: [33mtrue[39m,
+        __QUASAR_SSR_PWA__: [33mfalse[39m,
+        __VUE_I18N_FULL_INSTALL__: [33mtrue[39m,
+        __VUE_I18N_LEGACY_API__: [33mtrue[39m,
+        __VUE_I18N_PROD_DEVTOOLS__: [33mtrue[39m,
+        __INTLIFY_PROD_DEVTOOLS__: [33mtrue[39m
+      },
+      [__pluginName]: [32m'define'[39m,
+      [__pluginType]: [32m'plugin'[39m,
+      [__pluginArgs]: [
+        {
+          [32m'process.env.PROJECT_URL'[39m: [32m'"http://localhost:8080"'[39m,
+          [32m'process.env.NODE_ENV'[39m: [32m'"development"'[39m,
+          [32m'process.env.CLIENT'[39m: [32m'true'[39m,
+          [32m'process.env.SERVER'[39m: [32m'false'[39m,
+          [32m'process.env.DEV'[39m: [32m'true'[39m,
+          [32m'process.env.PROD'[39m: [32m'false'[39m,
+          [32m'process.env.DEBUGGING'[39m: [32m'true'[39m,
+          [32m'process.env.MODE'[39m: [32m'"ssr"'[39m,
+          [32m'process.env.VUE_ROUTER_MODE'[39m: [32m'"history"'[39m,
+          [32m'process.env.VUE_ROUTER_BASE'[39m: [32m'"/"'[39m,
+          [32m'process.env.APP_URL'[39m: [32m'"http://localhost:8080/"'[39m,
+          __VUE_OPTIONS_API__: [33mtrue[39m,
+          __VUE_PROD_DEVTOOLS__: [33mtrue[39m,
+          __QUASAR_VERSION__: [32m'"2.0.3"'[39m,
+          __QUASAR_SSR__: [33mtrue[39m,
+          __QUASAR_SSR_SERVER__: [33mfalse[39m,
+          __QUASAR_SSR_CLIENT__: [33mtrue[39m,
+          __QUASAR_SSR_PWA__: [33mfalse[39m,
+          __VUE_I18N_FULL_INSTALL__: [33mtrue[39m,
+          __VUE_I18N_LEGACY_API__: [33mtrue[39m,
+          __VUE_I18N_PROD_DEVTOOLS__: [33mtrue[39m,
+          __INTLIFY_PROD_DEVTOOLS__: [33mtrue[39m
+        },
+        [length]: [33m1[39m
+      ],
+      [__pluginConstructorName]: [32m'DefinePlugin'[39m,
+      [__pluginPath]: [1mnull[22m
+    },
+    WebpackProgressPlugin {
+      profile: [33mfalse[39m,
+      handler: [Function: handler] {
+        [length]: [33m0[39m,
+        [name]: [32m'handler'[39m
+      },
+      modulesCount: [33m5000[39m,
+      dependenciesCount: [33m10000[39m,
+      showEntries: [33mtrue[39m,
+      showModules: [33mtrue[39m,
+      showDependencies: [33mtrue[39m,
+      showActiveModules: [33mfalse[39m,
+      percentBy: [90mundefined[39m,
+      opts: {
+        name: [32m'Client-side'[39m,
+        useBars: [33mfalse[39m,
+        hasExternalWork: [90mundefined[39m
+      },
+      [__pluginName]: [32m'progress'[39m,
+      [__pluginType]: [32m'plugin'[39m,
+      [__pluginArgs]: [
+        {
+          name: [32m'Client-side'[39m,
+          cfg: {
+            ctx: {
+              dev: [33mtrue[39m,
+              prod: [33mfalse[39m,
+              mode: {
+                ssr: [33mtrue[39m,
+                pwa: [33mfalse[39m
+              },
+              modeName: [32m'ssr'[39m,
+              target: {},
+              targetName: [90mundefined[39m,
+              emulator: [90mundefined[39m,
+              arch: {},
+              archName: [90mundefined[39m,
+              bundler: {},
+              bundlerName: [90mundefined[39m,
+              debug: [33mfalse[39m,
+              publish: [90mundefined[39m,
+              vueDevtools: [33mfalse[39m
+            },
+            css: [
+              {
+                path: [32m'src/css/app.sass'[39m
+              },
+              [length]: [33m1[39m
+            ],
+            boot: [
+              {
+                path: [32m'boot/../../../shared/src/boot/use-setter'[39m
+              },
+              {
+                path: [32m'boot/2-node-cache'[39m,
+                client: [33mfalse[39m
+              },
+              {
+                path: [32m'boot/5-i18n'[39m
+              },
+              {
+                path: [32m'boot/3-ssr-data-preload'[39m,
+                client: [33mfalse[39m
+              },
+              {
+                path: [32m'boot/7-gtag'[39m,
+                server: [33mfalse[39m
+              },
+              {
+                path: [32m'boot/8-context'[39m,
+                client: [33mfalse[39m
+              },
+              [length]: [33m6[39m
+            ],
+            vendor: {
+              add: [
+                [length]: [33m0[39m
+              ],
+              remove: [
+                [32m'i18n-iso-countries'[39m,
+                [32m'svg-country-flags'[39m,
+                [32m'quasar/src/components/table'[39m,
+                [length]: [33m3[39m
+              ],
+              disable: [33mtrue[39m
+            },
+            build: {
+              vueLoaderOptions: {
+                compilerOptions: {},
+                transformAssetUrls: {
+                  base: [1mnull[22m,
+                  includeAbsolute: [33mfalse[39m,
+                  tags: {
+                    video: [36m[Array][39m,
+                    source: [36m[Array][39m,
+                    img: [36m[Array][39m,
+                    image: [36m[Array][39m,
+                    use: [36m[Array][39m,
+                    QCarouselSlide: [32m'img-src'[39m,
+                    [32m'q-carousel-slide'[39m: [32m'img-src'[39m,
+                    QChatMessage: [32m'avatar'[39m,
+                    [32m'q-chat-message'[39m: [32m'avatar'[39m,
+                    QImg: [36m[Array][39m,
+                    [32m'q-img'[39m: [36m[Array][39m,
+                    QParallax: [32m'src'[39m,
+                    [32m'q-parallax'[39m: [32m'src'[39m,
+                    QTimelineEntry: [32m'avatar'[39m,
+                    [32m'q-timeline-entry'[39m: [32m'avatar'[39m
+                  }
+                }
+              },
+              showProgress: [33mtrue[39m,
+              productName: [32m'Open For Travel Guide'[39m,
+              productDescription: [32m'A Quasar Framework app'[39m,
+              extractCSS: [33mtrue[39m,
+              sourceMap: [33mtrue[39m,
+              minify: [33mfalse[39m,
+              distDir: [32m'/Users/chetzof/Work/openfortravel/packages/front/dist/ssr'[39m,
+              htmlFilename: [32m'index.html'[39m,
+              ssrPwaHtmlFilename: [32m'offline.html'[39m,
+              vueRouterMode: [32m'history'[39m,
+              transpile: [33mfalse[39m,
+              devtool: [32m'eval-source-map'[39m,
+              uglifyOptions: {
+                compress: {
+                  arrows: [33mfalse[39m,
+                  collapse_vars: [33mfalse[39m,
+                  comparisons: [33mfalse[39m,
+                  computed_props: [33mfalse[39m,
+                  hoist_funs: [33mfalse[39m,
+                  hoist_props: [33mfalse[39m,
+                  hoist_vars: [33mfalse[39m,
+                  inline: [33mfalse[39m,
+                  loops: [33mfalse[39m,
+                  negate_iife: [33mfalse[39m,
+                  properties: [33mfalse[39m,
+                  reduce_funcs: [33mfalse[39m,
+                  reduce_vars: [33mfalse[39m,
+                  switches: [33mfalse[39m,
+                  toplevel: [33mfalse[39m,
+                  typeofs: [33mfalse[39m,
+                  booleans: [33mtrue[39m,
+                  if_return: [33mtrue[39m,
+                  sequences: [33mtrue[39m,
+                  unused: [33mtrue[39m,
+                  conditionals: [33mtrue[39m,
+                  dead_code: [33mtrue[39m,
+                  evaluate: [33mtrue[39m
+                },
+                mangle: {
+                  safari10: [33mtrue[39m
+                }
+              },
+              transpileDependencies: [
+                [length]: [33m0[39m
+              ],
+              sassLoaderOptions: {},
+              scssLoaderOptions: {},
+              stylusLoaderOptions: {},
+              lessLoaderOptions: {},
+              env: {
+                PROJECT_URL: [32m'http://localhost:8080'[39m,
+                NODE_ENV: [32m'development'[39m,
+                CLIENT: [33mtrue[39m,
+                SERVER: [33mfalse[39m,
+                DEV: [33mtrue[39m,
+                PROD: [33mfalse[39m,
+                DEBUGGING: [33mtrue[39m,
+                MODE: [32m'ssr'[39m,
+                VUE_ROUTER_MODE: [32m'history'[39m,
+                VUE_ROUTER_BASE: [32m'/'[39m,
+                APP_URL: [32m'http://localhost:8080/'[39m
+              },
+              extendWebpack: [Function: extendWebpack] {
+                [length]: [33m1[39m,
+                [name]: [32m'extendWebpack'[39m
+              },
+              gzip: [33mfalse[39m,
+              publicPath: [32m'/'[39m,
+              vueRouterBase: [32m'/'[39m,
+              appBase: [32m'/'[39m,
+              APP_URL: [32m'http://localhost:8080/'[39m
+            },
+            devServer: {
+              hot: [33mtrue[39m,
+              firewall: [33mfalse[39m,
+              compress: [33mtrue[39m,
+              open: [33mfalse[39m,
+              client: {
+                overlay: {
+                  warnings: [33mfalse[39m
+                }
+              },
+              devMiddleware: {
+                publicPath: [32m'/'[39m,
+                stats: [33mfalse[39m,
+                index: [33mfalse[39m
+              },
+              static: {
+                serveIndex: [33mfalse[39m
+              },
+              https: [33mfalse[39m,
+              port: [33m8080[39m,
+              host: [32m'0.0.0.0'[39m,
+              onBeforeSetupMiddleware: [Function: onBeforeSetupMiddleware] {
+                [length]: [33m1[39m,
+                [name]: [32m'onBeforeSetupMiddleware'[39m
+              }
+            },
+            framework: {
+              components: [
+                [length]: [33m0[39m
+              ],
+              directives: [
+                [length]: [33m0[39m
+              ],
+              plugins: [
+                [32m'Cookies'[39m,
+                [32m'Meta'[39m,
+                [32m'Notify'[39m,
+                [length]: [33m3[39m
+              ],
+              config: {
+                dark: [33mtrue[39m,
+                loadingBar: {
+                  position: [32m'bottom'[39m,
+                  skipHijack: [33mtrue[39m
+                },
+                notify: {}
+              },
+              iconSet: [32m'material-icons'[39m,
+              lang: [32m'en-US'[39m,
+              cssAddon: [33mtrue[39m,
+              autoImportComponentCase: [32m'kebab'[39m
+            },
+            animations: [
+              [32m'fadeIn'[39m,
+              [32m'fadeOut'[39m,
+              [32m'fadeInRight'[39m,
+              [32m'fadeOutRight'[39m,
+              [32m'bounceInUp'[39m,
+              [32m'bounce'[39m,
+              [length]: [33m6[39m
+            ],
+            extras: [
+              [length]: [33m0[39m
+            ],
+            sourceFiles: {
+              rootComponent: [32m'src/app.vue'[39m,
+              router: [32m'src/router/index'[39m,
+              store: [32m'src/store/index'[39m,
+              indexHtmlTemplate: [32m'src/index.template.html'[39m,
+              registerServiceWorker: [32m'src-pwa/register-service-worker'[39m,
+              serviceWorker: [32m'src-pwa/custom-service-worker'[39m,
+              electronMain: [32m'src-electron/electron-main'[39m,
+              electronPreload: [32m'src-electron/electron-preload'[39m
+            },
+            ssr: {
+              pwa: [33mfalse[39m,
+              manualStoreHydration: [33mfalse[39m,
+              manualPostHydrationTrigger: [33mfalse[39m,
+              prodPort: [33m3000[39m,
+              maxAge: [33m2592000000[39m,
+              middlewares: [
+                {
+                  path: [32m'src-ssr/middlewares/render'[39m
+                },
+                [length]: [33m1[39m
+              ],
+              chainWebpackWebserver: [Function: chainWebpackWebserver] {
+                [length]: [33m0[39m,
+                [name]: [32m'chainWebpackWebserver'[39m
+              },
+              directiveTransforms: {
+                [32m'close-popup'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                intersection: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                morph: [Function: Morph_ssr] {
+                  [length]: [33m1[39m,
+                  [name]: [32m'Morph_ssr'[39m
+                },
+                mutation: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                ripple: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                scroll: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'scroll-fire'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-hold'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-pan'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-repeat'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-swipe'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                }
+              }
+            },
+            pwa: {
+              workboxOptions: {},
+              manifest: {
+                icons: [
+                  [length]: [33m0[39m
+                ]
+              },
+              metaVariables: {}
+            },
+            electron: {
+              unPackagedInstallParams: [
+                [length]: [33m0[39m
+              ],
+              packager: {},
+              builder: {}
+            },
+            cordova: {},
+            capacitor: {
+              capacitorCliPreparationParams: [
+                [length]: [33m0[39m
+              ]
+            },
+            bin: {},
+            bex: {
+              builder: {
+                directories: {}
+              }
+            },
+            htmlVariables: {
+              ctx: {
+                dev: [33mtrue[39m,
+                prod: [33mfalse[39m,
+                mode: {
+                  ssr: [33mtrue[39m,
+                  pwa: [33mfalse[39m
+                },
+                modeName: [32m'ssr'[39m,
+                target: {},
+                targetName: [90mundefined[39m,
+                emulator: [90mundefined[39m,
+                arch: {},
+                archName: [90mundefined[39m,
+                bundler: {},
+                bundlerName: [90mundefined[39m,
+                debug: [33mfalse[39m,
+                publish: [90mundefined[39m,
+                vueDevtools: [33mfalse[39m
+              },
+              process: {
+                env: {
+                  PROJECT_URL: [32m'http://localhost:8080'[39m,
+                  NODE_ENV: [32m'development'[39m,
+                  CLIENT: [33mtrue[39m,
+                  SERVER: [33mfalse[39m,
+                  DEV: [33mtrue[39m,
+                  PROD: [33mfalse[39m,
+                  DEBUGGING: [33mtrue[39m,
+                  MODE: [32m'ssr'[39m,
+                  VUE_ROUTER_MODE: [32m'history'[39m,
+                  VUE_ROUTER_BASE: [32m'/'[39m,
+                  APP_URL: [32m'http://localhost:8080/'[39m
+                }
+              },
+              productName: [32m'Open For Travel Guide'[39m,
+              productDescription: [32m'A Quasar Framework app'[39m
+            },
+            supportTS: {
+              tsCheckerConfig: {
+                eslint: {
+                  enabled: [33mfalse[39m,
+                  files: [32m'./src/**/*.{ts,tsx,js,jsx,vue}'[39m
+                }
+              }
+            },
+            __rootDefines: {
+              __VUE_OPTIONS_API__: [33mtrue[39m,
+              __VUE_PROD_DEVTOOLS__: [33mtrue[39m,
+              __QUASAR_VERSION__: [32m'"2.0.3"'[39m,
+              __QUASAR_SSR__: [33mtrue[39m,
+              __QUASAR_SSR_SERVER__: [33mfalse[39m,
+              __QUASAR_SSR_CLIENT__: [33mfalse[39m,
+              __QUASAR_SSR_PWA__: [33mfalse[39m,
+              __VUE_I18N_FULL_INSTALL__: [33mtrue[39m,
+              __VUE_I18N_LEGACY_API__: [33mtrue[39m,
+              __VUE_I18N_PROD_DEVTOOLS__: [33mtrue[39m,
+              __INTLIFY_PROD_DEVTOOLS__: [33mtrue[39m
+            },
+            __needsAppMountHook: [33mtrue[39m,
+            __vueDevtools: [33mfalse[39m,
+            __transpileBanner: [32m'no'[39m,
+            __loadingBar: [33mfalse[39m,
+            __meta: [33mtrue[39m,
+            store: [33mtrue[39m,
+            preFetch: [33mfalse[39m,
+            __devServer: {},
+            __getUrl: [Function (anonymous)] {
+              [length]: [33m1[39m,
+              [name]: [32m''[39m
+            },
+            __html: {
+              minifyOptions: [33mfalse[39m
+            },
+            __versions: {},
+            __css: {
+              quasarSrcExt: [32m'sass'[39m
+            }
+          }
+        },
+        [length]: [33m1[39m
+      ],
+      [__pluginConstructorName]: [32m'WebpackProgressPlugin'[39m,
+      [__pluginPath]: [1mnull[22m
+    },
+    BootDefaultExport {
+      [__pluginName]: [32m'boot-default-export'[39m,
+      [__pluginType]: [32m'plugin'[39m,
+      [__pluginArgs]: [
+        [length]: [33m0[39m
+      ],
+      [__pluginConstructorName]: [32m'BootDefaultExport'[39m,
+      [__pluginPath]: [1mnull[22m
+    },
+    MiniCssExtractPlugin {
+      _sortedModulesCache: WeakMap {
+        
+      },
+      options: {
+        filename: [32m'css/[name].css'[39m,
+        ignoreOrder: [33mfalse[39m,
+        experimentalUseImportModule: [33mfalse[39m,
+        chunkFilename: [32m'css/[name].css'[39m
+      },
+      runtimeOptions: {
+        insert: [90mundefined[39m,
+        linkType: [32m'text/css'[39m,
+        attributes: [90mundefined[39m
+      },
+      [__pluginName]: [32m'mini-css-extract'[39m,
+      [__pluginType]: [32m'plugin'[39m,
+      [__pluginArgs]: [
+        {
+          filename: [32m'css/[name].css'[39m
+        },
+        [length]: [33m1[39m
+      ],
+      [__pluginConstructorName]: [32m'MiniCssExtractPlugin'[39m,
+      [__pluginPath]: [1mnull[22m
+    },
+    [length]: [33m5[39m
+  ],
+  performance: {
+    hints: [33mfalse[39m,
+    maxAssetSize: [33m500000[39m
+  },
+  entry: {
+    app: [
+      [32m'/Users/chetzof/Work/openfortravel/packages/front/.quasar/client-entry.js'[39m,
+      [length]: [33m1[39m
+    ]
+  },
+  infrastructureLogging: {
+    colors: [33mtrue[39m,
+    level: [32m'warn'[39m
+  }
+}
+
+ App • Showing Webpack config for "Webserver" with depth of 9
+
+{
+  target: [32m'node'[39m,
+  mode: [32m'development'[39m,
+  externals: [
+    [32m'@vue/server-renderer'[39m,
+    [32m'@vue/compiler-sfc'[39m,
+    [32m'@quasar/ssr-helpers/create-renderer'[39m,
+    [32m'./render-template.js'[39m,
+    [32m'./quasar.server-manifest.json'[39m,
+    [32m'./quasar.client-manifest.json'[39m,
+    [32m'compression'[39m,
+    [32m'express'[39m,
+    [32m'@quasar/babel-preset-app'[39m,
+    [32m'@quasar/fastclick'[39m,
+    [32m'@quasar/ssr-helpers'[39m,
+    [32m'@types/cordova'[39m,
+    [32m'@types/electron-packager'[39m,
+    [32m'@types/express'[39m,
+    [32m'@types/terser-webpack-plugin'[39m,
+    [32m'@types/webpack-bundle-analyzer'[39m,
+    [32m'@types/webpack-dev-server'[39m,
+    [32m'@vue/compiler-sfc'[39m,
+    [32m'@vue/server-renderer'[39m,
+    [32m'archiver'[39m,
+    [32m'autoprefixer'[39m,
+    [32m'browserslist'[39m,
+    [32m'chalk'[39m,
+    [32m'chokidar'[39m,
+    [32m'ci-info'[39m,
+    [32m'compression-webpack-plugin'[39m,
+    [32m'copy-webpack-plugin'[39m,
+    [32m'cross-spawn'[39m,
+    [32m'css-loader'[39m,
+    [32m'css-minimizer-webpack-plugin'[39m,
+    [32m'cssnano'[39m,
+    [32m'dot-prop'[39m,
+    [32m'elementtree'[39m,
+    [32m'error-stack-parser'[39m,
+    [32m'express'[39m,
+    [32m'fast-glob'[39m,
+    [32m'file-loader'[39m,
+    [32m'fork-ts-checker-webpack-plugin'[39m,
+    [32m'fs-extra'[39m,
+    [32m'hash-sum'[39m,
+    [32m'html-minifier'[39m,
+    [32m'html-webpack-plugin'[39m,
+    [32m'inquirer'[39m,
+    [32m'isbinaryfile'[39m,
+    [32m'launch-editor-middleware'[39m,
+    [32m'lodash.debounce'[39m,
+    [32m'lodash.template'[39m,
+    [32m'lodash.throttle'[39m,
+    [32m'log-update'[39m,
+    [32m'memory-fs'[39m,
+    [32m'mini-css-extract-plugin'[39m,
+    [32m'minimist'[39m,
+    [32m'node-loader'[39m,
+    [32m'null-loader'[39m,
+    [32m'open'[39m,
+    [32m'ouch'[39m,
+    [32m'postcss'[39m,
+    [32m'postcss-loader'[39m,
+    [32m'postcss-rtlcss'[39m,
+    [32m'pretty-error'[39m,
+    [32m'register-service-worker'[39m,
+    [32m'sass'[39m,
+    [32m'sass-loader'[39m,
+    [32m'semver'[39m,
+    [32m'table'[39m,
+    [32m'terser-webpack-plugin'[39m,
+    [32m'ts-loader'[39m,
+    [32m'typescript'[39m,
+    [32m'url-loader'[39m,
+    [32m'vue'[39m,
+    [32m'vue-loader'[39m,
+    [32m'vue-router'[39m,
+    [32m'vue-style-loader'[39m,
+    [32m'webpack'[39m,
+    [32m'webpack-bundle-analyzer'[39m,
+    [32m'webpack-chain'[39m,
+    [32m'webpack-dev-server'[39m,
+    [32m'webpack-merge'[39m,
+    [32m'webpack-node-externals'[39m,
+    [32m'@quasar/extras'[39m,
+    [32m'axios'[39m,
+    [32m'core-js'[39m,
+    [32m'quasar'[39m,
+    [32m'vue-i18n'[39m,
+    [32m'vuex'[39m,
+    [32m'@amcharts/amcharts4'[39m,
+    [32m'@amcharts/amcharts4-geodata'[39m,
+    [32m'@cospired/i18n-iso-languages'[39m,
+    [32m'@google-cloud/debug-agent'[39m,
+    [32m'@google-cloud/profiler'[39m,
+    [32m'@google-cloud/secret-manager'[39m,
+    [32m'@google-cloud/storage'[39m,
+    [32m'@types/lru-cache'[39m,
+    [32m'@types/node-fetch'[39m,
+    [32m'@types/winston'[39m,
+    [32m'@vue/composition-api'[39m,
+    [32m'@vueuse/core'[39m,
+    [32m'bunyan'[39m,
+    [32m'countup.js'[39m,
+    [32m'date-fns'[39m,
+    ... 19 more items,
+    [length]: [33m119[39m
+  ],
+  node: {
+    __dirname: [33mfalse[39m,
+    __filename: [33mfalse[39m
+  },
+  output: {
+    filename: [32m'compiled-middlewares.js'[39m,
+    path: [32m'/Users/chetzof/Work/openfortravel/packages/front/.quasar/ssr'[39m,
+    libraryTarget: [32m'commonjs2'[39m
+  },
+  resolve: {
+    alias: {
+      [32m'src-ssr'[39m: [32m'/Users/chetzof/Work/openfortravel/packages/front/src-ssr'[39m
+    },
+    extensions: [
+      [32m'.js'[39m,
+      [32m'.json'[39m,
+      [32m'.node'[39m,
+      [32m'.ts'[39m,
+      [length]: [33m4[39m
+    ],
+    modules: [
+      [32m'node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/packages/front/node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/node_modules'[39m,
+      [length]: [33m3[39m
+    ]
+  },
+  resolveLoader: {
+    modules: [
+      [32m'node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/packages/front/node_modules'[39m,
+      [32m'/Users/chetzof/Work/openfortravel/node_modules/@quasar/app/node_modules'[39m,
+      [length]: [33m3[39m
+    ]
+  },
+  module: {
+    rules: [
+      {
+        test: /\.node$/ {
+          [lastIndex]: [33m0[39m
+        },
+        use: [
+          {
+            loader: [32m'node-loader'[39m,
+            [__useName]: [32m'node-loader'[39m,
+            [__ruleNames]: [
+              [32m'node'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'node'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      {
+        test: /\.ts$/ {
+          [lastIndex]: [33m0[39m
+        },
+        use: [
+          {
+            loader: [32m'ts-loader'[39m,
+            options: {
+              compilerOptions: {
+                noEmit: [33mfalse[39m
+              },
+              onlyCompileBundledFiles: [33mtrue[39m,
+              transpileOnly: [33mfalse[39m
+            },
+            [__useName]: [32m'ts-loader'[39m,
+            [__ruleNames]: [
+              [32m'typescript'[39m,
+              [length]: [33m1[39m
+            ],
+            [__ruleTypes]: [
+              [32m'rule'[39m,
+              [length]: [33m1[39m
+            ]
+          },
+          [length]: [33m1[39m
+        ],
+        [__ruleNames]: [
+          [32m'typescript'[39m,
+          [length]: [33m1[39m
+        ],
+        [__ruleTypes]: [
+          [32m'rule'[39m,
+          [length]: [33m1[39m
+        ]
+      },
+      [length]: [33m2[39m
+    ]
+  },
+  optimization: {
+    nodeEnv: [33mfalse[39m,
+    emitOnErrors: [33mfalse[39m
+  },
+  plugins: [
+    DefinePlugin {
+      definitions: {
+        [32m'process.env.PROJECT_URL'[39m: [32m'"http://localhost:8080"'[39m,
+        [32m'process.env.NODE_ENV'[39m: [32m'"development"'[39m,
+        [32m'process.env.CLIENT'[39m: [32m'true'[39m,
+        [32m'process.env.SERVER'[39m: [32m'false'[39m,
+        [32m'process.env.DEV'[39m: [32m'true'[39m,
+        [32m'process.env.PROD'[39m: [32m'false'[39m,
+        [32m'process.env.DEBUGGING'[39m: [32m'true'[39m,
+        [32m'process.env.MODE'[39m: [32m'"ssr"'[39m,
+        [32m'process.env.VUE_ROUTER_MODE'[39m: [32m'"history"'[39m,
+        [32m'process.env.VUE_ROUTER_BASE'[39m: [32m'"/"'[39m,
+        [32m'process.env.APP_URL'[39m: [32m'"http://localhost:8080/"'[39m,
+        __VUE_OPTIONS_API__: [33mtrue[39m,
+        __VUE_PROD_DEVTOOLS__: [33mtrue[39m,
+        __QUASAR_VERSION__: [32m'"2.0.3"'[39m,
+        __QUASAR_SSR__: [33mtrue[39m,
+        __QUASAR_SSR_SERVER__: [33mfalse[39m,
+        __QUASAR_SSR_CLIENT__: [33mfalse[39m,
+        __QUASAR_SSR_PWA__: [33mfalse[39m,
+        __VUE_I18N_FULL_INSTALL__: [33mtrue[39m,
+        __VUE_I18N_LEGACY_API__: [33mtrue[39m,
+        __VUE_I18N_PROD_DEVTOOLS__: [33mtrue[39m,
+        __INTLIFY_PROD_DEVTOOLS__: [33mtrue[39m
+      },
+      [__pluginName]: [32m'define'[39m,
+      [__pluginType]: [32m'plugin'[39m,
+      [__pluginArgs]: [
+        {
+          [32m'process.env.PROJECT_URL'[39m: [32m'"http://localhost:8080"'[39m,
+          [32m'process.env.NODE_ENV'[39m: [32m'"development"'[39m,
+          [32m'process.env.CLIENT'[39m: [32m'true'[39m,
+          [32m'process.env.SERVER'[39m: [32m'false'[39m,
+          [32m'process.env.DEV'[39m: [32m'true'[39m,
+          [32m'process.env.PROD'[39m: [32m'false'[39m,
+          [32m'process.env.DEBUGGING'[39m: [32m'true'[39m,
+          [32m'process.env.MODE'[39m: [32m'"ssr"'[39m,
+          [32m'process.env.VUE_ROUTER_MODE'[39m: [32m'"history"'[39m,
+          [32m'process.env.VUE_ROUTER_BASE'[39m: [32m'"/"'[39m,
+          [32m'process.env.APP_URL'[39m: [32m'"http://localhost:8080/"'[39m,
+          __VUE_OPTIONS_API__: [33mtrue[39m,
+          __VUE_PROD_DEVTOOLS__: [33mtrue[39m,
+          __QUASAR_VERSION__: [32m'"2.0.3"'[39m,
+          __QUASAR_SSR__: [33mtrue[39m,
+          __QUASAR_SSR_SERVER__: [33mfalse[39m,
+          __QUASAR_SSR_CLIENT__: [33mfalse[39m,
+          __QUASAR_SSR_PWA__: [33mfalse[39m,
+          __VUE_I18N_FULL_INSTALL__: [33mtrue[39m,
+          __VUE_I18N_LEGACY_API__: [33mtrue[39m,
+          __VUE_I18N_PROD_DEVTOOLS__: [33mtrue[39m,
+          __INTLIFY_PROD_DEVTOOLS__: [33mtrue[39m
+        },
+        [length]: [33m1[39m
+      ],
+      [__pluginConstructorName]: [32m'DefinePlugin'[39m,
+      [__pluginPath]: [1mnull[22m
+    },
+    WebpackProgressPlugin {
+      profile: [33mfalse[39m,
+      handler: [Function: handler] {
+        [length]: [33m0[39m,
+        [name]: [32m'handler'[39m
+      },
+      modulesCount: [33m5000[39m,
+      dependenciesCount: [33m10000[39m,
+      showEntries: [33mtrue[39m,
+      showModules: [33mtrue[39m,
+      showDependencies: [33mtrue[39m,
+      showActiveModules: [33mfalse[39m,
+      percentBy: [90mundefined[39m,
+      opts: {
+        name: [32m'Webserver'[39m,
+        useBars: [33mfalse[39m,
+        hasExternalWork: [33mtrue[39m
+      },
+      [__pluginName]: [32m'progress'[39m,
+      [__pluginType]: [32m'plugin'[39m,
+      [__pluginArgs]: [
+        {
+          name: [32m'Webserver'[39m,
+          cfg: {
+            ctx: {
+              dev: [33mtrue[39m,
+              prod: [33mfalse[39m,
+              mode: {
+                ssr: [33mtrue[39m,
+                pwa: [33mfalse[39m
+              },
+              modeName: [32m'ssr'[39m,
+              target: {},
+              targetName: [90mundefined[39m,
+              emulator: [90mundefined[39m,
+              arch: {},
+              archName: [90mundefined[39m,
+              bundler: {},
+              bundlerName: [90mundefined[39m,
+              debug: [33mfalse[39m,
+              publish: [90mundefined[39m,
+              vueDevtools: [33mfalse[39m
+            },
+            css: [
+              {
+                path: [32m'src/css/app.sass'[39m
+              },
+              [length]: [33m1[39m
+            ],
+            boot: [
+              {
+                path: [32m'boot/../../../shared/src/boot/use-setter'[39m
+              },
+              {
+                path: [32m'boot/2-node-cache'[39m,
+                client: [33mfalse[39m
+              },
+              {
+                path: [32m'boot/5-i18n'[39m
+              },
+              {
+                path: [32m'boot/3-ssr-data-preload'[39m,
+                client: [33mfalse[39m
+              },
+              {
+                path: [32m'boot/7-gtag'[39m,
+                server: [33mfalse[39m
+              },
+              {
+                path: [32m'boot/8-context'[39m,
+                client: [33mfalse[39m
+              },
+              [length]: [33m6[39m
+            ],
+            vendor: {
+              add: [
+                [length]: [33m0[39m
+              ],
+              remove: [
+                [32m'i18n-iso-countries'[39m,
+                [32m'svg-country-flags'[39m,
+                [32m'quasar/src/components/table'[39m,
+                [length]: [33m3[39m
+              ],
+              disable: [33mtrue[39m
+            },
+            build: {
+              vueLoaderOptions: {
+                compilerOptions: {},
+                transformAssetUrls: {
+                  base: [1mnull[22m,
+                  includeAbsolute: [33mfalse[39m,
+                  tags: {
+                    video: [36m[Array][39m,
+                    source: [36m[Array][39m,
+                    img: [36m[Array][39m,
+                    image: [36m[Array][39m,
+                    use: [36m[Array][39m,
+                    QCarouselSlide: [32m'img-src'[39m,
+                    [32m'q-carousel-slide'[39m: [32m'img-src'[39m,
+                    QChatMessage: [32m'avatar'[39m,
+                    [32m'q-chat-message'[39m: [32m'avatar'[39m,
+                    QImg: [36m[Array][39m,
+                    [32m'q-img'[39m: [36m[Array][39m,
+                    QParallax: [32m'src'[39m,
+                    [32m'q-parallax'[39m: [32m'src'[39m,
+                    QTimelineEntry: [32m'avatar'[39m,
+                    [32m'q-timeline-entry'[39m: [32m'avatar'[39m
+                  }
+                }
+              },
+              showProgress: [33mtrue[39m,
+              productName: [32m'Open For Travel Guide'[39m,
+              productDescription: [32m'A Quasar Framework app'[39m,
+              extractCSS: [33mtrue[39m,
+              sourceMap: [33mtrue[39m,
+              minify: [33mfalse[39m,
+              distDir: [32m'/Users/chetzof/Work/openfortravel/packages/front/dist/ssr'[39m,
+              htmlFilename: [32m'index.html'[39m,
+              ssrPwaHtmlFilename: [32m'offline.html'[39m,
+              vueRouterMode: [32m'history'[39m,
+              transpile: [33mfalse[39m,
+              devtool: [32m'eval-source-map'[39m,
+              uglifyOptions: {
+                compress: {
+                  arrows: [33mfalse[39m,
+                  collapse_vars: [33mfalse[39m,
+                  comparisons: [33mfalse[39m,
+                  computed_props: [33mfalse[39m,
+                  hoist_funs: [33mfalse[39m,
+                  hoist_props: [33mfalse[39m,
+                  hoist_vars: [33mfalse[39m,
+                  inline: [33mfalse[39m,
+                  loops: [33mfalse[39m,
+                  negate_iife: [33mfalse[39m,
+                  properties: [33mfalse[39m,
+                  reduce_funcs: [33mfalse[39m,
+                  reduce_vars: [33mfalse[39m,
+                  switches: [33mfalse[39m,
+                  toplevel: [33mfalse[39m,
+                  typeofs: [33mfalse[39m,
+                  booleans: [33mtrue[39m,
+                  if_return: [33mtrue[39m,
+                  sequences: [33mtrue[39m,
+                  unused: [33mtrue[39m,
+                  conditionals: [33mtrue[39m,
+                  dead_code: [33mtrue[39m,
+                  evaluate: [33mtrue[39m
+                },
+                mangle: {
+                  safari10: [33mtrue[39m
+                }
+              },
+              transpileDependencies: [
+                [length]: [33m0[39m
+              ],
+              sassLoaderOptions: {},
+              scssLoaderOptions: {},
+              stylusLoaderOptions: {},
+              lessLoaderOptions: {},
+              env: {
+                PROJECT_URL: [32m'http://localhost:8080'[39m,
+                NODE_ENV: [32m'development'[39m,
+                CLIENT: [33mtrue[39m,
+                SERVER: [33mfalse[39m,
+                DEV: [33mtrue[39m,
+                PROD: [33mfalse[39m,
+                DEBUGGING: [33mtrue[39m,
+                MODE: [32m'ssr'[39m,
+                VUE_ROUTER_MODE: [32m'history'[39m,
+                VUE_ROUTER_BASE: [32m'/'[39m,
+                APP_URL: [32m'http://localhost:8080/'[39m
+              },
+              extendWebpack: [Function: extendWebpack] {
+                [length]: [33m1[39m,
+                [name]: [32m'extendWebpack'[39m
+              },
+              gzip: [33mfalse[39m,
+              publicPath: [32m'/'[39m,
+              vueRouterBase: [32m'/'[39m,
+              appBase: [32m'/'[39m,
+              APP_URL: [32m'http://localhost:8080/'[39m
+            },
+            devServer: {
+              hot: [33mtrue[39m,
+              firewall: [33mfalse[39m,
+              compress: [33mtrue[39m,
+              open: [33mfalse[39m,
+              client: {
+                overlay: {
+                  warnings: [33mfalse[39m
+                }
+              },
+              devMiddleware: {
+                publicPath: [32m'/'[39m,
+                stats: [33mfalse[39m,
+                index: [33mfalse[39m
+              },
+              static: {
+                serveIndex: [33mfalse[39m
+              },
+              https: [33mfalse[39m,
+              port: [33m8080[39m,
+              host: [32m'0.0.0.0'[39m,
+              onBeforeSetupMiddleware: [Function: onBeforeSetupMiddleware] {
+                [length]: [33m1[39m,
+                [name]: [32m'onBeforeSetupMiddleware'[39m
+              }
+            },
+            framework: {
+              components: [
+                [length]: [33m0[39m
+              ],
+              directives: [
+                [length]: [33m0[39m
+              ],
+              plugins: [
+                [32m'Cookies'[39m,
+                [32m'Meta'[39m,
+                [32m'Notify'[39m,
+                [length]: [33m3[39m
+              ],
+              config: {
+                dark: [33mtrue[39m,
+                loadingBar: {
+                  position: [32m'bottom'[39m,
+                  skipHijack: [33mtrue[39m
+                },
+                notify: {}
+              },
+              iconSet: [32m'material-icons'[39m,
+              lang: [32m'en-US'[39m,
+              cssAddon: [33mtrue[39m,
+              autoImportComponentCase: [32m'kebab'[39m
+            },
+            animations: [
+              [32m'fadeIn'[39m,
+              [32m'fadeOut'[39m,
+              [32m'fadeInRight'[39m,
+              [32m'fadeOutRight'[39m,
+              [32m'bounceInUp'[39m,
+              [32m'bounce'[39m,
+              [length]: [33m6[39m
+            ],
+            extras: [
+              [length]: [33m0[39m
+            ],
+            sourceFiles: {
+              rootComponent: [32m'src/app.vue'[39m,
+              router: [32m'src/router/index'[39m,
+              store: [32m'src/store/index'[39m,
+              indexHtmlTemplate: [32m'src/index.template.html'[39m,
+              registerServiceWorker: [32m'src-pwa/register-service-worker'[39m,
+              serviceWorker: [32m'src-pwa/custom-service-worker'[39m,
+              electronMain: [32m'src-electron/electron-main'[39m,
+              electronPreload: [32m'src-electron/electron-preload'[39m
+            },
+            ssr: {
+              pwa: [33mfalse[39m,
+              manualStoreHydration: [33mfalse[39m,
+              manualPostHydrationTrigger: [33mfalse[39m,
+              prodPort: [33m3000[39m,
+              maxAge: [33m2592000000[39m,
+              middlewares: [
+                {
+                  path: [32m'src-ssr/middlewares/render'[39m
+                },
+                [length]: [33m1[39m
+              ],
+              chainWebpackWebserver: [Function: chainWebpackWebserver] {
+                [length]: [33m0[39m,
+                [name]: [32m'chainWebpackWebserver'[39m
+              },
+              directiveTransforms: {
+                [32m'close-popup'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                intersection: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                morph: [Function: Morph_ssr] {
+                  [length]: [33m1[39m,
+                  [name]: [32m'Morph_ssr'[39m
+                },
+                mutation: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                ripple: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                scroll: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'scroll-fire'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-hold'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-pan'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-repeat'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                },
+                [32m'touch-swipe'[39m: [Function: noopTransform] {
+                  [length]: [33m0[39m,
+                  [name]: [32m'noopTransform'[39m
+                }
+              }
+            },
+            pwa: {
+              workboxOptions: {},
+              manifest: {
+                icons: [
+                  [length]: [33m0[39m
+                ]
+              },
+              metaVariables: {}
+            },
+            electron: {
+              unPackagedInstallParams: [
+                [length]: [33m0[39m
+              ],
+              packager: {},
+              builder: {}
+            },
+            cordova: {},
+            capacitor: {
+              capacitorCliPreparationParams: [
+                [length]: [33m0[39m
+              ]
+            },
+            bin: {},
+            bex: {
+              builder: {
+                directories: {}
+              }
+            },
+            htmlVariables: {
+              ctx: {
+                dev: [33mtrue[39m,
+                prod: [33mfalse[39m,
+                mode: {
+                  ssr: [33mtrue[39m,
+                  pwa: [33mfalse[39m
+                },
+                modeName: [32m'ssr'[39m,
+                target: {},
+                targetName: [90mundefined[39m,
+                emulator: [90mundefined[39m,
+                arch: {},
+                archName: [90mundefined[39m,
+                bundler: {},
+                bundlerName: [90mundefined[39m,
+                debug: [33mfalse[39m,
+                publish: [90mundefined[39m,
+                vueDevtools: [33mfalse[39m
+              },
+              process: {
+                env: {
+                  PROJECT_URL: [32m'http://localhost:8080'[39m,
+                  NODE_ENV: [32m'development'[39m,
+                  CLIENT: [33mtrue[39m,
+                  SERVER: [33mfalse[39m,
+                  DEV: [33mtrue[39m,
+                  PROD: [33mfalse[39m,
+                  DEBUGGING: [33mtrue[39m,
+                  MODE: [32m'ssr'[39m,
+                  VUE_ROUTER_MODE: [32m'history'[39m,
+                  VUE_ROUTER_BASE: [32m'/'[39m,
+                  APP_URL: [32m'http://localhost:8080/'[39m
+                }
+              },
+              productName: [32m'Open For Travel Guide'[39m,
+              productDescription: [32m'A Quasar Framework app'[39m
+            },
+            supportTS: {
+              tsCheckerConfig: {
+                eslint: {
+                  enabled: [33mfalse[39m,
+                  files: [32m'./src/**/*.{ts,tsx,js,jsx,vue}'[39m
+                }
+              }
+            },
+            __rootDefines: {
+              __VUE_OPTIONS_API__: [33mtrue[39m,
+              __VUE_PROD_DEVTOOLS__: [33mtrue[39m,
+              __QUASAR_VERSION__: [32m'"2.0.3"'[39m,
+              __QUASAR_SSR__: [33mtrue[39m,
+              __QUASAR_SSR_SERVER__: [33mfalse[39m,
+              __QUASAR_SSR_CLIENT__: [33mfalse[39m,
+              __QUASAR_SSR_PWA__: [33mfalse[39m,
+              __VUE_I18N_FULL_INSTALL__: [33mtrue[39m,
+              __VUE_I18N_LEGACY_API__: [33mtrue[39m,
+              __VUE_I18N_PROD_DEVTOOLS__: [33mtrue[39m,
+              __INTLIFY_PROD_DEVTOOLS__: [33mtrue[39m
+            },
+            __needsAppMountHook: [33mtrue[39m,
+            __vueDevtools: [33mfalse[39m,
+            __transpileBanner: [32m'no'[39m,
+            __loadingBar: [33mfalse[39m,
+            __meta: [33mtrue[39m,
+            store: [33mtrue[39m,
+            preFetch: [33mfalse[39m,
+            __devServer: {},
+            __getUrl: [Function (anonymous)] {
+              [length]: [33m1[39m,
+              [name]: [32m''[39m
+            },
+            __html: {
+              minifyOptions: [33mfalse[39m
+            },
+            __versions: {},
+            __css: {
+              quasarSrcExt: [32m'sass'[39m
+            }
+          },
+          hasExternalWork: [33mtrue[39m
+        },
+        [length]: [33m1[39m
+      ],
+      [__pluginConstructorName]: [32m'WebpackProgressPlugin'[39m,
+      [__pluginPath]: [1mnull[22m
+    },
+    [length]: [33m2[39m
+  ],
+  performance: {
+    hints: [33mfalse[39m
+  },
+  entry: {
+    webserver: [
+      [32m'/Users/chetzof/Work/openfortravel/packages/front/.quasar/ssr-middlewares.js'[39m,
+      [length]: [33m1[39m
+    ]
+  },
+  infrastructureLogging: {
+    colors: [33mtrue[39m,
+    level: [32m'warn'[39m
+  }
+}
+
+  Depth used: 9. You can change it with "-d" parameter.
+

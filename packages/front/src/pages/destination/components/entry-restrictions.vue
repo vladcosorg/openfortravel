@@ -107,14 +107,14 @@ export default defineComponent({
 
     const originISO = computed(() =>
       props.returnRestrictions
-        ? store.state.currentDestinationCode
+        ? store.getters.currentDestinationCode
         : store.getters.currentOriginCode,
     )
 
     const destinationISO = computed(() =>
       props.returnRestrictions
         ? store.getters.currentOriginCode
-        : store.state.currentDestinationCode,
+        : store.getters.currentDestinationCode,
     )
 
     const currentRestrictionCategory = ref<RestrictionListType>(

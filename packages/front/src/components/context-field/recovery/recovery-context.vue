@@ -4,7 +4,7 @@
     :options="options"
     label="Have you had COVID-19?"
     bottom-slots
-    disable-input
+    :use-input="false"
   >
     <template #hint>
       <hint>
@@ -37,7 +37,6 @@ import { useModel } from '@/front/src/components/context-field/recovery/composab
 
 export default defineComponent({
   components: { Hint, GenericSelect },
-  inheritAttrs: false,
   setup() {
     const internalValue = useModel()
     const options = [

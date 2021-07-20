@@ -1,36 +1,30 @@
 <template>
-  <country-dropdown
-    v-model="model"
-    borderless
-    behavior="dialog"
-    inherit-font-size
-    inline
-    no-ellipsis
-    dense
-  >
-    <template #selected>
-      <country-label regular focused :value="model" />
+  <inline-select v-model="model" :options="options">
+    <template #inline-label>
+      <country-label-list regular :values="model" />
     </template>
-  </country-dropdown>
+  </inline-select>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
-import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
-import CountryLabel from '@/front/src/components/country/country-label.vue'
+import InlineSelect from '@/front/src/components/context-field/helpers/inline-select.vue'
+import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
+import { useCountryOptions } from '@/front/src/composables/misc'
 import { updateRouteParameter } from '@/front/src/router/route-builders/common'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: {
-    CountryLabel,
-    CountryDropdown,
+    InlineSelect,
+    CountryLabelList,
   },
   inheritAttrs: false,
   setup() {
-    const model = computed({
+    const options = useCountryOptions()
+    const model = computed<string>({
       get() {
         return useRootStore().getters.visitorContextWithDefaults[
           RestrictionNodeType.ORIGIN
@@ -41,7 +35,7 @@ export default defineComponent({
       },
     })
 
-    return { model }
+    return { model, options }
   },
 })
 </script>

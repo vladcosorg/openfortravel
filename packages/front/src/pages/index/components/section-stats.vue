@@ -9,18 +9,15 @@
           Countries include sovereign states, overseas terriotories
         </h5>
       </div>
-      <lazy-hydrate
-        v-if="$q.platform.is.desktop"
-        never
-        :trigger-hydration="loadMap"
-      >
+      <div v-if="$q.platform.is.desktop">
         <section-map
+          v-intersection.once="loadMap"
           class="q-mb-xl"
           :origin-code="originISO"
           :restrictions="restrictions"
           :is-loading="false"
         />
-      </lazy-hydrate>
+      </div>
 
       <div :class="['row q-col-gutter-xl items-stretch', $style.data]">
         <div
@@ -79,7 +76,6 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
-import { hydrateWhenVisible } from 'vue-lazy-hydration'
 
 import { createTripsCards } from '@/front/src/composables/trip-cards'
 import { useStats } from '@/front/src/pages/index/index-composable'
@@ -91,9 +87,7 @@ export default defineComponent({
       import(
         /* webpackChunkName: "map-comp" */ '@/front/src/pages/index/components/section-map.vue'
       ),
-    CountUp: hydrateWhenVisible(
-      () => import(/* webpackChunkName: "countup" */ 'vue-countup-v2'),
-    ),
+    CountUp: () => import(/* webpackChunkName: "countup" */ 'vue-countup-v2'),
   },
   setup() {
     const loadMap = ref(false)

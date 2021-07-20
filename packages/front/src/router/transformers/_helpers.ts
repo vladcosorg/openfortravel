@@ -1,12 +1,16 @@
-import { useRouter, useRoute } from 'vue-router'
-
 import {
   DecodedParameters,
   EncodedParameters,
   ParameterTransformerMap,
 } from '@/front/src/router/transformers/_types'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
+import {
+  useRootStore,
+  useRouter,
+  useRoute,
+} from '@/shared/src/composables/use-plugins'
 import { Entries } from '@/shared/src/misc/type-helpers'
+import { destinationParameterTransformers } from '@/front/src/router/route-builders/destination'
+import { originParameterTransformers } from '@/front/src/router/route-builders/origin'
 
 export function getRouteURL<T extends ParameterTransformerMap>(
   routeName: string,
@@ -32,13 +36,16 @@ export function encodeParameters<T extends ParameterTransformerMap>(
           customParameters[parameterName],
         )
       } else {
-        acc[parameterName] =
+        const val =
           routeParams[parameterName] ??
           parameterTransformer.encode(
             store.state.visitorContext[parameterTransformer.contextField],
           )
-      }
 
+        if (val !== undefined) {
+          acc[parameterName] = val
+        }
+      }
       return acc
     },
     {} as EncodedParameters<T>,
@@ -46,15 +53,12 @@ export function encodeParameters<T extends ParameterTransformerMap>(
 }
 
 export function parseRoute<T extends ParameterTransformerMap>(
-  route: Route,
+  params: ReturnType<typeof useRoute>['params'],
   transformationConfig: T,
 ): DecodedParameters<T> {
-  const customParameters = route.params as EncodedParameters<T>
   return (Object.entries(transformationConfig) as Entries<T>).reduce(
     (acc, [parameterName, parameterTransformer]) => {
-      acc[parameterName] = parameterTransformer.decode(
-        customParameters[parameterName],
-      )
+      acc[parameterName] = parameterTransformer.decode(params[parameterName])
       return acc
     },
     {} as DecodedParameters<T>,

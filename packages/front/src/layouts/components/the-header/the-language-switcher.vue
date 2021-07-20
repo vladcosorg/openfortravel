@@ -7,37 +7,35 @@
     borderless
     emit-value
     options-dense
-    :class="$style.select"
+    class="language-switcher"
     :dropdown-icon="icon"
     @input="handleClick"
   />
 </template>
 
-<style lang="scss" module>
-.select {
-  :global {
-    .q-field__control {
-      border-radius: 14px;
-      padding: 0 8px;
-      font-size: 0.75rem;
-    }
-    .q-field__control,
-    .q-field__native {
-      // 'Important' needed to increase specificity against native quasar styles
-      min-height: auto !important;
-    }
-    .q-field__native,
-    .q-field__append {
-      color: $dark !important;
-      font-weight: bold;
-      text-transform: uppercase;
-      min-height: auto;
-      height: auto;
-    }
+<style lang="scss">
+.language-switcher {
+  .q-field__control {
+    border-radius: 14px;
+    padding: 0 8px;
+    font-size: 0.75rem;
+  }
+  .q-field__control,
+  .q-field__native {
+    // 'Important' needed to increase specificity against native quasar styles
+    min-height: auto !important;
+  }
+  .q-field__native,
+  .q-field__append {
+    color: $dark !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    min-height: auto;
+    height: auto;
+  }
 
-    .q-field__append {
-      padding-left: 0;
-    }
+  .q-field__append {
+    padding-left: 0;
   }
 }
 </style>

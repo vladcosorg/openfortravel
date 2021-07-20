@@ -14,10 +14,12 @@ type MenuItemMapCollection = Record<string, string>
 
 const links: Record<string, MenuItemRawPair> = {
   index: {
-    url: (locale) => ({
-      name: 'index-targeted',
-      params: { locale, originSlug: getCurrentOriginSlug() },
-    }),
+    url: (locale) => {
+      return {
+        name: 'index-targeted',
+        params: { locale, originSlug: getCurrentOriginSlug() },
+      }
+    },
     title: (i18n) => i18n.t('page.index.link'),
   },
   wizard: {
@@ -56,7 +58,7 @@ const links: Record<string, MenuItemRawPair> = {
 export function getMenuItemPair(menuID: keyof typeof links): MenuItemPair {
   const item = links[menuID]
   return {
-    url: useRouter().resolve(item.url(useI18n().locale)).href,
+    url: useRouter().resolve(item.url(useI18n().locale.value)).href,
     title: item.title(useI18n()),
   }
 }

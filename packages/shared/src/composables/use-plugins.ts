@@ -1,10 +1,9 @@
 import type { QSsrContext } from '@quasar/app'
 import ky from 'ky-universal'
-import type LRUCache from 'lru-cache'
 import type { LooseDictionary } from 'quasar'
 import { Cookies, Notify } from 'quasar'
 import { TranslateResult, VueI18n } from 'vue-i18n'
-import type VueRouter from 'vue-router'
+import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
 import { Store } from 'vuex'
 
 import { augmentedStore } from '@/front/src/store'
@@ -23,14 +22,18 @@ export function useRootStore(): ReturnType<typeof augmentedStore> {
   return augmentedStore(useStore())
 }
 
-let routerInstance: VueRouter
+let routerInstance: Router
 
-export function setRouter(instance: VueRouter): void {
+export function setRouter(instance: Router): void {
   routerInstance = instance
 }
 
-export function useRouter(): VueRouter {
+export function useRouter(): Router {
   return routerInstance
+}
+
+export function useRoute(): RouteLocationNormalizedLoaded {
+  return routerInstance.currentRoute.value
 }
 let i18nInstance: VueI18n
 

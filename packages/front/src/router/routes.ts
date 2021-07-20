@@ -1,18 +1,15 @@
+import type { IVueI18n } from 'vue-i18n'
 import {
   Router,
   createRouter,
-  RouteRecordRaw,
   RouterOptions,
   createMemoryHistory,
   createWebHistory,
   createWebHashHistory,
 } from 'vue-router'
-import type { IVueI18n } from 'vue-i18n'
 import type { RouteConfig, RouterOptions } from 'vue-router'
 
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
-import { parseDestinationRoute } from '@/front/src/router/route-builders/destination'
-import { parseOriginRoute } from '@/front/src/router/route-builders/origin'
 import { useRouter } from '@/shared/src/composables/use-plugins'
 import {
   transformCountryCodeToOriginSlug,
@@ -111,9 +108,6 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
               /* webpackChunkName: "page-destination" */
               '@/front/src/pages/destination/destination-page.vue'
             ),
-          props(route) {
-            return parseDestinationRoute(route)
-          },
         },
 
         {
@@ -124,9 +118,6 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
               /* webpackChunkName: "page-origin" */
               '@/front/src/pages/country/country-page.vue'
             ),
-          props(route) {
-            return parseOriginRoute(route)
-          },
         },
 
         {

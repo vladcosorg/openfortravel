@@ -1,5 +1,5 @@
 <template>
-  <section :class="`${$style.section} q-py-xl`">
+  <section class="q-py-xl section">
     <div class="container">
       <div class="text-center">
         <h3 class="text-bold">Get personalized restrictions</h3>
@@ -12,7 +12,7 @@
   </section>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 .section {
   background-image: url('../../../assets/trainer.svg');
   background-repeat: no-repeat;

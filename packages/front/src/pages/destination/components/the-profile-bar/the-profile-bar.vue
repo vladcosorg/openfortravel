@@ -72,7 +72,7 @@ export default defineComponent({
       () => rootStore.getters.visitorContextWithDefaults.origin,
     )
     const destinationCode = computed(
-      () => localStore.state.currentDestinationCode,
+      () => localStore.getters.currentDestinationCode,
     )
 
     return { isEditing, originCode, destinationCode, toggleEditor }

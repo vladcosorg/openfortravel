@@ -39,7 +39,7 @@ export const citizenshipTransformer: ParameterTransformer<
 
     if (
       isoList.length === 1 &&
-      isoList.pop() ===
+      isoList[0] ===
         useRootStore().getters.visitorContextWithDefaults[
           RestrictionNodeType.ORIGIN
         ]
