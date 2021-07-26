@@ -41,11 +41,10 @@ module.exports = configure((context) => ({
     // '~shared/src/boot/composition-api',
 
     // { path: '4-ssr-url-decoder', client: false },
-    // { path: '4.1-legacy-url-302', client: false },
+    { path: '4.1-legacy-url-302', client: false },
     '5-i18n',
     { path: '3-ssr-data-preload', client: false },
-    // '6-country-detector',
-    '7.1-slug-parser',
+    '6-country-detector',
     { path: '7-gtag', server: false },
     { path: '8-context', client: false },
   ],

@@ -29,7 +29,10 @@ export default defineComponent({
   components: { WidgetHeader },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const links = useLinks(computed(() => store.getters.currentDestinationCode))
+    const links = useLinks(
+      computed(() => store.getters.currentOriginCode),
+      computed(() => store.getters.currentDestinationCode),
+    )
 
     return { links }
   },

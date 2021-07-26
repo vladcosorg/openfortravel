@@ -18,8 +18,8 @@
           "
         >
           <h1 class="text-h1 text-bold">
-            <span v-html="$t('page.index.sections.hero.title')" />
-            <origin-context-inline />
+            <span v-html="t('page.index.sections.hero.title')" />
+            &nbsp;<origin-context-inline />
           </h1>
 
           <h2
@@ -47,11 +47,12 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
 import TheBoy from '@/front/src/layouts/components/the-boy/the-boy.vue'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
-import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
 
 export default defineComponent({
   components: { OriginContextInline, TheBoy },
@@ -62,11 +63,13 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { t } = useI18n()
     const url = computed(() => getOriginRouteURL())
     const countryLabel = computed(() =>
       getLabelForCountryCode(props.originCode),
     )
     return {
+      t,
       url,
       countryLabel,
     }

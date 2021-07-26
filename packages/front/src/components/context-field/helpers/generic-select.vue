@@ -9,14 +9,7 @@
     :clear-icon="clearIcon"
     :dropdown-icon="dropdownIcon"
     v-bind="$attrs"
-    :class="[
-      'select q-select--ellipsis',
-      // inline ? 'selectInline' : 'selectBlock',
-      // noEllipsis ? '' : 'q-select--ellipsis',
-      // $attrs.behavior === 'dialog' ? 'q-field--dialog' : '',
-      // $attrs.behavior === 'dialog' ? 'q-field--dialog' : '',
-      // multiple ? 'q-select--multiple' : 'q-select--single',
-    ]"
+    :class="['select q-select--ellipsis']"
     :options="filteredOptions"
     :model-value="modelValue"
     :multiple="multiple"

@@ -6,6 +6,7 @@ export type ParameterTransformer<D = string> = {
   decode: (input?: string) => D
   contextField?: RestrictionNodeType
   isRequired?: boolean
+  matcher?: (slug: string) => boolean
 }
 
 export type DecodedParameters<T extends ParameterTransformerMap> =

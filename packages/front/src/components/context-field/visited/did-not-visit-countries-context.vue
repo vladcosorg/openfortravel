@@ -8,6 +8,7 @@
     bottom-slots
     :options="options"
   >
+    <template #no-option>lol</template>
     <template #hint>
       <hint>
         Some countries may improse additional restrictions upon you in case

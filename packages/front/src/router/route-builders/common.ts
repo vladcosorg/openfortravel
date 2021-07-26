@@ -10,6 +10,7 @@ export function updateRouteParameter<
   value: ReturnType<typeof destinationParameterTransformers[T]['decode']>,
 ): Promise<unknown> {
   return useRouter().push({
+    name: useRoute().name,
     params: encodeParameters(
       useRoute().name === 'destination'
         ? destinationParameterTransformers

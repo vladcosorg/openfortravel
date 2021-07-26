@@ -66,10 +66,6 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
           redirect: '/',
         },
         {
-          path: 'test',
-          component: { template: 'dawd' },
-        },
-        {
           name: 'privacy',
           path: 'privacy-policy',
           component: () =>
@@ -102,7 +98,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
         },
         {
           name: 'destination',
-          path: 'travel-restrictions/from-:originSlug/to-:destinationSlug/:citizenship?/:vaccinated?/:recovered?/:visited?',
+          path: 'travel-restrictions/from-:originSlug/to-:destinationSlug/:parts+',
           component: () =>
             import(
               /* webpackChunkName: "page-destination" */
@@ -112,7 +108,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
 
         {
           name: 'origin',
-          path: 'travel-restrictions/from-:originSlug/:citizenship?/:vaccinated?/:recovered?/:visited?',
+          path: 'travel-restrictions/from-:originSlug/:parts+',
           component: () =>
             import(
               /* webpackChunkName: "page-origin" */

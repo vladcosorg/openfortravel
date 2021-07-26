@@ -1,7 +1,7 @@
 export class StateClass {
   public isEditingProfile = false
 
-  constructor(state: Partial<StateClass>) {
+  constructor(state?: Partial<StateClass>) {
     Object.assign(this, state)
   }
 }

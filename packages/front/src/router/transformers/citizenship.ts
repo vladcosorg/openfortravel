@@ -50,4 +50,7 @@ export const citizenshipTransformer: ParameterTransformer<
     return isoList
   },
   contextField: RestrictionNodeType.CITIZENSHIP,
+  matcher(slug) {
+    return /citizen-of/.test(slug)
+  },
 }

@@ -6,6 +6,9 @@ import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 export const vaccinatedTransformer: ParameterTransformer<
   VisitorProfile[RestrictionNodeType.VACCINATED]
 > = {
+  matcher(slug) {
+    return /(unvaccinated|vaccinated-with)/.test(slug)
+  },
   encode(input) {
     if (!input) {
       return 'unvaccinated'

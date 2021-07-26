@@ -25,7 +25,7 @@
         <div class="col-md-4 col-12">
           <links
             class="q-mb-xl"
-            :destination="destination"
+            :destination="origin"
             :is-loading="isLoading"
           />
         </div>
@@ -34,6 +34,7 @@
             class="q-mb-xl"
             :destination="destination"
             :is-loading="isLoading"
+            return-direction
           />
         </div>
       </div>
@@ -58,6 +59,7 @@ import { computed, defineComponent, provide } from 'vue'
 import { useStore } from 'vuex'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
+import { useContextParser } from '@/front/src/composables/visitor-context-applier'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import EntryRestrictions from '@/front/src/pages/destination/components/entry-restrictions.vue'
 import Links from '@/front/src/pages/destination/components/links.vue'
@@ -66,8 +68,10 @@ import Stats from '@/front/src/pages/destination/components/stats.vue'
 import TheHeading from '@/front/src/pages/destination/components/the-heading.vue'
 import TheProfileBar from '@/front/src/pages/destination/components/the-profile-bar/the-profile-bar.vue'
 import { useBreadcrumbs } from '@/front/src/pages/destination/destination-composable'
+import { useDestinationMeta } from '@/front/src/pages/destination/destination-meta'
 import { registerStoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { destinationParameterTransformers } from '@/front/src/router/route-builders/destination'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
@@ -82,16 +86,21 @@ export default defineComponent({
     InnerPage,
   },
   setup() {
+    useContextParser(destinationParameterTransformers)
+
     const store = registerStoreModule(useStore())
+    provide(StoreKey, store)
 
     const { loading } = useLoading(false)
     const breadcrumbs = useBreadcrumbs(
       computed(() => store.getters.currentOriginCode),
       computed(() => store.getters.currentDestinationCode),
     )
-    provide(StoreKey, store)
+
+    useDestinationMeta(store)
 
     return {
+      origin: computed(() => store.getters.origin),
       destination: computed(() => store.getters.destination),
       isLoading: loading,
       breadcrumbs,
