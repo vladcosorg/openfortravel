@@ -84,7 +84,7 @@ module.exports = configure((context) => ({
         ? 'https://openfortravel.org'
         : 'http://localhost:8080',
     },
-    transpile: false,
+    transpile: context.prod,
 
     // Add dependencies for transpiling with Babel (Array of string/regex)
     // (from node_modules, which are by default not transpiled).

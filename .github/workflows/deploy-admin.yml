@@ -6,7 +6,7 @@ on:
       - packages/admin/**
       - packages/shared/**
     branches:
-      - master
+      - masteraa
 
 jobs:
   release:

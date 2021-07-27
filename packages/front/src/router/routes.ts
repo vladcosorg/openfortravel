@@ -1,20 +1,18 @@
-import type { IVueI18n } from 'vue-i18n'
-import {
-  Router,
-  createRouter,
-  RouterOptions,
-  createMemoryHistory,
-  createWebHistory,
-  createWebHashHistory,
-} from 'vue-router'
-import type { RouteConfig, RouterOptions } from 'vue-router'
-
-import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 import { useRouter } from '@/shared/src/composables/use-plugins'
 import {
   transformCountryCodeToOriginSlug,
   transformOriginSlugToCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import type { IVueI18n } from 'vue-i18n'
+import {
+  Router,
+  createRouter,
+  createMemoryHistory,
+  createWebHistory,
+} from 'vue-router'
+import type { RouteConfig } from 'vue-router'
+
+import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 
 export function getRoutes(i18n: IVueI18n): RouteConfig[] {
   return [
@@ -98,29 +96,26 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
         },
         {
           name: 'destination',
-          path: 'travel-restrictions/from-:originSlug/to-:destinationSlug/:parts+',
+          path: 'travel-restrictions/from-:originSlug/to-:destinationSlug/for/:parts+',
           component: () =>
             import(
               /* webpackChunkName: "page-destination" */
               '@/front/src/pages/destination/destination-page.vue'
             ),
         },
-
         {
           name: 'origin',
-          path: 'travel-restrictions/from-:originSlug/:parts+',
+          path: 'travel-restrictions/from-:originSlug/for/:parts+',
           component: () =>
             import(
               /* webpackChunkName: "page-origin" */
               '@/front/src/pages/country/country-page.vue'
             ),
         },
-
         {
           name: 'origin-old',
           path: `${i18n.t('page.country.route')}/:originSlug`,
         },
-
         {
           name: 'guide',
           path: 'travel-guide/',
@@ -161,13 +156,9 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
 
 export function createGenericRouter(
   i18n: IVueI18n,
-  options?: RouterOptions,
+  isServer?: boolean,
 ): Router {
-  const createHistory = process.env.SERVER
-    ? createMemoryHistory
-    : process.env.VUE_ROUTER_MODE === 'history'
-    ? createWebHistory
-    : createWebHashHistory
+  const createHistory = isServer ? createMemoryHistory : createWebHistory
   return createRouter({
     scrollBehavior: function (to) {
       return to.hash ? { selector: to.hash } : { x: 0, y: 0 }
@@ -176,6 +167,5 @@ export function createGenericRouter(
     history: createHistory(
       process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE,
     ),
-    ...options,
   })
 }

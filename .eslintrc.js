@@ -159,6 +159,7 @@ module.exports = {
     'unicorn/prefer-replace-all': 'warn',
     'unicorn/filename-case': 'off',
     'unicorn/no-array-reduce': 'off',
+    'unicorn/prefer-node-protocol': 'off',
 
     'vue/no-v-html': 'off',
     'vue/html-self-closing': [
