@@ -1,9 +1,10 @@
-import { PropType } from '@vue/composition-api'
+import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 
 import { originParameterTransformers } from '@/front/src/router/route-builders/origin'
+import { parseRoute } from '@/front/src/router/transformers/_helpers'
+import { ParameterTransformerMap } from '@/front/src/router/transformers/_types'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+import { Entries } from '@/shared/src/misc/type-helpers'
 
 export function applyContextFromProps(props: Record<string, any>): void {
   useRootStore().mutations.replaceVisitorContext({
@@ -23,25 +24,50 @@ export function applyContextFromProps(props: Record<string, any>): void {
   })
 }
 
-export const contextProps = {
-  // eslint-disable-next-line vue/no-unused-properties
-  originSlug: {
-    type: String as PropType<VisitorProfile[RestrictionNodeType.ORIGIN]>,
-  },
-  // eslint-disable-next-line vue/no-unused-properties
-  citizenship: {
-    type: Array as PropType<VisitorProfile[RestrictionNodeType.CITIZENSHIP]>,
-  },
-  // eslint-disable-next-line vue/no-unused-properties
-  vaccinated: {
-    type: Object as PropType<VisitorProfile[RestrictionNodeType.VACCINATED]>,
-  },
-  recovered: {
-    type: Number as PropType<VisitorProfile[RestrictionNodeType.RECOVERY]>,
-  },
-  visited: {
-    type: Array as PropType<
-      VisitorProfile[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]
-    >,
-  },
+export function parseContext(
+  route: ReturnType<typeof useRoute>,
+  config: ParameterTransformerMap,
+): void {
+  const partParams = matchWithParts(route.params, config)
+  const params = parseRoute(partParams, config)
+  useRootStore().mutations.setSlugs(params)
+  applyContextFromProps(params)
+}
+
+export function useContextParser(config: ParameterTransformerMap): void {
+  parseContext(useRoute(), config)
+  onBeforeRouteUpdate((to) => {
+    parseContext(to, config)
+  })
+}
+
+function matchWithParts(
+  routeParams: ReturnType<typeof useRoute>['params'],
+  transformers: ParameterTransformerMap,
+) {
+  const params = { ...routeParams }
+  const parts = params.parts
+
+  if (!Array.isArray(parts)) {
+    return params
+  }
+
+  for (const [name, transformer] of Object.entries(
+    transformers,
+  ) as Entries<ParameterTransformerMap>) {
+    if (!transformer.matcher) {
+      continue
+    }
+
+    const matcher = transformer.matcher
+    const match = parts.find((slug) => matcher(slug))
+
+    if (!match) {
+      continue
+    }
+
+    params[name] = match
+  }
+
+  return params
 }

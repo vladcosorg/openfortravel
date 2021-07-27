@@ -19,4 +19,5 @@ export const destinationTransformer: ParameterTransformer = {
 
     return transformDestinationSlugToCode(input)
   },
+  isRequired: true,
 }

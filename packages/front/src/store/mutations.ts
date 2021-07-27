@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import type { MutationTree } from 'vuex'
 
 import { saveContextToCookie } from '@/front/src/modules/visitor-context/cookies'
@@ -38,9 +37,9 @@ export const mutations: MutationTree<RootState> & MutationSignatures = {
 
   [MutationTypes.setVisitorContextField](state, { field, value }) {
     if (value === undefined) {
-      Vue.delete(state.visitorContext, field)
+      delete state.visitorContext[field]
     } else {
-      Vue.set(state.visitorContext, field, value)
+      state.visitorContext[field] = value
     }
   },
 
@@ -71,7 +70,10 @@ export const mutations: MutationTree<RootState> & MutationSignatures = {
   },
 
   [MutationTypes.setVisitorOrigin](state, country) {
-    Vue.set(state.visitorContext, RestrictionNodeType.ORIGIN, country)
+    state.visitorContext[RestrictionNodeType.ORIGIN] = country
     useCookies().set('country', country, { path: '/' })
+  },
+  [MutationTypes.setSlugs](state, slugs) {
+    state.slugs = slugs
   },
 }

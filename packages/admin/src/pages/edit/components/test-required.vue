@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from '@vue/composition-api'
+import { computed, defineComponent, PropType, ref } from 'vue'
 
 import { ListItem } from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import { useAsyncListeners } from '@/shared/src/composables/use-async-listeners'

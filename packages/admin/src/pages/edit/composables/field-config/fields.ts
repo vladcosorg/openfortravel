@@ -1,5 +1,5 @@
-import type { WritableComputedRef } from '@vue/composition-api'
-import { computed, reactive } from '@vue/composition-api'
+import type { WritableComputedRef } from 'vue'
+import { computed, reactive } from 'vue'
 import { QBtnToggle, QCheckbox, QInput } from 'quasar'
 
 import CountryList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/country-list.vue'

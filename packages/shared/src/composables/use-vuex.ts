@@ -1,12 +1,5 @@
-import type { ComputedRef, Ref } from '@vue/composition-api'
-import {
-  computed,
-  isRef,
-  onMounted,
-  onServerPrefetch,
-  unref,
-  watch,
-} from '@vue/composition-api'
+import type { ComputedRef, Ref } from 'vue'
+import { computed, isRef, onMounted, onServerPrefetch, unref, watch } from 'vue'
 import { get, mapValues } from 'lodash'
 
 import { useStore } from '@/shared/src/composables/use-plugins'

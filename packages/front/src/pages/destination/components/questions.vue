@@ -20,8 +20,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent, inject } from 'vue'
 
 import QuestionItem from '@/front/src/pages/destination/components/question-item.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'

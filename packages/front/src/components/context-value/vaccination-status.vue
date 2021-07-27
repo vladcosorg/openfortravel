@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { matEdit as editIcon } from '@quasar/extras/material-icons'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
 import VaccinationContext from '@/front/src/components/context-field/vaccination/vaccination-context.vue'

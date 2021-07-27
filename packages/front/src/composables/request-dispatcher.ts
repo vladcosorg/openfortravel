@@ -1,6 +1,6 @@
 import { matDone } from '@quasar/extras/material-icons'
-import type { Ref } from '@vue/composition-api'
-import { ref } from '@vue/composition-api'
+import type { Ref } from 'vue'
+import { ref } from 'vue'
 import type { ResponsePromise } from 'ky'
 import { Notify } from 'quasar'
 

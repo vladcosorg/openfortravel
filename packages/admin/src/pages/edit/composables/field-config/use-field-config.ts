@@ -1,4 +1,4 @@
-import type { Ref, SetupContext } from '@vue/composition-api'
+import type { Ref, SetupContext } from 'vue'
 
 import {
   createButtonToggle,

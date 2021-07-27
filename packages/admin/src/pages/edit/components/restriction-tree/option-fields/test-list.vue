@@ -5,12 +5,11 @@
     empty-value="Any"
     :value="value"
     v-bind="$attrs"
-    v-on="$listeners"
   />
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import MultipleList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/base/multiple-list.vue'
 import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'

@@ -55,7 +55,7 @@
 
 <style lang="scss" module>
 .bestOption {
-  border: solid 1px var(--q-color-positive);
+  border: solid 1px var(--q-positive);
 }
 </style>
 
@@ -64,8 +64,8 @@ import {
   matCheck as availableIcon,
   matCheckCircle as successIcon,
 } from '@quasar/extras/material-icons'
-import type { PropType } from '@vue/composition-api'
-import { defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 
 import GroupScoreWords from '@/front/src/pages/destination/components/restriction-groups/group-score-words.vue'
 import GroupScore from '@/front/src/pages/destination/components/restriction-groups/group-score.vue'

@@ -1,9 +1,26 @@
 <template>
   <section class="rounded-borders">
-    <widget-header
-      :title="$t('page.destination.widgets.info.title')"
-      :subtitle="$t('page.destination.widgets.info.subtitle')"
-    />
+    <widget-header>
+      <template #title>
+        <i18n-t
+          :keypath="`page.destination.widgets.info.${
+            returnDirection ? 'returnTitle' : 'title'
+          }`"
+          tag="span"
+        >
+          <template #country>
+            <country-label :value="destination.countryCode" />
+          </template>
+        </i18n-t>
+      </template>
+      <template #subtitle>
+        <i18n-t keypath="page.destination.widgets.info.subtitle" tag="span">
+          <template #country>
+            <b> <country-label :value="destination.countryCode" /></b>
+          </template>
+        </i18n-t>
+      </template>
+    </widget-header>
     <ul class="rounded-borders q-pa-lg">
       <div v-if="!destination || isLoading">
         <q-skeleton type="text" width="30%" />
@@ -14,7 +31,7 @@
         {{ $t('page.destination.widgets.info.none') }}
       </div>
       <li v-for="(link, index) in destination.linkList" v-else :key="index">
-        <a target="_blank" :href="link">
+        <a ref="nofollow" target="_blank" :href="link">
           {{ link }}
         </a>
       </li>
@@ -23,18 +40,21 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import type { Destination } from '@/shared/src/api/destinations/models'
 
 export default defineComponent({
-  components: { WidgetHeader },
+  components: { CountryLabel, WidgetHeader },
   props: {
+    returnDirection: {
+      type: Boolean,
+    },
     isLoading: {
       type: Boolean,
-      default: false,
     },
     destination: {
       type: Object as PropType<Destination>,

@@ -1,18 +1,13 @@
 <template>
-  <generic-select
-    :value="value"
-    :options="list"
-    v-bind="$attrs"
-    v-on="$listeners"
-  >
-    <template v-for="(_, slot) of $scopedSlots" #[slot]="scope"
-      ><slot :name="slot" v-bind="scope"
-    /></template>
+  <generic-select :model-value="modelValue" :options="list" v-bind="$attrs">
+    <template #selected v-if="$slots.selected">
+      <slot name="selected" />
+    </template>
   </generic-select>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
@@ -22,11 +17,11 @@ export default defineComponent({
   components: { GenericSelect },
   inheritAttrs: false,
   props: {
-    value: {
+    modelValue: {
       type: [String, Array],
     },
   },
-  setup() {
+  setup(props) {
     const list = computed(() =>
       transformFlatMapToArrayOfPairs(getOriginLabels()),
     )

@@ -1,11 +1,13 @@
-import { Route } from 'vue-router'
-
 import {
   DecodedParameters,
   EncodedParameters,
   ParameterTransformerMap,
 } from '@/front/src/router/transformers/_types'
-import { useRootStore, useRouter } from '@/shared/src/composables/use-plugins'
+import {
+  useRootStore,
+  useRouter,
+  useRoute,
+} from '@/shared/src/composables/use-plugins'
 import { Entries } from '@/shared/src/misc/type-helpers'
 
 export function getRouteURL<T extends ParameterTransformerMap>(
@@ -23,38 +25,52 @@ export function encodeParameters<T extends ParameterTransformerMap>(
   transformationConfig: T,
   customParameters: DecodedParameters<T> = {} as DecodedParameters<T>,
 ): EncodedParameters<T> {
-  const currentRoute = useRouter().currentRoute
+  const routeParams = useRoute().params
   const store = useRootStore()
   return (Object.entries(transformationConfig) as Entries<T>).reduce(
-    (acc, [parameterName, parameterTransformer]) => {
-      if (customParameters.hasOwnProperty(parameterName)) {
-        acc[parameterName] = parameterTransformer.encode(
-          customParameters[parameterName],
-        )
-      } else {
-        acc[parameterName] =
-          currentRoute.params[parameterName] ??
-          parameterTransformer.encode(
-            store.state.visitorContext[parameterTransformer.contextField],
-          )
+    (outputParameters, [parameterName, parameterTransformer]) => {
+      const parameterValue =
+        parameterName in customParameters
+          ? parameterTransformer.encode(customParameters[parameterName])
+          : (routeParams[parameterName as string] as string) ??
+            parameterTransformer.encode(
+              parameterTransformer.contextField
+                ? store.state.visitorContext[parameterTransformer.contextField]
+                : undefined,
+            )
+
+      if (parameterValue === undefined) {
+        return outputParameters
       }
 
-      return acc
+      if (parameterTransformer.matcher !== undefined) {
+        Array.isArray(outputParameters['parts'])
+          ? outputParameters['parts'].push(parameterValue)
+          : (outputParameters['parts'] = [parameterValue])
+      } else {
+        outputParameters[parameterName] = parameterValue
+      }
+
+      return outputParameters
     },
     {} as EncodedParameters<T>,
   )
 }
 
 export function parseRoute<T extends ParameterTransformerMap>(
-  route: Route,
+  params: ReturnType<typeof useRoute>['params'],
   transformationConfig: T,
 ): DecodedParameters<T> {
-  const customParameters = route.params as EncodedParameters<T>
   return (Object.entries(transformationConfig) as Entries<T>).reduce(
     (acc, [parameterName, parameterTransformer]) => {
-      acc[parameterName] = parameterTransformer.decode(
-        customParameters[parameterName],
+      const result = parameterTransformer.decode(
+        params[parameterName] as string,
       )
+
+      if (result) {
+        acc[parameterName] = result
+      }
+
       return acc
     },
     {} as DecodedParameters<T>,

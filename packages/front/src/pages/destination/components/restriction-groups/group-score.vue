@@ -1,6 +1,6 @@
 <template>
   <q-rating
-    :value="score"
+    :model-value="score"
     color="grey"
     :color-selected="color"
     :icon="icon"
@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { matGrade as icon } from '@quasar/extras/material-icons'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},

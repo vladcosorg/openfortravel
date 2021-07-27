@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from 'vue'
 
 import { getRestrictionLabel } from '@/admin/src/pages/edit/components/restriction-tree/tree-item/fields/node-type-drowdown.vue'
 import { vd } from '@/shared/src/misc/helpers'

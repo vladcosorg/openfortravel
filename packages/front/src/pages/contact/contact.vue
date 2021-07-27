@@ -5,6 +5,7 @@
         class="col-md-6 col-sm-8 col-12 q-gutter-md text-sm-left text-center"
         @submit.prevent.stop="onSubmit"
       >
+        <span class="a"> ddddddddddddd </span>
         <rich-email-input
           v-model="email"
           :is-loading="isLoading"
@@ -28,9 +29,8 @@
     </div>
   </inner-page>
 </template>
-
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from 'vue'
 
 import RichEmailInput from '@/front/src/components/form/rich-email-input.vue'
 import RichTextInput from '@/front/src/components/form/rich-text-input.vue'
@@ -41,7 +41,6 @@ import { useKy, useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { SubmitButton, InnerPage, RichTextInput, RichEmailInput },
-  props: {},
   setup() {
     const { t } = useVueI18n()
     const { isLoading, isSuccessful, dispatcher } = useRequestDispatcher()
@@ -63,7 +62,7 @@ export default defineComponent({
               }),
             },
           ),
-          t('page.contact.messageSent') as string,
+          t('page.contact.messageSent'),
         )
       },
     }

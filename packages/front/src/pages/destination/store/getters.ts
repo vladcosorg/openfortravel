@@ -19,8 +19,11 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
     currentOriginCode: (_state, _getters, rootState) =>
       rootState.visitorContext[RestrictionNodeType.ORIGIN],
 
-    destination: (state, _getters, _rootState, rootGetters) =>
-      rootGetters.wrappedHostRules[state.currentDestinationCode],
+    currentDestinationCode: (_state, _getters, rootState) =>
+      rootState.slugs['destinationSlug'],
+
+    destination: (_state, getters, _rootState, rootGetters) =>
+      rootGetters.wrappedHostRules[getters.currentDestinationCode],
 
     allGroups(
       _state,

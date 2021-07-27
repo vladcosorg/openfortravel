@@ -7,6 +7,9 @@ import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 export const recoveredTransformer: ParameterTransformer<
   VisitorProfile[RestrictionNodeType.RECOVERY]
 > = {
+  matcher(slug) {
+    return /with-covid-recovery/.test(slug)
+  },
   encode(input) {
     if (!input) {
       return

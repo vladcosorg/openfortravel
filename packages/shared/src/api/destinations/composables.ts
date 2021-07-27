@@ -1,4 +1,4 @@
-import type { Ref } from '@vue/composition-api'
+import type { Ref } from 'vue'
 import { keyBy } from 'lodash'
 
 import {

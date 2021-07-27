@@ -37,8 +37,8 @@
 </style>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import {

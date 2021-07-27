@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { ionHelpCircleOutline as infoIcon } from '@quasar/extras/ionicons-v5'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   setup() {

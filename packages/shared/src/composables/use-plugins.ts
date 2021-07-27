@@ -1,12 +1,10 @@
 import type { QSsrContext } from '@quasar/app'
 import ky from 'ky-universal'
-import type LRUCache from 'lru-cache'
 import type { LooseDictionary } from 'quasar'
 import { Cookies, Notify } from 'quasar'
-import Vue from 'vue'
-import VueI18n, { IVueI18n, TranslateResult } from 'vue-i18n'
-import type VueRouter from 'vue-router'
-import type { Store } from 'vuex'
+import { TranslateResult, VueI18n } from 'vue-i18n'
+import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
+import { Store } from 'vuex'
 
 import { augmentedStore } from '@/front/src/store'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -23,28 +21,21 @@ export function useStore(): typeof storeInstance {
 export function useRootStore(): ReturnType<typeof augmentedStore> {
   return augmentedStore(useStore())
 }
-type Events = {
-  'toggle-menu-bar': () => void
-}
-const eventBusInstance = new Vue()
-export function useEventBus(): {
-  $on: (eventName: keyof Events) => void
-  $emit: (eventName: keyof Events) => void
-} & Vue {
-  return eventBusInstance
-}
 
-let routerInstance: VueRouter
+let routerInstance: Router
 
-export function setRouter(instance: VueRouter): void {
+export function setRouter(instance: Router): void {
   routerInstance = instance
 }
 
-export function useRouter(): VueRouter {
+export function useRouter(): Router {
   return routerInstance
 }
 
-let i18nInstance: IVueI18n
+export function useRoute(): RouteLocationNormalizedLoaded {
+  return routerInstance.currentRoute.value
+}
+let i18nInstance: VueI18n
 
 export function setI18n(instance: typeof i18nInstance): void {
   i18nInstance = instance
@@ -96,15 +87,15 @@ export function useSSRContext(): typeof ssrContext {
   return ssrContext
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let sharedCache: LRUCache<string, any> | undefined
-export function setSharedCache(instance: typeof sharedCache): void {
-  sharedCache = instance
-}
-export function useSharedCache(): typeof sharedCache {
-  return sharedCache
-}
-
+// // eslint-disable-next-line @typescript-eslint/no-explicit-any
+// let sharedCache: LRUCache<string, any> | undefined
+// export function setSharedCache(instance: typeof sharedCache): void {
+//   sharedCache = instance
+// }
+// export function useSharedCache(): typeof sharedCache {
+//   return sharedCache
+// }
+//
 export function useKy(): typeof ky {
   return ky.create({
     hooks: {

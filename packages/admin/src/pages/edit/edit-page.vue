@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import { computed, defineComponent, ref } from 'vue'
 import { pick } from 'lodash'
 import { Portal } from 'portal-vue'
 

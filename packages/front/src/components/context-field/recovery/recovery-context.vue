@@ -4,7 +4,7 @@
     :options="options"
     label="Have you had COVID-19?"
     bottom-slots
-    disable-input
+    :use-input="false"
   >
     <template #hint>
       <hint>
@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
@@ -37,7 +37,6 @@ import { useModel } from '@/front/src/components/context-field/recovery/composab
 
 export default defineComponent({
   components: { Hint, GenericSelect },
-  inheritAttrs: false,
   setup() {
     const internalValue = useModel()
     const options = [

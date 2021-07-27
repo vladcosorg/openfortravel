@@ -15,8 +15,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 import intersection from 'lodash/intersection'
 
 import CountryLabelList from '@/front/src/components/country/country-label-list.vue'

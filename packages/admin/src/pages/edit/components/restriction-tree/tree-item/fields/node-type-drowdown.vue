@@ -36,12 +36,7 @@
 </style>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  PropType,
-} from '@vue/composition-api'
+import { computed, defineComponent, inject, PropType } from 'vue'
 import capitalize from 'lodash/capitalize'
 
 import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'

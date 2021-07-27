@@ -6,7 +6,6 @@
         <logo class="order-md-first" />
         <the-language-switcher />
       </q-toolbar>
-      <portal-target name="under-header" />
     </q-header>
     <the-drawer v-model="menuOpen" />
   </div>
@@ -20,22 +19,21 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
-import { PortalTarget } from 'portal-vue'
-import { hydrateWhenIdle } from 'vue-lazy-hydration'
+import { defineComponent, ref } from 'vue'
 
 import TheDrawer from '@/front/src/layouts/components/the-drawer.vue'
 import TheLanguageSwitcher from '@/front/src/layouts/components/the-header/the-language-switcher.vue'
 import Logo from '@/front/src/layouts/components/the-header/the-logo.vue'
 import TheMenu from '@/front/src/layouts/components/the-header/the-menu.vue'
+import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 
 export default defineComponent({
   components: {
-    TheMenu: hydrateWhenIdle(TheMenu),
-    TheDrawer: hydrateWhenIdle(TheDrawer),
-    TheLanguageSwitcher: hydrateWhenIdle(TheLanguageSwitcher),
-    Logo: hydrateWhenIdle(Logo),
-    PortalTarget,
+    TheBreadcrumbs,
+    TheMenu,
+    TheDrawer,
+    TheLanguageSwitcher,
+    Logo,
   },
   setup() {
     const menuOpen = ref(false)

@@ -1,46 +1,40 @@
 <template>
-  <country-dropdown
-    v-model="model"
-    borderless
-    behavior="dialog"
-    inherit-font-size
-    inline
-    no-ellipsis
-    dense
-  >
-    <template #selected>
-      <country-label regular focused :value="model" />
+  <inline-select v-model="model" :options="options">
+    <template #inline-label>
+      <country-label-list regular :values="model" />
     </template>
-  </country-dropdown>
+  </inline-select>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import { computed, defineComponent, inject } from 'vue'
 
-import CountryDropdown from '@/front/src/components/context-field/helpers/country-dropdown.vue'
-import CountryLabel from '@/front/src/components/country/country-label.vue'
+import InlineSelect from '@/front/src/components/context-field/helpers/inline-select.vue'
+import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
+import { useCountryOptions } from '@/front/src/composables/misc'
 import { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import { updateRouteParameter } from '@/front/src/router/route-builders/common'
 
 export default defineComponent({
   components: {
-    CountryLabel,
-    CountryDropdown,
+    CountryLabelList,
+    InlineSelect,
   },
   inheritAttrs: false,
   setup() {
     const store = inject(StoreKey) as StoreModule
+    const options = useCountryOptions()
     const model = computed({
       get() {
-        return store.state.currentDestinationCode
+        return store.getters.currentDestinationCode
       },
       set(destinationCode: string) {
         updateRouteParameter('destinationSlug', destinationCode)
       },
     })
 
-    return { model }
+    return { model, options }
   },
 })
 </script>

@@ -20,8 +20,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent, inject } from 'vue'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import IssuerSection from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/issuer-section.vue'
@@ -50,7 +50,7 @@ export default defineComponent({
   },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const destinationId = computed(() => store.state.currentDestinationCode)
+    const destinationId = computed(() => store.getters.currentDestinationCode)
     return { destinationId }
   },
 })

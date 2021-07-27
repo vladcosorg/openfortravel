@@ -13,17 +13,17 @@
 <style lang="scss" module>
 .links {
   a {
-    color: var(--q-color-primary-subtle);
+    color: var(--q-primary-subtle);
   }
   a + a {
     padding-left: map-get(map-get($spaces, 'md'), 'x');
-    border-left: solid var(--q-color-primary-subtle) 1px;
+    border-left: solid var(--q-primary-subtle) 1px;
   }
 }
 </style>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import { getFooterMenuItems } from '@/front/src/misc/menu'
 

@@ -1,4 +1,4 @@
-import { Ref } from '@vue/composition-api'
+import { Ref } from 'vue'
 import cloneDeep from 'lodash/cloneDeep'
 import omit from 'lodash/omit'
 import Vue from 'vue'

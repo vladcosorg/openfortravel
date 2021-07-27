@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import { computed, defineComponent, inject } from 'vue'
 
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'

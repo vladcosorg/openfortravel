@@ -1,3 +1,4 @@
+import { createVueI18n } from '@/shared/src/misc/i18n'
 import mapValues from 'lodash/mapValues'
 import set from 'lodash/set'
 import type { IVueI18n } from 'vue-i18n'
@@ -10,7 +11,6 @@ import {
   EncodedParameters,
   ParameterTransformerMap,
 } from '@/front/src/router/transformers/_types'
-import { createVueI18n } from '@/shared/src/misc/i18n'
 
 export const routesThatNeedLocalization = [
   'origin',
@@ -24,13 +24,14 @@ function getLocalizedRouter(locale: string): VueRouter {
   }
 
   clonedI18n.locale = locale
-  return createGenericRouter(clonedI18n)
+  return createGenericRouter(clonedI18n, process.env.SERVER)
 }
 
 export function pregenerateLocalizableRouter(): Record<
   string,
   Record<string, string>
 > {
+  return {}
   const routes: Record<string, Record<string, string>> = {}
 
   for (const locale of serverCache.availableLocales) {

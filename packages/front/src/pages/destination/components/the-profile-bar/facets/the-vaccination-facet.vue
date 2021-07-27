@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import VaccineLabel from '@/front/src/components/vaccine-label.vue'
 import Facet from '@/front/src/pages/destination/components/the-profile-bar/facets/facet.vue'

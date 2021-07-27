@@ -4,12 +4,11 @@
     :rules="[isValidEmail]"
     type="email"
     v-bind="$attrs"
-    v-on="$listeners"
   />
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import RichTextInput from '@/front/src/components/form/rich-text-input.vue'
 import { useI18n } from '@/shared/src/composables/use-plugins'

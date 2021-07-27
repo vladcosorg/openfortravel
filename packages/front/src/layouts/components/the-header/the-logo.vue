@@ -17,14 +17,14 @@
   }
   :global {
     #Layer_1-2 path:first-child {
-      fill: var(--q-color-primary);
+      fill: var(--q-primary);
     }
   }
 }
 </style>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import { getMenuItemURL } from '@/front/src/misc/menu'
 

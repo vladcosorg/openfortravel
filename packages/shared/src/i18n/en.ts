@@ -231,8 +231,10 @@ export default {
       fillDeclaration: 'Fill online',
       widgets: {
         info: {
-          title: 'Additional resources',
-          subtitle: 'Please carefully read all the information below ',
+          title: 'Outgoing country resouces',
+          returnTitle: 'Return country resouces',
+          subtitle:
+            '{country} official and non-official sources and references',
           none: 'No resources at the moment',
         },
         entryRequirements: {

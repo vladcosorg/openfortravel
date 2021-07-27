@@ -1,9 +1,5 @@
-import type {
-  Ref,
-  SetupContext,
-  WritableComputedRef,
-} from '@vue/composition-api'
-import { computed } from '@vue/composition-api'
+import type { Ref, SetupContext, WritableComputedRef } from 'vue'
+import { computed } from 'vue'
 
 import { typeConstructors } from '@/shared/src/restriction-tree/converter'
 import type { RestrictionNodeType } from '@/shared/src/restriction-tree/types'

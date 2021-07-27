@@ -19,6 +19,7 @@ export enum MutationTypes {
   replaceVisitorContext = 'replaceVisitorContext',
   setVisitorContextField = 'setVisitorContextField',
   setVisitorOrigin = 'setVisitorOrigin',
+  setSlugs = 'setSlugs',
 }
 
 export type MutationSignatures<S = RootStateType> = {
@@ -71,4 +72,5 @@ export type MutationSignatures<S = RootStateType> = {
     },
   ): void
   [MutationTypes.setVisitorOrigin](state: S, country: string): void
+  [MutationTypes.setSlugs](state: S, slugs: any): void
 }

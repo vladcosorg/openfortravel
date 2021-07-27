@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import { computed, defineComponent, inject } from 'vue'
 
 import CitizenshipContextInline from '@/front/src/components/context-field/citizenship/citizenship-context-inline.vue'
 import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
@@ -43,7 +43,7 @@ export default defineComponent({
   },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const destinationIso = computed(() => store.state.currentDestinationCode)
+    const destinationIso = computed(() => store.getters.currentDestinationCode)
     return {
       destinationIso,
     }

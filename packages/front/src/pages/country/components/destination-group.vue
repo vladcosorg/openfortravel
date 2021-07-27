@@ -1,12 +1,8 @@
 <template>
-  <div>
-    <q-no-ssr :class="['rounded-borders', $style.grid]">
+  <div class="grid">
+    <q-no-ssr>
       <template #default>
-        <div
-          v-for="(destination, key) in results"
-          :key="key"
-          :class="[$style.gridItem, 'col']"
-        >
+        <div v-for="(destination, key) in results" :key="key" class="col">
           <destination-item
             hide-border
             :loading="loading"
@@ -14,11 +10,11 @@
           />
         </div>
       </template>
-      <template v-if="!$isDev" #placeholder>
+      <template #placeholder>
         <div
-          v-for="(destination, index) in items"
+          v-for="(destination, index) in results"
           :key="index"
-          :class="[$style.gridItem, 'col', 'bg-elevation-1']"
+          class="'bg-elevation-1 col"
         >
           <router-link
             :title="
@@ -51,7 +47,7 @@
   </div>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -65,8 +61,8 @@
 </style>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import { TripCard } from '@/front/src/models/TripCard'
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
@@ -77,15 +73,10 @@ export default defineComponent({
     loading: {
       required: false,
       type: Boolean,
-      default: false,
     },
     destinations: {
       type: Array as PropType<TripCard[]>,
       default: () => [],
-    },
-    groupName: {
-      type: String,
-      required: false,
     },
     collapseAfter: {
       type: Number,

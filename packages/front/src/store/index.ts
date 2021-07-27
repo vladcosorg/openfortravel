@@ -1,6 +1,6 @@
 import { store } from 'quasar/wrappers'
-import type { Store } from 'vuex'
-import Vuex from 'vuex'
+import { InjectionKey } from 'vue'
+import { createStore, Store, Store as VuexStore } from 'vuex'
 
 import { actions } from '@/front/src/store/actions'
 import { getters } from '@/front/src/store/getters'
@@ -13,17 +13,27 @@ import type { GetterSignatures } from '@/front/src/store/types/getters'
 import type { MutationSignatures } from '@/front/src/store/types/mutations'
 import { AugmentedStore } from '@/shared/src/misc/augmented-store'
 
-export default store(({ Vue }) => {
-  Vue.use(Vuex)
+export interface StateInterface {
+  // Define your own store structure, using submodules if needed
+  // example: ExampleStateInterface;
+  // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
+  example: unknown
+}
 
-  return new Vuex.Store<RootState>({
+export default store(function (/* { ssrContext } */) {
+  const Store = createStore<StateInterface>({
     state,
     modules,
     mutations,
     actions,
     getters,
-    strict: !!process.env.DEV,
+
+    // enable strict mode (adds overhead!)
+    // for dev mode and --debug builds only
+    strict: !!process.env.DEBUGGING,
   })
+
+  return Store
 })
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

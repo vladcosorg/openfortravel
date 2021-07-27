@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
 

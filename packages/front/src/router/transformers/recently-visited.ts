@@ -5,6 +5,9 @@ import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 export const recentlyVisitedTransformer: ParameterTransformer<
   VisitorProfile[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES] | undefined
 > = {
+  matcher(slug) {
+    return /visited-/.test(slug)
+  },
   encode(input) {
     if (!input || input.length === 0) {
       return

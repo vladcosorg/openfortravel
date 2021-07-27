@@ -1,7 +1,8 @@
 <template>
+  <the-breadcrumbs :items="breadcrumbs" />
   <div class="bg-elevation-1 overflow-auto q-pb-lg q-pt-md q-mb-lg">
     <div class="container">
-      <div :class="[$style.intro, 'text-h5 text-center col-12']">
+      <div class="text-h5 text-center col-12 intro">
         {{ $t('components.theCountryList.title') }}
       </div>
 
@@ -23,36 +24,25 @@
   </div>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 .intro {
   text-shadow: 1px 1px 5px $dark;
   font-weight: bold;
   text-transform: uppercase;
 }
-
-.btn {
-  height: 70px;
-  width: 70px;
-  box-shadow: $shadow-8;
-
-  :global {
-    .q-icon {
-      margin-left: 2px;
-      margin-bottom: 2px;
-    }
-  }
-}
 </style>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
 import RecoveryContext from '@/front/src/components/context-field/recovery/recovery-context.vue'
 import VaccinationContext from '@/front/src/components/context-field/vaccination/vaccination-context.vue'
 import DidNotVisitCountriesContext from '@/front/src/components/context-field/visited/did-not-visit-countries-context.vue'
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
+import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
+import { useBreadcrumbs } from '@/front/src/pages/country/composable'
 import {
   useRouter,
   useI18n,
@@ -63,6 +53,7 @@ import { transformCountryCodeToOriginSlug } from '@/shared/src/modules/country-l
 
 export default defineComponent({
   components: {
+    TheBreadcrumbs,
     RecoveryContext,
     DidNotVisitCountriesContext,
     VaccinationContext,
@@ -71,6 +62,7 @@ export default defineComponent({
   },
   setup() {
     const originCode = computed(() => useRootStore().getters.visitorOrigin)
+    const breadcrumbs = useBreadcrumbs(originCode)
     const { loading: loadingRef, callback: navigateToPage } = useClosureLoading(
       async (originCode: string): Promise<void> => {
         await useRouter().push({
@@ -78,7 +70,6 @@ export default defineComponent({
           params: {
             originSlug: transformCountryCodeToOriginSlug(originCode),
             locale: useI18n().locale,
-            searchId: useRootStore().state.searchId,
           },
         })
       },
@@ -94,6 +85,7 @@ export default defineComponent({
     })
 
     return {
+      breadcrumbs,
       loading: loadingRef,
       navigateToPage,
       currentOrigin: originValueRef,

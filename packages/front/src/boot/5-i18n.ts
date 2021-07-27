@@ -1,19 +1,24 @@
 import { boot } from 'quasar/wrappers'
-import type VueI18n from 'vue-i18n'
-
+import type { VueI18n } from 'vue-i18n'
+import { useI18n } from 'vue-i18n'
 import { serverCache } from '@/front/src/misc/server-cache'
-import {
-  autoTranslateIfNecessary,
-  extractCurrentLocale,
-  localeChangeHandler,
-  setLocale,
-} from '@/front/src/modules/i18n/boot'
+// import {
+//   autoTranslateIfNecessary,
+//   extractCurrentLocale,
+//   localeChangeHandler,
+//   setLocale,
+// } from '@/front/src/modules/i18n/boot'
 import {
   preloadLocaleMessageCollectionIntoPlugin,
   pushRequiredLocalesToStore,
 } from '@/front/src/modules/i18n/loaders'
 import { setI18n } from '@/shared/src/composables/use-plugins'
 import { createVueI18n } from '@/shared/src/misc/i18n'
+import {
+  extractCurrentLocale,
+  localeChangeHandler,
+  setLocale,
+} from '@/front/src/modules/i18n/boot'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -21,19 +26,24 @@ declare module 'vue/types/vue' {
   }
 }
 
-export const i18n = createVueI18n(serverCache.i18nMessages)
+export const i18nPlugin = createVueI18n(serverCache.i18nMessages)
 
 export default boot(async ({ app, store, ssrContext, redirect, router }) => {
+  app.use(i18nPlugin)
+  const i18n = i18nPlugin.global
+
   const isClient = !ssrContext
+
   app.i18n = i18n
+
   setI18n(i18n)
 
+  // return
   if (isClient) {
     preloadLocaleMessageCollectionIntoPlugin(i18n, store.state.locales)
   }
 
   const currentLocale = extractCurrentLocale(store, ssrContext)
-
   setLocale(currentLocale)
 
   if (ssrContext) {
@@ -45,7 +55,7 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
     }
 
     try {
-      await autoTranslateIfNecessary(currentLocale)
+      // await autoTranslateIfNecessary(currentLocale)
     } catch {
       redirect('/en/from/united-states-of-america')
       return

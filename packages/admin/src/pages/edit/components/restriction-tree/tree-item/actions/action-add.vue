@@ -4,12 +4,7 @@
 
 <script lang="ts">
 import { matAdd as icon } from '@quasar/extras/material-icons'
-import {
-  computed,
-  defineComponent,
-  inject,
-  PropType,
-} from '@vue/composition-api'
+import { computed, defineComponent, inject, PropType } from 'vue'
 
 import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
 import { TreeBuilderNode } from '@/admin/src/pages/edit/types'

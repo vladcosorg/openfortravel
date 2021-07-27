@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import { computed, defineComponent, inject } from 'vue'
 
 import { useLinks } from '@/front/src/pages/destination/components/sections/composables'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
@@ -29,7 +29,10 @@ export default defineComponent({
   components: { WidgetHeader },
   setup() {
     const store = inject(StoreKey) as StoreModule
-    const links = useLinks(computed(() => store.state.currentDestinationCode))
+    const links = useLinks(
+      computed(() => store.getters.currentOriginCode),
+      computed(() => store.getters.currentDestinationCode),
+    )
 
     return { links }
   },

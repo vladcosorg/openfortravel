@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import { matDangerous as stopIcon } from '@quasar/extras/material-icons'
-import { computed, defineComponent, inject, ref } from '@vue/composition-api'
+import { computed, defineComponent, inject, ref } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import { createCollection } from '@/front/src/composables/trip-cards'
@@ -107,14 +107,14 @@ export default defineComponent({
 
     const originISO = computed(() =>
       props.returnRestrictions
-        ? store.state.currentDestinationCode
+        ? store.getters.currentDestinationCode
         : store.getters.currentOriginCode,
     )
 
     const destinationISO = computed(() =>
       props.returnRestrictions
         ? store.getters.currentOriginCode
-        : store.state.currentDestinationCode,
+        : store.getters.currentDestinationCode,
     )
 
     const currentRestrictionCategory = ref<RestrictionListType>(

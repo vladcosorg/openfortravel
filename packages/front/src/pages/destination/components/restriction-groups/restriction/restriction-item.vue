@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, PropType, Ref } from '@vue/composition-api'
+import { defineComponent, inject, PropType, Ref } from 'vue'
 
 import RestrictionItemContent from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item-content.vue'
 import RestrictionItemTitle from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item-title.vue'

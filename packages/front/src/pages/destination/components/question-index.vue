@@ -11,8 +11,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { computed, defineComponent, inject } from 'vue'
 
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'

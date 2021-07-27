@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import { computed, defineComponent, inject } from 'vue'
 
 import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
 import TheAgeFacet from '@/front/src/pages/destination/components/the-profile-bar/facets/the-age-facet.vue'
@@ -72,7 +72,7 @@ export default defineComponent({
       () => rootStore.getters.visitorContextWithDefaults.origin,
     )
     const destinationCode = computed(
-      () => localStore.state.currentDestinationCode,
+      () => localStore.getters.currentDestinationCode,
     )
 
     return { isEditing, originCode, destinationCode, toggleEditor }

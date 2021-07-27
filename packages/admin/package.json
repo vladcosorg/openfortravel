@@ -39,12 +39,12 @@
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2",
     "lodash": "^4.17.20",
-    "quasar": "^1.0.0"
+    "quasar": "^2.0.0"
   },
   "devDependencies": {
-    "@quasar/app": "^2.0.0",
+    "@quasar/app": "^3.0.3",
     "@quasar/quasar-app-extension-dotenv": "^1.0.5",
-    "@types/lodash": "^4.14.161",
+    "@types/lodash": "^4.14.171",
     "@types/node": "^14.14.25",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
@@ -53,7 +53,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.3.0",
     "eslint-loader": "^4.0.2",
-    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-import": "2.23.4",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-unicorn": "^32.0.1",

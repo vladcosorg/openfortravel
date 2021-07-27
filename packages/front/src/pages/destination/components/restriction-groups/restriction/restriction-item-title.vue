@@ -1,9 +1,5 @@
 <script lang="ts">
-import {
-  createElement as h,
-  defineComponent,
-  PropType,
-} from '@vue/composition-api'
+import { h, defineComponent, PropType, computed } from 'vue'
 
 import {
   Placement,
@@ -20,30 +16,32 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     if (props.restriction.options.customInstructionTitle) {
-      const customTitle = props.restriction.options.customInstructionTitle
+      const customTitle = computed(
+        () => props.restriction.options.customInstructionTitle,
+      )
 
       switch (props.restriction.options.customTitlePlacement) {
         case Placement.REPLACE:
-          return () => h('span', { domProps: { innerHTML: customTitle } })
+          return () => h('span', { innerHTML: customTitle.value })
 
         case Placement.APPEND:
           return () =>
             h('span', [
-              ...slots.default(),
+              ...(slots.default ? slots.default() : []),
               ' ',
-              h('span', { domProps: { innerHTML: customTitle } }),
+              h('span', { innerHTML: customTitle.value }),
             ])
 
         case Placement.PREPEND:
           return () =>
             h('span', [
-              h('span', { domProps: { innerHTML: customTitle } }),
-              ...slots.default(),
+              h('span', { innerHTML: customTitle.value }),
+              ...(slots.default ? slots.default() : []),
             ])
       }
     }
 
-    return () => h('span', slots.default())
+    return () => h('span', slots.default ? slots.default() : [])
   },
 })
 </script>

@@ -475,7 +475,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
 

@@ -61,17 +61,15 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, toRef } from '@vue/composition-api'
-import { hydrateWhenVisible } from 'vue-lazy-hydration'
+import { defineComponent, toRef } from 'vue'
 
 import { useGroupedDestinations } from '@/front/src/pages/country/composable'
 import { useStats } from '@/front/src/pages/index/index-composable'
 
 export default defineComponent({
   components: {
-    CountUp: hydrateWhenVisible(
+    CountUp:
       () => import(/* webpackChunkName: "countup" */ 'vue-countup-v2'),
-    ),
   },
   props: {
     originCode: {

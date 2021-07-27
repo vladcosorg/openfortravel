@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import type { ComputedRef, PropType } from '@vue/composition-api'
-import { computed, defineComponent, ref } from '@vue/composition-api'
+import type { ComputedRef, PropType } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { union } from 'lodash'
 
 import {

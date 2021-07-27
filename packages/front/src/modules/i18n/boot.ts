@@ -4,7 +4,6 @@ import type { ManualTranslator } from 'vue-auto-i18n'
 import VueRouter, { Location } from 'vue-router'
 import type { Store } from 'vuex'
 
-import { i18n } from '@/front/src/boot/5-i18n'
 import { serverCache } from '@/front/src/misc/server-cache'
 import type { LanguageLocale } from '@/front/src/modules/i18n/types'
 import { reloadRoutes } from '@/front/src/router/helpers'
@@ -24,7 +23,7 @@ export function extractCurrentLocale(
 
   if (ssrContext) {
     currentLocale =
-      extractLanguageFromURL(ssrContext?.url) ??
+      extractLanguageFromURL(ssrContext.req.url) ??
       useCookies().get('locale') ??
       currentLocale
   }
@@ -94,13 +93,14 @@ export async function autoTranslateIfNecessary(
   if (currentLocale === 'en') {
     return
   }
-
-  if (!translator) {
-    const { createAutoI18n } = await import(
-      /* webpackChunkName: "auto-i18n" */ '@/front/src/misc/vue-auto-i18n.lazy'
-    )
-    translator = createAutoI18n(i18n)
-  }
-
-  await translator(i18n.locale)
+  return
+  //
+  // if (!translator) {
+  //   const { createAutoI18n } = await import(
+  //     /* webpackChunkName: "auto-i18n" */ '@/front/src/misc/vue-auto-i18n.lazy'
+  //   )
+  //   translator = createAutoI18n(i18n)
+  // }
+  //
+  // await translator(i18n.locale)
 }

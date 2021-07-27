@@ -38,13 +38,7 @@
 </template>
 
 <script lang="ts">
-import {
-  computed,
-  defineComponent,
-  inject,
-  PropType,
-  ref,
-} from '@vue/composition-api'
+import { computed, defineComponent, inject, PropType, ref } from 'vue'
 import upperFirst from 'lodash/upperFirst'
 import Vue from 'vue'
 

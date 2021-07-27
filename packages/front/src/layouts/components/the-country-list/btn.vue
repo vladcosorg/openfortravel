@@ -6,7 +6,6 @@
     text-color="primary"
     :percentage="20"
     v-bind="$attrs"
-    v-on="$listeners"
   >
     <q-tooltip> {{ $t('components.theCountryList.btn') }}</q-tooltip>
   </q-btn>
@@ -28,7 +27,7 @@
 </style>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},

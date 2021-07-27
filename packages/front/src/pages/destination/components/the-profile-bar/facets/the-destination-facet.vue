@@ -1,12 +1,12 @@
 <template>
-  <facet v-on="$listeners">
+  <facet v-bind="$attrs">
     <template #label>Travelling to</template>
     <template #hightlight><country-label :value="destinationCode" /></template>
   </facet>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from '@vue/composition-api'
+import { computed, defineComponent, inject } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import Facet from '@/front/src/pages/destination/components/the-profile-bar/facets/facet.vue'
@@ -18,7 +18,7 @@ export default defineComponent({
   setup() {
     const localStore = inject(StoreKey) as StoreModule
     const destinationCode = computed(
-      () => localStore.state.currentDestinationCode,
+      () => localStore.getters.currentDestinationCode,
     )
     return {
       destinationCode,

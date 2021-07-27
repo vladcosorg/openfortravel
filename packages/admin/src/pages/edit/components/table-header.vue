@@ -74,8 +74,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 
 import InPlaceField from '@/admin/src/pages/edit/components/in-place-field.vue'
 import InputDate from '@/admin/src/pages/edit/components/input-date.vue'

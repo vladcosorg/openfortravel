@@ -1,22 +1,22 @@
 // eslint-disable-next-line import/no-unused-modules
+
 import path from 'path'
 
-import { merge, mapValues } from 'lodash'
-import type { SitemapItemLoose } from 'sitemap';
-import { EnumChangefreq, simpleSitemapAndIndex } from 'sitemap'
-import type { LocaleMessages } from 'vue-i18n'
-import VueRouter, type { Location } from 'vue-router';
-
-
-import { createGenericRouter } from '@/front/src/router/routes'
 import messages from '@/shared/src/i18n/index'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 import { transformKeys } from '@/shared/src/misc/misc'
 import type { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import { convertCountryListResponseToCountrySlugMap } from '@/shared/src/modules/country-list/country-list-store'
 import { getTranslatedOrTranslatableLocales } from '@/shared/src/modules/language/locales'
+import { merge, mapValues } from 'lodash'
+import { EnumChangefreq, simpleSitemapAndIndex } from 'sitemap'
+import type { SitemapItemLoose } from 'sitemap'
+import type { LocaleMessages } from 'vue-i18n'
+import { Router, LocationAsRelativeRaw } from 'vue-router'
 
-const i18n = createVueI18n((messages as unknown) as LocaleMessages)
+import { createGenericRouter } from '@/front/src/router/routes'
+
+const i18n = createVueI18n(messages as unknown as LocaleMessages).global
 const countryCodes = Object.keys(
   convertCountryListResponseToCountrySlugMap(
     // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -24,28 +24,54 @@ const countryCodes = Object.keys(
   ),
 )
 
-async function main() {
-  const paths: SitemapItemLoose[] = [{ url: '/', changefreq: EnumChangefreq.DAILY, links: [] }]
+function main() {
+  const paths: SitemapItemLoose[] = [
+    { url: '/', changefreq: EnumChangefreq.DAILY, links: [] },
+  ]
+
+  paths.push(
+    createLocalizedEntry(
+      {
+        name: 'guide',
+      },
+      {},
+      {
+        changefreq: EnumChangefreq.WEEKLY,
+      },
+    ),
+  )
 
   const groupedLocalizedSlugs = getGroupedLocalizedSlugs()
-
-  for (const [originCode, originSlugs] of Object.entries(groupedLocalizedSlugs)) {
-    const originKeys = transformKeys(
+  for (const [originCode, originSlugs] of Object.entries(
+    groupedLocalizedSlugs,
+  )) {
+    const indexKeys = transformKeys(
       mapValues(originSlugs, (item, locale) => ({
         params: { originSlug: item.origin, locale },
       })),
       (key) => `${key}-${originCode}`,
     )
+    const originKeys = transformKeys(
+      mapValues(originSlugs, (item, locale) => ({
+        params: {
+          originSlug: item.origin,
+          locale,
+          parts: [`citizen-of-${item.origin}`, 'unvaccinated'],
+        },
+      })),
+      (key) => `${key}-${originCode}`,
+    )
     paths.push(
-      createLocalizedEntry({ name: 'index-targeted' }, originKeys, {
+      createLocalizedEntry({ name: 'index-targeted' }, indexKeys, {
         changefreq: EnumChangefreq.MONTHLY,
       }),
       createLocalizedEntry({ name: 'origin' }, originKeys, {
         changefreq: EnumChangefreq.WEEKLY,
       }),
     )
-
-    for (const [destinationCode, destinationSlugs] of Object.entries(groupedLocalizedSlugs)) {
+    for (const [destinationCode, destinationSlugs] of Object.entries(
+      groupedLocalizedSlugs,
+    )) {
       if (originCode === destinationCode) {
         continue
       }
@@ -55,6 +81,7 @@ async function main() {
           params: {
             originSlug: value.origin,
             destinationSlug: destinationSlugs[locale].destination,
+            parts: [`citizen-of-${value.origin}`, 'unvaccinated'],
             locale,
           },
         })),
@@ -72,8 +99,8 @@ async function main() {
 }
 
 function createLocalizedEntry(
-  to: Location,
-  appendPairs: Record<string, Location>,
+  to: LocationAsRelativeRaw,
+  appendPairs: LocationAsRelativeRaw,
   sitemapItem: Partial<SitemapItemLoose>,
 ): SitemapItemLoose {
   let primaryURL = ''
@@ -103,22 +130,28 @@ function createLocalizedEntry(
     sitemapItem,
   )
 }
-const routers: Record<string, VueRouter> = {}
-function generateHrefForRoute(to: Location) {
-  i18n.locale = to.params?.locale ?? 'en'
+const routers: Record<string, Router> = {}
+
+function generateHrefForRoute(to: LocationAsRelativeRaw) {
+  i18n.locale = (to.params?.locale as string) ?? 'en'
   if (!routers[i18n.locale]) {
-    routers[i18n.locale] = createGenericRouter(i18n)
+    routers[i18n.locale] = createGenericRouter(i18n, true)
   }
   return routers[i18n.locale].resolve(to).href
 }
 
-function getSlugsForLocale(
-  locale: string,
-): { origin: Record<string, string>; destination: Record<string, string> } {
+function getSlugsForLocale(locale: string): {
+  origin: Record<string, string>
+  destination: Record<string, string>
+} {
   const fallbacks = convertCountryListResponseToCountrySlugMap(
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('i18n-iso-countries/langs/en.json').countries,
   )
+  return {
+    origin: fallbacks,
+    destination: fallbacks,
+  }
   let countriesFrom: CountryList, countriesTo: CountryList
   try {
     if (locale !== 'ru') {
@@ -172,14 +205,12 @@ function getGroupedLocalizedSlugs() {
 
   return groupedLocalizedSlugs
 }
-
-main().then((paths) =>
-  simpleSitemapAndIndex({
-    limit: 100,
-    hostname: 'https://openfortravel.org',
-    sitemapHostname: 'https://cdn.openfortravel.org/sitemap/',
-    destinationDir: path.resolve('./var/sitemap'),
-    sourceData: paths ,
-    gzip: false,
-  }),
-)
+const sourceData = main()
+simpleSitemapAndIndex({
+  limit: 100,
+  hostname: 'https://openfortravel.org',
+  sitemapHostname: 'https://cdn.openfortravel.org/sitemap/',
+  destinationDir: path.resolve('./var/sitemap'),
+  sourceData,
+  gzip: false,
+}).then(() => console.log('done'))

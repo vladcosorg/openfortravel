@@ -1,15 +1,18 @@
-import type { IVueI18n } from 'vue-i18n'
-import type { RouteConfig, RouterOptions } from 'vue-router'
-import VueRouter from 'vue-router'
-
-import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
-import { parseDestinationRoute } from '@/front/src/router/route-builders/destination'
-import { parseOriginRoute } from '@/front/src/router/route-builders/origin'
 import { useRouter } from '@/shared/src/composables/use-plugins'
 import {
   transformCountryCodeToOriginSlug,
   transformOriginSlugToCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import type { IVueI18n } from 'vue-i18n'
+import {
+  Router,
+  createRouter,
+  createMemoryHistory,
+  createWebHistory,
+} from 'vue-router'
+import type { RouteConfig } from 'vue-router'
+
+import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 
 export function getRoutes(i18n: IVueI18n): RouteConfig[] {
   return [
@@ -93,35 +96,26 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
         },
         {
           name: 'destination',
-          path: 'travel-restrictions/from-:originSlug/to-:destinationSlug/:citizenship?/:vaccinated?/:recovered?/:visited?',
+          path: 'travel-restrictions/from-:originSlug/to-:destinationSlug/for/:parts+',
           component: () =>
             import(
               /* webpackChunkName: "page-destination" */
               '@/front/src/pages/destination/destination-page.vue'
             ),
-          props(route) {
-            return parseDestinationRoute(route)
-          },
         },
-
         {
           name: 'origin',
-          path: 'travel-restrictions/from-:originSlug/:citizenship?/:vaccinated?/:recovered?/:visited?',
+          path: 'travel-restrictions/from-:originSlug/for/:parts+',
           component: () =>
             import(
               /* webpackChunkName: "page-origin" */
               '@/front/src/pages/country/country-page.vue'
             ),
-          props(route) {
-            return parseOriginRoute(route)
-          },
         },
-
         {
           name: 'origin-old',
           path: `${i18n.t('page.country.route')}/:originSlug`,
         },
-
         {
           name: 'guide',
           path: 'travel-guide/',
@@ -151,7 +145,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
     // Always leave this as last one,
     // but you can also remove it
     {
-      path: '*',
+      path: '/:catchAll(.*)*',
       component: () =>
         import(
           /* webpackChunkName: "page-error" */ '@/front/src/pages/error-404-page.vue'
@@ -162,13 +156,16 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
 
 export function createGenericRouter(
   i18n: IVueI18n,
-  options?: RouterOptions,
-): VueRouter {
-  return new VueRouter({
+  isServer?: boolean,
+): Router {
+  const createHistory = isServer ? createMemoryHistory : createWebHistory
+  return createRouter({
     scrollBehavior: function (to) {
       return to.hash ? { selector: to.hash } : { x: 0, y: 0 }
     },
     routes: getRoutes(i18n),
-    ...options,
+    history: createHistory(
+      process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE,
+    ),
   })
 }

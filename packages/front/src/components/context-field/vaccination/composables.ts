@@ -1,4 +1,4 @@
-import { computed } from '@vue/composition-api'
+import { computed } from 'vue'
 
 import { updateRouteParameter } from '@/front/src/router/route-builders/common'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
@@ -9,14 +9,15 @@ export function useModel() {
   const store = useRootStore()
   return computed({
     get() {
-      return store.getters.visitorContextWithDefaults[
-        RestrictionNodeType.VACCINATED
-      ]?.brand
+      return (
+        store.getters.visitorContextWithDefaults[RestrictionNodeType.VACCINATED]
+          ?.brand ?? false
+      )
     },
-    set(value: undefined | VaccineBrand) {
+    set(value: false | VaccineBrand) {
       updateRouteParameter(
         RestrictionNodeType.VACCINATED,
-        value === undefined
+        value === false
           ? undefined
           : {
               partial: false,

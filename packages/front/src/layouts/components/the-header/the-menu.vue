@@ -1,6 +1,6 @@
 <template>
   <div class="row items-center q-gutter-x-md">
-    <div :class="['q-gutter-x-md gt-sm text-white', $style.links]">
+    <div :class="['q-gutter-x-md gt-sm text-white links']">
       <router-link
         v-for="(title, url, index) in menuItems"
         :key="index"
@@ -15,18 +15,18 @@
       round
       :icon="$q.screen.lt.md ? menuIcon : moreIcon"
       color="primary"
-      @click="$emit('input', true)"
+      @click="$emit('update:modelValue', true)"
     />
   </div>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 .links {
   & > a {
-    color: var(--q-color-primary);
+    color: var(--q-primary);
   }
-  :global(.router-link-active) {
-    color: var(--q-color-secondary);
+  .router-link-active {
+    color: var(--q-secondary);
     font-weight: bold;
   }
 }
@@ -37,13 +37,18 @@ import {
   matMenu as menuIcon,
   matMoreVert as moreIcon,
 } from '@quasar/extras/material-icons'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import { getShortHeaderMenuItems } from '@/front/src/misc/menu'
 
 export default defineComponent({
   components: {},
-  props: {},
+  props: {
+    modelValue: {
+      type: Boolean,
+      required: true,
+    },
+  },
   setup() {
     return { menuItems: computed(getShortHeaderMenuItems), menuIcon, moreIcon }
   },

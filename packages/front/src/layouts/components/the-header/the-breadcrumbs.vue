@@ -2,7 +2,7 @@
   <div class="bg-elevation-1 gt-xs">
     <q-toolbar class="container">
       <div class="q-gutterr-md">
-        <q-breadcrumbs :class="$style.breadcrumbs">
+        <q-breadcrumbs class="breadcrumbs">
           <template #separator>
             <q-icon size="1.5em" :name="matChevronRight" color="primary" />
           </template>
@@ -31,16 +31,16 @@
   </div>
 </template>
 
-<style lang="scss" module>
+<style lang="scss">
 .breadcrumbs a {
-  color: var(--q-color-secondary);
+  color: var(--q-secondary);
   text-decoration: underline;
 }
 </style>
 
 <script lang="ts">
 import { matHome, matChevronRight } from '@quasar/extras/material-icons'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
 
 import { getMenuItemURL } from '@/front/src/misc/menu'
 

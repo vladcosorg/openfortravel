@@ -1,4 +1,4 @@
-import type { InjectionKey } from '@vue/composition-api'
+import type { InjectionKey } from 'vue'
 
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 

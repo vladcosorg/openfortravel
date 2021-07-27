@@ -13,7 +13,7 @@ import {
   ionRemoveOutline as negativeIcon,
   ionAddOutline as positiveIcon,
 } from '@quasar/extras/ionicons-v5'
-import { computed, defineComponent, PropType } from '@vue/composition-api'
+import { computed, defineComponent, PropType } from 'vue'
 
 import { TripCard } from '@/front/src/models/TripCard'
 

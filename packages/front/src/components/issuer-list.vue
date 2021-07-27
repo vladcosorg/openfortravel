@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import { defineComponent, PropType } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
@@ -22,9 +22,6 @@ export default defineComponent({
       type: String,
       default: 'any country',
     },
-  },
-  setup(props) {
-    return {}
   },
 })
 </script>

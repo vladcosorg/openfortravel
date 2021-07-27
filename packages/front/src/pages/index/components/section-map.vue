@@ -26,14 +26,8 @@
 
 <script lang="ts">
 import type { MapChart } from '@amcharts/amcharts4/maps'
-import type { PropType } from '@vue/composition-api'
-import {
-  defineComponent,
-  onMounted,
-  onUnmounted,
-  ref,
-  watch,
-} from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue'
 import { defer } from 'lodash'
 
 import { TripCard } from '@/front/src/models/TripCard'

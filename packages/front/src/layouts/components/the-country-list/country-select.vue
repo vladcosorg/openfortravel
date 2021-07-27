@@ -68,8 +68,8 @@
 
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import { computed, defineComponent, ref, toRef } from '@vue/composition-api'
-
+import { computed, defineComponent, ref, toRef } from 'vue'
+import { useQuasar } from 'quasar'
 import InvisibleNativeSelect from '@/front/src/components/invisible-native-select.vue'
 import { useStore } from '@/shared/src/composables/use-plugins'
 import { useAggregatedLoader } from '@/shared/src/composables/use-promise-loading'
@@ -97,7 +97,7 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    value: {
+    modelValue: {
       type: String,
       required: false,
     },
@@ -121,7 +121,7 @@ export default defineComponent({
     },
   },
   setup(props, { emit, root }) {
-    const isMobile = computed(() => root.$q.platform.is.mobile)
+    const isMobile = computed(() => useQuasar().platform.is.mobile)
     // eslint-disable-next-line unicorn/consistent-function-scoping
     const nativeList = (): CountryList =>
       useVuexRawGetter<CountryList>('modules/countryList/originByContinent')
@@ -157,24 +157,24 @@ export default defineComponent({
 
     const currentCountryValueRef = computed<string | undefined>({
       get() {
-        return props.value
+        return props.modelValue
       },
       set(value) {
-        emit('input', value)
+        emit('update:modelValue', value)
       },
     })
 
     const currentCountry = computed<ListItem | undefined>({
       get() {
-        if (!props.value) {
+        if (!props.modelValue) {
           return
         }
 
         return {
           label: props.isDestination
-            ? getDestinationLabelForCountryCode(props.value)
-            : getOriginLabelForCountryCode(props.value),
-          value: props.value,
+            ? getDestinationLabelForCountryCode(props.modelValue)
+            : getOriginLabelForCountryCode(props.modelValue),
+          value: props.modelValue,
         }
       },
       set(item) {

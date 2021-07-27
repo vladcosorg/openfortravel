@@ -22,24 +22,25 @@ import {
   matWbSunny as lightIcon,
   matBrightness3 as darkIcon,
 } from '@quasar/extras/material-icons'
-import { computed, defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from 'vue'
+import { useQuasar } from 'quasar'
 
 export default defineComponent({
   components: {},
   props: {},
-  setup(_props, { root }) {
-    const cookieValue = root.$q.cookies.get<number | null>('dark')
+  setup() {
+    const cookieValue = useQuasar().cookies.get<number | null>('dark')
     if (cookieValue !== null) {
-      root.$q.dark.set(cookieValue === 1)
+      useQuasar().dark.set(cookieValue === 1)
     }
 
     const darkMode = computed<boolean>({
       get() {
-        return root.$q.dark.isActive
+        return useQuasar().dark.isActive
       },
       set(newDarkModeStatus) {
-        root.$q.dark.set(newDarkModeStatus)
-        root.$q.cookies.set('dark', newDarkModeStatus ? '1' : '0', {
+        useQuasar().dark.set(newDarkModeStatus)
+        useQuasar().cookies.set('dark', newDarkModeStatus ? '1' : '0', {
           path: '/',
         })
       },

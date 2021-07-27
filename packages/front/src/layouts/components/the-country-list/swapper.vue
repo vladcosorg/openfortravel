@@ -12,7 +12,6 @@
         'gt-xs': !destinationCode,
       },
     ]"
-    v-on="$listeners"
   />
 </template>
 
@@ -44,7 +43,7 @@ import {
   matSwapHoriz as swapIconDesktop,
   matSwapVert as swapIconMobile,
 } from '@quasar/extras/material-icons'
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},

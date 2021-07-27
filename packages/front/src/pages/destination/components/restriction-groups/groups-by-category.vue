@@ -20,8 +20,8 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { defineComponent } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 
 import GroupRestriction from '@/front/src/pages/destination/components/restriction-groups/group-restriction.vue'
 import type { RestrictionCategory } from '@/shared/src/restriction-tree/restriction-node'

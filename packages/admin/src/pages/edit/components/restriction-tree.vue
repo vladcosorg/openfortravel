@@ -39,8 +39,8 @@
 </style>
 
 <script lang="ts">
-import type { PropType } from '@vue/composition-api'
-import { defineComponent, provide, ref, watch } from '@vue/composition-api'
+import type { PropType } from 'vue'
+import { defineComponent, provide, ref, watch } from 'vue'
 import debounce from 'lodash/debounce'
 import Vue from 'vue'
 
