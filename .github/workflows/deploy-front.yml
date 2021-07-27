@@ -22,7 +22,7 @@ jobs:
         run: yarn install
       - run: yarn build
         working-directory: ./packages/front
-      - run: yarn install
+      - run: npm install
         working-directory: ./packages/front/dist/ssr
       - id: deploy
         uses: google-github-actions/deploy-appengine@main
