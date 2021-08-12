@@ -4,7 +4,7 @@
   "scripts": {
     "prebuild": "rm -rf ./dist && mkdir ./dist &&  cp package.json dist/package.json",
     "compile": "microbundle build src/index.ts --output dist/index.js --target node --format cjs --no-sourcemap",
-    "build": "run-s prebuild compile",
+    "build": "npm run prebuild && npm run compile",
     "build-watch": "microbundle -w build src/index.ts --output dist/index.js --target node --format cjs --no-sourcemap",
     "copy": "cp package.json dist/ && cp README.md dist/ && cp .npmrc dist/",
     "serve": "run-p build-watch start-emulators",
