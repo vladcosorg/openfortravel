@@ -12,10 +12,5 @@
     "firebase-admin": "^9.2.0",
     "ts-node": "^9.0.0"
   },
-  "workspaces": {
-    "nohoist": [
-      "**"
-    ]
-  },
   "private": true
 }

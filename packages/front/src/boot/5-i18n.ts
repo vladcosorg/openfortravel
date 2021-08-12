@@ -1,24 +1,19 @@
-import { boot } from 'quasar/wrappers'
-import type { VueI18n } from 'vue-i18n'
-import { useI18n } from 'vue-i18n'
-import { serverCache } from '@/front/src/misc/server-cache'
-// import {
-//   autoTranslateIfNecessary,
-//   extractCurrentLocale,
-//   localeChangeHandler,
-//   setLocale,
-// } from '@/front/src/modules/i18n/boot'
-import {
-  preloadLocaleMessageCollectionIntoPlugin,
-  pushRequiredLocalesToStore,
-} from '@/front/src/modules/i18n/loaders'
 import { setI18n } from '@/shared/src/composables/use-plugins'
 import { createVueI18n } from '@/shared/src/misc/i18n'
+import { boot } from 'quasar/wrappers'
+import type { VueI18n } from 'vue-i18n'
+
+import { serverCache } from '@/front/src/misc/server-cache'
 import {
+  autoTranslateIfNecessary,
   extractCurrentLocale,
   localeChangeHandler,
   setLocale,
 } from '@/front/src/modules/i18n/boot'
+import {
+  preloadLocaleMessageCollectionIntoPlugin,
+  pushRequiredLocalesToStore,
+} from '@/front/src/modules/i18n/loaders'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -55,7 +50,7 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
     }
 
     try {
-      // await autoTranslateIfNecessary(currentLocale)
+      await autoTranslateIfNecessary(currentLocale)
     } catch {
       redirect('/en/from/united-states-of-america')
       return

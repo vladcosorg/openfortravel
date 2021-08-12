@@ -9644,7 +9644,7 @@ __metadata:
     tsconfig-paths: ^3.9.0
     tsconfig-paths-webpack-plugin: ^3.3.0
     typescript: ^4.1.3
-    vue-auto-i18n: 1.1.0-beta.16
+    vue-auto-i18n: 1.1.0-beta.17
     vue-countup-v2: ^4.0.0
     vue-i18n: ^9.0.0-beta.0
     vue-inline-svg: ^3.0.0-beta.3
@@ -9787,7 +9787,7 @@ __metadata:
     scrape-it: 5.3.1
     tscpaths: ^0.0.9
     typescript: ^4.1.3
-    vue-auto-i18n: 1.1.0-beta.16
+    vue-auto-i18n: 1.1.0-beta.17
   languageName: unknown
   linkType: soft
 
@@ -19370,9 +19370,9 @@ typescript@^4.1.3:
   languageName: node
   linkType: hard
 
-"vue-auto-i18n@npm:1.1.0-beta.16":
-  version: 1.1.0-beta.16
-  resolution: "vue-auto-i18n@npm:1.1.0-beta.16"
+"vue-auto-i18n@npm:1.1.0-beta.17":
+  version: 1.1.0-beta.17
+  resolution: "vue-auto-i18n@npm:1.1.0-beta.17"
   dependencies:
     "@vitalets/google-translate-api": ^5.0.0
     flat: ^5.0.2
@@ -19382,7 +19382,7 @@ typescript@^4.1.3:
   peerDependencies:
     vue: ^2.0.0
     vue-i18n: ^8.0.0
-  checksum: 391e0e337446d479bd6dd074e1148d4f14101e627bddcb4a8e828589b3bd1099f63e22f4d911f117d7d10d76c9f0c5ee2d3775384efc2ffabac64ab77f38be57
+  checksum: a049c3112e0087c134283f998873f6d1cfa528ae30fb9c44db6185929e1eca879394e934add00d521992bcb8585863177e0870f4521a6b695c0d754661a89e85
   languageName: node
   linkType: hard
 

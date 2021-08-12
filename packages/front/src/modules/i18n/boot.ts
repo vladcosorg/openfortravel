@@ -1,3 +1,4 @@
+import { useCookies, useI18n } from '@/shared/src/composables/use-plugins'
 import type { QSsrContext } from '@quasar/app'
 import { mapValues } from 'lodash'
 import type { ManualTranslator } from 'vue-auto-i18n'
@@ -8,7 +9,6 @@ import { serverCache } from '@/front/src/misc/server-cache'
 import type { LanguageLocale } from '@/front/src/modules/i18n/types'
 import { reloadRoutes } from '@/front/src/router/helpers'
 import type { StateInterface } from '@/front/src/store/state'
-import { useCookies, useI18n } from '@/shared/src/composables/use-plugins'
 
 export function setLocale(locale: string): void {
   useI18n().locale = locale
@@ -93,14 +93,13 @@ export async function autoTranslateIfNecessary(
   if (currentLocale === 'en') {
     return
   }
-  return
-  //
-  // if (!translator) {
-  //   const { createAutoI18n } = await import(
-  //     /* webpackChunkName: "auto-i18n" */ '@/front/src/misc/vue-auto-i18n.lazy'
-  //   )
-  //   translator = createAutoI18n(i18n)
-  // }
-  //
-  // await translator(i18n.locale)
+
+  if (!translator) {
+    const { createAutoI18n } = await import(
+      /* webpackChunkName: "auto-i18n" */ '@/front/src/misc/vue-auto-i18n.lazy'
+    )
+    translator = createAutoI18n(i18n)
+  }
+
+  await translator(i18n.locale)
 }
