@@ -2,7 +2,6 @@ import { useCookies, useI18n } from '@/shared/src/composables/use-plugins'
 import type { QSsrContext } from '@quasar/app'
 import { mapValues } from 'lodash'
 import type { ManualTranslator } from 'vue-auto-i18n'
-import VueRouter, { Location } from 'vue-router'
 import type { Store } from 'vuex'
 
 import { serverCache } from '@/front/src/misc/server-cache'
