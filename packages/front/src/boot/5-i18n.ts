@@ -1,6 +1,7 @@
 import { setI18n } from '@/shared/src/composables/use-plugins'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 import { boot } from 'quasar/wrappers'
+import { watch } from 'vue'
 import type { VueI18n } from 'vue-i18n'
 
 import { serverCache } from '@/front/src/misc/server-cache'
@@ -26,7 +27,12 @@ export const i18nPlugin = createVueI18n(serverCache.i18nMessages)
 export default boot(async ({ app, store, ssrContext, redirect, router }) => {
   app.use(i18nPlugin)
   const i18n = i18nPlugin.global
-
+  watch(
+    () => i18n.locale,
+    () => {
+      console.log('chanmge')
+    },
+  )
   const isClient = !ssrContext
 
   app.i18n = i18n

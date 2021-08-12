@@ -9,7 +9,7 @@
     options-dense
     class="language-switcher"
     :dropdown-icon="icon"
-    @input="handleClick"
+    @update:modelValue="handleClick"
   />
 </template>
 
@@ -41,15 +41,15 @@
 </style>
 
 <script lang="ts">
-import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import { defineComponent, ref } from 'vue'
-
-import SimpleSelect from '@/front/src/components/simple-select.vue'
-import type { StateInterface } from '@/front/src/store/state'
 import { useI18n } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import { useStateProperty } from '@/shared/src/composables/use-vuex'
+import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
+import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
+
+import SimpleSelect from '@/front/src/components/simple-select.vue'
+import type { StateInterface } from '@/front/src/store/state'
 
 export default defineComponent({
   components: { SimpleSelect },
@@ -57,10 +57,10 @@ export default defineComponent({
     const { loading } = useLoading(false)
     const currentLanguage = ref(useI18n().locale)
     const languageList = useStateProperty<StateInterface>('labeledLocales')
-
+    const router = useRouter()
     const handleClick = (tolocale: string) => {
       loading.value = true
-      location.href = useRouter().resolve({ query: { tolocale } }).href
+      location.href = router.resolve({ query: { tolocale } }).href
     }
 
     return {

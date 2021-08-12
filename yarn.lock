@@ -19370,9 +19370,9 @@ typescript@^4.1.3:
   languageName: node
   linkType: hard
 
-"vue-auto-i18n@npm:1.1.0-beta.17":
-  version: 1.1.0-beta.17
-  resolution: "vue-auto-i18n@npm:1.1.0-beta.17"
+"vue-auto-i18n@portal:/Users/chetzof/Work/vue-auto-i18n/dist::locator=example-monorepo%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "vue-auto-i18n@portal:/Users/chetzof/Work/vue-auto-i18n/dist::locator=example-monorepo%40workspace%3A."
   dependencies:
     "@vitalets/google-translate-api": ^5.0.0
     flat: ^5.0.2
@@ -19382,9 +19382,8 @@ typescript@^4.1.3:
   peerDependencies:
     vue: ^2.0.0
     vue-i18n: ^8.0.0
-  checksum: a049c3112e0087c134283f998873f6d1cfa528ae30fb9c44db6185929e1eca879394e934add00d521992bcb8585863177e0870f4521a6b695c0d754661a89e85
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "vue-countup-v2@npm:^4.0.0":
   version: 4.0.0

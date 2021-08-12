@@ -2,6 +2,7 @@ import { useCookies, useI18n } from '@/shared/src/composables/use-plugins'
 import type { QSsrContext } from '@quasar/app'
 import { mapValues } from 'lodash'
 import type { ManualTranslator } from 'vue-auto-i18n'
+import { RouteLocation, useRouter } from 'vue-router'
 import type { Store } from 'vuex'
 
 import { serverCache } from '@/front/src/misc/server-cache'
@@ -41,23 +42,23 @@ export function extractLanguageFromURL(
 
 export function localeChangeHandler(
   currentLocale: string,
-  router: VueRouter,
+  router: ReturnType<typeof useRouter>,
   ssrContext: QSsrContext,
 ): void | string {
   if (ssrContext.req.query.tolocale) {
-    const routeConfig = { ...router.resolve(ssrContext?.url) }
-    const newLocale = routeConfig.location.query?.tolocale as string
+    const routeConfig = { ...router.resolve(ssrContext.req.url) }
+    const newLocale = routeConfig.query?.tolocale as string
     setLocale(newLocale)
 
     return router.resolve({
-      name: routeConfig.route.name as string,
-      params: translateParams(routeConfig.location, currentLocale, newLocale),
+      name: routeConfig.name as string,
+      params: translateParams(routeConfig, currentLocale, newLocale),
     }).href
   }
 }
 
 function translateParams(
-  route: Location,
+  route: RouteLocation,
   currentLocale: string,
   newLocale: string,
 ): Record<string, string> {
