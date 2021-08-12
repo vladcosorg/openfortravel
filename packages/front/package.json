@@ -18,7 +18,7 @@
     "build-serve": "quasar build -m ssr && cd dist/ssr && npm start",
     "serve": "cd dist/ssr && GOOGLE_APPLICATION_CREDENTIALS=\"../../gcloud/dev-serviceaccount.json\" npm start",
     "build-deploy": "yarn run build && yarn run deploy",
-    "deploy": "gcloud app deploy dist/ssr/app.yaml --quiet",
+    "deploy": "cp app.yaml dist/ssr/app.yaml && gcloud app deploy dist/ssr/app.yaml --quiet",
     "build-flags": "ts-node src/bin/build-flags.ts",
     "build-sitemap": "rm -rf var/sitemap && node -- node_modules/.bin/ts-node -P tsconfig.json -r tsconfig-paths/register src/bin/build-sitemap.ts",
     "build-stats": "node -- node_modules/.bin/ts-node -P tsconfig.json -r tsconfig-paths/register ../functions/src/stats-aggregator.ts",
@@ -70,7 +70,8 @@
     "vue-lazy-hydration": "^2.0.0-beta.4",
     "vue-social-sharing": "^3.0.5",
     "vuex": "^4.0.1",
-    "winston": "^3.3.3"
+    "winston": "^3.3.3",
+    "countries-list": "^2.6.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",
@@ -98,7 +99,6 @@
     "filesize": "^6.1.0",
     "md5-file": "^5.0.0",
     "prettier": "^2.1.1",
-    "shared": "0.3.1",
     "sharp": "^0.27.1",
     "sitemap": "^6.3.3",
     "ts-node": "^9.0.0",

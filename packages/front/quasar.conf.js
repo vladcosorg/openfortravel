@@ -102,20 +102,19 @@ module.exports = configure((context) => ({
 
     // https://v2.quasar.dev/quasar-cli/handling-webpack
     // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
-    // chainWebpack(config) {
-    //   if (context.debug) {
-    //     config.plugins.delete('hashed-module-ids')
-    //     config.optimization.namedModules(true)
-    //   }
-    //
-    //   config.module
-    //     .rule('images')
-    //     .use('url-loader')
-    //     .tap((options) => {
-    //       options.limit = 1000
-    //       return options
-    //     })
-    // },
+    chainWebpack(config) {
+      if (context.debug) {
+        config.plugins.delete('hashed-module-ids')
+        config.optimization.namedModules(true)
+      }
+      config.module
+        .rule('images')
+        .use('url-loader')
+        .tap((options) => {
+          options.limit = 1000
+          return options
+        })
+    },
     extendWebpack(config) {
       const skipChecks = true
       config.resolve.alias['@'] = path.resolve(__dirname, '../..')
@@ -131,41 +130,43 @@ module.exports = configure((context) => ({
       // })
       //
       // // linting is slow in TS projects, we execute it only for production builds
-      // if (context.prod && !context.debug) {
-      //   if (!skipChecks) {
-      //     config.module.rules.push({
-      //       enforce: 'pre',
-      //       test: /\.(js|vue)$/,
-      //       loader: 'eslint-loader',
-      //       exclude: /node_modules/,
-      //     })
-      //   }
-      //   if (config.optimization.minimizer) {
-      //     const terserOptions =
-      //       config.optimization.minimizer[0].options.terserOptions
-      //     terserOptions.compress['drop_console'] = true
-      //     terserOptions.output = { comments: false }
-      //   }
+      if (context.prod && !context.debug) {
+        //   if (!skipChecks) {
+        //     config.module.rules.push({
+        //       enforce: 'pre',
+        //       test: /\.(js|vue)$/,
+        //       loader: 'eslint-loader',
+        //       exclude: /node_modules/,
+        //     })
+        //   }
+        if (config.optimization.minimizer) {
+          const terserOptions =
+            config.optimization.minimizer[0].options.terserOptions
+          terserOptions.compress['drop_console'] = true
+          terserOptions.format = Object.assign(terserOptions.format || {}, {
+            comments: false,
+          })
+        }
+        //
+        config.output.publicPath = 'https://cdn.openfortravel.org/www/'
+      }
       //
-      //   config.output.publicPath = 'https://cdn.openfortravel.org/www/'
-      // }
-      //
-      // config.module.rules.push({
-      //   test: /\.vue$/,
-      //   loader: 'vue-svg-inline-loader',
-      //   options: {
-      //     svgo: {
-      //       plugins: [
-      //         {
-      //           inlineStyles: {
-      //             onlyMatchedOnce: false,
-      //           },
-      //         },
-      //         { cleanupIDs: false },
-      //       ],
-      //     },
-      //   },
-      // })
+      config.module.rules.push({
+        test: /\.vue$/,
+        loader: 'vue-svg-inline-loader',
+        options: {
+          svgo: {
+            plugins: [
+              {
+                inlineStyles: {
+                  onlyMatchedOnce: false,
+                },
+              },
+              { cleanupIDs: false },
+            ],
+          },
+        },
+      })
       //
       // config.plugins.push(
       //   new FilterWarningsPlugin({
