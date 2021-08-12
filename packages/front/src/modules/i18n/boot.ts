@@ -88,6 +88,7 @@ function translateParams(
 let translator: ManualTranslator
 export async function autoTranslateIfNecessary(
   currentLocale: string,
+  i18n: ReturnType<typeof useI18n>,
 ): Promise<void> {
   if (currentLocale === 'en') {
     return

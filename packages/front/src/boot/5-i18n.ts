@@ -50,7 +50,7 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
     }
 
     try {
-      await autoTranslateIfNecessary(currentLocale)
+      await autoTranslateIfNecessary(currentLocale, i18n)
     } catch {
       redirect('/en/from/united-states-of-america')
       return
