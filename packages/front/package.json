@@ -47,6 +47,7 @@
     "axios": "^0.21.1",
     "bunyan": "^2.0.5",
     "core-js": "^3.6.5",
+    "countries-list": "^2.6.1",
     "countup.js": "^2.0.7",
     "date-fns": "^2.16.1",
     "direct-vuex": "^0.12.1",
@@ -70,8 +71,7 @@
     "vue-lazy-hydration": "^2.0.0-beta.4",
     "vue-social-sharing": "^3.0.5",
     "vuex": "^4.0.1",
-    "winston": "^3.3.3",
-    "countries-list": "^2.6.1"
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",
