@@ -117,18 +117,8 @@ export function getRoutes(
           path: `${i18n.t('page.country.route')}/:originSlug`,
         },
         {
-          name: 'guide',
-          path: 'travel-guide/',
-          component: () =>
-            import(
-              /* webpackChunkName: "page-origin" */
-              '@/front/src/pages/guide/guide-page.vue'
-            ),
-        },
-
-        {
           name: 'index-targeted',
-          path: `${i18n.t('page.index.route')}/:originSlug/`,
+          path: 'travel-restrictions/from-:originSlug/',
           component: () =>
             import(
               /* webpackChunkName: "page-index" */ '@/front/src/pages/index/index-page.vue'
@@ -138,6 +128,19 @@ export function getRoutes(
               originCode: transformOriginSlugToCode(route.params.originSlug),
             }
           },
+        },
+        {
+          name: 'index-targeted-old',
+          path: `${i18n.t('page.index.route')}/:originSlug/`,
+        },
+        {
+          name: 'guide',
+          path: 'travel-guide/',
+          component: () =>
+            import(
+              /* webpackChunkName: "page-origin" */
+              '@/front/src/pages/guide/guide-page.vue'
+            ),
         },
       ],
     },

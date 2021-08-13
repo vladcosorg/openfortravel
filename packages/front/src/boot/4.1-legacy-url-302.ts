@@ -1,3 +1,4 @@
+import { useRouter } from '@/shared/src/composables/use-plugins'
 import { Router } from 'vue-router'
 
 import { serverCache } from '@/front/src/misc/server-cache'
@@ -38,17 +39,22 @@ export default ({
         301,
       )
     }
-    // if (to.name === 'index-targeted') {
-    //   return redirect(
-    //     getDestinationRouteURL({
-    //       originSlug:
-    //         serverCache.countrySlugToCodeMap[to.params.locale as string].origin[
-    //           to.params.originSlug as string
-    //         ]
-    //     }),
-    //     301,
-    //   )
-    // }
+    if (to.name === 'index-targeted-old') {
+      return redirect(
+        useRouter().resolve({
+          name: 'index-targeted',
+          params: {
+            locale: to.params.locale,
+            originSlug:
+              serverCache.countryCodeToSlugMap['en'].origin[
+                serverCache.countrySlugToCodeMap[to.params.locale as string]
+                  .origin[to.params.originSlug as string]
+              ],
+          },
+        }).href,
+        301,
+      )
+    }
     next()
     return
   })
