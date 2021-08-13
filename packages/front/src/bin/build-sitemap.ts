@@ -11,12 +11,11 @@ import { getTranslatedOrTranslatableLocales } from '@/shared/src/modules/languag
 import { merge, mapValues } from 'lodash'
 import { EnumChangefreq, simpleSitemapAndIndex } from 'sitemap'
 import type { SitemapItemLoose } from 'sitemap'
-import type { LocaleMessages } from 'vue-i18n'
 import { Router, LocationAsRelativeRaw } from 'vue-router'
 
 import { createGenericRouter } from '@/front/src/router/routes'
 
-const i18n = createVueI18n(messages as unknown as LocaleMessages).global
+const i18n = createVueI18n(messages).global
 const countryCodes = Object.keys(
   convertCountryListResponseToCountrySlugMap(
     // eslint-disable-next-line @typescript-eslint/no-var-requires
