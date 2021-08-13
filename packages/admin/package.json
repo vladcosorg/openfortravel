@@ -25,19 +25,19 @@
     "@vueuse/core": "^4.0.0-rc.9",
     "core-js": "^3.6.5",
     "date-fns": "^2.16.1",
-    "firebase": "9.0.0-beta.2",
+    "firebase": "9.0.0-beta.8",
     "i18n-iso-countries": "^6.0.0",
     "iso-639-1": "^2.1.9",
     "iso-language-list": "^0.3.3",
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2",
     "lodash": "^4.17.20",
-    "quasar": "^2.0.0"
+    "quasar": "^2.0.3"
   },
   "devDependencies": {
     "@quasar/app": "^3.0.3",
     "@quasar/quasar-app-extension-dotenv": "^1.0.5",
-    "@types/lodash": "^4.14.171",
+    "@types/lodash": "^4.14.172",
     "@types/node": "^14.14.25",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",

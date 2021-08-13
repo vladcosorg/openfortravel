@@ -16,6 +16,7 @@ export function getDestinationRouteURL(
     'destinationSlug'
   >,
 ): string {
+  console.log(customParameters)
   return getRouteURL(
     'destination',
     destinationParameterTransformers,

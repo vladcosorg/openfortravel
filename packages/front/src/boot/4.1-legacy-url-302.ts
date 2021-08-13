@@ -38,20 +38,17 @@ export default ({
         301,
       )
     }
-    if (to.name === 'index-targeted') {
-      return redirect(
-        getDestinationRouteURL({
-          originSlug:
-            serverCache.countrySlugToCodeMap[to.params.locale as string].origin[
-              to.params.originSlug as string
-            ],
-          destinationSlug:
-            serverCache.countrySlugToCodeMap[to.params.locale as string]
-              .destination[to.params.destinationSlug as string],
-        }),
-        301,
-      )
-    }
+    // if (to.name === 'index-targeted') {
+    //   return redirect(
+    //     getDestinationRouteURL({
+    //       originSlug:
+    //         serverCache.countrySlugToCodeMap[to.params.locale as string].origin[
+    //           to.params.originSlug as string
+    //         ]
+    //     }),
+    //     301,
+    //   )
+    // }
     next()
     return
   })
