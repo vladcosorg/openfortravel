@@ -93,16 +93,6 @@
 </style>
 
 <script lang="ts">
-import {
-  useRouter,
-  useI18n,
-  useRootStore,
-} from '@/shared/src/composables/use-plugins'
-import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
-import {
-  transformCountryCodeToDestinationSlug,
-  transformCountryCodeToOriginSlug,
-} from '@/shared/src/modules/country-list/country-list-helpers'
 import { computed, defineComponent } from 'vue'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
@@ -113,6 +103,16 @@ import DidNotVisitCountriesContext from '@/front/src/components/context-field/vi
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import Swapper from '@/front/src/layouts/components/the-country-list/swapper.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
+import {
+  useRouter,
+  useI18n,
+  useRootStore,
+} from '@/shared/src/composables/use-plugins'
+import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
+import {
+  transformCountryCodeToDestinationSlug,
+  transformCountryCodeToOriginSlug,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
   components: {

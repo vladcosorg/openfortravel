@@ -1,9 +1,8 @@
-import { OptionalExceptFor } from '@/shared/src/misc/type-helpers'
-
 import { originParameterTransformers } from '@/front/src/router/route-builders/origin'
 import { getRouteURL } from '@/front/src/router/transformers/_helpers'
 import { DecodedParameters } from '@/front/src/router/transformers/_types'
 import { destinationTransformer } from '@/front/src/router/transformers/destination'
+import { OptionalExceptFor } from '@/shared/src/misc/type-helpers'
 
 export const destinationParameterTransformers = {
   destinationSlug: destinationTransformer,

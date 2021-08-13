@@ -1,9 +1,9 @@
-import { useRouter } from '@/shared/src/composables/use-plugins'
 import { Router } from 'vue-router'
 
 import { serverCache } from '@/front/src/misc/server-cache'
 import { getDestinationRouteURL } from '@/front/src/router/route-builders/destination'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
+import { useRouter } from '@/shared/src/composables/use-plugins'
 
 export default ({
   router,

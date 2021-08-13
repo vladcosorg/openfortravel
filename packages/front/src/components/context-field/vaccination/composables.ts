@@ -1,9 +1,9 @@
-import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { VaccineBrand } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { computed } from 'vue'
 
 import { updateRouteParameter } from '@/front/src/router/route-builders/common'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { VaccineBrand } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export function useModel() {
   const store = useRootStore()

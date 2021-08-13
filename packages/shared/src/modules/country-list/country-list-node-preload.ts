@@ -1,5 +1,4 @@
 import { invert, mapValues } from 'lodash'
-import type { Locale } from 'vue-i18n'
 
 import { importAll } from '@/front/src/misc/misc'
 import type { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
@@ -8,6 +7,8 @@ import {
   convertCountryListResponseToCountryLabelMap,
   convertCountryNameToSlug,
 } from '@/shared/src/modules/country-list/country-list-store'
+
+import type { Locale } from 'vue-i18n'
 
 export type RawLocalizedCountryList = {
   locale: string

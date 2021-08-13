@@ -1,4 +1,5 @@
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
+
 import type { Path, TranslateResult, Values } from 'vue-i18n'
 
 const { t } = useVueI18n()

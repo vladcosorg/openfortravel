@@ -59,9 +59,9 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
 import { formatDistanceToNow, isPast, parseISO } from 'date-fns'
 import { Timestamp } from 'firebase/firestore'
+import { defineComponent, ref } from 'vue'
 
 import { useDestinations } from '@/shared/src/api/destinations/composables'
 import type { Destination } from '@/shared/src/api/destinations/models'

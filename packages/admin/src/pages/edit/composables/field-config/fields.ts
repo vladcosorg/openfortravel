@@ -1,6 +1,5 @@
-import type { WritableComputedRef } from 'vue'
-import { computed, reactive } from 'vue'
 import { QBtnToggle, QCheckbox, QInput } from 'quasar'
+import { computed, reactive } from 'vue'
 
 import CountryList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/country-list.vue'
 import LanguageList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/language-list.vue'
@@ -8,6 +7,8 @@ import NewValueList from '@/admin/src/pages/edit/components/restriction-tree/opt
 import TestList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/test-list.vue'
 import VaccineBrandList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/vaccine-brand-list.vue'
 import type { FieldConfig } from '@/admin/src/pages/edit/composables/field-config/helpers'
+
+import type { WritableComputedRef } from 'vue'
 
 export function createTextInput(
   model: WritableComputedRef<unknown>,

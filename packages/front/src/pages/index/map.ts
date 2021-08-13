@@ -1,13 +1,6 @@
-import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
-import {
-  transformCountryCodeToDestinationSlug,
-  transformCountryCodeToOriginSlug,
-} from '@/shared/src/modules/country-list/country-list-helpers'
 import map from '@amcharts/amcharts4-geodata/worldLow'
 import { Miller } from '@amcharts/amcharts4/.internal/charts/map/projections'
-import type { Color } from '@amcharts/amcharts4/core'
 import { color, create, DropShadowFilter } from '@amcharts/amcharts4/core'
-import type { MapArc, MapPolygon } from '@amcharts/amcharts4/maps'
 import {
   MapArcSeries,
   MapChart,
@@ -18,6 +11,14 @@ import { colors } from 'quasar'
 
 import { TripCard } from '@/front/src/models/TripCard'
 import { statusColorMap } from '@/front/src/pages/index/index-composable'
+import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
+import {
+  transformCountryCodeToDestinationSlug,
+  transformCountryCodeToOriginSlug,
+} from '@/shared/src/modules/country-list/country-list-helpers'
+
+import type { Color } from '@amcharts/amcharts4/core'
+import type { MapArc, MapPolygon } from '@amcharts/amcharts4/maps'
 
 type SeriesItem = {
   id: string

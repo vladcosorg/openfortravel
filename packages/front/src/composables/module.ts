@@ -1,5 +1,7 @@
-import { useStore } from '@/shared/src/composables/use-plugins'
 import { onMounted, onUnmounted } from 'vue'
+
+import { useStore } from '@/shared/src/composables/use-plugins'
+
 import type { Module } from 'vuex'
 
 export function useModule(

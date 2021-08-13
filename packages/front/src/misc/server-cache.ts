@@ -3,6 +3,7 @@ import type { CountryListTypes } from '@/shared/src/modules/country-list/country
 import type { LocaleList } from '@/shared/src/modules/language/locales'
 import type { PrefetchedLocalizedLanguages } from '@/shared/src/modules/language/ssr-loaders'
 import type { PreloadedNationalityList } from '@/shared/src/modules/nationality/nationality-preload'
+
 import type { VueI18n } from 'vue-i18n'
 
 class ServerCache {

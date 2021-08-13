@@ -1,9 +1,3 @@
-import type {
-  FirestoreDataConverter,
-  QueryDocumentSnapshot,
-  SnapshotOptions,
-  CollectionReference,
-} from 'firebase/firestore'
 import { collection } from 'firebase/firestore'
 import { pick } from 'lodash'
 import mapValues from 'lodash/mapValues'
@@ -19,6 +13,13 @@ import {
   restrictionDefaults,
 } from '@/shared/src/api/restrictions/models'
 import { firestore } from '@/shared/src/misc/firebase'
+
+import type {
+  FirestoreDataConverter,
+  QueryDocumentSnapshot,
+  SnapshotOptions,
+  CollectionReference,
+} from 'firebase/firestore'
 
 export type RestrictionDirection = 'origin' | 'destination'
 export function generateIDFromEntity(restriction: PlainRestriction): string {

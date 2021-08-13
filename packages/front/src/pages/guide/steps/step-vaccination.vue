@@ -22,18 +22,18 @@
 </template>
 
 <script lang="ts">
-import { useRootStore } from '@/shared/src/composables/use-plugins'
-import {
-  VaccineBrand,
-  vaccineLabels,
-} from '@/shared/src/restriction-tree/restriction-node/vaccinated'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { computed, defineComponent } from 'vue'
 
 import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'
 import CitizenshipField from '@/front/src/components/context-field/vaccination/vaccination-context.vue'
 import { useCaption } from '@/front/src/pages/guide/guide-composable'
 import mixin from '@/front/src/pages/guide/steps/mixin.vue'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import {
+  VaccineBrand,
+  vaccineLabels,
+} from '@/shared/src/restriction-tree/restriction-node/vaccinated'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: { CitizenshipField, StepNavigation },

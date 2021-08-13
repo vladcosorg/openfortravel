@@ -1,3 +1,8 @@
+import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
+import { boot } from 'quasar/wrappers'
+
+import { serverCache } from '@/front/src/misc/server-cache'
+import { pregenerateLocalizableRouter } from '@/front/src/router/route-preloader'
 import { listenToMappedOrigins } from '@/shared/src/api/destinations/repository'
 import messages from '@/shared/src/i18n/index'
 import { loadContinentMap } from '@/shared/src/modules/continent-map/ssr-loader'
@@ -9,11 +14,6 @@ import {
 import { getTranslatedOrTranslatableLocales } from '@/shared/src/modules/language/locales'
 import { loadLanguages } from '@/shared/src/modules/language/ssr-loaders'
 import { preloadNationalities } from '@/shared/src/modules/nationality/nationality-preload'
-import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
-import { boot } from 'quasar/wrappers'
-
-import { serverCache } from '@/front/src/misc/server-cache'
-import { pregenerateLocalizableRouter } from '@/front/src/router/route-preloader'
 
 if (!process.env.SERVER) {
   throw new Error('The node-cache should not run on client!')

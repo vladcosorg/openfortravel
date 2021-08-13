@@ -1,11 +1,10 @@
-import { useRouter } from '@/shared/src/composables/use-plugins'
-import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
-
 import { serverCache } from '@/front/src/misc/server-cache'
 import {
   resolveRoute,
   routesThatNeedLocalization,
 } from '@/front/src/router/route-preloader'
+import { useRouter } from '@/shared/src/composables/use-plugins'
+import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 type HreflangList = Record<
   string,

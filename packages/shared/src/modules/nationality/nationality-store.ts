@@ -1,6 +1,6 @@
-import type { Module } from 'vuex'
-
 import { normalizeFormat } from '@/shared/src/modules/nationality/nationality-helpers'
+
+import type { Module } from 'vuex'
 
 export type Nationalities = Record<string, string>
 // eslint-disable-next-line import/no-unused-modules

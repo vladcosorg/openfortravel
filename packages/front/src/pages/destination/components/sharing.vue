@@ -35,8 +35,6 @@
 </template>
 
 <script lang="ts">
-import type { Restriction } from '@/shared/src/api/restrictions/models'
-import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
 import {
   laTwitter as twitterIcon,
   laFacebookF as facebookIcon,
@@ -48,8 +46,12 @@ import {
   laViber as viberIcon,
   laWhatsapp as whatsappIcon,
 } from '@quasar/extras/line-awesome'
-import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
+
+import type { Restriction } from '@/shared/src/api/restrictions/models'
+import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
+
+import type { PropType } from 'vue'
 
 export default defineComponent({
   components: {},

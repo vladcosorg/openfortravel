@@ -29,5 +29,5 @@ export function getContinentList(
 
 export function getContinentLabel(continentID: string): string {
   const { t } = useVueI18n()
-  return t(`misc.continents.${continentID}`) as string
+  return t(`misc.continents.${continentID}`)
 }

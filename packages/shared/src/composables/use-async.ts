@@ -1,7 +1,8 @@
-import type { Ref } from 'vue'
 import { ref } from 'vue'
 
 import { usePromiseLoading } from '@/shared/src/composables/use-promise-loading'
+
+import type { Ref } from 'vue'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function useAsyncState<T>(

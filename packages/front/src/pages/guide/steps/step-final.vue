@@ -19,13 +19,13 @@
 </template>
 
 <script lang="ts">
-import { useI18n, useRootStore } from '@/shared/src/composables/use-plugins'
-import { transformCountryCodeToOriginSlug } from '@/shared/src/modules/country-list/country-list-helpers'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { roundFlag as finish } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent } from 'vue'
 
 import mixin from '@/front/src/pages/guide/steps/mixin.vue'
+import { useI18n, useRootStore } from '@/shared/src/composables/use-plugins'
+import { transformCountryCodeToOriginSlug } from '@/shared/src/modules/country-list/country-list-helpers'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   mixins: [mixin],

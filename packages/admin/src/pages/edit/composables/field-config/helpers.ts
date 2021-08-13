@@ -1,8 +1,9 @@
-import type { Ref, SetupContext, WritableComputedRef } from 'vue'
 import { computed } from 'vue'
 
 import { typeConstructors } from '@/shared/src/restriction-tree/converter'
 import type { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+
+import type { Ref, SetupContext, WritableComputedRef } from 'vue'
 
 export type ExtractOptions<T extends RestrictionNodeType> =
   typeof typeConstructors[T]['defaultOptions']

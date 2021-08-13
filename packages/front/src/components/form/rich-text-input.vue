@@ -41,13 +41,14 @@
 </style>
 
 <script lang="ts">
-import { useI18n } from '@/shared/src/composables/use-plugins'
 import {
   matDone as successIcon,
   matPriorityHigh as errorIcon,
 } from '@quasar/extras/material-icons'
 import { defer, throttle } from 'lodash'
 import { computed, defineComponent, ref } from 'vue'
+
+import { useI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   inheritAttrs: false,

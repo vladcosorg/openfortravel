@@ -1,13 +1,14 @@
-import { augmentedStore } from '@/front/src/store'
-import type { QSsrContext } from '@quasar/app'
 import ky from 'ky-universal'
-import type { LooseDictionary } from 'quasar'
 import { Cookies, Notify } from 'quasar'
 import { TranslateResult } from 'vue-i18n'
-import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
 import { Store } from 'vuex'
 
+import { augmentedStore } from '@/front/src/store'
 import { createVueI18n } from '@/shared/src/misc/i18n'
+
+import type { QSsrContext } from '@quasar/app'
+import type { LooseDictionary } from 'quasar'
+import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let storeInstance: Store<any>
 

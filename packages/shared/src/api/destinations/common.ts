@@ -1,8 +1,3 @@
-import type {
-  FirestoreDataConverter,
-  QueryDocumentSnapshot,
-  SnapshotOptions,
-} from '@firebase/firestore'
 import { omit } from 'lodash'
 
 import type {
@@ -10,6 +5,12 @@ import type {
   PlainDestination,
 } from '@/shared/src/api/destinations/models'
 import { Destination } from '@/shared/src/api/destinations/models'
+
+import type {
+  FirestoreDataConverter,
+  QueryDocumentSnapshot,
+  SnapshotOptions,
+} from '@firebase/firestore'
 
 export const dataConverter: FirestoreDataConverter<PlainDestination> = {
   toFirestore(destination: PlainDestination): DestinationDocument {

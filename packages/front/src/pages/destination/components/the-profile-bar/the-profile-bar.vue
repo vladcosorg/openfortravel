@@ -34,7 +34,6 @@
 </template>
 
 <script lang="ts">
-import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { computed, defineComponent, inject } from 'vue'
 
 import TheCountryList from '@/front/src/layouts/components/the-country-list/the-country-list.vue'
@@ -48,6 +47,7 @@ import TheRecoveryCertificateFacet from '@/front/src/pages/destination/component
 import TheVaccinationFacet from '@/front/src/pages/destination/components/the-profile-bar/facets/the-vaccination-facet.vue'
 import { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: {

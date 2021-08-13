@@ -1,6 +1,5 @@
-import { useI18n, useRouter } from '@/shared/src/composables/use-plugins'
-
 import { getRoutes } from '@/front/src/router/routes'
+import { useI18n, useRouter } from '@/shared/src/composables/use-plugins'
 
 export function reloadRoutes(): void {
   const routes = getRoutes(useI18n()).map((route) =>

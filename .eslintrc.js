@@ -105,6 +105,12 @@ module.exports = {
       {
         'newlines-between': 'always',
         alphabetize: { order: 'asc' },
+        pathGroups: [
+          {
+            pattern: '@/**',
+            group: 'internal',
+          },
+        ],
         groups: [
           'builtin',
           'external',
@@ -113,6 +119,7 @@ module.exports = {
           'parent',
           'index',
           'object',
+          'type',
         ],
       },
     ],
@@ -216,6 +223,7 @@ module.exports = {
     'vue/comma-spacing': 'warn',
   },
   settings: {
+    'import/internal-regex': '^@/',
     'import/parsers': {
       'vue-eslint-parser': ['.vue'],
     },

@@ -1,4 +1,3 @@
-import { AugmentedStore } from '@/shared/src/misc/augmented-store'
 import { store } from 'quasar/wrappers'
 import { createStore, Store } from 'vuex'
 
@@ -11,6 +10,7 @@ import { state } from '@/front/src/store/state'
 import type { ActionSignatures } from '@/front/src/store/types/actions'
 import type { GetterSignatures } from '@/front/src/store/types/getters'
 import type { MutationSignatures } from '@/front/src/store/types/mutations'
+import { AugmentedStore } from '@/shared/src/misc/augmented-store'
 
 export interface StateInterface {
   // Define your own store structure, using submodules if needed

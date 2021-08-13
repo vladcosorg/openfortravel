@@ -8,10 +8,10 @@
 </template>
 
 <script lang="ts">
-import { useI18n } from '@/shared/src/composables/use-plugins'
 import { defineComponent } from 'vue'
 
 import RichTextInput from '@/front/src/components/form/rich-text-input.vue'
+import { useI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { RichTextInput },

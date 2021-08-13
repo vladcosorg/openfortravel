@@ -13,11 +13,12 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
+
+import type { PropType } from 'vue'
 
 export default defineComponent({
   components: { Seq, Language },

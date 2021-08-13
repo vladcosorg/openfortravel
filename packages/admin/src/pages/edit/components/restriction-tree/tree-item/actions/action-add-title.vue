@@ -3,8 +3,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, PropType } from 'vue'
-import Vue from 'vue'
+import Vue, { computed, defineComponent, inject, PropType } from 'vue'
 
 import { EventBus } from '@/admin/src/pages/edit/modules/symbols'
 import { TreeBuilderRestrictionNode } from '@/admin/src/pages/edit/types'

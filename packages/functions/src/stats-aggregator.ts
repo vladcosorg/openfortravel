@@ -3,7 +3,10 @@ import * as functions from 'firebase-functions'
 import ky from 'ky-universal'
 import { find, deburr } from 'lodash'
 
-type RecordItem = { thisWeekCasesPer100K?: number; lastWeekCasesPer100K?: number }
+type RecordItem = {
+  thisWeekCasesPer100K?: number
+  lastWeekCasesPer100K?: number
+}
 type Records = Record<string, RecordItem>
 
 const regionMappings: Record<string, string> = {
@@ -34,7 +37,9 @@ async function loadStats(): Promise<void> {
   const historicalData = await loadHistoricCaseData()
 
   for (const country of Object.values(historicalData)) {
-    for (const [region, { dates, population, abbreviation }] of Object.entries(country)) {
+    for (const [region, { dates, population, abbreviation }] of Object.entries(
+      country,
+    )) {
       const mappedRegion = regionMappings[region] ?? region
       const indexedDates = Object.values(dates)
 
@@ -90,7 +95,9 @@ async function persistToFirestore(input: Records) {
   }
 }
 
-async function findMissingCountryData(region: string): Promise<Country | undefined> {
+async function findMissingCountryData(
+  region: string,
+): Promise<Country | undefined> {
   const countryLibrary = await loadCountryPopulations()
   return find(countryLibrary, (item) => {
     if (item.name === region || item.nativeName === region) {
@@ -106,7 +113,9 @@ async function findMissingCountryData(region: string): Promise<Country | undefin
       return true
     }
 
-    return item.altSpellings.map((spelling) => deburr(spelling)).includes(region)
+    return item.altSpellings
+      .map((spelling) => deburr(spelling))
+      .includes(region)
   })
 }
 
@@ -159,5 +168,7 @@ async function loadHistoricCaseData(): Promise<
     >
   >
 > {
-  return await ky.get('https://covid-api.mmediagroup.fr/v1/history?status=confirmed').json()
+  return await ky
+    .get('https://covid-api.mmediagroup.fr/v1/history?status=confirmed')
+    .json()
 }

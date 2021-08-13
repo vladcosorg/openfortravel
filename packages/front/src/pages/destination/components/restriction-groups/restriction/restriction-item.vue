@@ -23,11 +23,11 @@
 </template>
 
 <script lang="ts">
-import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import { defineComponent, inject, PropType, Ref } from 'vue'
 
 import RestrictionItemContent from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item-content.vue'
 import RestrictionItemTitle from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item-title.vue'
+import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 
 export default defineComponent({
   components: { RestrictionItemContent, RestrictionItemTitle },

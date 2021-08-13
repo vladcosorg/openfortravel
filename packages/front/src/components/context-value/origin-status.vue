@@ -7,11 +7,11 @@
 <style lang="scss" module />
 
 <script lang="ts">
-import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { computed, defineComponent } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: { CountryLabel },

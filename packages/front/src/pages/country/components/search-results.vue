@@ -54,8 +54,6 @@
 </template>
 
 <script lang="ts">
-import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import { computed, defineComponent } from 'vue'
 
 import CitizenshipContextInline from '@/front/src/components/context-field/citizenship/citizenship-context-inline.vue'
@@ -73,6 +71,8 @@ import {
   useRestrictionFilterer,
   useRestrictionList,
 } from '@/front/src/pages/country/composable'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
   components: {

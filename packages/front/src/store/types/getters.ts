@@ -1,11 +1,10 @@
+import type { RootStateType } from '@/front/src/store/state'
 import type {
   Destination,
   MappedDestinationCollection,
 } from '@/shared/src/api/destinations/models'
 import type { GetterContext } from '@/shared/src/misc/augmented-store'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
-
-import type { RootStateType } from '@/front/src/store/state'
 
 type LocalGetterContext<
   State = RootStateType,

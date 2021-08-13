@@ -1,9 +1,10 @@
-import type { IVueI18n, TranslateResult } from 'vue-i18n'
 import { useI18n } from 'vue-i18n'
 import { useRouter, RouteLocationRaw } from 'vue-router'
 
 import { getCurrentOriginSlug } from '@/front/src/misc/country-decider'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
+
+import type { IVueI18n, TranslateResult } from 'vue-i18n'
 
 type MenuItemRawPair = {
   url: (locale: string) => RouteLocationRaw

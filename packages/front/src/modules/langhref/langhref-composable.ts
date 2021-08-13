@@ -1,5 +1,6 @@
-import type { Ref } from 'vue'
 import { onServerPrefetch, ref } from 'vue'
+
+import type { Ref } from 'vue'
 
 export function useMeta(): Ref {
   const meta = ref({})

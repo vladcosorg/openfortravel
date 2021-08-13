@@ -20,9 +20,6 @@
 </template>
 
 <script lang="ts">
-import type { Destination } from '@/shared/src/api/destinations/models'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
-import type { PropType } from 'vue'
 import { computed, defineComponent, inject } from 'vue'
 
 import QuestionItem from '@/front/src/pages/destination/components/question-item.vue'
@@ -30,6 +27,10 @@ import WidgetHeader from '@/front/src/pages/destination/components/widget-header
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import type { Question } from '@/front/src/pages/destination/questions/question'
+import type { Destination } from '@/shared/src/api/destinations/models'
+import type { Restriction } from '@/shared/src/api/restrictions/models'
+
+import type { PropType } from 'vue'
 
 export default defineComponent({
   components: { WidgetHeader, QuestionItem },

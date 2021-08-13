@@ -7,11 +7,11 @@
 </template>
 
 <script lang="ts">
-import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
-import { getOriginLabels } from '@/shared/src/modules/country-list/country-list-helpers'
 import { computed, defineComponent } from 'vue'
 
 import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
+import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
+import { getOriginLabels } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
   components: { GenericSelect },

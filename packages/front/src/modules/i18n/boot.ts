@@ -1,14 +1,15 @@
-import { useCookies, useI18n } from '@/shared/src/composables/use-plugins'
-import type { QSsrContext } from '@quasar/app'
 import { mapValues } from 'lodash'
-import type { ManualTranslator } from 'vue-auto-i18n'
 import { RouteLocation, useRouter } from 'vue-router'
-import type { Store } from 'vuex'
 
 import { serverCache } from '@/front/src/misc/server-cache'
 import type { LanguageLocale } from '@/front/src/modules/i18n/types'
 import { reloadRoutes } from '@/front/src/router/helpers'
 import type { StateInterface } from '@/front/src/store/state'
+import { useCookies, useI18n } from '@/shared/src/composables/use-plugins'
+
+import type { QSsrContext } from '@quasar/app'
+import type { ManualTranslator } from 'vue-auto-i18n'
+import type { Store } from 'vuex'
 
 export function setLocale(locale: string): void {
   useI18n().locale = locale

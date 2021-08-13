@@ -1,8 +1,7 @@
+import { getDestinationRouteURL } from '@/front/src/router/route-builders/destination'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { RestrictionGroup } from '@/shared/src/restriction-tree/restriction-group'
-
-import { getDestinationRouteURL } from '@/front/src/router/route-builders/destination'
 
 export class TripCard {
   constructor(

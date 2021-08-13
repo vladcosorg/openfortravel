@@ -1,14 +1,14 @@
+import { useMeta } from 'quasar'
+import { useRoute } from 'vue-router'
+
+import { generateCanonicalBlock } from '@/front/src/misc/meta'
+import { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { useRootStore, useVueI18n } from '@/shared/src/composables/use-plugins'
 import {
   getLabelForCountryCode,
   transformCountryCodeToDestinationSlug,
   transformCountryCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { useMeta } from 'quasar'
-import { useRoute } from 'vue-router'
-
-import { generateCanonicalBlock } from '@/front/src/misc/meta'
-import { StoreModule } from '@/front/src/pages/destination/destination-store'
 
 export function useDestinationMeta(store: StoreModule): void {
   const route = useRoute()

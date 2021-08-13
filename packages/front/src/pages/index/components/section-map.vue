@@ -25,12 +25,13 @@
 </style>
 
 <script lang="ts">
-import type { MapChart } from '@amcharts/amcharts4/maps'
 import { defer } from 'lodash'
-import type { PropType } from 'vue'
 import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue'
 
 import { TripCard } from '@/front/src/models/TripCard'
+
+import type { MapChart } from '@amcharts/amcharts4/maps'
+import type { PropType } from 'vue'
 
 export default defineComponent({
   components: {},

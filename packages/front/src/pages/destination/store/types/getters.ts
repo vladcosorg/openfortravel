@@ -1,9 +1,8 @@
+import { TripCard } from '@/front/src/models/TripCard'
+import type { StateClass } from '@/front/src/pages/destination/store/state'
 import type { Destination } from '@/shared/src/api/destinations/models'
 import type { GetterContext } from '@/shared/src/misc/augmented-store'
 import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
-
-import { TripCard } from '@/front/src/models/TripCard'
-import type { StateClass } from '@/front/src/pages/destination/store/state'
 
 type LocalGetterContext<
   State = StateClass,

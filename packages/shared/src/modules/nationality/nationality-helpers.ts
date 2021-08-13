@@ -11,7 +11,7 @@ export function getNationalityOrFallback(countryCode: string): string {
 
   return useI18n().t('misc.countryCitizen', {
     country: list[countryCode] ?? getLabelForCountryCode(countryCode),
-  }) as string
+  })
 }
 
 export function getCurrentNationality(): string {

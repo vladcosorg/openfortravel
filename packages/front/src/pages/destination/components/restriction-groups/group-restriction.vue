@@ -28,16 +28,16 @@
 
 <script lang="ts">
 import {
-  RestrictionCategory,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
-import {
   matCheck as prerequisiteIcon,
   matUnfoldMore as showMoreIcon,
 } from '@quasar/extras/material-icons'
 import { PropType, defineComponent, ref, provide } from 'vue'
 
 import Restriction from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction.vue'
+import {
+  RestrictionCategory,
+  RestrictionNode,
+} from '@/shared/src/restriction-tree/restriction-node'
 
 export default defineComponent({
   name: 'GroupRestriction',

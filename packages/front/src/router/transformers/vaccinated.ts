@@ -1,8 +1,7 @@
+import { ParameterTransformer } from '@/front/src/router/transformers/_types'
 import { isVaccineBrand } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
-
-import { ParameterTransformer } from '@/front/src/router/transformers/_types'
 
 export const vaccinatedTransformer: ParameterTransformer<
   VisitorProfile[RestrictionNodeType.VACCINATED]

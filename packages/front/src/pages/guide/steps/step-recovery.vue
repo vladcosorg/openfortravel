@@ -12,7 +12,6 @@
 </template>
 
 <script lang="ts">
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { computed, defineComponent } from 'vue'
 
 import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'
@@ -22,6 +21,7 @@ import {
   useCaption,
 } from '@/front/src/pages/guide/guide-composable'
 import mixin from '@/front/src/pages/guide/steps/mixin.vue'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: { RecoveryContext, StepNavigation },

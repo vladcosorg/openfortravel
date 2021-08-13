@@ -1,8 +1,7 @@
-import { useRouter, useRoute } from '@/shared/src/composables/use-plugins'
-
 import { destinationParameterTransformers } from '@/front/src/router/route-builders/destination'
 import { originParameterTransformers } from '@/front/src/router/route-builders/origin'
 import { encodeParameters } from '@/front/src/router/transformers/_helpers'
+import { useRouter, useRoute } from '@/shared/src/composables/use-plugins'
 
 export function updateRouteParameter<
   T extends keyof typeof destinationParameterTransformers,

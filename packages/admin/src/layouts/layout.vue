@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import { PortalTarget } from 'portal-vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   components: {

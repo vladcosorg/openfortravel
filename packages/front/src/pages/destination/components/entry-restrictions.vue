@@ -53,7 +53,6 @@
 </template>
 
 <script lang="ts">
-import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { matDangerous as stopIcon } from '@quasar/extras/material-icons'
 import { computed, defineComponent, inject, ref } from 'vue'
 
@@ -64,6 +63,7 @@ import GroupsByType from '@/front/src/pages/destination/components/restriction-g
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export enum RestrictionListType {
   BEST_OPTION = 'best-option',

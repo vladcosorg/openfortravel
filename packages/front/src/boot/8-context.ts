@@ -1,7 +1,7 @@
-import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { boot } from 'quasar/wrappers'
 
 import { loadContextFromCookie } from '@/front/src/modules/visitor-context/cookies'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default boot(({ router }) => {
   router.beforeEach((to, _from, next) => {

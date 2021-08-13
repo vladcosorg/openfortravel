@@ -1,8 +1,8 @@
-import { useI18n } from '@/shared/src/composables/use-plugins'
-import type { Store } from 'vuex'
-
 import type { LanguageLocale } from '@/front/src/modules/i18n/types'
 import type { StateInterface } from '@/front/src/store/state'
+import { useI18n } from '@/shared/src/composables/use-plugins'
+
+import type { Store } from 'vuex'
 
 export function pushRequiredLocalesToStore(
   i18n: ReturnType<typeof useI18n>,

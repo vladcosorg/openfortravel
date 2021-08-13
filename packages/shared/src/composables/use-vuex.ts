@@ -1,9 +1,10 @@
-import type { ComputedRef, Ref } from 'vue'
-import { computed, isRef, onMounted, onServerPrefetch, unref, watch } from 'vue'
 import { get, mapValues } from 'lodash'
+import { computed, isRef, onMounted, onServerPrefetch, unref, watch } from 'vue'
 
 import { useStore } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
+
+import type { ComputedRef, Ref } from 'vue'
 
 // eslint-disable-next-line import/no-unused-modules
 export function useVuexComputedState<T>(path: string): ComputedRef<T> {

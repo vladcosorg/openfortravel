@@ -33,13 +33,6 @@
 </style>
 
 <script lang="ts">
-import {
-  useRouter,
-  useI18n,
-  useRootStore,
-} from '@/shared/src/composables/use-plugins'
-import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
-import { transformCountryCodeToOriginSlug } from '@/shared/src/modules/country-list/country-list-helpers'
 import { computed, defineComponent } from 'vue'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
@@ -50,6 +43,13 @@ import CountrySelect from '@/front/src/layouts/components/the-country-list/count
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 import { useBreadcrumbs } from '@/front/src/pages/country/composable'
+import {
+  useRouter,
+  useI18n,
+  useRootStore,
+} from '@/shared/src/composables/use-plugins'
+import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
+import { transformCountryCodeToOriginSlug } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
   components: {

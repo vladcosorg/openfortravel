@@ -54,9 +54,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
 import { pick } from 'lodash'
 import { Portal } from 'portal-vue'
+import { computed, defineComponent, ref } from 'vue'
 
 import RestrictionTree from '@/admin/src/pages/edit/components/restriction-tree.vue'
 import TableHeader from '@/admin/src/pages/edit/components/table-header.vue'

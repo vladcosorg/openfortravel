@@ -61,11 +61,12 @@
 </style>
 
 <script lang="ts">
-import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
 
 import { TripCard } from '@/front/src/models/TripCard'
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
+
+import type { PropType } from 'vue'
 
 export default defineComponent({
   components: { DestinationItem },

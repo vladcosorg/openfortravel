@@ -7,8 +7,6 @@
 </template>
 
 <script lang="ts">
-import { useI18n } from '@/shared/src/composables/use-plugins'
-import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 import { useMeta } from 'quasar'
 import { defineComponent } from 'vue'
 
@@ -16,6 +14,8 @@ import { useContextParser } from '@/front/src/composables/visitor-context-applie
 import SectionIntro from '@/front/src/pages/index/components/section-intro.vue'
 import SectionWizard from '@/front/src/pages/index/components/section-wizard.vue'
 import { originTransformer } from '@/front/src/router/transformers/origin'
+import { useI18n } from '@/shared/src/composables/use-plugins'
+import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
   components: {

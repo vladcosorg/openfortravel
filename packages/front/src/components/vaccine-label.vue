@@ -10,11 +10,12 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, PropType } from 'vue'
+
 import {
   getVaccineLabel,
   VaccineBrand,
 } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
-import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   inheritAttrs: false,

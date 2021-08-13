@@ -78,9 +78,9 @@
 
         <div class="col overflow-auto q-pa-md">
           <q-tree
+            v-model:ticked="ticked"
             :class="$style.columnList"
             tick-strategy="leaf"
-            :ticked.sync="ticked"
             :nodes="options"
             node-key="value"
             default-expand-all
@@ -136,17 +136,19 @@
 </style>
 
 <script lang="ts">
-import type { PropType } from 'vue'
-import { computed, defineComponent, ref } from 'vue'
 import difference from 'lodash/difference'
 import union from 'lodash/union'
 import { useQuasar } from 'quasar'
+import { computed, defineComponent, ref } from 'vue'
+
 import SelectorInput from '@/admin/src/pages/edit/components/selector-input.vue'
 import {
   getLabelsForCountryCodes,
   getOriginLabels,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 import { EEA, EU, SCHENGEN } from '@/shared/src/restriction-tree/misc'
+
+import type { PropType } from 'vue'
 
 type Node = { label: string; value: string }
 export default defineComponent({

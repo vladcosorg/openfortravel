@@ -3,11 +3,12 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, PropType } from 'vue'
+
 import {
   testLabels,
   TestType,
 } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
-import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   inheritAttrs: false,

@@ -1,10 +1,10 @@
+import { SearchIdDocument } from '@/shared/src/api/searchIds/models'
+
 import type {
   FirestoreDataConverter,
   QueryDocumentSnapshot,
   SnapshotOptions,
 } from '@firebase/firestore'
-
-import { SearchIdDocument } from '@/shared/src/api/searchIds/models'
 
 export const dataConverter: FirestoreDataConverter<SearchIdDocument> = {
   toFirestore(destination: SearchIdDocument): SearchIdDocument {

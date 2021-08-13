@@ -1,6 +1,5 @@
 import enCountryList from 'i18n-iso-countries/langs/en.json'
 import { boot } from 'quasar/wrappers'
-import type { LocaleMessages } from 'vue-i18n'
 import VueI18n from 'vue-i18n'
 
 import { setI18n } from '@/shared/src/composables/use-plugins'
@@ -11,6 +10,8 @@ import {
   createCountryListEntry,
   createSlugListEntry,
 } from '@/shared/src/modules/country-list/country-list-node-preload'
+
+import type { LocaleMessages } from 'vue-i18n'
 
 export default boot(async ({ Vue, store }) => {
   Vue.use(VueI18n)

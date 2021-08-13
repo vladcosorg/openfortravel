@@ -30,7 +30,6 @@
 </template>
 
 <script lang="ts">
-import { useKy, useVueI18n } from '@/shared/src/composables/use-plugins'
 import { defineComponent, ref } from 'vue'
 
 import RichEmailInput from '@/front/src/components/form/rich-email-input.vue'
@@ -38,6 +37,7 @@ import RichTextInput from '@/front/src/components/form/rich-text-input.vue'
 import SubmitButton from '@/front/src/components/form/submit-button.vue'
 import InnerPage from '@/front/src/components/inner-page.vue'
 import { useRequestDispatcher } from '@/front/src/composables/request-dispatcher'
+import { useKy, useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { SubmitButton, InnerPage, RichTextInput, RichEmailInput },

@@ -1,8 +1,7 @@
-import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
-import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
-
 import { generateStringSequenceFromList } from '@/front/src/misc/misc'
 import { Question } from '@/front/src/pages/destination/questions/question'
+import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
+import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 
 const { t } = useI18nWithPrefix<string>('faq.recentlyVisited')
 export class VisitedCountryQuestion extends Question {

@@ -3,10 +3,12 @@
 </template>
 
 <script lang="ts">
+import { computed, defineComponent } from 'vue'
+
 import type { VaccineBrand } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import { vaccineLabels } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
+
 import type { PropType } from 'vue'
-import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},

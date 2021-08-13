@@ -1,7 +1,8 @@
-import type { Ref } from 'vue'
 import { computed, ref } from 'vue'
 
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
+
+import type { Ref } from 'vue'
 
 export type SaveHandler = () => Promise<void>
 export type AddSaveHandler = (handler: SaveHandler) => void

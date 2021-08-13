@@ -1,8 +1,5 @@
-import { createVueI18n } from '@/shared/src/misc/i18n'
 import mapValues from 'lodash/mapValues'
 import set from 'lodash/set'
-import type { IVueI18n } from 'vue-i18n'
-import type VueRouter from 'vue-router'
 
 import { serverCache } from '@/front/src/misc/server-cache'
 import { originParameterTransformers } from '@/front/src/router/route-builders/origin'
@@ -11,6 +8,10 @@ import {
   EncodedParameters,
   ParameterTransformerMap,
 } from '@/front/src/router/transformers/_types'
+import { createVueI18n } from '@/shared/src/misc/i18n'
+
+import type { IVueI18n } from 'vue-i18n'
+import type VueRouter from 'vue-router'
 
 export const routesThatNeedLocalization = [
   'origin',

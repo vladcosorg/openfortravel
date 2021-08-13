@@ -1,10 +1,11 @@
 import { isEmpty, kebabCase, mapValues } from 'lodash'
-import type { Module } from 'vuex'
 
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { transformKeys } from '@/shared/src/misc/misc'
 import type { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import type { CountrySlugType } from '@/shared/src/modules/country-list/country-list-types'
+
+import type { Module } from 'vuex'
 
 export class CountryListState {
   countryList: CountryList = {}
@@ -134,9 +135,8 @@ function groupCountriesByContinents(
     { eu: [], na: [], as: [], sa: [] },
   )
 
-  output = transformKeys(
-    output,
-    (continentID) => t(`misc.continents.${continentID}`) as string,
+  output = transformKeys(output, (continentID) =>
+    t(`misc.continents.${continentID}`),
   )
 
   output = mapValues(output, (countryList) =>

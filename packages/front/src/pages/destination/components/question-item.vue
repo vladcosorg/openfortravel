@@ -29,11 +29,12 @@
 </template>
 
 <script lang="ts">
-import { createGeneratorForRandomIntegerInRange } from '@/shared/src/misc/misc'
-import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 import type { Question } from '@/front/src/pages/destination/questions/question'
+import { createGeneratorForRandomIntegerInRange } from '@/shared/src/misc/misc'
+
+import type { PropType } from 'vue'
 
 export default defineComponent({
   components: {},

@@ -9,10 +9,6 @@
 </template>
 
 <script lang="ts">
-import { useRootStore } from '@/shared/src/composables/use-plugins'
-import type { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
 
 import Age from '@/front/src/pages/destination/components/restriction-groups/restriction/age.vue'
@@ -29,6 +25,11 @@ import Recovery from '@/front/src/pages/destination/components/restriction-group
 import RestrictionItem from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item.vue'
 import SubDestination from '@/front/src/pages/destination/components/restriction-groups/restriction/sub-destination.vue'
 import Vaccinated from '@/front/src/pages/destination/components/restriction-groups/restriction/vaccinated.vue'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import type { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+
+import type { PropType } from 'vue'
 
 export default defineComponent({
   components: {

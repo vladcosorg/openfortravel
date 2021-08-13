@@ -1,3 +1,6 @@
+import { computed, ComputedRef, Ref } from 'vue'
+
+import { getDestinationRouteURL } from '@/front/src/router/route-builders/destination'
 import {
   getDestinationLabelForCountryCode,
   getOriginLabelForCountryCode,
@@ -6,9 +9,6 @@ import {
   VaccineBrand,
   vaccineLabels,
 } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
-import { computed, ComputedRef, Ref } from 'vue'
-
-import { getDestinationRouteURL } from '@/front/src/router/route-builders/destination'
 
 type Links = Array<{ url: string; title: string; label: string }>
 export function useLinks(

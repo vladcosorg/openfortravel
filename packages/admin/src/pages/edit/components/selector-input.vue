@@ -22,14 +22,15 @@
 </template>
 
 <script lang="ts">
-import type { ComputedRef, PropType } from 'vue'
-import { computed, defineComponent, ref } from 'vue'
 import { union } from 'lodash'
+import { computed, defineComponent, ref } from 'vue'
 
 import {
   getOriginLabelForCountryCode,
   getOriginLabels,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+
+import type { ComputedRef, PropType } from 'vue'
 
 export default defineComponent({
   components: {},

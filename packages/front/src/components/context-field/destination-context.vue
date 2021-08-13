@@ -36,8 +36,6 @@
 </style>
 
 <script lang="ts">
-import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { computed, defineComponent } from 'vue'
 
 import CitizenshipLabelShort from '@/front/src/components/citizenship/citizenship-label-short.vue'
@@ -45,6 +43,8 @@ import CountryDropdown from '@/front/src/components/context-field/helpers/countr
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
 import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
 import { createComputedSetter } from '@/front/src/pages/guide/guide-composable'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: {

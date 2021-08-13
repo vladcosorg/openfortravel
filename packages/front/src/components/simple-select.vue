@@ -21,10 +21,11 @@
 
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
-import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
 
 import InvisibleNativeSelect from '@/front/src/components/invisible-native-select.vue'
+
+import type { PropType } from 'vue'
 
 export interface SelectItem {
   value: string

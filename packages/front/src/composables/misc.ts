@@ -1,7 +1,8 @@
+import { computed, ComputedRef, Ref, ref } from 'vue'
+
 import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
 import { AnyArgFunction, OptionList } from '@/shared/src/misc/type-helpers'
 import { getOriginLabels } from '@/shared/src/modules/country-list/country-list-helpers'
-import { computed, ComputedRef, Ref, ref } from 'vue'
 
 export function useCountryOptions(): ComputedRef<
   ReturnType<typeof transformFlatMapToArrayOfPairs>

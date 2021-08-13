@@ -1,8 +1,3 @@
-import { useRouter, useI18n } from '@/shared/src/composables/use-plugins'
-import {
-  transformCountryCodeToOriginSlug,
-  transformOriginSlugToCode,
-} from '@/shared/src/modules/country-list/country-list-helpers'
 import {
   Router,
   createRouter,
@@ -11,6 +6,11 @@ import {
 } from 'vue-router'
 
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
+import { useRouter, useI18n } from '@/shared/src/composables/use-plugins'
+import {
+  transformCountryCodeToOriginSlug,
+  transformOriginSlugToCode,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 
 export function getRoutes(
   i18n: ReturnType<typeof useI18n>,

@@ -1,9 +1,9 @@
-import type VueI18n from 'vue-i18n'
-
 import type {
   PlainRestrictionGroups,
   RestrictionNodeType,
 } from '@/shared/src/restriction-tree/types'
+
+import type VueI18n from 'vue-i18n'
 
 export class Verbaliser {
   constructor(

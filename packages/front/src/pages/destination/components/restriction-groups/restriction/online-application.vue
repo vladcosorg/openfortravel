@@ -13,8 +13,6 @@
 </template>
 
 <script lang="ts">
-import { OnlineApplication } from '@/shared/src/restriction-tree/restriction-node/online-application'
-import type { PropType } from 'vue'
 import { computed, defineComponent, inject } from 'vue'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
@@ -22,6 +20,9 @@ import TitleCountry from '@/front/src/pages/destination/components/restriction-g
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { OnlineApplication } from '@/shared/src/restriction-tree/restriction-node/online-application'
+
+import type { PropType } from 'vue'
 
 export default defineComponent({
   components: { CollapsedCountrySequence, TitleCountry },

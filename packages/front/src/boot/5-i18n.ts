@@ -1,5 +1,3 @@
-import { setI18n } from '@/shared/src/composables/use-plugins'
-import { createVueI18n } from '@/shared/src/misc/i18n'
 import { boot } from 'quasar/wrappers'
 
 import { serverCache } from '@/front/src/misc/server-cache'
@@ -13,6 +11,8 @@ import {
   preloadLocaleMessageCollectionIntoPlugin,
   pushRequiredLocalesToStore,
 } from '@/front/src/modules/i18n/loaders'
+import { setI18n } from '@/shared/src/composables/use-plugins'
+import { createVueI18n } from '@/shared/src/misc/i18n'
 
 export const i18nPlugin = createVueI18n(serverCache.i18nMessages)
 

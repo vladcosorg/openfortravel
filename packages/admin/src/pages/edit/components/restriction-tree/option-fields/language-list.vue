@@ -9,8 +9,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import rawLanguageList from 'iso-639-1/src/data'
+import { defineComponent } from 'vue'
 
 import MultipleList from '@/admin/src/pages/edit/components/restriction-tree/option-fields/base/multiple-list.vue'
 

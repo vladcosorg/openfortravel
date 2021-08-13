@@ -2,18 +2,19 @@
 
 import path from 'path'
 
+import { merge, mapValues } from 'lodash'
+import { EnumChangefreq, simpleSitemapAndIndex } from 'sitemap'
+import { Router, LocationAsRelativeRaw } from 'vue-router'
+
+import { createGenericRouter } from '@/front/src/router/routes'
 import messages from '@/shared/src/i18n/index'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 import { transformKeys } from '@/shared/src/misc/misc'
 import type { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import { convertCountryListResponseToCountrySlugMap } from '@/shared/src/modules/country-list/country-list-store'
 import { getTranslatedOrTranslatableLocales } from '@/shared/src/modules/language/locales'
-import { merge, mapValues } from 'lodash'
-import { EnumChangefreq, simpleSitemapAndIndex } from 'sitemap'
-import type { SitemapItemLoose } from 'sitemap'
-import { Router, LocationAsRelativeRaw } from 'vue-router'
 
-import { createGenericRouter } from '@/front/src/router/routes'
+import type { SitemapItemLoose } from 'sitemap'
 
 const i18n = createVueI18n(messages).global
 const countryCodes = Object.keys(

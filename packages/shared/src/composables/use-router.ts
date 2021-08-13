@@ -1,5 +1,5 @@
-import { getCurrentInstance } from 'vue'
-import Vue from 'vue'
+import Vue, { getCurrentInstance } from 'vue'
+
 import type { NavigationGuard } from 'vue-router'
 import type { ComponentOptions } from 'vue/types/umd'
 

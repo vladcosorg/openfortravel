@@ -1,9 +1,3 @@
-import {
-  useRootStore,
-  useRouter,
-  useRoute,
-} from '@/shared/src/composables/use-plugins'
-import { Entries } from '@/shared/src/misc/type-helpers'
 import { RouteLocationNormalizedLoaded } from 'vue-router'
 
 import {
@@ -11,6 +5,12 @@ import {
   EncodedParameters,
   ParameterTransformerMap,
 } from '@/front/src/router/transformers/_types'
+import {
+  useRootStore,
+  useRouter,
+  useRoute,
+} from '@/shared/src/composables/use-plugins'
+import { Entries } from '@/shared/src/misc/type-helpers'
 
 export function getRouteURL<T extends ParameterTransformerMap>(
   routeName: string,

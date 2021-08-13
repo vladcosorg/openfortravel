@@ -1,8 +1,9 @@
 import { mapValues } from 'lodash'
-import type { Store, ActionContext, DispatchOptions } from 'vuex'
 
 import type { RootStateType, StateInterface } from '@/front/src/store/state'
 import type { RootGetterAccessors } from '@/front/src/store/types/getters'
+
+import type { Store, ActionContext, DispatchOptions } from 'vuex'
 
 export type GetterAccessors<Getters> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -149,7 +150,7 @@ export class AugmentedStore<
       let shortGetterName = fullGetterName
 
       if (this.moduleId !== undefined) {
-        if (fullGetterName.indexOf(this.moduleId as string) !== 0) {
+        if (fullGetterName.indexOf(this.moduleId) !== 0) {
           continue
         }
         shortGetterName = fullGetterName.slice(this.moduleId.length + 1)

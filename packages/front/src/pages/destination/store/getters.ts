@@ -1,7 +1,3 @@
-import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import type { GetterTree } from 'vuex'
-
 import {
   createCollection,
   createTripCard,
@@ -10,6 +6,10 @@ import { TripCard } from '@/front/src/models/TripCard'
 import type { StateClass } from '@/front/src/pages/destination/store/state'
 import type { GetterSignatures } from '@/front/src/pages/destination/store/types/getters'
 import type { RootStateType } from '@/front/src/store/state'
+import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+
+import type { GetterTree } from 'vuex'
 
 export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
   {

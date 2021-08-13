@@ -1,7 +1,6 @@
-import { Ref } from 'vue'
 import cloneDeep from 'lodash/cloneDeep'
 import omit from 'lodash/omit'
-import Vue from 'vue'
+import Vue, { Ref } from 'vue'
 
 import { LinkedNodeManager } from '@/admin/src/pages/edit/modules/linked-node-manager'
 import {

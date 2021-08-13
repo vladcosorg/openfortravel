@@ -1,6 +1,7 @@
-import type { ComputedRef, Ref } from 'vue'
-import { computed, ref } from 'vue'
 import { useDebounce } from '@vueuse/core'
+import { computed, ref } from 'vue'
+
+import type { ComputedRef, Ref } from 'vue'
 
 export function useFilterableCollection<T>(
   collection: Ref<T>,

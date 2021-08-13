@@ -36,8 +36,8 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent, inject, PropType } from 'vue'
 import capitalize from 'lodash/capitalize'
+import { computed, defineComponent, inject, PropType } from 'vue'
 
 import { TreeManagerStoreKey } from '@/admin/src/pages/edit/modules/symbols'
 import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'

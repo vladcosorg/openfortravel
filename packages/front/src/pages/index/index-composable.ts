@@ -1,11 +1,12 @@
+import { computed } from 'vue'
+
+import { TripCard } from '@/front/src/models/TripCard'
 import { getStatusMapper } from '@/shared/src/api/restrictions/helper'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { getCurrentNationality } from '@/shared/src/modules/nationality/nationality-helpers'
-import { computed } from 'vue'
-import type { ComputedRef } from 'vue'
 
-import { TripCard } from '@/front/src/models/TripCard'
+import type { ComputedRef } from 'vue'
 
 export const statusColorMap = {
   [RestrictionStatus.ALLOWED]: 'positive',

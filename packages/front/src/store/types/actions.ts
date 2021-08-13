@@ -1,8 +1,7 @@
-import type { AugmentedActionContext } from '@/shared/src/misc/augmented-store'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
-
 import type { RootStateType } from '@/front/src/store/state'
 import type { MutationSignatures } from '@/front/src/store/types/mutations'
+import type { AugmentedActionContext } from '@/shared/src/misc/augmented-store'
+import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export enum RootActionTypes {
   assignSearchId = 'assignSearchId',

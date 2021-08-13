@@ -1,7 +1,7 @@
-import { useKy, useVueI18n } from '@/shared/src/composables/use-plugins'
-import type { Ref } from 'vue'
-
 import { useRequestDispatcher as useGenericRequestDispatcher } from '@/front/src/composables/request-dispatcher'
+import { useKy, useVueI18n } from '@/shared/src/composables/use-plugins'
+
+import type { Ref } from 'vue'
 
 export function useRequestDispatcher(): {
   isLoading: Ref<boolean>

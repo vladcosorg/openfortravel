@@ -1,5 +1,3 @@
-import type { Ref, SetupContext } from 'vue'
-
 import {
   createButtonToggle,
   createCheckboxBoolean,
@@ -18,6 +16,8 @@ import type {
 } from '@/admin/src/pages/edit/composables/field-config/helpers'
 import { getSetters } from '@/admin/src/pages/edit/composables/field-config/helpers'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+
+import type { Ref, SetupContext } from 'vue'
 
 export function createConfig(
   type: RestrictionNodeType,

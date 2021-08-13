@@ -1,5 +1,6 @@
-import type { ComputedRef, Ref, UnwrapRef, WritableComputedRef } from 'vue'
 import { computed, getCurrentInstance, ref } from 'vue'
+
+import type { ComputedRef, Ref, UnwrapRef, WritableComputedRef } from 'vue'
 
 // eslint-disable-next-line import/no-unused-modules
 export function useClosedLoopModel<T>(defaultValue: T): {

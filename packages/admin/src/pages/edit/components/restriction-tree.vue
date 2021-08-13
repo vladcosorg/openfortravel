@@ -39,10 +39,8 @@
 </style>
 
 <script lang="ts">
-import type { PropType } from 'vue'
-import { defineComponent, provide, ref, watch } from 'vue'
 import debounce from 'lodash/debounce'
-import Vue from 'vue'
+import Vue, { defineComponent, provide, ref, watch } from 'vue'
 
 import RestrictionPreview from '@/admin/src/pages/edit/components/restriction-preview.vue'
 import TreeBody from '@/admin/src/pages/edit/components/restriction-tree/tree-item/tree-body.vue'
@@ -56,6 +54,8 @@ import { TreeBuilderNode } from '@/admin/src/pages/edit/types'
 import type { Destination } from '@/shared/src/api/destinations/models'
 import { isRestrictionNodeType } from '@/shared/src/restriction-tree/guards'
 import { Prerequisites } from '@/shared/src/restriction-tree/types'
+
+import type { PropType } from 'vue'
 
 export default defineComponent({
   components: { RestrictionPreview, TreeBody, TreeHeader },

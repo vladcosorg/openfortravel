@@ -60,17 +60,18 @@
 </style>
 
 <script lang="ts">
-import { RestrictionGroup } from '@/shared/src/restriction-tree/restriction-group'
 import {
   matCheck as availableIcon,
   matCheckCircle as successIcon,
 } from '@quasar/extras/material-icons'
-import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 import GroupScoreWords from '@/front/src/pages/destination/components/restriction-groups/group-score-words.vue'
 import GroupScore from '@/front/src/pages/destination/components/restriction-groups/group-score.vue'
 import GroupsByCategory from '@/front/src/pages/destination/components/restriction-groups/groups-by-category.vue'
+import { RestrictionGroup } from '@/shared/src/restriction-tree/restriction-group'
+
+import type { PropType } from 'vue'
 
 export default defineComponent({
   components: { GroupsByCategory, GroupScoreWords, GroupScore },

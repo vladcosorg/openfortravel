@@ -16,10 +16,11 @@
 
 <script lang="ts">
 import intersection from 'lodash/intersection'
-import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
 
 import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
+
+import type { PropType } from 'vue'
 
 export default defineComponent({
   components: { CountryLabelList },

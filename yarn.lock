@@ -1547,6 +1547,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@cspotcode/source-map-consumer@npm:0.8.0":
+  version: 0.8.0
+  resolution: "@cspotcode/source-map-consumer@npm:0.8.0"
+  checksum: c0c16ca3d2f58898f1bd74c4f41a189dbcc202e642e60e489cbcc2e52419c4e89bdead02c886a12fb13ea37798ede9e562b2321df997ebc210ae9bd881561b4e
+  languageName: node
+  linkType: hard
+
+"@cspotcode/source-map-support@npm:0.6.1":
+  version: 0.6.1
+  resolution: "@cspotcode/source-map-support@npm:0.6.1"
+  dependencies:
+    "@cspotcode/source-map-consumer": 0.8.0
+  checksum: da9fb4f6404ebd210537bfa8b2821a747407bf422d2d3d46f29bf85c7c3a68a126de1a9ec41398d57ca116c3bef56d58c2fb4def0800630b1ec82533ad2447c2
+  languageName: node
+  linkType: hard
+
 "@dabh/diagnostics@npm:^2.0.2":
   version: 2.0.2
   resolution: "@dabh/diagnostics@npm:2.0.2"
@@ -3126,7 +3142,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tsconfig/node16@npm:^1.0.1":
+"@tsconfig/node16@npm:^1.0.1, @tsconfig/node16@npm:^1.0.2":
   version: 1.0.2
   resolution: "@tsconfig/node16@npm:1.0.2"
   checksum: ca94d3639714672bbfd55f03521d3f56bb6a25479bd425da81faf21f13e1e9d15f40f97377dedbbf477a5841c5b0c8f4cd1b391f33553d750b9202c54c2c07aa
@@ -4276,7 +4292,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn-walk@npm:^8.0.0":
+"acorn-walk@npm:^8.0.0, acorn-walk@npm:^8.1.1":
   version: 8.1.1
   resolution: "acorn-walk@npm:8.1.1"
   checksum: 5e4dafbcec14fbfac96e1f13726273e969a30fdf607ed4eb6ca335292f85b8c896393fee15837a8f2b27afd7ede0f1c6edb5b5e6d0123a8821fee1a834318e62
@@ -8444,6 +8460,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-import-resolver-node@npm:^0.3.5":
+  version: 0.3.5
+  resolution: "eslint-import-resolver-node@npm:0.3.5"
+  dependencies:
+    debug: ^3.2.7
+    resolve: ^1.20.0
+  checksum: 93a8176205f18c40d2c11c444fab89aa3990c5a5eed226ef03a893b5779e7cd4d1f5f52b2bbbbbe4b13fb2a75ef629278be0b52099480cbe6e7024888d9982dd
+  languageName: node
+  linkType: hard
+
 "eslint-import-resolver-typescript@npm:^2.3.0":
   version: 2.4.0
   resolution: "eslint-import-resolver-typescript@npm:2.4.0"
@@ -8486,6 +8512,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-module-utils@npm:^2.6.2":
+  version: 2.6.2
+  resolution: "eslint-module-utils@npm:2.6.2"
+  dependencies:
+    debug: ^3.2.7
+    pkg-dir: ^2.0.0
+  checksum: 814591f494e4f4b04c1af0fde2a679e7a7664a5feb51175e02ba96d671e34ec60cb1835d174508eb81c07a6c92c243f84c6349f4169b3bec1a8dbdd36a0934f3
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-es@npm:^3.0.0":
   version: 3.0.1
   resolution: "eslint-plugin-es@npm:3.0.1"
@@ -8520,6 +8556,31 @@ __metadata:
   peerDependencies:
     eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0
   checksum: 8c64bb96fa35607de3da1ddf5d127a5913aebde5677bc276c55fecb3e539a7287569dc697af4f5c523bd2b08bff8f5b525448df5aa7d6256c86436b615be5abc
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-import@npm:^2.24.0":
+  version: 2.24.0
+  resolution: "eslint-plugin-import@npm:2.24.0"
+  dependencies:
+    array-includes: ^3.1.3
+    array.prototype.flat: ^1.2.4
+    debug: ^2.6.9
+    doctrine: ^2.1.0
+    eslint-import-resolver-node: ^0.3.5
+    eslint-module-utils: ^2.6.2
+    find-up: ^2.0.0
+    has: ^1.0.3
+    is-core-module: ^2.4.0
+    minimatch: ^3.0.4
+    object.values: ^1.1.3
+    pkg-up: ^2.0.0
+    read-pkg-up: ^3.0.0
+    resolve: ^1.20.0
+    tsconfig-paths: ^3.9.0
+  peerDependencies:
+    eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0
+  checksum: 79fb1094197cd1dc720725bd29e5c5fe7d123fd9dd31eb182849993a81a8c18e2bfbc4d267a2caabe02bd4d21aafb1eca1da2f55aca7e5df99fd8ba908e7b869
   languageName: node
   linkType: hard
 
@@ -9885,6 +9946,19 @@ __metadata:
     "@google-cloud/storage": ^5.13.0
     "@types/nodemailer": ^6.4.2
     "@types/nodemailer-mailgun-transport": ^1.4.2
+    "@typescript-eslint/eslint-plugin": ^4.10.0
+    "@typescript-eslint/parser": ^4.10.0
+    babel-eslint: ^10.0.1
+    eslint: ^7.15.0
+    eslint-config-prettier: ^8.3.0
+    eslint-import-resolver-typescript: ^2.3.0
+    eslint-loader: ^4.0.2
+    eslint-plugin-import: ^2.24.0
+    eslint-plugin-node: ^11.0.0
+    eslint-plugin-promise: ^5.1.0
+    eslint-plugin-unicorn: ^32.0.1
+    eslint-plugin-unused-imports: ^1.0.0
+    eslint-plugin-vue: ^7.2.0
     firebase-admin: ^9.5.0
     firebase-functions: ^3.13.1
     firebase-functions-test: ^0.2.0
@@ -9894,7 +9968,11 @@ __metadata:
     microbundle: ^0.13.0
     nodemailer: ^6.6.2
     nodemailer-mailgun-transport: ^2.1.3
+    prettier: ^2.1.1
     scrape-it: 5.3.1
+    ts-node: ^10.0.0
+    tsconfig-paths: ^3.9.0
+    tsconfig-paths-webpack-plugin: ^3.3.0
     tscpaths: ^0.0.9
     typescript: ^4.1.3
     vue-auto-i18n: 1.1.0-beta.19
@@ -17365,11 +17443,28 @@ resolve@1.1.7:
   dependencies:
     "@types/webpack-env": ^1.16.0
     "@types/winston": ^2.4.4
+    "@typescript-eslint/eslint-plugin": ^4.10.0
+    "@typescript-eslint/parser": ^4.10.0
+    babel-eslint: ^10.0.1
     countries-list: ^2.6.1
+    eslint: ^7.15.0
+    eslint-config-prettier: ^8.3.0
+    eslint-import-resolver-typescript: ^2.3.0
+    eslint-loader: ^4.0.2
+    eslint-plugin-import: 2.23.4
+    eslint-plugin-node: ^11.0.0
+    eslint-plugin-promise: ^5.1.0
+    eslint-plugin-unicorn: ^32.0.1
+    eslint-plugin-unused-imports: ^1.0.0
+    eslint-plugin-vue: ^7.2.0
     firebase: 9.0.0-beta.8
     ky: ^0.25.1
     ky-universal: ^0.8.2
     prettier: ^2.1.1
+    ts-node: ^10.0.0
+    tsconfig-paths: ^3.9.0
+    tsconfig-paths-webpack-plugin: ^3.3.0
+    typescript: ^4.1.3
     winston: ^3.3.3
   languageName: unknown
   linkType: soft
@@ -18778,6 +18873,42 @@ resolve@1.1.7:
     typescript: "*"
     webpack: "*"
   checksum: c12a267dbb3863e43334d2af9f11f8eade55c3c52121002dd901741e5dd1c38203a7c70865c2598cf3edba7b0b411e4327b191a75f2c5f4234836709ff2c8d53
+  languageName: node
+  linkType: hard
+
+"ts-node@npm:^10.0.0":
+  version: 10.2.0
+  resolution: "ts-node@npm:10.2.0"
+  dependencies:
+    "@cspotcode/source-map-support": 0.6.1
+    "@tsconfig/node10": ^1.0.7
+    "@tsconfig/node12": ^1.0.7
+    "@tsconfig/node14": ^1.0.0
+    "@tsconfig/node16": ^1.0.2
+    acorn: ^8.4.1
+    acorn-walk: ^8.1.1
+    arg: ^4.1.0
+    create-require: ^1.1.0
+    diff: ^4.0.1
+    make-error: ^1.1.1
+    yn: 3.1.1
+  peerDependencies:
+    "@swc/core": ">=1.2.50"
+    "@swc/wasm": ">=1.2.50"
+    "@types/node": "*"
+    typescript: ">=2.7"
+  peerDependenciesMeta:
+    "@swc/core":
+      optional: true
+    "@swc/wasm":
+      optional: true
+  bin:
+    ts-node: dist/bin.js
+    ts-node-cwd: dist/bin-cwd.js
+    ts-node-script: dist/bin-script.js
+    ts-node-transpile-only: dist/bin-transpile.js
+    ts-script: dist/bin-script-deprecated.js
+  checksum: da767e0fd5c1b4941f0b846c3532147f31cd2ac4d66a4809358e29ed5971a4e699720bd65f9e5a585a10bc7f9c55571a8fce9e485cedce6a224dcba3869bbd3a
   languageName: node
   linkType: hard
 

@@ -14,7 +14,7 @@ jobs:
     name: Building cloud functions
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
+      max-parallel: 2
       fail-fast: false
       matrix:
         function: [ translate, safetyLevelCalculatorJob, statsAggregatorJob, emailForwarder ]

@@ -1,17 +1,18 @@
-import { RiskLevel } from '@/shared/src/api/destinations/models'
-import { Restriction } from '@/shared/src/api/restrictions/models'
-import { useVueI18n } from '@/shared/src/composables/use-plugins'
-import { useVuexReactiveGetter } from '@/shared/src/composables/use-vuex'
-import { Breadcrumbs } from '@/shared/src/misc/type-helpers'
-import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 import { matFlightTakeoff } from '@quasar/extras/material-icons'
-import type { ComputedRef, Ref } from 'vue'
 import { computed, ref } from 'vue'
 
 import { createTripsCards } from '@/front/src/composables/trip-cards'
 import { TripCard } from '@/front/src/models/TripCard'
 import type { CountryMap } from '@/front/src/pages/country/country-store'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
+import { RiskLevel } from '@/shared/src/api/destinations/models'
+import { Restriction } from '@/shared/src/api/restrictions/models'
+import { useVueI18n } from '@/shared/src/composables/use-plugins'
+import { useVuexReactiveGetter } from '@/shared/src/composables/use-vuex'
+import { Breadcrumbs } from '@/shared/src/misc/type-helpers'
+import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
+
+import type { ComputedRef, Ref } from 'vue'
 
 export function useCountries(): {
   countries: ComputedRef<CountryMap>
