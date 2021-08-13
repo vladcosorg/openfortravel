@@ -2,6 +2,7 @@ name: Front sitemap
 on:
   push:
     paths:
+      - .github/workflows/deploy-sitemap.yml
       - packages/front/src/bin/build-sitemap.ts
     branches:
       - master
