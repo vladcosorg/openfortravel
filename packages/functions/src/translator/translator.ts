@@ -20,7 +20,8 @@ export const translate = functions.https.onRequest(async (req, res) => {
   }
 
   const response = await translateMessageObject(
-    sourceTranslations['en'],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    sourceTranslations['en'] as any,
     targetLanguage,
     {
       cache: [new InMemoryCache(), new CloudStorageCache()],
