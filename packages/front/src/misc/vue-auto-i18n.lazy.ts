@@ -7,7 +7,7 @@ export function createAutoI18n(i18nPluginInstance: IVueI18n): ManualTranslator {
     i18nPluginInstance,
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     sourceLanguage: 'en',
-    automatic: true,
+    automatic: false,
     translationService: new CloudFunctionTranslator(),
     blacklistedPaths: [
       'page.country.route',
