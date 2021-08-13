@@ -1,5 +1,5 @@
 <template>
-  <p v-if="languages && languages.length">
+  <p v-if="languages && languages.length > 0">
     A valid document must be presented in
     <seq v-slot="{ item }" :items="languages" conjunction="or"
       ><language :code="item" /></seq

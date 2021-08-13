@@ -22,14 +22,14 @@
       </q-item>
       <div class="q-col-gutter-y-xl">
         <groups-by-category
-          v-if="group.prerequisites.length"
+          v-if="group.prerequisites.length > 0"
           label="What you need to make sure:"
           :restrictions="group.prerequisites"
           type="prerequisite"
         />
 
         <groups-by-category
-          v-if="group.actions.length"
+          v-if="group.actions.length > 0"
           label="What you need to do:"
           :restrictions="group.actions"
           type="action"

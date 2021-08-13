@@ -1,5 +1,9 @@
 <template>
-  <seq v-if="values.length" v-slot="{ item }" :items="values" conjunction="or"
+  <seq
+    v-if="values.length > 0"
+    v-slot="{ item }"
+    :items="values"
+    conjunction="or"
     ><country-label v-bind="$props" :key="item" :value="item"
   /></seq>
   <span v-else>{{ emptyText }}</span>

@@ -130,7 +130,7 @@ export class DestinationDefaults implements PlainDestination {
   get fixedPercentage(): string {
     return ` ${
       Math.sign(this.percentage) === 1 ? '+' : ''
-    }${this.percentage.toFixed()}`
+    }${this.percentage.toFixed(0)}`
   }
 
   get thisWeekCasesFixed(): string {

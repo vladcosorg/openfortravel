@@ -8,7 +8,7 @@
         vaccination consists of 2 doses - people who have only taken the first
         dose are in the process of vaccination and are not yet fully vaccinated.
       </p>
-      <p v-if="restriction.options.authorizedBrands.length">
+      <p v-if="restriction.options.authorizedBrands.length > 0">
         Currently <country-label :value="destinationId" /> only accepts visitors
         vaccinated with the vaccine of the following brands:
         <seq v-slot="{ item }" :items="restriction.options.authorizedBrands">
