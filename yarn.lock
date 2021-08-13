@@ -4444,8 +4444,8 @@ __metadata:
     i18n-iso-countries: ^6.8.0
     iso-639-1: ^2.1.9
     iso-language-list: ^0.3.3
-    ky: ^0.28.5
-    ky-universal: ^0.9.1
+    ky: ^0.25.1
+    ky-universal: ^0.8.2
     lodash: ^4.17.21
     prettier: ^2.3.2
     quasar: ^2.0.3
@@ -9996,8 +9996,8 @@ __metadata:
     firebase-admin: ^9.11.0
     firebase-functions: ^3.15.3
     firebase-functions-test: ^0.3.1
-    ky: ^0.28.5
-    ky-universal: ^0.9.1
+    ky: ^0.25.1
+    ky-universal: ^0.8.2
     lodash: ^4.17.21
     microbundle: ^0.13.3
     nodemailer: ^6.6.3
