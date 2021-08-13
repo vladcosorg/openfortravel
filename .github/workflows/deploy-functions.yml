@@ -5,6 +5,7 @@ on:
       - .github/workflows/deploy-functions.yml
       - packages/functions/**
       - packages/shared/src/i18n/**
+      - yarn.lock
     branches:
       - master
 

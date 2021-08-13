@@ -5,6 +5,7 @@ on:
       - .github/workflows/deploy-front.yml
       - packages/front/**
       - packages/shared/**
+      - yarn.lock
     branches:
       - master
 
