@@ -1,18 +1,24 @@
-import {
-  transformDestinationSlugToCode,
-  transformOriginSlugToCode,
-} from '@/shared/src/modules/country-list/country-list-helpers'
-import { boot } from 'quasar/wrappers'
+import { Router } from 'vue-router'
 
+import { serverCache } from '@/front/src/misc/server-cache'
 import { getDestinationRouteURL } from '@/front/src/router/route-builders/destination'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
 
-export default boot(({ router, redirect }) => {
+export default ({
+  router,
+  redirect,
+}: {
+  router: Router
+  redirect: (url: string, code: number) => void
+}) => {
   router.beforeEach((to, _from, next) => {
     if (to.name === 'origin-old') {
       return redirect(
         getOriginRouteURL({
-          originSlug: transformOriginSlugToCode(to.params.originSlug),
+          originSlug:
+            serverCache.countrySlugToCodeMap[to.params.locale as string].origin[
+              to.params.originSlug as string
+            ],
         }),
         301,
       )
@@ -21,10 +27,27 @@ export default boot(({ router, redirect }) => {
     if (to.name === 'destination-old') {
       return redirect(
         getDestinationRouteURL({
-          originSlug: transformOriginSlugToCode(to.params.originSlug),
-          destinationSlug: transformDestinationSlugToCode(
-            to.params.destinationSlug,
-          ),
+          originSlug:
+            serverCache.countrySlugToCodeMap[to.params.locale as string].origin[
+              to.params.originSlug as string
+            ],
+          destinationSlug:
+            serverCache.countrySlugToCodeMap[to.params.locale as string]
+              .destination[to.params.destinationSlug as string],
+        }),
+        301,
+      )
+    }
+    if (to.name === 'index-targeted') {
+      return redirect(
+        getDestinationRouteURL({
+          originSlug:
+            serverCache.countrySlugToCodeMap[to.params.locale as string].origin[
+              to.params.originSlug as string
+            ],
+          destinationSlug:
+            serverCache.countrySlugToCodeMap[to.params.locale as string]
+              .destination[to.params.destinationSlug as string],
         }),
         301,
       )
@@ -32,4 +55,4 @@ export default boot(({ router, redirect }) => {
     next()
     return
   })
-})
+}

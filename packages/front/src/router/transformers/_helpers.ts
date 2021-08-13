@@ -4,6 +4,7 @@ import {
   useRoute,
 } from '@/shared/src/composables/use-plugins'
 import { Entries } from '@/shared/src/misc/type-helpers'
+import { RouteLocationNormalizedLoaded } from 'vue-router'
 
 import {
   DecodedParameters,
@@ -59,7 +60,7 @@ export function encodeParameters<T extends ParameterTransformerMap>(
 }
 
 export function parseRoute<T extends ParameterTransformerMap>(
-  params: ReturnType<typeof useRoute>['params'],
+  params: RouteLocationNormalizedLoaded['params'],
   transformationConfig: T,
 ): DecodedParameters<T> {
   return (Object.entries(transformationConfig) as Entries<T>).reduce(

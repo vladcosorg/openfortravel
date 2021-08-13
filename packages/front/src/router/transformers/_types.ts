@@ -1,4 +1,3 @@
-import { OptionalExceptFor } from '@/shared/src/misc/type-helpers'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export type ParameterTransformer<D = string> = {
@@ -9,13 +8,9 @@ export type ParameterTransformer<D = string> = {
   matcher?: (slug: string) => boolean
 }
 
-export type DecodedParameters<T extends ParameterTransformerMap> =
-  OptionalExceptFor<
-    {
-      [K in keyof T]: ReturnType<T[K]['decode']>
-    },
-    'destinationSlug'
-  >
+export type DecodedParameters<T extends ParameterTransformerMap> = {
+  [K in keyof T]: ReturnType<T[K]['decode']>
+}
 
 export type EncodedParameters<T extends ParameterTransformerMap> = {
   [K in keyof T]: string
