@@ -1,6 +1,5 @@
 <template>
   <q-drawer v-bind="$attrs" behavior="mobile">
-
     <q-scroll-area class="fit">
       <q-list padding :class="$style.links">
         <q-item

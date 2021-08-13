@@ -76,6 +76,7 @@
 </template>
 
 <script lang="ts">
+import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import {
   matTrendingDown as trendingDown,
   matTrendingFlat as trendingFlat,
@@ -89,7 +90,6 @@ import { riskLevelColor } from '@/front/src/pages/country/composable'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { WidgetHeader },

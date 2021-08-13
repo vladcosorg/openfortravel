@@ -1,5 +1,6 @@
-import { ParameterTransformer } from '@/front/src/router/transformers/_types'
 import { useI18n } from '@/shared/src/composables/use-plugins'
+
+import { ParameterTransformer } from '@/front/src/router/transformers/_types'
 
 export const localeTransformer: ParameterTransformer<string | undefined> = {
   encode(input) {

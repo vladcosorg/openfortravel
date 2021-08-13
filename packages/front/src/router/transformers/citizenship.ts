@@ -1,4 +1,3 @@
-import { ParameterTransformer } from '@/front/src/router/transformers/_types'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 import {
   transformCountryCodeToOriginSlug,
@@ -6,6 +5,8 @@ import {
 } from '@/shared/src/modules/country-list/country-list-helpers'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+
+import { ParameterTransformer } from '@/front/src/router/transformers/_types'
 
 export const citizenshipTransformer: ParameterTransformer<
   VisitorProfile[RestrictionNodeType.CITIZENSHIP] | undefined

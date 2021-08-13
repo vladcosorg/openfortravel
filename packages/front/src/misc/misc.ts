@@ -1,8 +1,7 @@
+import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import type { QSsrContext } from '@quasar/app'
 import type { LooseDictionary } from 'quasar'
 import { Cookies } from 'quasar'
-
-import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export const getCookiesAPI = function (
   ssrContext?: QSsrContext | null,

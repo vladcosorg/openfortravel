@@ -1,7 +1,7 @@
+import { useKy, useVueI18n } from '@/shared/src/composables/use-plugins'
 import type { Ref } from 'vue'
 
 import { useRequestDispatcher as useGenericRequestDispatcher } from '@/front/src/composables/request-dispatcher'
-import { useKy, useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export function useRequestDispatcher(): {
   isLoading: Ref<boolean>
@@ -32,7 +32,7 @@ export function useRequestDispatcher(): {
 
     await dispatcher(
       useKy().post('/subscribe', { body: payload }),
-      t('components.subscribe.notification') as string,
+      t('components.subscribe.notification'),
     )
   }
 

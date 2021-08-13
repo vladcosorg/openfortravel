@@ -1,6 +1,5 @@
-import type { Path, TranslateResult, Values } from 'vue-i18n'
-
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
+import type { Path, TranslateResult, Values } from 'vue-i18n'
 
 const { t } = useVueI18n()
 
@@ -9,7 +8,7 @@ export function translateBlock(
   values: Values,
   branches: Record<string, string | boolean> = {},
 ): string {
-  const result = t(translatePath, values) as string
+  const result = t(translatePath, values)
   if (typeof result === 'object' && !Array.isArray(result)) {
     const out = []
     for (const key of Object.keys(result)) {

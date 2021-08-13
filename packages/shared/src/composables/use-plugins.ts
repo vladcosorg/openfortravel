@@ -1,12 +1,13 @@
+import { augmentedStore } from '@/front/src/store'
 import type { QSsrContext } from '@quasar/app'
 import ky from 'ky-universal'
 import type { LooseDictionary } from 'quasar'
 import { Cookies, Notify } from 'quasar'
-import { TranslateResult, VueI18n } from 'vue-i18n'
+import { TranslateResult } from 'vue-i18n'
 import type { Router, RouteLocationNormalizedLoaded } from 'vue-router'
 import { Store } from 'vuex'
 
-import { augmentedStore } from '@/front/src/store'
+import { createVueI18n } from '@/shared/src/misc/i18n'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let storeInstance: Store<any>
 
@@ -35,7 +36,7 @@ export function useRouter(): Router {
 export function useRoute(): RouteLocationNormalizedLoaded {
   return routerInstance.currentRoute.value
 }
-let i18nInstance: VueI18n
+let i18nInstance: ReturnType<typeof createVueI18n>['global']
 
 export function setI18n(instance: typeof i18nInstance): void {
   i18nInstance = instance
@@ -87,15 +88,6 @@ export function useSSRContext(): typeof ssrContext {
   return ssrContext
 }
 
-// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-// let sharedCache: LRUCache<string, any> | undefined
-// export function setSharedCache(instance: typeof sharedCache): void {
-//   sharedCache = instance
-// }
-// export function useSharedCache(): typeof sharedCache {
-//   return sharedCache
-// }
-//
 export function useKy(): typeof ky {
   return ky.create({
     hooks: {

@@ -20,6 +20,8 @@
 </template>
 
 <script lang="ts">
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { computed, defineComponent } from 'vue'
 
 import { useModel } from '@/front/src/components/context-field/citizenship/composables'
@@ -27,8 +29,6 @@ import GenericSelect from '@/front/src/components/context-field/helpers/generic-
 import Hint from '@/front/src/components/context-field/helpers/hint.vue'
 import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
 import { useCountryOptions } from '@/front/src/composables/misc'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: {

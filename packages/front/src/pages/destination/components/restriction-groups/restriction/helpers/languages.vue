@@ -9,11 +9,11 @@
 </template>
 
 <script lang="ts">
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
 
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { Language },

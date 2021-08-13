@@ -1,8 +1,6 @@
-import type { LocaleMessageObject } from 'vue-i18n'
-
 import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
-import { QBreadcrumbsEl } from 'quasar'
+import type { LocaleMessageObject } from 'vue-i18n'
 
 export interface StateInterface {
   countrySelectorLoading: boolean

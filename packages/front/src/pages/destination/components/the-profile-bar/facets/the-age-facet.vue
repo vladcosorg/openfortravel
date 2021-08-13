@@ -6,10 +6,10 @@
 </template>
 
 <script lang="ts">
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { computed, defineComponent } from 'vue'
 
 import Facet from '@/front/src/pages/destination/components/the-profile-bar/facets/facet.vue'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { Facet },

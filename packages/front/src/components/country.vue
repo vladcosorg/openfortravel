@@ -5,13 +5,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue'
-
 import {
   getDestinationLabelForCountryCode,
   getLabelForCountryCode,
   getOriginLabelForCountryCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   components: {},

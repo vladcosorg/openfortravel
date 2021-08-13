@@ -1,9 +1,9 @@
-import { boot } from 'quasar/wrappers'
-
-import { getCookieCountry } from '@/front/src/misc/country-decider'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { transformOriginSlugToCode } from '@/shared/src/modules/country-list/country-list-helpers'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { boot } from 'quasar/wrappers'
+
+import { getCookieCountry } from '@/front/src/misc/country-decider'
 
 export default boot(({ router, urlPath, ssrContext }) => {
   const rootStore = useRootStore()

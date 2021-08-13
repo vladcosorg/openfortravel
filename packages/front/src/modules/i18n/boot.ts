@@ -64,14 +64,14 @@ function translateParams(
 ): Record<string, string> {
   return mapValues(route.params, (paramValue, paramKey) => {
     switch (paramKey) {
-      case 'originSlug':
+      case 'originSlugg':
         return serverCache.translateOriginSlug(
           paramValue,
           currentLocale,
           newLocale,
         )
 
-      case 'destinationSlug':
+      case 'destinationSlugg':
         return serverCache.translateDestinationSlug(
           paramValue,
           currentLocale,

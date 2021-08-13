@@ -40,6 +40,7 @@
 </template>
 
 <script lang="ts">
+import type { Citizenship } from '@/shared/src/restriction-tree/restriction-node/citizenship'
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
 
@@ -48,7 +49,6 @@ import CountryLabel from '@/front/src/components/country/country-label.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import type { Citizenship } from '@/shared/src/restriction-tree/restriction-node/citizenship'
 
 export default defineComponent({
   components: {

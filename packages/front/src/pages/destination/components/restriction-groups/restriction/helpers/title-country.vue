@@ -15,9 +15,9 @@
 </template>
 
 <script lang="ts">
+import intersection from 'lodash/intersection'
 import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
-import intersection from 'lodash/intersection'
 
 import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
 

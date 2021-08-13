@@ -1,20 +1,20 @@
-import { useRouter } from '@/shared/src/composables/use-plugins'
+import { useRouter, useI18n } from '@/shared/src/composables/use-plugins'
 import {
   transformCountryCodeToOriginSlug,
   transformOriginSlugToCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import type { IVueI18n } from 'vue-i18n'
 import {
   Router,
   createRouter,
   createMemoryHistory,
   createWebHistory,
 } from 'vue-router'
-import type { RouteConfig } from 'vue-router'
 
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 
-export function getRoutes(i18n: IVueI18n): RouteConfig[] {
+export function getRoutes(
+  i18n: ReturnType<typeof useI18n>,
+): Router['options']['routes'] {
   return [
     {
       name: 'index-nolocale-nocountry',
@@ -155,7 +155,7 @@ export function getRoutes(i18n: IVueI18n): RouteConfig[] {
 }
 
 export function createGenericRouter(
-  i18n: IVueI18n,
+  i18n: ReturnType<typeof useI18n>,
   isServer?: boolean,
 ): Router {
   const createHistory = isServer ? createMemoryHistory : createWebHistory

@@ -93,16 +93,6 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
-
-import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
-import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
-import RecoveryContext from '@/front/src/components/context-field/recovery/recovery-context.vue'
-import VaccinationContext from '@/front/src/components/context-field/vaccination/vaccination-context.vue'
-import DidNotVisitCountriesContext from '@/front/src/components/context-field/visited/did-not-visit-countries-context.vue'
-import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
-import Swapper from '@/front/src/layouts/components/the-country-list/swapper.vue'
-import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 import {
   useRouter,
   useI18n,
@@ -113,6 +103,16 @@ import {
   transformCountryCodeToDestinationSlug,
   transformCountryCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import { computed, defineComponent } from 'vue'
+
+import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
+import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
+import RecoveryContext from '@/front/src/components/context-field/recovery/recovery-context.vue'
+import VaccinationContext from '@/front/src/components/context-field/vaccination/vaccination-context.vue'
+import DidNotVisitCountriesContext from '@/front/src/components/context-field/visited/did-not-visit-countries-context.vue'
+import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
+import Swapper from '@/front/src/layouts/components/the-country-list/swapper.vue'
+import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 
 export default defineComponent({
   components: {

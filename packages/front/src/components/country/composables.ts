@@ -1,10 +1,9 @@
-import { PropType } from 'vue'
-
 import {
   getDestinationLabelForCountryCode,
   getLabelForCountryCode,
   getOriginLabelForCountryCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import { PropType } from 'vue'
 
 type Declination = 'origin' | 'destination' | 'nominative'
 export const withProps = {

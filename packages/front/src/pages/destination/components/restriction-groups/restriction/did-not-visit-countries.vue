@@ -34,9 +34,10 @@
 </template>
 
 <script lang="ts">
+import type { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
+import intersection from 'lodash/intersection'
 import type { PropType } from 'vue'
 import { computed, defineComponent } from 'vue'
-import intersection from 'lodash/intersection'
 
 import CountryLabelList from '@/front/src/components/country/country-label-list.vue'
 import CountryLabel from '@/front/src/components/country/country-label.vue'
@@ -44,7 +45,6 @@ import CollapsedCountrySequence from '@/front/src/pages/destination/components/r
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import type { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
 
 export default defineComponent({
   components: {

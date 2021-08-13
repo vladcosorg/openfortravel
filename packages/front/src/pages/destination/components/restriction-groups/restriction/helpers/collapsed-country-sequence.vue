@@ -37,14 +37,14 @@
 </style>
 
 <script lang="ts">
-import type { PropType } from 'vue'
-import { computed, defineComponent, ref } from 'vue'
-
-import CountryLabel from '@/front/src/components/country/country-label.vue'
 import {
   getLabelsForCountryCodes,
   getSortedLabelsForCountryCodes,
 } from '@/shared/src/modules/country-list/country-list-helpers'
+import type { PropType } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
+
+import CountryLabel from '@/front/src/components/country/country-label.vue'
 
 export default defineComponent({
   components: { CountryLabel },

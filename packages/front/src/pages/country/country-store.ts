@@ -1,6 +1,3 @@
-import type { Module } from 'vuex'
-
-import type { StateInterface } from '@/front/src/store/state'
 import type {
   Destination,
   PlainDestination,
@@ -14,6 +11,9 @@ import type {
   Restriction,
 } from '@/shared/src/api/restrictions/models'
 import { sortByStatusAndAlphabetically } from '@/shared/src/api/restrictions/sorters'
+import type { Module } from 'vuex'
+
+import type { StateInterface } from '@/front/src/store/state'
 
 export type CountryMap = Map<string, Destination>
 

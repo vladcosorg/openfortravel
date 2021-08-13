@@ -1,10 +1,10 @@
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { Entries } from '@/shared/src/misc/type-helpers'
 import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 
 import { originParameterTransformers } from '@/front/src/router/route-builders/origin'
 import { parseRoute } from '@/front/src/router/transformers/_helpers'
 import { ParameterTransformerMap } from '@/front/src/router/transformers/_types'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { Entries } from '@/shared/src/misc/type-helpers'
 
 export function applyContextFromProps(props: Record<string, any>): void {
   useRootStore().mutations.replaceVisitorContext({

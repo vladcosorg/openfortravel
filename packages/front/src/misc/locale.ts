@@ -1,6 +1,5 @@
-import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
-
 import { useCookies, useSSRContext } from '@/shared/src/composables/use-plugins'
+import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 
 export function setLocaleCookie(locale: string): void {
   useCookies().set('locale', locale, {

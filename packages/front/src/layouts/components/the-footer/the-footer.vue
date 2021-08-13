@@ -31,10 +31,10 @@
 </style>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
 import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
 // import { PortalTarget } from 'portal-vue'
 import { date } from 'quasar'
+import { defineComponent } from 'vue'
 
 import TheFooterMenu from '@/front/src/layouts/components/the-footer/the-footer-menu.vue'
 

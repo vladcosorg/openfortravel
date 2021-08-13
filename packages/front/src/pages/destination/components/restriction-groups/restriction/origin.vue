@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import type { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
 import type { PropType } from 'vue'
 import { computed, defineComponent, inject } from 'vue'
 
@@ -34,7 +35,6 @@ import TitleCountry from '@/front/src/pages/destination/components/restriction-g
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import type { Origin } from '@/shared/src/restriction-tree/restriction-node/origin'
 
 export default defineComponent({
   components: { CountryLabel, CollapsedCountrySequence, TitleCountry },

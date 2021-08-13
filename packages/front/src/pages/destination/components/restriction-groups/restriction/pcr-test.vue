@@ -67,6 +67,7 @@
 </template>
 
 <script lang="ts">
+import type { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
 import type { PropType } from 'vue'
 import { computed, defineComponent, inject } from 'vue'
 
@@ -82,7 +83,6 @@ import TitleCountry from '@/front/src/pages/destination/components/restriction-g
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
 import { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import type { PcrTest } from '@/shared/src/restriction-tree/restriction-node/pcr-test'
 
 export default defineComponent({
   components: {

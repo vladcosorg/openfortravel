@@ -1,8 +1,8 @@
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 import toInteger from 'lodash/toInteger'
 
 import { ParameterTransformer } from '@/front/src/router/transformers/_types'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export const recoveredTransformer: ParameterTransformer<
   VisitorProfile[RestrictionNodeType.RECOVERY]

@@ -16,8 +16,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
 import type { QPopupProxy } from 'quasar'
+import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({
   props: {

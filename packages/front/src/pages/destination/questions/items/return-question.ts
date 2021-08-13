@@ -1,7 +1,8 @@
-import { Question } from '@/front/src/pages/destination/questions/question'
 import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
 import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
+
+import { Question } from '@/front/src/pages/destination/questions/question'
 
 const { t } = useI18nWithPrefix<string>('faq.return')
 export class ReturnQuestion extends Question {

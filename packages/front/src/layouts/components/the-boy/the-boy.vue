@@ -105,10 +105,9 @@
 </style>
 
 <script lang="ts">
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { computed, defineComponent, ref } from 'vue'
 import InlineSvg from 'vue-inline-svg'
-
-import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { InlineSvg },

@@ -35,6 +35,7 @@
 </template>
 
 <script lang="ts">
+import type { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
 
@@ -43,7 +44,6 @@ import Language from '@/front/src/pages/destination/components/restriction-group
 import Languages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/languages.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import type { Quarantine } from '@/shared/src/restriction-tree/restriction-node/quarantine'
 
 export default defineComponent({
   components: {

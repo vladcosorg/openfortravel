@@ -75,11 +75,11 @@
 </style>
 
 <script lang="ts">
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { defineComponent, onMounted, ref } from 'vue'
 
 import { createTripsCards } from '@/front/src/composables/trip-cards'
 import { useStats } from '@/front/src/pages/index/index-composable'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: {

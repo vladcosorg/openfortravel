@@ -22,8 +22,8 @@ import {
   matWbSunny as lightIcon,
   matBrightness3 as darkIcon,
 } from '@quasar/extras/material-icons'
-import { computed, defineComponent } from 'vue'
 import { useQuasar } from 'quasar'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},

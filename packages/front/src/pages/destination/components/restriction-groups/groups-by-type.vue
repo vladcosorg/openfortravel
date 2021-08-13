@@ -60,6 +60,7 @@
 </style>
 
 <script lang="ts">
+import { RestrictionGroup } from '@/shared/src/restriction-tree/restriction-group'
 import {
   matCheck as availableIcon,
   matCheckCircle as successIcon,
@@ -70,7 +71,6 @@ import { defineComponent } from 'vue'
 import GroupScoreWords from '@/front/src/pages/destination/components/restriction-groups/group-score-words.vue'
 import GroupScore from '@/front/src/pages/destination/components/restriction-groups/group-score.vue'
 import GroupsByCategory from '@/front/src/pages/destination/components/restriction-groups/groups-by-category.vue'
-import { RestrictionGroup } from '@/shared/src/restriction-tree/restriction-group'
 
 export default defineComponent({
   components: { GroupsByCategory, GroupScoreWords, GroupScore },

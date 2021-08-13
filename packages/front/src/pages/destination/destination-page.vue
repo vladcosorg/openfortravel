@@ -55,6 +55,7 @@
 </template>
 
 <script lang="ts">
+import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import { computed, defineComponent, provide } from 'vue'
 import { useStore } from 'vuex'
 
@@ -72,7 +73,6 @@ import { useDestinationMeta } from '@/front/src/pages/destination/destination-me
 import { registerStoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import { destinationParameterTransformers } from '@/front/src/router/route-builders/destination'
-import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
   components: {

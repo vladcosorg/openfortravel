@@ -1,13 +1,12 @@
-import type { LocaleMessages } from 'vue-i18n'
-
 import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
 import type { CountryListTypes } from '@/shared/src/modules/country-list/country-list-store'
 import type { LocaleList } from '@/shared/src/modules/language/locales'
 import type { PrefetchedLocalizedLanguages } from '@/shared/src/modules/language/ssr-loaders'
 import type { PreloadedNationalityList } from '@/shared/src/modules/nationality/nationality-preload'
+import type { VueI18n } from 'vue-i18n'
 
 class ServerCache {
-  public i18nMessages!: LocaleMessages
+  public i18nMessages!: VueI18n['messages']
   public localizedRoutes!: Record<string, Record<string, string>>
   public availableLocales!: LocaleList
   public labeledLocales!: Array<Record<string, string>>

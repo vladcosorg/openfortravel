@@ -1,8 +1,8 @@
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 import { computed, ComputedRef, WritableComputedRef } from 'vue'
 
 import { RootStateType } from '@/front/src/store/state'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export function createComputedSetter<
   T extends keyof RootStateType['visitorContext'],

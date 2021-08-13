@@ -1,8 +1,8 @@
 import { matDone } from '@quasar/extras/material-icons'
-import type { Ref } from 'vue'
-import { ref } from 'vue'
 import type { ResponsePromise } from 'ky'
 import { Notify } from 'quasar'
+import type { Ref } from 'vue'
+import { ref } from 'vue'
 
 type Dispatcher = (
   request: ResponsePromise,

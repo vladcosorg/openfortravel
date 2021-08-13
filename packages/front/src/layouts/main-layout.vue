@@ -31,8 +31,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import TheHeader from '@/front/src/layouts/components/the-header/the-header.vue'
+
 import TheFooter from '@/front/src/layouts/components/the-footer/the-footer.vue'
+import TheHeader from '@/front/src/layouts/components/the-header/the-header.vue'
 
 export default defineComponent({
   components: {

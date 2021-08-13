@@ -1,7 +1,6 @@
+import { useCookies } from '@/shared/src/composables/use-plugins'
 import { uid } from 'quasar'
 import { boot } from 'quasar/wrappers'
-
-import { useCookies } from '@/shared/src/composables/use-plugins'
 
 export default boot(({ router }) => {
   if (process.env.PROD) {

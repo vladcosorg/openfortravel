@@ -5,9 +5,8 @@ import {
   createWebHashHistory,
   createWebHistory,
 } from 'vue-router'
+
 import { StateInterface } from '../store'
-import { getRoutes } from '@/front/src/router/routes'
-import { useI18n } from 'vue-i18n'
 
 /*
  * If not building with SSR mode, you can
@@ -18,7 +17,7 @@ import { useI18n } from 'vue-i18n'
  * with the Router instance.
  */
 
-export default route<StateInterface>(function (/* { store, ssrContext } */) {
+export default route<StateInterface>((/* { store, ssrContext } */) => {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === 'history'

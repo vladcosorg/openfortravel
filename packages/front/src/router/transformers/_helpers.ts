@@ -1,14 +1,15 @@
 import {
-  DecodedParameters,
-  EncodedParameters,
-  ParameterTransformerMap,
-} from '@/front/src/router/transformers/_types'
-import {
   useRootStore,
   useRouter,
   useRoute,
 } from '@/shared/src/composables/use-plugins'
 import { Entries } from '@/shared/src/misc/type-helpers'
+
+import {
+  DecodedParameters,
+  EncodedParameters,
+  ParameterTransformerMap,
+} from '@/front/src/router/transformers/_types'
 
 export function getRouteURL<T extends ParameterTransformerMap>(
   routeName: string,

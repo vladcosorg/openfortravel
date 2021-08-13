@@ -2,6 +2,7 @@ import { boot } from 'quasar/wrappers'
 
 import '@/shared/src/modules/country-list/country-list-node-preload'
 import { serverCache } from '@/front/src/misc/server-cache'
+
 import { useI18n } from '@/shared/src/composables/use-plugins'
 
 export default boot(({ store }) => {
@@ -26,11 +27,11 @@ export default boot(({ store }) => {
 
     store.commit(
       'modules/countryList/setOriginSlugMap',
-      serverCache.getCountrySlugToCodeMap(locale).origin,
+      serverCache.getCountrySlugToCodeMap('en').origin,
     )
     store.commit(
       'modules/countryList/setDestinationSlugMap',
-      serverCache.getCountrySlugToCodeMap(locale).destination,
+      serverCache.getCountrySlugToCodeMap('en').destination,
     )
   } else {
     store.commit(
@@ -39,7 +40,7 @@ export default boot(({ store }) => {
     )
     store.commit(
       'modules/countryList/setSlugMap',
-      serverCache.getCountrySlugToCodeMap(locale).origin,
+      serverCache.getCountrySlugToCodeMap('en').origin,
     )
   }
 

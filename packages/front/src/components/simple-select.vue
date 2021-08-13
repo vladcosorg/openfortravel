@@ -1,5 +1,5 @@
 <template>
-  <q-field v-if="$q.platform.is.mobile" v-bind="$attrs" >
+  <q-field v-if="$q.platform.is.mobile" v-bind="$attrs">
     <template #control>
       <div :class="['col', 'ellipsis-improved']">
         {{ currentLabelRef }}
@@ -7,7 +7,7 @@
     </template>
     <template #append>
       <q-icon :name="icon" />
-      <invisible-native-select   v-bind="{ ...$props, ...$attrs }" />
+      <invisible-native-select v-bind="{ ...$props, ...$attrs }" />
     </template>
   </q-field>
   <q-select
@@ -18,6 +18,7 @@
     :dropdown-icon="icon"
   />
 </template>
+
 <script lang="ts">
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import type { PropType } from 'vue'

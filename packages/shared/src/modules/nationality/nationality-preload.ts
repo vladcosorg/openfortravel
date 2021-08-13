@@ -12,13 +12,12 @@ export function preloadNationalities(): PreloadedNationalityList {
     true,
     /\.json$/,
   )
-  const content =
-    importAll<
-      Array<{
-        locale: string
-        nationalities: Record<string, string>
-      }>
-    >(context)
+  const content = importAll<
+    Array<{
+      locale: string
+      nationalities: Record<string, string>
+    }>
+  >(context)
   const output: PreloadedNationalityList = {}
 
   for (const group of content) {

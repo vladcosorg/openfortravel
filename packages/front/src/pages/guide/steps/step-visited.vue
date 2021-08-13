@@ -14,6 +14,8 @@
 </template>
 
 <script lang="ts">
+import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
 import { defineComponent } from 'vue'
 
@@ -25,8 +27,6 @@ import {
   useCaption,
 } from '@/front/src/pages/guide/guide-composable'
 import mixin from '@/front/src/pages/guide/steps/mixin.vue'
-import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: { DidNotVisitCountriesContext, StepNavigation, CountryDropdown },

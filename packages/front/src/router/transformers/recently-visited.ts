@@ -1,6 +1,7 @@
-import { ParameterTransformer } from '@/front/src/router/transformers/_types'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+
+import { ParameterTransformer } from '@/front/src/router/transformers/_types'
 
 export const recentlyVisitedTransformer: ParameterTransformer<
   VisitorProfile[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES] | undefined

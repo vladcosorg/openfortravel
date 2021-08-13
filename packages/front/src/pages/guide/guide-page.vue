@@ -52,6 +52,8 @@
 </style>
 
 <script lang="ts">
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import {
   matDone as doneIcon,
   matEdit as editIcon,
@@ -65,8 +67,6 @@ import StepOrigin from '@/front/src/pages/guide/steps/step-origin.vue'
 import StepRecovery from '@/front/src/pages/guide/steps/step-recovery.vue'
 import StepVaccination from '@/front/src/pages/guide/steps/step-vaccination.vue'
 import StepVisited from '@/front/src/pages/guide/steps/step-visited.vue'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: {

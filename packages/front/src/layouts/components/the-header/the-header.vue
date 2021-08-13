@@ -22,10 +22,10 @@
 import { defineComponent, ref } from 'vue'
 
 import TheDrawer from '@/front/src/layouts/components/the-drawer.vue'
+import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import TheLanguageSwitcher from '@/front/src/layouts/components/the-header/the-language-switcher.vue'
 import Logo from '@/front/src/layouts/components/the-header/the-logo.vue'
 import TheMenu from '@/front/src/layouts/components/the-header/the-menu.vue'
-import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 
 export default defineComponent({
   components: {

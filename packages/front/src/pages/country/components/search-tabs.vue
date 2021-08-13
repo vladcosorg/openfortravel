@@ -17,12 +17,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
-
 import {
   getContinentList,
   getMappedContinentID,
 } from '@/shared/src/modules/continent-map/continent-map-helpers'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},

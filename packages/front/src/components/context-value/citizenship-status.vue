@@ -3,6 +3,9 @@
 </template>
 
 <script lang="ts">
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import {
   matEdit as editIcon,
   matHelpOutline as helpIcon,
@@ -11,9 +14,6 @@ import {
 import { computed, defineComponent } from 'vue'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: { CitizenshipContext },

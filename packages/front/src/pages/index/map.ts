@@ -1,3 +1,8 @@
+import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
+import {
+  transformCountryCodeToDestinationSlug,
+  transformCountryCodeToOriginSlug,
+} from '@/shared/src/modules/country-list/country-list-helpers'
 import map from '@amcharts/amcharts4-geodata/worldLow'
 import { Miller } from '@amcharts/amcharts4/.internal/charts/map/projections'
 import type { Color } from '@amcharts/amcharts4/core'
@@ -13,11 +18,6 @@ import { colors } from 'quasar'
 
 import { TripCard } from '@/front/src/models/TripCard'
 import { statusColorMap } from '@/front/src/pages/index/index-composable'
-import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
-import {
-  transformCountryCodeToDestinationSlug,
-  transformCountryCodeToOriginSlug,
-} from '@/shared/src/modules/country-list/country-list-helpers'
 
 type SeriesItem = {
   id: string
@@ -224,8 +224,6 @@ function transformData(restrictions: TripCard[]): SeriesItem[] {
   return restrictions.map((restriction) => ({
     id: restriction.destinationISO.toUpperCase(),
     fill: color(colors.getBrand(statusColorMap[restriction.status]) as string),
-    status: t(
-      `page.index.sections.stats.types.${restriction.status}.title`,
-    ) as string,
+    status: t(`page.index.sections.stats.types.${restriction.status}.title`),
   }))
 }

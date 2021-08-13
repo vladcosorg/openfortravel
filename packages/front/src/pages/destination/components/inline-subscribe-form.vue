@@ -37,6 +37,7 @@
 </template>
 
 <script lang="ts">
+import type { Restriction } from '@/shared/src/api/restrictions/models'
 import type { PropType } from 'vue'
 import { defineComponent, ref, toRef } from 'vue'
 
@@ -44,7 +45,6 @@ import RichEmailInput from '@/front/src/components/form/rich-email-input.vue'
 import SubmitButton from '@/front/src/components/form/submit-button.vue'
 import { useRequestDispatcher } from '@/front/src/components/subscribe-form/composables'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
 
 export default defineComponent({
   components: { WidgetHeader, RichEmailInput, SubmitButton },

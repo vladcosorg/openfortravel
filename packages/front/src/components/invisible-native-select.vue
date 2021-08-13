@@ -47,8 +47,8 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
 import { isFunction } from 'lodash'
+import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({
   props: {

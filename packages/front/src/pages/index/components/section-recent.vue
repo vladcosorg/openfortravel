@@ -68,8 +68,7 @@ import { useStats } from '@/front/src/pages/index/index-composable'
 
 export default defineComponent({
   components: {
-    CountUp:
-      () => import(/* webpackChunkName: "countup" */ 'vue-countup-v2'),
+    CountUp: () => import(/* webpackChunkName: "countup" */ 'vue-countup-v2'),
   },
   props: {
     originCode: {

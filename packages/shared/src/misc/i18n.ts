@@ -1,6 +1,7 @@
-import { createI18n, LocaleMessages, VueMessageType } from 'vue-i18n'
+import { createI18n, VueI18n } from 'vue-i18n'
 
-export function createVueI18n(messages?: LocaleMessages<VueMessageType>) {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export function createVueI18n(messages: VueI18n['messages']) {
   return createI18n({
     locale: 'en',
     legacy: true,

@@ -6,9 +6,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
-
 import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
   components: {},

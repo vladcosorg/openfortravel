@@ -1,11 +1,12 @@
-import type { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
-import { Question } from '@/front/src/pages/destination/questions/question'
-import { getCurrentRelativeURL } from '@/front/src/router/helpers'
 import type { Destination } from '@/shared/src/api/destinations/models'
 import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
 import { getNationalityOrFallback } from '@/shared/src/modules/nationality/nationality-helpers'
+
+import type { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
+import { Question } from '@/front/src/pages/destination/questions/question'
+import { getCurrentRelativeURL } from '@/front/src/router/helpers'
 
 const { t } = useI18nWithPrefix<string>('faq.canITravelToCountry')
 export class GeneralQuestion extends Question {

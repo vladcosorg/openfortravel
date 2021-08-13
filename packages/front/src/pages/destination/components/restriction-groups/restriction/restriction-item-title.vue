@@ -1,10 +1,9 @@
 <script lang="ts">
-import { h, defineComponent, PropType, computed } from 'vue'
-
 import {
   Placement,
   RestrictionNode,
 } from '@/shared/src/restriction-tree/restriction-node'
+import { h, defineComponent, PropType, computed } from 'vue'
 
 export default defineComponent({
   components: {},

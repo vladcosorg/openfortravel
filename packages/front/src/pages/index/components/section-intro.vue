@@ -46,13 +46,13 @@
 </template>
 
 <script lang="ts">
+import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 import { computed, defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
 import TheBoy from '@/front/src/layouts/components/the-boy/the-boy.vue'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
-import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
   components: { OriginContextInline, TheBoy },

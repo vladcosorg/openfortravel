@@ -40,12 +40,12 @@
 </template>
 
 <script lang="ts">
+import type { Destination } from '@/shared/src/api/destinations/models'
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import type { Destination } from '@/shared/src/api/destinations/models'
 
 export default defineComponent({
   components: { CountryLabel, WidgetHeader },

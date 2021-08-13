@@ -43,6 +43,7 @@
 </template>
 
 <script lang="ts">
+import type { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import type { PropType } from 'vue'
 import { computed, defineComponent, inject } from 'vue'
 
@@ -58,7 +59,6 @@ import Vaccine from '@/front/src/pages/destination/components/restriction-groups
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import type { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 
 export default defineComponent({
   components: {

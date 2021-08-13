@@ -1,17 +1,16 @@
+import { AugmentedStore } from '@/shared/src/misc/augmented-store'
 import { store } from 'quasar/wrappers'
-import { InjectionKey } from 'vue'
-import { createStore, Store, Store as VuexStore } from 'vuex'
+import { createStore, Store } from 'vuex'
 
 import { actions } from '@/front/src/store/actions'
 import { getters } from '@/front/src/store/getters'
 import { modules } from '@/front/src/store/modules'
 import { mutations } from '@/front/src/store/mutations'
-import type { RootState, RootStateType } from '@/front/src/store/state'
+import type { RootStateType } from '@/front/src/store/state'
 import { state } from '@/front/src/store/state'
 import type { ActionSignatures } from '@/front/src/store/types/actions'
 import type { GetterSignatures } from '@/front/src/store/types/getters'
 import type { MutationSignatures } from '@/front/src/store/types/mutations'
-import { AugmentedStore } from '@/shared/src/misc/augmented-store'
 
 export interface StateInterface {
   // Define your own store structure, using submodules if needed
@@ -20,7 +19,7 @@ export interface StateInterface {
   example: unknown
 }
 
-export default store(function (/* { ssrContext } */) {
+export default store((/* { ssrContext } */) => {
   const Store = createStore<StateInterface>({
     state,
     modules,

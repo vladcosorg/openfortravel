@@ -1,8 +1,3 @@
-import type { ComputedRef } from 'vue'
-import { ref, watch } from 'vue'
-import debounce from 'lodash/debounce'
-
-import { TripCard } from '@/front/src/models/TripCard'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 import {
@@ -11,6 +6,11 @@ import {
 } from '@/shared/src/restriction-tree/restriction-group'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+import debounce from 'lodash/debounce'
+import { ref, watch } from 'vue'
+import type { ComputedRef } from 'vue'
+
+import { TripCard } from '@/front/src/models/TripCard'
 
 export function createTripsCards(
   includeReturnData = false,

@@ -1,7 +1,6 @@
 import { setI18n } from '@/shared/src/composables/use-plugins'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 import { boot } from 'quasar/wrappers'
-import type { VueI18n } from 'vue-i18n'
 
 import { serverCache } from '@/front/src/misc/server-cache'
 import {
@@ -14,12 +13,6 @@ import {
   preloadLocaleMessageCollectionIntoPlugin,
   pushRequiredLocalesToStore,
 } from '@/front/src/modules/i18n/loaders'
-
-declare module 'vue/types/vue' {
-  interface Vue {
-    i18n: VueI18n
-  }
-}
 
 export const i18nPlugin = createVueI18n(serverCache.i18nMessages)
 

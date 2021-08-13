@@ -19,14 +19,14 @@
 </template>
 
 <script lang="ts">
+import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { defineComponent } from 'vue'
 
 import CitizenshipContext from '@/front/src/components/context-field/citizenship/citizenship-context.vue'
 import StepNavigation from '@/front/src/components/context-field/helpers/step-navigation.vue'
 import { useCaption } from '@/front/src/pages/guide/guide-composable'
 import mixin from '@/front/src/pages/guide/steps/mixin.vue'
-import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   components: { CitizenshipContext, StepNavigation },
