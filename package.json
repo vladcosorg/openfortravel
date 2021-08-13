@@ -17,8 +17,5 @@
     "ts-node": "^10.1.0",
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
-  "packageManager": "yarn@3.0.0",
-  "resolutions": {
-    "vue-auto-i18n": "portal:/Users/chetzof/Work/vue-auto-i18n/dist"
-  }
+  "packageManager": "yarn@3.0.0"
 }
