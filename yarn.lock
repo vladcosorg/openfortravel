@@ -12371,33 +12371,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ky-universal@npm:^0.9.1":
-  version: 0.9.1
-  resolution: "ky-universal@npm:0.9.1"
-  dependencies:
-    abort-controller: ^3.0.0
-    node-fetch: 3.0.0-beta.9
-  peerDependencies:
-    ky: ">=0.26.0"
-    web-streams-polyfill: ">=3.0.1"
-  peerDependenciesMeta:
-    web-streams-polyfill:
-      optional: true
-  checksum: 05f3cab617cc34e8fe93b188fbf71d2c710cccacfb8490a19c9dd4ae89655b389d3b1967a9d4cccdf8777055b03ef1323752fa625380eae3dbd169cd19c8f137
-  languageName: node
-  linkType: hard
-
 "ky@npm:^0.25.1":
   version: 0.25.1
   resolution: "ky@npm:0.25.1"
   checksum: ae1b7bebb48001d00d53e386e077939eeef7398a36b4fb45660f988ddb17d583d077290f2adb9706b4761f9d3b74918eb8d9f45ce799760143e104e1053b33ef
-  languageName: node
-  linkType: hard
-
-"ky@npm:^0.28.5":
-  version: 0.28.5
-  resolution: "ky@npm:0.28.5"
-  checksum: 0ae9050941191ee58e3858696e77cdae7272ac32152c0124894aed83c8e5676b3e6ee61e05f00ee396bcfd08c7ff6567b83adcab0f2367a6b7ea517fcec9ca2b
   languageName: node
   linkType: hard
 
@@ -16991,8 +16968,8 @@ resolve@1.1.7:
     "@types/winston": ^2.4.4
     countries-list: ^2.6.1
     firebase: 9.0.0-beta.8
-    ky: ^0.28.5
-    ky-universal: ^0.9.1
+    ky: ^0.25.1
+    ky-universal: ^0.8.2
   languageName: unknown
   linkType: soft
 
