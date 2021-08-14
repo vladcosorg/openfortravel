@@ -25,10 +25,6 @@ jobs:
             api
           ]
     steps:
-      - uses: google-github-actions/setup-gcloud@master
-        with:
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
@@ -41,5 +37,7 @@ jobs:
       - id: deploy
         uses: google-github-actions/deploy-cloud-functions@main
         with:
+          source_dir: ./packages/functions/dist
           name: ${{ matrix.function }}
           runtime: nodejs14
+          credentials: ${{ secrets.GCP_SA_KEY }}
