@@ -1,5 +1,5 @@
 <template>
-  <section :class="`${$style.stats} q-py-xl`">
+  <section class="stats q-py-xl">
     <div class="container q-my-sm-xl">
       <div class="q-mb-sm-xl q-pb-xl text-center">
         <h3 class="text-bold">
@@ -19,7 +19,7 @@
         />
       </div>
 
-      <div :class="['row q-col-gutter-xl items-stretch', $style.data]">
+      <div :class="['row q-col-gutter-xl items-stretch']">
         <div
           v-for="category in stats"
           :key="category.title"
@@ -46,11 +46,7 @@
               }"
             >
               <span class="text-h1 block lh-1" style="font-weight: bold">
-                <count-up
-                  :end-val="category.value"
-                  :delay="1"
-                  :options="{ duration: 1 }"
-                />
+                {{ category.value }}
               </span>
               <span class="lh-base" v-html="category.valueSuffix" />
             </div>
@@ -62,7 +58,7 @@
   </section>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scoped>
 .stats {
   //background-color: #272f56;
   @media (min-width: $breakpoint-md-min) {
@@ -78,16 +74,13 @@
 import { defineComponent, onMounted, ref } from 'vue'
 
 import { createTripsCards } from '@/front/src/composables/trip-cards'
+import SectionMap from '@/front/src/pages/index/components/section-map.vue'
 import { useStats } from '@/front/src/pages/index/index-composable'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: {
-    SectionMap: () =>
-      import(
-        /* webpackChunkName: "map-comp" */ '@/front/src/pages/index/components/section-map.vue'
-      ),
-    CountUp: () => import(/* webpackChunkName: "countup" */ 'vue-countup-v2'),
+    SectionMap,
   },
   setup() {
     const loadMap = ref(false)

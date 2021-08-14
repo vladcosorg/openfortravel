@@ -26,9 +26,9 @@
         <div v-if="!hideRiskLevel" class="text-caption text-primary-subtle">
           {{ $t('components.destinationItem.riskLevel.title') }}:
           <span :class="riskLevelColor(journey.destination.riskLevel)">{{
-            $t('components.destinationItem.riskLevel.values')[
-              journey.destination.riskLevel
-            ]
+            $t(
+              `components.destinationItem.riskLevel.values.${journey.destination.riskLevel}`,
+            )
           }}</span>
         </div>
       </q-card-section>
@@ -145,6 +145,7 @@
 <script lang="ts">
 import { ionRemoveCircleOutline as accessDeniedIcon } from '@quasar/extras/ionicons-v5'
 import { defineComponent, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import { TripCard } from '@/front/src/models/TripCard'
@@ -176,7 +177,9 @@ export default defineComponent({
   },
 
   setup() {
+    const { t } = useI18n()
     return {
+      t,
       riskLevelColor,
       accessDeniedIcon,
       isClicked: ref(false),

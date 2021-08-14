@@ -7,15 +7,12 @@ import {
   MapPolygonSeries,
 } from '@amcharts/amcharts4/maps'
 import { random } from 'lodash'
-import { colors } from 'quasar'
+import { getCssVar } from 'quasar'
 
 import { TripCard } from '@/front/src/models/TripCard'
 import { statusColorMap } from '@/front/src/pages/index/index-composable'
-import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
-import {
-  transformCountryCodeToDestinationSlug,
-  transformCountryCodeToOriginSlug,
-} from '@/shared/src/modules/country-list/country-list-helpers'
+import { goToDestination } from '@/front/src/router/route-builders/destination'
+import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 import type { Color } from '@amcharts/amcharts4/core'
 import type { MapArc, MapPolygon } from '@amcharts/amcharts4/maps'
@@ -114,13 +111,7 @@ export function addHitHandler(
       return
     }
 
-    void useRouter().push({
-      name: 'destination',
-      params: {
-        originSlug: transformCountryCodeToOriginSlug(originCode),
-        destinationSlug: transformCountryCodeToDestinationSlug(destinationCode),
-      },
-    })
+    void goToDestination({ destinationSlug: destinationCode })
   })
 }
 
@@ -212,7 +203,7 @@ function configureLine(lineTemplate: MapArc): void {
 }
 
 export function configurePolygonTemplate(template: MapPolygon): void {
-  template.fill = color(colors.getBrand('primary-inverse') as string)
+  template.fill = color(getCssVar('primary-inverse') as string)
   template.stroke = color('#272f56')
   template.strokeWidth = 1
   template.propertyFields.fill = 'fill'
@@ -224,7 +215,7 @@ function transformData(restrictions: TripCard[]): SeriesItem[] {
   const { t } = useVueI18n()
   return restrictions.map((restriction) => ({
     id: restriction.destinationISO.toUpperCase(),
-    fill: color(colors.getBrand(statusColorMap[restriction.status]) as string),
+    fill: color(getCssVar(statusColorMap[restriction.status]) as string),
     status: t(`page.index.sections.stats.types.${restriction.status}.title`),
   }))
 }

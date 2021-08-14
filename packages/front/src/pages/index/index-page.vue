@@ -2,7 +2,7 @@
   <q-page class="column" style="z-index: 2">
     <section-intro :origin-code="originCode" />
     <section-wizard />
-    <!--    <section-stats :origin-code="originCode" />-->
+    <section-stats :origin-code="originCode" />
   </q-page>
 </template>
 
@@ -12,6 +12,7 @@ import { defineComponent } from 'vue'
 
 import { useContextParser } from '@/front/src/composables/visitor-context-applier'
 import SectionIntro from '@/front/src/pages/index/components/section-intro.vue'
+import SectionStats from '@/front/src/pages/index/components/section-stats.vue'
 import SectionWizard from '@/front/src/pages/index/components/section-wizard.vue'
 import { originTransformer } from '@/front/src/router/transformers/origin'
 import { useI18n } from '@/shared/src/composables/use-plugins'
@@ -19,6 +20,7 @@ import { getLabelForCountryCode } from '@/shared/src/modules/country-list/countr
 
 export default defineComponent({
   components: {
+    SectionStats,
     SectionWizard,
     SectionIntro,
   },

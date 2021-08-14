@@ -54,9 +54,9 @@
             {{ $t('page.destination.widgets.stats.riskLevel.title') }}:
             <span :class="riskLevelColor(destination.riskLevel)">
               {{
-                $t('components.destinationItem.riskLevel.values')[
-                  destination.riskLevel
-                ]
+                $t(
+                  `components.destinationItem.riskLevel.values.${destination.riskLevel}`,
+                )
               }}
             </span>
           </q-item-label>

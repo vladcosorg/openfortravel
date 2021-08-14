@@ -31,7 +31,12 @@
         {{ $t('page.destination.widgets.info.none') }}
       </div>
       <li v-for="(link, index) in destination.linkList" v-else :key="index">
-        <a ref="nofollow" target="_blank" :href="link">
+        <a
+          ref="nofollow"
+          style="overflow-wrap: break-word"
+          target="_blank"
+          :href="link"
+        >
           {{ link }}
         </a>
       </li>

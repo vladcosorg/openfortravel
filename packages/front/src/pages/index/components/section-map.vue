@@ -1,6 +1,6 @@
 <template>
-  <div :class="['relative-position']">
-    <div ref="chartContainer" :class="[$style.chart]" />
+  <div class="relative-position">
+    <div ref="chartContainer" class="chart" />
     <q-spinner
       v-if="loading"
       class="absolute-center"
@@ -11,12 +11,7 @@
   </div>
 </template>
 
-<style lang="scss" module>
-.placeholder {
-  transition: opacity 2s;
-  opacity: 1;
-}
-
+<style lang="scss" scoped>
 .chart {
   z-index: 20;
   width: 100%;
@@ -25,7 +20,7 @@
 </style>
 
 <script lang="ts">
-import { defer } from 'lodash'
+import defer from 'lodash/defer'
 import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue'
 
 import { TripCard } from '@/front/src/models/TripCard'
