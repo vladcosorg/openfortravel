@@ -47,7 +47,7 @@
 </style>
 
 <script lang="ts">
-import { isFunction } from 'lodash'
+import isFunction from 'lodash/isFunction'
 import { computed, defineComponent, ref } from 'vue'
 
 export default defineComponent({

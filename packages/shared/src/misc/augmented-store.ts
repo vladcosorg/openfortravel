@@ -1,4 +1,4 @@
-import { mapValues } from 'lodash'
+import mapValues from 'lodash/mapValues'
 
 import type { RootStateType, StateInterface } from '@/front/src/store/state'
 import type { RootGetterAccessors } from '@/front/src/store/types/getters'

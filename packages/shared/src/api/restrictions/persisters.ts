@@ -1,4 +1,4 @@
-import { setDoc, doc, writeBatch } from 'firebase/firestore'
+import { setDoc, doc, writeBatch } from '@firebase/firestore/lite'
 
 import { generateIDFromEntity } from '@/shared/src/api/restrictions/common'
 import type { PlainRestriction } from '@/shared/src/api/restrictions/models'

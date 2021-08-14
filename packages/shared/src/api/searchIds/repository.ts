@@ -1,4 +1,11 @@
-import { getDoc, doc, query, where, getDocs, addDoc } from 'firebase/firestore'
+import {
+  getDoc,
+  doc,
+  query,
+  where,
+  getDocs,
+  addDoc,
+} from '@firebase/firestore/lite'
 
 import { searchIdCollection } from '@/shared/src/misc/firebase'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'

@@ -95,7 +95,7 @@ module.exports = configure((context) => ({
     // preloadChunks: true,
     showProgress: true,
     // gzip: true,
-    // analyze: true,
+    analyze: true,
 
     // Options below are automatically set depending on the env, set them if you want to override
     // extractCSS: false,
@@ -119,16 +119,14 @@ module.exports = configure((context) => ({
       const skipChecks = true
       config.resolve.alias['@'] = path.resolve(__dirname, '../..')
       config.resolve.plugins = [new TsconfigPathsPlugin()]
-      // console.log(config.module)
-      // config.externals = !config.externals ? [] : [config.externals]
-      // config.externals.push((context, request, callback) => {
-      //   if (/xlsx|canvg|pdfmake/.test(request)) {
-      //     eslint-disable-next-line unicorn/no-null
-      // return callback(null, 'commonjs ' + request)
-      // }
-      // callback()
-      // })
-      //
+      config.externals = !config.externals ? [] : [config.externals]
+      config.externals.push((context, request, callback) => {
+        if (/xlsx|canvg|pdfmake/.test(request)) {
+          return callback(null, 'commonjs ' + request)
+        }
+        callback()
+      })
+
       // // linting is slow in TS projects, we execute it only for production builds
       if (context.prod && !context.debug) {
         //   if (!skipChecks) {

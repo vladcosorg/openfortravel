@@ -1,5 +1,5 @@
 import allLocales from 'iso-language-list/dist/generated/top10-speakers-then-az-value-label.json'
-import { intersection } from 'lodash'
+import intersection from 'lodash/intersection'
 import autoLanguages from 'vue-auto-i18n/supported-languages/google.json'
 
 export type Locale = string

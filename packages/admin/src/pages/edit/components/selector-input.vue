@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { union } from 'lodash'
+import union from 'lodash/union'
 import { computed, defineComponent, ref } from 'vue'
 
 import {

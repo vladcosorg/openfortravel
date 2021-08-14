@@ -1,4 +1,4 @@
-import { mapValues } from 'lodash'
+import mapValues from 'lodash/mapValues'
 import { computed, ref } from 'vue'
 
 import type { ComputedRef, Ref } from 'vue'

@@ -1,4 +1,4 @@
-import { findKey } from 'lodash'
+import findKey from 'lodash/findKey'
 
 import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
 import type {

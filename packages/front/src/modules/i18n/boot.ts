@@ -1,4 +1,4 @@
-import { mapValues } from 'lodash'
+import mapValues from 'lodash/mapValues'
 import { RouteLocation, useRouter } from 'vue-router'
 
 import { serverCache } from '@/front/src/misc/server-cache'

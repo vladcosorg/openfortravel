@@ -1,4 +1,5 @@
-import { invert, mapValues } from 'lodash'
+import invert from 'lodash/invert'
+import mapValues from 'lodash/mapValues'
 
 import { importAll } from '@/front/src/misc/misc'
 import type { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'

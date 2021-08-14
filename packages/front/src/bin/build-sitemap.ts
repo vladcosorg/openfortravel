@@ -2,7 +2,8 @@
 
 import path from 'path'
 
-import { merge, mapValues } from 'lodash'
+import mapValues from 'lodash/mapValues'
+import merge from 'lodash/merge'
 import { EnumChangefreq, simpleSitemapAndIndex } from 'sitemap'
 import { Router, LocationAsRelativeRaw } from 'vue-router'
 

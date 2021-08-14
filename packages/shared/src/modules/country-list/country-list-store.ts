@@ -1,4 +1,6 @@
-import { isEmpty, kebabCase, mapValues } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
+import kebabCase from 'lodash/kebabCase'
+import mapValues from 'lodash/mapValues'
 
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { transformKeys } from '@/shared/src/misc/misc'

@@ -1,4 +1,4 @@
-import { query, where, getDocs } from 'firebase/firestore'
+import { query, where, getDocs } from '@firebase/firestore/lite'
 
 import type { PlainRestriction } from '@/shared/src/api/restrictions/models'
 import { restrictionCollection } from '@/shared/src/misc/firebase'

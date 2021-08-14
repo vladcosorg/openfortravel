@@ -1,9 +1,9 @@
-import { initializeApp, getApps, getApp } from 'firebase/app'
 import {
   collection,
   initializeFirestore,
   getFirestore,
-} from 'firebase/firestore'
+} from '@firebase/firestore/lite'
+import { initializeApp, getApps, getApp } from 'firebase/app'
 
 import { dataConverter as destinationDataConverter } from '@/shared/src/api/destinations/common'
 import { dataConverter as restrictionDataConverter } from '@/shared/src/api/restrictions/common'

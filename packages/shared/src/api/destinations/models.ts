@@ -1,4 +1,4 @@
-import { Timestamp } from 'firebase/firestore'
+import { Timestamp } from '@firebase/firestore/lite'
 import cloneDeep from 'lodash/cloneDeep'
 
 import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'

@@ -3,7 +3,7 @@ import { boot } from 'quasar/wrappers'
 
 import { serverCache } from '@/front/src/misc/server-cache'
 import { pregenerateLocalizableRouter } from '@/front/src/router/route-preloader'
-import { listenToMappedOrigins } from '@/shared/src/api/destinations/repository'
+import { listenToMappedOrigins } from '@/shared/src/api/destinations/listeners'
 import messages from '@/shared/src/i18n/index'
 import { loadContinentMap } from '@/shared/src/modules/continent-map/ssr-loader'
 import {

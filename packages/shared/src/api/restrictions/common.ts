@@ -1,6 +1,11 @@
-import { collection } from 'firebase/firestore'
-import { pick } from 'lodash'
+import {
+  collection,
+  FirestoreDataConverter,
+  QueryDocumentSnapshot,
+  CollectionReference,
+} from '@firebase/firestore/lite'
 import mapValues from 'lodash/mapValues'
+import pick from 'lodash/pick'
 
 import type {
   PlainRestriction,
@@ -13,13 +18,6 @@ import {
   restrictionDefaults,
 } from '@/shared/src/api/restrictions/models'
 import { firestore } from '@/shared/src/misc/firebase'
-
-import type {
-  FirestoreDataConverter,
-  QueryDocumentSnapshot,
-  SnapshotOptions,
-  CollectionReference,
-} from 'firebase/firestore'
 
 export type RestrictionDirection = 'origin' | 'destination'
 export function generateIDFromEntity(restriction: PlainRestriction): string {
@@ -42,12 +40,11 @@ export const dataConverter: FirestoreDataConverter<PlainRestriction> = {
   },
   fromFirestore(
     snapshot: QueryDocumentSnapshot<RestrictionDocument>,
-    options: SnapshotOptions,
   ): PlainRestriction {
     return Object.assign(
       {},
       restrictionDefaults,
-      pick(snapshot.data(options), Object.keys(restrictionDefaults)),
+      pick(snapshot.data(), Object.keys(restrictionDefaults)),
     )
   },
 }
@@ -64,10 +61,9 @@ export function getViewCollection(
     },
     fromFirestore(
       snapshot: QueryDocumentSnapshot<MappedRestrictionDocumentCollection>,
-      options: SnapshotOptions,
     ): MappedPlainRestrictionCollection {
       const expectedKeys = Object.keys(restrictionDefaults)
-      return mapValues(snapshot.data(options), (item) =>
+      return mapValues(snapshot.data(), (item) =>
         Object.assign({}, restrictionDefaults, pick(item, expectedKeys)),
       )
     },

@@ -1,4 +1,4 @@
-import { getDoc, doc, setDoc, Timestamp, onSnapshot } from 'firebase/firestore'
+import { getDoc, doc, setDoc, Timestamp } from '@firebase/firestore/lite'
 
 import {
   createDummyPlainDestination,
@@ -35,17 +35,6 @@ export async function findMappedOrigins(): Promise<MappedPlainDestinationCollect
     throw new Error('Aggegated country result is missing')
   }
   return result.collection as MappedPlainDestinationCollection
-}
-
-export function listenToMappedOrigins(
-  callback: (collection: MappedPlainDestinationCollection) => void,
-): Promise<void> {
-  return new Promise((resolve) => {
-    onSnapshot(doc(countryCollection, '_all'), (doc) => {
-      callback(doc.data().collection)
-      resolve()
-    })
-  })
 }
 
 export async function findOrigins(): Promise<PlainDestination[]> {

@@ -6,7 +6,7 @@ import {
   MapChart,
   MapPolygonSeries,
 } from '@amcharts/amcharts4/maps'
-import { random } from 'lodash'
+import random from 'lodash/random'
 import { getCssVar } from 'quasar'
 
 import { TripCard } from '@/front/src/models/TripCard'

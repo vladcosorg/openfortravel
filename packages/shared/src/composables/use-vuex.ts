@@ -1,4 +1,5 @@
-import { get, mapValues } from 'lodash'
+import get from 'lodash/get'
+import mapValues from 'lodash/mapValues'
 import { computed, isRef, onMounted, onServerPrefetch, unref, watch } from 'vue'
 
 import { useStore } from '@/shared/src/composables/use-plugins'
