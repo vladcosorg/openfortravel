@@ -1,7 +1,6 @@
 /* eslint-env node */
 
-module.exports = (api) => {
-  return {
+module.exports = (api) => ({
     presets: [
       [
         '@quasar/babel-preset-app',
@@ -10,5 +9,4 @@ module.exports = (api) => {
           : {},
       ],
     ],
-  }
-}
+  })

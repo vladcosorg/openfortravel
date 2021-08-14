@@ -1,3 +1,6 @@
 dist/
 .quasar/
 node_modules/
+var
+public
+*.log

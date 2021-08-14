@@ -11,11 +11,12 @@
  *   "src-ssr/extension.js"
  */
 
-const express = require('express')
 const compression = require('compression')
-
+const express = require('express')
 const ssr = require('quasar-ssr')
+
 const extension = require('./extension')
+
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -75,8 +76,8 @@ app.get(ssr.resolveUrl('*'), (req, res) => {
   ssr.renderToString({ req, res }, (err, html) => {
     if (err) {
       if (err.url) {
-        if (err.code) res.redirect(err.code, err.url)
-        else res.redirect(err.url)
+        if (err.code) {res.redirect(err.code, err.url)}
+        else {res.redirect(err.url)}
       } else if (err.code === 404) {
         // Should reach here only if no "catch-all" route
         // is defined in /src/routes

@@ -24,7 +24,7 @@ export function applyContextToRestrictionGroups(
   profile: VisitorProfile,
   groups: PlainRestrictionGroups,
 ): Matcher {
-  const matcher = new Matcher(groups)
+  return new Matcher(groups)
     .withOptional(
       RestrictionNodeType.ORIGIN,
       profile[RestrictionNodeType.ORIGIN],
@@ -51,6 +51,4 @@ export function applyContextToRestrictionGroups(
       RestrictionNodeType.VACCINATED,
       profile[RestrictionNodeType.VACCINATED],
     )
-
-  return matcher
 }

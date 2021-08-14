@@ -15,17 +15,17 @@ export default ssrMiddleware(({ app, resolve, render, serve }) => {
         // now let's send the rendered html to the client
         res.send(html)
       })
-      .catch((err) => {
+      .catch((error) => {
         // oops, we had an error while rendering the page
 
         // we were told to redirect to another URL
-        if (err.url) {
-          if (err.code) {
-            res.redirect(err.code, err.url)
+        if (error.url) {
+          if (error.code) {
+            res.redirect(error.code, error.url)
           } else {
-            res.redirect(err.url)
+            res.redirect(error.url)
           }
-        } else if (err.code === 404) {
+        } else if (error.code === 404) {
           // hmm, Vue Router could not find the requested route
 
           // Should reach here only if no "catch-all" route
@@ -38,7 +38,7 @@ export default ssrMiddleware(({ app, resolve, render, serve }) => {
           // and other useful information
 
           // serve.error is available on dev only
-          serve.error({ err, req, res })
+          serve.error({ err: error, req, res })
         } else {
           // we're in production, so we should have another method
           // to display something to the client when we encounter an error

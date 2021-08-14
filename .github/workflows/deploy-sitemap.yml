@@ -12,18 +12,18 @@ jobs:
     name: Building a new sitemap
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-      with:
-        node-version: 14
-        cache: yarn
-    - name: Install dependencies
-      run: yarn install
-    - run: yarn build-sitemap
-      working-directory: ./packages/front
-    - id: upload-files
-      uses: google-github-actions/upload-cloud-storage@main
-      with:
-        credentials: ${{ secrets.GCP_SA_KEY }}
-        path: ./packages/front/var/sitemap
-        destination: cdn.openfortravel.org
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+          cache: yarn
+      - name: Install dependencies
+        run: yarn install
+      - run: yarn build-sitemap
+        working-directory: ./packages/front
+      - id: upload-files
+        uses: google-github-actions/upload-cloud-storage@main
+        with:
+          credentials: ${{ secrets.GCP_SA_KEY }}
+          path: ./packages/front/var/sitemap
+          destination: cdn.openfortravel.org

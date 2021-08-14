@@ -36,7 +36,7 @@ module.exports = {
     // ESLint typescript rules
     'plugin:@typescript-eslint/recommended',
     // consider disabling this class of rules if linting takes too long
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
     // Uncomment any of the lines below to choose desired strictness,
     // but leave only one uncommented!
     // See https://eslint.vuejs.org/rules/#available-rules
@@ -47,7 +47,7 @@ module.exports = {
     'plugin:import/errors',
     'plugin:import/warnings',
     'plugin:import/typescript',
-
+    'plugin:sonarjs/recommended',
     'prettier',
   ],
 
@@ -57,6 +57,7 @@ module.exports = {
     'vue',
     'import',
     'unused-imports',
+    'sonarjs',
   ],
 
   globals: {
@@ -123,23 +124,23 @@ module.exports = {
         ],
       },
     ],
-    'import/no-unused-modules': [
-      'warn',
-      {
-        unusedExports: true,
-        missingExports: true,
-        src: ['..'],
-        ignoreExports: [
-          '**/*.d.ts',
-          '**/babel.config.js',
-          '**/quasar.conf.js',
-          '**/*.vue',
-          '**/src/boot/*.ts',
-          '**/router/index.ts',
-          '**/store/index.ts',
-        ],
-      },
-    ],
+    // 'import/no-unused-modules': [
+    //   'warn',
+    //   {
+    //     unusedExports: true,
+    //     missingExports: true,
+    //     // ignoreExports: [
+    //     //   '**/*.d.ts',
+    //     //   '**/babel.config.js',
+    //     //   '**/quasar.conf.js',
+    //     //   '**/*.vue',
+    //     //   '**/src/boot/*.ts',
+    //     //   // '**/src/index.ts',
+    //     //   '**/router/index.ts',
+    //     //   '**/store/index.ts',
+    //     // ],
+    //   },
+    // ],
     'import/newline-after-import': 'warn',
     'import/dynamic-import-chunkname': [
       'warn',
@@ -248,25 +249,25 @@ module.exports = {
         'vue/no-bare-strings-in-template': 'off',
       },
     },
-    {
-      files: 'packages/shared/**/*.*',
-      rules: {
-        'import/no-unused-modules': [
-          'warn',
-          {
-            unusedExports: true,
-            missingExports: true,
-            src: ['..'],
-            ignoreExports: ['**/boot/*', '**/*.d.ts'],
-          },
-        ],
-      },
-    },
-    {
-      files: '*.*',
-      rules: {
-        'import/no-unused-modules': 'off',
-      },
-    },
+    // {
+    //   files: 'packages/shared/**/*.*',
+    //   rules: {
+    //     'import/no-unused-modules': [
+    //       'warn',
+    //       {
+    //         unusedExports: true,
+    //         missingExports: true,
+    //         src: ['..'],
+    //         ignoreExports: ['**/boot/*', '**/*.d.ts'],
+    //       },
+    //     ],
+    //   },
+    // },
+    // {
+    //   files: '*.*',
+    //   rules: {
+    //     'import/no-unused-modules': 'off',
+    //   },
+    // },
   ],
 }

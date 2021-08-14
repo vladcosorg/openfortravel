@@ -47,14 +47,12 @@ export async function findMappedOrigins(): Promise<MappedPlainDestinationCollect
 export function listenToMappedOrigins(
   callback: (collection: MappedPlainDestinationCollection) => void,
 ): Promise<void> {
-  const promise = new Promise((resolve) => {
+  return new Promise((resolve) => {
     onSnapshot(doc(countryCollection, '_all'), (doc) => {
       callback(doc.data().collection)
       resolve()
     })
   })
-
-  return promise
 }
 
 export async function findOrigins(): Promise<PlainDestination[]> {

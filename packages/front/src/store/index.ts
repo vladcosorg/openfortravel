@@ -19,8 +19,7 @@ export interface StateInterface {
   example: unknown
 }
 
-export default store((/* { ssrContext } */) => {
-  const Store = createStore<StateInterface>({
+export default store((/* { ssrContext } */) => createStore<StateInterface>({
     state,
     modules,
     mutations,
@@ -30,10 +29,7 @@ export default store((/* { ssrContext } */) => {
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
     strict: !!process.env.DEBUGGING,
-  })
-
-  return Store
-})
+  }))
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const augmentedStore = (store: Store<RootStateType>) =>

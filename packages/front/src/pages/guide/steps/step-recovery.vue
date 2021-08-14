@@ -45,7 +45,7 @@ export default defineComponent({
 
     const radioValue = computed({
       get() {
-        return !(internalValue.value === undefined)
+        return internalValue.value !== undefined
       },
       set(value) {
         value === true

@@ -14,7 +14,7 @@ import type { Store } from 'vuex'
 export default route<Store<StateInterface>>(({ Vue }) => {
   Vue.use(VueRouter)
 
-  const Router = new VueRouter({
+  return new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
     routes,
 
@@ -24,6 +24,4 @@ export default route<Store<StateInterface>>(({ Vue }) => {
     mode: process.env.VUE_ROUTER_MODE,
     base: process.env.VUE_ROUTER_BASE,
   })
-
-  return Router
 })

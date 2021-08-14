@@ -9,9 +9,5 @@ export function saveContextToCookie(context: VisitorProfile): void {
 }
 
 export function loadContextFromCookie(): Partial<VisitorProfile> | undefined {
-  const cookies =
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    (useCookies().get(ID) as VisitorProfile) ?? undefined
-
-  return cookies
+  return (useCookies().get(ID) as VisitorProfile) ?? undefined
 }

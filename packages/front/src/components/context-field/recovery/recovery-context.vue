@@ -56,7 +56,7 @@ export default defineComponent({
 
     const selectValue = computed({
       get() {
-        return !(internalValue.value === undefined)
+        return internalValue.value !== undefined
       },
       set(value) {
         value === true
