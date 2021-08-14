@@ -1,11 +1,4 @@
-import {
-  getDoc,
-  doc,
-  setDoc,
-  Timestamp,
-  doc,
-  onSnapshot,
-} from 'firebase/firestore'
+import { getDoc, doc, setDoc, Timestamp, onSnapshot } from 'firebase/firestore'
 
 import {
   createDummyPlainDestination,
