@@ -1,24 +1,25 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
-    "module": "commonjs",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "outDir": "dist",
-    "sourceMap": false,
-    "strict": true,
-    "target": "es2017",
-    "noEmit": false,
-    "esModuleInterop": true,
-    "lib": ["es2019", "DOM", "ES6", "DOM.Iterable", "ScriptHost"],
     "skipLibCheck": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "useDefineForClassFields": true,
-    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./",
+    "incremental": true,
+    "target": "es2017",
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "declaration": false,
+    "inlineSourceMap": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "pretty": true,
+    "strict": false,
+    "lib": ["es2019", "DOM", "ES6", "DOM.Iterable", "ScriptHost"],
+    "types": [],
     "paths": {
       "@/*": ["../*"]
     }
   },
-  "compileOnSave": true
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/**"],
+  "compileOnSave": false
 }

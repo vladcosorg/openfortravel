@@ -23,7 +23,7 @@
 import { defineComponent } from 'vue'
 
 import GroupRestriction from '@/front/src/pages/destination/components/restriction-groups/group-restriction.vue'
-import type { RestrictionCategory } from '@/shared/src/restriction-tree/restriction-node'
+import type { RestrictionCategory } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import type { PlainRestrictionGroup } from '@/shared/src/restriction-tree/types'
 
 import type { PropType } from 'vue'

@@ -1,6 +1,7 @@
-import { LogicNode } from '@/shared/src/restriction-tree/logic-node'
 import type { PlainRestrictionGroups } from '@/shared/src/restriction-tree/types'
 import { LogicNodeType } from '@/shared/src/restriction-tree/types'
+
+import { LogicNode } from '../logic-node'
 
 export class Or extends LogicNode {
   id(): LogicNodeType {

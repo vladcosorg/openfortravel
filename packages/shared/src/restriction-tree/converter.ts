@@ -1,7 +1,7 @@
+import { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { isLogicNode } from '@/shared/src/restriction-tree/guards'
 import { And } from '@/shared/src/restriction-tree/logic-node/and'
 import { Or } from '@/shared/src/restriction-tree/logic-node/or'
-import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import { Age } from '@/shared/src/restriction-tree/restriction-node/age'
 import { Citizenship } from '@/shared/src/restriction-tree/restriction-node/citizenship'
 import { CustomRequirement } from '@/shared/src/restriction-tree/restriction-node/custom-requirement'
@@ -26,7 +26,7 @@ export type EncodedTreeNode = EncodedRestrictionNode | EncodedLogicNode
 export type IncompleteEncodedNode = Partial<EncodedTreeNode>
 
 export type EncodedRestrictionNode<
-  T = typeof RestrictionNode['defaultOptions'],
+  T = typeof AbstractRestrictionNode['defaultOptions'],
 > = {
   type: RestrictionNodeType
   options: T

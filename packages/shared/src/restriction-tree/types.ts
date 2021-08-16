@@ -1,4 +1,4 @@
-import type { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
+import type { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-restriction-node'
 
 export type CriteriaMap = Map<CriterionType, CriterionValue>
 
@@ -35,7 +35,7 @@ export const Prerequisites: RestrictionNodeType[] = [
 
 export type CriterionType = RestrictionNodeType
 export type CriterionValue = string | number | boolean | string[]
-export type PlainRestrictionGroup<T = RestrictionNode> = T[]
+export type PlainRestrictionGroup<T = AbstractRestrictionNode> = T[]
 export type PlainRestrictionGroups<T = PlainRestrictionGroup> = T[]
 
 export interface TreeNode {

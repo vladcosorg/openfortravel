@@ -1,11 +1,11 @@
-import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
+import { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 type DefaultOptions = typeof EuDigitalCertificate.defaultOptions
-export class EuDigitalCertificate extends RestrictionNode<DefaultOptions> {
+export class EuDigitalCertificate extends AbstractRestrictionNode<DefaultOptions> {
   static defaultOptions = {
     issuer: [] as string[],
-    ...RestrictionNode.defaultOptions,
+    ...AbstractRestrictionNode.defaultOptions,
   }
 
   matches(): boolean {

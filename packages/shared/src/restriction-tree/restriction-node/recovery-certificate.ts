@@ -1,9 +1,9 @@
 import inRange from 'lodash/inRange'
 
-import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
+import { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export class RecoveryCertificate extends RestrictionNode<
+export class RecoveryCertificate extends AbstractRestrictionNode<
   typeof RecoveryCertificate.defaultOptions
 > {
   public static defaultOptions = {
@@ -11,7 +11,7 @@ export class RecoveryCertificate extends RestrictionNode<
     daysAtMost: 90,
     languages: [] as string[],
     issuer: [] as string[],
-    ...RestrictionNode.defaultOptions,
+    ...AbstractRestrictionNode.defaultOptions,
   }
 
   public penaltyScore(): number {

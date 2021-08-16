@@ -4,17 +4,17 @@ import intersection from 'lodash/intersection'
 import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 import {
   RestrictionCategory,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
+  AbstractRestrictionNode,
+} from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export class Citizenship extends RestrictionNode<
+export class Citizenship extends AbstractRestrictionNode<
   typeof Citizenship.defaultOptions
 > {
   public static defaultOptions = {
     allowedCitizenship: [] as string[],
     not: false,
-    ...RestrictionNode.defaultOptions,
+    ...AbstractRestrictionNode.defaultOptions,
   }
 
   matches(citizenships: string[]): boolean {

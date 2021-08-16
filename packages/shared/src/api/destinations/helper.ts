@@ -1,19 +1,17 @@
-import type {
+import {
   MappedDestinationCollection,
   MappedPlainDestinationCollection,
   PlainDestination,
-} from '@/shared/src/api/destinations/models'
-import {
   Destination,
   DestinationDefaults,
 } from '@/shared/src/api/destinations/models'
-import { getCountryCodes as getAllCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export function getFullDestinationList(
   partialDestinationList: MappedPlainDestinationCollection,
+  countryCodesList: string[],
 ): MappedDestinationCollection {
   const fullList: MappedDestinationCollection = {}
-  for (const countryCode of getAllCountryCodes()) {
+  for (const countryCode of countryCodesList) {
     if (!partialDestinationList[countryCode]) {
       fullList[countryCode] = createDummyDestination({ countryCode })
     } else {

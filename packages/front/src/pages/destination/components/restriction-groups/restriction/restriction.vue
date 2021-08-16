@@ -26,7 +26,7 @@ import RestrictionItem from '@/front/src/pages/destination/components/restrictio
 import SubDestination from '@/front/src/pages/destination/components/restriction-groups/restriction/sub-destination.vue'
 import Vaccinated from '@/front/src/pages/destination/components/restriction-groups/restriction/vaccinated.vue'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
-import type { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
+import type { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 import type { PropType } from 'vue'
@@ -51,7 +51,7 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     restriction: {
-      type: Object as PropType<RestrictionNode>,
+      type: Object as PropType<AbstractRestrictionNode>,
       required: true,
     },
   },

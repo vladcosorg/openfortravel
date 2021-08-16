@@ -1,14 +1,14 @@
 import {
   RestrictionCategory,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
+  AbstractRestrictionNode,
+} from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export class Age extends RestrictionNode<typeof Age.defaultOptions> {
+export class Age extends AbstractRestrictionNode<typeof Age.defaultOptions> {
   public static defaultOptions = {
     age: 6,
     orMore: false,
-    ...RestrictionNode.defaultOptions,
+    ...AbstractRestrictionNode.defaultOptions,
   }
 
   id(): RestrictionNodeType {

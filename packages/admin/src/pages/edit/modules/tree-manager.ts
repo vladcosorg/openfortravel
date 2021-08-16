@@ -8,6 +8,7 @@ import {
   TreeBuilderRestrictionNode,
   TreeBuilderNode,
 } from '@/admin/src/pages/edit/types'
+import { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { EncodedTreeNode } from '@/shared/src/restriction-tree/converter'
 import {
   isLogicNode,
@@ -15,7 +16,6 @@ import {
   isRestrictionNode,
 } from '@/shared/src/restriction-tree/guards'
 import { createDefaultNodeOfType } from '@/shared/src/restriction-tree/node-normalizers'
-import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
 import {
   LogicNodeType,
   RestrictionNodeType,
@@ -23,7 +23,7 @@ import {
 
 const compatMap = new Map<
   string,
-  keyof typeof RestrictionNode['defaultOptions']
+  keyof typeof AbstractRestrictionNode['defaultOptions']
 >()
 
 const compatibleOptions = [

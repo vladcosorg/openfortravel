@@ -22,7 +22,6 @@ jobs:
             safetyLevelCalculatorJob,
             statsAggregatorJob,
             emailForwarder,
-            api
           ]
     steps:
       - uses: actions/checkout@v2

@@ -1,14 +1,16 @@
 import difference from 'lodash/difference'
 
 import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
-import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
+import { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export class Origin extends RestrictionNode<typeof Origin.defaultOptions> {
+export class Origin extends AbstractRestrictionNode<
+  typeof Origin.defaultOptions
+> {
   public static defaultOptions = {
     allowedOrigins: [] as string[],
     not: false,
-    ...RestrictionNode.defaultOptions,
+    ...AbstractRestrictionNode.defaultOptions,
   }
 
   matches(value: string): boolean {

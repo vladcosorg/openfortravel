@@ -2,6 +2,7 @@ import invert from 'lodash/invert'
 import mapValues from 'lodash/mapValues'
 
 import { importAll } from '@/front/src/misc/misc'
+import list from '@/shared/src/i18n/declensions-ru/origin.json'
 import type { CountryList } from '@/shared/src/modules/country-list/country-list-helpers'
 import type { CountryListTypes } from '@/shared/src/modules/country-list/country-list-store'
 import {
@@ -37,6 +38,10 @@ export function preloadCountryList(): CountryListCollection {
     }
   }
   return output
+}
+
+export function extractCountryCodes(): string[] {
+  return Object.keys(list)
 }
 
 export function createCountryListEntry(

@@ -27,13 +27,13 @@ import { defineComponent, inject, PropType, Ref } from 'vue'
 
 import RestrictionItemContent from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item-content.vue'
 import RestrictionItemTitle from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction-item-title.vue'
-import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
+import { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-restriction-node'
 
 export default defineComponent({
   components: { RestrictionItemContent, RestrictionItemTitle },
   props: {
     restriction: {
-      type: Object as PropType<RestrictionNode>,
+      type: Object as PropType<AbstractRestrictionNode>,
       required: true,
     },
   },

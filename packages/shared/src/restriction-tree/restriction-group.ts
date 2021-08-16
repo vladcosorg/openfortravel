@@ -3,8 +3,8 @@ import difference from 'lodash/difference'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import {
   RestrictionCategory,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
+  AbstractRestrictionNode,
+} from '@/shared/src/restriction-tree/abstract-restriction-node'
 import {
   PlainRestrictionGroup,
   PlainRestrictionGroups,
@@ -55,7 +55,10 @@ export class RestrictionGroupCollection {
 }
 
 export class RestrictionGroup {
-  protected readonly indexedGroup: Map<RestrictionNodeType, RestrictionNode>
+  protected readonly indexedGroup: Map<
+    RestrictionNodeType,
+    AbstractRestrictionNode
+  >
   protected readonly restrictions: PlainRestrictionGroup = []
   constructor(restrictions?: PlainRestrictionGroup) {
     this.indexedGroup = new Map(

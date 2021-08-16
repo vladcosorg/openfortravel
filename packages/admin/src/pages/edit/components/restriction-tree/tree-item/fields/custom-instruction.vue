@@ -43,7 +43,7 @@ import Vue, { computed, defineComponent, inject, PropType, ref } from 'vue'
 
 import { EventBus } from '@/admin/src/pages/edit/modules/symbols'
 import { TreeBuilderRestrictionNode } from '@/admin/src/pages/edit/types'
-import { Placement } from '@/shared/src/restriction-tree/restriction-node'
+import { Placement } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({

@@ -4,11 +4,11 @@ import intersection from 'lodash/intersection'
 import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 import {
   RestrictionCategory,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
+  AbstractRestrictionNode,
+} from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export class DidNotVisitCountries extends RestrictionNode<
+export class DidNotVisitCountries extends AbstractRestrictionNode<
   typeof DidNotVisitCountries.defaultOptions
 > {
   public static defaultOptions = {
@@ -16,7 +16,7 @@ export class DidNotVisitCountries extends RestrictionNode<
     inverseSelection: false,
     matchEmpty: false,
     days: 0,
-    ...RestrictionNode.defaultOptions,
+    ...AbstractRestrictionNode.defaultOptions,
   }
 
   matches(userVisitedCountries: string[]): boolean {

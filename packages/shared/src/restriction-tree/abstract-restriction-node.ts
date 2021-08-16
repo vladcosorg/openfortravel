@@ -15,9 +15,9 @@ export enum Placement {
   REPLACE = 'replace',
 }
 
-export abstract class RestrictionNode<
+export abstract class AbstractRestrictionNode<
   T extends Record<string, unknown> &
-    typeof RestrictionNode.defaultOptions = typeof RestrictionNode.defaultOptions,
+    typeof AbstractRestrictionNode.defaultOptions = typeof AbstractRestrictionNode.defaultOptions,
 > implements TreeNode
 {
   static defaultOptions = {

@@ -1,5 +1,5 @@
 import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
-import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
+import { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export enum VaccineBrand {
@@ -39,7 +39,7 @@ export function isVaccineBrand(brand: string): brand is VaccineBrand {
 }
 
 type DefaultOptions = typeof Vaccinated.defaultOptions
-export class Vaccinated extends RestrictionNode<DefaultOptions> {
+export class Vaccinated extends AbstractRestrictionNode<DefaultOptions> {
   static defaultOptions = {
     daysAgo: 14,
     monthsAtMost: 9,
@@ -47,7 +47,7 @@ export class Vaccinated extends RestrictionNode<DefaultOptions> {
     languages: [] as string[],
     issuer: [] as string[],
     partial: false,
-    ...RestrictionNode.defaultOptions,
+    ...AbstractRestrictionNode.defaultOptions,
   }
 
   matches(visitorContext?: { brand: VaccineBrand; partial: boolean }): boolean {

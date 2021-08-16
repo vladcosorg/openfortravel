@@ -1,14 +1,14 @@
 import {
   RestrictionCategory,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
+  AbstractRestrictionNode,
+} from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export class Insurance extends RestrictionNode<
+export class Insurance extends AbstractRestrictionNode<
   typeof Insurance.defaultOptions
 > {
   public static defaultOptions = {
-    ...RestrictionNode.defaultOptions,
+    ...AbstractRestrictionNode.defaultOptions,
   }
 
   id(): RestrictionNodeType {

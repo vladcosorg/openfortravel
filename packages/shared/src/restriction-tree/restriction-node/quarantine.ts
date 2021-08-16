@@ -1,16 +1,16 @@
 import {
   RestrictionCategory,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
+  AbstractRestrictionNode,
+} from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export class Quarantine extends RestrictionNode<
+export class Quarantine extends AbstractRestrictionNode<
   typeof Quarantine.defaultOptions
 > {
   public static defaultOptions = {
     days: 14,
     earlyReleaseDays: 0,
-    ...RestrictionNode.defaultOptions,
+    ...AbstractRestrictionNode.defaultOptions,
   }
 
   id(): RestrictionNodeType {

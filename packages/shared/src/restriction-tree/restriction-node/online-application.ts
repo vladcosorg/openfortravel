@@ -1,16 +1,16 @@
 import {
   RestrictionCategory,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
+  AbstractRestrictionNode,
+} from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
-export class OnlineApplication extends RestrictionNode<
+export class OnlineApplication extends AbstractRestrictionNode<
   typeof OnlineApplication.defaultOptions
 > {
   static defaultOptions = {
     url: '',
     hoursBeforeArrival: undefined as number | undefined,
-    ...RestrictionNode.defaultOptions,
+    ...AbstractRestrictionNode.defaultOptions,
   }
 
   displayOrder(): number {

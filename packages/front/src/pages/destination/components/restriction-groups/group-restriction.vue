@@ -36,15 +36,15 @@ import { PropType, defineComponent, ref, provide } from 'vue'
 import Restriction from '@/front/src/pages/destination/components/restriction-groups/restriction/restriction.vue'
 import {
   RestrictionCategory,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
+  AbstractRestrictionNode,
+} from '@/shared/src/restriction-tree/abstract-restriction-node'
 
 export default defineComponent({
   name: 'GroupRestriction',
   components: { Restriction },
   props: {
     restriction: {
-      type: Object as PropType<RestrictionNode>,
+      type: Object as PropType<AbstractRestrictionNode>,
       required: true,
     },
     index: {

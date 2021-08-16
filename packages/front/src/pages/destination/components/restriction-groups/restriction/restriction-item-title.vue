@@ -3,14 +3,14 @@ import { h, defineComponent, PropType, computed } from 'vue'
 
 import {
   Placement,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
+  AbstractRestrictionNode,
+} from '@/shared/src/restriction-tree/abstract-restriction-node'
 
 export default defineComponent({
   components: {},
   props: {
     restriction: {
-      type: Object as PropType<RestrictionNode>,
+      type: Object as PropType<AbstractRestrictionNode>,
       required: true,
     },
   },

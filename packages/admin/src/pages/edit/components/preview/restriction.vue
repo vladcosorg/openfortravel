@@ -22,7 +22,7 @@ import { getRestrictionLabel } from '@/admin/src/pages/edit/components/restricti
 import { vd } from '@/shared/src/misc/helpers'
 import { ExtractArgs } from '@/shared/src/misc/type-helpers'
 import { getLabelsForCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
-import { RestrictionNode } from '@/shared/src/restriction-tree/restriction-node'
+import { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { Age } from '@/shared/src/restriction-tree/restriction-node/age'
 import { Citizenship } from '@/shared/src/restriction-tree/restriction-node/citizenship'
 import { DidNotVisitCountries } from '@/shared/src/restriction-tree/restriction-node/did-not-visit-countries'
@@ -41,7 +41,7 @@ import {
 
 function isType<
   T extends { new (...args: ExtractArgs<T>): A },
-  A extends RestrictionNode,
+  A extends AbstractRestrictionNode,
 >(restriction: A, type: T): restriction is InstanceType<T> {
   return restriction.constructor === type
 }
@@ -49,7 +49,7 @@ function isType<
 export default defineComponent({
   props: {
     restriction: {
-      type: Object as PropType<RestrictionNode>,
+      type: Object as PropType<AbstractRestrictionNode>,
       required: true,
     },
   },

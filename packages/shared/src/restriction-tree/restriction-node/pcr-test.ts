@@ -1,7 +1,7 @@
 import {
   RestrictionCategory,
-  RestrictionNode,
-} from '@/shared/src/restriction-tree/restriction-node'
+  AbstractRestrictionNode,
+} from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export enum TestType {
@@ -18,14 +18,16 @@ export const testLabels = {
   [TestType.TMA]: 'TMA',
 }
 
-export class PcrTest extends RestrictionNode<typeof PcrTest.defaultOptions> {
+export class PcrTest extends AbstractRestrictionNode<
+  typeof PcrTest.defaultOptions
+> {
   public static defaultOptions = {
     beforeArrival: true,
     hoursBeforeArrival: 72,
     languages: [] as string[],
     types: [] as TestType[],
     issuer: [] as string[],
-    ...RestrictionNode.defaultOptions,
+    ...AbstractRestrictionNode.defaultOptions,
   }
 
   getFormattedTypes(): TestType[] {
