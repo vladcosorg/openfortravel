@@ -69,9 +69,8 @@ function getCodeByLocalizedOrFallbackSlug(
   slug: string,
   type: 'origin' | 'destination',
 ): string {
-  return (
-    serverCache.countrySlugToCodeMap[locale][type][slug] ??
-    serverCache.countrySlugToCodeMap['en'][type][slug] ??
-    'us'
-  )
+  const localizedList =
+    serverCache.countrySlugToCodeMap[locale] ??
+    serverCache.countrySlugToCodeMap['en']
+  return localizedList[type][slug] ?? 'us'
 }
