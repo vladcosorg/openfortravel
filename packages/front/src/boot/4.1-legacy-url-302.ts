@@ -13,13 +13,15 @@ export default ({
   redirect: (url: string, code: number) => void
 }) => {
   router.beforeEach((to, _from, next) => {
+    console.log(to)
     if (to.name === 'origin-old') {
       return redirect(
         getOriginRouteURL({
-          originSlug:
-            serverCache.countrySlugToCodeMap[to.params.locale as string].origin[
-              to.params.originSlug as string
-            ],
+          originSlug: getCodeByLocalizedOrFallbackSlug(
+            to.params.locale,
+            to.params.originSlug,
+            'origin',
+          ),
         }),
         301,
       )
@@ -28,13 +30,16 @@ export default ({
     if (to.name === 'destination-old') {
       return redirect(
         getDestinationRouteURL({
-          originSlug:
-            serverCache.countrySlugToCodeMap[to.params.locale as string].origin[
-              to.params.originSlug as string
-            ],
-          destinationSlug:
-            serverCache.countrySlugToCodeMap[to.params.locale as string]
-              .destination[to.params.destinationSlug as string],
+          originSlug: getCodeByLocalizedOrFallbackSlug(
+            to.params.locale,
+            to.params.originSlug,
+            'origin',
+          ),
+          destinationSlug: getCodeByLocalizedOrFallbackSlug(
+            to.params.locale,
+            to.params.destinationSlug,
+            'destination',
+          ),
         }),
         301,
       )
@@ -58,4 +63,16 @@ export default ({
     next()
     return
   })
+}
+
+function getCodeByLocalizedOrFallbackSlug(
+  locale: string,
+  slug: string,
+  type: 'origin' | 'destination',
+): string {
+  return (
+    serverCache.countrySlugToCodeMap[locale][type][slug] ??
+    serverCache.countrySlugToCodeMap['en'][type][slug] ??
+    'us'
+  )
 }
