@@ -117,6 +117,10 @@ export function getRoutes(
           path: `${i18n.t('page.country.route')}/:originSlug`,
         },
         {
+          name: 'origin-old-temp',
+          path: `${i18n.t('page.country.route')}/:originSlug/as/:parts+`,
+        },
+        {
           name: 'index-targeted',
           path: 'travel-restrictions/from-:originSlug/',
           component: () =>
@@ -149,10 +153,7 @@ export function getRoutes(
     // but you can also remove it
     {
       path: '/:catchAll(.*)*',
-      component: () =>
-        import(
-          /* webpackChunkName: "page-error" */ '@/front/src/pages/error-404-page.vue'
-        ),
+      redirect: '/',
     },
   ]
 }

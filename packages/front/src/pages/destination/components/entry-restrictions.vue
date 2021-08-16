@@ -44,8 +44,8 @@
       </q-item-section>
       <q-item-section>
         <q-item-label class="text-primary-inverse">
-          According to available information currently you cannot enter this
-          country.</q-item-label
+          According to available information, currently you cannot enter
+          <country-label :value="destinationISO" />.</q-item-label
         >
       </q-item-section>
     </q-item>

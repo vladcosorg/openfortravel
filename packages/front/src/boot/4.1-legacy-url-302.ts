@@ -13,7 +13,7 @@ export default ({
   redirect: (url: string, code: number) => void
 }) => {
   router.beforeEach((to, _from, next) => {
-    if (to.name === 'origin-old') {
+    if (to.name === 'origin-old' || to.name === 'origin-old-temp') {
       return redirect(
         getOriginRouteURL({
           originSlug: getCodeByLocalizedOrFallbackSlug(
