@@ -148,7 +148,7 @@ import { defineComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
-import { TripCard } from '@/front/src/models/TripCard'
+import { RoundTripCard } from '@/front/src/models/round-trip-card'
 import TripHighlights from '@/front/src/pages/country/components/trip-highlights.vue'
 import TripSummary from '@/front/src/pages/country/components/trip-summary.vue'
 import { riskLevelColor } from '@/front/src/pages/country/composable'
@@ -166,7 +166,7 @@ export default defineComponent({
       type: Boolean,
     },
     journey: {
-      type: Object as PropType<TripCard>,
+      type: Object as PropType<RoundTripCard>,
     },
     hideRiskLevel: {
       type: Boolean,

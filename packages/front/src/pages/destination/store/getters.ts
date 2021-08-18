@@ -1,8 +1,9 @@
 import {
   createCollection,
-  createTripCard,
+  createRoundTripCard,
 } from '@/front/src/composables/trip-cards'
-import { TripCard } from '@/front/src/models/TripCard'
+import { QuarantineQuestion } from '@/front/src/pages/destination/questions/items/quarantine-question'
+import { Question } from '@/front/src/pages/destination/questions/question'
 import type { StateClass } from '@/front/src/pages/destination/store/state'
 import type { GetterSignatures } from '@/front/src/pages/destination/store/types/getters'
 import type { RootStateType } from '@/front/src/store/state'
@@ -36,12 +37,19 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
         rootGetters.visitorContextWithDefaults,
       )
     },
-
-    returnTripCard(_state, getters, _rootState, rootGetters): TripCard {
-      return createTripCard(
-        getters.destination,
+    tripCard(_state, getters, _rootState, rootGetters) {
+      return createRoundTripCard(
         getters.origin,
+        getters.destination,
         rootGetters.visitorContextWithDefaults,
       )
+    },
+    questions(state, getters): Question[] {
+      return [
+        // new GeneralQuestion(getters.tripCard.outgoingTrip),
+        // new GeneralQuestion(getters.tripCard.returnTrip, true),
+        new QuarantineQuestion(getters.tripCard.outgoingTrip),
+        new QuarantineQuestion(getters.tripCard.returnTrip, true),
+      ]
     },
   }

@@ -1,10 +1,9 @@
 import difference from 'lodash/difference'
 
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
-import {
-  RestrictionCategory,
-  AbstractRestrictionNode,
-} from '@/shared/src/restriction-tree/abstract-restriction-node'
+import { RestrictionCategory } from '@/shared/src/restriction-tree/abstract-restriction-node'
+import { RestrictionNodeList } from '@/shared/src/restriction-tree/converter'
+import { Matcher } from '@/shared/src/restriction-tree/matcher'
 import {
   PlainRestrictionGroup,
   PlainRestrictionGroups,
@@ -18,6 +17,7 @@ import {
 export type RawRestrictionGroupCollection = RestrictionGroup[]
 
 export class RestrictionGroupCollection {
+  protected matcher?: Matcher
   constructor(
     protected readonly restrictionGroups: PlainRestrictionGroups,
     protected readonly context?: VisitorProfile,
@@ -54,11 +54,10 @@ export class RestrictionGroupCollection {
   }
 }
 
+type MappedMap<A, K extends keyof A = keyof A> = Map<K, A[K]>
+
 export class RestrictionGroup {
-  protected readonly indexedGroup: Map<
-    RestrictionNodeType,
-    AbstractRestrictionNode
-  >
+  protected readonly indexedGroup: MappedMap<RestrictionNodeList>
   protected readonly restrictions: PlainRestrictionGroup = []
   constructor(restrictions?: PlainRestrictionGroup) {
     this.indexedGroup = new Map(
@@ -70,6 +69,12 @@ export class RestrictionGroup {
     if (restrictions) {
       this.restrictions = restrictions
     }
+  }
+
+  public findRestrictionByType<T extends keyof RestrictionNodeList>(
+    type: T,
+  ): RestrictionNodeList[T] | undefined {
+    return this.indexedGroup.get(type) as RestrictionNodeList[T]
   }
 
   get prerequisites(): PlainRestrictionGroup {

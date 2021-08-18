@@ -37,8 +37,8 @@
   </q-select>
 </template>
 
-<style lang="sass" scoped>
-.inline-select::v-deep
+<style lang="sass">
+.inline-select
   font-size: inherit !important
   display: inline-block
   .q-field__marginal

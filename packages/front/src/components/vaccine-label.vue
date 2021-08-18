@@ -12,10 +12,12 @@
 <script lang="ts">
 import { computed, defineComponent, PropType } from 'vue'
 
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import {
   getVaccineLabel,
   VaccineBrand,
 } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   inheritAttrs: false,
@@ -33,9 +35,24 @@ export default defineComponent({
     capitalize: {
       type: Boolean,
     },
+    useGlobalValue: {
+      type: Boolean,
+    },
   },
   setup(props) {
-    const label = computed(() => getVaccineLabel(props.value))
+    const internalValue = computed(() => {
+      if (props.useGlobalValue) {
+        const globalValue =
+          useRootStore().getters.visitorContextWithDefaults[
+            RestrictionNodeType.VACCINATED
+          ]
+
+        return globalValue ? globalValue.brand : undefined
+      }
+
+      return props.value
+    })
+    const label = computed(() => getVaccineLabel(internalValue.value))
     return { label }
   },
 })

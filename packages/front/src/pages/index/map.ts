@@ -9,7 +9,7 @@ import {
 import random from 'lodash/random'
 import { getCssVar } from 'quasar'
 
-import { TripCard } from '@/front/src/models/TripCard'
+import { RoundTripCard } from '@/front/src/models/round-trip-card'
 import { statusColorMap } from '@/front/src/pages/index/index-composable'
 import { goToDestination } from '@/front/src/router/route-builders/destination'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
@@ -27,7 +27,7 @@ type SeriesItem = {
 export function createChart(
   domElement: HTMLElement,
   originCode: string,
-  restrictions: TripCard[],
+  restrictions: RoundTripCard[],
 ): MapChart {
   const chart = createAndConfigureChart(domElement)
 
@@ -211,7 +211,7 @@ export function configurePolygonTemplate(template: MapPolygon): void {
   template.hidden = true
 }
 
-function transformData(restrictions: TripCard[]): SeriesItem[] {
+function transformData(restrictions: RoundTripCard[]): SeriesItem[] {
   const { t } = useVueI18n()
   return restrictions.map((restriction) => ({
     id: restriction.destinationISO.toUpperCase(),

@@ -63,7 +63,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
-import { TripCard } from '@/front/src/models/TripCard'
+import { RoundTripCard } from '@/front/src/models/round-trip-card'
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
 
 import type { PropType } from 'vue'
@@ -76,7 +76,7 @@ export default defineComponent({
       type: Boolean,
     },
     destinations: {
-      type: Array as PropType<TripCard[]>,
+      type: Array as PropType<RoundTripCard[]>,
       default: () => [],
     },
     collapseAfter: {

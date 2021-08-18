@@ -1,15 +1,18 @@
+import { OneWayTripCard } from '@/front/src/models/one-way-trip-card'
 import { getDestinationRouteURL } from '@/front/src/router/route-builders/destination'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
-import { RestrictionGroup } from '@/shared/src/restriction-tree/restriction-group'
 
-export class TripCard {
+export class RoundTripCard {
+  public readonly origin: Destination
+  public readonly destination: Destination
   constructor(
-    protected readonly origin: Destination,
-    protected readonly destination: Destination,
-    protected readonly restrictionGroup: RestrictionGroup,
-    protected readonly returnRestrictionGroup?: RestrictionGroup,
-  ) {}
+    public readonly outgoingTrip: OneWayTripCard,
+    public readonly returnTrip: OneWayTripCard,
+  ) {
+    this.origin = outgoingTrip.origin
+    this.destination = outgoingTrip.destination
+  }
 
   get originISO(): string {
     return this.origin.countryCode
@@ -20,53 +23,50 @@ export class TripCard {
   }
 
   get score(): number {
-    if (this.isForbidden) {
-      return 0
-    }
-
-    return this.restrictionGroup.rating
+    return this.outgoingTrip.score
   }
 
   get status(): RestrictionStatus {
-    return this.restrictionGroup.status
+    return this.outgoingTrip.status
   }
 
   get isForbidden(): boolean {
-    return this.restrictionGroup.status === RestrictionStatus.FORBIDDEN
+    return this.outgoingTrip.isForbidden
   }
 
   get returnIsForbidden(): boolean {
-    return this.restrictionGroup.status === RestrictionStatus.FORBIDDEN
+    return this.returnTrip.isForbidden
   }
 
   get quarantineRequired(): boolean {
-    return this.restrictionGroup.quarantineRequired
+    return this.outgoingTrip.quarantineRequired
   }
 
   get returnQuarantineRequired(): boolean {
-    return this.restrictionGroup.quarantineRequired
+    return this.returnTrip.quarantineRequired
   }
 
   get highlights(): string[] {
+    return []
     const highlights: string[] = []
 
     if (this.isForbidden) {
       return highlights
     }
 
-    if (this.restrictionGroup.quarantineRequired) {
+    if (this.bestGroup.quarantineRequired) {
       highlights.push('quarantine')
     } else {
       highlights.push('no-quarantine')
     }
 
-    if (this.restrictionGroup.pcrTestRequired) {
+    if (this.bestGroup.pcrTestRequired) {
       highlights.push('pcr-test')
     } else {
       highlights.push('no-pcr-test')
     }
 
-    if (this.restrictionGroup.insuranceRequired) {
+    if (this.bestGroup.insuranceRequired) {
       highlights.push('insurance')
     }
 

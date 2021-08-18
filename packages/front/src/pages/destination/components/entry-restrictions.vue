@@ -44,8 +44,24 @@
       </q-item-section>
       <q-item-section>
         <q-item-label class="text-primary-inverse">
-          According to available information, currently you cannot enter
-          <country-label :value="destinationISO" />.</q-item-label
+          According to available information you cannot visit
+          <country-label :value="destinationISO" /> at this time.</q-item-label
+        >
+        <q-item-label caption class="text-primary-inverse">
+          Some exceptions may apply if you have a
+          <b class="text-dotted-underline"
+            >special status<q-tooltip>
+              Transport crew members, onboard transport staff, cross-border
+              workers entering and leaving Italy for proven reasons of work,
+              pupils and students, officials and agents of the European Union
+            </q-tooltip></b
+          >
+          or
+          <b class="text-dotted-underline"
+            >special circumstances<q-tooltip
+              >Urgent health reasons, death of a relative, etc<q-tooltip /></q-tooltip></b
+          >. Please contact the embassy of
+          <country-label :value="destinationISO" /> for advice.</q-item-label
         >
       </q-item-section>
     </q-item>

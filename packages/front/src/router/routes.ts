@@ -164,9 +164,6 @@ export function createGenericRouter(
 ): Router {
   const createHistory = isServer ? createMemoryHistory : createWebHistory
   return createRouter({
-    scrollBehavior: function (to) {
-      return to.hash ? { selector: to.hash } : { x: 0, y: 0 }
-    },
     routes: getRoutes(i18n),
     history: createHistory(
       process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE,

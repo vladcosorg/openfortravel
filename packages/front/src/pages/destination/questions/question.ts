@@ -1,15 +1,12 @@
-import type { Destination } from '@/shared/src/api/destinations/models'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
+import { OneWayTripCard } from '@/front/src/models/one-way-trip-card'
+import { RenderFunction } from '@/shared/src/misc/type-helpers'
 
 export abstract class Question {
-  constructor(
-    protected readonly restriction: Restriction,
-    protected readonly destination: Destination,
-  ) {}
+  constructor(public readonly trip: OneWayTripCard) {}
 
   public abstract get id(): string
-  public abstract get question(): string
-  public abstract get answer(): string
+  public abstract get question(): RenderFunction
+  public abstract get answer(): RenderFunction
 
   public get skip(): boolean {
     return false

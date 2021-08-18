@@ -57,14 +57,8 @@
 import { computed, defineComponent } from 'vue'
 
 import CitizenshipContextInline from '@/front/src/components/context-field/citizenship/citizenship-context-inline.vue'
-import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
 import VaccinationContextInline from '@/front/src/components/context-field/vaccination/vaccination-context-inline.vue'
-import CitizenshipStatus from '@/front/src/components/context-value/citizenship-status.vue'
-import OriginStatus from '@/front/src/components/context-value/origin-status.vue'
-import VaccinationStatus from '@/front/src/components/context-value/vaccination-status.vue'
-import CountryLabel from '@/front/src/components/country/country-label.vue'
-import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import DestinationGroup from '@/front/src/pages/country/components/destination-group.vue'
 import InputFilter from '@/front/src/pages/country/components/input-filter.vue'
 import {
@@ -79,13 +73,7 @@ export default defineComponent({
     VaccinationContextInline,
     CitizenshipContextInline,
     OriginContextInline,
-    CountryLabel,
-    OriginStatus,
-    CitizenshipStatus,
-    VaccinationStatus,
-    GenericSelect,
     InputFilter,
-    TheBreadcrumbs,
     DestinationGroup,
   },
 

@@ -34,13 +34,13 @@
 import { computed, defineComponent, PropType } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
-import { TripCard } from '@/front/src/models/TripCard'
+import { RoundTripCard } from '@/front/src/models/round-trip-card'
 
 export default defineComponent({
   components: { CountryLabel },
   props: {
     journey: {
-      type: Object as PropType<TripCard>,
+      type: Object as PropType<RoundTripCard>,
       required: true,
     },
   },

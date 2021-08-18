@@ -18,6 +18,8 @@
         </div>
       </div>
       <q-separator class="q-my-xl" />
+      <questions class="q-my-xl col-8" :is-loading="isLoading" />
+      <q-separator class="q-my-xl" />
       <div class="row q-col-gutter-xl">
         <div class="col-md-4 col-12">
           <stats class="q-mb-xl" :is-loading="isLoading" />
@@ -39,12 +41,6 @@
         </div>
       </div>
 
-      <!--      <questions-->
-      <!--        class="q-my-xl"-->
-      <!--        :is-loading="isLoading"-->
-      <!--        :destination="destination"-->
-      <!--        :restriction="restriction"-->
-      <!--      />-->
       <section>
         <!--        <widget-header :title="$t('components.sharing.title')" />-->
         <!--        <sharing :restriction="restriction" />-->
@@ -63,6 +59,7 @@ import { useContextParser } from '@/front/src/composables/visitor-context-applie
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import EntryRestrictions from '@/front/src/pages/destination/components/entry-restrictions.vue'
 import Links from '@/front/src/pages/destination/components/links.vue'
+import Questions from '@/front/src/pages/destination/components/sections/questions/questions.vue'
 import TheRelatedCriteriaSection from '@/front/src/pages/destination/components/sections/the-related-criteria-section.vue'
 import Stats from '@/front/src/pages/destination/components/stats.vue'
 import TheHeading from '@/front/src/pages/destination/components/the-heading.vue'
@@ -76,6 +73,7 @@ import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
   components: {
+    Questions,
     TheRelatedCriteriaSection,
     Links,
     Stats,

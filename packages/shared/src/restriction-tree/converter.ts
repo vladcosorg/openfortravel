@@ -57,6 +57,10 @@ export const typeConstructors = {
   [RestrictionNodeType.CUSTOM_REQUIREMENT]: CustomRequirement,
 }
 
+export type RestrictionNodeList = {
+  [key in RestrictionNodeType]: InstanceType<typeof typeConstructors[key]>
+}
+
 export function convertFromStorageFormat<T extends EncodedTreeNode>(
   nodeTree: T,
 ): TreeNode {

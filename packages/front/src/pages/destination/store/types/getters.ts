@@ -1,4 +1,5 @@
-import { TripCard } from '@/front/src/models/TripCard'
+import { RoundTripCard } from '@/front/src/models/round-trip-card'
+import { Question } from '@/front/src/pages/destination/questions/question'
 import type { StateClass } from '@/front/src/pages/destination/store/state'
 import type { Destination } from '@/shared/src/api/destinations/models'
 import type { GetterContext } from '@/shared/src/misc/augmented-store'
@@ -18,5 +19,6 @@ export type GetterSignatures = {
   destination(...args: LocalGetterContext): Destination
   outgoingRestrictions(...args: LocalGetterContext): RestrictionGroupCollection
   returnRestrictions(...args: LocalGetterContext): RestrictionGroupCollection
-  returnTripCard(...args: LocalGetterContext): TripCard
+  tripCard(...args: LocalGetterContext): RoundTripCard
+  questions(...args: LocalGetterContext): Question[]
 }

@@ -1,33 +1,39 @@
-import type { VisitedCountryQuestion } from '@/front/src/pages/destination/questions/items/visited-country-question'
+import { h } from 'vue'
+
+import CountryLabel from '@/front/src/components/country/country-label.vue'
+import { OneWayTripCard } from '@/front/src/models/one-way-trip-card'
 import { Question } from '@/front/src/pages/destination/questions/question'
 import { getCurrentRelativeURL } from '@/front/src/router/helpers'
-import type { Destination } from '@/shared/src/api/destinations/models'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
-import { useI18nWithPrefix } from '@/shared/src/composables/use-plugins'
+import { RenderFunction } from '@/shared/src/misc/type-helpers'
 import { getNationalityOrFallback } from '@/shared/src/modules/nationality/nationality-helpers'
 
-const { t } = useI18nWithPrefix<string>('faq.canITravelToCountry')
 export class GeneralQuestion extends Question {
   constructor(
-    protected readonly restriction: Restriction,
-    protected readonly destination: Destination,
-    protected readonly visitedCountryQuestion: VisitedCountryQuestion,
+    public readonly trip: OneWayTripCard,
+    protected readonly returning = false,
   ) {
-    super(restriction, destination)
-  }
-  get id(): string {
-    return `can-travel-from-${this.restriction.originSlug}-to-${this.restriction.destinationSlug}`
-  }
-  get question(): string {
-    return t('question', {
-      origin: this.restriction.originLabel,
-      destination: this.restriction.destinationLabel,
-    })
+    super(trip)
   }
 
-  get answer(): string {
+  get id(): string {
+    return `can-i-${this.returning ? 'return' : 'travel'}-to-${
+      this.trip.destination.destinationSlug
+    }-from-${this.trip.origin.originSlug}`
+  }
+  get question(): RenderFunction {
+    return () => [
+      `Can I ${this.returning ? ' return back ' : ' travel'} from `,
+      h(CountryLabel, { value: this.trip.originISO }),
+      ' to ',
+      h(CountryLabel, { value: this.trip.destinationISO }),
+      '?',
+    ]
+  }
+
+  get answer(): RenderFunction {
     const answer: string[] = []
+    return () => 'dddd'
     const vars = {
       origin: this.restriction.originLabel,
       destination: this.restriction.destinationLabel,

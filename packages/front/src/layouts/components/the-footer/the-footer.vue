@@ -1,7 +1,7 @@
 <template>
   <div class="text-center text-caption q-ma-xl text-primary-subtle">
     <!--    <portal-target name="footer" />-->
-    <the-footer-menu class="q-mb-lg" />
+
     <div class="q-mb-lg">
       {{
         $t('components.footer.disclaimer', {
@@ -9,6 +9,7 @@
         })
       }}
     </div>
+    <the-footer-menu class="q-mb-lg" />
     <div
       class="q-mb-lg"
       v-html="

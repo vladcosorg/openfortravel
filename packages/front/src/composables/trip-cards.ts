@@ -1,44 +1,31 @@
 import debounce from 'lodash/debounce'
 import { ref, watch } from 'vue'
 
-import { TripCard } from '@/front/src/models/TripCard'
+import { OneWayTripCard } from '@/front/src/models/one-way-trip-card'
+import { RoundTripCard } from '@/front/src/models/round-trip-card'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
-import {
-  RestrictionGroup,
-  RestrictionGroupCollection,
-} from '@/shared/src/restriction-tree/restriction-group'
+import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 import type { ComputedRef } from 'vue'
 
-export function createTripsCards(
-  includeReturnData = false,
-): ComputedRef<TripCard[]> {
+export function createTripsCards(): ComputedRef<RoundTripCard[]> {
   const store = useRootStore()
-  const results = ref<TripCard[]>([])
+  const results = ref<RoundTripCard[]>([])
   const countries = store.getters.wrappedHostRules
   const debounced = debounce((context) => {
     const originCountry = countries[context[RestrictionNodeType.ORIGIN]]
     results.value = Object.values(countries)
       .filter((destinationCountry) => !destinationCountry.equals(originCountry))
-      .map((destinationCountry) => {
-        const optimalGroup = createCollection(
-          destinationCountry,
-          context,
-        ).getBestGroup()
-
-        return new TripCard(
-          originCountry,
-          destinationCountry,
-          optimalGroup ?? new RestrictionGroup(),
-          includeReturnData
-            ? createCollection(originCountry, context, true).getBestGroup() ??
-              new RestrictionGroup()
-            : undefined,
-        )
-      })
+      .map(
+        (destinationCountry) =>
+          new RoundTripCard(
+            new OneWayTripCard(originCountry, destinationCountry, context),
+            new OneWayTripCard(destinationCountry, originCountry, context),
+          ),
+      )
   }, 100)
 
   watch(
@@ -53,20 +40,22 @@ export function createTripsCards(
   return results
 }
 
-export function createTripCard(
+export function createOneWayTripCard(
   originCountry: Destination,
   destinationCountry: Destination,
   profile: VisitorProfile,
-): TripCard {
-  const collection = new RestrictionGroupCollection(
-    originCountry.restrictions,
-    profile,
-  )
+): OneWayTripCard {
+  return new OneWayTripCard(originCountry, destinationCountry, profile)
+}
 
-  return new TripCard(
-    originCountry,
-    destinationCountry,
-    collection.getBestGroup() ?? new RestrictionGroup(),
+export function createRoundTripCard(
+  origin: Destination,
+  destination: Destination,
+  profile: VisitorProfile,
+): RoundTripCard {
+  return new RoundTripCard(
+    createOneWayTripCard(origin, destination, profile),
+    createOneWayTripCard(destination, origin, profile),
   )
 }
 

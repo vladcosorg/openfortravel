@@ -2,7 +2,7 @@ import { matFlightTakeoff } from '@quasar/extras/material-icons'
 import { computed, ref } from 'vue'
 
 import { createTripsCards } from '@/front/src/composables/trip-cards'
-import { TripCard } from '@/front/src/models/TripCard'
+import { RoundTripCard } from '@/front/src/models/round-trip-card'
 import type { CountryMap } from '@/front/src/pages/country/country-store'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
 import { RiskLevel } from '@/shared/src/api/destinations/models'
@@ -23,11 +23,11 @@ export function useCountries(): {
 }
 
 export function useRestrictionList(): {
-  allDestinations: ComputedRef<TripCard[]>
-  allowedDestinations: ComputedRef<TripCard[]>
-  forbiddenDestinations: ComputedRef<TripCard[]>
+  allDestinations: ComputedRef<RoundTripCard[]>
+  allowedDestinations: ComputedRef<RoundTripCard[]>
+  forbiddenDestinations: ComputedRef<RoundTripCard[]>
 } {
-  const allDestinations = createTripsCards(true)
+  const allDestinations = createTripsCards()
   const allowedDestinations = computed(() =>
     allDestinations.value.filter((destination) => !destination.isForbidden),
   )
@@ -39,12 +39,12 @@ export function useRestrictionList(): {
   return { allDestinations, allowedDestinations, forbiddenDestinations }
 }
 
-type InputFilter = (input: TripCard[]) => TripCard[]
+type InputFilter = (input: RoundTripCard[]) => RoundTripCard[]
 
 export function useFilterer(
-  input: ComputedRef<TripCard[]>,
+  input: ComputedRef<RoundTripCard[]>,
   filters: InputFilter[],
-): ComputedRef<TripCard[]> {
+): ComputedRef<RoundTripCard[]> {
   return computed(() =>
     filters.reduce((restrictions, filter) => filter(restrictions), input.value),
   )
@@ -56,7 +56,7 @@ export function useCountryMatchFilter(): {
 } {
   const filterValue = ref('')
 
-  const filterFunction: InputFilter = (input: TripCard[]) => {
+  const filterFunction: InputFilter = (input: RoundTripCard[]) => {
     if (!filterValue.value) {
       return input
     }
@@ -98,9 +98,9 @@ export function useTabFilter(): {
   }
 }
 
-export function useRestrictionFilterer(input: Ref<TripCard[]>): {
+export function useRestrictionFilterer(input: Ref<RoundTripCard[]>): {
   countryMatchFilterValue: Ref<string>
-  destinations: Ref<TripCard[]>
+  destinations: Ref<RoundTripCard[]>
 } {
   const {
     filterValue: countryMatchFilterValue,

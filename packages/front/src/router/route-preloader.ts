@@ -11,7 +11,7 @@ import {
 import { createVueI18n } from '@/shared/src/misc/i18n'
 
 import type { IVueI18n } from 'vue-i18n'
-import type VueRouter from 'vue-router'
+import type { Router } from 'vue-router'
 
 export const routesThatNeedLocalization = [
   'origin',
@@ -19,7 +19,7 @@ export const routesThatNeedLocalization = [
   'index-targeted',
 ]
 let clonedI18n: IVueI18n
-function getLocalizedRouter(locale: string): VueRouter {
+function getLocalizedRouter(locale: string): Router {
   if (!clonedI18n) {
     clonedI18n = createVueI18n(serverCache.i18nMessages)
   }

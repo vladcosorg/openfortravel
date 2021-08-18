@@ -1,3 +1,5 @@
+import { defineComponent } from 'vue'
+
 import type { QBreadcrumbsEl } from 'quasar'
 
 interface Flavoring<FlavorT> {
@@ -33,3 +35,5 @@ export type AnyArgFunction<T = unknown> = (...args: any[]) => T
 export type Breadcrumbs = ReadonlyArray<
   Pick<QBreadcrumbsEl, 'to' | 'icon' | 'label'>
 >
+
+export type RenderFunction = Parameters<typeof defineComponent>[0]['render']

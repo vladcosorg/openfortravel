@@ -23,7 +23,7 @@
 import defer from 'lodash/defer'
 import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue'
 
-import { TripCard } from '@/front/src/models/TripCard'
+import { RoundTripCard } from '@/front/src/models/round-trip-card'
 
 import type { MapChart } from '@amcharts/amcharts4/maps'
 import type { PropType } from 'vue'
@@ -36,7 +36,7 @@ export default defineComponent({
       required: true,
     },
     restrictions: {
-      type: Array as PropType<TripCard[]>,
+      type: Array as PropType<RoundTripCard[]>,
       required: true,
     },
     isLoading: {
