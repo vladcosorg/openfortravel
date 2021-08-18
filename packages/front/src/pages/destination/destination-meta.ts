@@ -1,6 +1,7 @@
 import { useMeta } from 'quasar'
 import { useRoute } from 'vue-router'
 
+import { generateHreflangTags } from '@/front/src/composables/langhref'
 import { generateCanonicalBlock } from '@/front/src/misc/meta'
 import { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { useRootStore, useVueI18n } from '@/shared/src/composables/use-plugins'
@@ -16,7 +17,6 @@ export function useDestinationMeta(store: StoreModule): void {
     if (route.name !== 'destination') {
       return {}
     }
-
     const originIso = useRootStore().getters.visitorOrigin
     const destinationIso = store.getters.currentDestinationCode
     const { t } = useVueI18n()
@@ -34,6 +34,7 @@ export function useDestinationMeta(store: StoreModule): void {
             destinationSlug: transformCountryCodeToDestinationSlug(originIso),
           },
         }),
+        ...generateHreflangTags(),
       },
     }
   })

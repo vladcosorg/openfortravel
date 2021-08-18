@@ -6,7 +6,6 @@ import type { LocaleMessageObject } from 'vue-i18n'
 export interface StateInterface {
   countrySelectorLoading: boolean
   detectedCountry: string | undefined
-  localizedRoutes: Record<string, string>
   localizedLanguages: Record<string, string>
   locales: LocaleMessageObject
   serverLocale: string
@@ -20,7 +19,6 @@ export interface StateInterface {
 export class RootState implements StateInterface {
   countrySelectorLoading = false
   detectedCountry = 'us'
-  localizedRoutes = {}
   locales = {}
   localizedLanguages = {}
   serverLocale = 'en'

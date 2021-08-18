@@ -10,6 +10,7 @@
 import { useMeta } from 'quasar'
 import { defineComponent } from 'vue'
 
+import { generateHreflangTags } from '@/front/src/composables/langhref'
 import { useContextParser } from '@/front/src/composables/visitor-context-applier'
 import SectionIntro from '@/front/src/pages/index/components/section-intro.vue'
 import SectionStats from '@/front/src/pages/index/components/section-stats.vue'
@@ -38,6 +39,7 @@ export default defineComponent({
       title: useI18n().t('page.index.meta.title', {
         nationality: getLabelForCountryCode(props.originCode),
       }),
+      link: generateHreflangTags(),
     }))
   },
 })

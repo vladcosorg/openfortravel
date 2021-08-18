@@ -124,23 +124,23 @@ module.exports = {
         ],
       },
     ],
-    // 'import/no-unused-modules': [
-    //   'warn',
-    //   {
-    //     unusedExports: true,
-    //     missingExports: true,
-    //     // ignoreExports: [
-    //     //   '**/*.d.ts',
-    //     //   '**/babel.config.js',
-    //     //   '**/quasar.conf.js',
-    //     //   '**/*.vue',
-    //     //   '**/src/boot/*.ts',
-    //     //   // '**/src/index.ts',
-    //     //   '**/router/index.ts',
-    //     //   '**/store/index.ts',
-    //     // ],
-    //   },
-    // ],
+    'import/no-unused-modules': [
+      'warn',
+      {
+        unusedExports: true,
+        missingExports: true,
+        ignoreExports: [
+          '**/*.d.ts',
+          // '**/babel.config.js',
+          '**/quasar.conf.js',
+          '**/*.vue',
+          '**/src/boot/*.ts',
+          // '**/src/index.ts',
+          '**/router/index.ts',
+          '**/store/index.ts',
+        ],
+      },
+    ],
     'import/newline-after-import': 'warn',
     'import/dynamic-import-chunkname': [
       'warn',

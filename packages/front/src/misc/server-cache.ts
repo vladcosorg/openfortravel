@@ -8,7 +8,6 @@ import type { VueI18n } from 'vue-i18n'
 
 class ServerCache {
   public i18nMessages!: VueI18n['messages']
-  public localizedRoutes!: Record<string, Record<string, string>>
   public availableLocales!: LocaleList
   public labeledLocales!: Array<Record<string, string>>
   public countryCodeToLabelMap!: Record<string, CountryListTypes>

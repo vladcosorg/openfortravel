@@ -1,6 +1,7 @@
 import { useMeta } from 'quasar'
 import { useRoute } from 'vue-router'
 
+import { generateHreflangTags } from '@/front/src/composables/langhref'
 import { generateCanonicalBlock } from '@/front/src/misc/meta'
 import { useRootStore, useVueI18n } from '@/shared/src/composables/use-plugins'
 import {
@@ -28,6 +29,7 @@ export function useOriginMeta(): void {
             originSlug: transformCountryCodeToOriginSlug(originCode),
           },
         }),
+        ...generateHreflangTags(),
       },
     }
   })

@@ -1,6 +1,6 @@
 import { RouteLocationRaw } from 'vue-router'
 
-import { pathToURL } from '@/front/src/router'
+import { convertRelativeToAbsoluteURL } from '@/front/src/router'
 import { useRouter } from '@/shared/src/composables/use-plugins'
 
 export function generateCanonicalBlock(to: RouteLocationRaw): {
@@ -9,6 +9,8 @@ export function generateCanonicalBlock(to: RouteLocationRaw): {
 } {
   return {
     rel: 'canonical',
-    href: pathToURL(decodeURIComponent(useRouter().resolve(to).href)),
+    href: convertRelativeToAbsoluteURL(
+      decodeURIComponent(useRouter().resolve(to).href),
+    ),
   }
 }

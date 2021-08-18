@@ -2,7 +2,6 @@ import langs from 'iso-language-list/dist/generated/top10-speakers-then-az-value
 import { boot } from 'quasar/wrappers'
 
 import { serverCache } from '@/front/src/misc/server-cache'
-import { pregenerateLocalizableRouter } from '@/front/src/router/route-preloader'
 import { listenToMappedOrigins } from '@/shared/src/api/destinations/listeners'
 import messages from '@/shared/src/i18n/index'
 import { loadContinentMap } from '@/shared/src/modules/continent-map/ssr-loader'
@@ -32,7 +31,6 @@ serverCache.labeledLocales = langs.filter((langPair) =>
 serverCache.continentMap = loadContinentMap()
 serverCache.languages = loadLanguages()
 serverCache.i18nMessages = messages
-serverCache.localizedRoutes = pregenerateLocalizableRouter()
 serverCache.nationalities = preloadNationalities()
 serverCache.countryCodeToLabelMap = preloadCountryList()
 serverCache.countrySlugToCodeMap = generateCountrySlugToCodeList(

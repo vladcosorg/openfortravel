@@ -32,6 +32,8 @@ export default route<StateInterface>((/* { store, ssrContext } */) => {
   })
 })
 
-export function pathToURL(path: string): string {
-  return `${process.env.APP_URL}${path}`
+export const BASE_URL = process.env.PROJECT_URL
+
+export function convertRelativeToAbsoluteURL(path: string): string {
+  return `${process.env.PROJECT_URL}${path}`
 }
