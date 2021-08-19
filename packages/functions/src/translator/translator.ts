@@ -24,6 +24,7 @@ export const translate = functions.https.onRequest(async (req, res) => {
     sourceTranslations['en'] as any,
     targetLanguage,
     {
+      sourceLanguage: 'en',
       cache: [new InMemoryCache(), new CloudStorageCache()],
       blacklistedPaths: [
         'page.country.route',

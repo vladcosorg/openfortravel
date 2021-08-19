@@ -9687,7 +9687,7 @@ __metadata:
     svg-country-flags: ^1.2.10
     tsconfig-paths: ^3.10.1
     tsconfig-paths-webpack-plugin: ^3.5.1
-    vue-auto-i18n: 1.1.0-beta.19
+    vue-auto-i18n: 1.1.0-beta.20
     vue-i18n: ^9.2.0-beta.2
     vue-inline-svg: ^3.0.0-beta.3
     vue-social-sharing: ^3.0.8
@@ -9833,7 +9833,7 @@ __metadata:
     tsconfig-replace-paths: ^0.0.5
     tscpaths: ^0.0.9
     typescript: ^4.3.5
-    vue-auto-i18n: 1.1.0-beta.19
+    vue-auto-i18n: 1.1.0-beta.20
   languageName: unknown
   linkType: soft
 
@@ -16276,6 +16276,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"recursive-diff@npm:^1.0.8":
+  version: 1.0.8
+  resolution: "recursive-diff@npm:1.0.8"
+  checksum: 9d45eaf5e074c7ea346397eaa91a3db7d00786ca089bc2c8186fe6211582d1d1370a31530e1d3a8c6a5f670da9836277b42582b733e3fead95f65b1d600f6885
+  languageName: node
+  linkType: hard
+
 "regenerate-unicode-properties@npm:^8.2.0":
   version: 8.2.0
   resolution: "regenerate-unicode-properties@npm:8.2.0"
@@ -19560,19 +19567,20 @@ typescript@4.2.2:
   languageName: node
   linkType: hard
 
-"vue-auto-i18n@npm:1.1.0-beta.19":
-  version: 1.1.0-beta.19
-  resolution: "vue-auto-i18n@npm:1.1.0-beta.19"
+"vue-auto-i18n@npm:1.1.0-beta.20":
+  version: 1.1.0-beta.20
+  resolution: "vue-auto-i18n@npm:1.1.0-beta.20"
   dependencies:
     "@vitalets/google-translate-api": ^5.0.0
     flat: ^5.0.2
     lodash: ^4.17.20
     lodash-es: ^4.17.20
     node-fetch: ^2.6.1
+    recursive-diff: ^1.0.8
   peerDependencies:
     vue: ^2.0.0
     vue-i18n: ^8.0.0
-  checksum: 66805f60336649c1c3d1084d90c217fc440c92665a6eb4c7a51639fd84b1b58308cf3fd1e7784d593f2df8d7c828c8b81a1d8ec2ed9fa50dc09d332c28704bda
+  checksum: fc735ca2179e31658e30743165cc697c71e9199941909d9924c4be3eb86046040150f07f97586a17f82d553cbf3dcc1a16e48c8a41ece500887486dc3dc70392
   languageName: node
   linkType: hard
 
