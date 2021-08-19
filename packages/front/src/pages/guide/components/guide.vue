@@ -1,7 +1,7 @@
 <template>
   <q-stepper
     v-model="step"
-    :class="[$style.stepper, 'col-md-6 col-12']"
+    :class="['col-md-6 col-12 stepper']"
     vertical
     flat
     inactive-color="primary"
@@ -23,27 +23,25 @@
   </q-stepper>
 </template>
 
-<style lang="scss" module>
+<style lang="scss" scope>
 .stepper {
   background: none;
-  :global {
-    .q-stepper__tab {
-      padding: 12px 0;
-    }
-    .q-stepper__step-inner {
-      padding-left: 35px;
-    }
-    .q-stepper__dot {
-      font-size: 1.5rem;
-      line-height: 0;
-      min-width: 40px;
-      width: 40px;
-      height: 40px;
-    }
-    .q-stepper__title {
-      font-size: 1.2rem;
-      line-height: 1.3em;
-    }
+  .q-stepper__tab {
+    padding: 12px 0;
+  }
+  .q-stepper__step-inner {
+    padding-left: 35px;
+  }
+  .q-stepper__dot {
+    font-size: 1.5rem;
+    line-height: 0;
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+  }
+  .q-stepper__title {
+    font-size: 1.4rem;
+    line-height: 1.3em;
   }
 }
 </style>

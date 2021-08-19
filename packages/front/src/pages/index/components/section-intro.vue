@@ -1,10 +1,10 @@
 <template>
   <section class="relative-position">
-    <div class="container q-pa-md-xll q-px-mdd q-py-xl q-my-md-xl">
+    <div class="container q-py-xl q-my-md-xl">
       <div
         class="
           row
-          justify-center justify-sm-between
+          justify-center justify-md-between
           items-center
           q-col-gutter-y-xl
         "
@@ -12,9 +12,9 @@
         <div
           class="
             column
-            col-md-6 col-sm-6 col-12
-            text-sm-left text-center
-            items-sm-start items-center
+            col-md-6 col-sm-12 col-12
+            text-md-left text-center
+            items-md-start items-center
           "
         >
           <h1 class="text-h1 text-bold">
@@ -39,7 +39,7 @@
             :to="url"
           />
         </div>
-        <the-boy class="col-md-6 col-sm-5 col-10" />
+        <the-boy class="col-md-6 col-md-5 col-10" />
       </div>
     </div>
   </section>

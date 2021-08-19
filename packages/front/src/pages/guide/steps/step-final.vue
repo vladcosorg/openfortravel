@@ -23,8 +23,8 @@ import { roundFlag as finish } from '@quasar/extras/material-icons-round'
 import { computed, defineComponent } from 'vue'
 
 import mixin from '@/front/src/pages/guide/steps/mixin.vue'
-import { useI18n, useRootStore } from '@/shared/src/composables/use-plugins'
-import { transformCountryCodeToOriginSlug } from '@/shared/src/modules/country-list/country-list-helpers'
+import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
@@ -39,13 +39,7 @@ export default defineComponent({
         return
       }
 
-      return {
-        name: 'origin',
-        params: {
-          originSlug: transformCountryCodeToOriginSlug(origin),
-          locale: useI18n().locale,
-        },
-      }
+      return getOriginRouteURL()
     })
 
     return {

@@ -1,8 +1,8 @@
 <template>
-  <q-page class="column" style="z-index: 2">
+  <q-page style="z-index: 2">
     <section-intro :origin-code="originCode" />
     <section-wizard />
-    <section-stats :origin-code="originCode" />
+    <!--    <section-stats :origin-code="originCode" />-->
   </q-page>
 </template>
 
