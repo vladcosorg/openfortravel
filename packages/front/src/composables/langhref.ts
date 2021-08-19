@@ -32,6 +32,5 @@ export function generateHreflangTags(): HreflangList {
       list['default'] = { ...item, hreflang: 'x-default' }
     }
   }
-
   return list
 }

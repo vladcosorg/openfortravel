@@ -12,7 +12,7 @@ import {
 export function useOriginMeta(): void {
   const route = useRoute()
   useMeta(() => {
-    if (route.name !== 'country') {
+    if (route.name !== 'origin') {
       return {}
     }
 
