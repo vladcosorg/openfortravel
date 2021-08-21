@@ -92,14 +92,15 @@ export function createAndConfiguredPolygonSeries(
   const polygonSeries = chart.series.push(new MapPolygonSeries())
   polygonSeries.useGeodata = true
   polygonSeries.data = data
-  polygonSeries.calculateVisualCenter = true
+
+  // polygonSeries.calculateVisualCenter = true
 
   polygonSeries.exclude = ['AQ']
   polygonSeries.include = [
     originCode,
     ...getCountryISOCodes().map((code) => code.toUpperCase()),
   ]
-  polygonSeries.defaultState.transitionDuration = 2000
+  // polygonSeries.defaultState.transitionDuration = 2000
 
   polygonSeries.events.on('ready', () => {
     const originPolygon = polygonSeries.getPolygonById(originCode)
@@ -143,6 +144,7 @@ export function addHoverHandler(
   polygonTemplate.events.on('over', (event) => {
     const originPolygon = polygonSeries.getPolygonById(originCode)
     const destinationPolygon = event.target
+    console.log(event)
     lineSeries.data = [
       {
         multiGeoLine: [
@@ -180,7 +182,6 @@ function configureArrow(line: MapArc): void {
   arrow.strokeLinejoin = 'round'
   arrow.strokeWidth = 0
   arrow.fillOpacity = 1
-  arrow.filters.push(new DropShadowFilter())
   arrow.interactionsEnabled = false
   arrow.fill = color('white')
 }

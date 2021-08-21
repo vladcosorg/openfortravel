@@ -19,10 +19,10 @@ jobs:
       fail-fast: false
       matrix:
         function:
-          [
+          [ api,
             translate,
-            safetyLevelCalculatorJob,
-            statsAggregatorJob,
+            #            safetyLevelCalculatorJob,
+            #            statsAggregatorJob,
             emailForwarder,
           ]
     steps:
