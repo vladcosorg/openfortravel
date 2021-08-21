@@ -1,6 +1,6 @@
 import map from '@amcharts/amcharts4-geodata/worldLow'
 import { Miller } from '@amcharts/amcharts4/.internal/charts/map/projections'
-import { color, create, DropShadowFilter } from '@amcharts/amcharts4/core'
+import { color, create } from '@amcharts/amcharts4/core'
 import {
   MapArcSeries,
   MapChart,
@@ -93,7 +93,7 @@ export function createAndConfiguredPolygonSeries(
   polygonSeries.useGeodata = true
   polygonSeries.data = data
 
-  // polygonSeries.calculateVisualCenter = true
+  polygonSeries.calculateVisualCenter = true
 
   polygonSeries.exclude = ['AQ']
   polygonSeries.include = [
@@ -144,7 +144,6 @@ export function addHoverHandler(
   polygonTemplate.events.on('over', (event) => {
     const originPolygon = polygonSeries.getPolygonById(originCode)
     const destinationPolygon = event.target
-    console.log(event)
     lineSeries.data = [
       {
         multiGeoLine: [
@@ -208,7 +207,6 @@ function configureLine(lineTemplate: MapArc): void {
   lineTemplate.interactionsEnabled = false
   lineTemplate.line.controlPointDistance = 0.1
   lineTemplate.line.stroke = color('white')
-  lineTemplate.line.filters.push(new DropShadowFilter())
   lineTemplate.line.strokeDasharray = '4,6'
   lineTemplate.line.strokeWidth = 2
   lineTemplate.line.strokeLinecap = 'round'
@@ -219,8 +217,8 @@ export function configurePolygonTemplate(template: MapPolygon): void {
   template.stroke = color('#272f56')
   template.strokeWidth = 1
   template.propertyFields.fill = 'fill'
-  template.defaultState.transitionDuration = 500
-  // template.hidden = true
+  // template.defaultState.transitionDuration = 500
+  template.hidden = true
 }
 
 function transformData(
