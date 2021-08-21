@@ -1,7 +1,7 @@
 import difference from 'lodash/difference'
 import intersection from 'lodash/intersection'
 
-import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
+import { getCountryISOCodes } from '@/shared/src/misc/country-codes'
 import {
   RestrictionCategory,
   AbstractRestrictionNode,
@@ -33,7 +33,7 @@ export class Citizenship extends AbstractRestrictionNode<
 
   public getAllowedCountries(): string[] {
     return this.options.not
-      ? difference(getCountryCodes(), this.options.allowedCitizenship)
+      ? difference(getCountryISOCodes(), this.options.allowedCitizenship)
       : this.options.allowedCitizenship
   }
 

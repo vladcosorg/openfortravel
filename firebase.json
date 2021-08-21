@@ -1,6 +1,7 @@
 {
   "functions": {
     "source": "packages/functions/dist",
+    "predeploy": "yarn workspace functions run build",
     "ignore": ["*.map"]
   },
   "emulators": {

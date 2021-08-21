@@ -2,7 +2,7 @@
   "name": "functions",
   "version": "0.3.1",
   "scripts": {
-    "start": "run-s _build:prebuild:prepare-dir _build:prebuild:create-runtime-config; run-p _build:watch _firebase:start-emulators",
+    "start": "run-s _build:prebuild:prepare-dir _build:prebuild:create-runtime-config _build:compile; run-p _build:watch _firebase:start-emulators",
     "build": "run-s -nc _build:prebuild:prepare-dir _build:prebuild:create-lock _build:compile",
     "deploy": "firebase deploy --only functions",
     "serve": "run-s build create-runtime-config start-emulators",
@@ -32,6 +32,7 @@
     "@openfortravel/shared": "latest",
     "firebase-admin": "^9.11.0",
     "firebase-functions": "^3.15.3",
+    "i18n-iso-countries": "^6.8.0",
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2",
     "lodash": "^4.17.21",

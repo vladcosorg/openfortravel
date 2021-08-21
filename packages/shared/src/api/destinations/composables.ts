@@ -13,7 +13,7 @@ import {
   updateOriginField,
 } from '@/shared/src/api/destinations/repository'
 import { useAsyncState } from '@/shared/src/composables/use-async'
-import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
+import { getCountryISOCodes } from '@/shared/src/misc/country-codes'
 
 import type { Ref } from 'vue'
 
@@ -63,7 +63,7 @@ export function useDestinations(): {
 
 async function generateOriginList(): Promise<Destination[]> {
   const origins = keyBy(await findOrigins(), (origin) => origin.countryCode)
-  const allCountryCodes = getCountryCodes()
+  const allCountryCodes = getCountryISOCodes()
 
   const allOrigins = allCountryCodes.map(
     (countryCode) =>

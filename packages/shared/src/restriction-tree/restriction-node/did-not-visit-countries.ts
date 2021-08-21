@@ -1,7 +1,7 @@
 import difference from 'lodash/difference'
 import intersection from 'lodash/intersection'
 
-import { getCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
+import { getCountryISOCodes } from '@/shared/src/misc/country-codes'
 import {
   RestrictionCategory,
   AbstractRestrictionNode,
@@ -45,7 +45,7 @@ export class DidNotVisitCountries extends AbstractRestrictionNode<
 
   getCountries(): string[] {
     return this.options.inverseSelection
-      ? difference(getCountryCodes(), this.options.countryCodes)
+      ? difference(getCountryISOCodes(), this.options.countryCodes)
       : this.options.countryCodes
   }
 }
