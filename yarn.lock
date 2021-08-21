@@ -2664,7 +2664,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@openfortravel/admin@workspace:packages/admin"
   dependencies:
-    "@openfortravel/shared": "workspace:*"
+    "@openfortravel/shared": latest
     "@quasar/app": ^3.0.4
     "@quasar/extras": ^1.10.10
     "@quasar/quasar-app-extension-dotenv": ^1.1.0
@@ -2693,7 +2693,7 @@ __metadata:
     "@amcharts/amcharts4": ^4.10.21
     "@amcharts/amcharts4-geodata": ^4.1.21
     "@cospired/i18n-iso-languages": ^3.0.0
-    "@openfortravel/shared": "workspace:*"
+    "@openfortravel/shared": latest
     "@quasar/app": ^3.0.4
     "@quasar/extras": ^1.10.10
     "@quasar/quasar-app-extension-testing": ^1.0.3
@@ -2745,7 +2745,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openfortravel/shared@workspace:*, @openfortravel/shared@workspace:packages/shared":
+"@openfortravel/shared@workspace:packages/shared":
   version: 0.0.0-use.local
   resolution: "@openfortravel/shared@workspace:packages/shared"
   dependencies:
