@@ -2,6 +2,7 @@ import {
   collection,
   initializeFirestore,
   getFirestore,
+  Firestore,
 } from '@firebase/firestore/lite'
 import { initializeApp, getApps, getApp } from 'firebase/app'
 
@@ -23,7 +24,7 @@ const firebaseApp =
         measurementId: 'G-NHT0P83PH5',
       })
 
-let firestore
+let firestore: Firestore
 
 try {
   firestore = initializeFirestore(firebaseApp, {

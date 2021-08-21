@@ -1,4 +1,10 @@
-import { getDoc, doc, setDoc, Timestamp } from '@firebase/firestore/lite'
+import {
+  getDoc,
+  doc,
+  setDoc,
+  Timestamp,
+  collection,
+} from '@firebase/firestore/lite'
 
 import {
   createDummyPlainDestination,
@@ -9,7 +15,7 @@ import {
   MappedPlainDestinationCollection,
   PlainDestination,
 } from '@/shared/src/api/destinations/plain-destination'
-import { countryCollection } from '@/shared/src/misc/firebase'
+import { countryCollection, firestore } from '@/shared/src/misc/firebase'
 
 async function findOrigin(code: string): Promise<PlainDestination> {
   const snapshot = await getDoc(doc(countryCollection, code))
@@ -29,7 +35,9 @@ export async function findOriginAsRichObject(
 }
 
 export async function findMappedOrigins(): Promise<MappedPlainDestinationCollection> {
-  const result = (await getDoc(doc(countryCollection, '_all'))).data()
+  const result = (
+    await getDoc(doc(collection(firestore, 'countries'), '_all'))
+  ).data()
 
   if (result === undefined) {
     throw new Error('Aggegated country result is missing')

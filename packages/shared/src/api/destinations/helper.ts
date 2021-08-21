@@ -19,7 +19,10 @@ export function getFullDestinationList(
       fullList[countryCode] = createDummyDestination(countryCode)
     } else {
       fullList[countryCode] = wrapWithRichDestinationObject(
-        partialDestinationList[countryCode],
+        createPlainDestination(
+          countryCode,
+          partialDestinationList[countryCode],
+        ),
       )
     }
   }

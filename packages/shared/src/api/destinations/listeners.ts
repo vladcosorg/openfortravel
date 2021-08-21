@@ -1,7 +1,6 @@
 import { getFirestore, initializeFirestore } from '@firebase/firestore'
 import { doc, onSnapshot, collection } from 'firebase/firestore'
 
-import { dataConverter as destinationDataConverter } from '@/shared/src/api/destinations/data-converter'
 import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/plain-destination'
 import { firebaseApp } from '@/shared/src/misc/firebase'
 
@@ -17,9 +16,7 @@ export function listenToMappedOrigins(
   } catch {
     firestore = getFirestore(firebaseApp)
   }
-  const countryCollection = collection(firestore, 'countries').withConverter(
-    destinationDataConverter,
-  )
+  const countryCollection = collection(firestore, 'countries')
 
   return new Promise((resolve) => {
     onSnapshot(doc(countryCollection, '_all'), (doc) => {
