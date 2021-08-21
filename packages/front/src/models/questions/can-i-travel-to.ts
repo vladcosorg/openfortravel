@@ -1,6 +1,6 @@
 import { translateBlock } from '@/front/src/models/faq'
 import type { QAItem } from '@/front/src/models/faq'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
+import { Restriction } from '@/front/src/models/restriction'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { getNationalityOrFallback } from '@/shared/src/modules/nationality/nationality-helpers'
 

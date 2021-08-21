@@ -1,16 +1,12 @@
+import { Restriction } from '@/front/src/models/restriction'
 import type { StateInterface } from '@/front/src/store/state'
-import type {
-  Destination,
-  PlainDestination,
-} from '@/shared/src/api/destinations/models'
+import type { Destination } from '@/shared/src/api/destinations/models'
+import { PlainDestination } from '@/shared/src/api/destinations/plain-destination'
 import {
   generateRestrictionListByOrigin,
   wrapCollectionWithRichObject,
 } from '@/shared/src/api/restrictions/helper'
-import type {
-  PlainRestriction,
-  Restriction,
-} from '@/shared/src/api/restrictions/models'
+import type { PlainRestriction } from '@/shared/src/api/restrictions/models'
 import { sortByStatusAndAlphabetically } from '@/shared/src/api/restrictions/sorters'
 
 import type { Module } from 'vuex'

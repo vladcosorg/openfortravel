@@ -58,3 +58,17 @@ export function useFilterableOptions(
 
   return { filterFunction, filteredOptions }
 }
+
+export function useEnv(): {
+  env: {
+    isProd: boolean
+    isDev: boolean
+  }
+} {
+  return {
+    env: {
+      isProd: process.env.NODE_ENV === 'production',
+      isDev: process.env.NODE_ENV !== 'production',
+    },
+  }
+}

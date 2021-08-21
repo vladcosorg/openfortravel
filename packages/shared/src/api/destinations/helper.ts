@@ -1,10 +1,13 @@
 import {
   MappedDestinationCollection,
+  Destination,
+} from '@/shared/src/api/destinations/models'
+import {
+  createPlainDestination,
+  DestinationDocument,
   MappedPlainDestinationCollection,
   PlainDestination,
-  Destination,
-  DestinationDefaults,
-} from '@/shared/src/api/destinations/models'
+} from '@/shared/src/api/destinations/plain-destination'
 
 export function getFullDestinationList(
   partialDestinationList: MappedPlainDestinationCollection,
@@ -13,7 +16,7 @@ export function getFullDestinationList(
   const fullList: MappedDestinationCollection = {}
   for (const countryCode of countryCodesList) {
     if (!partialDestinationList[countryCode]) {
-      fullList[countryCode] = createDummyDestination({ countryCode })
+      fullList[countryCode] = createDummyDestination(countryCode)
     } else {
       fullList[countryCode] = wrapWithRichDestinationObject(
         partialDestinationList[countryCode],
@@ -25,19 +28,17 @@ export function getFullDestinationList(
 }
 
 export function createDummyPlainDestination(
-  mergeFields: Partial<PlainDestination> = {},
+  countryISO: string,
+  mergeFields: DestinationDocument = {},
 ): PlainDestination {
-  return Object.assign(
-    {},
-    new DestinationDefaults().toPlainObject(),
-    mergeFields,
-  )
+  return createPlainDestination(countryISO, mergeFields)
 }
 
 export function createDummyDestination(
-  mergeFields: Partial<PlainDestination> = {},
+  countryISO: string,
+  mergeFields: DestinationDocument = {},
 ): Destination {
-  return new Destination(createDummyPlainDestination(mergeFields))
+  return new Destination(createDummyPlainDestination(countryISO, mergeFields))
 }
 
 export function wrapWithRichDestinationObject(

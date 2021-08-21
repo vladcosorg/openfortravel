@@ -9,6 +9,7 @@ import { translate } from './translator/translator'
 
 firebase.initializeApp()
 
+// eslint-disable-next-line import/no-unused-modules
 export {
   translate,
   restrictionBuilder,

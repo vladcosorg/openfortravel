@@ -7,16 +7,14 @@ import {
 import mapValues from 'lodash/mapValues'
 import pick from 'lodash/pick'
 
+import { Restriction } from '@/front/src/models/restriction'
 import type {
   PlainRestriction,
   MappedPlainRestrictionCollection,
   MappedRestrictionDocumentCollection,
   RestrictionDocument,
 } from '@/shared/src/api/restrictions/models'
-import {
-  Restriction,
-  restrictionDefaults,
-} from '@/shared/src/api/restrictions/models'
+import { restrictionDefaults } from '@/shared/src/api/restrictions/models'
 import { firestore } from '@/shared/src/misc/firebase'
 
 export type RestrictionDirection = 'origin' | 'destination'

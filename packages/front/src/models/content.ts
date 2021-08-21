@@ -1,4 +1,4 @@
-import type { Restriction } from '@/shared/src/api/restrictions/models'
+import { Restriction } from '@/front/src/models/restriction'
 import { useI18n } from '@/shared/src/composables/use-plugins'
 
 export function getShortDescription(

@@ -84,12 +84,12 @@
 <script lang="ts">
 import { computed, defineComponent, inject } from 'vue'
 
+import { Restriction } from '@/front/src/models/restriction'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import type { SummaryItem } from '@/front/src/pages/destination/summary-items/summary-item'
 import type { Destination } from '@/shared/src/api/destinations/models'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
 import { createGeneratorForRandomIntegerInRange } from '@/shared/src/misc/misc'
 
 import type { PropType } from 'vue'

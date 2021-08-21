@@ -1,5 +1,5 @@
+import { Restriction } from '@/front/src/models/restriction'
 import type { Destination } from '@/shared/src/api/destinations/models'
-import type { Restriction } from '@/shared/src/api/restrictions/models'
 
 export type Badge = { label: string; color: string }
 export abstract class SummaryItem {

@@ -14,7 +14,7 @@ import {
   VisitorProfile,
 } from '@/shared/src/restriction-tree/visitor-profile'
 
-export type RawRestrictionGroupCollection = RestrictionGroup[]
+type RawRestrictionGroupCollection = RestrictionGroup[]
 
 export class RestrictionGroupCollection {
   protected matcher?: Matcher
@@ -57,8 +57,9 @@ export class RestrictionGroupCollection {
 type MappedMap<A, K extends keyof A = keyof A> = Map<K, A[K]>
 
 export class RestrictionGroup {
+  public readonly restrictions: PlainRestrictionGroup = []
   protected readonly indexedGroup: MappedMap<RestrictionNodeList>
-  protected readonly restrictions: PlainRestrictionGroup = []
+
   constructor(restrictions?: PlainRestrictionGroup) {
     this.indexedGroup = new Map(
       restrictions
@@ -172,4 +173,11 @@ export class RestrictionGroup {
       )
     }
   }
+}
+
+export function createRestrictionGroupCollection(
+  restrictions: PlainRestrictionGroups,
+  profile: VisitorProfile,
+): RestrictionGroupCollection {
+  return new RestrictionGroupCollection(restrictions, profile)
 }

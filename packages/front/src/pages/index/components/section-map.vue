@@ -21,9 +21,9 @@
 
 <script lang="ts">
 import defer from 'lodash/defer'
-import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue'
+import { defineComponent, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
 
-import { RoundTripCard } from '@/front/src/models/round-trip-card'
+import { RoundTripOverviewCollection } from '@/shared/src/api/cfapi/overview'
 
 import type { MapChart } from '@amcharts/amcharts4/maps'
 import type { PropType } from 'vue'
@@ -36,7 +36,7 @@ export default defineComponent({
       required: true,
     },
     restrictions: {
-      type: Array as PropType<RoundTripCard[]>,
+      type: Object as PropType<RoundTripOverviewCollection>,
       required: true,
     },
     isLoading: {
@@ -45,6 +45,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const restrictions = toRef(props, 'restrictions')
     const chartContainer = ref()
     const loading = ref<boolean | undefined>()
     let chart: MapChart
@@ -69,7 +70,7 @@ export default defineComponent({
             chart = createChart(
               chartContainer.value,
               props.originCode,
-              props.restrictions,
+              restrictions,
             )
             chart.events.once('ready', () => {
               chart.events.once('appeared', () => {

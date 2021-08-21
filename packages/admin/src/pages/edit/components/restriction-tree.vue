@@ -53,6 +53,7 @@ import { TreeManager } from '@/admin/src/pages/edit/modules/tree-manager'
 import { TreeBuilderNode } from '@/admin/src/pages/edit/types'
 import type { Destination } from '@/shared/src/api/destinations/models'
 import { isRestrictionNodeType } from '@/shared/src/restriction-tree/guards'
+import { normalizeTree } from '@/shared/src/restriction-tree/node-normalizers'
 import { Prerequisites } from '@/shared/src/restriction-tree/types'
 
 import type { PropType } from 'vue'
@@ -93,7 +94,9 @@ export default defineComponent({
           return
         }
 
-        treeManager.initializeWith(props.destination.normalizedRestrictionTree)
+        treeManager.initializeWith(
+          normalizeTree(props.destination.restrictionTree),
+        )
         setTimeout(() => treeDOMElement.value.expandAll(), 500)
       },
       { immediate: true },

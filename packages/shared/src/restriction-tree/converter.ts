@@ -2,6 +2,7 @@ import { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-
 import { isLogicNode } from '@/shared/src/restriction-tree/guards'
 import { And } from '@/shared/src/restriction-tree/logic-node/and'
 import { Or } from '@/shared/src/restriction-tree/logic-node/or'
+import { normalizeTree } from '@/shared/src/restriction-tree/node-normalizers'
 import { Age } from '@/shared/src/restriction-tree/restriction-node/age'
 import { Citizenship } from '@/shared/src/restriction-tree/restriction-node/citizenship'
 import { CustomRequirement } from '@/shared/src/restriction-tree/restriction-node/custom-requirement'
@@ -18,6 +19,7 @@ import { Vaccinated } from '@/shared/src/restriction-tree/restriction-node/vacci
 import type { TreeNode } from '@/shared/src/restriction-tree/types'
 import {
   LogicNodeType,
+  PlainRestrictionGroups,
   RestrictionNodeType,
 } from '@/shared/src/restriction-tree/types'
 
@@ -94,4 +96,13 @@ export function convertFromStorageFormat<T extends EncodedTreeNode>(
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return new constructor(nodeTree.options)
+}
+
+export function convertIncompleteTreeFromStorageFormat(
+  incompleteTree: Array<Partial<EncodedTreeNode>>,
+): PlainRestrictionGroups {
+  return convertFromStorageFormat({
+    type: LogicNodeType.OR,
+    children: normalizeTree(incompleteTree ?? []),
+  }).resolveTreeNodes()
 }

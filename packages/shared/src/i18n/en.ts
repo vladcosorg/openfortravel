@@ -137,7 +137,9 @@ export default {
           button: 'Explore destinations',
         },
         stats: {
-          title: 'Destination statistics',
+          title: 'Travel restrictions for travellers from ',
+          subtitle:
+            'categorized by the level of restrictions and requirements.',
           types: {
             allowed: {
               title: '@:restriction.travel.value.allowed',
@@ -168,7 +170,6 @@ export default {
                 'Entrance into the country may depend on the traveler’s citizenship, point of origin, or other specific regulations.',
             },
           },
-          noChanges: 'no change from yesterday',
         },
         countries: {
           title: 'Explore restrictions from other countries',

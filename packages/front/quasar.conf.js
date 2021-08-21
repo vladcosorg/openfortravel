@@ -83,6 +83,9 @@ module.exports = configure((context) => ({
       PROJECT_URL: context.prod
         ? 'https://openfortravel.org'
         : 'http://localhost:8080',
+      CLOUD_FUNCTIONS_URL: context.prod
+        ? 'https://us-central1-openfortravel.cloudfunctions.net'
+        : 'http://localhost:5001/openfortravel/us-central1',
     },
     transpile: context.prod,
 

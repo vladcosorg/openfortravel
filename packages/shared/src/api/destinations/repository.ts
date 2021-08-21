@@ -4,19 +4,19 @@ import {
   createDummyPlainDestination,
   wrapWithRichDestinationObject,
 } from '@/shared/src/api/destinations/helper'
-import type {
-  Destination,
+import type { Destination } from '@/shared/src/api/destinations/models'
+import {
   MappedPlainDestinationCollection,
   PlainDestination,
-} from '@/shared/src/api/destinations/models'
+} from '@/shared/src/api/destinations/plain-destination'
 import { countryCollection } from '@/shared/src/misc/firebase'
 
-export async function findOrigin(code: string): Promise<PlainDestination> {
+async function findOrigin(code: string): Promise<PlainDestination> {
   const snapshot = await getDoc(doc(countryCollection, code))
 
   const data = snapshot.data()
   if (!data) {
-    return createDummyPlainDestination({ countryCode: code })
+    return createDummyPlainDestination(code)
   }
 
   return data

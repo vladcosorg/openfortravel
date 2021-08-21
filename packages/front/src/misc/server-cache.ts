@@ -1,4 +1,4 @@
-import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
+import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/plain-destination'
 import type { CountryListTypes } from '@/shared/src/modules/country-list/country-list-store'
 import type { LocaleList } from '@/shared/src/modules/language/locales'
 import type { PrefetchedLocalizedLanguages } from '@/shared/src/modules/language/ssr-loaders'

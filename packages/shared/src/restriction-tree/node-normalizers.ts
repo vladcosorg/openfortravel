@@ -72,3 +72,30 @@ export function normalizeEncodedNode(
     ? normalizeEncodedLogicNode(node as Partial<EncodedLogicNode>)
     : normalizeEncodedRestrictionNode(node as Partial<EncodedRestrictionNode>)
 }
+
+export function normalizeRecursively(
+  tree: Array<Partial<EncodedTreeNode>>,
+): EncodedTreeNode[] {
+  const out: EncodedTreeNode[] = []
+  for (const node of tree) {
+    if (node.type === LogicNodeType.OR || node.type === LogicNodeType.AND) {
+      out.push(
+        Object.assign(node, {
+          children: normalizeRecursively(
+            node.children as Array<Partial<EncodedTreeNode>>,
+          ),
+        }) as EncodedTreeNode,
+      )
+      continue
+    }
+
+    out.push(normalizeEncodedNode(node))
+  }
+  return out
+}
+
+export function normalizeTree(
+  tree: Array<Partial<EncodedTreeNode>>,
+): EncodedTreeNode[] {
+  return normalizeRecursively(cloneDeep(tree) ?? [])
+}

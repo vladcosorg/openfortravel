@@ -62,7 +62,7 @@ import RestrictionTree from '@/admin/src/pages/edit/components/restriction-tree.
 import TableHeader from '@/admin/src/pages/edit/components/table-header.vue'
 import { useSaveHandler } from '@/admin/src/pages/edit/composables/use-persister'
 import { useDestination } from '@/shared/src/api/destinations/composables'
-import type { PlainDestination } from '@/shared/src/api/destinations/models'
+import { PlainDestination } from '@/shared/src/api/destinations/plain-destination'
 import { updateOriginDocument } from '@/shared/src/api/destinations/repository'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 

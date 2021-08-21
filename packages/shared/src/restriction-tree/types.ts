@@ -33,8 +33,8 @@ export const Prerequisites: RestrictionNodeType[] = [
   RestrictionNodeType.RECOVERY,
 ]
 
-export type CriterionType = RestrictionNodeType
-export type CriterionValue = string | number | boolean | string[]
+type CriterionType = RestrictionNodeType
+type CriterionValue = string | number | boolean | string[]
 export type PlainRestrictionGroup<T = AbstractRestrictionNode> = T[]
 export type PlainRestrictionGroups<T = PlainRestrictionGroup> = T[]
 

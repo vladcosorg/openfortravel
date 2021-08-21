@@ -1,3 +1,4 @@
+import { EncodedRestrictionNode } from '@/shared/src/restriction-tree/converter'
 import type {
   PlainRestrictionGroups,
   TreeNode,
@@ -52,6 +53,13 @@ export abstract class AbstractRestrictionNode<
 
   toI18nConfig(): [string, Record<string, unknown>?] {
     return [this.id(), this.options]
+  }
+
+  encode(): EncodedRestrictionNode {
+    return {
+      type: this.id(),
+      options: this.options,
+    }
   }
 
   abstract id(): RestrictionNodeType

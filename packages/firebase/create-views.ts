@@ -1,7 +1,7 @@
 import admin from 'firebase-admin'
 import groupBy from 'lodash/groupBy'
 
-import { DestinationDocument } from '@/shared/src/api/destinations/models'
+import { DestinationDocument } from '@/shared/src/api/destinations/plain-destination'
 
 const db = admin
   .initializeApp({

@@ -1,8 +1,8 @@
 import { getFirestore, initializeFirestore } from '@firebase/firestore'
 import { doc, onSnapshot, collection } from 'firebase/firestore'
 
-import { dataConverter as destinationDataConverter } from '@/shared/src/api/destinations/common'
-import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
+import { dataConverter as destinationDataConverter } from '@/shared/src/api/destinations/data-converter'
+import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/plain-destination'
 import { firebaseApp } from '@/shared/src/misc/firebase'
 
 export function listenToMappedOrigins(

@@ -73,12 +73,12 @@ import { matDangerous as stopIcon } from '@quasar/extras/material-icons'
 import { computed, defineComponent, inject, ref } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
-import { createCollection } from '@/front/src/composables/trip-cards'
 import CategorySwitcher from '@/front/src/pages/destination/components/category-switcher.vue'
 import GroupsByType from '@/front/src/pages/destination/components/restriction-groups/groups-by-type.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { createCollection } from '@/shared/src/composables/createCollection'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export enum RestrictionListType {

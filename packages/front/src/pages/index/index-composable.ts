@@ -1,6 +1,6 @@
-import { computed } from 'vue'
+import { computed, Ref } from 'vue'
 
-import { RoundTripCard } from '@/front/src/models/round-trip-card'
+import { RoundTripOverviewCollection } from '@/shared/src/api/cfapi/overview'
 import { getStatusMapper } from '@/shared/src/api/restrictions/helper'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
@@ -15,7 +15,7 @@ export const statusColorMap = {
 }
 
 export function useStats(
-  destinations: ComputedRef<RoundTripCard[]>,
+  destinations: Ref<RoundTripOverviewCollection>,
 ): ComputedRef<
   Record<
     RestrictionStatus,
@@ -29,14 +29,13 @@ export function useStats(
   >
 > {
   const { t } = useVueI18n()
-
   return computed(() =>
     getStatusMapper((status) => ({
       title: t(`page.index.sections.stats.types.${status}.title`),
       description: t(`page.index.sections.stats.types.${status}.description`),
       colorClass: `bg-${statusColorMap[status]}`,
-      value: destinations.value.filter(
-        (destination) => destination.status === status,
+      value: Object.values(destinations.value).filter(
+        (destination) => destination.outgoing.status === status,
       ).length,
       valueSuffix: t(`page.index.sections.stats.types.${status}.valueSuffix`, {
         nationality: getCurrentNationality(),

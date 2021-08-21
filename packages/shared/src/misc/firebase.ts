@@ -5,7 +5,7 @@ import {
 } from '@firebase/firestore/lite'
 import { initializeApp, getApps, getApp } from 'firebase/app'
 
-import { dataConverter as destinationDataConverter } from '@/shared/src/api/destinations/common'
+import { dataConverter as destinationDataConverter } from '@/shared/src/api/destinations/data-converter'
 import { dataConverter as restrictionDataConverter } from '@/shared/src/api/restrictions/common'
 import { dataConverter as searchIdDataConverter } from '@/shared/src/api/searchIds/common'
 

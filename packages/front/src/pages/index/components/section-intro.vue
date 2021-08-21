@@ -39,7 +39,7 @@
             :to="url"
           />
         </div>
-        <the-boy class="col-md-6 col-md-5 col-10" />
+        <the-boy v-if="env.isProd" class="col-md-6 col-md-5 col-10" />
       </div>
     </div>
   </section>
@@ -50,6 +50,7 @@ import { computed, defineComponent } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
+import { useEnv } from '@/front/src/composables/misc'
 import TheBoy from '@/front/src/layouts/components/the-boy/the-boy.vue'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
@@ -68,10 +69,12 @@ export default defineComponent({
     const countryLabel = computed(() =>
       getLabelForCountryCode(props.originCode),
     )
+
     return {
       t,
       url,
       countryLabel,
+      ...useEnv(),
     }
   },
 })

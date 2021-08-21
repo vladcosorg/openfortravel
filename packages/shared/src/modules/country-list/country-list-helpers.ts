@@ -1,3 +1,4 @@
+import langs from 'i18n-iso-countries/langs/en.json'
 import findKey from 'lodash/findKey'
 
 import { useVuexRawGetter } from '@/shared/src/composables/use-vuex'
@@ -59,7 +60,7 @@ export function transformDestinationSlugToCode(
 }
 
 export function getCountryCodes(): string[] {
-  return useVuexRawGetter('modules/countryList/countryCodes')
+  return Object.keys(langs.countries).map((code) => code.toLowerCase())
 }
 
 export function getLabelForCountryCode(countryCode: string): string {

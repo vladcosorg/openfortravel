@@ -48,7 +48,7 @@ import {
 } from '@quasar/extras/line-awesome'
 import { computed, defineComponent } from 'vue'
 
-import type { Restriction } from '@/shared/src/api/restrictions/models'
+import { Restriction } from '@/front/src/models/restriction'
 import { useRouter, useVueI18n } from '@/shared/src/composables/use-plugins'
 
 import type { PropType } from 'vue'

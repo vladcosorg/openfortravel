@@ -1,14 +1,16 @@
 import zipObject from 'lodash/zipObject'
 
+import {
+  MappedRestrictionCollection,
+  Restriction,
+  RestrictionCollection,
+} from '@/front/src/models/restriction'
 import type {
   MappedPlainRestrictionCollection,
-  MappedRestrictionCollection,
   PlainRestriction,
   PlainRestrictionCollection,
-  RestrictionCollection,
 } from '@/shared/src/api/restrictions/models'
 import {
-  Restriction,
   restrictionDefaults,
   RestrictionStatus,
 } from '@/shared/src/api/restrictions/models'

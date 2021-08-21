@@ -1,16 +1,14 @@
-import {
-  createCollection,
-  createRoundTripCard,
-} from '@/front/src/composables/trip-cards'
 import { QuarantineQuestion } from '@/front/src/pages/destination/questions/items/quarantine-question'
 import { Question } from '@/front/src/pages/destination/questions/question'
 import type { StateClass } from '@/front/src/pages/destination/store/state'
 import type { GetterSignatures } from '@/front/src/pages/destination/store/types/getters'
 import type { RootStateType } from '@/front/src/store/state'
+import { createCollection } from '@/shared/src/composables/createCollection'
 import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 import type { GetterTree } from 'vuex'
+import { createRoundTripCard } from '@/front/src/composables/createRoundTripCard'
 
 export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
   {

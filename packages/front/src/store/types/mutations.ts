@@ -1,5 +1,5 @@
 import type { RootStateType, StateInterface } from '@/front/src/store/state'
-import type { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/models'
+import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/plain-destination'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 import type { LocaleMessageObject } from 'vue-i18n'

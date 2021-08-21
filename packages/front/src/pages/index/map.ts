@@ -6,12 +6,13 @@ import {
   MapChart,
   MapPolygonSeries,
 } from '@amcharts/amcharts4/maps'
-import random from 'lodash/random'
+import { random } from 'lodash'
 import { getCssVar } from 'quasar'
+import { watch, Ref } from 'vue'
 
-import { RoundTripCard } from '@/front/src/models/round-trip-card'
 import { statusColorMap } from '@/front/src/pages/index/index-composable'
 import { goToDestination } from '@/front/src/router/route-builders/destination'
+import { RoundTripOverviewCollection } from '@/shared/src/api/cfapi/overview'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 import type { Color } from '@amcharts/amcharts4/core'
@@ -27,15 +28,21 @@ type SeriesItem = {
 export function createChart(
   domElement: HTMLElement,
   originCode: string,
-  restrictions: RoundTripCard[],
+  restrictions: Ref<RoundTripOverviewCollection>,
 ): MapChart {
   const chart = createAndConfigureChart(domElement)
 
   const polygonSeries = createAndConfiguredPolygonSeries(
     chart,
     originCode,
-    transformData(restrictions),
+    transformData(restrictions.value),
   )
+
+  watch(restrictions, () => {
+    polygonSeries.data = transformData(restrictions.value)
+    chart.invalidateData()
+  })
+
   const polygonTemplate = polygonSeries.mapPolygons.template
 
   configurePolygonTemplate(polygonTemplate)
@@ -48,12 +55,12 @@ export function createChart(
     })
   })
 
-  configureTooltip(polygonSeries)
+  // configureTooltip(polygonSeries)
 
-  addHitHandler(polygonTemplate, originCode)
-  addHoverHandler(chart, polygonTemplate, polygonSeries, originCode)
+  // addHitHandler(polygonTemplate, originCode)
+  // addHoverHandler(chart, polygonTemplate, polygonSeries, originCode)
 
-  addHoverState(polygonTemplate)
+  // addHoverState(polygonTemplate)
 
   return chart
 }
@@ -87,14 +94,14 @@ export function createAndConfiguredPolygonSeries(
   polygonSeries.calculateVisualCenter = true
 
   polygonSeries.exclude = ['AQ']
-  polygonSeries.include = [originCode, ...data.map((item) => item.id)]
-  polygonSeries.defaultState.transitionDuration = 2000
+  // polygonSeries.include = [originCode, ...data.map((item) => item.id)]
+  // polygonSeries.defaultState.transitionDuration = 2000
 
-  polygonSeries.events.on('ready', () => {
-    const originPolygon = polygonSeries.getPolygonById(originCode)
-    originPolygon.interactionsEnabled = false
-    originPolygon.fill = color('#3B4AEC')
-  })
+  // polygonSeries.events.on('ready', () => {
+  //   const originPolygon = polygonSeries.getPolygonById(originCode)
+  //   originPolygon.interactionsEnabled = false
+  //   originPolygon.fill = color('#3B4AEC')
+  // })
 
   return polygonSeries
 }
@@ -211,11 +218,17 @@ export function configurePolygonTemplate(template: MapPolygon): void {
   template.hidden = true
 }
 
-function transformData(restrictions: RoundTripCard[]): SeriesItem[] {
+function transformData(
+  restrictions: RoundTripOverviewCollection,
+): SeriesItem[] {
   const { t } = useVueI18n()
-  return restrictions.map((restriction) => ({
-    id: restriction.destinationISO.toUpperCase(),
-    fill: color(getCssVar(statusColorMap[restriction.status]) as string),
-    status: t(`page.index.sections.stats.types.${restriction.status}.title`),
+  return Object.entries(restrictions).map(([countryISO, restriction]) => ({
+    id: countryISO.toUpperCase(),
+    fill: color(
+      getCssVar(statusColorMap[restriction.outgoing.status]) as string,
+    ),
+    status: t(
+      `page.index.sections.stats.types.${restriction.outgoing.status}.title`,
+    ),
   }))
 }

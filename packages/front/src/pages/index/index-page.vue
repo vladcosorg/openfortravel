@@ -2,7 +2,7 @@
   <q-page style="z-index: 2">
     <section-intro :origin-code="originCode" />
     <section-wizard />
-    <!--    <section-stats :origin-code="originCode" />-->
+    <section-stats v-if="env.isProd || true" :origin-code="originCode" />
   </q-page>
 </template>
 
@@ -11,6 +11,7 @@ import { useMeta } from 'quasar'
 import { defineComponent } from 'vue'
 
 import { generateHreflangTags } from '@/front/src/composables/langhref'
+import { useEnv } from '@/front/src/composables/misc'
 import { useContextParser } from '@/front/src/composables/visitor-context-applier'
 import SectionIntro from '@/front/src/pages/index/components/section-intro.vue'
 import SectionStats from '@/front/src/pages/index/components/section-stats.vue'
@@ -41,6 +42,10 @@ export default defineComponent({
       }),
       link: generateHreflangTags(),
     }))
+
+    return {
+      ...useEnv(),
+    }
   },
 })
 </script>
