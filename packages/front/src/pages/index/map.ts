@@ -14,6 +14,7 @@ import { statusColorMap } from '@/front/src/pages/index/index-composable'
 import { goToDestination } from '@/front/src/router/route-builders/destination'
 import { RoundTripOverviewCollection } from '@/shared/src/api/cfapi/overview'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
+import { getCountryISOCodes } from '@/shared/src/misc/country-codes'
 
 import type { Color } from '@amcharts/amcharts4/core'
 import type { MapArc, MapPolygon } from '@amcharts/amcharts4/maps'
@@ -55,12 +56,12 @@ export function createChart(
     })
   })
 
-  // configureTooltip(polygonSeries)
+  configureTooltip(polygonSeries)
 
-  // addHitHandler(polygonTemplate, originCode)
-  // addHoverHandler(chart, polygonTemplate, polygonSeries, originCode)
+  addHitHandler(polygonTemplate, originCode)
+  addHoverHandler(chart, polygonTemplate, polygonSeries, originCode)
 
-  // addHoverState(polygonTemplate)
+  addHoverState(polygonTemplate)
 
   return chart
 }
@@ -94,14 +95,17 @@ export function createAndConfiguredPolygonSeries(
   polygonSeries.calculateVisualCenter = true
 
   polygonSeries.exclude = ['AQ']
-  // polygonSeries.include = [originCode, ...data.map((item) => item.id)]
-  // polygonSeries.defaultState.transitionDuration = 2000
+  polygonSeries.include = [
+    originCode,
+    ...getCountryISOCodes().map((code) => code.toUpperCase()),
+  ]
+  polygonSeries.defaultState.transitionDuration = 2000
 
-  // polygonSeries.events.on('ready', () => {
-  //   const originPolygon = polygonSeries.getPolygonById(originCode)
-  //   originPolygon.interactionsEnabled = false
-  //   originPolygon.fill = color('#3B4AEC')
-  // })
+  polygonSeries.events.on('ready', () => {
+    const originPolygon = polygonSeries.getPolygonById(originCode)
+    originPolygon.interactionsEnabled = false
+    originPolygon.fill = color('#3B4AEC')
+  })
 
   return polygonSeries
 }
@@ -215,7 +219,7 @@ export function configurePolygonTemplate(template: MapPolygon): void {
   template.strokeWidth = 1
   template.propertyFields.fill = 'fill'
   template.defaultState.transitionDuration = 500
-  template.hidden = true
+  // template.hidden = true
 }
 
 function transformData(
