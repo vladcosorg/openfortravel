@@ -9,8 +9,8 @@
   },
   "main": "run.js",
   "devDependencies": {
-    "firebase-admin": "^9.11.0",
-    "ts-node": "^10.2.0"
+    "firebase-admin": "^9.11.1",
+    "ts-node": "^10.2.1"
   },
   "private": true
 }

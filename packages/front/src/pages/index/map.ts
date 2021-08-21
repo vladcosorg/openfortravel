@@ -69,10 +69,7 @@ export function createChart(
 export function createAndConfigureChart(domElement: HTMLElement): MapChart {
   const chart = create(domElement, MapChart)
   chart.showOnInit = true
-  chart.defaultState.transitionDuration = 1000
-  chart.hidden = true
   chart.geodata = map
-  chart.exportable = true
   chart.projection = new Miller()
   chart.chartContainer.wheelable = false
   chart.maxZoomLevel = 1
