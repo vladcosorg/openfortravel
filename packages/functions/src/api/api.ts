@@ -5,13 +5,11 @@ import _ from 'lodash'
 
 import { fetchDestinations } from '@/functions/src/api/helpers/repository'
 import { addCacheMiddleware } from '@/functions/src/api/middlewares/cache'
-import { OneWayOverview } from '@/shared/src/api/cfapi/overview'
-import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/plain-destination'
-import { convertIncompleteTreeFromStorageFormat } from '@/shared/src/restriction-tree/converter'
 import {
-  createRestrictionGroupCollection,
-  RestrictionGroup,
-} from '@/shared/src/restriction-tree/restriction-group'
+  getLiteDestinationDocumentFIelds,
+  MappedPlainDestinationCollection,
+} from '@/shared/src/api/destinations/plain-destination'
+import { createOverviewCollection } from '@/shared/src/api/function-api/overview/helpers'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 const app = express()
@@ -22,70 +20,41 @@ if (process.env.NODE_ENV === 'production') {
 
 let destinations: MappedPlainDestinationCollection
 
-const createGroup = (group: RestrictionGroup): OneWayOverview => ({
-  quarantine: group.quarantineRequired,
-  pcrTest: group.pcrTestRequired,
-  rating: group.rating,
-  status: group.status,
-})
-
 app.get('/restrictions/:origin/overview', async (req, res) => {
   if (!destinations) {
     destinations = await fetchDestinations()
   }
 
-  const origin = destinations[req.params.origin]
-  const originRestrictionTree = convertIncompleteTreeFromStorageFormat(
-    origin.restrictionTree,
+  const collection = createOverviewCollection(
+    {
+      origin: req.params.origin,
+      citizenship: ['md'],
+      [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [],
+    },
+    destinations,
   )
 
-  const outgoingContext = {
-    origin: origin.countryCode,
-    citizenship: ['md'],
-    [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [],
+  res.status(200).send(collection)
+})
+
+app.get('/restrictions/:origin/details', async (req, res) => {
+  if (!destinations) {
+    destinations = await fetchDestinations()
   }
 
-  res.status(200).send(
-    _.pickBy(
-      _.mapValues(destinations, (destination) => {
-        const outgoingTrip =
-          createRestrictionGroupCollection(
-            convertIncompleteTreeFromStorageFormat(destination.restrictionTree),
-            outgoingContext,
-          ).getBestGroup() ?? new RestrictionGroup()
-
-        const returnContext = {
-          origin: destination.countryCode,
-          citizenship: ['md'],
-          [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [],
-        }
-
-        const returnTrip =
-          createRestrictionGroupCollection(
-            originRestrictionTree,
-            returnContext,
-          ).getBestGroup() ?? new RestrictionGroup()
-
-        if (!outgoingTrip) {
-          return
-        }
-
-        return {
-          outgoing: createGroup(outgoingTrip),
-          return: createGroup(returnTrip),
-        }
-      }),
-      (v) => v !== undefined,
-    ),
-  )
+  const origin = destinations[req.params.origin]
+  res.status(200).send(origin ? origin.restrictionTree : [])
 })
 
-app.get('/restrictions/:originISO/all', async (req, res) => {
-  res.status(200).send('1')
-})
+app.get('/country/:iso', async (req, res) => {
+  if (!destinations) {
+    destinations = await fetchDestinations()
+  }
 
-app.get('/restrictions/all/:destinationISO', async (req, res) => {
-  res.status(200).send('1')
+  const origin = destinations[req.params.iso]
+  res
+    .status(200)
+    .send(origin ? _.pick(origin, getLiteDestinationDocumentFIelds()) : [])
 })
 
 export const api = functions.https.onRequest(app)

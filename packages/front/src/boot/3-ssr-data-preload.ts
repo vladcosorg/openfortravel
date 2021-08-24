@@ -51,5 +51,6 @@ export default boot(({ store }) => {
     )
   }
 
-  store.commit('setHostRules', serverCache.destinations)
+  // store.commit('setHostRules', serverCache.destinations)
+  // console.log(ssrContext)
 })

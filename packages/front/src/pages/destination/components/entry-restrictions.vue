@@ -16,9 +16,11 @@
       v-model="currentRestrictionCategory"
       :available-count="availableGroups.length"
       :unavailable-count="unavailableGroups.length"
+      :is-loading="isLoading"
     />
     <groups-by-type
-      v-if="currentGroupList.length > 0"
+      v-if="currentGroupList.length > 0 || isLoading"
+      :is-loading="isLoading"
       :restrictions-groups="currentGroupList"
       :show-header="
         currentRestrictionCategory !== RestrictionListType.BEST_OPTION
@@ -70,7 +72,15 @@
 
 <script lang="ts">
 import { matDangerous as stopIcon } from '@quasar/extras/material-icons'
-import { computed, defineComponent, inject, ref } from 'vue'
+import {
+  computed,
+  defineComponent,
+  inject,
+  InjectionKey,
+  provide,
+  Ref,
+  ref,
+} from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import CategorySwitcher from '@/front/src/pages/destination/components/category-switcher.vue'
@@ -78,8 +88,12 @@ import GroupsByType from '@/front/src/pages/destination/components/restriction-g
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { createCollection } from '@/shared/src/composables/createCollection'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
+
+export const OriginFactsheetKey: InjectionKey<Ref<CountryFactsheet>> =
+  Symbol('Origin')
+export const DestinationFactsheetKey: InjectionKey<Ref<CountryFactsheet>> =
+  Symbol('Destination')
 
 export enum RestrictionListType {
   BEST_OPTION = 'best-option',
@@ -100,16 +114,18 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const rootStore = useRootStore()
     const store = inject(StoreKey) as StoreModule
+    const isLoading = computed(
+      () =>
+        (props.returnRestrictions
+          ? store.state.returnRestrictions
+          : store.state.outgoingRestrictions) === undefined,
+    )
 
     const groups = computed(() =>
-      createCollection(
-        props.returnRestrictions
-          ? store.getters.origin
-          : store.getters.destination,
-        rootStore.getters.visitorContextWithDefaults,
-      ),
+      props.returnRestrictions
+        ? store.getters.returnRestrictions
+        : store.getters.outgoingRestrictions,
     )
     const bestAvailableGroup = computed(() => {
       const group = groups.value.getBestGroup()
@@ -149,6 +165,24 @@ export default defineComponent({
       return bestAvailableGroup.value
     })
 
+    provide(
+      OriginFactsheetKey,
+      computed(() =>
+        props.returnRestrictions
+          ? store.getters.destinationFactsheet
+          : store.getters.originFactsheet,
+      ),
+    )
+
+    provide(
+      DestinationFactsheetKey,
+      computed(() =>
+        props.returnRestrictions
+          ? store.getters.originFactsheet
+          : store.getters.destinationFactsheet,
+      ),
+    )
+
     return {
       RestrictionListType,
       currentGroupList,
@@ -158,6 +192,7 @@ export default defineComponent({
       stopIcon,
       originISO,
       destinationISO,
+      isLoading,
     }
   },
 })

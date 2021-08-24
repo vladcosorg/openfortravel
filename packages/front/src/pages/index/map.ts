@@ -12,7 +12,7 @@ import { watch, Ref } from 'vue'
 
 import { statusColorMap } from '@/front/src/pages/index/index-composable'
 import { goToDestination } from '@/front/src/router/route-builders/destination'
-import { RoundTripOverviewCollection } from '@/shared/src/api/cfapi/overview'
+import { RoundTripOverviewCollection } from '@/shared/src/api/function-api/overview'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { getCountryISOCodes } from '@/shared/src/misc/country-codes'
 

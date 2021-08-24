@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent, h, PropType } from 'vue'
 
-import { OneWayTripCard } from '@/front/src/models/one-way-trip-card'
+import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 import {
   getLabelForCountryCode,
@@ -12,8 +12,8 @@ import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export default defineComponent({
   props: {
-    trip: {
-      type: Object as PropType<OneWayTripCard>,
+    originFactsheet: {
+      type: Object as PropType<CountryFactsheet>,
       required: true,
     },
   },
@@ -60,7 +60,7 @@ export default defineComponent({
 
     const origin = computed(() => [
       'arriving from ',
-      h('b', getLabelForCountryCode(props.trip.originISO)),
+      h('b', getLabelForCountryCode(props.originFactsheet.countryCode)),
     ])
 
     const visited = computed(() => {

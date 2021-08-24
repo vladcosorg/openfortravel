@@ -22,7 +22,11 @@
       <q-separator class="q-my-xl" />
       <div class="row q-col-gutter-xl">
         <div class="col-md-4 col-12">
-          <stats class="q-mb-xl" :is-loading="isLoading" />
+          <stats
+            class="q-mb-xl"
+            :is-loading="isLoading"
+            :country-factsheet="destination"
+          />
         </div>
         <div class="col-md-4 col-12">
           <links
@@ -51,7 +55,14 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide } from 'vue'
+import {
+  computed,
+  defineComponent,
+  provide,
+  onServerPrefetch,
+  onBeforeMount,
+  watch,
+} from 'vue'
 import { useStore } from 'vuex'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
@@ -83,23 +94,30 @@ export default defineComponent({
     TheBreadcrumbs,
     InnerPage,
   },
+
   setup() {
     useContextParser(destinationParameterTransformers)
 
     const store = registerStoreModule(useStore())
+    const originCode = computed(() => store.getters.currentOriginCode)
+    const destinationCode = computed(() => store.getters.currentDestinationCode)
+
+    onServerPrefetch(async () => {
+      await store.actions.fetchAll()
+    })
+    onBeforeMount(() => store.actions.fetchAll())
+    watch([originCode, destinationCode], () => store.actions.fetchAll())
+
     provide(StoreKey, store)
 
     const { loading } = useLoading(false)
-    const breadcrumbs = useBreadcrumbs(
-      computed(() => store.getters.currentOriginCode),
-      computed(() => store.getters.currentDestinationCode),
-    )
+    const breadcrumbs = useBreadcrumbs(originCode, destinationCode)
 
     useDestinationMeta(store)
 
     return {
-      origin: computed(() => store.getters.origin),
-      destination: computed(() => store.getters.destination),
+      origin: computed(() => store.getters.originFactsheet),
+      destination: computed(() => store.getters.destinationFactsheet),
       isLoading: loading,
       breadcrumbs,
     }

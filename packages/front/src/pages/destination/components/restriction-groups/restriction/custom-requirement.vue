@@ -13,13 +13,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from 'vue'
+import { defineComponent } from 'vue'
 
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import type { StoreModule } from '@/front/src/pages/destination/destination-store'
-import { StoreKey } from '@/front/src/pages/destination/destination-types'
 import { OnlineApplication } from '@/shared/src/restriction-tree/restriction-node/online-application'
 
 import type { PropType } from 'vue'
@@ -32,11 +30,6 @@ export default defineComponent({
       type: Object as PropType<OnlineApplication>,
       required: true,
     },
-  },
-  setup() {
-    const store = inject(StoreKey) as StoreModule
-    const destination = computed(() => store.getters.destination)
-    return { destination }
   },
 })
 </script>

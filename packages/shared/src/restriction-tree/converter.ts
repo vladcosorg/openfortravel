@@ -26,6 +26,7 @@ import {
 export type EncodedTreeNode = EncodedRestrictionNode | EncodedLogicNode
 
 export type IncompleteEncodedNode = Partial<EncodedTreeNode>
+export type IncompleteEncodedNodeCollection = IncompleteEncodedNode[]
 
 export type EncodedRestrictionNode<
   T = typeof AbstractRestrictionNode['defaultOptions'],
@@ -99,7 +100,7 @@ export function convertFromStorageFormat<T extends EncodedTreeNode>(
 }
 
 export function convertIncompleteTreeFromStorageFormat(
-  incompleteTree: Array<Partial<EncodedTreeNode>>,
+  incompleteTree: IncompleteEncodedNodeCollection,
 ): PlainRestrictionGroups {
   return convertFromStorageFormat({
     type: LogicNodeType.OR,

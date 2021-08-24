@@ -27,26 +27,20 @@ import { Question } from '@/front/src/pages/destination/questions/question'
 
 export default defineComponent({
   components: { QuestionIndex, QuestionItem },
-  props: {
-    isLoading: {
-      type: Boolean,
-      default: true,
-    },
-  },
   setup() {
     const store = inject(StoreKey) as StoreModule
+    const isLoading = computed(() => store.getters.restrictionsLoading)
     const activeQuestionHash = computed(() => {
       const hash = useRoute().hash
       return hash.length > 0 ? hash.slice(1) : undefined
     })
 
-    const questions = computed<Question[]>(
-      () =>
-        // if (props.isLoading || !props.restriction || !props.destination) {
-        //   return Array.from({ length: 3 })
-        // }
-        store.getters.questions,
-    )
+    const questions = computed<Question[]>(() => {
+      if (isLoading.value) {
+        return Array.from({ length: 3 })
+      }
+      return store.getters.questions
+    })
 
     const lastIndex = computed(() => questions.value.length - 1)
 

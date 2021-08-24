@@ -1,7 +1,7 @@
 <template>
   <div>
     <widget-header>
-      <template #title>Common questions</template>
+      <template #title>Frequent questions</template>
     </widget-header>
     <div class="q-mt-md text-subtitle1 q-gutter-sm">
       <div v-for="(question, index) in questions" :key="index">
@@ -24,30 +24,22 @@ import { getCurrentRelativeURL } from '@/front/src/router/helpers'
 
 export default defineComponent({
   components: { WidgetHeader },
-  props: {
-    isLoading: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  setup(props) {
+  setup() {
     const store = inject(StoreKey) as StoreModule
-    const questions = computed(() =>
-      // if (props.isLoading || !props.restriction || !props.destination) {
-      //   return Array.from({ length: 3 })
-      // }
+    const isLoading = computed(() => store.getters.restrictionsLoading)
+    const questions = computed(() => {
+      if (isLoading.value) {
+        return Array.from({ length: 3 })
+      }
 
-      store.getters.questions.map((question) => ({
+      return store.getters.questions.map((question) => ({
         title: question.question,
         url: getCurrentRelativeURL(question.id),
-      })),
-    )
-
-    const lastIndex = computed(() => questions.value.length - 1)
+      }))
+    })
 
     return {
       questions,
-      lastIndex,
     }
   },
 })

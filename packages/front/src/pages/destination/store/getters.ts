@@ -1,17 +1,37 @@
+import { createRoundTripCard } from '@/front/src/composables/createRoundTripCard'
 import { QuarantineQuestion } from '@/front/src/pages/destination/questions/items/quarantine-question'
 import { Question } from '@/front/src/pages/destination/questions/question'
 import type { StateClass } from '@/front/src/pages/destination/store/state'
 import type { GetterSignatures } from '@/front/src/pages/destination/store/types/getters'
 import type { RootStateType } from '@/front/src/store/state'
-import { createCollection } from '@/shared/src/composables/createCollection'
-import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
+import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
+import { createLightPlainDestination } from '@/shared/src/api/destinations/plain-destination'
+import { convertIncompleteTreeFromStorageFormat } from '@/shared/src/restriction-tree/converter'
+import {
+  createRestrictionGroupCollection,
+  RestrictionGroupCollection,
+} from '@/shared/src/restriction-tree/restriction-group'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 import type { GetterTree } from 'vuex'
-import { createRoundTripCard } from '@/front/src/composables/createRoundTripCard'
 
 export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
   {
+    originFactsheet: (state, getters) =>
+      new CountryFactsheet(
+        createLightPlainDestination(
+          getters.currentOriginCode,
+          state.originCountryFactsheet?.[1],
+        ),
+      ),
+    destinationFactsheet: (state, getters) =>
+      new CountryFactsheet(
+        createLightPlainDestination(
+          getters.currentDestinationCode,
+          state.destinationCountryFactsheet?.[1],
+        ),
+      ),
+
     origin: (_state, getters, _rootState, rootGetters) =>
       rootGetters.wrappedHostRules[getters.currentOriginCode],
 
@@ -24,17 +44,6 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
     destination: (_state, getters, _rootState, rootGetters) =>
       rootGetters.wrappedHostRules[getters.currentDestinationCode],
 
-    allGroups(
-      _state,
-      getters,
-      _rootState,
-      rootGetters,
-    ): RestrictionGroupCollection {
-      return createCollection(
-        getters.destination,
-        rootGetters.visitorContextWithDefaults,
-      )
-    },
     tripCard(_state, getters, _rootState, rootGetters) {
       return createRoundTripCard(
         getters.origin,
@@ -42,12 +51,55 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
         rootGetters.visitorContextWithDefaults,
       )
     },
+    outgoingRestrictions(
+      state,
+      _getters,
+      _rootState,
+      rootGetters,
+    ): RestrictionGroupCollection {
+      return createRestrictionGroupCollection(
+        convertIncompleteTreeFromStorageFormat(
+          state.outgoingRestrictions ? state.outgoingRestrictions[1] : [],
+        ),
+        rootGetters.visitorContextWithDefaults,
+      )
+    },
+    returnRestrictions(
+      state,
+      getters,
+      _rootState,
+      rootGetters,
+    ): RestrictionGroupCollection {
+      return createRestrictionGroupCollection(
+        convertIncompleteTreeFromStorageFormat(
+          state.returnRestrictions ? state.returnRestrictions[1] : [],
+        ),
+        Object.assign({}, rootGetters.visitorContextWithDefaults, {
+          [RestrictionNodeType.ORIGIN]: getters.currentDestinationCode,
+        }),
+      )
+    },
     questions(state, getters): Question[] {
       return [
         // new GeneralQuestion(getters.tripCard.outgoingTrip),
         // new GeneralQuestion(getters.tripCard.returnTrip, true),
-        new QuarantineQuestion(getters.tripCard.outgoingTrip),
-        new QuarantineQuestion(getters.tripCard.returnTrip, true),
+        new QuarantineQuestion(
+          getters.originFactsheet,
+          getters.destinationFactsheet,
+          getters.outgoingRestrictions,
+        ),
+        new QuarantineQuestion(
+          getters.destinationFactsheet,
+          getters.originFactsheet,
+          getters.returnRestrictions,
+          true,
+        ),
       ]
+    },
+    restrictionsLoading(store): boolean {
+      return (
+        store.returnRestrictions === undefined ||
+        store.outgoingRestrictions === undefined
+      )
     },
   }

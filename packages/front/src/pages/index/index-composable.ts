@@ -1,6 +1,6 @@
 import { computed, Ref } from 'vue'
 
-import { RoundTripOverviewCollection } from '@/shared/src/api/cfapi/overview'
+import { RoundTripOverviewCollection } from '@/shared/src/api/function-api/overview'
 import { getStatusMapper } from '@/shared/src/api/restrictions/helper'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'

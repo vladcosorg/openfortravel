@@ -1,8 +1,7 @@
-import omit from 'lodash/omit'
-
-import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
-import { useKy } from '@/shared/src/composables/use-plugins'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+import omit from 'lodash/omit'
+import { useKy } from '@/shared/src/composables/use-plugins'
+import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 
 export type OneWayOverview = {
   quarantine: boolean
@@ -14,7 +13,6 @@ export type RoundTripOverview = {
   outgoing: OneWayOverview
   return: OneWayOverview
 }
-
 export type RoundTripOverviewCollection = Record<string, RoundTripOverview>
 
 export async function fetchOverview(

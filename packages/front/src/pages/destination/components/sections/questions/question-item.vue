@@ -17,7 +17,7 @@
         <component :is="item.answer" />
       </div>
       <div class="text-primary-subtle text-caption bg-elevation-1 q-pa-lg">
-        <verbalized-context :trip="item.trip" />
+        <verbalized-context :origin-factsheet="item.originFactsheet" />
       </div>
     </div>
     <p v-else>
@@ -58,13 +58,8 @@ export default defineComponent({
       type: Object as PropType<Question>,
       default: undefined,
     },
-    isLast: {
-      type: Boolean,
-      default: false,
-    },
     isActive: {
       type: Boolean,
-      default: false,
     },
   },
   setup() {
@@ -72,9 +67,6 @@ export default defineComponent({
       randWidth: createGeneratorForRandomIntegerInRange(50, 80, '%'),
       randRows: createGeneratorForRandomIntegerInRange(1, 4),
     }
-  },
-  render() {
-    return {}
   },
 })
 </script>

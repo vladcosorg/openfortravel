@@ -1,10 +1,11 @@
-import { ComputedRef, ref, watch } from 'vue'
-import { RoundTripCard } from '@/front/src/models/round-trip-card'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
 import debounce from 'lodash/debounce'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
+import { ComputedRef, ref, watch } from 'vue'
+
 import { OneWayTripCard } from '@/front/src/models/one-way-trip-card'
+import { RoundTripCard } from '@/front/src/models/round-trip-card'
 import { Destination } from '@/shared/src/api/destinations/models'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export function createTripsCards(): ComputedRef<RoundTripCard[]> {

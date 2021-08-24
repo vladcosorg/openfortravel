@@ -23,7 +23,7 @@
 import defer from 'lodash/defer'
 import { defineComponent, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
 
-import { RoundTripOverviewCollection } from '@/shared/src/api/cfapi/overview'
+import { RoundTripOverviewCollection } from '@/shared/src/api/function-api/overview'
 
 import type { MapChart } from '@amcharts/amcharts4/maps'
 import type { PropType } from 'vue'

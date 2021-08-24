@@ -19,7 +19,7 @@
       <required-languages :languages="restriction.options.languages" />
 
       <issuer-section
-        :destination-id="destinationId"
+        :destination-id="destinationFactsheet.countryCode"
         :issuers="restriction.options.issuer"
       />
     </template>
@@ -27,16 +27,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject } from 'vue'
+import { defineComponent } from 'vue'
 
+import { DestinationFactsheetKey } from '@/front/src/pages/destination/components/entry-restrictions.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import IssuerSection from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/issuer-section.vue'
 import RequiredLanguages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/required-languages.vue'
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
 import TitleCountry from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/title-country.vue'
 import { sharedProps } from '@/front/src/pages/destination/composables/restriction-item'
-import type { StoreModule } from '@/front/src/pages/destination/destination-store'
-import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { injectStrict } from '@/shared/src/misc/vue'
 import type { RecoveryCertificate } from '@/shared/src/restriction-tree/restriction-node/recovery-certificate'
 
 import type { PropType } from 'vue'
@@ -57,9 +57,8 @@ export default defineComponent({
     },
   },
   setup() {
-    const store = inject(StoreKey) as StoreModule
-    const destinationId = computed(() => store.getters.currentDestinationCode)
-    return { destinationId }
+    const destinationFactsheet = injectStrict(DestinationFactsheetKey)
+    return { destinationFactsheet }
   },
 })
 </script>

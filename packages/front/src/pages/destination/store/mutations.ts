@@ -8,7 +8,24 @@ export const mutations: MutationTree<StateType> & MutationSignatures = {
   [MutationTypes.toggleProfileEditor](state): void {
     state.isEditingProfile = !state.isEditingProfile
   },
-  [MutationTypes.setCurrentDestinationIso](state, destinationIso): void {
-    state.currentDestinationCode = destinationIso
+  [MutationTypes.setOriginCountryFactsheet](state, factsheet): void {
+    state.originCountryFactsheet = factsheet
+  },
+  [MutationTypes.setDestinationCountryFactsheet](state, factsheet): void {
+    state.destinationCountryFactsheet = factsheet
+  },
+  [MutationTypes.setOutgoingRestrictions](state, restrictions): void {
+    state.outgoingRestrictions = restrictions
+  },
+  [MutationTypes.setReturnRestrictions](state, restrictions): void {
+    state.returnRestrictions = restrictions
+  },
+  [MutationTypes.resetRestrictions](state): void {
+    state.returnRestrictions = undefined
+    state.outgoingRestrictions = undefined
+  },
+  [MutationTypes.resetDestinations](state): void {
+    state.originCountryFactsheet = undefined
+    state.destinationCountryFactsheet = undefined
   },
 }

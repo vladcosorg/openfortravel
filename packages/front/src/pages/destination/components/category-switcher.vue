@@ -31,12 +31,14 @@
       @click="$emit('update:modelValue', RestrictionListType.ALL_AVAILABLE)"
     >
       <q-badge
-        class="q-ml-sm"
+        class="q-ml-sm relative-position"
         color="positive"
         :outline="modelValue !== RestrictionListType.ALL_AVAILABLE"
         text-color="primary-inverse"
-        >{{ availableCount }}</q-badge
       >
+        <q-spinner v-if="isLoading" class="absolute" size="10px" />
+        <span :class="{ invisible: isLoading }">{{ availableCount }}</span>
+      </q-badge>
     </q-btn>
     <q-btn
       :disable="unavailableCount === 0"
@@ -59,8 +61,10 @@
         color="negative"
         :outline="modelValue !== RestrictionListType.ALL_UNAVAILABLE"
         text-color="primary-inverse"
-        >{{ unavailableCount }}</q-badge
       >
+        <q-spinner v-if="isLoading" class="absolute" size="10px" />
+        <span :class="{ invisible: isLoading }">{{ unavailableCount }}</span>
+      </q-badge>
     </q-btn>
   </div>
 </template>
@@ -85,6 +89,9 @@ export default defineComponent({
     unavailableCount: {
       type: Number,
       required: true,
+    },
+    isLoading: {
+      type: Boolean,
     },
   },
   emits: ['update:modelValue'],

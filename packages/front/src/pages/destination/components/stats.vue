@@ -1,11 +1,11 @@
 <template>
-  <section v-if="destination">
+  <section v-if="countryFactsheet">
     <widget-header
       :title="$t('page.destination.widgets.stats.title')"
       :subtitle="
-        destination &&
+        countryFactsheet &&
         $t('page.destination.widgets.stats.subtitle', {
-          country: destination.name,
+          country: countryFactsheet.name,
         })
       "
     />
@@ -17,7 +17,7 @@
 
         <q-item-section>
           <q-item-label class="text-subtitle1">
-            <strong>{{ destination.thisWeekCasesFixed }}</strong>
+            <strong>{{ countryFactsheet.thisWeekCasesFixed }}</strong>
             {{ $t('page.destination.widgets.stats.casesThisWeek.title') }}
           </q-item-label>
           <q-item-label caption>{{
@@ -32,12 +32,13 @@
 
         <q-item-section>
           <q-item-label class="text-subtitle1">
-            {{ trendWord }} <strong>{{ destination.fixedPercentage }}%</strong>
+            {{ trendWord }}
+            <strong>{{ countryFactsheet.fixedPercentage }}%</strong>
           </q-item-label>
           <q-item-label caption>
             {{
               $t('page.destination.widgets.stats.trend.subtitle', {
-                count: destination.lastWeekCasesFixed,
+                count: countryFactsheet.lastWeekCasesFixed,
               })
             }}
           </q-item-label>
@@ -52,10 +53,10 @@
         <q-item-section>
           <q-item-label class="text-subtitle1">
             {{ $t('page.destination.widgets.stats.riskLevel.title') }}:
-            <span :class="riskLevelColor(destination.riskLevel)">
+            <span :class="riskLevelColor(countryFactsheet.riskLevel)">
               {{
                 $t(
-                  `components.destinationItem.riskLevel.values.${destination.riskLevel}`,
+                  `components.destinationItem.riskLevel.values.${countryFactsheet.riskLevel}`,
                 )
               }}
             </span>
@@ -64,6 +65,7 @@
             {{ $t('page.destination.widgets.stats.riskLevel.subtitle') }}
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="https://www.cdc.gov/coronavirus/2019-ncov/travelers/map-and-travel-notices.html"
             >
               CDC
@@ -83,27 +85,29 @@ import {
   matCoronavirus as coronavirus,
   matAnnouncement as cdcRiskLevel,
 } from '@quasar/extras/material-icons'
-import { computed, defineComponent, inject } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 
 import { riskLevelColor } from '@/front/src/pages/country/composable'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import type { StoreModule } from '@/front/src/pages/destination/destination-store'
-import { StoreKey } from '@/front/src/pages/destination/destination-types'
+import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { WidgetHeader },
-  setup() {
+  props: {
+    countryFactsheet: {
+      type: Object as PropType<CountryFactsheet>,
+    },
+  },
+  setup(props) {
     const { t } = useVueI18n()
-    const store = inject(StoreKey) as StoreModule
 
-    const destination = computed(() => store.getters.destination)
     const percentageSign = computed(() => {
-      if (!destination.value) {
+      if (!props.countryFactsheet) {
         return
       }
 
-      return Math.sign(destination.value.percentage)
+      return Math.sign(props.countryFactsheet.percentage)
     })
 
     const trendWord = computed(() => {
@@ -143,16 +147,11 @@ export default defineComponent({
     })
 
     return {
-      destination,
-      percentageSign,
       trendWord,
       trendIcon,
       trendColor,
       cdcRiskLevel,
       coronavirus,
-      trendingUp,
-      trendingDown,
-      trendingFlat,
       riskLevelColor,
     }
   },

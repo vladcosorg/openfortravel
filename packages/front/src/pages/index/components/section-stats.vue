@@ -81,7 +81,7 @@ import { defineComponent, ref } from 'vue'
 import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
 import SectionMap from '@/front/src/pages/index/components/section-map.vue'
 import { useStats } from '@/front/src/pages/index/index-composable'
-import { fetchOverview } from '@/shared/src/api/cfapi/overview'
+import { fetchOverview } from '@/shared/src/api/function-api/overview'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({

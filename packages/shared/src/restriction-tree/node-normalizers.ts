@@ -6,6 +6,8 @@ import {
   EncodedTreeNode,
   EncodedRestrictionNode,
   typeConstructors,
+  IncompleteEncodedNode,
+  IncompleteEncodedNodeCollection,
 } from '@/shared/src/restriction-tree/converter'
 import { isLogicNodeType } from '@/shared/src/restriction-tree/guards'
 import {
@@ -62,7 +64,7 @@ export function createDefaultNodeOfType(
 }
 
 export function normalizeEncodedNode(
-  node: Partial<EncodedTreeNode>,
+  node: IncompleteEncodedNode,
 ): EncodedTreeNode {
   if (!node.type) {
     throw new Error('Undefined type')
@@ -74,7 +76,7 @@ export function normalizeEncodedNode(
 }
 
 export function normalizeRecursively(
-  tree: Array<Partial<EncodedTreeNode>>,
+  tree: IncompleteEncodedNodeCollection,
 ): EncodedTreeNode[] {
   const out: EncodedTreeNode[] = []
   for (const node of tree) {
@@ -82,7 +84,7 @@ export function normalizeRecursively(
       out.push(
         Object.assign(node, {
           children: normalizeRecursively(
-            node.children as Array<Partial<EncodedTreeNode>>,
+            node.children as IncompleteEncodedNodeCollection,
           ),
         }) as EncodedTreeNode,
       )
@@ -95,7 +97,7 @@ export function normalizeRecursively(
 }
 
 export function normalizeTree(
-  tree: Array<Partial<EncodedTreeNode>>,
+  tree: IncompleteEncodedNodeCollection,
 ): EncodedTreeNode[] {
   return normalizeRecursively(cloneDeep(tree) ?? [])
 }

@@ -3,13 +3,11 @@ import type { MutationSignatures } from '@/front/src/pages/destination/store/typ
 import type { ActionSignatures as RootActionSignatures } from '@/front/src/store/types/actions'
 import type { AugmentedActionContext } from '@/shared/src/misc/augmented-store'
 
-export type Links = Array<{
-  url: Promise<string>
-  title: string
-  label: string
-}>
-
-export enum ActionTypes {}
+export enum ActionTypes {
+  fetchAll = 'fetchAll',
+  fetchRestrictions = 'fetchRestrictions',
+  fetchCountryFactsheets = 'fetchCountryFactsheets',
+}
 type Context = AugmentedActionContext<
   MutationSignatures,
   ActionSignatures,
@@ -17,4 +15,8 @@ type Context = AugmentedActionContext<
   StateType
 >
 
-export type ActionSignatures = {}
+export type ActionSignatures = {
+  [ActionTypes.fetchAll](context: Context, force: boolean): Promise<void>
+  [ActionTypes.fetchRestrictions](context: Context): Promise<void>
+  [ActionTypes.fetchCountryFactsheets](context: Context): Promise<void>
+}

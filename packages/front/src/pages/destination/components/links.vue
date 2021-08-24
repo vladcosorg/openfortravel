@@ -49,7 +49,7 @@ import { defineComponent } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import type { Destination } from '@/shared/src/api/destinations/models'
+import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
 
 import type { PropType } from 'vue'
 
@@ -63,7 +63,7 @@ export default defineComponent({
       type: Boolean,
     },
     destination: {
-      type: Object as PropType<Destination>,
+      type: Object as PropType<CountryFactsheet>,
     },
   },
 })

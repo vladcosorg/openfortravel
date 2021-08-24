@@ -17,7 +17,7 @@ class ServerCache {
   public languages!: PrefetchedLocalizedLanguages
   public nationalities!: PreloadedNationalityList
   public quasarLocales!: Record<string, string>
-  public destinations: MappedPlainDestinationCollection = {}
+  public destinations?: MappedPlainDestinationCollection
 
   public getCountryCodeToLabelMap(locale: string): CountryListTypes {
     return (

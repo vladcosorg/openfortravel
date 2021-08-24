@@ -152,6 +152,10 @@ export class RestrictionGroup {
     return this.indexedGroup.has(RestrictionNodeType.INSURANCE)
   }
 
+  get isForbidden(): boolean {
+    return this.status === RestrictionStatus.FORBIDDEN
+  }
+
   get hasNoRestrictions(): boolean {
     if (this.indexedGroup.size !== 1) {
       return false
