@@ -36,8 +36,6 @@ jobs:
         run: yarn install
       - run: yarn build
         working-directory: ./packages/functions
-      - name: deploy
-        run: yarn dlx firebase deploy --token ${{ secrets.GCLOUD_TOKEN }}
       - uses: w9jds/firebase-action@a17f996b089638653d57c7aa85d0763e256b13fb
         with:
           args: deploy --only functions:${{ matrix.function }}
