@@ -41,3 +41,8 @@ jobs:
         env:
           CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
           CLOUDFLARE_AUTH_KEY: ${{ secrets.CLOUDFLARE_AUTH_KEY }}
+      - name: Warmup
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: 'https://us-central1-openfortravel.cloudfunctions.net/warmer'
+          method: 'GET'
