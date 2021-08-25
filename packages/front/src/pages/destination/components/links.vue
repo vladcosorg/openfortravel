@@ -49,7 +49,7 @@ import { defineComponent } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
+import { CountryFactsheet } from '@/shared/src/models/country-factsheet/country-factsheet'
 
 import type { PropType } from 'vue'
 

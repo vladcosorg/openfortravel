@@ -1,5 +1,5 @@
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 
 export interface SearchIdDocument {
-  context: Partial<VisitorProfile>
+  context: Partial<ProfileContext>
 }

@@ -1,11 +1,11 @@
 import toInteger from 'lodash/toInteger'
 
 import { ParameterTransformer } from '@/front/src/router/transformers/_types'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export const recoveredTransformer: ParameterTransformer<
-  VisitorProfile[RestrictionNodeType.RECOVERY]
+  ProfileContext[RestrictionNodeType.RECOVERY]
 > = {
   matcher(slug) {
     return /with-covid-recovery/.test(slug)

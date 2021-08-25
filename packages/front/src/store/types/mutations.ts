@@ -1,6 +1,6 @@
 import type { RootStateType, StateInterface } from '@/front/src/store/state'
 import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/plain-destination'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 
 import type { LocaleMessageObject } from 'vue-i18n'
 
@@ -48,7 +48,7 @@ export type MutationSignatures<S = RootStateType> = {
   [MutationTypes.mergeVisitorContext](
     state: S,
     payload: {
-      context: Partial<VisitorProfile>
+      context: Partial<ProfileContext>
       persistLocally: boolean
     },
   ): void
@@ -56,14 +56,14 @@ export type MutationSignatures<S = RootStateType> = {
   [MutationTypes.replaceVisitorContext](
     state: S,
     payload: {
-      context: VisitorProfile
+      context: ProfileContext
       persistLocally?: boolean
     },
   ): void
 
   [MutationTypes.setVisitorContextField]<
-    K extends keyof VisitorProfile,
-    V extends VisitorProfile[K],
+    K extends keyof ProfileContext,
+    V extends ProfileContext[K],
   >(
     state: S,
     payload: {

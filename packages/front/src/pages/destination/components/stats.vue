@@ -89,8 +89,8 @@ import { computed, defineComponent, PropType } from 'vue'
 
 import { riskLevelColor } from '@/front/src/pages/country/composable'
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
-import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
+import { CountryFactsheet } from '@/shared/src/models/country-factsheet/country-factsheet'
 
 export default defineComponent({
   components: { WidgetHeader },

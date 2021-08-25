@@ -42,6 +42,7 @@ import DidNotVisitCountriesContext from '@/front/src/components/context-field/vi
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
+import TheSearchStats from '@/front/src/pages/country/components/the-search-stats.vue'
 import { useBreadcrumbs } from '@/front/src/pages/country/composable'
 import {
   useRouter,
@@ -53,6 +54,7 @@ import { transformCountryCodeToOriginSlug } from '@/shared/src/modules/country-l
 
 export default defineComponent({
   components: {
+    TheSearchStats,
     TheBreadcrumbs,
     RecoveryContext,
     DidNotVisitCountriesContext,

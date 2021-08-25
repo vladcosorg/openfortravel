@@ -2,13 +2,13 @@ import { computed, ComputedRef, WritableComputedRef } from 'vue'
 
 import { RootStateType } from '@/front/src/store/state'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 
 export function createComputedSetter<
   T extends keyof RootStateType['visitorContext'],
->(field: T, withDefaults: false): WritableComputedRef<VisitorProfile[T]> {
+>(field: T, withDefaults: false): WritableComputedRef<ProfileContext[T]> {
   const store = useRootStore()
-  return computed<VisitorProfile[T]>({
+  return computed<ProfileContext[T]>({
     get() {
       return withDefaults
         ? store.getters.visitorContextWithDefaults[field]

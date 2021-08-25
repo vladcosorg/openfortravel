@@ -1,11 +1,15 @@
 <template>
   <div>
     Travel from
-    <country-label regular :value="journey.originISO" declination="origin" />
+    <country-label
+      regular
+      :value="trip.outgoing.origin.countryCode"
+      declination="origin"
+    />
     to
     <country-label
       regular
-      :value="journey.destinationISO"
+      :value="trip.outgoing.destination.countryCode"
       declination="destination"
     />
     is
@@ -13,12 +17,15 @@
       {{ status }}
     </strong>
     .
-    <span v-if="journey.returnIsForbidden" class="text-bold">
+    <span v-if="trip.returning.restrictions.isForbidden" class="text-bold">
       Attention! You may not be able to return back because of the current
       restriction.
     </span>
     <span
-      v-if="!journey.returnIsForbidden && journey.quarantineRequired"
+      v-else-if="
+        !trip.returning.restrictions.isForbidden &&
+        trip.returning.restrictions.quarantine
+      "
       class="text-bold"
     >
       You may have to self-quarantine upon return.
@@ -34,23 +41,23 @@
 import { computed, defineComponent, PropType } from 'vue'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
-import { RoundTripCard } from '@/front/src/models/round-trip-card'
+import { RoundTrip } from '@/shared/src/models/trip/round-trip'
 
 export default defineComponent({
   components: { CountryLabel },
   props: {
-    journey: {
-      type: Object as PropType<RoundTripCard>,
+    trip: {
+      type: Object as PropType<RoundTrip>,
       required: true,
     },
   },
   setup(props) {
     const status = computed(() => {
-      if (props.journey.isForbidden) {
+      if (props.trip.outgoing.restrictions.isForbidden) {
         return 'forbidden'
       }
 
-      if (props.journey.quarantineRequired) {
+      if (props.trip.outgoing.restrictions.quarantine) {
         return 'allowed with quarantine'
       }
 

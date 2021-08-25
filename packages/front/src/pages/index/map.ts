@@ -12,9 +12,9 @@ import { watch, Ref } from 'vue'
 
 import { statusColorMap } from '@/front/src/pages/index/index-composable'
 import { goToDestination } from '@/front/src/router/route-builders/destination'
-import { RoundTripOverviewCollection } from '@/shared/src/api/function-api/overview'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { getCountryISOCodes } from '@/shared/src/misc/country-codes'
+import { RoundTripRawPrecomputedRestrictionMap } from '@/shared/src/models/precomputed-restriction/raw-precomputed-restriction'
 
 import type { Color } from '@amcharts/amcharts4/core'
 import type { MapArc, MapPolygon } from '@amcharts/amcharts4/maps'
@@ -29,7 +29,7 @@ type SeriesItem = {
 export function createChart(
   domElement: HTMLElement,
   originCode: string,
-  restrictions: Ref<RoundTripOverviewCollection>,
+  restrictions: Ref<RoundTripRawPrecomputedRestrictionMap>,
 ): MapChart {
   const chart = createAndConfigureChart(domElement)
 
@@ -48,7 +48,7 @@ export function createChart(
 
   configurePolygonTemplate(polygonTemplate)
 
-  chart.events.once('appeared', () => {
+  chart.events.once('inited', () => {
     polygonSeries.mapPolygons.each((polygon) => {
       setTimeout(() => {
         polygon.show()
@@ -219,7 +219,7 @@ export function configurePolygonTemplate(template: MapPolygon): void {
 }
 
 function transformData(
-  restrictions: RoundTripOverviewCollection,
+  restrictions: RoundTripRawPrecomputedRestrictionMap,
 ): SeriesItem[] {
   const { t } = useVueI18n()
   return Object.entries(restrictions).map(([countryISO, restriction]) => ({

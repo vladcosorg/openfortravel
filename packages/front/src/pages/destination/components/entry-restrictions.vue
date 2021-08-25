@@ -88,7 +88,7 @@ import GroupsByType from '@/front/src/pages/destination/components/restriction-g
 import WidgetHeader from '@/front/src/pages/destination/components/widget-header.vue'
 import type { StoreModule } from '@/front/src/pages/destination/destination-store'
 import { StoreKey } from '@/front/src/pages/destination/destination-types'
-import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
+import { CountryFactsheet } from '@/shared/src/models/country-factsheet/country-factsheet'
 
 export const OriginFactsheetKey: InjectionKey<Ref<CountryFactsheet>> =
   Symbol('Origin')

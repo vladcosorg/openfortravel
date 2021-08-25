@@ -3,7 +3,9 @@
     flat
     :class="[
       'card bg-elevation-1 full-height relative-position',
-      hideBorder || loading ? '' : `status-${journey.status}`,
+      hideBorder || loading
+        ? ''
+        : `status-${trip.outgoing.restrictions.status}`,
     ]"
   >
     <router-link
@@ -12,22 +14,26 @@
       class="column full-height relative-position"
       style="text-decoration: none; color: inherit"
       clickable
-      :to="journey.url"
-      @click.native="isClicked = true"
+      :to="trip.outgoing.url"
+      @click="isClicked = true"
     >
       <q-card-section>
         <div v-if="returning" class="text-subtitle">
-          Returning from <country-label :value="journey.originISO" /> to
+          Returning from
+          <country-label :value="trip.outgoing.destination.countryCode" /> to
         </div>
         <div class="text-h6 ellipsis-improved full-width">
-          <country-label :value="journey.destinationISO" regular />
+          <country-label
+            :value="trip.outgoing.destination.countryCode"
+            regular
+          />
         </div>
 
         <div v-if="!hideRiskLevel" class="text-caption text-primary-subtle">
           {{ $t('components.destinationItem.riskLevel.title') }}:
-          <span :class="riskLevelColor(journey.destination.riskLevel)">{{
+          <span :class="riskLevelColor(trip.outgoing.destination.riskLevel)">{{
             $t(
-              `components.destinationItem.riskLevel.values.${journey.destination.riskLevel}`,
+              `components.destinationItem.riskLevel.values.${trip.outgoing.destination.riskLevel}`,
             )
           }}</span>
         </div>
@@ -35,19 +41,22 @@
 
       <q-separator inset />
 
-      <q-card-section v-if="journey.isForbidden" style="flex-grow: 1">
+      <q-card-section
+        v-if="trip.outgoing.restrictions.isForbidden"
+        style="flex-grow: 1"
+      >
         <div class="text-center">
           <q-icon :name="accessDeniedIcon" color="negative" size="lg" />
           <div>Access denied</div>
         </div>
       </q-card-section>
       <q-card-section v-else style="flex-grow: 1">
-        <trip-summary class="text-caption" :journey="journey" />
-        <trip-highlights :journey="journey" />
+        <trip-summary class="text-caption" :trip="trip" />
+        <trip-highlights :trip="trip" />
       </q-card-section>
       <q-card-actions class="bg-elevation-1" align="between">
         <div class="text-primary-subtle">
-          <group-score :score="journey.score" />
+          <group-score :score="trip.outgoing.restrictions.rating" />
           <q-tooltip>
             The higher the score the less restrictions and requirements you are
             required to abide
@@ -145,14 +154,13 @@
 <script lang="ts">
 import { ionRemoveCircleOutline as accessDeniedIcon } from '@quasar/extras/ionicons-v5'
 import { defineComponent, ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 
 import CountryLabel from '@/front/src/components/country/country-label.vue'
-import { RoundTripCard } from '@/front/src/models/round-trip-card'
 import TripHighlights from '@/front/src/pages/country/components/trip-highlights.vue'
 import TripSummary from '@/front/src/pages/country/components/trip-summary.vue'
 import { riskLevelColor } from '@/front/src/pages/country/composable'
 import GroupScore from '@/front/src/pages/destination/components/restriction-groups/group-score.vue'
+import { RoundTrip } from '@/shared/src/models/trip/round-trip'
 
 import type { PropType } from 'vue'
 
@@ -165,8 +173,8 @@ export default defineComponent({
     returning: {
       type: Boolean,
     },
-    journey: {
-      type: Object as PropType<RoundTripCard>,
+    trip: {
+      type: Object as PropType<RoundTrip>,
     },
     hideRiskLevel: {
       type: Boolean,
@@ -177,9 +185,7 @@ export default defineComponent({
   },
 
   setup() {
-    const { t } = useI18n()
     return {
-      t,
       riskLevelColor,
       accessDeniedIcon,
       isClicked: ref(false),

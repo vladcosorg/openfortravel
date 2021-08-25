@@ -2,11 +2,11 @@ import { getDestinationRouteURL } from '@/front/src/router/route-builders/destin
 import { Destination } from '@/shared/src/api/destinations/models'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { createCollection } from '@/shared/src/composables/createCollection'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 import {
   RestrictionGroup,
   RestrictionGroupCollection,
 } from '@/shared/src/restriction-tree/restriction-group'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export class OneWayTripCard {
   protected restrictions: RestrictionGroupCollection
@@ -14,7 +14,7 @@ export class OneWayTripCard {
   constructor(
     public readonly origin: Destination,
     public readonly destination: Destination,
-    public profile: VisitorProfile,
+    public profile: ProfileContext,
   ) {
     this.restrictions = createCollection(destination, profile)
     this.bestGroup = this.restrictions.getBestGroup() ?? new RestrictionGroup()

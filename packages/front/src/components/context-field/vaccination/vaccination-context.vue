@@ -1,11 +1,12 @@
 <template>
   <generic-select
-    v-model="modelValue"
+    v-model="model"
     label="Vaccination status"
     :options="options"
     :use-input="false"
     bottom-slots
     :multiple="false"
+    :loading="isSaving"
   >
     <template #selected>
       <vaccine-label regular :value="labelValue" />
@@ -35,11 +36,12 @@ export default defineComponent({
   components: { VaccineLabel, GenericSelect, Hint },
   emits: ['update:modelValue'],
   setup() {
-    const modelValue = useModel()
-    const labelValue = computed(() => modelValue.value || undefined)
+    const { model, isSaving } = useModel()
+    const labelValue = computed(() => model.value || undefined)
     const options = useVaccinationOptions()
     return {
-      modelValue,
+      isSaving,
+      model,
       labelValue,
       options,
     }

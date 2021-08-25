@@ -1,39 +1,36 @@
 <template>
-  <div class="grid">
+  <div class="grid q-mb-xl">
     <q-no-ssr>
       <template #default>
-        <div v-for="(destination, key) in results" :key="key" class="col">
-          <destination-item
-            hide-border
-            :loading="loading"
-            :journey="destination"
-          />
+        <div v-for="(trip, key) in results" :key="key" class="col">
+          <destination-item hide-border :loading="loading" :trip="trip" />
         </div>
       </template>
       <template #placeholder>
         <div
           v-for="(destination, index) in results"
           :key="index"
-          class="'bg-elevation-1 col"
+          class="bg-elevation-1 col"
         >
           <router-link
             :title="
               $t('components.destinationItem.ssrAttrTitle', {
-                to: destination.destinationLabel,
+                to: destination.outgoing.destination.destinationLabel,
               })
             "
             :to="{
               name: 'destination',
               params: {
-                originSlug: destination.originSlug,
-                destinationSlug: destination.destinationSlug,
+                originSlug: destination.outgoing.origin.originSlug,
+                destinationSlug:
+                  destination.outgoing.destination.destinationSlug,
               },
             }"
           >
             {{
               $t('components.destinationItem.ssrTitle', {
-                from: destination.originLabel,
-                to: destination.destinationLabel,
+                from: destination.outgoing.origin.originLabel,
+                to: destination.outgoing.destination.destinationLabel,
               })
             }}
           </router-link>
@@ -63,8 +60,8 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
-import { RoundTripCard } from '@/front/src/models/round-trip-card'
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
+import { RoundTripCollection } from '@/shared/src/models/trip/round-trip'
 
 import type { PropType } from 'vue'
 
@@ -76,7 +73,7 @@ export default defineComponent({
       type: Boolean,
     },
     destinations: {
-      type: Array as PropType<RoundTripCard[]>,
+      type: Array as PropType<RoundTripCollection>,
       default: () => [],
     },
     collapseAfter: {

@@ -1,6 +1,7 @@
 import difference from 'lodash/difference'
 
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 import { RestrictionCategory } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeList } from '@/shared/src/restriction-tree/converter'
 import { Matcher } from '@/shared/src/restriction-tree/matcher'
@@ -9,10 +10,7 @@ import {
   PlainRestrictionGroups,
   RestrictionNodeType,
 } from '@/shared/src/restriction-tree/types'
-import {
-  applyContextToRestrictionGroups,
-  VisitorProfile,
-} from '@/shared/src/restriction-tree/visitor-profile'
+import { applyContextToRestrictionGroups } from '@/shared/src/restriction-tree/visitor-profile'
 
 type RawRestrictionGroupCollection = RestrictionGroup[]
 
@@ -20,7 +18,7 @@ export class RestrictionGroupCollection {
   protected matcher?: Matcher
   constructor(
     protected readonly restrictionGroups: PlainRestrictionGroups,
-    protected readonly context?: VisitorProfile,
+    protected readonly context?: ProfileContext,
   ) {}
 
   public getAvailableGroups(): RestrictionGroup[] {
@@ -181,7 +179,7 @@ export class RestrictionGroup {
 
 export function createRestrictionGroupCollection(
   restrictions: PlainRestrictionGroups,
-  profile: VisitorProfile,
+  profile: ProfileContext,
 ): RestrictionGroupCollection {
   return new RestrictionGroupCollection(restrictions, profile)
 }

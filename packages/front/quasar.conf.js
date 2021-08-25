@@ -36,6 +36,7 @@ module.exports = configure((context) => ({
   // https://v2.quasar.dev/quasar-cli/boot-files
   boot: [
     // '1-vue',
+    'pinia',
     '../../../shared/src/boot/use-setter',
     { path: '2-node-cache', client: false },
     // '~shared/src/boot/composition-api',
@@ -101,7 +102,7 @@ module.exports = configure((context) => ({
     // analyze: true,
 
     // Options below are automatically set depending on the env, set them if you want to override
-    // extractCSS: false,
+    extractCSS: true,
 
     // https://v2.quasar.dev/quasar-cli/handling-webpack
     // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

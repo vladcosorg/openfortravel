@@ -15,19 +15,19 @@ import {
 } from '@quasar/extras/ionicons-v5'
 import { computed, defineComponent, PropType } from 'vue'
 
-import { RoundTripCard } from '@/front/src/models/round-trip-card'
+import { RoundTrip } from '@/shared/src/models/trip/round-trip'
 
 export default defineComponent({
   components: {},
   props: {
-    journey: {
-      type: Object as PropType<RoundTripCard>,
+    trip: {
+      type: Object as PropType<RoundTrip>,
       required: true,
     },
   },
   setup(props) {
     const highlights = computed(() => {
-      const values = props.journey.highlights.map((item) => {
+      const values = props.trip.highlights.map((item) => {
         switch (item) {
           case 'quarantine':
             return {

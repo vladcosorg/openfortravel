@@ -251,6 +251,6 @@ const codes = [
   'xk',
 ]
 
-export function getCountryISOCodes(): string[] {
-  return codes
+export function getCountryISOCodes(exceptCode?: string): string[] {
+  return exceptCode ? codes.filter((code) => code !== exceptCode) : codes
 }

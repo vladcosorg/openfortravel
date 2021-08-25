@@ -5,8 +5,8 @@ import { OneWayTripCard } from '@/front/src/models/one-way-trip-card'
 import { RoundTripCard } from '@/front/src/models/round-trip-card'
 import { Destination } from '@/shared/src/api/destinations/models'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export function createTripsCards(): ComputedRef<RoundTripCard[]> {
   const store = useRootStore()
@@ -40,7 +40,7 @@ export function createTripsCards(): ComputedRef<RoundTripCard[]> {
 export function createOneWayTripCard(
   originCountry: Destination,
   destinationCountry: Destination,
-  profile: VisitorProfile,
+  profile: ProfileContext,
 ): OneWayTripCard {
   return new OneWayTripCard(originCountry, destinationCountry, profile)
 }
@@ -48,7 +48,7 @@ export function createOneWayTripCard(
 export function createRoundTripCard(
   origin: Destination,
   destination: Destination,
-  profile: VisitorProfile,
+  profile: ProfileContext,
 ): RoundTripCard {
   return new RoundTripCard(
     createOneWayTripCard(origin, destination, profile),

@@ -4,8 +4,8 @@ import { Question } from '@/front/src/pages/destination/questions/question'
 import type { StateClass } from '@/front/src/pages/destination/store/state'
 import type { GetterSignatures } from '@/front/src/pages/destination/store/types/getters'
 import type { RootStateType } from '@/front/src/store/state'
-import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
-import { createLightPlainDestination } from '@/shared/src/api/destinations/plain-destination'
+import { CountryFactsheet } from '@/shared/src/models/country-factsheet/country-factsheet'
+import { createRawFactsheet } from '@/shared/src/models/country-factsheet/factory'
 import { convertIncompleteTreeFromStorageFormat } from '@/shared/src/restriction-tree/converter'
 import {
   createRestrictionGroupCollection,
@@ -19,14 +19,14 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
   {
     originFactsheet: (state, getters) =>
       new CountryFactsheet(
-        createLightPlainDestination(
+        createRawFactsheet(
           getters.currentOriginCode,
           state.originCountryFactsheet?.[1],
         ),
       ),
     destinationFactsheet: (state, getters) =>
       new CountryFactsheet(
-        createLightPlainDestination(
+        createRawFactsheet(
           getters.currentDestinationCode,
           state.destinationCountryFactsheet?.[1],
         ),
@@ -80,6 +80,14 @@ export const getters: GetterTree<StateClass, RootStateType> & GetterSignatures =
       )
     },
     questions(state, getters): Question[] {
+      if (
+        !getters.originFactsheet ||
+        !getters.destinationFactsheet ||
+        !getters.outgoingRestrictions ||
+        !getters.returnRestrictions
+      ) {
+        return []
+      }
       return [
         // new GeneralQuestion(getters.tripCard.outgoingTrip),
         // new GeneralQuestion(getters.tripCard.returnTrip, true),

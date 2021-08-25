@@ -1,4 +1,4 @@
-import { PlainCountryFactsheet } from '@/shared/src/api/destinations/plain-destination'
+import { RawCountryFactsheet } from '@/shared/src/models/country-factsheet/raw-country-factsheet'
 import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import {
   getDestinationLabelForCountryCode,
@@ -10,9 +10,9 @@ import {
 
 export type MappedCountryFactsheetCollection = Record<string, CountryFactsheet>
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CountryFactsheet extends PlainCountryFactsheet {}
-export class CountryFactsheet implements PlainCountryFactsheet {
-  constructor(plainDestination: PlainCountryFactsheet) {
+export interface CountryFactsheet extends RawCountryFactsheet {}
+export class CountryFactsheet implements RawCountryFactsheet {
+  constructor(plainDestination: RawCountryFactsheet) {
     Object.assign(this, plainDestination)
   }
   get name(): string {
@@ -48,7 +48,7 @@ export class CountryFactsheet implements PlainCountryFactsheet {
   }
 
   public cloneWithFields(
-    fields: Partial<PlainCountryFactsheet>,
+    fields: Partial<RawCountryFactsheet>,
   ): CountryFactsheet {
     return new CountryFactsheet(Object.assign(this.toPlainObject(), fields))
   }
@@ -57,7 +57,7 @@ export class CountryFactsheet implements PlainCountryFactsheet {
     return this.infoLink.replace(/\r/g, '').split(/\n/).filter(Boolean)
   }
 
-  public toPlainObject(): PlainCountryFactsheet {
+  public toPlainObject(): RawCountryFactsheet {
     return { ...this }
   }
 
@@ -88,5 +88,13 @@ export class CountryFactsheet implements PlainCountryFactsheet {
 
   get lastWeekCasesFixed(): string {
     return this.lastWeekCasesPer100K.toFixed(1)
+  }
+
+  includesSubtring(substring: string): boolean {
+    return this.originLabel.toLowerCase().includes(substring)
+  }
+
+  substringIndex(substring: string): number {
+    return this.originLabel.indexOf(substring)
   }
 }

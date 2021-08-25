@@ -1,8 +1,8 @@
 <script lang="ts">
 import { computed, defineComponent, h, PropType } from 'vue'
 
-import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { CountryFactsheet } from '@/shared/src/models/country-factsheet/country-factsheet'
 import {
   getLabelForCountryCode,
   getLabelsForCountryCodes,

@@ -8,11 +8,11 @@ import {
 } from '@firebase/firestore/lite'
 
 import { searchIdCollection } from '@/shared/src/misc/firebase'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 
 export async function getContextBySearchId(
   id: string,
-): Promise<Partial<VisitorProfile>> {
+): Promise<Partial<ProfileContext>> {
   const snapshot = await getDoc(doc(searchIdCollection, id))
   if (!snapshot.exists()) {
     throw new Error(`Search id ${id} does not exist`)
@@ -21,7 +21,7 @@ export async function getContextBySearchId(
 }
 
 export async function findIdByData(
-  context: Partial<VisitorProfile>,
+  context: Partial<ProfileContext>,
 ): Promise<string | undefined> {
   const q = query(searchIdCollection, where('context', '==', context))
   const result = await getDocs(q)
@@ -29,14 +29,14 @@ export async function findIdByData(
 }
 
 export async function createSearchIdWithData(
-  context: Partial<VisitorProfile>,
+  context: Partial<ProfileContext>,
 ): Promise<string> {
   const docRef = await addDoc(searchIdCollection, { context })
   return docRef.id
 }
 
 export async function getOrCreateSearchId(
-  context: Partial<VisitorProfile>,
+  context: Partial<ProfileContext>,
 ): Promise<string> {
   return (
     (await findIdByData(context)) ?? (await createSearchIdWithData(context))

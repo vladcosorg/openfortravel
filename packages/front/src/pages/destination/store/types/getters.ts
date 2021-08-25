@@ -1,9 +1,9 @@
 import { RoundTripCard } from '@/front/src/models/round-trip-card'
 import { Question } from '@/front/src/pages/destination/questions/question'
 import type { StateClass } from '@/front/src/pages/destination/store/state'
-import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
 import type { Destination } from '@/shared/src/api/destinations/models'
 import type { GetterContext } from '@/shared/src/misc/augmented-store'
+import { CountryFactsheet } from '@/shared/src/models/country-factsheet/country-factsheet'
 import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
 
 type LocalGetterContext<

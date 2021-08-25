@@ -23,7 +23,7 @@
 import defer from 'lodash/defer'
 import { defineComponent, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
 
-import { RoundTripOverviewCollection } from '@/shared/src/api/function-api/overview'
+import { RoundTripRawPrecomputedRestrictionMap } from '@/shared/src/models/precomputed-restriction/raw-precomputed-restriction'
 
 import type { MapChart } from '@amcharts/amcharts4/maps'
 import type { PropType } from 'vue'
@@ -36,7 +36,7 @@ export default defineComponent({
       required: true,
     },
     restrictions: {
-      type: Object as PropType<RoundTripOverviewCollection>,
+      type: Object as PropType<RoundTripRawPrecomputedRestrictionMap>,
       required: true,
     },
     isLoading: {

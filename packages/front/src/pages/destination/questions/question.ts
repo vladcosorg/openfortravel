@@ -1,6 +1,9 @@
-import { CountryFactsheet } from '@/shared/src/api/destinations/country-factsheet'
 import { RenderFunction } from '@/shared/src/misc/type-helpers'
-import { RestrictionGroupCollection } from '@/shared/src/restriction-tree/restriction-group'
+import { CountryFactsheet } from '@/shared/src/models/country-factsheet/country-factsheet'
+import {
+  RestrictionGroup,
+  RestrictionGroupCollection,
+} from '@/shared/src/restriction-tree/restriction-group'
 
 export abstract class Question {
   public readonly optimalRestrictionGroup
@@ -10,7 +13,8 @@ export abstract class Question {
     public readonly restrictions: RestrictionGroupCollection,
     public readonly returning: boolean = false,
   ) {
-    this.optimalRestrictionGroup = restrictions.getBestGroup()
+    this.optimalRestrictionGroup =
+      restrictions.getBestGroup() ?? new RestrictionGroup()
   }
 
   public abstract get id(): string

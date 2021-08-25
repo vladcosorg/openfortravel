@@ -1,5 +1,5 @@
 <template>
-  <inline-select v-model="value" :options="options">
+  <inline-select v-model="model" :options="options" :loading="isSaving">
     <template #inline-label>
       <vaccine-label regular :value="labelValue" />
     </template>
@@ -20,10 +20,11 @@ export default defineComponent({
   setup() {
     const options = useVaccinationOptions()
 
-    const value = useModel()
-    const labelValue = computed(() => value.value || undefined)
+    const { model, isSaving } = useModel()
+    const labelValue = computed(() => model.value || undefined)
     return {
-      value,
+      isSaving,
+      model,
       options,
       labelValue,
     }

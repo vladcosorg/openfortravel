@@ -4,10 +4,8 @@ import type { ActionSignatures } from '@/front/src/pages/destination/store/types
 import { ActionTypes } from '@/front/src/pages/destination/store/types/actions'
 import { MutationTypes } from '@/front/src/pages/destination/store/types/mutations'
 import type { StateInterface } from '@/front/src/store/state'
-import {
-  fetchCountryDetails,
-  fetchDetailedRestrictions,
-} from '@/shared/src/api/function-api'
+import { fetchDetailedRestrictions } from '@/shared/src/api/function-api'
+import { fetchCountryFactsheet } from '@/shared/src/api/function-api/country-factsheet'
 
 import type { ActionTree } from 'vuex'
 
@@ -42,11 +40,11 @@ export const actions: ActionTree<StateClass, StateInterface> &
     } else {
       commit(MutationTypes.setOriginCountryFactsheet, [
         getters.currentDestinationCode,
-        await fetchCountryDetails(getters.currentOriginCode),
+        await fetchCountryFactsheet(getters.currentOriginCode),
       ])
       commit(MutationTypes.setDestinationCountryFactsheet, [
         getters.currentDestinationCode,
-        await fetchCountryDetails(getters.currentDestinationCode),
+        await fetchCountryFactsheet(getters.currentDestinationCode),
       ])
     }
   },
@@ -79,7 +77,7 @@ export const actions: ActionTree<StateClass, StateInterface> &
         await fetchDetailedRestrictions(getters.currentDestinationCode),
       ])
       commit(MutationTypes.setReturnRestrictions, [
-        getters.currentDestinationCode,
+        getters.currentOriginCode,
         await fetchDetailedRestrictions(getters.currentOriginCode),
       ])
     }

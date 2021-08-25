@@ -1,10 +1,10 @@
 import { ParameterTransformer } from '@/front/src/router/transformers/_types'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 import { isVaccineBrand } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export const vaccinatedTransformer: ParameterTransformer<
-  VisitorProfile[RestrictionNodeType.VACCINATED]
+  ProfileContext[RestrictionNodeType.VACCINATED]
 > = {
   matcher(slug) {
     return /(unvaccinated|vaccinated-with)/.test(slug)

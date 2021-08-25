@@ -1,50 +1,21 @@
 import { matFlightTakeoff } from '@quasar/extras/material-icons'
 import { computed, ref } from 'vue'
 
-import { createTripsCards } from '@/front/src/composables/createRoundTripCard'
-import { Restriction } from '@/front/src/models/restriction'
-import { RoundTripCard } from '@/front/src/models/round-trip-card'
-import type { CountryMap } from '@/front/src/pages/country/country-store'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
-import { RiskLevel } from '@/shared/src/api/destinations/plain-destination'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
-import { useVuexReactiveGetter } from '@/shared/src/composables/use-vuex'
 import { Breadcrumbs } from '@/shared/src/misc/type-helpers'
+import { RiskLevel } from '@/shared/src/models/country-factsheet/raw-country-factsheet'
+import { RoundTripCollection } from '@/shared/src/models/trip/round-trip'
 import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 import type { ComputedRef, Ref } from 'vue'
 
-export function useCountries(): {
-  countries: ComputedRef<CountryMap>
-} {
-  return {
-    countries: useVuexReactiveGetter<CountryMap>('countryPage/countryList'),
-  }
-}
-
-export function useRestrictionList(): {
-  allDestinations: ComputedRef<RoundTripCard[]>
-  allowedDestinations: ComputedRef<RoundTripCard[]>
-  forbiddenDestinations: ComputedRef<RoundTripCard[]>
-} {
-  const allDestinations = createTripsCards()
-  const allowedDestinations = computed(() =>
-    allDestinations.value.filter((destination) => !destination.isForbidden),
-  )
-
-  const forbiddenDestinations = computed(() =>
-    allDestinations.value.filter((destination) => destination.isForbidden),
-  )
-
-  return { allDestinations, allowedDestinations, forbiddenDestinations }
-}
-
-type InputFilter = (input: RoundTripCard[]) => RoundTripCard[]
+type InputFilter = (input: RoundTripCollection) => RoundTripCollection
 
 export function useFilterer(
-  input: ComputedRef<RoundTripCard[]>,
+  input: ComputedRef<RoundTripCollection>,
   filters: InputFilter[],
-): ComputedRef<RoundTripCard[]> {
+): ComputedRef<RoundTripCollection> {
   return computed(() =>
     filters.reduce((restrictions, filter) => filter(restrictions), input.value),
   )
@@ -56,17 +27,19 @@ export function useCountryMatchFilter(): {
 } {
   const filterValue = ref('')
 
-  const filterFunction: InputFilter = (input: RoundTripCard[]) => {
+  const filterFunction: InputFilter = (input: RoundTripCollection) => {
     if (!filterValue.value) {
       return input
     }
 
     return input
-      .filter((restriction) => restriction.includesSubtring(filterValue.value))
+      .filter((trip) =>
+        trip.outgoing.destination.includesSubtring(filterValue.value),
+      )
       .sort(
-        (destinationA, destinationB) =>
-          destinationA.substringIndex(filterValue.value) -
-          destinationB.substringIndex(filterValue.value),
+        (tripA, tripB) =>
+          tripA.outgoing.destination.substringIndex(filterValue.value) -
+          tripB.outgoing.destination.substringIndex(filterValue.value),
       )
   }
 
@@ -82,13 +55,14 @@ export function useTabFilter(): {
 } {
   const filterValue = ref('')
 
-  const filterFunction: InputFilter = (input: Restriction[]) => {
+  const filterFunction: InputFilter = (input: RoundTripCollection) => {
     if (!filterValue.value) {
       return input
     }
 
     return input.filter(
-      (restriction) => restriction.destinationContinent === filterValue.value,
+      (restriction) =>
+        restriction.outgoing.destination.continent === filterValue.value,
     )
   }
 
@@ -98,9 +72,9 @@ export function useTabFilter(): {
   }
 }
 
-export function useRestrictionFilterer(input: Ref<RoundTripCard[]>): {
+export function useRestrictionFilterer(input: Ref<RoundTripCollection>): {
   countryMatchFilterValue: Ref<string>
-  destinations: Ref<RoundTripCard[]>
+  destinations: Ref<RoundTripCollection>
 } {
   const {
     filterValue: countryMatchFilterValue,

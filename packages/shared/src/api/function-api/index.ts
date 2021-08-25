@@ -1,4 +1,3 @@
-import { LiteDestinationDocument } from '@/shared/src/api/destinations/plain-destination'
 import { useKy } from '@/shared/src/composables/use-plugins'
 import { IncompleteEncodedNodeCollection } from '@/shared/src/restriction-tree/converter'
 
@@ -9,13 +8,5 @@ export async function fetchDetailedRestrictions(
     .get(
       `${process.env.CLOUD_FUNCTIONS_URL}/api/restrictions/${destinationISO}/details`,
     )
-    .json()
-}
-
-export async function fetchCountryDetails(
-  destinationISO: string,
-): Promise<LiteDestinationDocument> {
-  return await useKy()
-    .get(`${process.env.CLOUD_FUNCTIONS_URL}/api/country/${destinationISO}`)
     .json()
 }

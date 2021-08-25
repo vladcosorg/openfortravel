@@ -1,9 +1,9 @@
 import { ParameterTransformer } from '@/front/src/router/transformers/_types'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export const recentlyVisitedTransformer: ParameterTransformer<
-  VisitorProfile[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES] | undefined
+  ProfileContext[RestrictionNodeType.DID_NOT_VISIT_COUNTRIES] | undefined
 > = {
   matcher(slug) {
     return /visited-/.test(slug)

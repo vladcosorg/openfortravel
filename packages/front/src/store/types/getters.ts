@@ -4,7 +4,7 @@ import type {
   MappedDestinationCollection,
 } from '@/shared/src/api/destinations/models'
 import type { GetterContext } from '@/shared/src/misc/augmented-store'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 
 type LocalGetterContext<
   State = RootStateType,
@@ -18,7 +18,7 @@ export interface GetterSignatures {
   detectedCountryWithFallback(...args: LocalGetterContext): string
 
   visitorOrigin(...args: LocalGetterContext): string
-  visitorContextWithDefaults(...args: LocalGetterContext): VisitorProfile
+  visitorContextWithDefaults(...args: LocalGetterContext): ProfileContext
 }
 
 export type RootGetterAccessors = {

@@ -16,12 +16,14 @@
     behavior="dialog"
     inline
     dense
+    :loading="loading"
     @filter="filterFunction"
   >
     <template #before>
       <a @click="onBeforeClick">
         <slot name="inline-label" />
-        <q-icon :name="dropdownIcon" />
+        <q-spinner v-if="loading" size="xs" />
+        <q-icon v-else :name="dropdownIcon" />
       </a>
     </template>
     <template #selected-item="scope">
@@ -81,6 +83,9 @@ export default defineComponent({
       required: true,
     },
     disableInput: {
+      type: Boolean,
+    },
+    loading: {
       type: Boolean,
     },
   },

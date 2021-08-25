@@ -1,5 +1,5 @@
 import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/plain-destination'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 
 import type { LocaleMessageObject } from 'vue-i18n'
 
@@ -13,7 +13,7 @@ export interface StateInterface {
   labeledLocales: Array<Record<string, string>>
   countryToContinentMap: Record<string, string>
   hostRules: MappedPlainDestinationCollection
-  visitorContext: Partial<VisitorProfile>
+  visitorContext: Partial<ProfileContext>
 }
 
 export class RootState implements StateInterface {
@@ -26,7 +26,7 @@ export class RootState implements StateInterface {
   labeledLocales = {} as StateInterface['labeledLocales']
   countryToContinentMap = {}
   hostRules: MappedPlainDestinationCollection = {}
-  visitorContext: Partial<VisitorProfile> = {}
+  visitorContext: Partial<ProfileContext> = {}
   slugs: any
 }
 

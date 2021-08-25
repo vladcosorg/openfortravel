@@ -1,70 +1,58 @@
-import mapValues from 'lodash/mapValues'
-import pickBy from 'lodash/pickBy'
-
 import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/plain-destination'
-import {
-  OneWayOverview,
-  RoundTripOverviewCollection,
-} from '@/shared/src/api/function-api/overview/index'
+import { getCountryISOCodes } from '@/shared/src/misc/country-codes'
+import { createRawPrecomputedRestriction } from '@/shared/src/models/precomputed-restriction/factory'
+import { RoundTripRawPrecomputedRestrictionMap } from '@/shared/src/models/precomputed-restriction/raw-precomputed-restriction'
+import { createProfileContext } from '@/shared/src/models/profile-context/helper'
+import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 import { convertIncompleteTreeFromStorageFormat } from '@/shared/src/restriction-tree/converter'
 import {
   createRestrictionGroupCollection,
   RestrictionGroup,
 } from '@/shared/src/restriction-tree/restriction-group'
-import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
-import { VisitorProfile } from '@/shared/src/restriction-tree/visitor-profile'
 
 export function createOverviewCollection(
-  context: VisitorProfile,
+  context: Partial<ProfileContext>,
   rawDestinations: MappedPlainDestinationCollection,
-): RoundTripOverviewCollection {
-  const origin = rawDestinations[context.origin]
+): RoundTripRawPrecomputedRestrictionMap {
+  const outgoingContext = createProfileContext(context)
+
+  const origin = rawDestinations[outgoingContext.origin]
   const originRestrictionTree = convertIncompleteTreeFromStorageFormat(
-    origin.restrictionTree,
+    origin ? origin.restrictionTree ?? [] : [],
   )
 
-  const outgoingContext = {
-    origin: origin.countryCode,
-    citizenship: ['md'],
-    [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [],
+  const result: RoundTripRawPrecomputedRestrictionMap = {}
+
+  for (const countryISO of getCountryISOCodes()) {
+    if (countryISO === context.origin) {
+      continue
+    }
+
+    const destination = rawDestinations[countryISO]
+    const outgoingTrip =
+      createRestrictionGroupCollection(
+        convertIncompleteTreeFromStorageFormat(
+          destination ? destination.restrictionTree : [],
+        ),
+        outgoingContext,
+      ).getBestGroup() ?? new RestrictionGroup()
+
+    const returnContext = createProfileContext({
+      origin: countryISO,
+      ...context,
+    })
+
+    const returnTrip =
+      createRestrictionGroupCollection(
+        originRestrictionTree,
+        returnContext,
+      ).getBestGroup() ?? new RestrictionGroup()
+
+    result[countryISO] = {
+      outgoing: createRawPrecomputedRestriction(outgoingTrip),
+      return: createRawPrecomputedRestriction(returnTrip),
+    }
   }
 
-  return pickBy(
-    mapValues(rawDestinations, (destination) => {
-      const outgoingTrip =
-        createRestrictionGroupCollection(
-          convertIncompleteTreeFromStorageFormat(destination.restrictionTree),
-          outgoingContext,
-        ).getBestGroup() ?? new RestrictionGroup()
-
-      const returnContext = {
-        origin: destination.countryCode,
-        citizenship: ['md'],
-        [RestrictionNodeType.DID_NOT_VISIT_COUNTRIES]: [],
-      }
-
-      const returnTrip =
-        createRestrictionGroupCollection(
-          originRestrictionTree,
-          returnContext,
-        ).getBestGroup() ?? new RestrictionGroup()
-
-      if (!outgoingTrip) {
-        return
-      }
-
-      return {
-        outgoing: createGroup(outgoingTrip),
-        return: createGroup(returnTrip),
-      }
-    }),
-    (v) => v !== undefined,
-  ) as RoundTripOverviewCollection
+  return result
 }
-
-const createGroup = (group: RestrictionGroup): OneWayOverview => ({
-  quarantine: group.quarantineRequired,
-  pcrTest: group.pcrTestRequired,
-  rating: group.rating,
-  status: group.status,
-})

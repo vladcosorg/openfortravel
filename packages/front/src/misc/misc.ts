@@ -37,3 +37,7 @@ export function generateStringSequenceFromList(
 
   return ''
 }
+
+export function isServer(): boolean {
+  return process.env.SERVER as unknown as boolean
+}

@@ -1,5 +1,5 @@
 import type { StateType } from '@/front/src/pages/destination/store/state'
-import { LiteDestinationDocument } from '@/shared/src/api/destinations/plain-destination'
+import { FactsheetCountryDocument } from '@/shared/src/models/country-factsheet/raw-country-factsheet'
 import { IncompleteEncodedNodeCollection } from '@/shared/src/restriction-tree/converter'
 
 export enum MutationTypes {
@@ -15,11 +15,11 @@ export enum MutationTypes {
 export type MutationSignatures<S = StateType> = {
   [MutationTypes.setOriginCountryFactsheet](
     state: S,
-    factsheet: [string, LiteDestinationDocument] | undefined,
+    factsheet: [string, FactsheetCountryDocument] | undefined,
   ): void
   [MutationTypes.setDestinationCountryFactsheet](
     state: S,
-    restrictions: [string, LiteDestinationDocument] | undefined,
+    restrictions: [string, FactsheetCountryDocument] | undefined,
   ): void
   [MutationTypes.setOutgoingRestrictions](
     state: S,

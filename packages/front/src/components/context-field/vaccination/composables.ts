@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import { updateRouteParameter } from '@/front/src/router/route-builders/common'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
@@ -7,23 +7,31 @@ import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
 
 export function useModel() {
   const store = useRootStore()
-  return computed({
+  const buffer = ref()
+  const isSaving = computed(() => buffer.value !== undefined)
+  const model = computed({
     get() {
-      return (
-        store.getters.visitorContextWithDefaults[RestrictionNodeType.VACCINATED]
-          ?.brand ?? false
-      )
+      return buffer.value === undefined
+        ? store.getters.visitorContextWithDefaults[
+            RestrictionNodeType.VACCINATED
+          ]?.brand ?? false
+        : buffer.value
     },
     set(value: false | VaccineBrand) {
-      updateRouteParameter(
-        RestrictionNodeType.VACCINATED,
-        value === false
-          ? undefined
-          : {
-              partial: false,
-              brand: value,
-            },
-      )
+      buffer.value = value
+      setTimeout(() => {
+        updateRouteParameter(
+          RestrictionNodeType.VACCINATED,
+          value === false
+            ? undefined
+            : {
+                partial: false,
+                brand: value,
+              },
+        )
+        buffer.value = undefined
+      }, 400)
     },
   })
+  return { model, isSaving }
 }
