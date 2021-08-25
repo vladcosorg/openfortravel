@@ -14,18 +14,6 @@ jobs:
   cloudfunctions:
     name: Building cloud functions
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        function:
-          [ api,
-            warmer,
-            translate,
-            #            safetyLevelCalculatorJob,
-            #            statsAggregatorJob,
-            emailForwarder,
-            warmer
-          ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -38,7 +26,7 @@ jobs:
         working-directory: ./packages/functions
       - uses: w9jds/firebase-action@a17f996b089638653d57c7aa85d0763e256b13fb
         with:
-          args: deploy --only functions:${{ matrix.function }}
+          args: deploy --only functions
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       - name: Warmup
