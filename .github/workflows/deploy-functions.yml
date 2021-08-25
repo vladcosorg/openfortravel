@@ -19,10 +19,12 @@ jobs:
       matrix:
         function:
           [ api,
+            warmer,
             translate,
             #            safetyLevelCalculatorJob,
             #            statsAggregatorJob,
             emailForwarder,
+            warmer
           ]
     steps:
       - uses: actions/checkout@v2
@@ -34,10 +36,15 @@ jobs:
         run: yarn install
       - run: yarn build
         working-directory: ./packages/functions
-      - id: deploy
-        uses: google-github-actions/deploy-cloud-functions@main
+      - name: deploy
+        run: yarn dlx firebase deploy --token ${{ secrets.GCLOUD_TOKEN }}
+      - uses: w9jds/firebase-action@a17f996b089638653d57c7aa85d0763e256b13fb
         with:
-          source_dir: ./packages/functions/dist
-          name: ${{ matrix.function }}
-          runtime: nodejs14
-          credentials: ${{ secrets.GCP_SA_KEY }}
+          args: deploy --only functions:${{ matrix.function }}
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - name: Warmup
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: 'https://us-central1-openfortravel.cloudfunctions.net/warmer'
+          method: 'GET'
