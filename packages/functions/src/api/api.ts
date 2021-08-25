@@ -10,7 +10,7 @@ import { createOverviewCollection } from '@/shared/src/api/function-api/overview
 import {
   createRawCountryFactsheetMap,
   createRawFactsheet,
-} from '@/shared/src/models/country-factsheet/factory'
+} from '@/shared/src/models/country-factsheet/raw-factory'
 
 const app = express()
 app.use(express.json())

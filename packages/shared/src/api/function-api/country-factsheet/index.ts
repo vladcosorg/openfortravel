@@ -1,10 +1,10 @@
 import { serverCache } from '@/front/src/misc/server-cache'
 import { useKy } from '@/shared/src/composables/use-plugins'
-import { createRawCountryFactsheetMap } from '@/shared/src/models/country-factsheet/factory'
 import {
   RawCountryFactsheetMap,
   RawCountryFactsheet,
 } from '@/shared/src/models/country-factsheet/raw-country-factsheet'
+import { createRawCountryFactsheetMap } from '@/shared/src/models/country-factsheet/raw-factory'
 
 export async function fetchAllCountryFactsheets(): Promise<RawCountryFactsheetMap> {
   return serverCache.destinations

@@ -5,7 +5,7 @@ import type { StateClass } from '@/front/src/pages/destination/store/state'
 import type { GetterSignatures } from '@/front/src/pages/destination/store/types/getters'
 import type { RootStateType } from '@/front/src/store/state'
 import { CountryFactsheet } from '@/shared/src/models/country-factsheet/country-factsheet'
-import { createRawFactsheet } from '@/shared/src/models/country-factsheet/factory'
+import { createRawFactsheet } from '@/shared/src/models/country-factsheet/raw-factory'
 import { convertIncompleteTreeFromStorageFormat } from '@/shared/src/restriction-tree/converter'
 import {
   createRestrictionGroupCollection,
