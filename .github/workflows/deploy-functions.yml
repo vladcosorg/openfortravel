@@ -22,8 +22,6 @@ jobs:
           cache: yarn
       - name: Install dependencies
         run: yarn install
-      - run: yarn build
-        working-directory: ./packages/functions
       - uses: w9jds/firebase-action@a17f996b089638653d57c7aa85d0763e256b13fb
         with:
           args: deploy --only functions
