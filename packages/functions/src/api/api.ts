@@ -17,9 +17,17 @@ import {
 const app = express()
 app.use(express.json())
 app.use(queryTypes.middleware())
-app.use(cors({ origin: true }))
+
 if (process.env.NODE_ENV === 'production') {
   addCacheMiddleware(app)
+  app.use(
+    cors({
+      origin: [
+        'https://openfortravel.org',
+        'https://us-central1-openfortravel.cloudfunctions.net',
+      ],
+    }),
+  )
 }
 
 listenToDestinationUpdates()
