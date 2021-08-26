@@ -61,7 +61,6 @@ app.get('/country-factsheets', async (req, res) => {
 
 app.get('/country-factsheets/:iso', async (req, res) => {
   const destinations = await fetchDestinations()
-
   const origin = destinations[req.params.iso]
   res.status(200).send(createRawFactsheet(origin.countryCode, origin))
 })

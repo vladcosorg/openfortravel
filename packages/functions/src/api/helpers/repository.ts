@@ -21,7 +21,7 @@ export async function fetchDestinations(): Promise<MappedPlainDestinationCollect
   return destinationsMappedPlainDestinationCollection
 }
 
-export function listenToDestinationUpdates() {
+export function listenToDestinationUpdates(): void {
   getCollectionDocument().onSnapshot((snapshot) => {
     destinationsMappedPlainDestinationCollection = getSnapshoData(snapshot)
   })
@@ -34,11 +34,11 @@ function getCollectionDocument(): DocumentReference {
 }
 
 function getSnapshoData(snapshot: DocumentSnapshot) {
-  return mapValues(
-    snapshot.data() as {
-      collection: MappedDestinationDocumentCollection
-    },
-    (value, countryISO) => createPlainDestination(countryISO, value),
+  const data = snapshot.data() as {
+    collection: MappedDestinationDocumentCollection
+  }
+  return mapValues(data.collection, (value, countryISO) =>
+    createPlainDestination(countryISO, value),
   )
 }
 
