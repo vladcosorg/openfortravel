@@ -51,11 +51,10 @@
     "rfs": "^9.0.5",
     "svg-country-flags": "^1.2.10",
     "vue-auto-i18n": "1.1.0-beta.20",
-    "vue-i18n": "^9.2.0-beta.2",
+    "vue-i18n": "^9.2.0-beta.3",
     "vue-inline-svg": "^3.0.0-beta.3",
     "vue-social-sharing": "^3.0.8",
-    "vuex": "^4.0.2",
-    "winston": "^3.3.3"
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@quasar/quasar-app-extension-testing": "^1.0.3",
@@ -66,8 +65,7 @@
     "@types/qs": "^6",
     "@types/sharp": "^0.28.5",
     "@types/webpack-env": "^1.16.2",
-    "@types/winston": "^2.4.4",
-    "filesize": "^7.0.0",
+    "filesize": "^8.0.0",
     "md5-file": "^5.0.0",
     "sharp": "^0.28.3",
     "sitemap": "^7.0.0",

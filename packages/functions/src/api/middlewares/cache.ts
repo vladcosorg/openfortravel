@@ -3,7 +3,7 @@ import type { Express } from 'express'
 export function addCacheMiddleware(app: Express): void {
   app.use((req, res, next) => {
     // here you can define period in second, this one is 5 minutes
-    const period = 60 * 5
+    const period = 60 * 50
 
     // you only want to cache for GET requests
     if (req.method == 'GET') {

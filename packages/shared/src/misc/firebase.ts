@@ -33,7 +33,6 @@ try {
 } catch {
   firestore = getFirestore(firebaseApp)
 }
-
 const countryCollection = collection(firestore, 'countries').withConverter(
   destinationDataConverter,
 )

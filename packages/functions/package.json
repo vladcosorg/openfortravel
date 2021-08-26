@@ -21,7 +21,7 @@
     "_build:fix-paths:watcher": "nodemon --watch dist --exec 'yarn run _build:fix-paths' ",
     "_build:compile": "tsc || true; yarn _build:fix-paths",
     "_build:watch": "tsc-watch --onCompilationComplete  \"yarn run _build:fix-paths \"",
-    "_firebase:start-emulators": "firebase emulators:start --import=./seed/production/"
+    "_firebase:start-emulators": "NODE_ENV=development firebase emulators:start --import=./seed/production/"
   },
   "engines": {
     "node": "14"
