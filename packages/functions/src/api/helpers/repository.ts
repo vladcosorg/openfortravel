@@ -10,12 +10,16 @@ import {
 import DocumentReference = firestore.DocumentReference
 import DocumentSnapshot = firestore.DocumentSnapshot
 
+import { log } from 'firebase-functions/lib/logger'
+
 let destinationsMappedPlainDestinationCollection
 export async function fetchDestinations(): Promise<MappedPlainDestinationCollection> {
   if (destinationsMappedPlainDestinationCollection) {
+    log('Getting collection data from cache')
     return destinationsMappedPlainDestinationCollection
   }
 
+  log('Collection data is empty. Fetching...')
   const snapshot = await getCollectionDocument().get()
   destinationsMappedPlainDestinationCollection = getSnapshoData(snapshot)
   return destinationsMappedPlainDestinationCollection
@@ -24,6 +28,7 @@ export async function fetchDestinations(): Promise<MappedPlainDestinationCollect
 export function listenToDestinationUpdates(): void {
   getCollectionDocument().onSnapshot((snapshot) => {
     destinationsMappedPlainDestinationCollection = getSnapshoData(snapshot)
+    log('Refreshed data from snapshot')
   })
 }
 

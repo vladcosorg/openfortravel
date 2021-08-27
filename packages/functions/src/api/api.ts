@@ -17,7 +17,6 @@ import {
 const app = express()
 app.use(express.json())
 app.use(queryTypes.middleware())
-console.log(process.env)
 if (process.env.NODE_ENV === 'development') {
   app.use(cors({ origin: true }))
 } else {
