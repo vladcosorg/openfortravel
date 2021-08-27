@@ -50,12 +50,14 @@ export default defineComponent({
     const loading = ref<boolean | undefined>()
     let chart: MapChart
     const initializeChart = async () => {
+      console.log('initializingg')
       loading.value = true
       const { createChart } = await import(
         /* webpackChunkName: "map" */ '@/front/src/pages/index/map'
       )
-
+      console.log(chart)
       if (chart) {
+        console.log('disposedd?')
         chart.dispose()
       }
 
@@ -73,12 +75,7 @@ export default defineComponent({
               restrictions,
             )
             chart.events.once('ready', () => {
-              chart.events.once('appeared', () => {
-                loading.value = false
-              })
-
-              chart.hidden = false
-              chart.appear()
+              loading.value = false
             })
           })
         },
@@ -92,7 +89,7 @@ export default defineComponent({
       if (!chart) {
         return
       }
-
+      console.log('disposedd')
       chart.dispose()
     })
 

@@ -47,14 +47,14 @@ export function createChart(
   const polygonTemplate = polygonSeries.mapPolygons.template
 
   configurePolygonTemplate(polygonTemplate)
-
-  chart.events.once('inited', () => {
-    polygonSeries.mapPolygons.each((polygon) => {
-      setTimeout(() => {
-        polygon.show()
-      }, random(500, 1000))
-    })
-  })
+  //
+  // chart.events.once('inited', () => {
+  //   polygonSeries.mapPolygons.each((polygon) => {
+  //     setTimeout(() => {
+  //       polygon.show()
+  //     }, random(500, 1000))
+  //   })
+  // })
 
   configureTooltip(polygonSeries)
 
@@ -215,7 +215,7 @@ export function configurePolygonTemplate(template: MapPolygon): void {
   template.strokeWidth = 1
   template.propertyFields.fill = 'fill'
   // template.defaultState.transitionDuration = 500
-  template.hidden = true
+  // template.hidden = true
 }
 
 function transformData(
