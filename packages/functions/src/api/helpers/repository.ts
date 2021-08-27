@@ -1,4 +1,5 @@
 import firebase, { firestore } from 'firebase-admin'
+import { log } from 'firebase-functions/lib/logger'
 import mapValues from 'lodash/mapValues'
 
 import {
@@ -10,9 +11,8 @@ import {
 import DocumentReference = firestore.DocumentReference
 import DocumentSnapshot = firestore.DocumentSnapshot
 
-import { log } from 'firebase-functions/lib/logger'
-
 let destinationsMappedPlainDestinationCollection
+let snapshotListener
 export async function fetchDestinations(): Promise<MappedPlainDestinationCollection> {
   if (destinationsMappedPlainDestinationCollection) {
     log('Getting collection data from cache')
@@ -22,11 +22,16 @@ export async function fetchDestinations(): Promise<MappedPlainDestinationCollect
   log('Collection data is empty. Fetching...')
   const snapshot = await getCollectionDocument().get()
   destinationsMappedPlainDestinationCollection = getSnapshoData(snapshot)
+
+  if (snapshotListener === undefined) {
+    snapshotListener = listenToDestinationUpdates()
+  }
+
   return destinationsMappedPlainDestinationCollection
 }
 
-export function listenToDestinationUpdates(): void {
-  getCollectionDocument().onSnapshot((snapshot) => {
+export function listenToDestinationUpdates(): () => void {
+  return getCollectionDocument().onSnapshot((snapshot) => {
     destinationsMappedPlainDestinationCollection = getSnapshoData(snapshot)
     log('Refreshed data from snapshot')
   })
@@ -46,5 +51,3 @@ function getSnapshoData(snapshot: DocumentSnapshot) {
     createPlainDestination(countryISO, value),
   )
 }
-
-listenToDestinationUpdates()

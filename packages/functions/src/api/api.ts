@@ -3,10 +3,7 @@ import express from 'express'
 import * as functions from 'firebase-functions'
 import queryTypes from 'query-types'
 
-import {
-  fetchDestinations,
-  listenToDestinationUpdates,
-} from '@/functions/src/api/helpers/repository'
+import { fetchDestinations } from '@/functions/src/api/helpers/repository'
 import { addCacheMiddleware } from '@/functions/src/api/middlewares/cache'
 import { createOverviewCollection } from '@/shared/src/api/function-api/overview/helpers'
 import {
@@ -30,8 +27,6 @@ if (process.env.NODE_ENV === 'development') {
     }),
   )
 }
-
-listenToDestinationUpdates()
 
 app.get('/restrictions/:origin/overview', async (req, res) => {
   const destinations = await fetchDestinations()
