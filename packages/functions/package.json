@@ -14,7 +14,7 @@
     "lint": "yarn run -T _lint packages/functions",
     "fix": "yarn format && yarn lint",
     "_build:prebuild": "run-s _build:prebuild:prepare-dir _build:prebuild:create-runtime-config",
-    "_build:prebuild:create-lock": "cd ./dist; touch yarn.lock; YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install --mode update-lockfile",
+    "_build:prebuild:create-lock": "cd ./dist; npm i --only=prod --package-lock-only",
     "_build:prebuild:create-runtime-config": "firebase functions:config:get > ./dist/.runtimeconfig.json",
     "_build:prebuild:prepare-dir": "rm -rf ./dist && mkdir ./dist &&  yarn fx ./package.json '{...this, devDependencies: {}}' > ./dist/package.json",
     "_build:fix-paths": "tscpaths --project tsconfig.json  -s ../ -o ./dist",
