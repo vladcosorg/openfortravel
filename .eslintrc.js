@@ -146,6 +146,7 @@ module.exports = {
     //   },
     // ],
     'import/newline-after-import': 'warn',
+
     'import/dynamic-import-chunkname': [
       'warn',
       {
@@ -243,6 +244,12 @@ module.exports = {
     },
   },
   overrides: [
+    {
+      files: ['*.vue'],
+      rules: {
+        'import/default': 'off',
+      },
+    },
     {
       files: [
         'packages/admin/**/*.*',

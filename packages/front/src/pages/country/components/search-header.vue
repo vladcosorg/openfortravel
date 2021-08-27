@@ -54,7 +54,7 @@ import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadc
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 import TheSort from '@/front/src/pages/country/components/header/the-sort.vue'
 import InputFilter from '@/front/src/pages/country/components/input-filter.vue'
-import TheSearchStats from '@/front/src/pages/country/components/the-search-stats.vue'
+import TheSearchStats from '@/front/src/pages/country/components/the-search-stats/the-search-stats.vue'
 import { useBreadcrumbs } from '@/front/src/pages/country/composable'
 import {
   useRouter,

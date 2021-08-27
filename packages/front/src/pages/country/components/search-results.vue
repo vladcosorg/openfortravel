@@ -90,7 +90,7 @@ import DestinationGroup from '@/front/src/pages/country/components/destination-g
 import TheSort from '@/front/src/pages/country/components/header/the-sort.vue'
 import InputFilter from '@/front/src/pages/country/components/input-filter.vue'
 import SearchTabs from '@/front/src/pages/country/components/search-tabs.vue'
-import TheSearchStats from '@/front/src/pages/country/components/the-search-stats.vue'
+import TheSearchStats from '@/front/src/pages/country/components/the-search-stats/the-search-stats.vue'
 import { useRestrictionFilterer } from '@/front/src/pages/country/composable'
 import { useCountryStore } from '@/front/src/pages/country/pinia-store'
 

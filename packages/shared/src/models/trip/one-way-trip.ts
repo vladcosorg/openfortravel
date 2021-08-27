@@ -1,3 +1,4 @@
+import { StatCategory } from '@/front/src/modules/stats/model'
 import { getDestinationRouteURL } from '@/front/src/router/route-builders/destination'
 import { CountryFactsheet } from '@/shared/src/models/country-factsheet/country-factsheet'
 import { riskLevel } from '@/shared/src/models/country-factsheet/raw-country-factsheet'
@@ -65,5 +66,21 @@ export class OneWayTrip {
     }
 
     return 1
+  }
+
+  get newStatus(): StatCategory {
+    if (this.restrictions.isForbidden) {
+      return 'forbidden'
+    }
+
+    if (this.restrictions.quarantine) {
+      return 'quarantine'
+    }
+
+    if (this.restrictions.pcrTest) {
+      return 'test'
+    }
+
+    return 'open'
   }
 }

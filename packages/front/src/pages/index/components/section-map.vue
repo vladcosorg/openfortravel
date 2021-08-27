@@ -23,7 +23,8 @@
 import defer from 'lodash/defer'
 import { defineComponent, onMounted, onUnmounted, ref, toRef } from 'vue'
 
-import { RoundTripRawPrecomputedRestrictionMap } from '@/shared/src/models/precomputed-restriction/raw-precomputed-restriction'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { RoundTripCollection } from '@/shared/src/models/trip/round-trip'
 
 import type { MapChart } from '@amcharts/amcharts4/maps'
 import type { PropType } from 'vue'
@@ -31,12 +32,8 @@ import type { PropType } from 'vue'
 export default defineComponent({
   components: {},
   props: {
-    originCode: {
-      type: String,
-      required: true,
-    },
     restrictions: {
-      type: Object as PropType<RoundTripRawPrecomputedRestrictionMap>,
+      type: Object as PropType<RoundTripCollection>,
       required: true,
     },
   },
@@ -46,22 +43,18 @@ export default defineComponent({
     const loading = ref<boolean | undefined>()
     let chart: MapChart
     const initializeChart = async () => {
-      console.log('initializingg')
       loading.value = true
       const { createChart } = await import(
         /* webpackChunkName: "map" */ '@/front/src/pages/index/map'
       )
-      console.log(chart)
       if (chart) {
-        console.log('disposedd?')
         chart.dispose()
       }
 
       defer(() => {
-        console.log('creating')
         chart = createChart(
           chartContainer.value,
-          props.originCode,
+          useRootStore().getters.visitorOrigin,
           restrictions,
         )
         chart.events.once('ready', () => {
@@ -76,7 +69,6 @@ export default defineComponent({
       if (!chart) {
         return
       }
-      console.log('disposedd')
       chart.dispose()
     })
 

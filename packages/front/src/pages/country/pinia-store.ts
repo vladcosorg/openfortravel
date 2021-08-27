@@ -1,7 +1,7 @@
-import groupBy from 'lodash/groupBy'
 import isEqual from 'lodash/isEqual'
 import { defineStore } from 'pinia'
 
+import { groupTripsByCategory } from '@/front/src/modules/stats/helpers'
 import { usePiniaRootStore } from '@/front/src/store/pinia-root-store'
 import { fetchOverview } from '@/shared/src/api/function-api/overview'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
@@ -11,10 +11,6 @@ import { ProfileContext } from '@/shared/src/models/profile-context/profile-cont
 import { createRoundTripCollectionFromRawRestrictions } from '@/shared/src/models/trip/factory'
 import { RoundTripCollection } from '@/shared/src/models/trip/round-trip'
 
-const groups = ['forbidden', 'quarantine', 'test', 'open'] as const
-type GroupedDestinations = {
-  [key in typeof groups[number]]: RoundTripCollection | undefined
-}
 export const useCountryStore = defineStore('country', {
   state: () => ({
     sortBy: Object.keys(sorters)[0] as SearchSortOption,
@@ -47,24 +43,7 @@ export const useCountryStore = defineStore('country', {
           )
         : this.searchResults
 
-      return Object.assign(
-        Object.fromEntries(groups.map((group) => [group, undefined])),
-        groupBy(allDestinations, (roundTrip) => {
-          if (roundTrip.outgoing.restrictions.isForbidden) {
-            return 'forbidden'
-          }
-
-          if (roundTrip.outgoing.restrictions.quarantine) {
-            return 'quarantine'
-          }
-
-          if (roundTrip.outgoing.restrictions.pcrTest) {
-            return 'test'
-          }
-
-          return 'open'
-        }) as unknown as GroupedDestinations,
-      ) as GroupedDestinations
+      return groupTripsByCategory(allDestinations)
     },
   },
   actions: {

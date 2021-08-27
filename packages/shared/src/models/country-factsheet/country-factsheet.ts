@@ -1,4 +1,5 @@
 import { RawCountryFactsheet } from '@/shared/src/models/country-factsheet/raw-country-factsheet'
+import { createRawFactsheet } from '@/shared/src/models/country-factsheet/raw-factory'
 import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import {
   getDestinationLabelForCountryCode,
@@ -15,6 +16,11 @@ export class CountryFactsheet implements RawCountryFactsheet {
   constructor(plainDestination: RawCountryFactsheet) {
     Object.assign(this, plainDestination)
   }
+
+  static createDummy(countryCode: string): CountryFactsheet {
+    return new CountryFactsheet(createRawFactsheet(countryCode))
+  }
+
   get name(): string {
     return getLabelForCountryCode(this.countryCode)
   }

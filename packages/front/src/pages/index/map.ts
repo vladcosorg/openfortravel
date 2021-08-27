@@ -9,11 +9,11 @@ import {
 import { getCssVar } from 'quasar'
 import { watch, Ref } from 'vue'
 
-import { statusColorMap } from '@/front/src/pages/index/index-composable'
+import { statColor } from '@/front/src/modules/stats/model'
 import { goToDestination } from '@/front/src/router/route-builders/destination'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { getCountryISOCodes } from '@/shared/src/misc/country-codes'
-import { RoundTripRawPrecomputedRestrictionMap } from '@/shared/src/models/precomputed-restriction/raw-precomputed-restriction'
+import { RoundTripCollection } from '@/shared/src/models/trip/round-trip'
 
 import type { Color } from '@amcharts/amcharts4/core'
 import type { MapArc, MapPolygon } from '@amcharts/amcharts4/maps'
@@ -28,7 +28,7 @@ type SeriesItem = {
 export function createChart(
   domElement: HTMLElement,
   originCode: string,
-  restrictions: Ref<RoundTripRawPrecomputedRestrictionMap>,
+  restrictions: Ref<RoundTripCollection>,
 ): MapChart {
   const chart = createAndConfigureChart(domElement)
 
@@ -96,13 +96,12 @@ export function createAndConfiguredPolygonSeries(
     originCode,
     ...getCountryISOCodes().map((code) => code.toUpperCase()),
   ]
-  console.log(polygonSeries.include)
   // polygonSeries.defaultState.transitionDuration = 2000
 
   polygonSeries.events.on('ready', () => {
     const originPolygon = polygonSeries.getPolygonById(originCode)
     originPolygon.interactionsEnabled = false
-    originPolygon.fill = color('#3B4AEC')
+    originPolygon.fill = color(getCssVar('primary') as string)
   })
 
   return polygonSeries
@@ -218,17 +217,11 @@ export function configurePolygonTemplate(template: MapPolygon): void {
   // template.hidden = true
 }
 
-function transformData(
-  restrictions: RoundTripRawPrecomputedRestrictionMap,
-): SeriesItem[] {
+function transformData(restrictions: RoundTripCollection): SeriesItem[] {
   const { t } = useVueI18n()
-  return Object.entries(restrictions).map(([countryISO, restriction]) => ({
-    id: countryISO.toUpperCase(),
-    fill: color(
-      getCssVar(statusColorMap[restriction.outgoing.status]) as string,
-    ),
-    status: t(
-      `page.index.sections.stats.types.${restriction.outgoing.status}.title`,
-    ),
+  return restrictions.map((restriction) => ({
+    id: restriction.outgoing.destination.countryCode.toUpperCase(),
+    fill: color(getCssVar(statColor[restriction.outgoing.newStatus]) as string),
+    status: t(`misc.stats.categories.${restriction.outgoing.newStatus}.title`),
   }))
 }

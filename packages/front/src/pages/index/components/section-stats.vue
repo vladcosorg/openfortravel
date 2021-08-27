@@ -11,52 +11,10 @@
         </h5>
       </div>
       <div v-if="$q.platform.is.desktop && loadMap">
-        <section-map
-          class="q-mb-xl"
-          :origin-code="originISO"
-          :restrictions="data"
-        />
+        <section-map class="q-mb-xl" :restrictions="data" />
       </div>
 
-      <div
-        :class="[
-          'row q-col-gutter-x-xl q-col-gutter-sm-x-md q-col-gutter-y-sm items-stretch',
-        ]"
-      >
-        <div
-          v-for="category in stats"
-          :key="category.title"
-          class="col-lg col-sm-4 col-12 wrap"
-        >
-          <div
-            class="q-px-md q-py-lg rounded-borders fit"
-            style="background-color: #39579d"
-          >
-            <h6>{{ category.title }}</h6>
-
-            <div
-              :class="[
-                'lh-1 q-pa-md q-mb-sm text-primary-inverse rounded-borders',
-                category.colorClass,
-              ]"
-              :style="{
-                marginTop: 'auto',
-                marginLeft: '-16px',
-                borderTopLeftRadius: '0px',
-                borderBottomLeftRadius: '0px',
-              }"
-            >
-              <span class="text-h1 block lh-1" style="font-weight: bold">
-                {{ category.value }}
-              </span>
-              <span class="lh-base" v-html="category.valueSuffix" />
-            </div>
-            <div class="q-mb-md">
-              {{ category.description }}
-            </div>
-          </div>
-        </div>
-      </div>
+      <the-stats-container :trips="data" />
     </div>
   </section>
 </template>
@@ -79,18 +37,19 @@ import { defineComponent, ref } from 'vue'
 
 import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
 import SectionMap from '@/front/src/pages/index/components/section-map.vue'
-import { useStats } from '@/front/src/pages/index/index-composable'
+import TheStatsContainer from '@/front/src/pages/index/components/the-stats-section/the-stats-container.vue'
 import { fetchOverview } from '@/shared/src/api/function-api/overview'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
+import { createRoundTripCollectionFromRawRestrictions } from '@/shared/src/models/trip/factory'
 
 export default defineComponent({
   components: {
+    TheStatsContainer,
     OriginContextInline,
     SectionMap,
   },
   setup() {
     const loadMap = ref(false)
-    const originISO = useRootStore().getters.visitorOrigin
     const onIntersection = (entry: IntersectionObserverEntry) => {
       if (!entry.isIntersecting) {
         return
@@ -100,15 +59,16 @@ export default defineComponent({
 
     const data = asyncComputed(async () => {
       if (!loadMap.value) {
-        return {}
+        return []
       }
-      return await fetchOverview(
-        useRootStore().getters.visitorContextWithDefaults,
-      )
-    }, {})
 
-    const stats = useStats(data)
-    return { stats, loadMap, originISO, onIntersection, data }
+      return createRoundTripCollectionFromRawRestrictions(
+        useRootStore().getters.visitorContextWithDefaults.origin,
+        await fetchOverview(useRootStore().getters.visitorContextWithDefaults),
+      )
+    }, [])
+
+    return { loadMap, onIntersection, data }
   },
 })
 </script>
