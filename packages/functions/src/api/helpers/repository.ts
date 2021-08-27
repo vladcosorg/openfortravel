@@ -11,29 +11,29 @@ import {
 import DocumentReference = firestore.DocumentReference
 import DocumentSnapshot = firestore.DocumentSnapshot
 
-let destinationsMappedPlainDestinationCollection
+let destinationCache
 let snapshotListener
 export async function fetchDestinations(): Promise<MappedPlainDestinationCollection> {
-  if (destinationsMappedPlainDestinationCollection) {
+  if (destinationCache) {
     log('Getting collection data from cache')
-    return destinationsMappedPlainDestinationCollection
+    return destinationCache
   }
 
   log('Collection data is empty. Fetching...')
   const snapshot = await getCollectionDocument().get()
-  destinationsMappedPlainDestinationCollection = getSnapshoData(snapshot)
-
+  destinationCache = getSnapshoData(snapshot)
+  log('Saved data to cache', destinationCache)
   if (snapshotListener === undefined) {
     snapshotListener = listenToDestinationUpdates()
   }
 
-  return destinationsMappedPlainDestinationCollection
+  return destinationCache
 }
 
 export function listenToDestinationUpdates(): () => void {
   return getCollectionDocument().onSnapshot((snapshot) => {
-    destinationsMappedPlainDestinationCollection = getSnapshoData(snapshot)
-    log('Refreshed data from snapshot')
+    destinationCache = getSnapshoData(snapshot)
+    log('Refreshed data from snapshot', destinationCache)
   })
 }
 
