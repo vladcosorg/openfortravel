@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import defer from 'lodash/defer'
-import { defineComponent, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
+import { defineComponent, onMounted, onUnmounted, ref, toRef } from 'vue'
 
 import { RoundTripRawPrecomputedRestrictionMap } from '@/shared/src/models/precomputed-restriction/raw-precomputed-restriction'
 
@@ -37,10 +37,6 @@ export default defineComponent({
     },
     restrictions: {
       type: Object as PropType<RoundTripRawPrecomputedRestrictionMap>,
-      required: true,
-    },
-    isLoading: {
-      type: Boolean,
       required: true,
     },
   },
@@ -61,26 +57,17 @@ export default defineComponent({
         chart.dispose()
       }
 
-      watch(
-        () => props.isLoading,
-        (isLoading: boolean) => {
-          if (isLoading) {
-            return
-          }
-
-          defer(() => {
-            chart = createChart(
-              chartContainer.value,
-              props.originCode,
-              restrictions,
-            )
-            chart.events.once('ready', () => {
-              loading.value = false
-            })
-          })
-        },
-        { immediate: true },
-      )
+      defer(() => {
+        console.log('creating')
+        chart = createChart(
+          chartContainer.value,
+          props.originCode,
+          restrictions,
+        )
+        chart.events.once('ready', () => {
+          loading.value = false
+        })
+      })
     }
 
     onMounted(initializeChart)

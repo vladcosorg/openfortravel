@@ -6,7 +6,6 @@ import {
   MapChart,
   MapPolygonSeries,
 } from '@amcharts/amcharts4/maps'
-import { random } from 'lodash'
 import { getCssVar } from 'quasar'
 import { watch, Ref } from 'vue'
 
@@ -97,6 +96,7 @@ export function createAndConfiguredPolygonSeries(
     originCode,
     ...getCountryISOCodes().map((code) => code.toUpperCase()),
   ]
+  console.log(polygonSeries.include)
   // polygonSeries.defaultState.transitionDuration = 2000
 
   polygonSeries.events.on('ready', () => {

@@ -15,7 +15,6 @@
           class="q-mb-xl"
           :origin-code="originISO"
           :restrictions="data"
-          :is-loading="false"
         />
       </div>
 
