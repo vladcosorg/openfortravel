@@ -25,18 +25,17 @@ export class RoundTrip {
       highlights.push('no-pcr-test')
     }
 
-    //
-    // if (this.returnRestrictionGroup) {
-    //   if (this.returnRestrictionGroup.quarantineRequired) {
-    //     highlights.push('return-quarantine')
-    //   } else {
-    //     highlights.push('no-return-quarantine')
-    //   }
-    //
-    //   if (this.returnRestrictionGroup.pcrTestRequired) {
-    //     highlights.push('return-pcr-test')
-    //   }
-    // }
+    if (this.returning.restrictions.quarantine) {
+      highlights.push('return-quarantine')
+    } else {
+      highlights.push('no-return-quarantine')
+    }
+
+    if (this.returning.restrictions.pcrTest) {
+      highlights.push('return-pcr-test')
+    } else {
+      highlights.push('no-return-pcr-test')
+    }
 
     return highlights
   }

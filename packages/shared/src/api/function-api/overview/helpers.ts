@@ -16,10 +16,11 @@ export function createOverviewCollection(
 ): RoundTripRawPrecomputedRestrictionMap {
   const outgoingContext = createProfileContext(context)
 
-  const origin = rawDestinations[outgoingContext.origin]
-  const originRestrictionTree = convertIncompleteTreeFromStorageFormat(
-    origin ? origin.restrictionTree ?? [] : [],
-  )
+  const returningDestination = rawDestinations[outgoingContext.origin]
+  const returningDestinationRestrictions =
+    convertIncompleteTreeFromStorageFormat(
+      returningDestination ? returningDestination.restrictionTree ?? [] : [],
+    )
 
   const result: RoundTripRawPrecomputedRestrictionMap = {}
 
@@ -37,15 +38,13 @@ export function createOverviewCollection(
         outgoingContext,
       ).getBestGroup() ?? new RestrictionGroup()
 
-    const returnContext = createProfileContext({
-      origin: countryISO,
-      ...context,
-    })
-
     const returnTrip =
       createRestrictionGroupCollection(
-        originRestrictionTree,
-        returnContext,
+        returningDestinationRestrictions,
+        createProfileContext({
+          origin: countryISO,
+          ...context,
+        }),
       ).getBestGroup() ?? new RestrictionGroup()
 
     result[countryISO] = {

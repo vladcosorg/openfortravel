@@ -6,7 +6,7 @@
           <destination-item hide-border :trip="trip" />
         </q-intersection>
       </template>
-      <template #placeholderr>
+      <template #placeholder>
         <div
           v-for="(destination, index) in results"
           :key="index"
@@ -37,10 +37,6 @@
         </div>
       </template>
     </q-no-ssr>
-
-    <div class="text-center q-mt-lg">
-      <q-btn v-if="collapseAfter" color="elevation-1"> Show all </q-btn>
-    </div>
   </div>
 </template>
 

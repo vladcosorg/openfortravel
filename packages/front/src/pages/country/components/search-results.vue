@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="justify-center q-col-gutter-lg">
+      <search-tabs origin-code="us" />
       <the-search-stats class="q-mb-md" />
 
       <destination-group
@@ -88,13 +89,14 @@ import VaccinationContextInline from '@/front/src/components/context-field/vacci
 import DestinationGroup from '@/front/src/pages/country/components/destination-group.vue'
 import TheSort from '@/front/src/pages/country/components/header/the-sort.vue'
 import InputFilter from '@/front/src/pages/country/components/input-filter.vue'
+import SearchTabs from '@/front/src/pages/country/components/search-tabs.vue'
 import TheSearchStats from '@/front/src/pages/country/components/the-search-stats.vue'
 import { useRestrictionFilterer } from '@/front/src/pages/country/composable'
 import { useCountryStore } from '@/front/src/pages/country/pinia-store'
-import { useRootStore } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: {
+    SearchTabs,
     TheSort,
     GenericSelect,
     TheSearchStats,
@@ -108,7 +110,6 @@ export default defineComponent({
   setup() {
     const countryStore = useCountryStore()
     const allDestinations = computed(() => countryStore.searchResults)
-    const originCode = computed(() => useRootStore().getters.visitorOrigin)
     const isListLoading = computed(() => !allDestinations.value)
     const groupedDestinations = computed(() => countryStore.groupedResults)
     const { countryMatchFilterValue, destinations: filteredDestinations } =
@@ -116,11 +117,9 @@ export default defineComponent({
     const isFiltering = computed(() => countryMatchFilterValue.value.length > 0)
 
     return {
-      originCode,
       groupedDestinations,
       isFiltering,
       filteredDestinations,
-      countryMatchFilterValue,
       isListLoading,
     }
   },

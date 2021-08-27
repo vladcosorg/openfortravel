@@ -1,6 +1,6 @@
 <template>
   <q-tabs
-    v-model="internalValue"
+    v-model="model"
     no-caps
     dense
     narrow-indicator
@@ -19,6 +19,8 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 
+import { useDelayedSetter } from '@/front/src/composables/misc'
+import { useCountryStore } from '@/front/src/pages/country/pinia-store'
 import {
   getContinentList,
   getMappedContinentID,
@@ -27,35 +29,28 @@ import {
 export default defineComponent({
   components: {},
   props: {
-    value: {
-      type: String,
-    },
     originCode: {
       type: String,
       required: true,
     },
   },
-  setup(props, { emit }) {
-    const internalValue = computed({
-      get() {
-        if (!props.value) {
-          return 'all'
-        }
+  setup(props) {
+    const store = useCountryStore()
+    const { model } = useDelayedSetter(
+      computed({
+        get() {
+          return store.continentFilter ?? 'all'
+        },
+        set(newValue: string | undefined) {
+          store.continentFilter = newValue === 'all' ? undefined : newValue
+        },
+      }),
+    )
 
-        return props.value
-      },
-      set(newValue) {
-        if (newValue === 'all') {
-          newValue = undefined
-        }
-
-        emit('input', newValue)
-      },
-    })
     const continentList = computed(() =>
       getContinentList(getMappedContinentID(props.originCode)),
     )
-    return { continentList, internalValue }
+    return { continentList, model }
   },
 })
 </script>

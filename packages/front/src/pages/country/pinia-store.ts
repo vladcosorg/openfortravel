@@ -18,6 +18,7 @@ type GroupedDestinations = {
 export const useCountryStore = defineStore('country', {
   state: () => ({
     sortBy: Object.keys(sorters)[0] as SearchSortOption,
+    continentFilter: undefined as string | undefined,
     plainRestrictions: undefined as
       | [ProfileContext, RoundTripRawPrecomputedRestrictionMap]
       | undefined,
@@ -25,7 +26,7 @@ export const useCountryStore = defineStore('country', {
   getters: {
     currentCountryCode: () =>
       useRootStore().getters.visitorContextWithDefaults.origin!,
-    searchResults(state) {
+    searchResults: (state) => {
       if (!state.plainRestrictions) {
         return []
       }
@@ -36,10 +37,16 @@ export const useCountryStore = defineStore('country', {
         rootStore.countryFactsheets,
       )
 
-      return sorters[this.sortBy](allResults)
+      return sorters[state.sortBy](allResults)
     },
-    groupedResults() {
-      const allDestinations: RoundTripCollection = this.searchResults
+    groupedResults(state) {
+      const allDestinations: RoundTripCollection = state.continentFilter
+        ? this.searchResults.filter(
+            (trip) =>
+              trip.outgoing.destination.continent === state.continentFilter,
+          )
+        : this.searchResults
+
       return Object.assign(
         Object.fromEntries(groups.map((group) => [group, undefined])),
         groupBy(allDestinations, (roundTrip) => {

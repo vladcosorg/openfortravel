@@ -61,10 +61,14 @@ export default defineComponent({
 
           case 'return-pcr-test':
             return {
-              label: 'PCR-test upon return required',
+              label: ' COVID-test upon return required',
               positive: false,
             }
-
+          case 'no-return-pcr-test':
+            return {
+              label: 'No COVID-test upon return required',
+              positive: true,
+            }
           case 'insurance':
             return {
               label: 'Additional insurance required',

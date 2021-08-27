@@ -330,7 +330,7 @@ export default {
       ssrAttrTitle: 'See COVID-19 travel restrictions to {to}',
       ssrTitle: 'Travel restrictions for travel from {from} to {to}',
       riskLevel: {
-        title: 'COVID-19 Risk Level',
+        title: 'Infection risk',
         values: {
           'no-data': 'No data',
           low: 'Low',
