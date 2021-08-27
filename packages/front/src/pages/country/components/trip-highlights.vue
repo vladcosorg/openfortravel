@@ -1,5 +1,5 @@
 <template>
-  <div class="q-my-md">
+  <div>
     <div v-for="(highlight, key) in highlights" :key="key">
       <q-icon v-if="highlight.positive" :name="positiveIcon" color="positive" />
       <q-icon v-else :name="negativeIcon" color="negative" />
@@ -11,7 +11,7 @@
 <script lang="ts">
 import {
   ionRemoveOutline as negativeIcon,
-  ionAddOutline as positiveIcon,
+  ionCheckmark as positiveIcon,
 } from '@quasar/extras/ionicons-v5'
 import { computed, defineComponent, PropType } from 'vue'
 
@@ -55,7 +55,7 @@ export default defineComponent({
 
           case 'no-pcr-test':
             return {
-              label: 'No PCR-test',
+              label: 'No COVID test',
               positive: true,
             }
 

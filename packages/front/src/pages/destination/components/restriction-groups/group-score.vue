@@ -1,11 +1,6 @@
 <template>
-  <q-rating
-    :model-value="score"
-    color="grey"
-    :color-selected="color"
-    :icon="icon"
-    readonly
-  />
+  Travel score:
+  <b class="text-positive">{{ score }}</b> out of <b>10</b>
 </template>
 
 <script lang="ts">
@@ -13,7 +8,6 @@ import { matGrade as icon } from '@quasar/extras/material-icons'
 import { computed, defineComponent } from 'vue'
 
 export default defineComponent({
-  components: {},
   props: {
     score: {
       type: Number,

@@ -2,11 +2,11 @@
   <div class="grid q-mb-xl">
     <q-no-ssr>
       <template #default>
-        <div v-for="(trip, key) in results" :key="key" class="col">
-          <destination-item hide-border :loading="loading" :trip="trip" />
-        </div>
+        <q-intersection v-for="(trip, key) in results" :key="key" class="col">
+          <destination-item hide-border :trip="trip" />
+        </q-intersection>
       </template>
-      <template #placeholder>
+      <template #placeholderr>
         <div
           v-for="(destination, index) in results"
           :key="index"
@@ -57,37 +57,21 @@
 }
 </style>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue'
+<script lang="ts" setup>
+import { computed } from 'vue'
 
 import DestinationItem from '@/front/src/pages/country/components/destination-item.vue'
 import { RoundTripCollection } from '@/shared/src/models/trip/round-trip'
 
 import type { PropType } from 'vue'
 
-export default defineComponent({
-  components: { DestinationItem },
-  props: {
-    loading: {
-      required: false,
-      type: Boolean,
-    },
-    destinations: {
-      type: Array as PropType<RoundTripCollection>,
-      default: () => [],
-    },
-    collapseAfter: {
-      type: Number,
-      required: false,
-    },
-  },
-  setup(props) {
-    const results = computed(() =>
-      props.collapseAfter
-        ? props.destinations.slice(0, props.collapseAfter)
-        : props.destinations,
-    )
-    return { results }
+const props = defineProps({
+  destinations: {
+    type: Array as PropType<RoundTripCollection>,
   },
 })
+
+const results = computed<RoundTripCollection>(() =>
+  !props.destinations ? Array.from({ length: 4 }) : props.destinations,
+)
 </script>

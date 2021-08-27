@@ -1,6 +1,6 @@
 <template>
   <the-breadcrumbs :items="breadcrumbs" />
-  <div class="bg-elevation-1 overflow-auto q-pb-lg q-pt-md q-mb-lg">
+  <div class="bg-elevation-1 overflow-auto q-pb- q-pt-md q-mb-lg">
     <div class="container">
       <div class="text-h5 text-center col-12 intro">
         {{ $t('components.theCountryList.title') }}
@@ -19,6 +19,16 @@
         <did-not-visit-countries-context class="col-sm-4 col-12" />
         <vaccination-context class="col-sm-4 col-12" />
         <recovery-context class="col-sm-4 col-12" />
+      </div>
+      <q-separator class="q-my-lg" />
+      <div class="row q-gutter-x-md q-mb-lg">
+        <input-filter
+          model-value=""
+          class="col-4"
+          :is-loading="false"
+          :origin-code="originCode"
+        />
+        <the-sort />
       </div>
     </div>
   </div>
@@ -42,6 +52,8 @@ import DidNotVisitCountriesContext from '@/front/src/components/context-field/vi
 import CountrySelect from '@/front/src/layouts/components/the-country-list/country-select.vue'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
+import TheSort from '@/front/src/pages/country/components/header/the-sort.vue'
+import InputFilter from '@/front/src/pages/country/components/input-filter.vue'
 import TheSearchStats from '@/front/src/pages/country/components/the-search-stats.vue'
 import { useBreadcrumbs } from '@/front/src/pages/country/composable'
 import {
@@ -54,6 +66,8 @@ import { transformCountryCodeToOriginSlug } from '@/shared/src/modules/country-l
 
 export default defineComponent({
   components: {
+    TheSort,
+    InputFilter,
     TheSearchStats,
     TheBreadcrumbs,
     RecoveryContext,

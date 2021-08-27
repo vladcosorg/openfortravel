@@ -1,8 +1,10 @@
+import debounce from 'lodash/debounce'
 import { computed, ComputedRef, Ref, ref } from 'vue'
 
 import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
 import { AnyArgFunction, OptionList } from '@/shared/src/misc/type-helpers'
 import { getOriginLabels } from '@/shared/src/modules/country-list/country-list-helpers'
+import { VaccineBrand } from '@/shared/src/restriction-tree/restriction-node/vaccinated'
 
 export function useCountryOptions(): ComputedRef<
   ReturnType<typeof transformFlatMapToArrayOfPairs>
@@ -71,4 +73,29 @@ export function useEnv(): {
       isDev: process.env.NODE_ENV !== 'production',
     },
   }
+}
+
+export function useDelayedSetter<T extends Ref>(
+  innerRef: T,
+): {
+  model: T
+  isBuffering: ComputedRef<boolean>
+} {
+  const buffer = ref() as T
+  const isBuffering = computed(() => buffer.value !== undefined)
+  const debouncedSetter = debounce((value) => {
+    innerRef.value = value
+    buffer.value = undefined
+  }, 400)
+  const model = computed({
+    get() {
+      return buffer.value === undefined ? innerRef.value : buffer.value
+    },
+    set(value: false | VaccineBrand) {
+      buffer.value = value
+      debouncedSetter(value)
+    },
+  }) as unknown as T
+
+  return { model, isBuffering }
 }

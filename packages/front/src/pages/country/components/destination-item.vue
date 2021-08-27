@@ -1,35 +1,39 @@
 <template>
-  <q-card
-    flat
-    :class="[
-      'card bg-elevation-1 full-height relative-position',
-      hideBorder || loading
-        ? ''
-        : `status-${trip.outgoing.restrictions.status}`,
-    ]"
+  <div
+    class="card full-height relative-position rounded-borders bg-elevation-1"
   >
     <router-link
-      v-if="!loading"
+      v-if="!isLoading"
       v-ripple
-      class="column full-height relative-position"
+      class="column full-height relative-position link"
       style="text-decoration: none; color: inherit"
       clickable
       :to="trip.outgoing.url"
       @click="isClicked = true"
     >
-      <q-card-section>
+      <div class="bg-elevation-2 q-pa-md">
         <div v-if="returning" class="text-subtitle">
           Returning from
           <country-label :value="trip.outgoing.destination.countryCode" /> to
         </div>
-        <div class="text-h6 ellipsis-improved full-width">
+        <div class="text-h5 ellipsis-improved full-width">
           <country-label
+            declination="nominative"
             :value="trip.outgoing.destination.countryCode"
             regular
           />
         </div>
+        <continent-label
+          class="block text-subtitle1 text-primary-subtle"
+          :value="trip.outgoing.destination.continent"
+        />
+      </div>
 
-        <div v-if="!hideRiskLevel" class="text-caption text-primary-subtle">
+      <div class="q-pa-md">
+        <div class="text-primary-subtle">
+          <group-score :score="trip.rating" />
+        </div>
+        <div class="text-primary-subtle">
           {{ $t('components.destinationItem.riskLevel.title') }}:
           <span :class="riskLevelColor(trip.outgoing.destination.riskLevel)">{{
             $t(
@@ -37,52 +41,32 @@
             )
           }}</span>
         </div>
-      </q-card-section>
+        <q-separator spaced />
+        <trip-highlights class="q-mb-md" :trip="trip" />
 
-      <q-separator inset />
-
-      <q-card-section
-        v-if="trip.outgoing.restrictions.isForbidden"
-        style="flex-grow: 1"
-      >
-        <div class="text-center">
-          <q-icon :name="accessDeniedIcon" color="negative" size="lg" />
-          <div>Access denied</div>
-        </div>
-      </q-card-section>
-      <q-card-section v-else style="flex-grow: 1">
-        <trip-summary class="text-caption" :trip="trip" />
-        <trip-highlights :trip="trip" />
-      </q-card-section>
-      <q-card-actions class="bg-elevation-1" align="between">
-        <div class="text-primary-subtle">
-          <group-score :score="trip.outgoing.restrictions.rating" />
-          <q-tooltip>
-            The higher the score the less restrictions and requirements you are
-            required to abide
-          </q-tooltip>
-        </div>
-        <span class="text-uppercase text-hyperlink">Read more</span>
-      </q-card-actions>
+        <span class="text-hyperlink">See details...</span>
+        <!--        </div>-->
+      </div>
     </router-link>
 
-    <q-item
-      v-else
-      class="item rounded-borders q-pa-md"
-      style="min-height: 212px"
-    >
+    <q-item v-else class="rounded-borders q-pa-md" style="min-height: 212px">
       <q-item-section>
         <q-item-label :class="['q-mb-sm']">
-          <q-skeleton type="text" height="3rem" width="65%" />
+          <q-skeleton animation="none" type="text" height="3rem" width="65%" />
         </q-item-label>
         <q-item-label :class="['text-subtitle2']">
-          <q-skeleton type="text" height="1.5rem" width="45%" />
+          <q-skeleton
+            animation="none"
+            type="text"
+            height="1.5rem"
+            width="45%"
+          />
         </q-item-label>
         <q-item-label :class="['q-py-xs']">
-          <q-skeleton type="text" height="1rem" />
+          <q-skeleton animation="none" type="text" height="1rem" />
         </q-item-label>
         <q-item-label>
-          <q-skeleton type="text" height="10px" width="25%" />
+          <q-skeleton animation="none" type="text" height="10px" width="25%" />
         </q-item-label>
         <q-item-label class="q-gutter-sm">
           <q-item-label class="q-gutter-xs row">
@@ -92,25 +76,33 @@
               type="QBadge"
               height="0.9rem"
               width="3rem"
+              animation="none"
             />
           </q-item-label>
         </q-item-label>
       </q-item-section>
     </q-item>
-  </q-card>
+  </div>
 </template>
 
 <style lang="scss" scoped>
+.link {
+  text-decoration: none;
+  color: inherit;
+}
 .card {
-  .status-allowed {
+  &:hover {
+    background-color: var(--q-elevation-2);
+  }
+  &.status-allowed {
     border: 2px solid rgba($positive, 0.5);
   }
 
-  .status-conditional {
+  &.status-conditional {
     border: 2px solid rgba($warning, 0.5);
   }
 
-  .status-forbidden {
+  &.status-forbidden {
     opacity: 0.5;
     border: 2px solid rgba($negative, 0.5);
   }
@@ -153,8 +145,9 @@
 
 <script lang="ts">
 import { ionRemoveCircleOutline as accessDeniedIcon } from '@quasar/extras/ionicons-v5'
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 
+import ContinentLabel from '@/front/src/components/continent-label.vue'
 import CountryLabel from '@/front/src/components/country/country-label.vue'
 import TripHighlights from '@/front/src/pages/country/components/trip-highlights.vue'
 import TripSummary from '@/front/src/pages/country/components/trip-summary.vue'
@@ -165,11 +158,14 @@ import { RoundTrip } from '@/shared/src/models/trip/round-trip'
 import type { PropType } from 'vue'
 
 export default defineComponent({
-  components: { GroupScore, CountryLabel, TripHighlights, TripSummary },
+  components: {
+    ContinentLabel,
+    GroupScore,
+    CountryLabel,
+    TripHighlights,
+    TripSummary,
+  },
   props: {
-    loading: {
-      type: Boolean,
-    },
     returning: {
       type: Boolean,
     },
@@ -179,16 +175,14 @@ export default defineComponent({
     hideRiskLevel: {
       type: Boolean,
     },
-    hideBorder: {
-      type: Boolean,
-    },
   },
 
-  setup() {
+  setup(props) {
     return {
       riskLevelColor,
       accessDeniedIcon,
       isClicked: ref(false),
+      isLoading: computed(() => !props.trip),
     }
   },
 })

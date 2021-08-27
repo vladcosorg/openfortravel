@@ -123,7 +123,6 @@ export class RestrictionGroup {
     }
 
     if (penaltySum <= 4) {
-      1
       return 4
     }
 

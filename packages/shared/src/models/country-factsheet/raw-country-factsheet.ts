@@ -1,11 +1,12 @@
 export enum RiskLevel {
-  NO_DATA = 'no-data',
   LOW = 'low',
   MODERATE = 'moderate',
   HIGH = 'high',
   VERY_HIGH = 'very-high',
+  NO_DATA = 'no-data',
 }
 
+export const riskLevel = Object.values(RiskLevel)
 export const factsheetDefaults = {
   infoLink: '',
 

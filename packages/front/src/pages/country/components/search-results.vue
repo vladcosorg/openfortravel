@@ -1,16 +1,8 @@
 <template>
   <div class="container">
     <div class="justify-center q-col-gutter-lg">
-      <the-search-stats />
-      <div class="row q-gutter-x-md q-mb-lg">
-        <input-filter
-          v-model="countryMatchFilterValue"
-          class="col-4"
-          :is-loading="isListLoading"
-          :origin-code="originCode"
-        />
-        <!--        <generic-select label="Sort by" dense :value="[]" />-->
-      </div>
+      <the-search-stats class="q-mb-md" />
+
       <destination-group
         v-if="isFiltering"
         :loading="isListLoading"
@@ -18,7 +10,7 @@
       />
       <div v-else class="q-col-gutter-md">
         <div class="text-h5" style="font-weight: normal">
-          Countries impose
+          Countries with
           <span class="text-positive">no restrictions</span> for travel from
           <origin-context-inline />
           <div class="text-subtitle1">
@@ -90,18 +82,21 @@
 import { computed, defineComponent } from 'vue'
 
 import CitizenshipContextInline from '@/front/src/components/context-field/citizenship/citizenship-context-inline.vue'
+import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
 import VaccinationContextInline from '@/front/src/components/context-field/vaccination/vaccination-context-inline.vue'
 import DestinationGroup from '@/front/src/pages/country/components/destination-group.vue'
+import TheSort from '@/front/src/pages/country/components/header/the-sort.vue'
 import InputFilter from '@/front/src/pages/country/components/input-filter.vue'
 import TheSearchStats from '@/front/src/pages/country/components/the-search-stats.vue'
 import { useRestrictionFilterer } from '@/front/src/pages/country/composable'
 import { useCountryStore } from '@/front/src/pages/country/pinia-store'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
-import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
   components: {
+    TheSort,
+    GenericSelect,
     TheSearchStats,
     VaccinationContextInline,
     CitizenshipContextInline,
@@ -114,7 +109,7 @@ export default defineComponent({
     const countryStore = useCountryStore()
     const allDestinations = computed(() => countryStore.searchResults)
     const originCode = computed(() => useRootStore().getters.visitorOrigin)
-    const { loading: isLoading } = useLoading(false)
+    const isListLoading = computed(() => !allDestinations.value)
     const groupedDestinations = computed(() => countryStore.groupedResults)
     const { countryMatchFilterValue, destinations: filteredDestinations } =
       useRestrictionFilterer(allDestinations)
@@ -126,7 +121,7 @@ export default defineComponent({
       isFiltering,
       filteredDestinations,
       countryMatchFilterValue,
-      isListLoading: isLoading,
+      isListLoading,
     }
   },
 })

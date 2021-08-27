@@ -4,7 +4,6 @@
     :placeholder="$t('page.country.quickSearch')"
     :loading="isLoading"
     standout
-    dense
     debounce="300"
     stack-label
     dark

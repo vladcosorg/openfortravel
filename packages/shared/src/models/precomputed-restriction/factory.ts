@@ -13,6 +13,6 @@ export const createRawPrecomputedRestriction = (
 ): RawPrecomputedRestriction => ({
   quarantine: group.quarantineRequired,
   pcrTest: group.pcrTestRequired,
-  rating: group.rating,
+  rating: group.penaltyScore,
   status: group.status,
 })

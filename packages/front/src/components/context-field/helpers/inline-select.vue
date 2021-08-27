@@ -4,6 +4,7 @@
     emit-value
     map-options
     standout=""
+    style="display: inline-block"
     options-selected-class="text-bold text-accent"
     :clear-icon="clearIcon"
     :dropdown-icon="dropdownIcon"
@@ -14,7 +15,6 @@
     class="inline-select"
     borderless
     behavior="dialog"
-    inline
     dense
     :loading="loading"
     @filter="filterFunction"
