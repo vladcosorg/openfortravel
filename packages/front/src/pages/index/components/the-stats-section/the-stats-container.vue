@@ -15,8 +15,6 @@
   </div>
 </template>
 
-<style lang="sass"></style>
-
 <script lang="ts" setup>
 import { computed, PropType } from 'vue'
 

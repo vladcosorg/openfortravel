@@ -48,7 +48,6 @@ export default {
     },
   },
   meta: {
-    title:
-      'COVID-19 flight & travel bans to foreign countries for {nationality}',
+    title: 'Travel restrictions from {country}',
   },
 }

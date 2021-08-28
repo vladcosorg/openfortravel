@@ -36,7 +36,7 @@ import { asyncComputed } from '@vueuse/core'
 import { defineComponent, ref } from 'vue'
 
 import OriginContextInline from '@/front/src/components/context-field/origin/origin-context-inline.vue'
-import SectionMap from '@/front/src/pages/index/components/section-map.vue'
+import SectionMap from '@/front/src/pages/index/components/the-stats-section/section-map.vue'
 import TheStatsContainer from '@/front/src/pages/index/components/the-stats-section/the-stats-container.vue'
 import { fetchOverview } from '@/shared/src/api/function-api/overview'
 import { useRootStore } from '@/shared/src/composables/use-plugins'

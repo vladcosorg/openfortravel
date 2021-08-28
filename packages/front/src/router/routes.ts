@@ -41,12 +41,10 @@ export function getRoutes(
       props(route) {
         const props = {
           showTravelBar: false,
-          fullHeight: false,
           containerize: true,
         }
         switch (route.name) {
           case 'index-targeted':
-            props.fullHeight = true
             props.showTravelBar = true
             props.containerize = false
             break

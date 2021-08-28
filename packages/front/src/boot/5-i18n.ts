@@ -14,9 +14,8 @@ import {
 import { setI18n } from '@/shared/src/composables/use-plugins'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 
-export const i18nPlugin = createVueI18n(serverCache.i18nMessages)
-
 export default boot(async ({ app, store, ssrContext, redirect, router }) => {
+  const i18nPlugin = createVueI18n(serverCache.i18nMessages)
   app.use(i18nPlugin)
   const i18n = i18nPlugin.global
 

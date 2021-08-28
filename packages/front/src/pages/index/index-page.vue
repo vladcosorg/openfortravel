@@ -38,7 +38,7 @@ export default defineComponent({
     })
     useMeta(() => ({
       title: useI18n().t('page.index.meta.title', {
-        nationality: getLabelForCountryCode(props.originCode),
+        country: getLabelForCountryCode(props.originCode),
       }),
       link: generateHreflangTags(),
     }))

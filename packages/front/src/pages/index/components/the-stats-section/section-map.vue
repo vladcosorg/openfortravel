@@ -45,7 +45,7 @@ export default defineComponent({
     const initializeChart = async () => {
       loading.value = true
       const { createChart } = await import(
-        /* webpackChunkName: "map" */ '@/front/src/pages/index/map'
+        /* webpackChunkName: "map" */ '@/front/src/pages/index/components/the-stats-section/map'
       )
       if (chart) {
         chart.dispose()
