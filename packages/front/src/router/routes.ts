@@ -70,6 +70,14 @@ export function getRoutes(
             ),
         },
         {
+          name: 'travelAlerts',
+          path: 'news/travel-alerts/where-vaccinated-tourists-can-travel-from-:originSlug',
+          component: () =>
+            import(
+              /* webpackChunkName: "page-news" */ '@/front/src/pages/blog.vue'
+            ),
+        },
+        {
           name: 'terms',
           path: 'terms-and-conditions',
           component: () =>
@@ -85,7 +93,6 @@ export function getRoutes(
               /* webpackChunkName: "page-contact" */ '@/front/src/pages/contact/contact.vue'
             ),
         },
-
         {
           name: 'destination-old',
           path: `${i18n.t('page.country.route')}/:originSlug/${i18n.t(

@@ -64,6 +64,12 @@ export type RestrictionNodeList = {
   [key in RestrictionNodeType]: InstanceType<typeof typeConstructors[key]>
 }
 
+export function createRestrictionNodeFromEncodedNode<
+  T extends EncodedRestrictionNode,
+>(encodedNode: T): AbstractRestrictionNode {
+  return new typeConstructors[encodedNode.type](encodedNode.options)
+}
+
 export function convertFromStorageFormat<T extends EncodedTreeNode>(
   nodeTree: T,
 ): TreeNode {

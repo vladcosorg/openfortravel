@@ -7,6 +7,7 @@ export type CountrySlug = string
 export type CountrySlugPair = { origin: CountrySlug; destination: CountrySlug }
 export type CountryList<K extends CountryCode, V = CountryLabel> = Record<K, V>
 export enum CountrySlugType {
+  NOMINATIVE = 'nominative',
   ORIGIN = 'origin',
   DESTINATION = 'destination',
 }

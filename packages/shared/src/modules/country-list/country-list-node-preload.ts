@@ -30,6 +30,7 @@ export function preloadCountryList(): CountryListCollection {
   for (const list of content) {
     if (list.locale === 'ru') {
       output[list.locale] = {
+        nominative: convertCountryListResponseToCountryLabelMap(list.countries),
         origin: require('@/shared/src/i18n/declensions-ru/origin.json'),
         destination: require('@/shared/src/i18n/declensions-ru/destination.json'),
       }
@@ -51,6 +52,7 @@ export function createCountryListEntry(
     list.countries,
   )
   return {
+    nominative: processedList,
     origin: processedList,
     destination: processedList,
   }
@@ -62,6 +64,9 @@ export function generateCountryCodeToSlugList(
   const output: Record<Locale, CountryListTypes> = {}
   for (const [locale, countryList] of Object.entries(collection)) {
     output[locale] = {
+      nominative: mapValues(countryList.nominative, (value) =>
+        convertCountryNameToSlug(value),
+      ),
       origin: mapValues(countryList.origin, (value) =>
         convertCountryNameToSlug(value),
       ),
@@ -88,6 +93,11 @@ export function createSlugListEntry(
   countryList: CountryListTypes,
 ): CountryListTypes {
   return {
+    nominative: invert(
+      mapValues(countryList.nominative, (value) =>
+        convertCountryNameToSlug(value),
+      ),
+    ),
     origin: invert(
       mapValues(countryList.origin, (value) => convertCountryNameToSlug(value)),
     ),

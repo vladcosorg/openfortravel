@@ -2655,6 +2655,7 @@ __metadata:
     rfs: ^9.0.5
     sharp: ^0.28.3
     sitemap: ^7.0.0
+    slugify: ^1.6.0
     svg-country-flags: ^1.2.10
     tsconfig-paths: ^3.10.1
     tsconfig-paths-webpack-plugin: ^3.5.1
@@ -16794,6 +16795,13 @@ resolve@~1.17.0:
   version: 1.0.1
   resolution: "sliced@npm:1.0.1"
   checksum: 84528d23279985ead75809eeec5d601b0fb6bc28348c6627f4feb40747533a1e36a75e8bc60f9079528079b21c434890b397e8fc5c24a649165cc0bbe90b4d70
+  languageName: node
+  linkType: hard
+
+"slugify@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "slugify@npm:1.6.0"
+  checksum: 87035aa1a4559d2c861e5807e030e0a5d933d0a77563511eb91a2502f87c395690da14b8b3757513d1d77a4a7eb74c86abb95c51b8deaf328394bccdf19debb8
   languageName: node
   linkType: hard
 

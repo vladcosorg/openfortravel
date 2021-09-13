@@ -22,7 +22,7 @@ export async function fetchDestinations(): Promise<MappedPlainDestinationCollect
   log('Collection data is empty. Fetching...')
   const snapshot = await getCollectionDocument().get()
   destinationCache = getSnapshoData(snapshot)
-  log('Saved data to cache', destinationCache)
+  log('Saved data to cache')
   if (snapshotListener === undefined) {
     snapshotListener = listenToDestinationUpdates()
   }
@@ -33,7 +33,7 @@ export async function fetchDestinations(): Promise<MappedPlainDestinationCollect
 export function listenToDestinationUpdates(): () => void {
   return getCollectionDocument().onSnapshot((snapshot) => {
     destinationCache = getSnapshoData(snapshot)
-    log('Refreshed data from snapshot', destinationCache)
+    log('Refreshed data from snapshot')
   })
 }
 

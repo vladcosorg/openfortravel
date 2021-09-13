@@ -1,4 +1,5 @@
 import { Cookies } from 'quasar'
+import { default as oSlugify } from 'slugify'
 
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
@@ -40,4 +41,8 @@ export function generateStringSequenceFromList(
 
 export function isServer(): boolean {
   return process.env.SERVER as unknown as boolean
+}
+
+export function slugify(input: string): string {
+  return oSlugify(input, { lower: true })
 }

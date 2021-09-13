@@ -16,6 +16,10 @@ export default boot(({ store }) => {
   )
   if (locale === 'ru') {
     store.commit(
+      'modules/countryList/setCountryListNominative',
+      serverCache.getCountryCodeToLabelMap(locale).nominative,
+    )
+    store.commit(
       'modules/countryList/setCountryListOrigin',
       serverCache.getCountryCodeToLabelMap(locale).origin,
     )

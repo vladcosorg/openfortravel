@@ -64,7 +64,9 @@ export function getCountryCodes(): string[] {
 }
 
 export function getLabelForCountryCode(countryCode: string): string {
-  return getOriginLabelForCountryCode(countryCode)
+  return useVuexRawGetter<CountryList>(
+    'modules/countryList/countryListNominative',
+  )[countryCode]
 }
 
 export function getLabelsForCountryCodes(countryCodes: string[]): string[] {

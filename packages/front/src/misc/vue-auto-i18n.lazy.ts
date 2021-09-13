@@ -28,7 +28,7 @@ class ProxyTranslator implements TranslationService {
       targetLanguage,
     })
     const response = await fetch(
-      `https://us-central1-openfortravel.cloudfunctions.net/translate?${params.toString()}`,
+      `${process.env.CLOUD_FUNCTIONS_URL}/translate?${params.toString()}`,
     )
     return await response.json()
   }

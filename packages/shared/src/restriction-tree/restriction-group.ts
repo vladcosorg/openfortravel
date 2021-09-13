@@ -3,7 +3,11 @@ import difference from 'lodash/difference'
 import { RestrictionStatus } from '@/shared/src/api/restrictions/models'
 import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 import { RestrictionCategory } from '@/shared/src/restriction-tree/abstract-restriction-node'
-import { RestrictionNodeList } from '@/shared/src/restriction-tree/converter'
+import {
+  createRestrictionNodeFromEncodedNode,
+  EncodedRestrictionNode,
+  RestrictionNodeList,
+} from '@/shared/src/restriction-tree/converter'
 import { Matcher } from '@/shared/src/restriction-tree/matcher'
 import {
   PlainRestrictionGroup,
@@ -73,7 +77,17 @@ export class RestrictionGroup {
   public findRestrictionByType<T extends keyof RestrictionNodeList>(
     type: T,
   ): RestrictionNodeList[T] | undefined {
-    return this.indexedGroup.get(type) as RestrictionNodeList[T]
+    return this.restrictions.find(
+      (element) => element.id() === type,
+    ) as RestrictionNodeList[T]
+  }
+
+  public findAllRestrictionsByType<T extends keyof RestrictionNodeList>(
+    type: T,
+  ): Array<RestrictionNodeList[T]> {
+    return this.restrictions.filter(
+      (element) => element.id() === type,
+    ) as Array<RestrictionNodeList[T]>
   }
 
   get prerequisites(): PlainRestrictionGroup {
@@ -97,7 +111,10 @@ export class RestrictionGroup {
       return RestrictionStatus.FORBIDDEN
     }
 
-    if (this.indexedGroup.has(RestrictionNodeType.QUARANTINE)) {
+    if (
+      this.indexedGroup.has(RestrictionNodeType.QUARANTINE) ||
+      this.indexedGroup.has(RestrictionNodeType.PCR_TEST)
+    ) {
       return RestrictionStatus.CONDITIONAL
     }
 
@@ -137,6 +154,10 @@ export class RestrictionGroup {
     return 1
   }
 
+  get onlineApplicationRequired(): boolean {
+    return this.findRestrictionByType(RestrictionNodeType.ONLINE_APPLICATION)
+  }
+
   get quarantineRequired(): boolean {
     return this.indexedGroup.has(RestrictionNodeType.QUARANTINE)
   }
@@ -145,8 +166,146 @@ export class RestrictionGroup {
     return this.indexedGroup.has(RestrictionNodeType.PCR_TEST)
   }
 
+  get testRequiredBeforeArrival(): boolean {
+    const restrictions = this.findAllRestrictionsByType(
+      RestrictionNodeType.PCR_TEST,
+    ).filter((testRestriction) => testRestriction.options.beforeArrival)
+
+    return restrictions.length > 0
+  }
+
+  get testRequiredAfterArrivalWithQuarantine(): boolean {
+    const restrictions = this.findAllRestrictionsByType(
+      RestrictionNodeType.PCR_TEST,
+    ).filter((testRestriction) => !testRestriction.options.beforeArrival)
+
+    return restrictions.length > 0
+  }
+
+  get testRequiredBeforeAndAfterWithQuarantine(): boolean {
+    return (
+      this.testRequiredBeforeArrival &&
+      this.testRequiredAfterArrivalWithQuarantine
+    )
+  }
+
   get insuranceRequired(): boolean {
     return this.indexedGroup.has(RestrictionNodeType.INSURANCE)
+  }
+
+  get vaccineRequired(): boolean {
+    return this.indexedGroup.has(RestrictionNodeType.VACCINATED)
+  }
+
+  get isAllowed(): boolean {
+    return this.status === RestrictionStatus.ALLOWED
+  }
+
+  get canEnterVaccinated(): boolean {
+    if (this.isForbidden) {
+      return false
+    }
+
+    return (
+      this.vaccineRequired && !this.pcrTestRequired && !this.quarantineRequired
+    )
+  }
+
+  get canEnterVaccinatedAndTestedBeforeArrival(): boolean {
+    if (this.isForbidden) {
+      return false
+    }
+
+    return (
+      this.vaccineRequired &&
+      this.testRequiredBeforeArrival &&
+      !this.quarantineRequired
+    )
+  }
+
+  get canEnterVaccinatedAndTestedAfterArrivalWithQuarantine(): boolean {
+    if (this.isForbidden) {
+      return false
+    }
+
+    return (
+      this.vaccineRequired &&
+      this.testRequiredAfterArrivalWithQuarantine &&
+      !this.quarantineRequired
+    )
+  }
+
+  get canEnterVaccinatedWithQuarantine(): boolean {
+    if (this.isForbidden) {
+      return false
+    }
+
+    return (
+      this.vaccineRequired && !this.pcrTestRequired && this.quarantineRequired
+    )
+  }
+
+  get canEnterWithoutVaccinationButTestedBeforeArrivalWithQuarantine() {
+    if (this.isForbidden) {
+      return false
+    }
+    return (
+      !this.vaccineRequired &&
+      this.testRequiredBeforeArrival &&
+      this.quarantineRequired
+    )
+  }
+  get canEnterWithQuarantine() {
+    if (this.isForbidden) {
+      return false
+    }
+    return (
+      !this.vaccineRequired && !this.pcrTestRequired && this.quarantineRequired
+    )
+  }
+
+  get canEnterWithBeforeTest() {
+    if (this.isForbidden) {
+      return false
+    }
+    return (
+      !this.vaccineRequired &&
+      this.testRequiredBeforeArrival &&
+      !this.quarantineRequired
+    )
+  }
+
+  get canEnterWithAfterTest() {
+    if (this.isForbidden) {
+      return false
+    }
+    return (
+      !this.vaccineRequired &&
+      this.testRequiredAfterArrivalWithQuarantine &&
+      !this.quarantineRequired
+    )
+  }
+
+  get canEnterWithBeforeAndAfterTestWithQuarantine() {
+    if (this.isForbidden) {
+      return false
+    }
+    return (
+      !this.vaccineRequired &&
+      this.testRequiredBeforeArrival &&
+      this.testRequiredAfterArrivalWithQuarantine
+    )
+  }
+
+  get canEnterVaccinatedBeforeAndAfterTestWithQuarantine() {
+    if (this.isForbidden) {
+      return false
+    }
+    return (
+      this.vaccineRequired &&
+      this.testRequiredBeforeArrival &&
+      this.testRequiredAfterArrivalWithQuarantine
+    )
   }
 
   get isForbidden(): boolean {
@@ -174,6 +333,10 @@ export class RestrictionGroup {
       )
     }
   }
+
+  public encode(): EncodedRestrictionNode[] {
+    return this.restrictions.map((restriction) => restriction.encode())
+  }
 }
 
 export function createRestrictionGroupCollection(
@@ -181,4 +344,14 @@ export function createRestrictionGroupCollection(
   profile: ProfileContext,
 ): RestrictionGroupCollection {
   return new RestrictionGroupCollection(restrictions, profile)
+}
+
+export function createGroupFromEncodedNodeGroup(
+  encodedNodes: EncodedRestrictionNode[],
+): RestrictionGroup {
+  return new RestrictionGroup(
+    encodedNodes.map((encodedNode) =>
+      createRestrictionNodeFromEncodedNode(encodedNode),
+    ),
+  )
 }

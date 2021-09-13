@@ -1,16 +1,10 @@
-import mapValues from 'lodash/mapValues'
-
 import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/plain-destination'
 import { RoundTripEncodedRestriction } from '@/shared/src/api/function-api/overview-raw/model'
-import { RoundTripRestrictionGroup } from '@/shared/src/api/function-api/overview/model'
 import { getCountryISOCodes } from '@/shared/src/misc/country-codes'
-import { createRawPrecomputedRestriction } from '@/shared/src/models/precomputed-restriction/factory'
-import { RoundTripRawPrecomputedRestrictionMap } from '@/shared/src/models/precomputed-restriction/raw-precomputed-restriction'
 import { createProfileContext } from '@/shared/src/models/profile-context/helper'
 import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 import { convertIncompleteTreeFromStorageFormat } from '@/shared/src/restriction-tree/converter'
 import {
-  createGroupFromEncodedNodeGroup,
   createRestrictionGroupCollection,
   RestrictionGroup,
 } from '@/shared/src/restriction-tree/restriction-group'
@@ -18,7 +12,7 @@ import {
 export function createRawOverviewCollection(
   context: Partial<ProfileContext>,
   rawDestinations: MappedPlainDestinationCollection,
-): RoundTripRawPrecomputedRestrictionMap {
+): Record<string, RoundTripEncodedRestriction> {
   const outgoingContext = createProfileContext(context)
   const returningDestination = rawDestinations[outgoingContext.origin]
   const returningDestinationRestrictions =
@@ -26,7 +20,7 @@ export function createRawOverviewCollection(
       returningDestination ? returningDestination.restrictionTree ?? [] : [],
     )
 
-  const result: RoundTripRawPrecomputedRestrictionMap = {}
+  const result: Record<string, RoundTripEncodedRestriction> = {}
 
   for (const countryISO of getCountryISOCodes()) {
     if (countryISO === context.origin) {
@@ -52,18 +46,10 @@ export function createRawOverviewCollection(
       ).getBestGroup() ?? new RestrictionGroup()
 
     result[countryISO] = {
-      outgoing: createRawPrecomputedRestriction(outgoingTrip),
-      return: createRawPrecomputedRestriction(returnTrip),
+      outgoing: outgoingTrip.encode(),
+      return: returnTrip.encode(),
     }
   }
 
   return result
-}
-
-export function createOverviewCollection(
-  rawCollection: Record<string, RoundTripEncodedRestriction>,
-): Record<string, RoundTripRestrictionGroup> {
-  return mapValues(rawCollection, (roundtrip) =>
-    mapValues(roundtrip, (trip) => createGroupFromEncodedNodeGroup(trip)),
-  )
 }

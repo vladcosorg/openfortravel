@@ -260,19 +260,19 @@ module.exports = {
         'vue/no-bare-strings-in-template': 'off',
       },
     },
-    {
-      files: 'packages/shared/**/*.*',
-      rules: {
-        'import/no-unused-modules': [
-          'warn',
-          {
-            src: ['.'],
-            unusedExports: true,
-            missingExports: true,
-          },
-        ],
-      },
-    },
+    // {
+    //   files: 'packages/shared/**/*.*',
+    //   rules: {
+    //     'import/no-unused-modules': [
+    //       'warn',
+    //       {
+    //         src: ['.'],
+    //         unusedExports: true,
+    //         missingExports: true,
+    //       },
+    //     ],
+    //   },
+    // },
     // {
     //   files: '*.*',
     //   rules: {

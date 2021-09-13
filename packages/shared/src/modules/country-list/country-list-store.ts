@@ -11,6 +11,7 @@ import type { Module } from 'vuex'
 
 export class CountryListState {
   countryList: CountryList = {}
+  countryListNominative: CountryList = {}
   countryListOrigin: CountryList = {}
   countryListDestination: CountryList = {}
   slugMap: CountryList = {}
@@ -26,6 +27,11 @@ export default {
     return new CountryListState()
   },
   getters: {
+    countryListNominative(state): CountryListState['countryListNominative'] {
+      return isEmpty(state.countryListNominative)
+        ? state.countryList
+        : state.countryListNominative
+    },
     countryListOrigin(state): CountryListState['countryListOrigin'] {
       return isEmpty(state.countryListOrigin)
         ? state.countryList
@@ -58,6 +64,9 @@ export default {
   mutations: {
     setCountryList(state: CountryListState, list: CountryList) {
       state.countryList = list
+    },
+    setCountryListNominative(state: CountryListState, list: CountryList) {
+      state.countryListNominative = list
     },
     setCountryListOrigin(state: CountryListState, list: CountryList) {
       state.countryListOrigin = list

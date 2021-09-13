@@ -1,11 +1,17 @@
 import { useStore, useVueI18n } from '@/shared/src/composables/use-plugins'
+import { Continent, continents } from '@/shared/src/modules/continent-map/types'
 
-export function getMappedContinentID(countryISO: string): string | undefined {
-  return useStore().state.countryToContinentMap[countryISO]
+export function getMappedContinentID(countryISO: string): Continent {
+  const result = useStore().state.countryToContinentMap[countryISO]
+  if (!result) {
+    throw new Error(`Cannot find continent for ${countryISO}`)
+  }
+
+  return result
 }
 
-export function getOrderedListOfContinentIDs(): string[] {
-  return ['na', 'eu', 'as', 'sa', 'oc', 'af']
+export function getOrderedListOfContinentIDs(): typeof continents {
+  return continents
 }
 
 export function getContinentList(
@@ -13,11 +19,13 @@ export function getContinentList(
 ): Record<string, string> {
   const list: Record<string, string> = {}
 
-  let orderedList = getOrderedListOfContinentIDs()
+  let orderedList
   if (prioritizeContinent) {
     orderedList = [
       prioritizeContinent,
-      ...orderedList.filter((contId) => contId !== prioritizeContinent),
+      ...getOrderedListOfContinentIDs().filter(
+        (contId) => contId !== prioritizeContinent,
+      ),
     ]
   }
 

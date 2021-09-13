@@ -5,7 +5,8 @@ import queryTypes from 'query-types'
 
 import { fetchDestinations } from '@/functions/src/api/helpers/repository'
 import { addCacheMiddleware } from '@/functions/src/api/middlewares/cache'
-import { createOverviewCollection } from '@/shared/src/api/function-api/overview/helpers'
+import { createRawOverviewCollection } from '@/shared/src/api/function-api/overview-raw/helpers'
+import { createRawOverviewCollection as createOverviewCollection } from '@/shared/src/api/function-api/overview/helpers'
 import {
   createRawCountryFactsheetMap,
   createRawFactsheet,
@@ -35,6 +36,19 @@ app.get('/restrictions/:origin/overview', async (req, res) => {
     {
       origin: req.params.origin,
       ...req.query,
+    },
+    destinations,
+  )
+
+  res.status(200).send(collection)
+})
+
+app.get('/restrictions/:origin/raw-overview', async (req, res) => {
+  const destinations = await fetchDestinations()
+  const collection = createRawOverviewCollection(
+    {
+      origin: req.params.origin,
+      ...req.query.context,
     },
     destinations,
   )

@@ -1,3 +1,5 @@
+import intersection from 'lodash/intersection'
+
 import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
 import { AbstractRestrictionNode } from '@/shared/src/restriction-tree/abstract-restriction-node'
 import { RestrictionNodeType } from '@/shared/src/restriction-tree/types'
@@ -34,6 +36,10 @@ export function getVaccineLabel(id?: VaccineBrand): string {
   return id ? vaccineLabels[id] : 'not vaccinated'
 }
 
+export function getVaccineIds(): VaccineBrand[] {
+  return Object.values(VaccineBrand)
+}
+
 export function isVaccineBrand(brand: string): brand is VaccineBrand {
   return Object.values(VaccineBrand).includes(brand as VaccineBrand)
 }
@@ -50,8 +56,18 @@ export class Vaccinated extends AbstractRestrictionNode<DefaultOptions> {
     ...AbstractRestrictionNode.defaultOptions,
   }
 
-  matches(visitorContext?: { brand: VaccineBrand; partial: boolean }): boolean {
+  matches(visitorContext?: {
+    brand: VaccineBrand | VaccineBrand[]
+    partial: boolean
+  }): boolean {
     if (!visitorContext || this.options.partial !== visitorContext.partial) {
+      return false
+    }
+
+    if (
+      !visitorContext.brand ||
+      (Array.isArray(visitorContext.brand) && visitorContext.brand.length === 0)
+    ) {
       return false
     }
 
@@ -59,7 +75,16 @@ export class Vaccinated extends AbstractRestrictionNode<DefaultOptions> {
       return true
     }
 
-    return this.options.authorizedBrands.includes(visitorContext.brand)
+    if (typeof visitorContext.brand === 'string') {
+      return this.options.authorizedBrands.includes(visitorContext.brand)
+    }
+
+    const matches = intersection(
+      visitorContext.brand,
+      this.options.authorizedBrands,
+    )
+
+    return matches.length > 0
   }
 
   id(): RestrictionNodeType {
