@@ -1,5 +1,5 @@
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { useVueI18n } from '@/shared/src/composables/use-plugins'
 import { useVuexRawStateProperty } from '@/shared/src/composables/use-vuex'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 import type { Nationalities } from '@/shared/src/modules/nationality/nationality-store'
@@ -9,7 +9,8 @@ export function getNationalityOrFallback(countryCode: string): string {
     'modules.nationalities.list',
   )
 
-  return useI18n().t('misc.countryCitizen', {
+  const { t } = useVueI18n()
+  return t('misc.countryCitizen', {
     country: list[countryCode] ?? getLabelForCountryCode(countryCode),
   })
 }

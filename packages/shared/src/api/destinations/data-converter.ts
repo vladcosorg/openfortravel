@@ -9,7 +9,7 @@ import type {
   FirestoreDataConverter,
   QueryDocumentSnapshot,
   SnapshotOptions,
-} from '@firebase/firestore'
+} from 'firebase/firestore'
 
 export const dataConverter: FirestoreDataConverter<PlainDestination> = {
   toFirestore(destination: PlainDestination): DestinationDocument {

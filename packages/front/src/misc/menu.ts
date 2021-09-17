@@ -1,8 +1,8 @@
-import { useI18n } from 'vue-i18n'
 import { useRouter, RouteLocationRaw } from 'vue-router'
 
 import { getCurrentOriginSlug } from '@/front/src/misc/country-decider'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
+import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
 import type { IVueI18n, TranslateResult } from 'vue-i18n'
 
@@ -56,9 +56,10 @@ const links: Record<string, MenuItemRawPair> = {
 
 export function getMenuItemPair(menuID: keyof typeof links): MenuItemPair {
   const item = links[menuID]
+  const { i18n } = useVueI18n()
   return {
-    url: useRouter().resolve(item.url(useI18n().locale.value)).href,
-    title: item.title(useI18n()),
+    url: useRouter().resolve(item.url(i18n.locale.value)).href,
+    title: item.title(i18n),
   }
 }
 

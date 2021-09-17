@@ -4,7 +4,7 @@ import type {
   FirestoreDataConverter,
   QueryDocumentSnapshot,
   SnapshotOptions,
-} from '@firebase/firestore'
+} from 'firebase/firestore'
 
 export const dataConverter: FirestoreDataConverter<SearchIdDocument> = {
   toFirestore(destination: SearchIdDocument): SearchIdDocument {

@@ -4,7 +4,7 @@ import {
   setDoc,
   Timestamp,
   collection,
-} from '@firebase/firestore/lite'
+} from 'firebase/firestore/lite'
 
 import {
   createDummyPlainDestination,

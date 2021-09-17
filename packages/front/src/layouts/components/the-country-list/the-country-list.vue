@@ -105,7 +105,7 @@ import Swapper from '@/front/src/layouts/components/the-country-list/swapper.vue
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
 import {
   useRouter,
-  useI18n,
+  getI18nInstance,
   useRootStore,
 } from '@/shared/src/composables/use-plugins'
 import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
@@ -149,7 +149,7 @@ export default defineComponent({
               originSlug: transformCountryCodeToOriginSlug(originCode),
               destinationSlug:
                 transformCountryCodeToDestinationSlug(destinationCode),
-              locale: useI18n().locale,
+              locale: getI18nInstance().locale.value,
             },
           })
           return
@@ -159,7 +159,7 @@ export default defineComponent({
           name: 'origin',
           params: {
             originSlug: transformCountryCodeToOriginSlug(originCode),
-            locale: useI18n().locale,
+            locale: getI18nInstance().locale.value,
             searchId: useRootStore().state.searchId,
           },
         })

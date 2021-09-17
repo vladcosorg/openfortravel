@@ -5,14 +5,17 @@ import { serverCache } from '@/front/src/misc/server-cache'
 import type { LanguageLocale } from '@/front/src/modules/i18n/types'
 import { reloadRoutes } from '@/front/src/router/helpers'
 import type { StateInterface } from '@/front/src/store/state'
-import { useCookies, useI18n } from '@/shared/src/composables/use-plugins'
+import {
+  useCookies,
+  getI18nInstance,
+} from '@/shared/src/composables/use-plugins'
 
 import type { QSsrContext } from '@quasar/app'
 import type { ManualTranslator } from 'vue-auto-i18n'
 import type { Store } from 'vuex'
 
 export function setLocale(locale: string): void {
-  useI18n().locale = locale
+  getI18nInstance().locale.value = locale
   reloadRoutes()
 }
 
@@ -90,7 +93,7 @@ function translateParams(
 let translator: ManualTranslator
 export async function autoTranslateIfNecessary(
   currentLocale: string,
-  i18n: ReturnType<typeof useI18n>,
+  i18n: ReturnType<typeof getI18nInstance>,
 ): Promise<void> {
   if (currentLocale === 'en') {
     return
@@ -103,5 +106,5 @@ export async function autoTranslateIfNecessary(
     translator = createAutoI18n(i18n)
   }
 
-  await translator(i18n.locale)
+  await translator(i18n.locale.value)
 }

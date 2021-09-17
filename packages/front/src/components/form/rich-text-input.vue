@@ -49,7 +49,7 @@ import defer from 'lodash/defer'
 import throttle from 'lodash/throttle'
 import { computed, defineComponent, ref } from 'vue'
 
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { getI18nInstance } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   inheritAttrs: false,
@@ -93,7 +93,10 @@ export default defineComponent({
       successIcon,
       errorIcon,
       isRequiredValidator(val: string) {
-        return val.length > 0 || useI18n().t('components.form.input.emptyField')
+        return (
+          val.length > 0 ||
+          getI18nInstance().t('components.form.input.emptyField')
+        )
       },
       onInput() {
         throttledValidator()

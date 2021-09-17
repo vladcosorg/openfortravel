@@ -1,12 +1,12 @@
 import { getRoutes } from '@/front/src/router/routes'
 import {
-  useI18n,
+  getI18nInstance,
   useRouter,
   useRoute,
 } from '@/shared/src/composables/use-plugins'
 
 export function reloadRoutes(): void {
-  getRoutes(useI18n()).map((route) => useRouter().addRoute(route))
+  getRoutes(getI18nInstance()).map((route) => useRouter().addRoute(route))
 }
 
 export function getAbsoluteURL(relativeURL: string, hash?: string): string {

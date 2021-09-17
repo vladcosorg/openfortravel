@@ -6,14 +6,17 @@ import {
 } from 'vue-router'
 
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
-import { useRouter, useI18n } from '@/shared/src/composables/use-plugins'
+import {
+  useRouter,
+  getI18nInstance,
+} from '@/shared/src/composables/use-plugins'
 import {
   transformCountryCodeToOriginSlug,
   transformOriginSlugToCode,
 } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export function getRoutes(
-  i18n: ReturnType<typeof useI18n>,
+  i18n: ReturnType<typeof getI18nInstance>,
 ): Router['options']['routes'] {
   return [
     {
@@ -23,7 +26,7 @@ export function getRoutes(
         return useRouter().resolve({
           name: 'index-targeted',
           params: {
-            locale: i18n.locale,
+            locale: i18n.locale.value,
             originSlug: transformCountryCodeToOriginSlug(
               getPersistedOriginOrDefault(),
             ),
@@ -164,7 +167,7 @@ export function getRoutes(
 }
 
 export function createGenericRouter(
-  i18n: ReturnType<typeof useI18n>,
+  i18n: ReturnType<typeof getI18nInstance>,
   isServer?: boolean,
 ): Router {
   const createHistory = isServer ? createMemoryHistory : createWebHistory

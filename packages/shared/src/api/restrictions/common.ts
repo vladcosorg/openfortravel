@@ -3,7 +3,7 @@ import {
   FirestoreDataConverter,
   QueryDocumentSnapshot,
   CollectionReference,
-} from '@firebase/firestore/lite'
+} from 'firebase/firestore/lite'
 import mapValues from 'lodash/mapValues'
 import pick from 'lodash/pick'
 

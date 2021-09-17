@@ -1,12 +1,12 @@
 import { integrateWithVueI18n } from 'vue-auto-i18n'
 
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { getI18nInstance } from '@/shared/src/composables/use-plugins'
 
 import type { ManualTranslator, TranslationService } from 'vue-auto-i18n'
 import type { Locale, LocaleMessageObject } from 'vue-i18n'
 
 export function createAutoI18n(
-  i18nPluginInstance: ReturnType<typeof useI18n>,
+  i18nPluginInstance: ReturnType<typeof getI18nInstance>,
 ): ManualTranslator {
   return integrateWithVueI18n({
     i18nPluginInstance,

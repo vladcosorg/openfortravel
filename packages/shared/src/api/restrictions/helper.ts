@@ -15,7 +15,7 @@ import {
   RestrictionStatus,
 } from '@/shared/src/api/restrictions/models'
 import { findRestrictionsByOrigin } from '@/shared/src/api/restrictions/repository'
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { getI18nInstance } from '@/shared/src/composables/use-plugins'
 import { wrapCollection } from '@/shared/src/misc/misc'
 import { getCountryCodes as getAllCountryCodes } from '@/shared/src/modules/country-list/country-list-helpers'
 
@@ -108,7 +108,7 @@ export function getStatusListMap(): Record<RestrictionStatus, TranslateResult> {
   const keys = getStatusList()
   return zipObject(
     keys,
-    keys.map((status) => useI18n().t(`status.${status}`)),
+    keys.map((status) => getI18nInstance().t(`status.${status}`)),
   ) as Record<RestrictionStatus, TranslateResult>
 }
 
@@ -117,7 +117,7 @@ export function getStatusListPairs(): Array<{
   value: RestrictionStatus
 }> {
   return Object.values(RestrictionStatus).map((value) => ({
-    label: useI18n().t(`status.${value}`),
+    label: getI18nInstance().t(`status.${value}`),
     value,
   }))
 }

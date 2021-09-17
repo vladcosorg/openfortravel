@@ -58,7 +58,7 @@ import TheSearchStats from '@/front/src/pages/country/components/the-search-stat
 import { useBreadcrumbs } from '@/front/src/pages/country/composable'
 import {
   useRouter,
-  useI18n,
+  getI18nInstance,
   useRootStore,
 } from '@/shared/src/composables/use-plugins'
 import { useClosureLoading } from '@/shared/src/composables/use-promise-loading'
@@ -85,7 +85,7 @@ export default defineComponent({
           name: 'origin',
           params: {
             originSlug: transformCountryCodeToOriginSlug(originCode),
-            locale: useI18n().locale,
+            locale: getI18nInstance().locale.value,
           },
         })
       },

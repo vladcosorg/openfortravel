@@ -47,7 +47,7 @@ import { useRouter } from 'vue-router'
 
 import SimpleSelect from '@/front/src/components/simple-select.vue'
 import type { StateInterface } from '@/front/src/store/state'
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { getI18nInstance } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import { useStateProperty } from '@/shared/src/composables/use-vuex'
 
@@ -55,7 +55,7 @@ export default defineComponent({
   components: { SimpleSelect },
   setup() {
     const { loading } = useLoading(false)
-    const currentLanguage = ref(useI18n().locale)
+    const currentLanguage = ref(getI18nInstance().locale.value)
     const languageList = useStateProperty<StateInterface>('labeledLocales')
     const router = useRouter()
     const handleClick = (tolocale: string) => {

@@ -1,16 +1,19 @@
 import { Restriction } from '@/front/src/models/restriction'
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { getI18nInstance } from '@/shared/src/composables/use-plugins'
 
 export function getShortDescription(
   restriction: Restriction,
   returning = false,
 ): string {
   return [
-    useI18n().t(`description.intro.${returning ? 'return' : 'travel'}`, {
-      origin: restriction.originLabel,
-      destination: restriction.destinationLabel,
-    }),
-    useI18n().t(`description.status.${restriction.status}`),
+    getI18nInstance().t(
+      `description.intro.${returning ? 'return' : 'travel'}`,
+      {
+        origin: restriction.originLabel,
+        destination: restriction.destinationLabel,
+      },
+    ),
+    getI18nInstance().t(`description.status.${restriction.status}`),
   ].join(' ')
 }
 
@@ -21,8 +24,10 @@ export function getFullDescription(
   return (
     getShortDescription(restriction, returning) +
     [
-      useI18n().t(`description.testing.${restriction.testRequired}`),
-      useI18n().t(`description.insurance.${restriction.insuranceRequired}`),
+      getI18nInstance().t(`description.testing.${restriction.testRequired}`),
+      getI18nInstance().t(
+        `description.insurance.${restriction.insuranceRequired}`,
+      ),
     ].join(' ')
   )
 }

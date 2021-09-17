@@ -11,7 +11,7 @@
 import { defineComponent } from 'vue'
 
 import RichTextInput from '@/front/src/components/form/rich-text-input.vue'
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { getI18nInstance } from '@/shared/src/composables/use-plugins'
 
 export default defineComponent({
   components: { RichTextInput },
@@ -21,7 +21,7 @@ export default defineComponent({
       isValidEmail(val: string) {
         return (
           /^.+@.+\..+$/.test(val) ||
-          useI18n().t('components.form.email.invalidEmail')
+          getI18nInstance().t('components.form.email.invalidEmail')
         )
       },
     }

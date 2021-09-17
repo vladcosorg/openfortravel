@@ -5,7 +5,7 @@ import {
   where,
   getDocs,
   addDoc,
-} from '@firebase/firestore/lite'
+} from 'firebase/firestore/lite'
 
 import { searchIdCollection } from '@/shared/src/misc/firebase'
 import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'

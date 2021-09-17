@@ -1,5 +1,10 @@
-import { getFirestore, initializeFirestore } from '@firebase/firestore'
-import { doc, onSnapshot, collection } from 'firebase/firestore'
+import {
+  getFirestore,
+  initializeFirestore,
+  doc,
+  onSnapshot,
+  collection,
+} from 'firebase/firestore'
 
 import { MappedPlainDestinationCollection } from '@/shared/src/api/destinations/plain-destination'
 import { firebaseApp } from '@/shared/src/misc/firebase'

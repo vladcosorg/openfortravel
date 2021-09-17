@@ -1,10 +1,10 @@
 import { ParameterTransformer } from '@/front/src/router/transformers/_types'
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { getI18nInstance } from '@/shared/src/composables/use-plugins'
 
 export const localeTransformer: ParameterTransformer<string | undefined> = {
   encode(input) {
     if (!input) {
-      input = useI18n().locale
+      input = getI18nInstance().locale.value
     }
 
     return input

@@ -19,7 +19,8 @@
           visit.
         </h2>
         <div class="text-primary-subtle">
-          Last updated: {{ publishedDate.toLocaleDateString(i18n.locale) }}
+          Last updated:
+          {{ publishedDate.toLocaleDateString(locale) }}
         </div>
       </div>
     </div>
@@ -141,8 +142,8 @@ import {
   getCurrentMonthAndYear,
   getFirstDayOfCurrentMonth,
 } from '@/front/src/misc/date'
-import { tr } from '@/front/src/misc/i18n-utils'
 import { slugify } from '@/front/src/misc/misc'
+import { useCustomI18n } from '@/front/src/modules/i18n/composables'
 import NewsCard from '@/front/src/pages/news/news-card.vue'
 import {
   GroupedDestinations,
@@ -150,21 +151,21 @@ import {
 } from '@/front/src/pages/news/news-store'
 import { getCurrentRelativeURL } from '@/front/src/router/helpers'
 import { originTransformer } from '@/front/src/router/transformers/origin'
-import { useRootStore, useVueI18n } from '@/shared/src/composables/use-plugins'
+import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { getContinentLabel } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
+const { tr, locale, t } = useCustomI18n()
 useContextParser({
   originSlug: originTransformer,
 })
 const store = useNewsStore()
-const { t, i18n } = useVueI18n()
 const publishedDate = getFirstDayOfCurrentMonth()
 const countryISO = computed(() => useRootStore().getters.visitorOrigin)
 const originCountryLabel = computed(() =>
   getOriginLabelForCountryCode(countryISO.value),
 )
-const date = getCurrentMonthAndYear(i18n.locale)
+const date = getCurrentMonthAndYear(locale.value)
 const title = computed(
   () =>
     `Which countries are allowing vaccinated visitors from ${originCountryLabel.value} in ${date}?`,

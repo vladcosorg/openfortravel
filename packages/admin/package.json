@@ -19,15 +19,15 @@
   "dependencies": {
     "@vue/composition-api": "^0.6.7",
     "@vueuse/core": "^5.3.0",
-    "date-fns": "^2.23.0",
-    "firebase": "9.0.0-beta.8",
+    "date-fns": "^2.24.0",
+    "firebase": "9.0.2",
     "i18n-iso-countries": "^6.8.0",
     "iso-639-1": "^2.1.9",
     "iso-language-list": "^0.3.3",
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2",
     "lodash": "^4.17.21",
-    "quasar": "^2.0.4"
+    "quasar": "^2.1.0"
   },
   "devDependencies": {
     "@openfortravel/shared": "latest",
@@ -37,7 +37,7 @@
     "@types/lodash": "^4.14.172",
     "@types/node": "^14.17.11",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
-    "typescript": "^4.4.2"
+    "typescript": "^4.4.3"
   },
   "browserslist": [
     "last 1 Chrome versions",

@@ -1,10 +1,11 @@
 import { h, VNode } from 'vue'
 
-import { tr } from '@/front/src/misc/i18n-utils'
+import { useCustomI18n } from '@/front/src/modules/i18n/composables'
 import { RoundTripRestrictionGroup } from '@/shared/src/api/function-api/overview/model'
 import { ProfileContext } from '@/shared/src/models/profile-context/profile-context'
 import { RestrictionGroup } from '@/shared/src/restriction-tree/restriction-group'
 
+const { tr } = useCustomI18n()
 type FragmentContext = {
   profile: ProfileContext
   destinationISO: string

@@ -1,6 +1,7 @@
 export default {
   meta: {
-    title: 'Where can vaccinated Americans {nationality} travel right now?',
+    title:
+      'Where can vaccinated <i id="nationality">Americans</i> travel right now?',
     description: 'A freshly compiled list of destinations',
   },
   intro: `While traveling has gradually made a comeback, we can now say for

@@ -17,7 +17,7 @@ import SectionIntro from '@/front/src/pages/index/components/section-intro.vue'
 import SectionStats from '@/front/src/pages/index/components/section-stats.vue'
 import SectionWizard from '@/front/src/pages/index/components/section-wizard.vue'
 import { originTransformer } from '@/front/src/router/transformers/origin'
-import { useI18n } from '@/shared/src/composables/use-plugins'
+import { getI18nInstance } from '@/shared/src/composables/use-plugins'
 import { getLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
 export default defineComponent({
@@ -37,7 +37,7 @@ export default defineComponent({
       originSlug: originTransformer,
     })
     useMeta(() => ({
-      title: useI18n().t('page.index.meta.title', {
+      title: getI18nInstance().t('page.index.meta.title', {
         country: getLabelForCountryCode(props.originCode),
       }),
       link: generateHreflangTags(),

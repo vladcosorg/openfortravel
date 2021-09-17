@@ -1,8 +1,10 @@
 import ky from 'ky-universal'
 import { Cookies, Notify } from 'quasar'
+import { WritableComputedRef } from 'vue'
 import { TranslateResult } from 'vue-i18n'
 import { Store } from 'vuex'
 
+import { tl } from '@/front/src/misc/i18n-utils'
 import { augmentedStore } from '@/front/src/store'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 
@@ -37,27 +39,26 @@ export function useRouter(): Router {
 export function useRoute(): RouteLocationNormalizedLoaded {
   return routerInstance.currentRoute.value
 }
-let i18nInstance: ReturnType<typeof createVueI18n>['global']
+let i18nInstance: { locale: WritableComputedRef<string> } & ReturnType<
+  typeof createVueI18n
+>['global']
 
-export function setI18n(instance: typeof i18nInstance): void {
+export function setI18nInstance(instance: typeof i18nInstance): void {
   i18nInstance = instance
 }
 
-export function useI18n(): typeof i18nInstance {
+export function getI18nInstance(): typeof i18nInstance {
   return i18nInstance
 }
 
-type Translator<T extends TranslateResult> = (
-  key: VueI18n.Path,
-  values?: VueI18n.Values,
-) => T
 export function useVueI18n<T extends TranslateResult>(): {
-  t: Translator<T>
+  t: typeof i18nInstance['t']
+  tl: typeof tl
   i18n: typeof i18nInstance
 } {
-  const i18n = useI18n()
+  const i18n = getI18nInstance()
   const unbound = i18n.t
-  return { i18n, t: unbound.bind(i18n) as unknown as Translator<T> }
+  return { i18n, t: unbound.bind(i18n), tl }
 }
 
 export function useI18nWithPrefix<T extends TranslateResult>(

@@ -134,11 +134,11 @@ function createLocalizedEntry(
 const routers: Record<string, Router> = {}
 
 function generateHrefForRoute(to: LocationAsRelativeRaw) {
-  i18n.locale = (to.params?.locale as string) ?? 'en'
-  if (!routers[i18n.locale]) {
-    routers[i18n.locale] = createGenericRouter(i18n, true)
+  i18n.locale.value = (to.params?.locale as string) ?? 'en'
+  if (!routers[i18n.locale.value]) {
+    routers[i18n.locale.value] = createGenericRouter(i18n, true)
   }
-  return routers[i18n.locale].resolve(to).href
+  return routers[i18n.locale.value].resolve(to).href
 }
 
 function getSlugsForLocale(locale: string): {

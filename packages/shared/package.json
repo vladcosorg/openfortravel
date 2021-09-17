@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "countries-list": "^2.6.1",
-    "firebase": "9.0.0-beta.8",
+    "firebase": "9.0.2",
     "i18n-iso-countries": "^6.8.0",
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2"

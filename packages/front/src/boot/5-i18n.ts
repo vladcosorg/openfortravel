@@ -11,19 +11,18 @@ import {
   preloadLocaleMessageCollectionIntoPlugin,
   pushRequiredLocalesToStore,
 } from '@/front/src/modules/i18n/loaders'
-import { setI18n } from '@/shared/src/composables/use-plugins'
+import { setI18nInstance } from '@/shared/src/composables/use-plugins'
 import { createVueI18n } from '@/shared/src/misc/i18n'
 
 export default boot(async ({ app, store, ssrContext, redirect, router }) => {
   const i18nPlugin = createVueI18n(serverCache.i18nMessages)
   app.use(i18nPlugin)
+
   const i18n = i18nPlugin.global
 
   const isClient = !ssrContext
 
-  app.i18n = i18n
-
-  setI18n(i18n)
+  setI18nInstance(i18n)
 
   // return
   if (isClient) {
@@ -40,12 +39,8 @@ export default boot(async ({ app, store, ssrContext, redirect, router }) => {
     if ((url = localeChangeHandler(currentLocale, router, ssrContext))) {
       redirect(url)
     }
-    try {
-      await autoTranslateIfNecessary(currentLocale, i18n)
-    } catch {
-      redirect('/en/from/united-states-of-america')
-      return
-    }
+
+    await autoTranslateIfNecessary(currentLocale, i18nPlugin.global)
     pushRequiredLocalesToStore(i18n, currentLocale, store)
   }
 })
