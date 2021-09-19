@@ -1,6 +1,6 @@
 import { h } from 'vue'
 
-import CountryLabel from '@/front/src/components/country/country-label.vue'
+import { useCustomI18n } from '@/front/src/modules/i18n/composables'
 import Quarantine from '@/front/src/pages/destination/components/restriction-groups/restriction/quarantine.vue'
 import { Question } from '@/front/src/pages/destination/questions/question'
 import { RenderFunction } from '@/shared/src/misc/type-helpers'
@@ -16,24 +16,29 @@ export class QuarantineQuestion extends Question {
   }
 
   get question(): RenderFunction {
-    return () => [
-      `Do I have to quarantine when ${
-        this.returning ? 'returning back ' : ' traveling'
-      } from `,
-      h(CountryLabel, { value: this.originFactsheet.countryCode }),
-      ' to ',
-      h(CountryLabel, { value: this.destinationFactsheet.countryCode }),
-      '?',
-    ]
+    const { tl } = useCustomI18n()
+    return () =>
+      h('div', {
+        innerHTML: tl(
+          `page.destination.widgets.faq.quarantine.q.${
+            this.returning ? 'returning' : 'outgoing'
+          }`,
+          {
+            origin: this.originFactsheet.countryCode,
+            destination: this.destinationFactsheet.countryCode,
+          },
+        ),
+      })
   }
 
   get answer(): RenderFunction {
+    const { tl } = useCustomI18n()
     if (this.optimalRestrictionGroup.isForbidden) {
-      return () => [
-        'Unfortunately you are not permitted to enter ',
-        h(CountryLabel, { value: this.destinationFactsheet.countryCode }),
-        ' at all, with or without quarantine.',
-      ]
+      return () =>
+        tl('page.destination.widgets.faq.quarantine.a.forbidden', {
+          origin: this.originFactsheet.countryCode,
+          destination: this.destinationFactsheet.countryCode,
+        })
     }
 
     const quarantineRestriction =
@@ -42,9 +47,15 @@ export class QuarantineQuestion extends Question {
       )
     if (quarantineRestriction) {
       return () => [
-        `No, you can't ${this.returning ? ' return back' : ' travel'} to `,
-        h(CountryLabel, { value: this.destinationFactsheet.countryCode }),
-        ' without quarantine.',
+        tl(
+          `page.destination.widgets.faq.quarantine.a.notAllowed.${
+            this.returning ? 'returning' : 'outgoing'
+          }`,
+          {
+            origin: this.originFactsheet.countryCode,
+            destination: this.destinationFactsheet.countryCode,
+          },
+        ),
         h('br'),
         h('br'),
         h(Quarantine, {
@@ -59,12 +70,10 @@ export class QuarantineQuestion extends Question {
       ]
     }
 
-    return () => [
-      `No, you don't need to quarantine upon ${
-        this.returning ? ' returning ' : ' arriving'
-      } to `,
-      h(CountryLabel, { value: this.destinationFactsheet.countryCode }),
-      '.',
-    ]
+    return () =>
+      tl('page.destination.widgets.faq.quarantine.a.allowed', {
+        origin: this.originFactsheet.countryCode,
+        destination: this.destinationFactsheet.countryCode,
+      })
   }
 }

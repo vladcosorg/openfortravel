@@ -6,7 +6,21 @@ export default {
   drawer: {
     darkMode: 'Dark mode',
   },
-
+  breadcrumbs: {
+    homeLabel: 'Homepage',
+  },
+  requiredLanguages: {
+    languageList:
+      'This document must be presented in <i id="langs">English and Romanian</i>.',
+    noInfo: `Currently there is no info if the document has to be presented in original
+    or has to be translated to the local language. Please check with the
+    embassy.`,
+  },
+  issuerSection: {
+    yes: `Currently, <i id="country">Austria</i> accepts this document,
+          if it is issued by <i id="issuers">Austria and Bulgaria</i>`,
+    no: 'It is not specified whether <i id="country">Austria</i> has any requirements regarding the issuing country of this document.',
+  },
   form: {
     input: {
       emptyField: 'This field should not be empty',

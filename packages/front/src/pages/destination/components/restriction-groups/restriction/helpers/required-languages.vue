@@ -1,27 +1,31 @@
 <template>
-  <p v-if="languages && languages.length > 0">
-    A valid document must be presented in
-    <seq v-slot="{ item }" :items="languages" conjunction="or"
-      ><language :code="item" /></seq
-    >.
-  </p>
+  <i18n-l
+    v-if="languages && languages.length > 0"
+    keypath="components.requiredLanguages.languageList"
+    tag="p"
+  >
+    <template #langs>
+      <seq v-slot="{ item }" :items="languages" conjunction="or"
+        ><language :code="item"
+      /></seq>
+    </template>
+  </i18n-l>
   <p v-else>
-    Currently there is no info if the document has to be presented in original
-    or has to be translated to the local language. Please check with the
-    embassy.
+    {{ $t('components.requiredLanguages.noInfo') }}
   </p>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import I18nL from '@/front/src/modules/i18n/i18n-l.vue'
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
 import Seq from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/seq.vue'
 
 import type { PropType } from 'vue'
 
 export default defineComponent({
-  components: { Seq, Language },
+  components: { I18nL, Seq, Language },
   props: {
     languages: {
       type: Array as PropType<string[]>,

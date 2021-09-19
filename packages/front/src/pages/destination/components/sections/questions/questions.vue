@@ -1,10 +1,17 @@
 <template>
-  <div class="row q-col-gutter-x-xl">
+  <div
+    class="row q-col-gutter-x-xl"
+    itemscope
+    itemtype="https://schema.org/FAQPage"
+  >
     <question-index class="col-5" />
     <div class="col q-gutter-y-lg">
       <question-item
         v-for="(item, index) in questions"
         :key="index"
+        itemscope
+        itemprop="mainEntity"
+        itemtype="https://schema.org/Question"
         :item="item"
         :is-last="lastIndex === index"
         :is-active="

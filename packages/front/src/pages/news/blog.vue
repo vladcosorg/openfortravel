@@ -2,7 +2,7 @@
   <inner-page disable-container disable-margins>
     <the-breadcrumbs
       :items="[
-        { label: 'News', to: '/' },
+        { label: t('page.travelAlertsVaccinated.breadcrumbCategory'), to: '/' },
         {
           label: title,
         },
@@ -10,16 +10,21 @@
     />
     <div class="overflow-auto q-pb-lg q-pt-md relative-position bg-elevation-1">
       <div class="container">
-        <h1 class="text-h4 q-ma-none">
+        <h1 class="text-h4 q-ma-none text-capitalize">
           {{ title }}
         </h1>
-        <h2 class="text-h6 text-primary-subtle" style="font-weight: normal">
-          Ready to travel from U.S. after your COVID vaccine?<br />
-          Each month we review the safest travel destinations that you can
-          visit.
-        </h2>
+        <h2
+          class="text-h6 text-primary-subtle"
+          style="font-weight: normal"
+          v-html="
+            tl('page.travelAlertsVaccinated.subtitle', {
+              origin: originISO,
+            })
+          "
+        />
+
         <div class="text-primary-subtle">
-          Last updated:
+          {{ t('page.travelAlertsVaccinated.lastUpdated') }}:
           {{ publishedDate.toLocaleDateString(locale) }}
         </div>
       </div>
@@ -31,7 +36,7 @@
       <div class="row q-col-gutter-xl">
         <div class="col content-page">
           <p class="text-h6">
-            {{ t(`page.travelAlerts.intro`) }}
+            {{ t(`page.travelAlertsVaccinated.intro`) }}
           </p>
 
           <div class="rounded-borders bg-elevation-1 q-pa-md q-my-xl">
@@ -132,60 +137,52 @@
 
 <script lang="ts" setup>
 import mapValues from 'lodash/mapValues'
-import { useMeta } from 'quasar'
 import { computed, onMounted, onServerPrefetch } from 'vue'
 
 import InnerPage from '@/front/src/components/inner-page.vue'
 import { useContextParser } from '@/front/src/composables/visitor-context-applier'
 import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadcrumbs.vue'
-import {
-  getCurrentMonthAndYear,
-  getFirstDayOfCurrentMonth,
-} from '@/front/src/misc/date'
+import { getFirstDayOfCurrentMonth } from '@/front/src/misc/date'
+import { useMetaJsonLd } from '@/front/src/misc/meta'
 import { slugify } from '@/front/src/misc/misc'
 import { useCustomI18n } from '@/front/src/modules/i18n/composables'
+import { useBlogTitle } from '@/front/src/pages/news/composables'
 import NewsCard from '@/front/src/pages/news/news-card.vue'
 import {
   GroupedDestinations,
   useNewsStore,
 } from '@/front/src/pages/news/news-store'
+import { parameterTransformers } from '@/front/src/pages/news/router'
 import { getCurrentRelativeURL } from '@/front/src/router/helpers'
-import { originTransformer } from '@/front/src/router/transformers/origin'
 import { useRootStore } from '@/shared/src/composables/use-plugins'
 import { getContinentLabel } from '@/shared/src/modules/continent-map/continent-map-helpers'
-import { getOriginLabelForCountryCode } from '@/shared/src/modules/country-list/country-list-helpers'
 
-const { tr, locale, t } = useCustomI18n()
-useContextParser({
-  originSlug: originTransformer,
-})
+const { tr, locale, t, tl } = useCustomI18n()
+useContextParser(parameterTransformers)
 const store = useNewsStore()
-const publishedDate = getFirstDayOfCurrentMonth()
-const countryISO = computed(() => useRootStore().getters.visitorOrigin)
-const originCountryLabel = computed(() =>
-  getOriginLabelForCountryCode(countryISO.value),
-)
-const date = getCurrentMonthAndYear(locale.value)
-const title = computed(
-  () =>
-    `Which countries are allowing vaccinated visitors from ${originCountryLabel.value} in ${date}?`,
-)
+const publishedDate = new Date()
+const originISO = computed(() => useRootStore().getters.visitorOrigin)
+const title = useBlogTitle(originISO)
+const image =
+  'https://images.unsplash.com/photo-1525077426767-cf97e02024ee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&h=350&q=80'
 
 const fetcher = async () => {
   await store.fetchData()
 }
 
 const list = computed<GroupedDestinations>(() => store.sortedCountryList)
-const headings: Record<
-  keyof GroupedDestinations,
-  {
-    title: string
-    slug: string
-    children: Array<{ title: string; slug: string }>
-  }
-> = computed(() =>
+const headings = computed<
+  Record<
+    keyof GroupedDestinations,
+    {
+      title: string
+      slug: string
+      children: Array<{ title: string; slug: string }>
+    }
+  >
+>(() =>
   mapValues(list.value, (continents, key) => {
-    const title = tr(`page.travelAlerts.category.${key}`)
+    const title = tr(`page.travelAlertsVaccinated.category.${key}`)
     const slug = slugify(title)
     const children = mapValues(continents, (_value, continentId) => {
       const continentLabel = getContinentLabel(continentId)
@@ -205,23 +202,12 @@ const headings: Record<
 onServerPrefetch(fetcher)
 onMounted(fetcher)
 
-useMeta(() => ({
-  script: {
-    ldJson: {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'NewsArticle',
-        headline: title.value,
-        image: [
-          'https://example.com/photos/1x1/photo.jpg',
-          'https://example.com/photos/4x3/photo.jpg',
-          'https://example.com/photos/16x9/photo.jpg',
-        ],
-        datePublished: '2020-02-05T04:00:00+01:00',
-        dateModified: publishedDate.toISOString(),
-      }),
-    },
-  },
-}))
+useMetaJsonLd({
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: title.value,
+  image: [image],
+  datePublished: getFirstDayOfCurrentMonth().toISOString(),
+  dateModified: publishedDate.toISOString(),
+})
 </script>

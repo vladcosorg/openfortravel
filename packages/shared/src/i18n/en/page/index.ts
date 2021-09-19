@@ -1,7 +1,7 @@
 import country from './country'
-import destination from './destination'
+import destination from './destination/index'
 import index from './home'
-import travelAlerts from './travel-alerts'
+import travelAlertsVaccinated from './travel-alerts-vaccinated'
 
 export default {
   index,
@@ -29,7 +29,7 @@ export default {
   },
   country,
   destination,
-  travelAlerts,
+  travelAlertsVaccinated,
   notFound: {
     title: '404',
     subtitle: 'Oops. Nothing here...',

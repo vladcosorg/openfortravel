@@ -6,6 +6,7 @@ import { ProfileContext } from '@/shared/src/models/profile-context/profile-cont
 import { RestrictionGroup } from '@/shared/src/restriction-tree/restriction-group'
 
 const { tr } = useCustomI18n()
+
 type FragmentContext = {
   profile: ProfileContext
   destinationISO: string

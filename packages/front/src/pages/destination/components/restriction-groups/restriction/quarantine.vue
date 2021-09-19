@@ -1,35 +1,50 @@
 <template>
   <component :is="wrapper" :restriction="restriction">
     <template v-if="!restriction.options.earlyReleaseDays" #title>
-      Self-isolate for <b>{{ restriction.options.days }} days</b> upon arrival
+      <span
+        v-html="
+          tl('page.destination.rs.quarantine.title.earlyRelease', {
+            days: restriction.options.days,
+          })
+        "
+      />
     </template>
 
     <template v-else #title>
-      Self-isolate for
-      <b>at least {{ restriction.options.earlyReleaseDays }} days</b> upon
-      arrival
+      <span
+        v-html="
+          tl('page.destination.rs.quarantine.title.noEarlyRelease', {
+            days: restriction.options.days,
+          })
+        "
+      />
     </template>
     <template #subtitle>
-      <p>
-        Travelers are subject to <b>{{ restriction.options.days }} days</b> of
-        mandatory self-isolation at home, declared location or location
-        designated by authorities.
-      </p>
-      <p v-if="restriction.options.earlyReleaseDays">
-        The quarantine period may be shortened by taking another test during the
-        self-isolation. If the result of this test is negative,
-        <b
-          >the period of quarantine can end on day
-          {{ restriction.options.earlyReleaseDays }}.</b
-        >
-      </p>
-      <p v-else>
-        You have to self-isolate for the full duration ({{
-          restriction.options.days
-        }}
-        days) and it is not possible to end the quarantine early by taking a
-        repeated test.
-      </p>
+      <p
+        v-html="
+          tl('page.destination.rs.quarantine.body.firstLine', {
+            days: restriction.options.days,
+          })
+        "
+      />
+
+      <p
+        v-if="restriction.options.earlyReleaseDays"
+        v-html="
+          tl('page.destination.rs.quarantine.body.earlyRelease', {
+            days: restriction.options.days,
+          })
+        "
+      />
+
+      <p
+        v-else
+        v-html="
+          tl('page.destination.rs.quarantine.body.noEarlyRelease', {
+            days: restriction.options.days,
+          })
+        "
+      />
     </template>
   </component>
 </template>
@@ -37,6 +52,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import { useCustomI18n } from '@/front/src/modules/i18n/composables'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import Language from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/language.vue'
 import Languages from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/languages.vue'
@@ -59,6 +75,10 @@ export default defineComponent({
       type: Object as PropType<Quarantine>,
       required: true,
     },
+  },
+  setup() {
+    const { tl } = useCustomI18n()
+    return { tl }
   },
 })
 </script>

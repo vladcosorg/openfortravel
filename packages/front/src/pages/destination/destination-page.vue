@@ -8,7 +8,7 @@
     </div>
     <the-profile-bar />
     <q-separator color="elevation-1" />
-    <div class="container q-mt-xl">
+    <div class="container q-mt-xl q-gutter-lg">
       <div class="row q-col-gutter-xl">
         <div class="col-md-6 col-12">
           <entry-restrictions />
@@ -45,10 +45,11 @@
         </div>
       </div>
 
-      <section>
-        <!--        <widget-header :title="$t('components.sharing.title')" />-->
-        <!--        <sharing :restriction="restriction" />-->
-      </section>
+      <the-related-articles />
+      <!--      <section>-->
+      <!--        <widget-header :title="$t('components.sharing.title')" />-->
+      <!--        <sharing :restriction="restriction" />-->
+      <!--      </section>-->
       <the-related-criteria-section />
     </div>
   </inner-page>
@@ -71,6 +72,7 @@ import TheBreadcrumbs from '@/front/src/layouts/components/the-header/the-breadc
 import EntryRestrictions from '@/front/src/pages/destination/components/entry-restrictions.vue'
 import Links from '@/front/src/pages/destination/components/links.vue'
 import Questions from '@/front/src/pages/destination/components/sections/questions/questions.vue'
+import TheRelatedArticles from '@/front/src/pages/destination/components/sections/the-related-articles.vue'
 import TheRelatedCriteriaSection from '@/front/src/pages/destination/components/sections/the-related-criteria-section.vue'
 import Stats from '@/front/src/pages/destination/components/stats.vue'
 import TheHeading from '@/front/src/pages/destination/components/the-heading.vue'
@@ -84,6 +86,7 @@ import { useLoading } from '@/shared/src/composables/use-promise-loading'
 
 export default defineComponent({
   components: {
+    TheRelatedArticles,
     Questions,
     TheRelatedCriteriaSection,
     Links,

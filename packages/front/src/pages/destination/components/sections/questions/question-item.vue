@@ -3,17 +3,20 @@
     <h6 v-if="!item">
       <q-skeleton type="rect" :width="randWidth()" />
     </h6>
-    <h6 v-else :id="item.id" class="text-weight-regular">
+    <h6 v-else :id="item.id" itemprop="name" class="text-weight-regular">
       <component :is="item.question" />
     </h6>
     <div
       v-if="item"
+      itemscope
+      itemprop="acceptedAnswer"
+      itemtype="https://schema.org/Answer"
       :class="[
         { 'active-question': isActive },
         'bg-elevation-1 rounded-borders ',
       ]"
     >
-      <div class="q-pa-lg text-subtitle1">
+      <div itemprop="text" class="q-pa-lg text-subtitle1">
         <component :is="item.answer" />
       </div>
       <div class="text-primary-subtle text-caption bg-elevation-1 q-pa-lg">

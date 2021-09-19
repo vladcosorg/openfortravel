@@ -6,6 +6,7 @@ import {
 } from 'vue-router'
 
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
+import { getTravelAlertsRouteConfig } from '@/front/src/pages/news/router'
 import {
   useRouter,
   getI18nInstance,
@@ -72,14 +73,7 @@ export function getRoutes(
               /* webpackChunkName: "page-privacy-policy" */ '@/front/src/pages/privacy-policy.vue'
             ),
         },
-        {
-          name: 'travelAlerts',
-          path: 'news/travel-alerts/where-vaccinated-tourists-can-travel-from-:originSlug',
-          component: () =>
-            import(
-              /* webpackChunkName: "page-news" */ '@/front/src/pages/blog.vue'
-            ),
-        },
+        getTravelAlertsRouteConfig(),
         {
           name: 'terms',
           path: 'terms-and-conditions',

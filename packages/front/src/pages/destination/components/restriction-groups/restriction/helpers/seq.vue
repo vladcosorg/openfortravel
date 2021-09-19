@@ -12,6 +12,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
+import { useCustomI18n } from '@/front/src/modules/i18n/composables'
+
 import type { PropType } from 'vue'
 
 export default defineComponent({
@@ -26,13 +28,14 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { t } = useCustomI18n()
     const insertSeparator = (index: number): string => {
       if (index === 0) {
         return ''
       }
 
       if (index === props.items.length - 1) {
-        return ' ' + props.conjunction
+        return ' ' + t(`misc.${props.conjunction}`)
       }
 
       return ','

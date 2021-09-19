@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card class="card" flat tag="a" href="#">
+    <q-card class="card" flat tag="a" :href="to">
       <q-img
         width="900"
         height="600"
@@ -26,7 +26,10 @@
 </style>
 
 <script lang="ts" setup>
-const props = defineProps({
+defineProps({
+  to: {
+    type: String,
+  },
   unsplashId: {
     type: String,
     required: true,

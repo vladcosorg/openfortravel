@@ -1,7 +1,7 @@
 <template>
   <div>
     <widget-header>
-      <template #title>Frequent questions</template>
+      <template #title>{{ $t('page.destination.widgets.faq.title') }}</template>
     </widget-header>
     <div class="q-mt-md text-subtitle1 q-gutter-sm">
       <div v-for="(question, index) in questions" :key="index">
@@ -27,6 +27,7 @@ export default defineComponent({
   setup() {
     const store = inject(StoreKey) as StoreModule
     const isLoading = computed(() => store.getters.restrictionsLoading)
+
     const questions = computed(() => {
       if (isLoading.value) {
         return Array.from({ length: 3 })

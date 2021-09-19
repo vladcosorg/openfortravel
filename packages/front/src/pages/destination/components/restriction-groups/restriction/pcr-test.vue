@@ -1,61 +1,44 @@
 <template>
   <component :is="wrapper" :restriction="restriction">
     <template #title>
-      Get a negative COVID-19
-      <seq
-        v-slot="{ item }"
-        :items="restriction.getFormattedTypes()"
-        conjunction="or"
+      <i18n-l
+        :keypath="`page.destination.rs.test.title.${titleI18nId}`"
+        tag="span"
       >
-        <covid-test-label :value="item" />
-      </seq>
-      test certificate
-
-      <template v-if="restriction.options.beforeArrival">
-        <b v-if="restriction.options.beforeArrival > 0">
-          at most {{ restriction.options.hoursBeforeArrival }}h before
-          arrival</b
-        >
-        <b v-else> at most 72h before arrival</b>
-      </template>
-      <template v-else>
-        <b v-if="restriction.options.hoursBeforeArrival > 0"
-          >within {{ restriction.options.hoursBeforeArrival }}h after arrival</b
-        >
-        <b v-else>at the airport after arrival</b>
-      </template>
+        <template #type="{ innerContent }">
+          {{ innerContent }}
+          <seq
+            v-slot="{ item }"
+            :items="restriction.getFormattedTypes()"
+            conjunction="or"
+          >
+            <covid-test-label :value="item" />
+          </seq>
+        </template>
+        <template #hours>
+          {{ hours }}
+        </template>
+      </i18n-l>
     </template>
 
     <template #subtitle>
-      <p>
-        The COVID-19 test has to be performed
-        <template v-if="restriction.options.beforeArrival">
-          <b v-if="restriction.options.beforeArrival > 0">
-            at most {{ restriction.options.hoursBeforeArrival }}h before
-            arrival</b
-          >
-          <b v-else> at most 72h before arrival</b>
+      <i18n-l :keypath="`page.destination.rs.test.body.${titleI18nId}`" tag="p">
+        <template #hours>
+          {{ hours }}
         </template>
-        <template v-else>
-          <b v-if="restriction.options.hoursBeforeArrival > 0"
-            >within {{ restriction.options.hoursBeforeArrival }} hours after
-            arrival</b
+      </i18n-l>
+      <i18n-l keypath="page.destination.rs.test.body.acceptedTests" tag="p">
+        <template #types>
+          <seq
+            v-slot="{ item }"
+            :items="restriction.getFormattedTypes()"
+            conjunction="or"
           >
-          <b v-else>at the airport after arrival</b>
-          . You have to self-isolate until you receive a negative result.
+            <covid-test-label :value="item" />
+          </seq>
         </template>
-      </p>
+      </i18n-l>
 
-      <p>
-        Accepted tests:
-        <seq
-          v-slot="{ item }"
-          :items="restriction.getFormattedTypes()"
-          conjunction="or"
-        >
-          <covid-test-label :value="item" />
-        </seq>
-      </p>
       <required-languages :languages="restriction.options.languages" />
 
       <issuer-section
@@ -67,10 +50,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 
 import CovidTestLabel from '@/front/src/components/covid-test-label.vue'
 import IssuerList from '@/front/src/components/issuer-list.vue'
+import I18nL from '@/front/src/modules/i18n/i18n-l.vue'
 import { DestinationFactsheetKey } from '@/front/src/pages/destination/components/entry-restrictions.vue'
 import CollapsedCountrySequence from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/collapsed-country-sequence.vue'
 import IssuerSection from '@/front/src/pages/destination/components/restriction-groups/restriction/helpers/issuer-section.vue'
@@ -87,6 +71,7 @@ import type { PropType } from 'vue'
 
 export default defineComponent({
   components: {
+    I18nL,
     IssuerSection,
     IssuerList,
     CovidTestLabel,
@@ -104,9 +89,27 @@ export default defineComponent({
       required: true,
     },
   },
-  setup() {
+  setup(props) {
     const destinationFactsheet = injectStrict(DestinationFactsheetKey)
-    return { destinationFactsheet }
+    const titleI18nId = computed(() => {
+      if (props.restriction.options.beforeArrival) {
+        return 'beforeArrival'
+      }
+
+      if (props.restriction.options.hoursBeforeArrival > 0) {
+        return 'afterArrival'
+      }
+
+      return 'atArrival'
+    })
+    const hours = computed(() => {
+      if (props.restriction.options.beforeArrival) {
+        return props.restriction.options.hoursBeforeArrival ?? 72
+      }
+
+      return 0
+    })
+    return { destinationFactsheet, titleI18nId, hours }
   },
 })
 </script>
