@@ -1,7 +1,7 @@
 <template>
   <q-page style="z-index: 2">
     <section-intro :origin-code="originCode" />
-    <section-whyus />
+    <!--    <section-whyus />-->
     <section-wizard />
     <section-stats v-if="env.isProd || true" :origin-code="originCode" />
   </q-page>
