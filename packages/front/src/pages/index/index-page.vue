@@ -1,6 +1,7 @@
 <template>
   <q-page style="z-index: 2">
     <section-intro :origin-code="originCode" />
+    <section-whyus />
     <section-wizard />
     <section-stats v-if="env.isProd || true" :origin-code="originCode" />
   </q-page>
@@ -15,6 +16,7 @@ import { useEnv } from '@/front/src/composables/misc'
 import { useContextParser } from '@/front/src/composables/visitor-context-applier'
 import SectionIntro from '@/front/src/pages/index/components/section-intro.vue'
 import SectionStats from '@/front/src/pages/index/components/section-stats.vue'
+import SectionWhyus from '@/front/src/pages/index/components/section-whyus.vue'
 import SectionWizard from '@/front/src/pages/index/components/section-wizard.vue'
 import { originTransformer } from '@/front/src/router/transformers/origin'
 import { getI18nInstance } from '@/shared/src/composables/use-plugins'
@@ -22,6 +24,7 @@ import { getLabelForCountryCode } from '@/shared/src/modules/country-list/countr
 
 export default defineComponent({
   components: {
+    SectionWhyus,
     SectionStats,
     SectionWizard,
     SectionIntro,
