@@ -3,7 +3,9 @@
     v-bind="$attrs"
     type="submit"
     unelevated
-    color="secondary"
+    size="lg"
+    color="accent"
+    class="text-bold"
     text-color="primary-inverse"
     :icon-right="isSuccessful ? matDone : undefined"
     :loading="isLoading"

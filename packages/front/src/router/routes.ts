@@ -6,6 +6,7 @@ import {
 } from 'vue-router'
 
 import { getPersistedOriginOrDefault } from '@/front/src/misc/country-decider'
+import { getBusinessRouteConfig } from '@/front/src/pages/business/router'
 import { getTravelAlertsRouteConfig } from '@/front/src/pages/news/router'
 import {
   useRouter,
@@ -74,6 +75,7 @@ export function getRoutes(
             ),
         },
         getTravelAlertsRouteConfig(),
+        getBusinessRouteConfig(),
         {
           name: 'terms',
           path: 'terms-and-conditions',

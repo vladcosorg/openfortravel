@@ -13,13 +13,11 @@ export default defineComponent({
     },
   },
   setup(props, { slots }) {
-    const { t } = useCustomI18n()
+    const { t, locale } = useCustomI18n()
     let text = t(props.keypath)
-
     const out: Array<string | VNode | VNode[]> = []
     let iterate = true
     let match: ReturnType<typeof regex['exec']>
-
     while (iterate) {
       match = regex.exec(text)
 
@@ -29,7 +27,9 @@ export default defineComponent({
         continue
       }
 
-      out.push(text.slice(0, match.index))
+      if (match.index > 0) {
+        out.push(text.slice(0, match.index))
+      }
 
       const slot = slots[match[1]]
       if (slot) {

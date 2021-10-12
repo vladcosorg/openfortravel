@@ -1,58 +1,47 @@
 <template>
-  <simple-select
+  <generic-select
     v-model="currentLanguage"
     :options="languageList"
-    bg-color="accent"
     :loading="loading"
-    borderless
-    emit-value
-    options-dense
+    dense
+    fill-input
+    hide-bottom-space
+    hide-selected
+    flat
+    :hide-dropdown-icon="$q.screen.lt.md"
     class="language-switcher"
-    :dropdown-icon="icon"
     @update:modelValue="handleClick"
-  />
+  >
+    <template #prepend>
+      <q-icon :name="icon" size="xs" />
+    </template>
+  </generic-select>
 </template>
 
-<style lang="scss">
-.language-switcher {
-  .q-field__control {
-    border-radius: 14px;
-    padding: 0 8px;
-    font-size: 0.75rem;
-  }
-  .q-field__control,
-  .q-field__native {
-    // 'Important' needed to increase specificity against native quasar styles
-    min-height: auto !important;
-  }
-  .q-field__native,
-  .q-field__append {
-    color: $dark !important;
-    font-weight: bold;
-    text-transform: uppercase;
-    min-height: auto;
-    height: auto;
-  }
+<style lang="sass">
+.language-switcher
+  min-width: auto !important
+  .q-field__input
+    display: block !important
 
-  .q-field__append {
-    padding-left: 0;
-  }
-}
+  .q-field__control-container
+    @media (max-width: $breakpoint-xs-max)
+      display: none
 </style>
 
 <script lang="ts">
-import { roundExpandMore as icon } from '@quasar/extras/material-icons-round'
+import { matTranslate as icon } from '@quasar/extras/material-icons'
 import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import SimpleSelect from '@/front/src/components/simple-select.vue'
+import GenericSelect from '@/front/src/components/context-field/helpers/generic-select.vue'
 import type { StateInterface } from '@/front/src/store/state'
 import { getI18nInstance } from '@/shared/src/composables/use-plugins'
 import { useLoading } from '@/shared/src/composables/use-promise-loading'
 import { useStateProperty } from '@/shared/src/composables/use-vuex'
 
 export default defineComponent({
-  components: { SimpleSelect },
+  components: { GenericSelect },
   setup() {
     const { loading } = useLoading(false)
     const currentLanguage = ref(getI18nInstance().locale.value)

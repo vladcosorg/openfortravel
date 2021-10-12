@@ -15,6 +15,9 @@
     :multiple="multiple"
     @filter="filterFunction"
   >
+    <template v-if="$slots.prepend" #prepend>
+      <slot name="prepend" />
+    </template>
     <template v-if="$slots.hint" #hint>
       <slot name="hint" />
     </template>

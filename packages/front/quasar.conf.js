@@ -132,8 +132,9 @@ module.exports = configure((context) => ({
       })
 
       // // linting is slow in TS projects, we execute it only for production builds
-      if (context.prod && !context.debug) {
-        //   if (!skipChecks) {
+      if (
+        context.prod &&
+        !context.debug && //   if (!skipChecks) {
         //     config.module.rules.push({
         //       enforce: 'pre',
         //       test: /\.(js|vue)$/,
@@ -141,17 +142,18 @@ module.exports = configure((context) => ({
         //       exclude: /node_modules/,
         //     })
         //   }
-        if (config.optimization.minimizer) {
-          const terserOptions =
-            config.optimization.minimizer[0].options.terserOptions
-          terserOptions.compress['drop_console'] = true
-          terserOptions.format = Object.assign(terserOptions.format || {}, {
-            comments: false,
-          })
-        }
-        //
+        config.optimization.minimizer
+      ) {
+        const terserOptions =
+          config.optimization.minimizer[0].options.minimizer.options
+        terserOptions.compress['drop_console'] = true
+        terserOptions.format = Object.assign(terserOptions.format || {}, {
+          comments: false,
+        })
         config.output.publicPath = 'https://cdn.openfortravel.org/www/'
       }
+      //
+
       //
       config.module.rules.push({
         test: /\.vue$/,
@@ -191,13 +193,7 @@ module.exports = configure((context) => ({
     https: false,
     port: 8080,
     host: '0.0.0.0',
-    // disableHostCheck: true,
-    open: false, // opens browser window automatically
-    // staticOptions: {
-    //   contentBase: path.join(__dirname, 'public'),
-    //
-    //   extensions: ['svg', 'webp'],
-    // },
+    open: false,
   },
 
   // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework

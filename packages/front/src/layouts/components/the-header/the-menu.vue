@@ -1,20 +1,25 @@
 <template>
-  <div class="row items-center q-gutter-x-md">
-    <div :class="['q-gutter-x-md gt-sm text-white links']">
+  <div class="row items-center q-gutter-md-x-md">
+    <div
+      :class="[
+        'q-gutter-x-md gt-sm text-white links text-subtitle1 text-capitalize',
+      ]"
+    >
       <router-link
         v-for="(title, url, index) in menuItems"
         :key="index"
+        :class="url.indexOf('business') > 0 ? 'business' : ''"
         :to="url"
         exact
         >{{ title }}</router-link
       >
     </div>
     <q-btn
+      class="lt-md"
+      size="md"
       flat
       dense
-      round
       :icon="$q.screen.lt.md ? menuIcon : moreIcon"
-      color="primary"
       @click="$emit('update:modelValue', true)"
     />
   </div>
@@ -25,8 +30,13 @@
   & > a {
     color: var(--q-primary);
   }
+
+  & > a.business {
+    color: var(--q-info);
+  }
   .router-link-active {
-    color: var(--q-secondary);
+    text-decoration: none;
+    //color: var(--q-secondary);
     font-weight: bold;
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <section class="q-pt-xl section bg-elevation-1">
-    <div class="container q-my-sm-xl">
+    <div class="container q-py-sm-xl">
       <div class="q-mb-sm-xl q-pb-xl text-center">
         <h3 class="text-bold">
           Why this is the best source of information that you will find
@@ -108,6 +108,34 @@
             <q-item-label class="text-h6"
               >Temporal validity of documents</q-item-label
             >
+            <q-item-label class="text-primary-subtle"
+              >Secondary line text. Lorem ipsum dolor sit amet, consectetur
+              adipiscit elit.</q-item-label
+            >
+          </q-item-section>
+        </q-item>
+
+        <q-item>
+          <q-item-section avatar>
+            <q-icon size="md" :name="checkIcon" color="positive" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="text-h6">Travel duration</q-item-label>
+            <q-item-label class="text-primary-subtle"
+              >Secondary line text. Lorem ipsum dolor sit amet, consectetur
+              adipiscit elit.</q-item-label
+            >
+          </q-item-section>
+        </q-item>
+
+        <q-item>
+          <q-item-section avatar>
+            <q-icon size="md" :name="checkIcon" color="positive" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label class="text-h6">Purpose of visit</q-item-label>
             <q-item-label class="text-primary-subtle"
               >Secondary line text. Lorem ipsum dolor sit amet, consectetur
               adipiscit elit.</q-item-label

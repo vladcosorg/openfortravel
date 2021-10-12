@@ -6,10 +6,10 @@
       style="border: 1px solid rgb(38 43 49)"
     >
       <q-card-section class="full-height row">
-        <div class="text-h6 text-capitalize">
+        <div class="text-h6 text-capitalize col-12">
           {{ $t(`misc.stats.categories.${type}.title`) }}
         </div>
-        <div class="text-subtitle2 text-primary-subtle q-mb-sm">
+        <div class="text-subtitle2 text-primary-subtle q-mb-sm col-12">
           {{ $t(`misc.stats.categories.${type}.shortSubtitle`) }}
         </div>
 

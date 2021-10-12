@@ -1,6 +1,7 @@
 import { useRouter, RouteLocationRaw } from 'vue-router'
 
 import { getCurrentOriginSlug } from '@/front/src/misc/country-decider'
+import { getBusinessPageURL } from '@/front/src/pages/business/router'
 import { getOriginRouteURL } from '@/front/src/router/route-builders/origin'
 import { useVueI18n } from '@/shared/src/composables/use-plugins'
 
@@ -30,6 +31,10 @@ const links: Record<string, MenuItemRawPair> = {
   origin: {
     url: (locale) => getOriginRouteURL({ locale }),
     title: (i18n) => i18n.t('page.country.link'),
+  },
+  business: {
+    url: (locale) => getBusinessPageURL({ locale }),
+    title: (i18n) => i18n.t('page.forBusiness.link'),
   },
   terms: {
     url: (locale) => ({
@@ -76,9 +81,13 @@ export function getMenuItems(
 }
 
 export function getShortHeaderMenuItems(): MenuItemMapCollection {
+  return getMenuItems('index', 'business', 'origin', 'wizard', 'contact')
+}
+
+export function getDrawerMenuItems(): MenuItemMapCollection {
   return getMenuItems(
     'index',
-    'wizard',
+    'business',
     'origin',
     'terms',
     'privacy',
@@ -86,10 +95,13 @@ export function getShortHeaderMenuItems(): MenuItemMapCollection {
   )
 }
 
-export function getDrawerMenuItems(): MenuItemMapCollection {
-  return getMenuItems('index', 'origin', 'terms', 'privacy', 'contact')
-}
-
 export function getFooterMenuItems(): MenuItemMapCollection {
-  return getMenuItems('index', 'origin', 'terms', 'privacy', 'contact')
+  return getMenuItems(
+    'index',
+    'business',
+    'origin',
+    'terms',
+    'privacy',
+    'contact',
+  )
 }

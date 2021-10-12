@@ -10,8 +10,9 @@
     "fix": "yarn format && yarn lint"
   },
   "dependencies": {
+    "@vueuse/core": "^6.5.3",
     "countries-list": "^2.6.1",
-    "firebase": "9.0.2",
+    "firebase": "9.1.2",
     "i18n-iso-countries": "^6.8.0",
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2"

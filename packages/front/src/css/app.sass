@@ -23,6 +23,8 @@ a, .text-hyperlink
   -webkit-box-orient: vertical
   overflow: hidden
 
+.text-normal
+  font-weight: normal !important
 
 
 .container-np
@@ -47,6 +49,13 @@ a, .text-hyperlink
   @media (min-width: $breakpoint-lg-min)
     max-width: $breakpoint-lg-min - $padding
 
+.container-roomy
+  @extend .container
+  padding-top: map-get($space-xl, 'x') * 2
+  padding-bottom: map-get($space-xl, 'x') * 2
+  @media (max-width: $breakpoint-xs-max)
+    padding-top: map-get($space-xl, 'x')
+    padding-bottom: map-get($space-xl, 'x')
 
 @import "components/global"
 @import "components/typography"

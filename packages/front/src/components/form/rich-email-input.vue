@@ -1,6 +1,6 @@
 <template>
   <rich-text-input
-    :placeholder="$t('components.form.email.placeholder') + ' *'"
+    :label="$t('components.form.email.placeholder')"
     :rules="[isValidEmail]"
     type="email"
     v-bind="$attrs"

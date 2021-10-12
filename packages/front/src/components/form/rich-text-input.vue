@@ -6,7 +6,6 @@
     :class="[$style.input]"
     no-error-icon
     standout
-    stack-label
     :readonly="isLoading || isSuccessful"
     v-bind="$attrs"
     :model-value="modelValue"

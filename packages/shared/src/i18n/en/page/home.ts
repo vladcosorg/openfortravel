@@ -3,10 +3,9 @@ export default {
   route: 'from',
   sections: {
     hero: {
-      title: 'COVID-19 travel ban info <br> for travellers from',
-      subtitle: `Where can I travel during pandemic as a {country} citizen?<br> Do I
-            need a COVID-19 vaccine passport at the border control?<br/> You’ve got
-            questions - we’ve got answers!`,
+      header: 'Travel Restrictions',
+      subtitle:
+        'Hey, traveller! Are you from <i id="origin">Austria</i>? Here are some quick stats to get you started: ',
       button: 'Explore destinations',
     },
     stats: {
@@ -48,6 +47,6 @@ export default {
     },
   },
   meta: {
-    title: 'Travel restrictions from {country}',
+    title: 'Travel bans from {country}',
   },
 }

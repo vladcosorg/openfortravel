@@ -1,3 +1,4 @@
+import forBusiness from './business'
 import country from './country'
 import destination from './destination/index'
 import index from './home'
@@ -27,6 +28,7 @@ export default {
     sendButton: 'Send message',
     messageSent: 'The message has been sent successfully',
   },
+  forBusiness,
   country,
   destination,
   travelAlertsVaccinated,
