@@ -1,26 +1,21 @@
 <template>
   <q-item-label v-if="status === 'checking' && visible">
-    <div v-if="stage === 0">
-      <q-spinner color="primary-inverse" class="q-mr-sm" />
+    <progress-item v-if="stage === 0">
       <b>Robby AI</b> checking for updated travel restrictions
-    </div>
-    <div v-else-if="stage === 1">
-      <q-spinner color="primary-inverse" class="q-mr-sm" />
+    </progress-item>
+    <progress-item v-else-if="stage === 1">
       <b>Robby AI</b> found some new travel restrictions. Notifying humans...
-    </div>
-    <div v-else-if="stage === 2">
-      <q-spinner color="primary-inverse" class="q-mr-sm" />
+    </progress-item>
+    <progress-item v-else-if="stage === 2">
       <b>{{ humanName }}</b> is verifying the updates.
-    </div>
-    <div v-else-if="stage === 3">
-      <q-spinner color="primary-inverse" class="q-mr-sm" />
+    </progress-item>
+    <progress-item v-else-if="stage === 3">
       <b>{{ humanName }}</b> approves the changes.
-    </div>
+    </progress-item>
 
-    <div v-else-if="stage === 4">
-      <q-spinner color="primary-inverse" class="q-mr-sm" />
+    <progress-item v-else-if="stage === 4">
       <b>Robby AI</b> distributed to all our subscribers...
-    </div>
+    </progress-item>
   </q-item-label>
   <q-item-label v-else-if="status === 'nochange'">
     No changes found since last check</q-item-label
@@ -31,11 +26,17 @@
     </div>
   </q-item-label>
   <div class="row justify-between q-mt-md items-center">
-    <q-item-label class="text-right text-caption text-primary-inverse"
-      >Last checked:
-      <b>{{ status === 'checking' ? 'in progress' : date }}</b></q-item-label
-    >
-    <q-item-label class="text-right text-caption text-primary-inverse"
+    <q-item-label class="text-caption text-primary-inverse col-12"
+      >Customers notified by email or SMS:
+      <span v-if="stage > 3"> <q-icon :name="icon" /> <b>Yes</b></span>
+      <span v-else>Pending</span>
+    </q-item-label>
+
+    <!--    <q-item-label class="text-caption text-primary-inverse col-12 col-md-6"-->
+    <!--      >Last checked:-->
+    <!--      <b>{{ status === 'checking' ? 'in progress' : date }}</b></q-item-label-->
+    <!--    >-->
+    <q-item-label class="text-caption text-primary-inverse col-12"
       >Verified by a human:
       <span v-if="stage > 2"> <q-icon :name="icon" /> <b>Yes</b></span>
       <span v-else>Pending</span>
@@ -53,6 +54,7 @@ import { useTimeoutFn } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 
 import { ItemStatus } from '@/front/src/pages/business/components/section-featured-data.vue'
+import ProgressItem from '@/front/src/pages/business/components/the-featured-data/sample-item/progress-item.vue'
 import { getRelativeTimeFromDate } from '@/shared/src/misc/date'
 
 const props = defineProps<{

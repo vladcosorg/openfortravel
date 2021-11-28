@@ -12,7 +12,6 @@ const path = require('path')
 
 const { configure } = require('quasar/wrappers')
 const { TsconfigPathsPlugin } = require('tsconfig-paths-webpack-plugin')
-const FilterWarningsPlugin = require('webpack-filter-warnings-plugin')
 
 module.exports = configure((context) => ({
   sourceFiles: {
@@ -29,7 +28,7 @@ module.exports = configure((context) => ({
   },
 
   // https://v2.quasar.dev/quasar-cli/prefetch-feature
-  preFetch: true,
+  // preFetch: true,
 
   // app boot file (/src/boot)
   // --> boot files are part of "main.js"
@@ -77,6 +76,12 @@ module.exports = configure((context) => ({
 
   // Full list of options: https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
   build: {
+    scssLoaderOptions: {
+      additionalData: '@import "src/css/components/_angled-sections.scss";',
+    },
+    sassLoaderOptions: {
+      additionalData: '@import "src/css/components/_angled-sections.scss"',
+    },
     devtool: 'eval-source-map',
     // vueCompiler: true,
     vueRouterMode: 'history', // available values: 'hash', 'history'
@@ -97,12 +102,12 @@ module.exports = configure((context) => ({
 
     // rtl: true, // https://v2.quasar.dev/options/rtl-support
     // preloadChunks: true,
-    showProgress: true,
+    // showProgress: true,
     // gzip: true,
     // analyze: true,
 
     // Options below are automatically set depending on the env, set them if you want to override
-    extractCSS: true,
+    // extractCSS: true,
 
     // https://v2.quasar.dev/quasar-cli/handling-webpack
     // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
@@ -132,18 +137,7 @@ module.exports = configure((context) => ({
       })
 
       // // linting is slow in TS projects, we execute it only for production builds
-      if (
-        context.prod &&
-        !context.debug && //   if (!skipChecks) {
-        //     config.module.rules.push({
-        //       enforce: 'pre',
-        //       test: /\.(js|vue)$/,
-        //       loader: 'eslint-loader',
-        //       exclude: /node_modules/,
-        //     })
-        //   }
-        config.optimization.minimizer
-      ) {
+      if (context.prod && !context.debug && config.optimization.minimizer) {
         const terserOptions =
           config.optimization.minimizer[0].options.minimizer.options
         terserOptions.compress['drop_console'] = true
@@ -152,9 +146,7 @@ module.exports = configure((context) => ({
         })
         config.output.publicPath = 'https://cdn.openfortravel.org/www/'
       }
-      //
 
-      //
       config.module.rules.push({
         test: /\.vue$/,
         loader: 'vue-svg-inline-loader',
@@ -171,17 +163,7 @@ module.exports = configure((context) => ({
           },
         },
       })
-      //
-      // config.plugins.push(
-      //   new FilterWarningsPlugin({
-      //     exclude:
-      //       /Critical dependency|dependency is an expression|require function is used|keyv|got/,
-      //   }),
-      // )
-      // if (!config.stats) {
-      //   config.stats = {}
-      // }
-      // config.stats.warningsFilter = [/dependency/]
+
       if (skipChecks) {
         config.plugins.shift()
       }
@@ -229,6 +211,8 @@ module.exports = configure((context) => ({
     'fadeIn',
     'fadeOut',
     'fadeInRight',
+    'fadeInLeft',
+    'fadeInDown',
     'fadeOutRight',
     'bounceInUp',
     'bounce',

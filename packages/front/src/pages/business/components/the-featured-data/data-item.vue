@@ -1,29 +1,31 @@
 <template>
   <div class="q-gutter-y-sm">
     <q-item class="q-pa-none">
-      <transition-group
-        appear
-        enter-active-class="animated fadeInRight"
-        leave-active-class="animated fadeOut"
-      >
+      <the-status-line
+        key="content"
+        :human-name="humanName"
+        :visible="visible"
+        :time="time"
+        :status="status"
+        :country="country"
+        v-bind="$attrs"
+        @humanInput="showHuman = true"
+      />
+      <q-item-section avatar class="q-gutter-y-md">
         <the-robot-avatar key="ai" />
-        <the-status-line
-          key="content"
-          :human-name="humanName"
-          :visible="visible"
-          :time="time"
-          :status="status"
-          :country="country"
-          v-bind="$attrs"
-          @humanInput="showHuman = true"
-        />
         <the-human-avatar
-          v-if="showHuman"
           ref="humanRef"
           key="avatar"
+          :class="[
+            initialHumanVisibility
+              ? ''
+              : showHuman
+              ? 'animated fadeInLeft'
+              : 'invisible',
+          ]"
           :male="avatarType"
         />
-      </transition-group>
+      </q-item-section>
     </q-item>
   </div>
 </template>
@@ -62,7 +64,8 @@ export default defineComponent({
 
     const humanRef = ref()
     const avatarType = ref(man)
-    const showHuman = ref(props.status !== 'checking')
+    const initialHumanVisibility = ref(props.status !== 'checking')
+    const showHuman = ref(initialHumanVisibility.value)
     const humanName = computed(() =>
       humanRef.value ? humanRef.value.name : '',
     )
@@ -72,6 +75,7 @@ export default defineComponent({
       showHuman,
       humanRef,
       humanName,
+      initialHumanVisibility,
     }
   },
 })

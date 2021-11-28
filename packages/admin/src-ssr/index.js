@@ -76,8 +76,11 @@ app.get(ssr.resolveUrl('*'), (req, res) => {
   ssr.renderToString({ req, res }, (err, html) => {
     if (err) {
       if (err.url) {
-        if (err.code) {res.redirect(err.code, err.url)}
-        else {res.redirect(err.url)}
+        if (err.code) {
+          res.redirect(err.code, err.url)
+        } else {
+          res.redirect(err.url)
+        }
       } else if (err.code === 404) {
         // Should reach here only if no "catch-all" route
         // is defined in /src/routes

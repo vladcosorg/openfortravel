@@ -1,6 +1,6 @@
 // app global css in Sass form
 html
-  //scroll-behavior: smooth
+//scroll-behavior: smooth
 
 body
   color: var(--q-primary) !important
@@ -8,8 +8,16 @@ body
 
 a, .text-hyperlink
   color: var(--q-secondary)
+
   &:hover
     text-decoration: none
+
+a:not([href]), .text-dotted-underline
+  text-decoration: underline
+  text-underline-position: under
+  text-decoration-style: dashed
+  text-decoration-thickness: 1px
+
 
 .q-layout__section--marginal
   background-color: transparent
@@ -49,13 +57,17 @@ a, .text-hyperlink
   @media (min-width: $breakpoint-lg-min)
     max-width: $breakpoint-lg-min - $padding
 
-.container-roomy
-  @extend .container
+.roomy
   padding-top: map-get($space-xl, 'x') * 2
   padding-bottom: map-get($space-xl, 'x') * 2
-  @media (max-width: $breakpoint-xs-max)
+  @media (max-width: $breakpoint-sm-max)
     padding-top: map-get($space-xl, 'x')
     padding-bottom: map-get($space-xl, 'x')
+
+.container-roomy
+  @extend .container
+  @extend .roomy
+
 
 @import "components/global"
 @import "components/typography"
@@ -63,14 +75,13 @@ a, .text-hyperlink
 //@import "components/statuses"
 @import "components/layout"
 @import "customizations"
+@import "components/angled-sections"
 
+.flex-dependent-height-sm
+  @media (min-width: $breakpoint-sm-min)
+    flex-basis: 0
+    flex-grow: 1
 
-
-.text-dotted-underline
-  text-decoration: underline
-  text-underline-position: under
-  text-decoration-style: dashed
-  text-decoration-thickness: 1px
 
 .text-no-decoration
   text-decoration: none !important
@@ -80,5 +91,11 @@ a, .text-hyperlink
   text-decoration: underline
   text-underline-position: under
   text-decoration-thickness: 1
+
+.negative-margin-xs-only
+  @media (max-width: $breakpoint-xs-max)
+    $pad: map-get($space-md, 'x')
+    margin-left: -$pad
+    margin-right: -$pad
 
 

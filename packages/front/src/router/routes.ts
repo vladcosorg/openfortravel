@@ -69,28 +69,16 @@ export function getRoutes(
         {
           name: 'privacy',
           path: 'privacy-policy',
-          component: () =>
-            import(
-              /* webpackChunkName: "page-privacy-policy" */ '@/front/src/pages/privacy-policy.vue'
-            ),
         },
         getTravelAlertsRouteConfig(),
         getBusinessRouteConfig(),
         {
           name: 'terms',
           path: 'terms-and-conditions',
-          component: () =>
-            import(
-              /* webpackChunkName: "page-terms" */ '@/front/src/pages/terms.vue'
-            ),
         },
         {
           name: 'contact',
           path: 'contact-us',
-          component: () =>
-            import(
-              /* webpackChunkName: "page-contact" */ '@/front/src/pages/contact/contact.vue'
-            ),
         },
         {
           name: 'destination-old',
@@ -101,20 +89,10 @@ export function getRoutes(
         {
           name: 'destination',
           path: 'travel-restrictions/from-:originSlug/to-:destinationSlug/for/:parts+',
-          component: () =>
-            import(
-              /* webpackChunkName: "page-destination" */
-              '@/front/src/pages/destination/destination-page.vue'
-            ),
         },
         {
           name: 'origin',
           path: 'travel-restrictions/from-:originSlug/for/:parts+',
-          component: () =>
-            import(
-              /* webpackChunkName: "page-origin" */
-              '@/front/src/pages/country/country-page.vue'
-            ),
         },
         {
           name: 'origin-old',
@@ -127,10 +105,7 @@ export function getRoutes(
         {
           name: 'index-targeted',
           path: 'travel-restrictions/from-:originSlug/',
-          component: () =>
-            import(
-              /* webpackChunkName: "page-index" */ '@/front/src/pages/index/index-page.vue'
-            ),
+
           props(route) {
             return {
               originCode: transformOriginSlugToCode(route.params.originSlug),
@@ -144,11 +119,6 @@ export function getRoutes(
         {
           name: 'guide',
           path: 'travel-guide/',
-          component: () =>
-            import(
-              /* webpackChunkName: "page-origin" */
-              '@/front/src/pages/guide/guide-page.vue'
-            ),
         },
       ],
     },

@@ -2,19 +2,27 @@
   <span>{{ label }}</span>
 </template>
 
-<style lang="scss" module></style>
-
 <script lang="ts" setup>
 import { computed } from 'vue'
 
-import { getContinentLabel } from '@/shared/src/modules/continent-map/continent-map-helpers'
+import {
+  getContinentLabel,
+  getMappedContinentID,
+} from '@/shared/src/modules/continent-map/continent-map-helpers'
 
 const props = defineProps({
   value: {
     type: String,
     required: true,
   },
+  fromCountry: {
+    type: Boolean,
+  },
 })
 
-const label = computed(() => getContinentLabel(props.value))
+const label = computed(() =>
+  props.fromCountry
+    ? getContinentLabel(getMappedContinentID(props.value))
+    : getContinentLabel(props.value),
+)
 </script>

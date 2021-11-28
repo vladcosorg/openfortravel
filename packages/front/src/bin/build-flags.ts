@@ -1,7 +1,8 @@
 // eslint-disable-next-line import/no-unused-modules
-import globby from 'globby'
 import { promises as fs, rmdirSync } from 'node:fs'
 import path from 'node:path'
+
+import globby from 'globby'
 import sharp from 'sharp'
 
 const rootDirPath = path.resolve('./')

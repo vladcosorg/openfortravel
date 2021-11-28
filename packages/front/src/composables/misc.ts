@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce'
-import { computed, ComputedRef, Ref, ref } from 'vue'
+import { computed, ComputedRef, Ref, ref, readonly, DeepReadonly } from 'vue'
 
 import { transformFlatMapToArrayOfPairs } from '@/shared/src/misc/misc'
 import { AnyArgFunction, OptionList } from '@/shared/src/misc/type-helpers'
@@ -98,4 +98,59 @@ export function useDelayedSetter<T extends Ref>(
   }) as unknown as T
 
   return { model, isBuffering }
+}
+
+export function useCollectionToggle<T extends string[], V extends string>(
+  collectionItems: T,
+): {
+  currentValue: DeepReadonly<Ref<V>>
+  setValue: (value: V) => void
+  next: () => void
+} {
+  const iterator = createCycleableArrayIterator(collectionItems)
+
+  const currentValue = ref(iterator.next().value)
+
+  const next = () => {
+    currentValue.value = iterator.next().value
+  }
+
+  const setValue = (value: V) => {
+    currentValue.value = value
+    iterator.setCurrentValue(value)
+  }
+
+  return { currentValue: readonly(currentValue) as any, next, setValue }
+}
+
+function createCycleableArrayIterator(
+  items: string[],
+): { setCurrentValue: (value: string) => void } & Iterator<
+  string,
+  string,
+  string
+> {
+  let index: undefined | number
+  const collectionSize = items.length
+  return {
+    next() {
+      if (index === undefined) {
+        index = 0
+      } else {
+        index++
+      }
+
+      if (index >= collectionSize) {
+        index = 0
+      }
+
+      return {
+        value: items[index],
+        done: false,
+      }
+    },
+    setCurrentValue(value) {
+      index = items.indexOf(value)
+    },
+  }
 }

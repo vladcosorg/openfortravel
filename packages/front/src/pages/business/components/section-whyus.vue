@@ -1,17 +1,13 @@
 <template>
-  <section class="q-pt-xl section">
-    <div class="container q-py-sm-xl">
-      <div class="q-mb-sm-xl q-pb-xl text-center">
-        <h3 class="text-bold">
-          Why this is the best source of information that you will find
-          anywhere?
-        </h3>
-        <h5 class="text-subtitle1">
-          Please fill out the fields below to get information about travel
-          restrictions that apply specifically to you
-        </h5>
-      </div>
-      <h5>The search engine</h5>
+  <landing-section>
+    <template #title>
+      Why this is the best source of information that you will find anywhere?
+    </template>
+    <template #subtitle>
+      Please fill out the fields below to get information about travel
+      restrictions that apply specifically to you
+    </template>
+    <template #content>
       <div class="grid">
         <q-item>
           <q-item-section avatar>
@@ -143,8 +139,8 @@
           </q-item-section>
         </q-item>
       </div>
-    </div>
-  </section>
+    </template>
+  </landing-section>
 </template>
 
 <style lang="scss" scoped>
@@ -164,7 +160,10 @@
 import { matCheck as checkIcon } from '@quasar/extras/material-icons'
 import { defineComponent } from 'vue'
 
+import LandingSection from '@/front/src/components/section-elements/landing-section.vue'
+
 export default defineComponent({
+  components: { LandingSection },
   props: {},
   setup(props) {
     return { checkIcon }

@@ -13,7 +13,6 @@ import {
 } from '@/front/src/components/country/composables'
 
 export default defineComponent({
-  inheritAttrs: false,
   props: {
     ...withProps,
     value: {

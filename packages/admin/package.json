@@ -18,26 +18,26 @@
   },
   "dependencies": {
     "@vue/composition-api": "^0.6.7",
-    "@vueuse/core": "^5.3.0",
+    "@vueuse/core": "^6.7.4",
     "date-fns": "^2.25.0",
-    "firebase": "9.1.2",
+    "firebase": "9.2.0",
     "i18n-iso-countries": "^6.8.0",
     "iso-639-1": "^2.1.9",
     "iso-language-list": "^0.3.3",
     "ky": "^0.25.1",
     "ky-universal": "^0.8.2",
     "lodash": "^4.17.21",
-    "quasar": "^2.1.0"
+    "quasar": "^2.2.1"
   },
   "devDependencies": {
     "@openfortravel/shared": "latest",
-    "@quasar/app": "^3.1.2",
-    "@quasar/extras": "^1.11.2",
+    "@quasar/app": "^3.1.7",
+    "@quasar/extras": "^1.11.3",
     "@quasar/quasar-app-extension-dotenv": "^1.1.0",
-    "@types/lodash": "^4.14.175",
-    "@types/node": "^14.17.21",
+    "@types/lodash": "^4.14.176",
+    "@types/node": "^16.11.6",
     "tsconfig-paths-webpack-plugin": "^3.5.1",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.4"
   },
   "browserslist": [
     "last 1 Chrome versions",

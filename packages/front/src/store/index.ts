@@ -19,7 +19,8 @@ export interface StateInterface {
   example: unknown
 }
 
-export default store((/* { ssrContext } */) => createStore<StateInterface>({
+export default store((/* { ssrContext } */) =>
+  createStore<StateInterface>({
     state,
     modules,
     mutations,

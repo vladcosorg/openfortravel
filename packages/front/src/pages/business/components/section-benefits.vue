@@ -1,13 +1,13 @@
 <template>
-  <section class="section q-py-xl bg-elevation-1">
-    <div class="container q-gutter-y-xl q-my-xl">
-      <div class="">
-        <h3>Get your business back to the <b>pre-pandemic</b> levels</h3>
-        <h6 class="text-primary-subtle">
-          Please fill out the fields below to get information about travel
-          restrictions that apply specifically to you
-        </h6>
-      </div>
+  <landing-section>
+    <template #title>
+      <span class="text-accent">Instant benefits</span> upon using our platform
+    </template>
+    <template #subtitle>
+      Please fill out the fields below to get information about travel
+      restrictions that apply specifically to you
+    </template>
+    <template #content>
       <div class="grid">
         <benefit-item :icon="integrationIcon">
           <template #icon>
@@ -17,7 +17,7 @@
               src="./the-benefits-section/rocket-launch.svg"
             />
           </template>
-          <template #title>Quick integration </template>
+          <template #title>Increased booking rate</template>
           <template #subtitle>
             Please fill out the fields below to get information about travel
             restrictions that apply specifically to you
@@ -30,7 +30,7 @@
               svg-inline
               src="./the-benefits-section/skills.svg"
           /></template>
-          <template #title> Personalized restrictions </template>
+          <template #title>Decreased operational costs</template>
           <template #subtitle>
             Please fill out the fields below to get information about travel
             restrictions that apply specifically to you. <br />
@@ -45,15 +45,15 @@
               src="./the-benefits-section/idea.svg"
             />
           </template>
-          <template #title>AI-assisted advisory updates</template>
+          <template #title>Safe and informed customers</template>
           <template #subtitle>
             Please fill out the fields below to get information about travel
             restrictions that apply specifically to you
           </template>
         </benefit-item>
       </div>
-    </div>
-  </section>
+    </template>
+  </landing-section>
 </template>
 
 <style lang="scss" scoped>
@@ -69,20 +69,12 @@
 }
 </style>
 
-<script lang="ts">
+<script lang="ts" setup>
 import {
   ionAccessibilitySharp as personalizedIcon,
   ionPaperPlaneOutline as integrationIcon,
 } from '@quasar/extras/ionicons-v5'
-import { defineComponent } from 'vue'
 
+import LandingSection from '@/front/src/components/section-elements/landing-section.vue'
 import BenefitItem from '@/front/src/pages/business/components/the-benefits-section/benefit-item.vue'
-
-export default defineComponent({
-  components: { BenefitItem },
-  props: {},
-  setup() {
-    return { personalizedIcon, integrationIcon }
-  },
-})
 </script>

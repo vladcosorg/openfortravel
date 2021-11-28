@@ -1,33 +1,35 @@
 <template>
-  <q-page style="z-index: 2">
+  <q-page style="z-index: 2" class="section-bg">
     <section-intro />
-    <section-real-benefits />
-    <!--    <section-contact />-->
-    <section-featured-data />
-    <!--    <section-whyus />-->
+    <section-benefits />
+    <section-guide />
+    <section-whyus />
+    <section-chatbot />
+    <section-case-study />
+    <section-customer-service />
+    <section-ai-data />
+    <section-contact />
   </q-page>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<style lang="sass" scoped>
+// $
+.section-bg > section
+  @include angle(before, true)
+  &:nth-child(even)
+    background-color: #262b32
+  &:nth-child(odd)
+    background-color: #1c273f
+</style>
 
+<script lang="ts" setup>
+import SectionAiData from '@/front/src/pages/business/components/section-ai-data.vue'
 import SectionBenefits from '@/front/src/pages/business/components/section-benefits.vue'
+import SectionCaseStudy from '@/front/src/pages/business/components/section-case-study.vue'
+import SectionChatbot from '@/front/src/pages/business/components/section-chatbot.vue'
 import SectionContact from '@/front/src/pages/business/components/section-contact.vue'
-import SectionFeaturedData from '@/front/src/pages/business/components/section-featured-data.vue'
+import SectionCustomerService from '@/front/src/pages/business/components/section-customer-service.vue'
+import SectionGuide from '@/front/src/pages/business/components/section-guide.vue'
 import SectionIntro from '@/front/src/pages/business/components/section-intro.vue'
-import SectionRealBenefits from '@/front/src/pages/business/components/section-real-benefits.vue'
 import SectionWhyus from '@/front/src/pages/business/components/section-whyus.vue'
-
-export default defineComponent({
-  components: {
-    SectionFeaturedData,
-    SectionRealBenefits,
-    SectionBenefits,
-    SectionContact,
-    SectionWhyus,
-    SectionIntro,
-  },
-
-  setup(props) {},
-})
 </script>

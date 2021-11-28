@@ -1,4 +1,13 @@
+import {
+  getFullDescription,
+  getShortDescription,
+} from '@/front/src/models/content'
 import { Destination } from '@/shared/src/api/destinations/models'
+import {
+  PlainRestriction,
+  RestrictionStatus,
+} from '@/shared/src/api/restrictions/models'
+import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'
 import {
   getDestinationLabelForCountryCode,
   getLabelForCountryCode,
@@ -6,15 +15,6 @@ import {
   transformCountryCodeToDestinationSlug,
   transformCountryCodeToOriginSlug,
 } from '@/shared/src/modules/country-list/country-list-helpers'
-import { getMappedContinentID } from '@/shared/src/modules/continent-map/continent-map-helpers'
-import {
-  getFullDescription,
-  getShortDescription,
-} from '@/front/src/models/content'
-import {
-  PlainRestriction,
-  RestrictionStatus,
-} from '@/shared/src/api/restrictions/models'
 
 export class Restriction implements PlainRestriction {
   public readonly origin!: string
